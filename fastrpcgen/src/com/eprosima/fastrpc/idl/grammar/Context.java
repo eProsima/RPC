@@ -2,8 +2,8 @@ package com.eprosima.fastrpc.idl.grammar;
 
 import java.util.ArrayList;
 import java.util.Stack;
-
-import com.eprosima.fastrpc.fastrpcgen;
+import com.eprosima.fastrpc.idl.tree.*;
+import com.eprosima.idl.parser.typecode.TypeCode;
 
 public abstract class Context extends com.eprosima.idl.context.Context
 {
@@ -57,6 +57,32 @@ public abstract class Context extends com.eprosima.idl.context.Context
     public boolean isFastrpcProduct()
     {
         return true;
+    }
+
+    public Interface createInterface(String name)
+    {
+        Interface interfaceObject = new Interface(getScopeFile(), isInScopedFile(), getScope(), name);
+        addInterface(interfaceObject);
+        return interfaceObject;
+    }
+
+    public com.eprosima.fastrpc.idl.tree.Exception createException(String name)
+    {
+        com.eprosima.fastrpc.idl.tree.Exception exceptionObject = new com.eprosima.fastrpc.idl.tree.Exception(getScopeFile(), isInScopedFile(), getScope(), name);
+        addException(exceptionObject);
+        return exceptionObject;
+    }
+
+    public Operation createOperation(String name)
+    {
+        Operation operationObject = new Operation(getScopeFile(), isInScopedFile(), null, name);
+        return operationObject;
+    }
+
+    public Param createParam(String name, TypeCode typecode, com.eprosima.idl.parser.tree.Param.Kind kind)
+    {
+        Param paramObject = new Param(name, typecode, kind);
+        return paramObject;
     }
 
     // TODO Para stringtemplate TopicsPlugin de nuestros tipos DDS.

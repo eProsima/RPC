@@ -3,10 +3,12 @@ package com.eprosima.fastrpc.idl.grammar;
 import java.util.ArrayList;
 
 import com.eprosima.idl.parser.tree.Module;
-import com.eprosima.idl.parser.tree.Interface;
-import com.eprosima.idl.parser.tree.Operation;
+import com.eprosima.fastrpc.idl.tree.Interface;
+import com.eprosima.fastrpc.idl.tree.Operation;
+import com.eprosima.fastrpc.idl.tree.Param;
 import com.eprosima.idl.parser.typecode.Member;
 import com.eprosima.idl.parser.typecode.StructTypeCode;
+import com.eprosima.idl.parser.typecode.TypeCode;
 
 public class RESTContext extends Context
 {
@@ -43,12 +45,13 @@ public class RESTContext extends Context
 
     public String getDeserializeCode() {  
     	PathTree pathTree = new PathTree();
-    	for(Interface iface: getInterfaces()) {
+    	for(com.eprosima.idl.parser.tree.Interface interf: getInterfaces()) {
+            Interface iface = (Interface)interf;
     		String path = iface.getPath();
     		
     		pathTree.addInterfaceName(path, iface.getName());
-   			for(Operation operation: iface.getOperations()) {
-   	   			pathTree.addMethod(operation);
+   			for(com.eprosima.idl.parser.tree.Operation operation: iface.getOperations()) {
+   	   			pathTree.addMethod((Operation)operation);
     		}
 
     		if(iface.getPathHasBrackets()) {

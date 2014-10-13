@@ -39,8 +39,94 @@ $exports; separator="\n"$
 exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
+$operation.parent.scopedname$_$operation.name$_In::$operation.parent.name$_$operation.name$_In()
+$if(operation.inputparam)$$parameters_default_init(operation.inputparam)$
+$else$: m_dummy(0)
+$endif$
+{
+}
+
+$operation.parent.scopedname$_$operation.name$_In::~$operation.parent.name$_$operation.name$_In()
+{
+}
+
+$operation.parent.scopedname$_$operation.name$_In::$operation.parent.name$_$operation.name$_In(const $operation.parent.name$_$operation.name$_In &x)
+$if(operation.inputparam)$$parameters_copy_init(parameters=operation.inputparam)$
+$else$: m_dummy(x.m_dummy)
+$endif$
+{
+}
+
+$operation.parent.scopedname$_$operation.name$_In::$operation.parent.name$_$operation.name$_In($operation.parent.name$_$operation.name$_In &&x)
+$if(operation.inputparam)$$parameters_move_init(parameters=operation.inputparam)$
+$else$: m_dummy(x.m_dummy)
+$endif$
+{
+}
+
+$operation.parent.scopedname$_$operation.name$_In& $operation.parent.scopedname$_$operation.name$_In::operator=(const $operation.parent.scopedname$_$operation.name$_In &x)
+{
+    $if(operation.inputparam)$
+    $operation.inputparam :{ param |$parameters_copy_assigment(param)$;}; separator="\n"$
+    $else$
+    m_dummy = x.m_dummy;
+    $endif$
+    
+    return *this;
+}
+
+$operation.parent.scopedname$_$operation.name$_In& $operation.parent.scopedname$_$operation.name$_In::operator=($operation.parent.scopedname$_$operation.name$_In &&x)
+{
+    $if(operation.inputparam)$
+    $operation.inputparam :{ param |$parameters_move_assigment(param)$;}; separator="\n"$
+    $else$
+    m_dummy = x.m_dummy;
+    $endif$
+    
+    return *this;
+}
+
+size_t $operation.parent.scopedname$_$operation.name$_In::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+            
+    $if(operation.inputparam)$
+    $operation.inputparam : { param |$max_serialized_size(ctx=ctx, typecode=param.typecode, var="current_alignment")$}; separator="\n"$
+    $else$
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+    $endif$
+
+    return current_alignment - initial_alignment;
+}
+
+size_t $operation.parent.scopedname$_$operation.name$_In::getSerializedSize(size_t current_alignment) const
+{
+    size_t current_align = current_alignment;
+
+    $operation.inputparam : { param |$serialized_size(param=param, var="current_align")$}; separator="\n"$
+
+    return current_align;
+}
+
+void $operation.parent.scopedname$_$operation.name$_In::serialize(eprosima::fastcdr::Cdr &scdr) const
+{
+    $if(operation.inputparam)$
+    $operation.inputparam : { param |$object_serialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
+    $else$
+    scdr << m_dummy;
+    $endif$
+}
+
+void $operation.parent.scopedname$_$operation.name$_In::deserialize(eprosima::fastcdr::Cdr &dcdr)
+{
+    $if(operation.inputparam)$
+    $operation.inputparam : { param |$object_deserialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
+    $else$
+    dcdr \>> m_dummy;
+    $endif$
+}
+
 $operation.parent.scopedname$_$operation.name$_Request::$operation.parent.name$_$operation.name$_Request()
-$parameters_default_init(operation.inputparam)$
 {
 }
 
@@ -49,19 +135,19 @@ $operation.parent.scopedname$_$operation.name$_Request::~$operation.parent.name$
 }
 
 $operation.parent.scopedname$_$operation.name$_Request::$operation.parent.name$_$operation.name$_Request(const $operation.parent.name$_$operation.name$_Request &x)
-: m_header(x.m_header)$parameters_copy_init(parameters=operation.inputparam, separator=", ")$
+: m_header(x.m_header), m_$operation.name$(x.m_$operation.name$)
 {
 }
 
 $operation.parent.scopedname$_$operation.name$_Request::$operation.parent.name$_$operation.name$_Request($operation.parent.name$_$operation.name$_Request &&x)
-: m_header(std::move(x.m_header))$parameters_move_init(parameters=operation.inputparam, separator=", ")$
+: m_header(std::move(x.m_header)), m_$operation.name$(std::move(x.m_$operation.name$))
 {
 }
 
 $operation.parent.scopedname$_$operation.name$_Request& $operation.parent.scopedname$_$operation.name$_Request::operator=(const $operation.parent.scopedname$_$operation.name$_Request &x)
 {
     m_header = x.m_header;
-    $operation.inputparam :{ param |$parameters_copy_assigment(param)$;}; separator="\n"$
+    m_$operation.name$ = x.m_$operation.name$;
     
     return *this;
 }
@@ -69,19 +155,19 @@ $operation.parent.scopedname$_$operation.name$_Request& $operation.parent.scoped
 $operation.parent.scopedname$_$operation.name$_Request& $operation.parent.scopedname$_$operation.name$_Request::operator=($operation.parent.scopedname$_$operation.name$_Request &&x)
 {
     m_header = std::move(x.m_header);
-    $operation.inputparam :{ param |$parameters_move_assigment(param)$;}; separator="\n"$
+    m_$operation.name$ = std::move(x.m_$operation.name$);
     
     return *this;
 }
 
 size_t $operation.parent.scopedname$_$operation.name$_Request::getMaxCdrSerializedSize(size_t current_alignment)
 {
-    size_t current_align = current_alignment;
-    current_align =  eprosima::rpc::protocol::dds::RequestHeader::getMaxCdrSerializedSize(current_align);
-            
-    $operation.inputparam : { param |$max_serialized_size(ctx=ctx, typecode=param.typecode, var="current_align")$}; separator="\n"$
+    size_t initial_alignment = current_alignment;
 
-    return current_align;
+    current_alignment += eprosima::rpc::protocol::dds::RequestHeader::getMaxCdrSerializedSize(current_alignment);
+    current_alignment += $operation.parent.scopedname$_$operation.name$_In::getMaxCdrSerializedSize(current_alignment);
+
+    return current_alignment - initial_alignment;
 }
 
 size_t $operation.parent.scopedname$_$operation.name$_Request::getSerializedSize(size_t current_alignment) const
@@ -89,209 +175,207 @@ size_t $operation.parent.scopedname$_$operation.name$_Request::getSerializedSize
     size_t current_align = current_alignment;
     // TODO Header
 
-    $operation.inputparam : { param |$serialized_size(param=param, var="current_align")$}; separator="\n"$
-
     return current_align;
 }
 
 void $operation.parent.scopedname$_$operation.name$_Request::serialize(eprosima::fastcdr::Cdr &scdr) const
 {
     scdr << m_header;
-
-    $operation.inputparam : { param |$object_serialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
+    scdr << m_$operation.name$;
 }
 
 void $operation.parent.scopedname$_$operation.name$_Request::deserialize(eprosima::fastcdr::Cdr &dcdr)
 {
     dcdr \>> m_header;
-
-    $operation.inputparam : { param |$object_deserialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
+    dcdr \>> m_$operation.name$;
 }
 
 $if(!operation.oneway)$
-$if(operation.exceptions)$
-$if([operation.outputparam, operation.rettype])$
-$operation.parent.scopedname$_$operation.name$_Reply_st::$operation.parent.name$_$operation.name$_Reply_st()
-$parameters_default_init([operation.outputparam, operation.rettypeparam])$
+$operation.parent.scopedname$_$operation.name$_Out::$operation.parent.name$_$operation.name$_Out()
+$if([operation.outputparam, operation.rettypeparam])$$parameters_default_init([operation.outputparam, operation.rettypeparam])$
+$else$: m_dummy(0)
+$endif$
 {
 }
 
-$operation.parent.scopedname$_$operation.name$_Reply_st::~$operation.parent.name$_$operation.name$_Reply_st()
+$operation.parent.scopedname$_$operation.name$_Out::~$operation.parent.name$_$operation.name$_Out()
 {
 }
 
-$operation.parent.scopedname$_$operation.name$_Reply_st::$operation.parent.name$_$operation.name$_Reply_st(const $operation.parent.name$_$operation.name$_Reply_st &x)
-: $parameters_copy_init(parameters=[operation.outputparam, operation.rettypeparam])$
+$operation.parent.scopedname$_$operation.name$_Out::$operation.parent.name$_$operation.name$_Out(const $operation.parent.name$_$operation.name$_Out &x)
+$if([operation.outputparam, operation.rettypeparam])$$parameters_copy_init(parameters=[operation.outputparam, operation.rettypeparam])$
+$else$: m_dummy(x.m_dummy)
+$endif$
 {
 }
 
-$operation.parent.scopedname$_$operation.name$_Reply_st::$operation.parent.name$_$operation.name$_Reply_st($operation.parent.name$_$operation.name$_Reply_st &&x)
-: $parameters_move_init(parameters=[operation.outputparam, operation.rettypeparam])$
+$operation.parent.scopedname$_$operation.name$_Out::$operation.parent.name$_$operation.name$_Out($operation.parent.name$_$operation.name$_Out &&x)
+$if([operation.outputparam, operation.rettypeparam])$$parameters_move_init(parameters=[operation.outputparam, operation.rettypeparam])$
+$else$: m_dummy(x.m_dummy)
+$endif$
 {
 }
 
-$operation.parent.scopedname$_$operation.name$_Reply_st& $operation.parent.scopedname$_$operation.name$_Reply_st::operator=(const $operation.parent.scopedname$_$operation.name$_Reply_st &x)
+$operation.parent.scopedname$_$operation.name$_Out& $operation.parent.scopedname$_$operation.name$_Out::operator=(const $operation.parent.scopedname$_$operation.name$_Out &x)
 {
+    $if([operation.outputparam, operation.rettypeparam])$
     $[operation.outputparam, operation.rettypeparam] :{ param |$parameters_copy_assigment(param)$;}; separator="\n"$
+    $else$
+    m_dummy = x.m_dummy;
+    $endif$
     
     return *this;
 }
 
-$operation.parent.scopedname$_$operation.name$_Reply_st& $operation.parent.scopedname$_$operation.name$_Reply_st::operator=($operation.parent.scopedname$_$operation.name$_Reply_st &&x)
+$operation.parent.scopedname$_$operation.name$_Out& $operation.parent.scopedname$_$operation.name$_Out::operator=($operation.parent.scopedname$_$operation.name$_Out &&x)
 {
+    $if([operation.outputparam, operation.rettypeparam])$
     $[operation.outputparam, operation.rettypeparam] :{ param |$parameters_move_assigment(param)$;}; separator="\n"$
+    $else$
+    m_dummy = x.m_dummy;
+    $endif$
     
     return *this;
 }
 
-size_t $operation.parent.scopedname$_$operation.name$_Reply_st::getMaxCdrSerializedSize(size_t current_alignment)
+size_t $operation.parent.scopedname$_$operation.name$_Out::getMaxCdrSerializedSize(size_t current_alignment)
 {
-    size_t current_align = current_alignment;
+    size_t initial_alignment = current_alignment;
             
-    $[operation.outputparam, operation.rettypeparam] : { param |$max_serialized_size(ctx=ctx, typecode=param.typecode, var="current_align")$}; separator="\n"$
+    $if([operation.outputparam, operation.rettypeparam])$
+    $[operation.outputparam, operation.rettypeparam] : { param |$max_serialized_size(ctx=ctx, typecode=param.typecode, var="current_alignment")$}; separator="\n"$
+    $else$
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+    $endif$
 
-    return current_align;
+    return current_alignment - initial_alignment;
 }
 
-size_t $operation.parent.scopedname$_$operation.name$_Reply_st::getSerializedSize(size_t current_alignment) const
+size_t $operation.parent.scopedname$_$operation.name$_Out::getSerializedSize(size_t current_alignment) const
 {
     size_t current_align = current_alignment;
     // TODO Header
 
-    $operation.inputparam : { param |$serialized_size(param=param, var="current_align")$}; separator="\n"$
+    //$operation.inputparam : { param |$serialized_size(param=param, var="current_align")$}; separator="\n"$
 
     return current_align;
 }
 
-void $operation.parent.scopedname$_$operation.name$_Reply_st::serialize(eprosima::fastcdr::Cdr &scdr) const
+void $operation.parent.scopedname$_$operation.name$_Out::serialize(eprosima::fastcdr::Cdr &scdr) const
 {
+    $if([operation.outputparam, operation.rettypeparam])$
     $[operation.outputparam, operation.rettypeparam] : { param |$object_serialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
+    $else$
+    scdr << m_dummy;
+    $endif$
 }
 
-void $operation.parent.scopedname$_$operation.name$_Reply_st::deserialize(eprosima::fastcdr::Cdr &dcdr)
+void $operation.parent.scopedname$_$operation.name$_Out::deserialize(eprosima::fastcdr::Cdr &dcdr)
 {
+    $if([operation.outputparam, operation.rettypeparam])$
     $[operation.outputparam, operation.rettypeparam] : { param |$object_deserialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
+    $else$
+    dcdr \>> m_dummy;
+    $endif$
 }
 
-$endif$
-
-$operation.parent.scopedname$_$operation.name$_Reply_union::$operation.parent.name$_$operation.name$_Reply_union() : m__d(0)
+$operation.parent.scopedname$_$operation.name$_Result::$operation.parent.name$_$operation.name$_Result() : m__d(2)
 {
 }
 
-$operation.parent.scopedname$_$operation.name$_Reply_union::~$operation.parent.name$_$operation.name$_Reply_union()
+$operation.parent.scopedname$_$operation.name$_Result::~$operation.parent.name$_$operation.name$_Result()
 {
 }
 
-$operation.parent.scopedname$_$operation.name$_Reply_union::$operation.parent.name$_$operation.name$_Reply_union(const $operation.parent.name$_$operation.name$_Reply_union &x)
+$operation.parent.scopedname$_$operation.name$_Result::$operation.parent.name$_$operation.name$_Result(const $operation.parent.name$_$operation.name$_Result &x)
 {
     m__d = x.m__d;
     
     switch(m__d)
     {
-        $if([operation.outputparam, operation.rettype])$
         case 0:
-            m_st = x.m_st;
+            m_out_ = x.m_out_;
             break;
-        $endif$
+        case 1:
+            m_sysx_ = x.m_sysx_;
+            break;
 
         $operation.exceptions : { exception |
-        case $i$:
+        case $exception.md5$:
             m_$exception.formatedScopedname$_ex = x.m_$exception.formatedScopedname$_ex;
             break;
         }; separator="\n"$
-
-        default:
-            $if([operation.outputparam, operation.rettype])$
-            m_st = x.m_st;
-            $endif$
-            break;
     }
 }
 
-$operation.parent.scopedname$_$operation.name$_Reply_union::$operation.parent.name$_$operation.name$_Reply_union($operation.parent.name$_$operation.name$_Reply_union &&x)
+$operation.parent.scopedname$_$operation.name$_Result::$operation.parent.name$_$operation.name$_Result($operation.parent.name$_$operation.name$_Result &&x)
 {
     m__d = x.m__d;
     
     switch(m__d)
     {
-        $if([operation.outputparam, operation.rettype])$
         case 0:
-            m_st = std::move(x.m_st);
+            m_out_ = std::move(x.m_out_);
             break;
-        $endif$
+        case 1:
+            m_sysx_ = x.m_sysx_;
+            break;
 
         $operation.exceptions : { exception |
-        case $i$:
+        case $exception.md5$:
             m_$exception.formatedScopedname$_ex = std::move(x.m_$exception.formatedScopedname$_ex);
             break;
         }; separator="\n"$
-
-        default:
-            $if([operation.outputparam, operation.rettype])$
-            m_st = std::move(x.m_st);
-            $endif$
-            break;
     }
 }
 
-$operation.parent.scopedname$_$operation.name$_Reply_union& $operation.parent.scopedname$_$operation.name$_Reply_union::operator=(const $operation.parent.name$_$operation.name$_Reply_union &x)
+$operation.parent.scopedname$_$operation.name$_Result& $operation.parent.scopedname$_$operation.name$_Result::operator=(const $operation.parent.scopedname$_$operation.name$_Result &x)
 {
     m__d = x.m__d;
     
     switch(m__d)
     {
-        $if([operation.outputparam, operation.rettype])$
         case 0:
-            m_st = x.m_st;
+            m_out_ = x.m_out_;
             break;
-        $endif$
+        case 1:
+            m_sysx_ = x.m_sysx_;
+            break;
 
         $operation.exceptions : { exception |
-        case $i$:
+        case $exception.md5$:
             m_$exception.formatedScopedname$_ex = x.m_$exception.formatedScopedname$_ex;
             break;
         }; separator="\n"$
-
-        default:
-            $if([operation.outputparam, operation.rettype])$
-            m_st = x.m_st;
-            $endif$
-            break;
     }
     
     return *this;
 }
 
-$operation.parent.scopedname$_$operation.name$_Reply_union& $operation.parent.scopedname$_$operation.name$_Reply_union::operator=($operation.parent.name$_$operation.name$_Reply_union &&x)
+$operation.parent.scopedname$_$operation.name$_Result& $operation.parent.scopedname$_$operation.name$_Result::operator=($operation.parent.scopedname$_$operation.name$_Result &&x)
 {
     m__d = x.m__d;
     
     switch(m__d)
     {
-        $if([operation.outputparam, operation.rettype])$
         case 0:
-            m_st = std::move(x.m_st);
+            m_out_ = std::move(x.m_out_);
             break;
-        $endif$
+        case 1:
+            m_sysx_ = x.m_sysx_;
+            break;
 
         $operation.exceptions : { exception |
-        case $i$:
+        case $exception.md5$:
             m_$exception.formatedScopedname$_ex = std::move(x.m_$exception.formatedScopedname$_ex);
             break;
         }; separator="\n"$
-
-        default:
-            $if([operation.outputparam, operation.rettype])$
-            m_st = std::move(x.m_st);
-            $endif$
-            break;
     }
     
     return *this;
 }
 
-void $operation.parent.scopedname$_$operation.name$_Reply_union::_d(int32_t __d)
+void $operation.parent.scopedname$_$operation.name$_Result::_d(int32_t __d)
 {
     if(m__d != __d)
     {
@@ -301,127 +385,175 @@ void $operation.parent.scopedname$_$operation.name$_Reply_union::_d(int32_t __d)
     m__d = __d;
 }
 
-int32_t $operation.parent.scopedname$_$operation.name$_Reply_union::_d() const
+int32_t $operation.parent.scopedname$_$operation.name$_Result::_d() const
 {
     return m__d;
 }
 
-int32_t& $operation.parent.scopedname$_$operation.name$_Reply_union::_d()
+int32_t& $operation.parent.scopedname$_$operation.name$_Result::_d()
 {
     return m__d;
 }
 
-$if([operation.outputparam, operation.rettype])$
-void $operation.parent.scopedname$_$operation.name$_Reply_union::st(const $operation.parent.scopedname$_$operation.name$_Reply_st &_st)
+void $operation.parent.scopedname$_$operation.name$_Result::unknown_exception(eprosima::rpc::protocol::dds::UnknownException _unknown_exception)
 {
-    m_st = _st;
+    m_unknown_exception = _unknown_exception;
+    m__d = 2;
+}
+
+eprosima::rpc::protocol::dds::UnknownException $operation.parent.scopedname$_$operation.name$_Result::unknown_exception() const
+{
+    if(m__d != 2)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_unknown_exception;
+}
+
+eprosima::rpc::protocol::dds::UnknownException& $operation.parent.scopedname$_$operation.name$_Result::unknown_exception()
+{
+    if(m__d != 2)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_unknown_exception;
+}
+
+void $operation.parent.scopedname$_$operation.name$_Result::out_(const $operation.parent.scopedname$_$operation.name$_Out &_out_)
+{
+    m_out_ = _out_;
     m__d = 0;
 }
 
-void $operation.parent.scopedname$_$operation.name$_Reply_union::st($operation.parent.scopedname$_$operation.name$_Reply_st &&_st)
+void $operation.parent.scopedname$_$operation.name$_Result::out_($operation.parent.scopedname$_$operation.name$_Out &&_out_)
 {
-    m_st = std::move(_st);
+    m_out_ = std::move(_out_);
     m__d = 0;
 }
 
-const $operation.parent.scopedname$_$operation.name$_Reply_st& $operation.parent.scopedname$_$operation.name$_Reply_union::st() const
+const $operation.parent.scopedname$_$operation.name$_Out& $operation.parent.scopedname$_$operation.name$_Result::out_() const
 {
     if(m__d != 0)
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
-    return m_st;
+    return m_out_;
 }
 
-$operation.parent.scopedname$_$operation.name$_Reply_st& $operation.parent.scopedname$_$operation.name$_Reply_union::st()
+$operation.parent.scopedname$_$operation.name$_Out& $operation.parent.scopedname$_$operation.name$_Result::out_()
 {
     if(m__d != 0)
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
-    return m_st;
+    return m_out_;
 }
 
-$endif$
-
-$operation.exceptions:{ exception |$public_exception_union_member_declaration(class=[operation.parent.scopedname, "_", operation.name, "_Reply_union"], exception=exception, label=i)$}; separator="\n"$
-
-size_t $operation.parent.scopedname$_$operation.name$_Reply_union::getMaxCdrSerializedSize(size_t current_alignment)
+void $operation.parent.scopedname$_$operation.name$_Result::sysx_(eprosima::rpc::ReturnMessage _sysx_)
 {
-    size_t current_align = current_alignment;
-    size_t reset_align = 0;
+    m_sysx_ = _sysx_;
+    m__d = 1;
+}
+
+eprosima::rpc::ReturnMessage $operation.parent.scopedname$_$operation.name$_Result::sysx_() const
+{
+    if(m__d != 1)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    
+    return m_sysx_;
+}
+
+eprosima::rpc::ReturnMessage& $operation.parent.scopedname$_$operation.name$_Result::sysx_()
+{
+    if(m__d != 1)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    
+    return m_sysx_;
+}
+
+$operation.exceptions:{ exception |$public_exception_union_member_declaration(class=[operation.parent.scopedname, "_", operation.name, "_Result"], exception=exception)$}; separator="\n"$
+
+size_t $operation.parent.scopedname$_$operation.name$_Result::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+    size_t reset_alignment = 0;
     size_t union_max_size_serialized = 0;
 
-    current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
-    $if([operation.outputparam, operation.rettype])$
-    reset_align = current_align;
+    // sysx_ attribute. The unknown_exception is minor.
+    union_max_size_serialized = current_alignment;
+    union_max_size_serialized += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
-    reset_align = $operation.parent.scopedname$_$operation.name$_Reply_st::getMaxCdrSerializedSize(reset_align);
+    reset_alignment = current_alignment;
+    reset_alignment += $operation.parent.scopedname$_$operation.name$_Out::getMaxCdrSerializedSize(reset_alignment);
 
-    if(union_max_size_serialized < reset_align)
-        union_max_size_serialized = reset_align;
-    $endif$
+    if(union_max_size_serialized < reset_alignment)
+        union_max_size_serialized = reset_alignment;
 
     $operation.exceptions : { exception |
-    reset_align = current_align;
+    reset_alignment = current_alignment;
 
-    reset_align = $exception.scopedname$::getMaxCdrSerializedSize(reset_align);
+    reset_alignment += $exception.scopedname$::getMaxCdrSerializedSize(reset_alignment);
 
-    if(union_max_size_serialized < reset_align)
-        union_max_size_serialized = reset_align;
+    if(union_max_size_serialized < reset_alignment)
+        union_max_size_serialized = reset_alignment;
 
     }; separator="\n"$
 
-    return union_max_size_serialized;
+    return union_max_size_serialized - initial_alignment;
 }
 
-void $operation.parent.scopedname$_$operation.name$_Reply_union::serialize(eprosima::fastcdr::Cdr &scdr) const
+size_t $operation.parent.scopedname$_$operation.name$_Result::getSerializedSize(size_t current_alignment) const
+{
+    size_t current_align = current_alignment;
+    // TODO Discriminator
+
+    return current_align;
+}
+
+void $operation.parent.scopedname$_$operation.name$_Result::serialize(eprosima::fastcdr::Cdr &scdr) const
 {
     scdr << m__d;
 
     switch(m__d)
     {
-        $if([operation.outputparam, operation.rettype])$
         case 0:
-            scdr << m_st;
+            scdr << m_out_;
             break;
-        $endif$
+        case 1:
+            scdr << (int32_t)m_sysx_;
+            break;
 
         $operation.exceptions : { exception |
-        case $i$:
+        case $exception.md5$:
             scdr << m_$exception.formatedScopedname$_ex;
             break;
         }; separator="\n"$
 
         default:
-            $if([operation.outputparam, operation.rettype])$
-            scdr << m_st;
-            $endif$
+            scdr << m_unknown_exception;
             break;
     }
 }
 
-void $operation.parent.scopedname$_$operation.name$_Reply_union::deserialize(eprosima::fastcdr::Cdr &dcdr)
+void $operation.parent.scopedname$_$operation.name$_Result::deserialize(eprosima::fastcdr::Cdr &dcdr)
 {
     dcdr \>> m__d;
 
     switch(m__d)
     {
-        $if([operation.outputparam, operation.rettype])$
         case 0:
-            dcdr \>> m_st;
+            dcdr \>> m_out_;
             break;
-        $endif$
+        case 1:
+            dcdr \>> (int32_t&)m_sysx_;
+            break;
 
         $operation.exceptions : { exception |
-        case $i$:
+        case $exception.md5$:
             dcdr \>> m_$exception.formatedScopedname$_ex;
             break;
         }; separator="\n"$
 
         default:
-            $if([operation.outputparam, operation.rettype])$
-            dcdr \>> m_st;
-            $endif$
+            dcdr \>> m_unknown_exception;
             break;
     }
 }
@@ -435,19 +567,19 @@ $operation.parent.scopedname$_$operation.name$_Reply::~$operation.parent.name$_$
 }
 
 $operation.parent.scopedname$_$operation.name$_Reply::$operation.parent.name$_$operation.name$_Reply(const $operation.parent.name$_$operation.name$_Reply &x)
-: m_header(x.m_header), m_unio(x.m_unio)
+: m_header(x.m_header), m_$operation.name$(x.m_$operation.name$)
 {
 }
 
 $operation.parent.scopedname$_$operation.name$_Reply::$operation.parent.name$_$operation.name$_Reply($operation.parent.name$_$operation.name$_Reply &&x)
-: m_header(std::move(x.m_header)), m_unio(std::move(x.m_unio))
+: m_header(std::move(x.m_header)), m_$operation.name$(std::move(x.m_$operation.name$))
 {
 }
 
 $operation.parent.scopedname$_$operation.name$_Reply& $operation.parent.scopedname$_$operation.name$_Reply::operator=(const $operation.parent.scopedname$_$operation.name$_Reply &x)
 {
     m_header = x.m_header;
-    m_unio = x.m_unio;
+    m_$operation.name$ = x.m_$operation.name$;
     
     return *this;
 }
@@ -455,18 +587,19 @@ $operation.parent.scopedname$_$operation.name$_Reply& $operation.parent.scopedna
 $operation.parent.scopedname$_$operation.name$_Reply& $operation.parent.scopedname$_$operation.name$_Reply::operator=($operation.parent.scopedname$_$operation.name$_Reply &&x)
 {
     m_header = std::move(x.m_header);
-    m_unio = std::move(x.m_unio);
+    m_$operation.name$ = std::move(x.m_$operation.name$);
     
     return *this;
 }
 
 size_t $operation.parent.scopedname$_$operation.name$_Reply::getMaxCdrSerializedSize(size_t current_alignment)
 {
-    size_t current_align = current_alignment;
-    current_align =  eprosima::rpc::protocol::dds::ReplyHeader::getMaxCdrSerializedSize(current_align);
-    current_align = $operation.parent.name$_$operation.name$_Reply_union::getMaxCdrSerializedSize(current_align);
+    size_t initial_alignment = current_alignment;
+
+    current_alignment +=  eprosima::rpc::protocol::dds::ReplyHeader::getMaxCdrSerializedSize(current_alignment);
+    current_alignment += $operation.parent.name$_$operation.name$_Result::getMaxCdrSerializedSize(current_alignment);
             
-    return current_align;
+    return current_alignment - initial_alignment;
 }
 
 size_t $operation.parent.scopedname$_$operation.name$_Reply::getSerializedSize(size_t current_alignment) const
@@ -474,97 +607,22 @@ size_t $operation.parent.scopedname$_$operation.name$_Reply::getSerializedSize(s
     size_t current_align = current_alignment;
     // TODO Header
 
-    $operation.inputparam : { param |$serialized_size(param=param, var="current_align")$}; separator="\n"$
-
     return current_align;
 }
 
 void $operation.parent.scopedname$_$operation.name$_Reply::serialize(eprosima::fastcdr::Cdr &scdr) const
 {
     scdr << m_header;
-    scdr << m_unio;
+    scdr << m_$operation.name$;
 }
 
 void $operation.parent.scopedname$_$operation.name$_Reply::deserialize(eprosima::fastcdr::Cdr &dcdr)
 {
     dcdr \>> m_header;
-    dcdr \>> m_unio;
-}
-
-
-$else$
-$operation.parent.scopedname$_$operation.name$_Reply::$operation.parent.name$_$operation.name$_Reply()
-$parameters_default_init([operation.outputparam, operation.rettypeparam])$
-{
-}
-
-$operation.parent.scopedname$_$operation.name$_Reply::~$operation.parent.name$_$operation.name$_Reply()
-{
-}
-
-$operation.parent.scopedname$_$operation.name$_Reply::$operation.parent.name$_$operation.name$_Reply(const $operation.parent.name$_$operation.name$_Reply &x)
-: m_header(x.m_header)$parameters_copy_init(parameters=[operation.outputparam, operation.rettypeparam], separator=", ")$
-{
-}
-
-$operation.parent.scopedname$_$operation.name$_Reply::$operation.parent.name$_$operation.name$_Reply($operation.parent.name$_$operation.name$_Reply &&x)
-: m_header(std::move(x.m_header))$parameters_move_init(parameters=[operation.outputparam, operation.rettypeparam], separator=", ")$
-{
-}
-
-$operation.parent.scopedname$_$operation.name$_Reply& $operation.parent.scopedname$_$operation.name$_Reply::operator=(const $operation.parent.scopedname$_$operation.name$_Reply &x)
-{
-    m_header = x.m_header;
-    $[operation.outputparam, operation.rettypeparam] :{ param |$parameters_copy_assigment(param)$;}; separator="\n"$
-    
-    return *this;
-}
-
-$operation.parent.scopedname$_$operation.name$_Reply& $operation.parent.scopedname$_$operation.name$_Reply::operator=($operation.parent.scopedname$_$operation.name$_Reply &&x)
-{
-    m_header = std::move(x.m_header);
-    $[operation.outputparam, operation.rettypeparam] :{ param |$parameters_move_assigment(param)$;}; separator="\n"$
-    
-    return *this;
-}
-
-size_t $operation.parent.scopedname$_$operation.name$_Reply::getMaxCdrSerializedSize(size_t current_alignment)
-{
-    size_t current_align = current_alignment;
-    current_align =  eprosima::rpc::protocol::dds::ReplyHeader::getMaxCdrSerializedSize(current_align);
-            
-    $[operation.outputparam, operation.rettypeparam] : { param |$max_serialized_size(ctx=ctx, typecode=param.typecode, var="current_align")$}; separator="\n"$
-
-    return current_align;
-}
-
-size_t $operation.parent.scopedname$_$operation.name$_Reply::getSerializedSize(size_t current_alignment) const
-{
-    size_t current_align = current_alignment;
-    // TODO Header
-
-    $operation.inputparam : { param |$serialized_size(param=param, var="current_align")$}; separator="\n"$
-
-    return current_align;
-}
-
-void $operation.parent.scopedname$_$operation.name$_Reply::serialize(eprosima::fastcdr::Cdr &scdr) const
-{
-    scdr << m_header;
-
-    $[operation.outputparam, operation.rettypeparam] : { param |$object_serialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
-}
-
-void $operation.parent.scopedname$_$operation.name$_Reply::deserialize(eprosima::fastcdr::Cdr &dcdr)
-{
-    dcdr \>> m_header;
-
-    $[operation.outputparam, operation.rettypeparam] : { param |$object_deserialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
+    dcdr \>> m_$operation.name$;
 }
 
 $endif$
-$endif$
-
 >>
 
 param_list(parameters) ::= <<>>
@@ -596,12 +654,12 @@ m_$param.name$()
 $endif$
 >>
 
-parameters_copy_init(parameters, separator) ::= <<
-$if(parameters)$$separator$$parameters:{ param |m_$param.name$(x.m_$param.name$)}; separator=", "$$endif$
+parameters_copy_init(parameters) ::= <<
+$if(parameters)$: $parameters:{ param |m_$param.name$(x.m_$param.name$)}; separator=", "$$endif$
 >>
 
-parameters_move_init(parameters, separator) ::= <<
-$if(parameters)$$separator$$parameters:{ param |m_$param.name$(std::move(x.m_$param.name$))}; separator=", "$$endif$
+parameters_move_init(parameters) ::= <<
+$if(parameters)$: $parameters:{ param |m_$param.name$(std::move(x.m_$param.name$))}; separator=", "$$endif$
 >>
 
 parameters_copy_assigment(param) ::= <<
@@ -612,22 +670,22 @@ parameters_move_assigment(param) ::= <<
 m_$param.name$ = x.m_$param.name$;
 >>
 
-public_exception_union_member_declaration(class, exception, label) ::= <<
+public_exception_union_member_declaration(class, exception) ::= <<
 void $class$::$exception.formatedScopedname$_ex(const $exception.scopedname$ &_$exception.formatedScopedname$_ex)
 {
     m_$exception.formatedScopedname$_ex = _$exception.formatedScopedname$_ex;
-    m__d = $label$;
+    m__d = $exception.md5$;
 }
 
 void $class$::$exception.formatedScopedname$_ex($exception.scopedname$ &&_$exception.formatedScopedname$_ex)
 {
     m_$exception.formatedScopedname$_ex = std::move(_$exception.formatedScopedname$_ex);
-    m__d = $label$;
+    m__d = $exception.md5$;
 }
 
 const $exception.scopedname$& $class$::$exception.formatedScopedname$_ex() const
 {
-    if(m__d != $label$)
+    if(m__d != $exception.md5$)
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
     return m_$exception.formatedScopedname$_ex;
@@ -635,7 +693,7 @@ const $exception.scopedname$& $class$::$exception.formatedScopedname$_ex() const
 
 $exception.scopedname$& $class$::$exception.formatedScopedname$_ex()
 {
-    if(m__d != $label$)
+    if(m__d != $exception.md5$)
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
     return m_$exception.formatedScopedname$_ex;

@@ -315,7 +315,7 @@ $interface.scopedname$_Return::$interface.name$_Return(const $interface.name$_Re
     
     switch(m__d)
     {
-        $interface.operations : { operation |
+        $interface.notOnewayOperations : { operation |
         case $operation.md5$:
             m_$operation.name$ = x.m_$operation.name$;
             break;
@@ -329,7 +329,7 @@ $interface.scopedname$_Return::$interface.name$_Return($interface.name$_Return &
     
     switch(m__d)
     {
-        $interface.operations : { operation |
+        $interface.notOnewayOperations : { operation |
         case $operation.md5$:
             m_$operation.name$ = std::move(x.m_$operation.name$);
             break;
@@ -343,7 +343,7 @@ $interface.scopedname$_Return& $interface.scopedname$_Return::operator=(const $i
     
     switch(m__d)
     {
-        $interface.operations : { operation |
+        $interface.notOnewayOperations : { operation |
         case $operation.md5$:
             m_$operation.name$ = x.m_$operation.name$;
             break;
@@ -359,7 +359,7 @@ $interface.scopedname$_Return& $interface.scopedname$_Return::operator=($interfa
     
     switch(m__d)
     {
-        $interface.operations : { operation |
+        $interface.notOnewayOperations : { operation |
         case $operation.md5$:
             m_$operation.name$ = std::move(x.m_$operation.name$);
             break;
@@ -411,7 +411,7 @@ eprosima::rpc::protocol::dds::UnknownOperation& $interface.scopedname$_Return::u
     return m_unknown_operation;
 }
 
-$interface.operations : { operation |
+$interface.notOnewayOperations : { operation |
 void $interface.scopedname$_Return::$operation.name$(const $operation.parent.scopedname$_$operation.name$_Result &_$operation.name$)
 {
     m_$operation.name$ = _$operation.name$;
@@ -452,7 +452,7 @@ size_t $interface.scopedname$_Return::getMaxCdrSerializedSize(size_t current_ali
     // Default unknown_operation attribute;
     union_max_size_serialized = current_alignment + 1;
 
-    $interface.operations : { operation |
+    $interface.notOnewayOperations : { operation |
     reset_alignment = current_alignment;
 
     reset_alignment += $operation.parent.scopedname$_$operation.name$_Result::getMaxCdrSerializedSize(reset_alignment);
@@ -479,7 +479,7 @@ void $interface.scopedname$_Return::serialize(eprosima::fastcdr::Cdr &scdr) cons
 
     switch(m__d)
     {
-        $interface.operations : { operation |
+        $interface.notOnewayOperations : { operation |
         case $operation.md5$:
             scdr << m_$operation.name$;
             break;
@@ -496,7 +496,7 @@ void $interface.scopedname$_Return::deserialize(eprosima::fastcdr::Cdr &dcdr)
 
     switch(m__d)
     {
-        $interface.operations : { operation |
+        $interface.notOnewayOperations : { operation |
         case $operation.md5$:
             dcdr \>> m_$operation.name$;
             break;
@@ -547,7 +547,7 @@ size_t $interface.scopedname$_Reply::getMaxCdrSerializedSize(size_t current_alig
     current_alignment +=  eprosima::rpc::protocol::dds::ReplyHeader::getMaxCdrSerializedSize(current_alignment);
     current_alignment += $interface.name$_Return::getMaxCdrSerializedSize(current_alignment);
             
-    return current_alignment;
+    return current_alignment - initial_alignment;
 }
 
 size_t $interface.scopedname$_Reply::getSerializedSize(size_t current_alignment) const
@@ -665,6 +665,8 @@ void $operation.parent.scopedname$_$operation.name$_In::deserialize(eprosima::fa
     $endif$
 }
 
+$if(!operation.oneway)$
+
 $operation.parent.scopedname$_$operation.name$_Out::$operation.parent.name$_$operation.name$_Out()
 $if([operation.outputparam, operation.rettypeparam])$$parameters_default_init([operation.outputparam, operation.rettypeparam])$
 $else$: m_dummy(0)
@@ -685,7 +687,7 @@ $endif$
 
 $operation.parent.scopedname$_$operation.name$_Out::$operation.parent.name$_$operation.name$_Out($operation.parent.name$_$operation.name$_Out &&x)
 $if([operation.outputparam, operation.rettypeparam])$$parameters_move_init(parameters=[operation.outputparam, operation.rettypeparam])$
-$else$m_dummy(x.m_dummy)
+$else$: m_dummy(x.m_dummy)
 $endif$
 {
 }
@@ -722,7 +724,7 @@ size_t $operation.parent.scopedname$_$operation.name$_Out::getMaxCdrSerializedSi
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
     $endif$
 
-    return current_alignment;
+    return current_alignment - initial_alignment;
 }
 
 size_t $operation.parent.scopedname$_$operation.name$_Out::getSerializedSize(size_t current_alignment) const
@@ -971,7 +973,7 @@ size_t $operation.parent.scopedname$_$operation.name$_Result::getMaxCdrSerialize
 
     }; separator="\n"$
 
-    return union_max_size_serialized;
+    return union_max_size_serialized - initial_alignment;
 }
 
 size_t $operation.parent.scopedname$_$operation.name$_Result::getSerializedSize(size_t current_alignment) const
@@ -1031,6 +1033,8 @@ void $operation.parent.scopedname$_$operation.name$_Result::deserialize(eprosima
             break;
     }
 }
+
+$endif$
 >>
 
 param_list(parameters) ::= <<>>

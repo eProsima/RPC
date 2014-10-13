@@ -35,7 +35,7 @@ int main(int argc, char **argv)
     try
     {
         protocol = new UserExceptionsProtocol();
-        transport = new UDPProxyTransport("UserExceptionsService");
+        transport = new UDPProxyTransport("UserExceptionsService", "Instance");
         proxy = new Beta::IfcProxy(*transport, *protocol);
     }
     catch(InitializeException &ex)

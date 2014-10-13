@@ -1,6 +1,7 @@
 package com.eprosima.fastrpc.idl.tree;
 
 import java.util.ArrayList;
+import com.eprosima.idl.parser.tree.Operation;
 
 public class Interface extends com.eprosima.idl.parser.tree.Interface
 {
@@ -8,6 +9,26 @@ public class Interface extends com.eprosima.idl.parser.tree.Interface
     {
         super(scopeFile, isInScope, scope, name);
     }
+
+    ////////// DDS block ////////////
+    public ArrayList<Operation> getNotOnewayOperations()
+    {
+        if(m_notOnewayOperations == null)
+        {
+            m_notOnewayOperations = new ArrayList<Operation>();
+            
+            for(int count = 0; count < getOperations().size(); ++count)
+            {
+                if(!getOperations().get(count).isOneway())
+                {
+                    m_notOnewayOperations.add(getOperations().get(count));
+                }
+            }
+        }
+        
+        return m_notOnewayOperations;
+    }
+    ///////// End DDS Block /////////
 
     ////////// Auth block ////////////
     // TODO Pensar en que la Annotacion no solo tenga un string, sino mas valores.
@@ -82,4 +103,6 @@ public class Interface extends com.eprosima.idl.parser.tree.Interface
     }
     
     /////// End of RESTful block //////
+
+    private ArrayList<Operation> m_notOnewayOperations = null;
 }

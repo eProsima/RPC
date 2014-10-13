@@ -35,7 +35,7 @@ int main(int argc, char **argv)
     try
     {
         protocol = new IncludesTestProtocol();
-        transport = new UDPProxyTransport("IncludesTestService");
+        transport = new UDPProxyTransport("IncludesTestService", "Instance");
         proxy = new IncludesTestNS::IncludesTestIfcProxy(*transport, *protocol);
     }
     catch(InitializeException &ex)

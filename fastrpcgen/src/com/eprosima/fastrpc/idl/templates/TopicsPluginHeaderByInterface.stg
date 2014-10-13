@@ -357,6 +357,8 @@ class user_cpp_DllExport $operation.name$_InPlugin
         static DDS_TypeCode* get_typecode();
 };
 
+$if(!operation.oneway)$
+
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
@@ -376,6 +378,8 @@ class user_cpp_DllExport $operation.name$_ResultPlugin : public DDSTypeSupport
 
         static DDS_TypeCode* get_typecode();
 };
+
+$endif$
 
 >>
 

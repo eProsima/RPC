@@ -35,7 +35,7 @@ int main(int argc, char **argv)
     try
     {
         protocol = new EnumYStringTestProtocol();
-        transport = new UDPProxyTransport("EnumYStringTestService");
+        transport = new UDPProxyTransport("EnumYStringTestService", "Instance");
         proxy = new EnumYStringTestProxy(*transport, *protocol);
     }
     catch(InitializeException &ex)

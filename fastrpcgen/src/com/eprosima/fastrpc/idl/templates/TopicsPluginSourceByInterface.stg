@@ -960,7 +960,7 @@ DDS_TypeCode* $interface.scopedname$_ReturnPlugin::get_typecode()
 {
     static bool is_initialized = false;
 
-    static DDS_TypeCode_Member $interface.name$_Return_g_tc_members[$length(interface.operations)$ + 1] =
+    static DDS_TypeCode_Member $interface.name$_Return_g_tc_members[$length(interface.notOnewayOperations)$ + 1] =
     {
         {
             (char *)"unknown_operation",/* Member name */
@@ -979,7 +979,7 @@ DDS_TypeCode* $interface.scopedname$_ReturnPlugin::get_typecode()
             1,
             NULL/* Ignored */
         }
-        $interface.operations : { operation |
+        $interface.notOnewayOperations : { operation |
         ,
         {
             (char *)"$operation.name$",
@@ -1010,7 +1010,7 @@ DDS_TypeCode* $interface.scopedname$_ReturnPlugin::get_typecode()
          0,
          0,
          NULL,
-         $length(interface.operations)$ + 1,
+         $length(interface.notOnewayOperations)$ + 1,
          $interface.name$_Return_g_tc_members,
          DDS_VM_NONE
     }};
@@ -1018,7 +1018,7 @@ DDS_TypeCode* $interface.scopedname$_ReturnPlugin::get_typecode()
     if(!is_initialized)
     {
         $interface.name$_Return_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::UnknownOperationPlugin::get_typecode();
-        $interface.operations : { operation |$interface.name$_Return_g_tc_members[$i$]._representation._typeCode = (RTICdrTypeCode*)$operation.parent.scopedname$Plugin::$operation.name$_ResultPlugin::get_typecode();}; separator="\n"$
+        $interface.notOnewayOperations : { operation |$interface.name$_Return_g_tc_members[$i$]._representation._typeCode = (RTICdrTypeCode*)$operation.parent.scopedname$Plugin::$operation.name$_ResultPlugin::get_typecode();}; separator="\n"$
 
         $interface.name$_Return_g_tc._data._typeCode = (RTICdrTypeCode*)&DDS_g_tc_long;
 
@@ -1403,6 +1403,8 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_InPlugin::ge
 
 // Reply operations
 
+$if(!operation.oneway)$
+
 DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_OutPlugin::get_typecode()
 {
     static bool is_initialized = false;
@@ -1432,7 +1434,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_OutPlugin::g
         }}; separator=",\n"$
     };
     $else$
-    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_In_g_tc_members[1] =
+    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_Out_g_tc_members[1] =
     {
         {
             (char *)"dummy",
@@ -1593,6 +1595,8 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_ResultPlugin
 
     return &$operation.parent.name$_$operation.name$_Result_g_tc;
 }
+
+$endif$
 
 >>
 

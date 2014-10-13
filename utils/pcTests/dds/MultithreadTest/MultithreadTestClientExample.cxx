@@ -147,7 +147,7 @@ int main(int argc, char **argv)
     const char* const METHOD_NAME = "main";
 
     proto = new MultithreadTestProtocol();
-    transp = new UDPProxyTransport("MultithreadTestService");
+    transp = new UDPProxyTransport("MultithreadTestService", "Instance");
     prox = new MultithreadTestProxy(*transp, *proto);
 
     if(prox != NULL)

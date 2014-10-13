@@ -83,6 +83,16 @@ class user_cpp_DllExport $exception.name$Plugin
 
 operation(ctx, operation, param_list) ::= <<
 /*!
+ * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+ */
+class user_cpp_DllExport $operation.name$_InPlugin
+{
+    public:
+
+        static DDS_TypeCode* get_typecode();
+};
+
+/*!
  * @brief Request DataReader.
  */
 class user_cpp_DllExport $operation.name$_RequestDataReader : public DDSDataReader
@@ -208,6 +218,23 @@ class user_cpp_DllExport $operation.name$_RequestPlugin : public DDSTypeSupport
 
 // Reply operations 
 $if(!operation.oneway)$
+class user_cpp_DllExport $operation.name$_OutPlugin
+{
+    public:
+
+        static DDS_TypeCode* get_typecode();
+};
+
+/*!
+ * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+ */
+class user_cpp_DllExport $operation.name$_ResultPlugin : public DDSTypeSupport
+{
+    public:
+
+        static DDS_TypeCode* get_typecode();
+};
+
 /*!
  * @brief Reply DataReader.
  */
@@ -227,28 +254,6 @@ class user_cpp_DllExport $operation.name$_ReplyDataWriter : public DDSDataWriter
 
         $operation.name$_ReplyDataWriter(DDSDataWriter *impl) : DDSDataWriter(impl){}
 };
-
-$if(operation.exceptions)$
-/*!
- * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
- */
-class user_cpp_DllExport $operation.name$_Reply_stPlugin
-{
-    public:
-
-        static DDS_TypeCode* get_typecode();
-};
-
-/*!
- * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
- */
-class user_cpp_DllExport $operation.name$_Reply_unionPlugin
-{
-    public:
-
-        static DDS_TypeCode* get_typecode();
-};
-$endif$
 
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.

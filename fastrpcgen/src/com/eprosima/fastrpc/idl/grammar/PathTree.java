@@ -3,9 +3,9 @@ package com.eprosima.fastrpc.idl.grammar;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.eprosima.idl.parser.tree.Interface;
-import com.eprosima.idl.parser.tree.Operation;
-import com.eprosima.idl.parser.tree.Param;
+import com.eprosima.fastrpc.idl.tree.Interface;
+import com.eprosima.fastrpc.idl.tree.Operation;
+import com.eprosima.fastrpc.idl.tree.Param;
 
 public class PathTree {
 	private PathTree parent;
@@ -110,17 +110,20 @@ public class PathTree {
 		}
 		
 		PathTreeMethod method = new PathTreeMethod(operation.getName(), operation.getMethod(), node);		
-		List<Param> params;
+		List<com.eprosima.idl.parser.tree.Param> params;
 		if(pathHasBrackets) {
 			params = operation.getParameters().subList(1, operation.getParameters().size());
 		} else {
 			params = operation.getParameters();
 		}
 				
-		for(Param param: params) {
-			if(param.getBodyParam())
+		for(com.eprosima.idl.parser.tree.Param param: params)
+        {
+            Param parameter = (Param)param;
+
+			if(parameter.getBodyParam())
 				continue;			
-			method.addQueryParameter(param.getName());
+			method.addQueryParameter(parameter.getName());
 		}
 		
 		node.methods.add(method);

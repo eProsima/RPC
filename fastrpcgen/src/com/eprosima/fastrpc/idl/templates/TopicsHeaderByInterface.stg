@@ -370,7 +370,7 @@ public:
 
     eprosima::rpc::protocol::dds::UnknownOperation& unknown_operation();
 
-    $interface.operations : { operation |$public_operations_declaration(operation=operation, suffix="_Result")$}; separator="\n"$
+    $interface.notOnewayOperations : { operation |$public_operations_declaration(operation=operation, suffix="_Result")$}; separator="\n"$
 
     /*!
      * @brief This function returns the maximum serialized size of an object
@@ -405,7 +405,7 @@ private:
 
     eprosima::rpc::protocol::dds::UnknownOperation m_unknown_operation;
 
-    $interface.operations : { operation |$operation.parent.name$_$operation.name$_Result m_$operation.name$;}; separator="\n"$
+    $interface.notOnewayOperations : { operation |$operation.parent.name$_$operation.name$_Result m_$operation.name$;}; separator="\n"$
 };
 
 /*!
@@ -612,11 +612,20 @@ public:
     $if(operation.inputparam)$
     $operation.inputparam:{$public_parameters_declaration(it)$}; separator="\n"$
     $else$
-    void dummy(int32_t _dummy);
+    inline void dummy(int32_t _dummy)
+    {
+        m_dummy = _dummy;
+    }
 
-    int32_t dummy();
+    inline int32_t dummy() const
+    {
+        return m_dummy;
+    }
 
-    int32_t& dummy();
+    inline int32_t& dummy()
+    {
+        return m_dummy;
+    }
     $endif$
 
     /*!
@@ -656,6 +665,7 @@ private:
     $endif$
 };
 
+$if(!operation.oneway)$
 /*!
  * @brief This class encapsulates output paramaters for operation $operation.parent.name$::$operation.name$.
  * @ingroup $ctx.trimfilename$
@@ -700,11 +710,20 @@ public:
     $if([operation.outputparam, operation.rettypeparam])$
     $[operation.outputparam, operation.rettypeparam]:{param |$public_parameters_declaration(param=param)$}; separator="\n"$
     $else$
-    void dummy(int32_t _dummy);
+    inline void dummy(int32_t _dummy)
+    {
+        m_dummy = _dummy;
+    }
 
-    int32_t dummy();
+    inline int32_t dummy() const
+    {
+        return m_dummy;
+    }
 
-    int32_t& dummy();
+    inline int32_t& dummy()
+    {
+        return m_dummy;
+    }
     $endif$
 
     /*!
@@ -863,6 +882,8 @@ private:
 
     $operation.exceptions : { exception |$exception.scopedname$ m_$exception.formatedScopedname$_ex;}; separator="\n"$
 };
+
+$endif$
 
 >>
 

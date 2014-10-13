@@ -35,7 +35,7 @@ int main(int argc, char **argv)
     try
     {
         protocol = new UnionTestProtocol();
-        transport = new UDPProxyTransport("UnionTestService");
+        transport = new UDPProxyTransport("UnionTestService", "Instance");
         proxy = new UnionTestProxy(*transport, *protocol);
     }
     catch(InitializeException &ex)

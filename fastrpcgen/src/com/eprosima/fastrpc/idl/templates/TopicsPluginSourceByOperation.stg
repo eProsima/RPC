@@ -95,6 +95,86 @@ DDS_TypeCode* $if(exception.hasScope)$$exception.scope$$if(exception.parent)$$if
 
 operation(ctx, operation, param_list) ::= <<
 // Request operations
+DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_InPlugin::get_typecode()
+{
+    //printf("=> $operation.parent.scopedname$_$operation.name$_InPlugin::get_typecode\n");
+    static bool is_initialized = false;
+
+    $operation.inputparam : { param |$ddsTypeCodeDecls(ctx=ctx, name=param.name, typecode=param.typecode)$}; separator="\n"$
+
+    $if(operation.inputparam)$
+    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_In_g_tc_members[$length(operation.inputparam)$] =
+    {
+        $operation.inputparam : { param |
+        {
+            (char *)"$param.name$",
+            {
+                0,
+                DDS_BOOLEAN_FALSE,
+                -1,
+                NULL
+            },
+            0,
+            0,
+            0,
+            NULL,
+            RTI_CDR_REQUIRED_MEMBER,
+            DDS_PRIVATE_MEMBER,
+            1,
+            NULL
+        }}; separator=",\n"$
+    };
+    $else$
+    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_In_g_tc_members[1] =
+    {
+        {
+            (char *)"dummy",
+            {
+                0,
+                DDS_BOOLEAN_FALSE,
+                -1,
+                NULL
+            },
+            0,
+            0,
+            0,
+            NULL,
+            RTI_CDR_REQUIRED_MEMBER,
+            DDS_PRIVATE_MEMBER,
+            1,
+            NULL
+        }
+    };
+    $endif$
+
+    static DDS_TypeCode $operation.parent.name$_$operation.name$_In_g_tc =
+    {{
+         DDS_TK_STRUCT,
+         DDS_BOOLEAN_FALSE,
+         -1,
+         (char*)"$operation.parent.scopedname$_$operation.name$_In",
+         NULL,
+         0,
+         0,
+         NULL,
+         $if(operation.inputparam)$$length(operation.inputparam)$$else$1$endif$,
+         $operation.parent.name$_$operation.name$_In_g_tc_members,
+         DDS_VM_NONE
+    }};
+    
+    if(!is_initialized)
+    {
+        $if(operation.inputparam)$
+        $operation.inputparam : { param |$operation.parent.name$_$operation.name$_In_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=param.name, typecode=param.typecode)$;}; separator="\n"$
+        $else$
+        $operation.parent.name$_$operation.name$_In_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode*)&DDS_g_tc_long;
+        $endif$
+
+        is_initialized = true;
+    }
+
+    return &$operation.parent.name$_$operation.name$_In_g_tc;
+}
 
 const char *$operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::m_typename = "$operation.parent.scopedname$_$operation.name$_Request";
 
@@ -412,9 +492,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugi
     //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_typecode\n");
     static bool is_initialized = false;
 
-    $operation.inputparam : { param |$ddsTypeCodeDecls(ctx=ctx, name=param.name, typecode=param.typecode)$}; separator="\n"$
-
-    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_Request_g_tc_members[1 + $length(operation.inputparam)$] =
+    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_Request_g_tc_members[2] =
     {
         // TODO Add header.
         {
@@ -434,12 +512,11 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugi
             1,
             NULL
         }
-        $operation.inputparam : { param |
         ,
         {
-            (char *)"$param.name$",
+            (char *)"$operation.name$",
             {
-                0,
+                1,
                 DDS_BOOLEAN_FALSE,
                 -1,
                 NULL
@@ -452,7 +529,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugi
             DDS_PRIVATE_MEMBER,
             1,
             NULL
-        }}; separator="\n"$
+        }
     };
 
     static DDS_TypeCode $operation.parent.name$_$operation.name$_Request_g_tc =
@@ -465,7 +542,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugi
          0,
          0,
          NULL,
-         1 + $length(operation.inputparam)$,
+         2,
          $operation.parent.name$_$operation.name$_Request_g_tc_members,
          DDS_VM_NONE
     }};
@@ -473,7 +550,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugi
     if(!is_initialized)
     {
         $operation.parent.name$_$operation.name$_Request_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::RequestHeaderPlugin::get_typecode();
-        $operation.inputparam : { param |$operation.parent.name$_$operation.name$_Request_g_tc_members[$i$]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=param.name, typecode=param.typecode)$;}; separator="\n"$
+        $operation.parent.name$_$operation.name$_Request_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)$operation.parent.scopedname$Plugin::$operation.name$_InPlugin::get_typecode();
         is_initialized = true;
     }
 
@@ -639,8 +716,199 @@ DDS_ReturnCode_t $operation.parent.scopedname$Plugin::$operation.name$_RequestPl
     return DDS_RETCODE_OK;
 }
 
-$if(!operation.oneway)$
 // Reply operations
+$if(!operation.oneway)$
+DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_OutPlugin::get_typecode()
+{
+    static bool is_initialized = false;
+
+    $[operation.outputparam, operation.rettypeparam] : { param |$ddsTypeCodeDecls(ctx=ctx, name=param.name, typecode=param.typecode)$}; separator="\n"$
+
+    $if([operation.outputparam, operation.rettypeparam])$
+    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_Out_g_tc_members[$length([operation.outputparam, operation.rettypeparam])$] =
+    {
+        $[operation.outputparam, operation.rettypeparam] : { param |
+        {
+            (char *)"$param.name$",
+            {
+                0,
+                DDS_BOOLEAN_FALSE,
+                -1,
+                NULL
+            },
+            0,
+            0,
+            0,
+            NULL,
+            RTI_CDR_REQUIRED_MEMBER,
+            DDS_PRIVATE_MEMBER,
+            1,
+            NULL
+        }}; separator=",\n"$
+    };
+    $else$
+    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_Out_g_tc_members[1] =
+    {
+        {
+            (char *)"dummy",
+            {
+                0,
+                DDS_BOOLEAN_FALSE,
+                -1,
+                NULL
+            },
+            0,
+            0,
+            0,
+            NULL,
+            RTI_CDR_REQUIRED_MEMBER,
+            DDS_PRIVATE_MEMBER,
+            1,
+            NULL
+        }
+    };
+    $endif$
+
+    static DDS_TypeCode $operation.parent.name$_$operation.name$_Out_g_tc =
+    {{
+         DDS_TK_STRUCT,
+         DDS_BOOLEAN_FALSE,
+         -1,
+         (char*)"$operation.parent.scopedname$_$operation.name$_Out",
+         NULL,
+         0,
+         0,
+         NULL,
+         $if([operation.outputparam, operation.rettypeparam])$$length([operation.outputparam, operation.rettypeparam])$$else$1$endif$,
+         $operation.parent.name$_$operation.name$_Out_g_tc_members,
+         DDS_VM_NONE
+    }};
+    
+    if(!is_initialized)
+    {
+        $if([operation.outputparam, operation.rettypeparam])$
+        $[operation.outputparam, operation.rettypeparam] : { param |$operation.parent.name$_$operation.name$_Out_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=param.name, typecode=param.typecode)$;}; separator="\n"$
+        $else$
+        $operation.parent.name$_$operation.name$_Out_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode*)&DDS_g_tc_long;
+        $endif$
+
+        is_initialized = true;
+    }
+
+    return &$operation.parent.name$_$operation.name$_Out_g_tc;
+}
+
+DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_ResultPlugin::get_typecode()
+{
+    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ResultPlugin::get_typecode\n");
+    static bool is_initialized = false;
+
+    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_Result_g_tc_members[$length(operation.exceptions)$ + 3] =
+    {
+        {
+            (char *)"unknown_exception",/* Member name */
+            {
+                1,/* Representation ID */
+                DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                -1, /* Bitfield bits */
+                NULL/* Member type code is assigned later */
+            },
+            0, /* Ignored */
+            1, /* Number of labels */
+            RTI_CDR_TYPE_CODE_UNION_DEFAULT_LABEL, /* First label */
+            NULL, /* Labels (it is NULL when there is only one label)*/
+            RTI_CDR_NONKEY_MEMBER, /* Member flags */
+            DDS_PRIVATE_MEMBER,/* Ignored */
+            1,
+            NULL/* Ignored */
+        }
+        ,
+        {
+            (char *)"out_",
+            {
+                0,
+                DDS_BOOLEAN_FALSE,
+                -1,
+                NULL
+            },
+            0,
+            1,
+            0,
+            NULL,
+            RTI_CDR_NONKEY_MEMBER,
+            DDS_PRIVATE_MEMBER,
+            1,
+            NULL
+        }
+        ,
+        {
+            (char *)"sysx_",
+            {
+                0,
+                DDS_BOOLEAN_FALSE,
+                -1,
+                NULL
+            },
+            0,
+            1,
+            1,
+            NULL,
+            RTI_CDR_NONKEY_MEMBER,
+            DDS_PRIVATE_MEMBER,
+            1,
+            NULL
+        }
+        $operation.exceptions : { exception |
+        ,
+        {
+            (char *)"$exception.formatedScopedname$_ex",
+            {
+                0,
+                DDS_BOOLEAN_FALSE,
+                -1,
+                NULL
+            },
+            0,
+            1,
+            $exception.md5$,
+            NULL,
+            RTI_CDR_NONKEY_MEMBER,
+            DDS_PRIVATE_MEMBER,
+            1,
+            NULL
+        }}; separator="\n"$
+    };
+
+    static DDS_TypeCode $operation.parent.name$_$operation.name$_Result_g_tc =
+    {{
+         DDS_TK_UNION,
+         DDS_BOOLEAN_FALSE,
+         -1,
+         (char*)"$operation.parent.scopedname$_$operation.name$_Result",
+         NULL,
+         0,
+         0,
+         NULL,
+         $length(operation.exceptions)$ + 3,
+         $operation.parent.name$_$operation.name$_Result_g_tc_members,
+         DDS_VM_NONE
+    }};
+    
+    if(!is_initialized)
+    {
+        $operation.parent.name$_$operation.name$_Result_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::UnknownExceptionPlugin::get_typecode();
+        $operation.parent.name$_$operation.name$_Result_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)$operation.parent.scopedname$Plugin::$operation.name$_OutPlugin::get_typecode();
+        $operation.parent.name$_$operation.name$_Result_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::SystemExceptionCodePlugin::get_typecode();
+        $operation.exceptions : { exception |$operation.parent.name$_$operation.name$_Result_g_tc_members[$i$ + 2]._representation._typeCode = (RTICdrTypeCode*)$if(exception.hasScope)$$exception.scope$$if(exception.parent)$$if(exception.parent.isInterface)$Plugin$endif$$endif$::$endif$$exception.name$Plugin::get_typecode();}; separator="\n"$
+
+        $operation.parent.name$_$operation.name$_Result_g_tc._data._typeCode = (RTICdrTypeCode*)&DDS_g_tc_long;
+
+        is_initialized = true;
+    }
+
+    return &$operation.parent.name$_$operation.name$_Result_g_tc;
+}
+
 const char *$operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::m_typename = "$operation.parent.scopedname$_$operation.name$_Reply";
 
 const char* $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_typename()
@@ -949,149 +1217,12 @@ $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_key_kind(
     return PRES_TYPEPLUGIN_NO_KEY;
 }
 
-$if(operation.exceptions)$
-$if([operation.outputparam, operation.rettypeparam])$
-DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_Reply_stPlugin::get_typecode()
-{
-    static bool is_initialized = false;
-
-    $[operation.outputparam, operation.rettypeparam] : { param |$ddsTypeCodeDecls(ctx=ctx, name=param.name, typecode=param.typecode)$}; separator="\n"$
-
-    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_Reply_st_g_tc_members[$length([operation.outputparam, operation.rettypeparam])$] =
-    {
-        $[operation.outputparam, operation.rettypeparam] : { param |
-        {
-            (char *)"$param.name$",
-            {
-                0,
-                DDS_BOOLEAN_FALSE,
-                -1,
-                NULL
-            },
-            0,
-            0,
-            0,
-            NULL,
-            RTI_CDR_REQUIRED_MEMBER,
-            DDS_PRIVATE_MEMBER,
-            1,
-            NULL
-        }}; separator=",\n"$
-    };
-
-    static DDS_TypeCode $operation.parent.name$_$operation.name$_Reply_st_g_tc =
-    {{
-         DDS_TK_STRUCT,
-         DDS_BOOLEAN_FALSE,
-         -1,
-         (char*)"$operation.parent.scopedname$_$operation.name$_Reply_st",
-         NULL,
-         0,
-         0,
-         NULL,
-         $length([operation.outputparam, operation.rettypeparam])$,
-         $operation.parent.name$_$operation.name$_Reply_st_g_tc_members,
-         DDS_VM_NONE
-    }};
-    
-    if(!is_initialized)
-    {
-        $[operation.outputparam, operation.rettypeparam] : { param |$operation.parent.name$_$operation.name$_Reply_st_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=param.name, typecode=param.typecode)$;}; separator="\n"$
-
-        is_initialized = true;
-    }
-
-    return &$operation.parent.name$_$operation.name$_Reply_st_g_tc;
-}
-$endif$
-
-DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_Reply_unionPlugin::get_typecode()
-{
-    static bool is_initialized = false;
-
-    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_Reply_union_g_tc_members[$if([operation.outputparam, operation.rettypeparam])$1 + $endif$$length(operation.exceptions)$] =
-    {
-        $if([operation.outputparam, operation.rettypeparam])$
-        {
-            (char *)"st",
-            {
-                0,
-                DDS_BOOLEAN_FALSE,
-                -1,
-                NULL
-            },
-            0,
-            1,
-            0,
-            NULL,
-            RTI_CDR_NONKEY_MEMBER,
-            DDS_PRIVATE_MEMBER,
-            1,
-            NULL
-        }
-        ,
-        $endif$
-        $operation.exceptions : { exception |
-        {
-            (char *)"$exception.formatedScopedname$_ex",
-            {
-                0,
-                DDS_BOOLEAN_FALSE,
-                -1,
-                NULL
-            },
-            0,
-            1,
-            $i$,
-            NULL,
-            RTI_CDR_NONKEY_MEMBER,
-            DDS_PRIVATE_MEMBER,
-            1,
-            NULL
-        }}; separator=",\n"$
-    };
-
-    static DDS_TypeCode $operation.parent.name$_$operation.name$_Reply_union_g_tc =
-    {{
-         DDS_TK_UNION,
-         DDS_BOOLEAN_FALSE,
-         -1,
-         (char*)"$operation.parent.scopedname$_$operation.name$_Reply_union",
-         NULL,
-         0,
-         0,
-         NULL,
-         $if([operation.outputparam, operation.rettypeparam])$1 + $endif$$length(operation.exceptions)$,
-         $operation.parent.name$_$operation.name$_Reply_union_g_tc_members,
-         DDS_VM_NONE
-    }};
-    
-    if(!is_initialized)
-    {
-        $if([operation.outputparam, operation.rettypeparam])$
-        $operation.parent.name$_$operation.name$_Reply_union_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)$operation.parent.scopedname$Plugin::$operation.name$_Reply_stPlugin::get_typecode();
-        $endif$
-        $operation.exceptions : { exception |$operation.parent.name$_$operation.name$_Reply_union_g_tc_members[$i$$if(![operation.outputparam, operation.rettypeparam])$ - 1$endif$]._representation._typeCode = (RTICdrTypeCode*)$if(exception.hasScope)$$exception.scope$$if(exception.parent)$$if(exception.parent.isInterface)$Plugin$endif$$endif$::$endif$$exception.name$Plugin::get_typecode();}; separator="\n"$
-
-        $operation.parent.name$_$operation.name$_Reply_union_g_tc._data._typeCode = (RTICdrTypeCode*)&DDS_g_tc_long;
-
-        is_initialized = true;
-    }
-
-    return &$operation.parent.name$_$operation.name$_Reply_union_g_tc;
-}
-$endif$
-
 DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_typecode()
 {
     //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_typecode\n");
     static bool is_initialized = false;
 
-    $if(!operation.exceptions)$
-    $[operation.outputparam, operation.rettypeparam] : { param |$ddsTypeCodeDecls(ctx=ctx, name=param.name, typecode=param.typecode)$}; separator="\n"$
-    $endif$
-
-    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_Reply_g_tc_members[$if(operation.exceptions)$2$else$1 + $length([operation.outputparam, operation.rettypeparam])$$endif$] =
+    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_Reply_g_tc_members[2] =
     {
         // TODO Add header.
         {
@@ -1111,12 +1242,11 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin:
             1,
             NULL
         }
-        $if(operation.exceptions)$
         ,
         {
-            (char *)"unio",
+            (char *)"$operation.name$",
             {
-                0,
+                1,
                 DDS_BOOLEAN_FALSE,
                 -1,
                 NULL
@@ -1130,27 +1260,6 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin:
             1,
             NULL
         }
-        $else$
-        $[operation.outputparam, operation.rettypeparam] : { param |
-        ,
-        {
-            (char *)"$param.name$",
-            {
-                0,
-                DDS_BOOLEAN_FALSE,
-                -1,
-                NULL
-            },
-            0,
-            0,
-            0,
-            NULL,
-            RTI_CDR_REQUIRED_MEMBER,
-            DDS_PRIVATE_MEMBER,
-            1,
-            NULL
-        }}; separator="\n"$
-        $endif$
     };
 
     static DDS_TypeCode $operation.parent.name$_$operation.name$_Reply_g_tc =
@@ -1163,7 +1272,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin:
          0,
          0,
          NULL,
-         $if(operation.exceptions)$2$else$1 + $length([operation.outputparam, operation.rettypeparam])$$endif$,
+         2,
          $operation.parent.name$_$operation.name$_Reply_g_tc_members,
          DDS_VM_NONE
     }};
@@ -1171,11 +1280,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin:
     if(!is_initialized)
     {
         $operation.parent.name$_$operation.name$_Reply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::ReplyHeaderPlugin::get_typecode();
-        $if(operation.exceptions)$
-        $operation.parent.name$_$operation.name$_Reply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)$operation.parent.scopedname$Plugin::$operation.name$_Reply_unionPlugin::get_typecode();
-        $else$
-        $[operation.outputparam, operation.rettypeparam] : { param |$operation.parent.name$_$operation.name$_Reply_g_tc_members[$i$]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=param.name, typecode=param.typecode)$;}; separator="\n"$
-        $endif$
+        $operation.parent.name$_$operation.name$_Reply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)$operation.parent.scopedname$Plugin::$operation.name$_ResultPlugin::get_typecode();
 
         is_initialized = true;
     }
@@ -1320,7 +1425,6 @@ bool $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::register
     return returnedValue;
 }
 
-
 DDSDataReader* $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::create_datareaderI(DDSDataReader* dataReader)
 {
     return new $operation.parent.scopedname$Plugin::$operation.name$_ReplyDataReader(dataReader);
@@ -1342,6 +1446,7 @@ DDS_ReturnCode_t $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlug
     delete ($operation.parent.scopedname$Plugin::$operation.name$_ReplyDataWriter*)dataWriter;
     return DDS_RETCODE_OK;
 }
+
 $endif$
 
 >>

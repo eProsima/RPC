@@ -370,7 +370,7 @@ void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.na
         //TODO Quitar el unsetReply
         //$unsetReply()$
         $replyOperationUnionDiscriminatorByOperation(operation=operation, varname="replyData")$ = 1;
-        $replyOperationUnionDataAccessByOperation(operation=operation, varname="replyData", dataname="sysx_")$ = (SystemExceptionCode)SERVER_INTERNAL_ERROR;
+        $replyOperationUnionDataAccessByOperation(operation=operation, varname="replyData", dataname="sysx_")$ = $if(ctx.rtiTypes)$(SystemExceptionCode)$endif$SERVER_INTERNAL_ERROR;
         
         _protocol.$operation.parent.formatedScopedname$_$operation.name$_se->sendReply(&replyData);
         $endif$
