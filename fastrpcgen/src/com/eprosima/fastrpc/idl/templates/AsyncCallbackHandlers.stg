@@ -55,7 +55,7 @@ class $operation.parent.name$_$operation.name$CallbackHandler
         /*!
          * This function is called when is received the reply from the server.
          */
-        virtual void $operation.name$($paramDeclsByValue(params=[operation.outputparam, operation.rettypeparam])$) = 0;
+        virtual void $operation.name$($paramDeclarations(params=[operation.outputparam, operation.rettypeparam])$) = 0;
         
         /*!
          * @brief This function is called when an exception occurs.

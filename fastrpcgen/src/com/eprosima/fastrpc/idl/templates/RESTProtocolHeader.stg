@@ -132,7 +132,7 @@ $endif$
 /*!
  * @brief This method implements the proxy part of the protocol for the operation $operation.name$
  */
-$paramRetType(operation.rettype)$ $operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
+$paramRetType(operation.rettype)$ $operation.parent.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$);
 
 >>
 

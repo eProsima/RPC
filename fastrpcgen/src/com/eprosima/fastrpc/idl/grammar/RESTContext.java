@@ -23,11 +23,6 @@ public class RESTContext extends Context
         return false;
     }
 
-    public boolean isAnyCdr()
-    {
-        return false;
-    }
-
     public boolean isCdr()
     {
         return false;

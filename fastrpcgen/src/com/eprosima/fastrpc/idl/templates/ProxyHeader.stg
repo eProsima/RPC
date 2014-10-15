@@ -48,7 +48,7 @@ interface(ctx, interface, export_list) ::= <<
  * @brief This class implements a specific server's proxy for the defined interface $interface.name$.
  * @ingroup $ctx.trimfilename$
  */
-class FASTRPCUSERDllExport $interface.name$Proxy : public eprosima::rpc::proxy::Proxy
+class FASTRPCUSERDllExport $interface.name$Proxy : $inheritance(interface=interface)$
 {
     public:
    
@@ -80,12 +80,12 @@ exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
 //! @brief Proxy method for the operation $operation.name$.
-$paramRetType(operation.rettype)$ $operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
+$paramRetType(operation.rettype)$ $operation.name$($paramDeclarations(params=operation.parameters)$);
 
 $if(ctx.dds)$
 $if(!operation.oneway)$
 //! @brief Proxy asynchronous method for the operation $operation.name$.
-void $operation.name$_async($operation.parent.name$_$operation.name$CallbackHandler &obj$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$);
+void $operation.name$_async($operation.parent.name$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$);
 
 $endif$
 $endif$
@@ -104,3 +104,9 @@ struct_type(ctx, struct) ::= <<>>
 union_type(ctx, union) ::= <<>>
 
 enum_type(ctx, enum) ::= <<>>
+
+/**** Utils ****/
+inheritance(interface) ::= <<
+$if(interface.bases)$$interface.bases : { base |$base.scopedname$Proxy}; separator=", "$
+$else$public eprosima::rpc::proxy::Proxy$endif$
+>>

@@ -201,7 +201,7 @@ exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
 $if(ctx.client)$
-$paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$)
+$paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$)
 {
     const char* const interface_name = "$operation.parent.scopedname$";
     const char* const operation_name = "$operation.name$";

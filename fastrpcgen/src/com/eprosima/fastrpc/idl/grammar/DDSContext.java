@@ -19,14 +19,6 @@ public class DDSContext extends Context
         return true;
     }
 
-    public boolean isAnyCdr()
-    {
-        if(m_ddstypes == fastrpcgen.DDS_TYPES.EPROSIMA)
-            return true;
-
-        return false;
-    }
-
     public boolean isCdr()
     {
         if(m_ddstypes == fastrpcgen.DDS_TYPES.EPROSIMA)

@@ -53,7 +53,7 @@ exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
 //! @brief Implementation of the remote procedure $operation.name$
-$paramRetType(operation.rettype)$ $operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
+$paramRetType(operation.rettype)$ $operation.name$($paramDeclarations(params=operation.parameters)$);
 
 >>
 

@@ -39,7 +39,7 @@ $exports; separator="\n"$
 exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
-$paramRetType(operation.rettype)$ $operation.parent.name$ServerImplExample::$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$)
+$paramRetType(operation.rettype)$ $operation.parent.name$ServerImplExample::$operation.name$($paramDeclarations(params=operation.parameters)$)
 {
     $varDecl(variable=operation.rettypeparam)$
    

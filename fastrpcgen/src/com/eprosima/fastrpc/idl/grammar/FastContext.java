@@ -15,11 +15,6 @@ public class FastContext extends Context
         return false;
     }
 
-    public boolean isAnyCdr()
-    {
-        return true;
-    }
-
     public boolean isCdr()
     {
         return false;

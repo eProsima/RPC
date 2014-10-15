@@ -32,7 +32,6 @@ import com.eprosima.idl.parser.grammar.IDLLexer;
 import com.eprosima.idl.parser.grammar.IDLParser;
 import com.eprosima.idl.parser.exception.ParseException;
 import com.eprosima.idl.parser.tree.Interface;
-import com.eprosima.idl.parser.typecode.TypeCode;
 import com.eprosima.idl.generator.manager.TemplateGroup;
 import com.eprosima.idl.generator.manager.TemplateManager;
 import com.eprosima.idl.util.Util;
@@ -428,11 +427,7 @@ public class fastrpcgen
 
             // Load string templates
             System.out.println("Loading Templates...");     
-            StringTemplateGroupLoader loader = new CommonGroupLoader("com/eprosima/fastrpc/idl/templates", new TemplateErrorListener());
-            StringTemplateGroup.registerGroupLoader(loader);
-
-            // Load IDL types for stringtemplates
-            TypeCode.idltypesgr = StringTemplateGroup.loadGroup("idlTypes", DefaultTemplateLexer.class, null);
+            TemplateManager.setGroupLoaderDirectories("com/eprosima/fastrpc/idl/templates:com/eprosima/fastcdr/idl/templates");
 
             // In local for all products
             if(m_local) {
@@ -470,10 +465,6 @@ public class fastrpcgen
                         project.addCommonIncludeFile("MessageHeaderSupport.h");
                         project.addCommonSrcFile("MessageHeaderSupport.cxx");
                         solution.addProject(project);
-
-                        // Load CPP types for stringtemplates.
-                        TypeCode.cpptypesgr = StringTemplateGroup.loadGroup("rtiTypes", DefaultTemplateLexer.class, null);
-                        TemplateManager.middlgr = StringTemplateGroup.loadGroup("rti", DefaultTemplateLexer.class, null);
                     }
                     catch(Exception ex)
                     {
@@ -484,9 +475,6 @@ public class fastrpcgen
                 // Our types need to add fastcdr library as dependency.
                 else
                 {
-                    // Load CPP types for stringtemplates.
-                    TypeCode.cpptypesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
-                    TemplateManager.middlgr = StringTemplateGroup.loadGroup("eprosima", DefaultTemplateLexer.class, null);
 
 	                if(m_local) {
 						solution.addInclude("$(RPCDDSHOME)/thirdparty/fastcdr/include");
@@ -537,10 +525,6 @@ public class fastrpcgen
             }
             else if(m_protocol == PROTOCOL.REST)
             {
-                // Load CPP types for stringtemplates.
-                TypeCode.cpptypesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
-                TemplateManager.middlgr = StringTemplateGroup.loadGroup("eprosima", DefaultTemplateLexer.class, null);
-
                 if(m_exampleOption != null && m_exampleOption.contains("Linux"))
                 {
                     solution.addLibrary("boost_system");
@@ -555,10 +539,6 @@ public class fastrpcgen
             }
             else if(m_protocol == PROTOCOL.FASTCDR)
             {
-                // Load CPP types for stringtemplates.
-                TypeCode.cpptypesgr = StringTemplateGroup.loadGroup("Types", DefaultTemplateLexer.class, null);
-                TemplateManager.middlgr = StringTemplateGroup.loadGroup("eprosima", DefaultTemplateLexer.class, null);
-
                 if(m_exampleOption != null && m_exampleOption.contains("Linux"))
                 {
                     solution.addLibrary("boost_system");
@@ -769,7 +749,7 @@ public class fastrpcgen
                     (!m_local ? m_appProduct : m_localAppProduct));
 
             // Create template manager
-            TemplateManager tmanager = new TemplateManager();
+            TemplateManager tmanager = new TemplateManager("FastCdrCommon:eprosima:Common");
             // Load template to generate source for common types.
             tmanager.addGroup("TypesHeader");
             tmanager.addGroup("TypesSource");
@@ -939,7 +919,7 @@ public class fastrpcgen
                     (!m_local ? m_appProduct : m_localAppProduct));
 
             // Create template manager
-            TemplateManager tmanager = new TemplateManager();
+            TemplateManager tmanager = new TemplateManager("FastCdrCommon:eprosima:Common");
             // Load template to generate source for common types.
             tmanager.addGroup("TypesHeader");
             tmanager.addGroup("TypesSource");
@@ -1104,10 +1084,11 @@ public class fastrpcgen
                     (!m_local ? m_appProduct : m_localAppProduct), m_types);
 
             // Create template manager
-            TemplateManager tmanager = new TemplateManager();
+            TemplateManager tmanager = null;
             // Load templates depending on dds types.
             if(m_types == DDS_TYPES.EPROSIMA)
             {
+                tmanager = new TemplateManager("FastCdrCommon:eprosima:Common");
                 // Load template to generate source for common types.
                 tmanager.addGroup("TypesHeader");
                 tmanager.addGroup("TypesSource");
@@ -1119,6 +1100,9 @@ public class fastrpcgen
             }
             else if(m_types == DDS_TYPES.RTI)
             {
+                tmanager = new TemplateManager("rti:Common");
+                // Load CPP type for RTI types.
+                tmanager.changeCppTypesTemplateGroup("rtiTypes");
                 // TODO OpenDDS not
                 // Load template to generate the supported IDL to RTI.
                 tmanager.addGroup("rtiIDL");

@@ -271,6 +271,14 @@ memset((char*)&replyData + sizeof(replyData.header), 0, sizeof(replyData) - size
 
 /***** NEW OUR_TYPES *****/
 
+paramRetType(typecode) ::= <<
+$if(typecode)$
+$typecode.cppTypename$
+$else$
+void
+$endif$
+>>
+
 paramTypeByValue(typecode) ::= <<
 $if(typecode.primitive)$
 $if(typecode.isType_d)$
@@ -281,6 +289,14 @@ $endif$
 $else$
 const $typecode.cppTypename$&
 $endif$
+>>
+
+paramTypeByRef(typecode) ::= <<
+$typecode.cppTypename$&
+>>
+
+paramDeclarations(params, separatorInicial) ::= <<
+$if(params)$$separatorInicial$$endif$$params : {param | /*$param.comment$*/ $if(param.output)$$paramTypeByRef(typecode=param.typecode)$$else$$paramTypeByValue(typecode=param.typecode)$$endif$ $param.name$}; separator=", "$
 >>
 
 varDecl(variable, create) ::= <<

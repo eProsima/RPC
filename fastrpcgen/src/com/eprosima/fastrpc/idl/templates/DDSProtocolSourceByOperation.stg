@@ -177,10 +177,9 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
             }
             $endif$
             }; separator="\n"$
-        }
+        }}; separator="\n"$
         
         return true;
-        }$
         $endif$
     }
     else
@@ -215,7 +214,7 @@ exception(ctx, exception) ::= <<>>
 
 operation(ctx, operation, param_list) ::= <<
 $if(ctx.client)$
-$paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$)
+$paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$)
 {
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
     $varDecl(variable=operation.rettypeparam)$
@@ -290,7 +289,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
 $endif$
 
 $if(!operation.oneway)$
-void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$_async($operation.parent.scopedname$_$operation.name$CallbackHandler &obj$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$)
+void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$_async($operation.parent.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$)
 {
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
     $operation.parent.scopedname$_$operation.name$_Request instance;
@@ -317,10 +316,10 @@ $endif$
 
 $if(ctx.server)$
 void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$_serve(eprosima::rpc::protocol::Protocol &protocol,
-    void *data , eprosima::rpc::transport::Endpoint *endpoint)
+    void *_data , eprosima::rpc::transport::Endpoint *endpoint)
 {
     $ctx.filename$Protocol &_protocol = dynamic_cast<$ctx.filename$Protocol&>(protocol);
-    $operation.parent.scopedname$_$operation.name$_Request &requestData = *($operation.parent.scopedname$_$operation.name$_Request*)data;
+    $operation.parent.scopedname$_$operation.name$_Request &requestData = *($operation.parent.scopedname$_$operation.name$_Request*)_data;
     $operation.parameters : {param | $varDecl(variable=param, create=param.onlyOutput)$}; separator="\n"$
     $varDecl(variable=operation.rettypeparam, create="yes")$   
     $if(!operation.oneway)$

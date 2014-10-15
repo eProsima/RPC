@@ -5,7 +5,7 @@ import java.util.Stack;
 import com.eprosima.fastrpc.idl.tree.*;
 import com.eprosima.idl.parser.typecode.TypeCode;
 
-public abstract class Context extends com.eprosima.idl.context.Context
+public abstract class Context extends com.eprosima.idl.context.Context implements com.eprosima.fastcdr.idl.context.Context
 {
     public Context(String filename, String file, ArrayList includePaths, boolean clientcode, boolean servercode,
             String appProduct)
@@ -39,25 +39,45 @@ public abstract class Context extends com.eprosima.idl.context.Context
         return m_servercode;
     }
 
+    public abstract boolean isDds();
+
+    public abstract boolean isRtiTypes();
+
+    /*** Functions inherated from FastCDR Context ***/
+
+    @Override
+    public boolean isPrintexception()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isPrintoperation()
+    {
+        return true;
+    }
+
     public String getProduct()
     {
         return m_appProduct;
     }
 
-    public abstract boolean isDds();
-
-    public abstract boolean isAnyCdr();
+    public String getNamespace()
+    {
+        return "rpc";
+    }
 
     public abstract boolean isCdr();
 
     public abstract boolean isFastcdr();
 
-    public abstract boolean isRtiTypes();
-
-    public boolean isFastrpcProduct()
+    public boolean isAnyCdr()
     {
-        return true;
+        return isCdr() || isFastcdr();
     }
+
+
+    /*** End ***/
 
     public Interface createInterface(String name)
     {
@@ -91,17 +111,6 @@ public abstract class Context extends com.eprosima.idl.context.Context
         String name = "type_" + ++m_randomGenName;
         m_randomGenNames.push(name);
         return name;
-    }
-
-    public String getNewLoopVarName()
-    {
-        m_loopVarName = 'a';
-        return Character.toString(m_loopVarName);
-    }
-
-    public String getNextLoopVarName()
-    {
-        return Character.toString(++m_loopVarName);
     }
 
     // TODO Para stringtemplate TopicsPlugin de nuestros tipos DDS.

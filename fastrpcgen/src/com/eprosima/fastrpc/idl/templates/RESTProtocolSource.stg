@@ -151,7 +151,7 @@ string $ctx.filename$Protocol::expandPath_$operation.name$(string &&path, $param
 }
 
 $endif$
-$paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$)
+$paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$)
 {
      stringstream stream;
      RESTSerializer restSerializer;
