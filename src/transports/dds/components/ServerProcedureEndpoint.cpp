@@ -137,7 +137,7 @@ int ServerProcedureEndpoint::createEntities(std::string &serviceName, std::strin
         stringSeq.length(0);
         char value[570];
 
-        SNPRINTF(value, 570, "header.remote_service_name = '%s' and header.instance_name = '%s'", serviceName.c_str(), instanceName.c_str());
+        SNPRINTF(value, 570, "header.remote_service_name = '%s'", serviceName.c_str());
 
         if((m_filter = m_transport.getParticipant()->create_contentfilteredtopic(m_name, m_readerTopic,
                         value, stringSeq)) != NULL)

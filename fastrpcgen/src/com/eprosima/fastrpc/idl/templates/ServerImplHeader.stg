@@ -34,7 +34,7 @@ interface(ctx, interface, export_list) ::= <<
  * @brief This class is the skeleton of the servant and its remote procedures has to be implemented.
  * @ingroup $ctx.trimfilename$
  */
-class $interface.name$ServerImpl
+class $interface.name$ServerImpl : public $interface.name$
 {
     public:
 
@@ -55,11 +55,7 @@ $exports; separator="\n"$
 
 exception(ctx, exception) ::= <<>>
 
-operation(ctx, operation, param_list) ::= <<
-//! @brief Skeleton of the operation $operation.name$.
-virtual $paramRetType(operation.rettype)$ $operation.name$($paramDeclarations(params=operation.parameters)$) = 0;
-
->>
+operation(ctx, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 

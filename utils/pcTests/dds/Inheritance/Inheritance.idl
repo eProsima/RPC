@@ -1,0 +1,30 @@
+module ModuleA
+{
+    interface Interface1
+    {
+        struct Dato
+        {
+            long count;
+        };
+
+        void function1(in Dato data);
+    };
+
+    interface Interface2 : Interface1
+    {
+        void function2(in long count);
+    };
+};
+
+module ModuleB
+{
+    interface Interface3 : ModuleA::Interface1
+    {
+        struct Dato
+        {
+            string str;
+        };
+
+        void function3(in Dato data);
+    };
+};
