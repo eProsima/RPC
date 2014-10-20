@@ -10,10 +10,14 @@
 #define _PROTOCOLS_DDS_MESSAGEHEADER_H_
 
 #include "fastrpc/fastrpc_dll.h"
+#include "fastrpc/utils/macros/stl_string_export.h"
+#include "fastrpc/utils/macros/strdup.h"
 
 #include <stdint.h>
 #include <string.h>
 #include <string>
+
+STL_STRING_EXPORT(FASTRPC_DllAPI)
 
 namespace eprosima
 {
@@ -180,7 +184,7 @@ namespace eprosima
                          * @param current_alignment Buffer alignment.
                          * @return Maximum serialized size.
                          */
-                        static unsigned int getMaxCdrSerializedSize(unsigned int current_alignment);
+                        static size_t getMaxCdrSerializedSize(size_t current_alignment);
 
                         /*!
                          * @brief This function serializes the Identification object using CDR serialization.
@@ -284,7 +288,7 @@ namespace eprosima
                         {
 							if(m_remoteServiceName != NULL)
 								free(m_remoteServiceName);
-                            m_remoteServiceName = strdup(_remoteServiceName);
+                            m_remoteServiceName = STRDUP(_remoteServiceName);
                         }
 
                         /*!
@@ -329,7 +333,7 @@ namespace eprosima
                          * @param current_alignment Buffer alignment.
                          * @return Maximum serialized size.
                          */
-                        static unsigned int getMaxCdrSerializedSize(unsigned int current_alignment);
+                        static size_t getMaxCdrSerializedSize(size_t current_alignment);
 
                         /*!
                          * @brief This function serializes the RequestHeader object using CDR serialization.
@@ -523,7 +527,7 @@ namespace eprosima
                          * @param current_alignment Buffer alignment.
                          * @return Maximum serialized size.
                          */
-                        static unsigned int getMaxCdrSerializedSize(unsigned int current_alignment);
+                        static size_t getMaxCdrSerializedSize(size_t current_alignment);
 
                         /*!
                          * @brief This function serializes the ReplyHeader object using CDR serialization.

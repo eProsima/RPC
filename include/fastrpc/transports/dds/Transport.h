@@ -9,7 +9,12 @@
 #define _TRANSPORTS_DDS_TRANSPORT_H_
 
 #include "fastrpc/fastrpc_dll.h"
-#include "fastrpc/utils/dds/Middleware.h"
+
+
+class DDSDomainParticipant;
+class DDSPublisher;
+class DDSSubscriber;
+struct DDS_DomainParticipantQos;
 
 namespace eprosima
 {
@@ -56,7 +61,7 @@ namespace eprosima
 						 * @return DDS domain participant.
 						 */
                         inline
-                            DDS::DomainParticipant* getParticipant() const
+                            DDSDomainParticipant* getParticipant() const
                             {
                                 return m_participant;
                             }
@@ -66,7 +71,7 @@ namespace eprosima
 						 * @return DDS publisher.
 						 */
                         inline
-                            DDS::Publisher* getPublisher() const
+                            DDSPublisher* getPublisher() const
                             {
                                 return m_publisher;
                             }
@@ -76,7 +81,7 @@ namespace eprosima
 						 * @return DDS subscriber.
 						 */
                         inline
-                            DDS::Subscriber* getSubscriber() const
+                            DDSSubscriber* getSubscriber() const
                             {
                                 return m_subscriber;
                             }
@@ -111,7 +116,7 @@ namespace eprosima
                          * @param participantQos Reference to the DDS domain participant QoS.
                          * @param participant The domain participant that will be set to use a specific transport.
                          */
-                        virtual int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant) = 0;
+                        virtual int setTransport(DDS_DomainParticipantQos &participantQos, DDSDomainParticipant *participant) = 0;
 
                         /*!
                          * @brief Default constructor.
@@ -129,21 +134,21 @@ namespace eprosima
                          * This participant has to be created during the transport creation.
                          * This pointer should never be NULL.
                          */
-                        DDS::DomainParticipant *m_participant;
+                        DDSDomainParticipant *m_participant;
 
                         /*!
                          * @brief DDS::Publisher entity used to create DDS::DataWriter entities.
                          * This publisher has to be created in the transport creation.
                          * This pointer should never be NULL.
                          */
-                        DDS::Publisher *m_publisher;
+                        DDSPublisher *m_publisher;
 
                         /*!
                          * @brief DDS::Subscriber entity used to create DDS::DataReader entities.
                          * This subscriber has to be created in the transport creation.
                          * This pointer should never be NULL.
                          */
-                        DDS::Subscriber *m_subscriber;
+                        DDSSubscriber *m_subscriber;
                 };
             } // namespace dds
         } // namespace transport

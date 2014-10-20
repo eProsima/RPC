@@ -11,13 +11,20 @@
 #include "fastrpc/fastrpc_dll.h"
 #include "fastrpc/transports/dds/ProxyTransport.h"
 #include "fastrpc/transports/components/Endpoint.h"
-#include "fastrpc/utils/dds/Middleware.h"
 #include "fastrpc/utils/Messages.h"
 
 namespace boost
 {
     class mutex;
 }
+
+class DDSTopic;
+class DDSContentFilteredTopic;
+class DDSDataWriter;
+class DDSDataReader;
+class DDSQueryCondition;
+class DDSWaitSet;
+
 
 namespace eprosima
 {
@@ -97,12 +104,12 @@ namespace eprosima
 						 *
 						 * @param query Query condition to free.
 						 */
-                        void freeQuery(DDS::QueryCondition *query);
+                        void freeQuery(DDSQueryCondition *query);
 
                         /*!
                          * @brief This function takes a sample from the datareader.
                          */
-                        eprosima::rpc::ReturnMessage takeReply(void *reply, DDS::QueryCondition *query);
+                        eprosima::rpc::ReturnMessage takeReply(void *reply, DDSQueryCondition *query);
 
                     private:
 
@@ -129,7 +136,7 @@ namespace eprosima
                          * @param timeout Timeout used to do the checking. Its value is in milliseconds.
                          * @return FASTRPC return message.
                          */
-                        ReturnMessage checkServerConnection(DDS::WaitSet *waitSet, long timeout);
+                        ReturnMessage checkServerConnection(DDSWaitSet *waitSet, long timeout);
 
                         //! @brief This function initializes the query conditions of the pool.
                         int initQueryPool();
@@ -142,12 +149,12 @@ namespace eprosima
                          *
                          * @return This function returns a free query condition. If all the query condition are in use, then a NULL pointer is returned.
                          */
-                        DDS::QueryCondition* getFreeQueryFromPool();
+                        DDSQueryCondition* getFreeQueryFromPool();
 
                         /*!
                          * @brief This function returns a used query condition to its freedom.
                          */
-                        void returnUsedQueryToPool(DDS::QueryCondition *query);
+                        void returnUsedQueryToPool(DDSQueryCondition *query);
 
                         //! @brief Mutex used to ensure that sequence number and query pool is safe-thread.
                         boost::mutex *m_mutex;
@@ -156,19 +163,19 @@ namespace eprosima
                         ProxyTransport &m_transport;
 
                         //!@brief The topic used to send.
-                        DDS::Topic *m_writerTopic;
+                        DDSTopic *m_writerTopic;
 
                         //! @brief The topic used to receive.
-                        DDS::Topic *m_readerTopic;
+                        DDSTopic *m_readerTopic;
 
                         //! @brief Content filter used to take an expected data.
-                        DDS::ContentFilteredTopic *m_filter;
+                        DDSContentFilteredTopic *m_filter;
 
                         //! @brief The data writer used to send.
-                        DDS::DataWriter *m_writer;
+                        DDSDataWriter *m_writer;
 
                         //! @brief The data reader used to receive.
-                        DDS::DataReader *m_reader;
+                        DDSDataReader *m_reader;
 
                         // TODO
                         bool m_eprosima_types;
@@ -179,7 +186,7 @@ namespace eprosima
                         int m_dataSize;
 
                         //! @brief Pool of DDSQueryConditions that are used by the proxy procedure endpoint. It's length is 10.
-                        DDS::QueryCondition **m_queryPool;
+                        DDSQueryCondition **m_queryPool;
 
                         /// \brief First position of queries that are in use.
                         int m_queriesInUseLimiter;

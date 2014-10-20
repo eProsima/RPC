@@ -9,6 +9,8 @@
 #ifndef _TRANSPORTS_ASYNCTASK_H_
 #define _TRANSPORTS_ASYNCTASK_H_
 
+#include "fastrpc/fastrpc_dll.h"
+
 namespace eprosima
 {
     namespace rpc
@@ -19,7 +21,7 @@ namespace eprosima
              * @brief This class represents a asynchronous task created to wait the reply from the server in an asynchronous call.
              * @ingroup TRANSPORTMODULE
              */
-            class AsyncTask
+            class FASTRPC_DllAPI AsyncTask
             {
                 protected:
 

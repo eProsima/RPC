@@ -10,8 +10,11 @@
 #define _EXCEPTIONS_SYSTEMEXCEPTION_H_
 
 #include "fastrpc/exceptions/Exception.h"
+#include "fastrpc/utils/macros/stl_string_export.h"
 
 #include <stdint.h>
+
+STL_STRING_EXPORT(FASTRPC_DllAPI)
 
 namespace eprosima
 {

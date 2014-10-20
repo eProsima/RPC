@@ -11,6 +11,7 @@
 
 #include "fastrpc/fastrpc_dll.h"
 #include "fastrpc/transports/dds/ProxyTransport.h"
+#include "fastrpc/utils/dds/Middleware.h"
 
 namespace eprosima
 {

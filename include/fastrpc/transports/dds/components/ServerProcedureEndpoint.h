@@ -11,10 +11,20 @@
 #include "fastrpc/fastrpc_dll.h"
 #include "fastrpc/transports/dds/ServerTransport.h"
 #include "fastrpc/transports/components/Endpoint.h"
-#include "fastrpc/utils/dds/Middleware.h"
 #include "fastrpc/utils/Messages.h"
+#include "fastrpc/utils/macros/stl_string_export.h"
 
 #include <string>
+
+#if defined(_WIN32) && defined(NDDS_DLL_VARIABLE)
+class __declspec(dllimport) DDSDataReaderListener;
+class __declspec(dllimport) DDSListener;
+#endif
+
+#include "fastrpc/utils/dds/Middleware.h"
+
+
+STL_STRING_EXPORT(FASTRPC_DllAPI)
 
 namespace boost
 {
@@ -34,7 +44,7 @@ namespace eprosima
                  * Also this class encapsulate the DDS datawriter and the DDS datareader.
 				 * @ingroup TRANSPORTMODULE
                  */
-                class FASTRPC_DllAPI ServerProcedureEndpoint : public Endpoint, public DDS::DataReaderListener
+                class FASTRPC_DllAPI ServerProcedureEndpoint : public Endpoint, public DDSDataReaderListener
                 {
                     public:
 
@@ -88,37 +98,37 @@ namespace eprosima
                         int sendReply(void *data);
 
                         /// @brief DDS callback.
-                        virtual void on_data_available(DDS::DataReader* reader);
+                        virtual void on_data_available(DDSDataReader* reader);
 
                         /// @brief DDS callback.
                         virtual void on_requested_deadline_missed(
-                                DDS::DataReader* reader,
-                                const DDS::RequestedDeadlineMissedStatus& status) {}
+                                DDSDataReader* reader,
+                                const DDS_RequestedDeadlineMissedStatus& status) {}
 
                         /// @brief DDS callback.
                         virtual void on_requested_incompatible_qos(
-                                DDS::DataReader* reader,
-                                const DDS::RequestedIncompatibleQosStatus& status) {}
+                                DDSDataReader* reader,
+                                const DDS_RequestedIncompatibleQosStatus& status) {}
 
                         /// @brief DDS callback.
                         virtual void on_sample_rejected(
-                                DDS::DataReader* reader,
-                                const DDS::SampleRejectedStatus& status) {}
+                                DDSDataReader* reader,
+                                const DDS_SampleRejectedStatus& status) {}
 
                         /// @brief DDS callback.
                         virtual void on_liveliness_changed(
-                                DDS::DataReader* reader,
-                                const DDS::LivelinessChangedStatus& status) {}
+                                DDSDataReader* reader,
+                                const DDS_LivelinessChangedStatus& status) {}
 
                         /// @brief DDS callback.
                         virtual void on_sample_lost(
-                                DDS::DataReader* reader,
-                                const DDS::SampleLostStatus& status) {}
+                                DDSDataReader* reader,
+                                const DDS_SampleLostStatus& status) {}
 
                         /// @brief DDS callback.
                         virtual void on_subscription_matched(
-                                DDS::DataReader* reader,
-                                const DDS::SubscriptionMatchedStatus& status) {}
+                                DDSDataReader* reader,
+                                const DDS_SubscriptionMatchedStatus& status) {}
 
                     private:
 
@@ -146,18 +156,18 @@ namespace eprosima
                         std::string m_readerTypeName;
 
                         //!@brief The topic used to send.
-                        DDS::Topic *m_writerTopic;
+                        DDSTopic *m_writerTopic;
 
                         //! @brief The topic used to receive.
-                        DDS::Topic *m_readerTopic;
+                        DDSTopic *m_readerTopic;
 
-                        DDS::ContentFilteredTopic *m_filter;
+                        DDSContentFilteredTopic *m_filter;
 
                         //! @brief The data writer used to send.
-                        DDS::DataWriter *m_writer;
+                        DDSDataWriter *m_writer;
 
                         //! @brief The data reader used to receive.
-                        DDS::DataReader *m_reader;
+                        DDSDataReader *m_reader;
 
                         Transport::Create_data m_create_data;
 

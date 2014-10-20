@@ -45,7 +45,7 @@ namespace eprosima
                          * @param participantQos Reference to the DDS domain participant QoS.
                          * @param participant The domain participant that will be set to use UDPv4 transport.
                          */
-                        virtual int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant);
+                        virtual int setTransport(DDS_DomainParticipantQos &participantQos, DDSDomainParticipant *participant);
                 };
             } // namepsace dds
         } // namespace transport

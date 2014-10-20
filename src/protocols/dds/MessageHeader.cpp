@@ -1,4 +1,5 @@
 #include "fastrpc/protocols/dds/MessageHeader.h"
+#include "fastrpc/utils/macros/strdup.h"
 
 #include "fastcdr/Cdr.h"
 
@@ -46,9 +47,9 @@ Identification& Identification::operator=(Identification &&id)
     return *this;
 }
 
-unsigned int Identification::getMaxCdrSerializedSize(unsigned int current_alignment)
+size_t Identification::getMaxCdrSerializedSize(size_t current_alignment)
 {
-    unsigned int initial_alignment = current_alignment;
+    size_t initial_alignment = current_alignment;
 
     // Optimization. First unsigned long has to be aligned. The rest is not necessary.
     current_alignment += 16 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
@@ -71,13 +72,13 @@ RequestHeader::RequestHeader() : m_remoteServiceName(NULL), m_requestSequenceNum
 }
 
 RequestHeader::RequestHeader(const RequestHeader &header) :
-    m_clientId(header.m_clientId), m_remoteServiceName(strdup(header.m_remoteServiceName)),
+    m_clientId(header.m_clientId), m_remoteServiceName(STRDUP(header.m_remoteServiceName)),
     m_requestSequenceNumber(header.m_requestSequenceNumber)
 {
 }
 
 RequestHeader::RequestHeader(RequestHeader &&header) :
-    m_clientId(std::move(header.m_clientId)), m_remoteServiceName(strdup(header.m_remoteServiceName)),
+    m_clientId(std::move(header.m_clientId)), m_remoteServiceName(STRDUP(header.m_remoteServiceName)),
     m_requestSequenceNumber(header.m_requestSequenceNumber)
 {
 }
@@ -93,7 +94,7 @@ RequestHeader& RequestHeader::operator=(const RequestHeader &header)
     m_clientId = header.m_clientId;
 	if(m_remoteServiceName != NULL)
 		free(m_remoteServiceName);
-    m_remoteServiceName = strdup(header.m_remoteServiceName);
+    m_remoteServiceName = STRDUP(header.m_remoteServiceName);
     m_requestSequenceNumber = header.m_requestSequenceNumber;
 
     return *this;
@@ -104,15 +105,15 @@ RequestHeader& RequestHeader::operator=(RequestHeader &&header)
     m_clientId = std::move(header.m_clientId);
     if(m_remoteServiceName != NULL)
 		free(m_remoteServiceName);
-    m_remoteServiceName = strdup(header.m_remoteServiceName);
+    m_remoteServiceName = STRDUP(header.m_remoteServiceName);
     m_requestSequenceNumber = header.m_requestSequenceNumber;
 
     return *this;
 }
 
-unsigned int RequestHeader::getMaxCdrSerializedSize(unsigned int current_alignment)
+size_t RequestHeader::getMaxCdrSerializedSize(size_t current_alignment)
 {
-    unsigned int initial_alignment = current_alignment;
+    size_t initial_alignment = current_alignment;
 
     current_alignment = Identification::getMaxCdrSerializedSize(current_alignment);
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + 256; // Max string length + 1.
@@ -172,9 +173,9 @@ ReplyHeader& ReplyHeader::operator=(ReplyHeader &&header)
     return *this;
 }
 
-unsigned int ReplyHeader::getMaxCdrSerializedSize(unsigned int current_alignment)
+size_t ReplyHeader::getMaxCdrSerializedSize(size_t current_alignment)
 {
-    unsigned int initial_alignment = current_alignment;
+    size_t initial_alignment = current_alignment;
 
     current_alignment = Identification::getMaxCdrSerializedSize(current_alignment);
     // Optimization. First unsigned long has to be aligment but the other not.

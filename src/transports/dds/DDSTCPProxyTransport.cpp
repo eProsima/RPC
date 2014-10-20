@@ -7,7 +7,7 @@
  *************************************************************************/
 
 #include "fastrpc/transports/dds/TCPProxyTransport.h"
-#include "eProsima_c/macros/snprintf.h"
+#include "fastrpc/utils/macros/snprintf.h"
 
 static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::TCPProxyTransport";
 

@@ -296,6 +296,7 @@ projectClientExample(solution, project, example, configurations, local) ::= <<
                               $project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;$if(!it.dll)$lib$endif$$project.name$Client$if(it.debug)$d$endif$.lib;$if(!it.dll)$WS2_32.lib;$endif$%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$solution.libraryPaths : {path |$path$;}$.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      $if(!it.dll)$<IgnoreSpecificDefaultLibraries>libcmt$if(it.debug)$d$endif$.lib</IgnoreSpecificDefaultLibraries>$endif$
     </Link>
   </ItemDefinitionGroup>};separator="\n"$
   <ItemGroup>
@@ -477,6 +478,7 @@ projectServerExample(solution, project, example, configurations, local) ::= <<
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
       <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK$endif$;$solution.defines : {define |$define$;}$$if(local)$$solution.productDefine$$endif$%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -496,6 +498,7 @@ projectServerExample(solution, project, example, configurations, local) ::= <<
                               $project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;$if(!it.dll)$lib$endif$$project.name$Server$if(it.debug)$d$endif$.lib;$if(!it.dll)$WS2_32.lib;$endif$%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$solution.libraryPaths : {path |$path$;}$.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      $if(!it.dll)$<IgnoreSpecificDefaultLibraries>libcmt$if(it.debug)$d$endif$.lib</IgnoreSpecificDefaultLibraries>$endif$
     </Link>
   </ItemDefinitionGroup>};separator="\n"$
   <ItemGroup>
@@ -684,5 +687,5 @@ $if(conf.debug)$true$else$false$endif$
  * Uses:
  */ 
 runtimeLibrary(conf) ::= <<
-$if(it.dll)$$if(it.debug)$MultiThreadedDebugDLL$else$MultiThreadedDLL$endif$$else$$if(it.debug)$MultiThreadedDebug$else$MultiThreaded$endif$$endif$
+$if(conf.dll)$$if(conf.debug)$MultiThreadedDebugDLL$else$MultiThreadedDLL$endif$$else$$if(conf.debug)$MultiThreadedDebug$else$MultiThreaded$endif$$endif$
 >>

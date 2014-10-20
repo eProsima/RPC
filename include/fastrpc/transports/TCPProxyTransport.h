@@ -3,9 +3,12 @@
 
 #include "fastrpc/fastrpc_dll.h"
 #include "fastrpc/transports/ProxyTransport.h"
+#include "fastrpc/utils/macros/stl_string_export.h"
 
 #include <string>
 #include <iostream>
+
+STL_STRING_EXPORT(FASTRPC_DllAPI)
 
 namespace eprosima
 {

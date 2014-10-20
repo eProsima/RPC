@@ -9,10 +9,10 @@
 #ifndef _TRANSPORTS_DDS_ASYNCTHREAD_H_
 #define _TRANSPORTS_DDS_ASYNCTHREAD_H_
 
-#include "fastrpc/utils/dds/Middleware.h"
-
 #include <vector>
 #include <boost/thread.hpp>
+
+#include "fastrpc/utils/dds/Middleware.h"
 
 namespace eprosima
 {
@@ -25,7 +25,7 @@ namespace eprosima
                 class DDSAsyncTask;
                 class ProxyProcedureEndpoint;
 
-                typedef std::pair<DDS::QueryCondition*, DDSAsyncTask*> AsyncTaskPair;
+                typedef std::pair<DDSQueryCondition*, DDSAsyncTask*> AsyncTaskPair;
                 typedef std::pair<boost::posix_time::time_duration, AsyncTaskPair> AsyncListPair;
                 typedef std::vector<AsyncListPair> AsyncVector;
 
@@ -58,7 +58,7 @@ namespace eprosima
                          * \param timeout The time in milliseconds to wait for the reply.
                          * \return 0 if the function succesfully works. -1 in other case
                          */
-                        int addTask(DDS::QueryCondition *query, DDSAsyncTask *task, long timeout);
+                        int addTask(DDSQueryCondition *query, DDSAsyncTask *task, long timeout);
 
                         /**
                          * @brief This function deletes all the asynchronous tasks associated with the ProxyProcedureEndpoint endpoint.
@@ -84,13 +84,13 @@ namespace eprosima
                         boost::condition_variable m_cond_wake_up;
 
                         /// \brief Variable used to wake up a WaitSet.
-                        DDS::GuardCondition *m_guardWaitSet;
+                        DDSGuardCondition *m_guardWaitSet;
 
                         /// \brief Object that waits for incoming data publications on a Topic.
-                        DDS::WaitSet *m_waitSet;
+                        DDSWaitSet *m_waitSet;
 
                         /// \brief Timeout for not being waiting an undefined amount of time.
-                        DDS::Duration_t m_timeout;
+                        DDS_Duration_t m_timeout;
 
                         /// \brief Boolean variable used to exit from the Thread.
                         bool m_exit;

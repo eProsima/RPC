@@ -10,6 +10,7 @@
 #include "fastrpc/transports/dds/components/ServerProcedureEndpoint.h"
 #include "fastrpc/protocols/Protocol.h"
 #include "fastrpc/exceptions/InitializeException.h"
+#include "fastrpc/utils/dds/Middleware.h"
 
 using namespace eprosima::rpc;
 using namespace ::transport::dds;

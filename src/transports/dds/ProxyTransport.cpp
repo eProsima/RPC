@@ -10,6 +10,7 @@
 #include "fastrpc/transports/dds/components/ProxyProcedureEndpoint.h"
 #include "fastrpc/transports/dds/AsyncThread.h"
 #include "fastrpc/exceptions/InitializeException.h"
+#include "fastrpc/utils/dds/Middleware.h"
 
 #include <string>
 

@@ -7,7 +7,8 @@
  *************************************************************************/
 
 #include "fastrpc/transports/dds/UDPServerTransport.h"
-#include "eProsima_c/macros/snprintf.h"
+#include "fastrpc/utils/macros/snprintf.h"
+#include "fastrpc/utils/dds/Middleware.h"
 
 #if defined(OPENDDS)
 #include "dds/DCPS/transport/framework/TransportRegistry.h"

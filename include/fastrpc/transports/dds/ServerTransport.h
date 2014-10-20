@@ -11,10 +11,13 @@
 #include "fastrpc/fastrpc_dll.h"
 #include "fastrpc/transports/dds/Transport.h"
 #include "fastrpc/transports/ServerTransport.h"
-#include "fastrpc/utils/dds/Middleware.h"
+#include "fastrpc/utils/macros/stl_string_export.h"
 
 #include <string>
 #include <map>
+
+class DDSDomainParticipant;
+struct DDS_DomainParticipantQos;
 
 namespace eprosima
 {
@@ -25,7 +28,28 @@ namespace eprosima
             namespace dds
             {
                 class ServerProcedureEndpoint;
+			}
+		}
+	}
+}
 
+STL_STRING_EXPORT(FASTRPC_DllAPI)
+
+#ifdef _WIN32
+template struct FASTRPC_DllAPI std::less<const char*>;
+template class FASTRPC_DllAPI std::allocator<std::pair<const char* const, eprosima::rpc::transport::dds::ServerProcedureEndpoint*>>;
+template class FASTRPC_DllAPI std::allocator<std::_Tree_nod<std::_Tmap_traits<const char *,eprosima::rpc::transport::dds::ServerProcedureEndpoint *,std::less<const char *>,std::allocator<std::pair<const char *const ,eprosima::rpc::transport::dds::ServerProcedureEndpoint *>>,false>>::_Node>;
+template class FASTRPC_DllAPI std::map<const char*, eprosima::rpc::transport::dds::ServerProcedureEndpoint*>;
+#endif
+
+namespace eprosima
+{
+    namespace rpc
+    {
+        namespace transport
+        {
+            namespace dds
+            {
 				/*!
                  * @brief This class is the base of all classes that implement a transport
                  * using DDS. This transport can be used by the servers.
@@ -106,7 +130,7 @@ namespace eprosima
                          * @param participantQos Reference to the DDS domain participant QoS.
                          * @param participant The domain participant that will be set to use a specific transport.
                          */
-                        virtual int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant) = 0;
+                        virtual int setTransport(DDS_DomainParticipantQos &participantQos, DDSDomainParticipant *participant) = 0;
 
                         /*!
                          * @brief Default constructor.

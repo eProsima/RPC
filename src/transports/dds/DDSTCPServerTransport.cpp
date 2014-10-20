@@ -7,7 +7,8 @@
  *************************************************************************/
 
 #include "fastrpc/transports/dds/TCPServerTransport.h"
-#include "eProsima_c/macros/snprintf.h"
+#include "fastrpc/utils/macros/snprintf.h"
+#include "fastrpc/utils/dds/Middleware.h"
 
 static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::TCPServerTransport";
 

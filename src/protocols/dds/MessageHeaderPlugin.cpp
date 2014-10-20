@@ -1,6 +1,5 @@
 #include "fastrpc/protocols/dds/MessageHeaderPlugin.h"
-
-#include "ndds/ndds_cpp.h"
+#include "fastrpc/utils/dds/Middleware.h"
 
 using namespace eprosima::rpc;
 using namespace ::protocol::dds;
