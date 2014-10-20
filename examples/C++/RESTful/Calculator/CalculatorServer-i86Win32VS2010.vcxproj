@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>CalculatorServer</ProjectName>
-    <ProjectGuid>{22A83F5E-AF52-8058-3F84-AD4D2D0DFCAF}</ProjectGuid>
+    <ProjectGuid>{864C4795-7A28-F850-821B-7E2FD0635552}</ProjectGuid>
     <RootNamespace>CalculatorServer</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -96,7 +96,8 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>Calculatord.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>
+  ;Calculatord.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
         <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>   
@@ -114,7 +115,8 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>Calculator.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>
+  ;Calculator.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
         <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>   
@@ -132,7 +134,8 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>libCalculatord.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>
+  ;libCalculatord.lib;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>
       <Lib>
@@ -151,7 +154,8 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>libCalculator.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>
+  ;libCalculator.lib;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>
       <Lib>

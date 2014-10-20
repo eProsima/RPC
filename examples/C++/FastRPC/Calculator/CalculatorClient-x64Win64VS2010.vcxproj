@@ -96,7 +96,8 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>Calculatord.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>
+  ;Calculatord.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(FASTRPCHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
         <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>   
@@ -114,7 +115,8 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>Calculator.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>
+  ;Calculator.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(FASTRPCHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
         <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>   
@@ -132,7 +134,8 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>libCalculatord.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>
+  ;libCalculatord.lib;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>
       <Lib>
@@ -151,7 +154,8 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>libCalculator.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>
+  ;libCalculator.lib;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>
       <Lib>

@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>BankClientExample</ProjectName>
-    <ProjectGuid>{41AEBA74-DABD-F156-9A49-2A0B8110E760}</ProjectGuid>
+    <ProjectGuid>{0798189E-05AF-EB16-62FA-7EB00751A022}</ProjectGuid>
     <RootNamespace>BankClientExample</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -96,7 +96,8 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>Bankd.lib;BankClientd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>
+  ;Bankd.lib;BankClientd.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
@@ -113,7 +114,8 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>Bank.lib;BankClient.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>
+  ;Bank.lib;BankClient.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
@@ -130,9 +132,11 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>libBankd.lib;libBankClientd.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>
+  ;libBankd.lib;libBankClientd.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+  <IgnoreSpecificDefaultLibraries>libcmtd.lib</IgnoreSpecificDefaultLibraries>
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -147,9 +151,11 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>libBank.lib;libBankClient.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>
+  ;libBank.lib;libBankClient.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCRESTHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+  <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
       </Link>
     </ItemDefinitionGroup>
   <ItemGroup>

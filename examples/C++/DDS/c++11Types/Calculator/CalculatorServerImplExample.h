@@ -1,8 +1,8 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This generated file is licensed to you under the terms described in the
- * FASTRPC_LICENSE file included in this FASTRPC distribution.
+ * rpcdds_LICENSE file included in this rpcdds distribution.
  *
  *************************************************************************
  * 
@@ -28,7 +28,7 @@ class CalculatorServerImplExample : public CalculatorServerImpl
         //! @brief The default constructor.
         CalculatorServerImplExample(){}
 
-        //! @brief The default destructor.
+        //! @brief Destructor.
         virtual ~CalculatorServerImplExample(){}
 
         //! @brief Implementation of the remote procedure addition

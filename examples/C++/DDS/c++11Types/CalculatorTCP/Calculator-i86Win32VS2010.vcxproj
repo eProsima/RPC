@@ -96,7 +96,8 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscored.lib;nddscd.lib;nddscppd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>nddscored.lib;nddscd.lib;nddscppd.lib;
+  ;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/i86Win32VS2010;$(NDDSHOME)/lib/i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
         <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>   
@@ -114,7 +115,8 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscore.lib;nddsc.lib;nddscpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>nddscore.lib;nddsc.lib;nddscpp.lib;
+  ;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/i86Win32VS2010;$(NDDSHOME)/lib/i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
         <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>   
@@ -132,7 +134,8 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscorezd.lib;nddsczd.lib;nddscppzd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>nddscorezd.lib;nddsczd.lib;nddscppzd.lib;
+  ;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>
       <Lib>
@@ -151,7 +154,8 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscorez.lib;nddscz.lib;nddscppz.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <AdditionalDependencies>nddscorez.lib;nddscz.lib;nddscppz.lib;
+  ;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>
       <Lib>

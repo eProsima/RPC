@@ -53,9 +53,12 @@ namespace eprosima
                         
                         static size_t worker(Protocol& protocol, void *&buffer, size_t &bufferLength, size_t &bufferSize, eprosima::rpc::transport::Endpoint *endpoint);
                         
+
+
                                                                         int32_t Calculator_addition(/*in*/ int32_t value1, /*in*/ int32_t value2);
                                                                         
                                                                         
+
                                                                         int32_t Calculator_subtraction(/*in*/ int32_t value1, /*in*/ int32_t value2);
                                                                         
                                                                         
