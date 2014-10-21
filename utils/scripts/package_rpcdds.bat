@@ -197,16 +197,34 @@ if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdr-%VERSIONFASTCDR%.lib lib\i86Win32VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdr-%VERSIONFASTCDR%.pdb lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdr-%VERSIONFASTCDR%.exp lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdrd-%VERSIONFASTCDR%.dll lib\i86Win32VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdrd-%VERSIONFASTCDR%.lib lib\i86Win32VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdrd-%VERSIONFASTCDR%.pdb lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdrd-%VERSIONFASTCDR%.exp lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\i86Win32VS2010\libfastcdr-%VERSIONFASTCDR%.lib lib\i86Win32VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2010\libfastcdr-%VERSIONFASTCDR%.pdb lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\i86Win32VS2010\libfastcdrd-%VERSIONFASTCDR%.lib lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2010\libfastcdrd-%VERSIONFASTCDR%.pdb lib\i86Win32VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 
@@ -216,16 +234,34 @@ if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdr-%VERSIONFASTCDR%.lib lib\x64Win64VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdr-%VERSIONFASTCDR%.pdb lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdr-%VERSIONFASTCDR%.exp lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdrd-%VERSIONFASTCDR%.dll lib\x64Win64VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdrd-%VERSIONFASTCDR%.lib lib\x64Win64VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdrd-%VERSIONFASTCDR%.pdb lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdrd-%VERSIONFASTCDR%.exp lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\x64Win64VS2010\libfastcdr-%VERSIONFASTCDR%.lib lib\x64Win64VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2010\libfastcdr-%VERSIONFASTCDR%.pdb lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\x64Win64VS2010\libfastcdrd-%VERSIONFASTCDR%.lib lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2010\libfastcdrd-%VERSIONFASTCDR%.exp lib\x64Win64VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 

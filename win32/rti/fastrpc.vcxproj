@@ -482,7 +482,7 @@
       <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\i86Win32VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
-      <ProgramDatabaseFile>$(SolutionDir)..\..\lib\i86Win32VS2010\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -523,7 +523,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010
       <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
-      <ProgramDatabaseFile>$(SolutionDir)..\..\lib\i86Win32VS2010\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -564,7 +564,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010
       <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2010;$(BOOST_ROOT)\lib\i86Win32VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
-      <ProgramDatabaseFile>$(SolutionDir)..\..\lib\i86Win32VS2010\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -605,7 +605,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32V
       <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\x64Win64VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
-      <ProgramDatabaseFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -646,7 +646,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010
       <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
-      <ProgramDatabaseFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -687,7 +687,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010
       <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(BOOST_ROOT)\lib\x64Win64VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
-      <ProgramDatabaseFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -729,7 +729,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64V
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
-      <ProgramDatabaseFile>$(SolutionDir)..\..\lib\i86Win32VS2010\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
       <Command>if not "$(EPROSIMA_LIBRARY_PATH)" == "" (
@@ -768,7 +769,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
-      <ProgramDatabaseFile>$(SolutionDir)..\..\lib\i86Win32VS2010\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
       <Command>if not "$(EPROSIMA_LIBRARY_PATH)" == "" (
@@ -807,7 +809,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
-      <ProgramDatabaseFile>$(SolutionDir)..\..\lib\i86Win32VS2010\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
       <Command>if not "$(EPROSIMA_LIBRARY_PATH)" == "" (
@@ -846,7 +849,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32V
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
-      <ProgramDatabaseFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
@@ -886,7 +889,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
-      <ProgramDatabaseFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
       <Command>if not "$(EPROSIMA_LIBRARY_PATH)" == "" (
@@ -925,7 +929,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
-      <ProgramDatabaseFile>$(SolutionDir)..\..\lib\x64Win64VS2010\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
       <Command>if not "$(EPROSIMA_LIBRARY_PATH)" == "" (
