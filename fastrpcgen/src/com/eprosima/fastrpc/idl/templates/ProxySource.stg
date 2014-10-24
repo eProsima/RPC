@@ -35,6 +35,29 @@ $interface.name$Proxy::$interface.name$Proxy(eprosima::rpc::transport::ProxyTran
 $interface.name$Proxy::~$interface.name$Proxy()
 {
 }
+ 
+$interface.all_operations : {operation|
+$paramRetType(operation.rettype)$ $interface.name$Proxy::$operation.name$($paramDeclarations(params=operation.parameters)$)
+{
+    $if(operation.rettypeparam)$
+    $paramRetType(operation.rettype)$ $operation.rettypeparam.name$ =
+    $endif$
+    dynamic_cast<eprosima::rpc::protocol::$ctx.filename$Protocol&>(getProtocol()).$interface.formatedScopedname$_$operation.name$($extractParams(params=operation.parameters)$);
+    $if(operation.rettypeparam)$
+    return $operation.rettypeparam.name$;
+    $endif$
+}
+
+$if(ctx.dds)$
+$if(!operation.oneway)$
+void $interface.name$Proxy::$operation.name$_async($operation.parent.name$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$)
+{
+    dynamic_cast<eprosima::rpc::protocol::$ctx.filename$Protocol&>(getProtocol()).$interface.formatedScopedname$_$operation.name$_async(obj$extractParams(params=operation.inputparam, separatorInicial=", ")$);
+}
+
+$endif$
+$endif$
+}; separator="\n"$
 
 $export_list$
 
@@ -47,29 +70,7 @@ $exports; separator="\n"$
 
 exception(ctx, exception) ::= <<>>
 
-operation(ctx, operation, param_list) ::= <<
-$paramRetType(operation.rettype)$ $operation.parent.name$Proxy::$operation.name$($paramDeclarations(params=operation.parameters)$)
-{
-    $if(operation.rettypeparam)$
-    $paramRetType(operation.rettype)$ $operation.rettypeparam.name$ =
-    $endif$
-    dynamic_cast<eprosima::rpc::protocol::$ctx.filename$Protocol&>(getProtocol()).$operation.parent.formatedScopedname$_$operation.name$($extractParams(params=operation.parameters)$);
-    $if(operation.rettypeparam)$
-    return $operation.rettypeparam.name$;
-    $endif$
-}
-
-$if(ctx.dds)$
-$if(!operation.oneway)$
-void $operation.parent.name$Proxy::$operation.name$_async($operation.parent.name$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$)
-{
-    dynamic_cast<eprosima::rpc::protocol::$ctx.filename$Protocol&>(getProtocol()).$operation.parent.formatedScopedname$_$operation.name$_async(obj$extractParams(params=operation.inputparam, separatorInicial=", ")$);
-}
-
-$endif$
-$endif$
-
->>
+operation(ctx, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 
