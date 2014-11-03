@@ -148,8 +148,6 @@ Section -post SEC0006
     File /r ..\..\..\..\thirdparty\fastcdr\include\*
     SetOutPath $INSTDIR\include\fastcdr\eProsima_cpp\config
     File "..\..\..\..\thirdparty\fastcdr\thirdparty\eprosima-common-code\eProsima_cpp\config\eProsima_auto_link.h"
-    SetOutPath $INSTDIR\include\fastcdr\eProsima_cpp\macros
-    File "..\..\..\..\thirdparty\fastcdr\thirdparty\eprosima-common-code\eProsima_cpp\macros\stl_string_export.hpp"
     
     # Copy licensies
     SetOutPath $INSTDIR
