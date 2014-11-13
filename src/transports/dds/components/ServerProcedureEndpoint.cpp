@@ -127,7 +127,7 @@ void ServerProcedureEndpoint::stop()
     m_mutex->unlock();
 }
 
-int ServerProcedureEndpoint::createEntities(std::string &serviceName)
+int ServerProcedureEndpoint::createEntities(const std::string &serviceName)
 {
     const char* const METHOD_NAME = "createEntities";
 
@@ -294,7 +294,6 @@ int ServerProcedureEndpoint::sendReply(void *data)
 
 void ServerProcedureEndpoint::on_data_available(DDS::DataReader* reader)
 {
-    const char* const METHOD_NAME = "on_data_available";
 	DDS::SampleInfo info;
     void *data = m_create_data();
 

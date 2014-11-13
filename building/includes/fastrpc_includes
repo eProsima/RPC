@@ -3,7 +3,6 @@ client/Proxy.h
 utils/dds/Middleware.h
 utils/macros/snprintf.h
 utils/macros/strdup.h
-utils/macros/stl_string_export.h
 utils/Utilities.h
 utils/Messages.h
 utils/Typedefs.h

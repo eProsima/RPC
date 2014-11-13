@@ -18,7 +18,7 @@ using namespace ::exception;
 
 static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::DDSAsyncTask";
 
-DDSAsyncTask::DDSAsyncTask() : m_pe(NULL), eprosima::rpc::transport::AsyncTask()
+DDSAsyncTask::DDSAsyncTask() : eprosima::rpc::transport::AsyncTask(), m_pe(NULL)
 {
 }
 

@@ -18,8 +18,8 @@ using namespace ::transport::dds;
 static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::ServerTransport";
 
 ServerTransport::ServerTransport(const char* const &serviceName, int domainId) :
-    m_serviceName(serviceName), ::transport::ServerTransport(),
-    ::transport::dds::Transport(domainId)
+    ::transport::ServerTransport(), ::transport::dds::Transport(domainId),
+    m_serviceName(serviceName)
 {
 }
 

@@ -554,7 +554,6 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
     ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
     DDS::WaitSet *waitSet = NULL;
     DDS::ReturnCode_t retCode;
-    boost::posix_time::time_duration tTimeout = boost::posix_time::milliseconds(m_transport.getTimeout());
     unsigned int numSec = 0;
     char value[50];
     void *auxPointerToRequest = NULL;

@@ -90,9 +90,9 @@ return *this;
 }
 */
 
-RESTSerializer& RESTSerializer::serialize(const  std::string &string_t)
+RESTSerializer& RESTSerializer::serialize(const char* const &string_t)
 {
-    uint32_t length = (uint32_t)string_t.length();
+    uint32_t length = strlen(string_t);
     state(*this);
 
     //serialize(length);
@@ -103,7 +103,7 @@ RESTSerializer& RESTSerializer::serialize(const  std::string &string_t)
         {
             // Save last datasize.
             //m_lastDataSize_ = sizeof(uint8_t);
-            m_currentPosition_.memcopy(string_t.c_str(), length);
+            m_currentPosition_.memcopy(string_t, length);
             m_currentPosition_ += length;
         }
         else
@@ -116,31 +116,28 @@ RESTSerializer& RESTSerializer::serialize(const  std::string &string_t)
     return *this;
 }
 
-RESTSerializer& RESTSerializer::deserialize(std::string &string_t)
+const char* RESTSerializer::readString(uint32_t &length)
 {
-    uint32_t length = 0;
+	const char* returnedValue = "";
     state(*this);
 
     //deserialize(length);
 
     if(length == 0)
     {
-        string_t = "";
-        return *this;
+		return returnedValue;
     }
     else if((m_lastPosition_ - m_currentPosition_) >= length)
     {
-        // Save last datasize.
-        //m_lastDataSize_ = sizeof(uint8_t);
-
-        string_t = std::string(&m_currentPosition_, length - ((&m_currentPosition_)[length-1] == '\0' ? 1 : 0));
-        m_currentPosition_ += length;
-        return *this;
+		returnedValue = &m_currentPosition_;
+		m_currentPosition_ += length;
+		if(returnedValue[length-1] == '\0') --length;
+		return returnedValue;
     }
 
     setState();
     //throw NotEnoughMemoryException(NotEnoughMemoryException::NOT_ENOUGH_MEMORY_MESSAGE_DEFAULT);
-    return *this;
+    return returnedValue;
 }
 
 RESTSerializer& RESTSerializer::serialize(HTTPMethod &method)
