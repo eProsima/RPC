@@ -13,10 +13,10 @@ mkdir output
 :: Generates the Util idl file with FASTRPC script
 mkdir output\util
 :: Generates the rest of files with FASTRPC script
-call ..\..\..\scripts\fastrpcgen.bat -local -d output\util -example %NDDSTARGET% -protocol fastcdr "IncludesTest\util\Util.idl"
+call ..\..\..\scripts\fastrpcgen.bat -local -d output\util -example %NDDSTARGET% "IncludesTest\util\Util.idl"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :EOF
-call ..\..\..\scripts\fastrpcgen.bat -local -d output -example %NDDSTARGET% -protocol fastcdr -IIncludesTest -IIncludesTest\hide "IncludesTest\IncludesTest.idl" "IncludesTest\SameDirectory.idl" "IncludesTest\Level2.idl" "IncludesTest\hide\Hide.idl"
+call ..\..\..\scripts\fastrpcgen.bat -local -d output -example %NDDSTARGET% -IIncludesTest -IIncludesTest\hide "IncludesTest\IncludesTest.idl" "IncludesTest\SameDirectory.idl" "IncludesTest\Level2.idl" "IncludesTest\hide\Hide.idl"
 set errorstatus=%ERRORLEVEL%
 :: Copy backup to original files.
 :: Copy static test files into output directory
@@ -43,3 +43,105 @@ msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Release
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :EOF
 copy output\lib\%NDDSTARGET%\*.dll output\bin\%NDDSTARGET%\
+:: Execute the server in other cmd.exe
+start output\bin\%NDDSTARGET%\IncludesTestServerExample.exe
+:: Wait 5 seconds
+call :wait 5
+:: Execute the client in this cmd.exe
+"output\bin\%NDDSTARGET%\IncludesTestClientExample.exe"
+set errorstatus=%ERRORLEVEL%
+:: Kill server
+TaskKill /IM "IncludesTestServerExample.exe"
+if not %errorstatus%==0 goto :EOF
+
+:::: Debug DLL Configuration
+:::: Clean the Util visual solution
+::msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+:::: Build the Util visual solution
+::msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Debug DLL" /p:Platform="%1"
+::set errorstatus=%ERRORLEVEL%
+::if not %errorstatus%==0 goto :EOF
+:::: Copy the Util idl library
+::mkdir output\lib
+::mkdir output\lib\%NDDSTARGET%
+::copy output\util\lib\%NDDSTARGET%\* output\lib\%NDDSTARGET%
+:::: Clean the visual solution
+::msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+:::: Build the visual solution
+::msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Debug DLL" /p:Platform="%1"
+::set errorstatus=%ERRORLEVEL%
+::if not %errorstatus%==0 goto :EOF
+::copy output\lib\%NDDSTARGET%\*.dll output\bin\%NDDSTARGET%\
+:::: Execute the server in other cmd.exe
+::start output\bin\%NDDSTARGET%\IncludesTestServerExample.exe
+:::: Wait 5 seconds
+::call :wait 5
+:::: Execute the client in this cmd.exe
+::"output\bin\%NDDSTARGET%\IncludesTestClientExample.exe"
+::set errorstatus=%ERRORLEVEL%
+:::: Kill server
+::TaskKill /IM "IncludesTestServerExample.exe"
+::if not %errorstatus%==0 goto :EOF
+
+:: Release Configuration
+:: Clean the Util visual solution
+msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+:: Build the Util visual solution
+msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Release" /p:Platform="%1"
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :EOF
+:: Copy the Util idl library
+mkdir output\lib
+mkdir output\lib\%NDDSTARGET%
+copy output\util\lib\%NDDSTARGET%\* output\lib\%NDDSTARGET%
+:: Clean the visual solution
+msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+:: Build the visual solution
+msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Release" /p:Platform="%1"
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :EOF
+:: Execute the server in other cmd.exe
+start output\bin\%NDDSTARGET%\IncludesTestServerExample.exe
+:: Wait 5 seconds
+call :wait 2
+:: Execute the client in this cmd.exe
+"output\bin\%NDDSTARGET%\IncludesTestClientExample.exe"
+set errorstatus=%ERRORLEVEL%
+:: Kill server
+TaskKill /IM "IncludesTestServerExample.exe"
+if not %errorstatus%==0 goto :EOF
+
+:::: Debug Configuration
+:::: Clean the Util visual solution
+::msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+:::: Build the Util visual solution
+::msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Debug" /p:Platform="%1"
+::set errorstatus=%ERRORLEVEL%
+::if not %errorstatus%==0 goto :EOF
+:::: Copy the Util idl library
+::mkdir output\lib
+::mkdir output\lib\%NDDSTARGET%
+::copy output\util\lib\%NDDSTARGET%\* output\lib\%NDDSTARGET%
+:::: Clean the visual solution
+::msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+:::: Build the visual solution
+::msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Debug" /p:Platform="%1"
+::set errorstatus=%ERRORLEVEL%
+::if not %errorstatus%==0 goto :EOF
+:::: Execute the server in other cmd.exe
+::start output\bin\%NDDSTARGET%\IncludesTestServerExample.exe
+:::: Wait 5 seconds
+::call :wait 2
+:::: Execute the client in this cmd.exe
+::"output\bin\%NDDSTARGET%\IncludesTestClientExample.exe"
+::set errorstatus=%ERRORLEVEL%
+:::: Kill server
+::TaskKill /IM "IncludesTestServerExample.exe"
+::if not %errorstatus%==0 goto :EOF
+
+goto :EOF
+
+:: Fuction wait. Use "call" to call this function.
+:wait
+@ping 192.168.1.10 -n %~1 -w 1000
+goto :EOF

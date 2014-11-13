@@ -272,3 +272,10 @@ if not %errorstatus%==0 goto :EOF
 :::: Kill server
 ::TaskKill /IM "IncludesTestServerExample.exe"
 ::if not %errorstatus%==0 goto :EOF
+
+goto :EOF
+
+:: Fuction wait. Use "call" to call this function.
+:wait
+@ping 192.168.1.10 -n %~1 -w 1000
+goto :EOF

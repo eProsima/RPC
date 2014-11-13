@@ -153,7 +153,7 @@ Struct::Recepcion StructTestServerImplExample::duplicate(/*in*/ const Struct::En
     Struct::Recepcion duplicate_ret;
 
     duplicate_ret.devolucion = ev.dato;
-    duplicate_ret.message = DDS::String_dup(ev.message);
+    duplicate_ret.message = DDS_String_dup(ev.message);
 
     return duplicate_ret;
 } 
@@ -163,7 +163,7 @@ Struct::Recepcion StructTestServerImplExample::suma(/*in*/ const Struct::Envio& 
     Struct::Recepcion suma_ret;
 
     suma_ret.devolucion = ev1.dato + ev2.dato;
-    suma_ret.message = DDS::String_alloc(strlen(ev1.message) + strlen(ev2.message) + 1);
+    suma_ret.message = DDS_String_alloc(strlen(ev1.message) + strlen(ev2.message) + 1);
 #if defined(RTI_WIN32)
     _snprintf(suma_ret.message, strlen(ev1.message) + strlen(ev2.message) + 1, "%s%s", ev1.message, ev2.message);
 #elif defined(RTI_LINUX)

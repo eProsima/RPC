@@ -31,10 +31,10 @@ char* EnumYStringTestServerImplExample::getString(/*in*/ const char* s1, /*inout
 {
     char* returnedValue;
 
-    s3 = DDS::String_dup(s2);
-    returnedValue = DDS::String_dup(s1);
-    DDS::String_free(s2);
-    s2 = DDS::String_alloc(strlen(s1) + strlen(s3) + 1);
+    s3 = DDS_String_dup(s2);
+    returnedValue = DDS_String_dup(s1);
+    DDS_String_free(s2);
+    s2 = DDS_String_alloc(strlen(s1) + strlen(s3) + 1);
 #if defined(RTI_WIN32)
     _snprintf(s2, strlen(s1) + strlen(s3) + 1, "%s%s", s1, s3);
 #elif defined(RTI_LINUX)
@@ -48,10 +48,10 @@ char* EnumYStringTestServerImplExample::getStringBounded(/*in*/ const char* sb1,
 {
     char* returnedValue;
 
-    sb3 = DDS::String_dup(sb2);
-    returnedValue = DDS::String_dup(sb1);
-    DDS::String_free(sb2);
-    sb2 = DDS::String_alloc(strlen(sb1) + strlen(sb3) + 1);
+    sb3 = DDS_String_dup(sb2);
+    returnedValue = DDS_String_dup(sb1);
+    DDS_String_free(sb2);
+    sb2 = DDS_String_alloc(strlen(sb1) + strlen(sb3) + 1);
 #if defined(RTI_WIN32)
     _snprintf(sb2, strlen(sb1) + strlen(sb3) + 1, "%s%s", sb1, sb3);
 #elif defined(RTI_LINUX)

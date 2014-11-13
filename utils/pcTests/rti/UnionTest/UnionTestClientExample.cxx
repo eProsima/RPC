@@ -57,7 +57,7 @@ int main(int argc, char **argv)
     em1._d = 1;
     em1._u.id = 1;
     em2._d = 2;
-    em2._u.name = DDS::String_dup("PRUEBA");
+    em2._u.name = DDS_String_dup("PRUEBA");
 
     try
     {
