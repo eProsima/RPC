@@ -21,7 +21,7 @@ using namespace transport;
 
 const char* const CLASS_NAME = "HttpServerTransport";
 
-HttpServerTransport::HttpServerTransport(const std::string &to_connect) : m_tcptransport(to_connect)
+HttpServerTransport::HttpServerTransport(const char* const &to_connect) : m_tcptransport(to_connect)
 {
     m_tcptransport.onBossProcess->function = boost::bind(&HttpServerTransport::bossProcess, this, _1);
 }

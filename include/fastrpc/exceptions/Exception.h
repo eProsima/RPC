@@ -10,7 +10,6 @@
 #define _EXCEPTIONS_EXCEPTION_H_
 
 #include "fastrpc/fastrpc_dll.h"
-#include <string>
 #include <exception>
 
 namespace eprosima

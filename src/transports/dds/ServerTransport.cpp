@@ -17,7 +17,7 @@ using namespace ::transport::dds;
 
 static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::ServerTransport";
 
-ServerTransport::ServerTransport(std::string &serviceName, int domainId) :
+ServerTransport::ServerTransport(const char* const &serviceName, int domainId) :
     m_serviceName(serviceName), ::transport::ServerTransport(),
     ::transport::dds::Transport(domainId)
 {
@@ -104,7 +104,7 @@ void ServerTransport::run()
     for(it = m_procedureEndpoints.begin(); it != m_procedureEndpoints.end(); ++it)
     {
         // TODO Launch exception
-        if((*it).second->start(m_serviceName) != 0)
+        if((*it).second->start(m_serviceName.c_str()) != 0)
             printf("ERROR<%s::%s>: The procedure endpoint %s cannot be started\n", CLASS_NAME, METHOD_NAME, (*it).first);
     }
 }

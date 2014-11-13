@@ -34,7 +34,7 @@ namespace eprosima
 					 * @brief Default constructor.
 					 * @param to_connect Listening IP interface.
 					 */
-                    HttpServerTransport(const std::string &to_connect);
+                    HttpServerTransport(const char* const &to_connect);
 
                     //! \brief Default destructor.
                     virtual ~HttpServerTransport();

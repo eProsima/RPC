@@ -26,7 +26,7 @@ namespace eprosima
                  * This transport can only be used by a server proxy.
                  * @ingroup TRANSPORTMODULE
                  */
-                class FASTRPC_DllAPI TCPProxyTransport : public ProxyTransport
+                class TCPProxyTransport : public ProxyTransport
                 {
                     public:
 
@@ -38,10 +38,10 @@ namespace eprosima
                          * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
 						 * @param timeout The time in milliseconds to wait for the reply.
                          */
-                        TCPProxyTransport(const char *to_connect, std::string remoteServiceName, int domainId = 0, long timeout = 10000L);
+                        FASTRPC_DllAPI TCPProxyTransport(const char* const &to_connect, const char* const &remoteServiceName, int domainId = 0, long timeout = 10000L);
 
                         //! @brief Default destructor.
-                        virtual ~TCPProxyTransport();
+                        virtual FASTRPC_DllAPI ~TCPProxyTransport();
 
                         /*!
                          * @brief This function sets the DDS' QoS to use the TCPv4 transport.
@@ -49,7 +49,7 @@ namespace eprosima
                          * @param participantQos Reference to the DDS domain participant QoS.
                          * @param participant The domain participant that will be set to use TCPv4 transport.
                          */
-                        virtual int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant);
+                        virtual FASTRPC_DllAPI int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant);
 
                     private:
 

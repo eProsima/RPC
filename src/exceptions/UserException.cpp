@@ -8,6 +8,8 @@
 
 #include "fastrpc/exceptions/UserException.h"
 
+#include <utility>
+
 using namespace eprosima::rpc::exception;
 
 UserException::UserException() : Exception()

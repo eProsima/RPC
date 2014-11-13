@@ -21,7 +21,7 @@ namespace eprosima
              * @brief This class is thrown as an exception when there is an error initializating an object.
              * @ingroup EXCEPTIONMODULE
              */
-            class FASTRPC_DllAPI InitializeException : public SystemException
+            class InitializeException : public SystemException
             {
                 public:
 
@@ -30,48 +30,41 @@ namespace eprosima
                      *
                      * \param message An error message. This message is copied.
                      */
-                    InitializeException(const std::string &message);
-
-                    /**
-                     * \brief Default constructor.
-                     *
-                     * \param message An error message. This message is moved.
-                     */
-                    InitializeException(std::string&& message);
+					FASTRPC_DllAPI InitializeException(const std::string &message) : SystemException(message.c_str(), 1){}
 
                     /**
                      * \brief Default copy constructor.
                      *
                      * \param ex InitializeException that will be copied.
                      */
-                    InitializeException(const InitializeException &ex);
+                    FASTRPC_DllAPI InitializeException(const InitializeException &ex);
 
                     /**
                      * \brief Default move constructor.
                      *
                      * \param ex InitializeException that will be moved.
                      */
-                    InitializeException(InitializeException&& ex);
+                    FASTRPC_DllAPI InitializeException(InitializeException&& ex);
 
                     /**
                      * \brief Assigment operation.
                      *
                      * \param ex InitializeException that will be copied.
                      */
-                    InitializeException& operator=(const InitializeException &ex);
+                    FASTRPC_DllAPI InitializeException& operator=(const InitializeException &ex);
 
                     /**
                      * \brief Assigment operation.
                      *
                      * \param ex InitializeException that will be moved.
                      */
-                    InitializeException& operator=(InitializeException&& ex);
+                    FASTRPC_DllAPI InitializeException& operator=(InitializeException&& ex);
 
                     /// \brief Default constructor
-                    virtual ~InitializeException() throw();
+                    virtual FASTRPC_DllAPI ~InitializeException() throw();
 
                     /// \brief This function throws the object as an exception.
-                    virtual void raise() const;
+                    virtual FASTRPC_DllAPI void raise() const;
             };
         } // namespace exception
     } // namespace rpc

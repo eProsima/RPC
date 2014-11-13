@@ -61,7 +61,7 @@ int ServerProcedureEndpoint::initialize(const char *name, const char *writertype
     return -1;
 }
 
-int ServerProcedureEndpoint::start(std::string &serviceName)
+int ServerProcedureEndpoint::start(const char* const &serviceName)
 {
     const char* const METHOD_NAME = "start";
     int returnedValue = -1;
@@ -69,7 +69,7 @@ int ServerProcedureEndpoint::start(std::string &serviceName)
     m_mutex->lock();
     if(m_started++ == 0)
     {
-        if(createEntities(serviceName) == 0)
+        if(createEntities(std::string(serviceName)) == 0)
         {
             if((returnedValue = enableEntities()) != 0)
             {

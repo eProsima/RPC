@@ -25,7 +25,7 @@ namespace eprosima
                  * This transport only can be used by a server's proxy.
                  * @ingroup TRANSPORTMODULE
                  */
-                class FASTRPC_DllAPI UDPProxyTransport : public ProxyTransport
+                class UDPProxyTransport : public ProxyTransport
                 {
                     public:
 
@@ -35,7 +35,7 @@ namespace eprosima
                          * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
 						 * @param timeout The time in milliseconds to wait for the reply.
                          */
-                        UDPProxyTransport(std::string remoteServiceName, int domainId = 0, long timeout = 10000L);
+                        FASTRPC_DllAPI UDPProxyTransport(const char* const &remoteServiceName, int domainId = 0, long timeout = 10000L);
 
                         /*!
                          * @brief Constructor for server's proxies.
@@ -45,10 +45,10 @@ namespace eprosima
                          * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
 						 * @param timeout The time in milliseconds to wait for the reply.
                          */
-                        UDPProxyTransport(const char *to_connect, std::string remoteServiceName, int domainId = 0, long timeout = 10000L);
+                        FASTRPC_DllAPI UDPProxyTransport(const char* const &to_connect, const char* const &remoteServiceName, int domainId = 0, long timeout = 10000L);
 
                         //! @brief Default destructor.
-                        virtual ~UDPProxyTransport();
+                        virtual FASTRPC_DllAPI ~UDPProxyTransport();
 
                         /*!
                          * @brief This function sets the QoS of DDS to use the UDPv4 transport.
@@ -56,7 +56,7 @@ namespace eprosima
                          * @param participantQos Reference to the DDS domain participant QoS.
                          * @param participant The domain participant that will be set to use UDPv4 transport. 
                          */
-                        virtual int setTransport(DDS_DomainParticipantQos &participantQos, DDSDomainParticipant *participant);
+                        virtual FASTRPC_DllAPI int setTransport(DDS_DomainParticipantQos &participantQos, DDSDomainParticipant *participant);
 
                     private:
 

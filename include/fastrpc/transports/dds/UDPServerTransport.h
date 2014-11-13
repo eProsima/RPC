@@ -25,7 +25,7 @@ namespace eprosima
                  * This transport can only be used by a server.
                  * @ingroup TRANSPORTMODULE
                  */
-                class FASTRPC_DllAPI UDPServerTransport : public ServerTransport
+                class UDPServerTransport : public ServerTransport
                 {
                     public:
 
@@ -34,10 +34,10 @@ namespace eprosima
 						 * @param remoteServiceName Name of the service
                          * @param domainId Optional parameter that specifies the domain identifier that will be used in DDS.
                          */
-                        UDPServerTransport(std::string serviceName, int domainId = 0);
+                        FASTRPC_DllAPI UDPServerTransport(const char* const &serviceName, int domainId = 0);
 
                         //! @brief Default destructor.
-                        virtual ~UDPServerTransport();
+                        virtual FASTRPC_DllAPI ~UDPServerTransport();
 
                         /*!
                          * @brief This function sets the DDS' QoS to use the UDPv4 transport.
@@ -45,7 +45,7 @@ namespace eprosima
                          * @param participantQos Reference to the DDS domain participant QoS.
                          * @param participant The domain participant that will be set to use UDPv4 transport.
                          */
-                        virtual int setTransport(DDS_DomainParticipantQos &participantQos, DDSDomainParticipant *participant);
+                        virtual FASTRPC_DllAPI int setTransport(DDS_DomainParticipantQos &participantQos, DDSDomainParticipant *participant);
                 };
             } // namepsace dds
         } // namespace transport

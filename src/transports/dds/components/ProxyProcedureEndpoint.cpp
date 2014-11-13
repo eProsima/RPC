@@ -410,7 +410,7 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
             requestHeader->clientId().value_2(m_proxyId[1]);
             requestHeader->clientId().value_3(m_proxyId[2]);
             requestHeader->clientId().value_4(m_proxyId[3]);
-            requestHeader->remoteServiceName(m_transport.getRemoteServiceName().c_str());
+            requestHeader->remoteServiceName(m_transport.getRemoteServiceName());
         }
         else
         {
@@ -420,7 +420,7 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
             ((unsigned int*)auxPointerToRequest)[2] = m_proxyId[2];
             ((unsigned int*)auxPointerToRequest)[3] = m_proxyId[3];
             auxPointerToRequest = (unsigned int*)auxPointerToRequest + 4;
-            *(char**)auxPointerToRequest = (char*)m_transport.getRemoteServiceName().c_str();
+            *(char**)auxPointerToRequest = (char*)m_transport.getRemoteServiceName();
             auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
             auxPointerToRequest = (char**)auxPointerToRequest + 1;
         }
@@ -571,7 +571,7 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
             requestHeader->clientId().value_2(m_proxyId[1]);
             requestHeader->clientId().value_3(m_proxyId[2]);
             requestHeader->clientId().value_4(m_proxyId[3]);
-            requestHeader->remoteServiceName(m_transport.getRemoteServiceName().c_str());
+            requestHeader->remoteServiceName(m_transport.getRemoteServiceName());
         }
         else
         {
@@ -581,7 +581,7 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
             ((unsigned int*)auxPointerToRequest)[2] = m_proxyId[2];
             ((unsigned int*)auxPointerToRequest)[3] = m_proxyId[3];
             auxPointerToRequest = (unsigned int*)auxPointerToRequest + 4;
-            *(char**)auxPointerToRequest = (char*)m_transport.getRemoteServiceName().c_str();
+            *(char**)auxPointerToRequest = (char*)m_transport.getRemoteServiceName();
             auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
             auxPointerToRequest = (char**)auxPointerToRequest + 1;
         }

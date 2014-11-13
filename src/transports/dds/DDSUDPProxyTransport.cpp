@@ -21,12 +21,12 @@ static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::UDPProxyTr
 
 using namespace eprosima::rpc::transport::dds;
 
-UDPProxyTransport::UDPProxyTransport(std::string remoteServiceName, int domainId, long milliseconds) : m_to_connect(NULL),
+UDPProxyTransport::UDPProxyTransport(const char* const &remoteServiceName, int domainId, long milliseconds) : m_to_connect(NULL),
     ProxyTransport(remoteServiceName, domainId, milliseconds)
 {
 }
 
-UDPProxyTransport::UDPProxyTransport(const char *to_connect, std::string remoteServiceName, int domainId, long milliseconds) : m_to_connect(NULL),
+UDPProxyTransport::UDPProxyTransport(const char* const &to_connect, const char* const &remoteServiceName, int domainId, long milliseconds) : m_to_connect(NULL),
     ProxyTransport(remoteServiceName, domainId, milliseconds)
 {
     m_to_connect = strdup(to_connect);

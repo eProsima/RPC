@@ -10,14 +10,11 @@
 #define _PROTOCOLS_DDS_MESSAGEHEADER_H_
 
 #include "fastrpc/fastrpc_dll.h"
-#include "fastrpc/utils/macros/stl_string_export.h"
 #include "fastrpc/utils/macros/strdup.h"
 
 #include <stdint.h>
 #include <string.h>
 #include <string>
-
-STL_STRING_EXPORT(FASTRPC_DllAPI)
 
 namespace eprosima
 {
@@ -361,45 +358,45 @@ namespace eprosima
                  * @brief Header information used in all generated reply topics.
 				 * @ingroup PROTOCOLMODULE
                  */
-                class FASTRPC_DllAPI ReplyHeader
+                class ReplyHeader
                 {
                     public:
 
                         //! @brief Default constructor
-                        ReplyHeader();
+                        FASTRPC_DllAPI ReplyHeader();
 
                         /*!
                          * @brief Copy constructor
                          * @param header ReplyHeader object to be copied.
                          */
-                        ReplyHeader(const ReplyHeader &header);
+                        FASTRPC_DllAPI ReplyHeader(const ReplyHeader &header);
 
                         /*!
                          * @brief Copy constructor
                          * @param header ReplyHeader object to be copied.
                          */
-                        ReplyHeader(ReplyHeader &&header);
+                        FASTRPC_DllAPI ReplyHeader(ReplyHeader &&header);
 
                         //! @brief Destructor
-                        ~ReplyHeader();
+                        FASTRPC_DllAPI ~ReplyHeader();
 
                         /*!
                          * @brief Copy assignment
                          * @param header ReplyHeader object to be copied.
                          */
-                        ReplyHeader& operator=(const ReplyHeader &header);
+                        FASTRPC_DllAPI ReplyHeader& operator=(const ReplyHeader &header);
 
                         /*!
                          * @brief Copy assignment
                          * @param header ReplyHeader object to be copied.
                          */
-                        ReplyHeader& operator=(ReplyHeader &&header);
+                        FASTRPC_DllAPI ReplyHeader& operator=(ReplyHeader &&header);
 
                         /*!
                          * @brief This function sets the client identifier.
                          * @param _clientId Client identifier
                          */
-                        inline void clientId(const Identification &_clientId)
+                        inline FASTRPC_DllAPI void clientId(const Identification &_clientId)
                         {
                             m_clientId = _clientId;
                         }
@@ -408,7 +405,7 @@ namespace eprosima
                          * @brief This function sets the client identifier.
                          * @param _clientId Client identifier
                          */
-                        inline void clientId(Identification &&_clientId)
+                        inline FASTRPC_DllAPI void clientId(Identification &&_clientId)
                         {
                             m_clientId = std::move(_clientId);
                         }
@@ -417,7 +414,7 @@ namespace eprosima
                          * @brief This function returns the client identifier.
                          * @return Client identifier
                          */
-                        inline const Identification& clientId() const
+                        inline FASTRPC_DllAPI const Identification& clientId() const
                         {
                             return m_clientId;
                         }
@@ -426,7 +423,7 @@ namespace eprosima
                          * @brief This function returns the client identifier.
                          * @return Client identifier
                          */
-                        inline Identification& clientId()
+                        inline FASTRPC_DllAPI Identification& clientId()
                         {
                             return m_clientId;
                         }
@@ -435,7 +432,7 @@ namespace eprosima
                          * @brief This function sets the request sequence number
                          * @param _requestSequenceNumber Request sequence number
                          */
-                        inline void requestSequenceNumber(uint32_t _requestSequenceNumber)
+                        inline FASTRPC_DllAPI void requestSequenceNumber(uint32_t _requestSequenceNumber)
                         {
                             m_requestSequenceNumber = _requestSequenceNumber;
                         }
@@ -444,7 +441,7 @@ namespace eprosima
                          * @brief This function returns the request sequence number
                          * @return Request sequence number
                          */
-                        inline uint32_t requestSequenceNumber() const
+                        inline FASTRPC_DllAPI uint32_t requestSequenceNumber() const
                         {
                             return m_requestSequenceNumber;
                         }
@@ -453,7 +450,7 @@ namespace eprosima
                          * @brief This function returns the request sequence number
                          * @return Request sequence number
                          */
-                        inline uint32_t& requestSequenceNumber()
+                        inline FASTRPC_DllAPI uint32_t& requestSequenceNumber()
                         {
                             return m_requestSequenceNumber;
                         }
@@ -462,7 +459,7 @@ namespace eprosima
                          * @brief This function sets the server return code
                          * @param _retCode Server return code
                          */
-                        inline void retCode(int32_t _retCode)
+                        inline FASTRPC_DllAPI void retCode(int32_t _retCode)
                         {
                             m_retCode = _retCode;
                         }
@@ -471,7 +468,7 @@ namespace eprosima
                          * @brief This function returns the server return code
                          * @return Server return code
                          */
-                        inline int32_t retCode() const
+                        inline FASTRPC_DllAPI int32_t retCode() const
                         {
                             return m_retCode;
                         }
@@ -480,7 +477,7 @@ namespace eprosima
                          * @brief This function returns the server return code
                          * @return Server return code
                          */
-                        inline int32_t& retCode()
+                        inline FASTRPC_DllAPI int32_t& retCode()
                         {
                             return m_retCode;
                         }
@@ -489,37 +486,13 @@ namespace eprosima
                          * @brief This function sets the server return message.
                          * @param _retMsg Server return message
                          */
-                        inline void retMsg(const std::string &_retMsg)
-                        {
-                            m_retMsg = _retMsg;
-                        }
-
-                        /*!
-                         * @brief This function sets the server return message.
-                         * @param _retMsg Server return message
-                         */
-                        inline void retMsg(std::string &&_retMsg)
-                        {
-                            m_retMsg = std::move(_retMsg);
-                        }
+                        FASTRPC_DllAPI void retMsg(const char* const &_retMsg);
 
                         /*!
                          * @brief This function returns the server return message.
                          * @return Server return message
                          */
-                        inline const std::string& retMsg() const
-                        {
-                            return m_retMsg;
-                        }
-
-                        /*!
-                         * @brief This function returns the server return message.
-                         * @return Server return message
-                         */
-                        inline std::string& retMsg()
-                        {
-                            return m_retMsg;
-                        }
+                        FASTRPC_DllAPI const char* retMsg() const;
 
                         /*!
                          * @brief This function returns the maximum serialized size of a ReplyHeader object
@@ -527,19 +500,19 @@ namespace eprosima
                          * @param current_alignment Buffer alignment.
                          * @return Maximum serialized size.
                          */
-                        static size_t getMaxCdrSerializedSize(size_t current_alignment);
+                        FASTRPC_DllAPI static size_t getMaxCdrSerializedSize(size_t current_alignment);
 
                         /*!
                          * @brief This function serializes the ReplyHeader object using CDR serialization.
                          * @param cdr CDR serialization object.
                          */
-                        void serialize(eprosima::fastcdr::Cdr &cdr) const;
+                        FASTRPC_DllAPI void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
                         /*!
                          * @brief This function deserializes the ReplyHeader object using CDR serialization.
                          * @param cdr CDR serialization object.
                          */
-                        void deserialize(eprosima::fastcdr::Cdr &cdr);
+                        FASTRPC_DllAPI void deserialize(eprosima::fastcdr::Cdr &cdr);
 
                     private:
 

@@ -21,7 +21,7 @@ namespace eprosima
              * @brief This class is thrown as an exception when the server is not found.
              * @ingroup EXCEPTIONMODULE
              */
-            class FASTRPC_DllAPI ServerNotFoundException : public SystemException
+            class ServerNotFoundException : public SystemException
             {
                 public:
 
@@ -30,48 +30,41 @@ namespace eprosima
                      *
                      * \param message An error message. This message is copied.
                      */
-                    ServerNotFoundException(const std::string &message);
-
-                    /**
-                     * \brief Default constructor.
-                     *
-                     * \param message An error message. This message is moved.
-                     */
-                    ServerNotFoundException(std::string&& message);
+					FASTRPC_DllAPI ServerNotFoundException(const std::string &message) : SystemException(message.c_str(), 4) {}
 
                     /**
                      * \brief Default copy constructor.
                      *
                      * \param ex ServerNotFoundException that will be copied.
                      */
-                    ServerNotFoundException(const ServerNotFoundException &ex);
+                    FASTRPC_DllAPI ServerNotFoundException(const ServerNotFoundException &ex);
 
                     /**
                      * \brief Default move constructor.
                      *
                      * \param ex ServerNotFoundException that will be moved.
                      */
-                    ServerNotFoundException(ServerNotFoundException&& ex);
+                    FASTRPC_DllAPI ServerNotFoundException(ServerNotFoundException&& ex);
 
                     /**
                      * \brief Assigment operation.
                      *
                      * \param ex ServerNotFoundException that will be copied.
                      */
-                    ServerNotFoundException& operator=(const ServerNotFoundException &ex);
+                    FASTRPC_DllAPI ServerNotFoundException& operator=(const ServerNotFoundException &ex);
 
                     /**
                      * \brief Assigment operation.
                      *
                      * \param ex ServerNotFoundException that will be moved.
                      */
-                    ServerNotFoundException& operator=(ServerNotFoundException&& ex);
+                    FASTRPC_DllAPI ServerNotFoundException& operator=(ServerNotFoundException&& ex);
 
                     /// \brief Default constructor
-                    virtual ~ServerNotFoundException() throw();
+                    virtual FASTRPC_DllAPI ~ServerNotFoundException() throw();
 
                     /// \brief This function throws the object as an exception.
-                    virtual void raise() const;
+                    virtual FASTRPC_DllAPI void raise() const;
             };
         } // namespace exception
     } // namespace rpc

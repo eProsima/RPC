@@ -10,6 +10,7 @@
 #define TCP_SERIALIZER_HTTPSERIALIZER
 
 #include "fastrpc/fastrpc_dll.h"
+#include "fastrpc/utils/macros/stl_string_export.h"
 
 #include <iostream>
 #include <stdint.h>
@@ -19,6 +20,8 @@
 
 #include "fastrpc/protocols/rest/FastBuffer.h"
 #include "fastrpc/protocols/rest/HTTPEntities.h"
+
+STL_STRING_EXPORT(FASTRPC_DllAPI)
 
 namespace eprosima
 {

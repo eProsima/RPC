@@ -21,7 +21,7 @@ namespace eprosima
 		 * @brief This class is thrown as an exception when there is an error in the proxy side.
          * @ingroup EXCEPTIONMODULE
 		 */
-        class FASTRPC_DllAPI ClientInternalException : public SystemException
+        class ClientInternalException : public SystemException
         {
 		public:
 
@@ -30,48 +30,41 @@ namespace eprosima
 			 *
 			 * \param message An error message. This message is copied.
 			 */
-			ClientInternalException(const std::string &message);
-
-			/**
-			 * \brief Default constructor.
-			 *
-			 * \param message An error message. This message is moved.
-			 */
-			ClientInternalException(std::string&& message);
+			FASTRPC_DllAPI ClientInternalException(const std::string &message) : SystemException(message.c_str(), 2) {}
 
 			/**
 			 * \brief Default copy constructor.
 			 *
 			 * \param ex ClientInternalException that will be copied.
 			 */
-			ClientInternalException(const ClientInternalException &ex);
+			FASTRPC_DllAPI ClientInternalException(const ClientInternalException &ex);
 
 			/**
 			 * \brief Default move constructor.
 			 *
 			 * \param ex ClientInternalException that will be moved.
 			 */
-			ClientInternalException(ClientInternalException&& ex);
+			FASTRPC_DllAPI ClientInternalException(ClientInternalException&& ex);
 
 			/**
 			 * \brief Assigment operation.
 			 *
 			 * \param ex ClientInternalException that will be copied.
 			 */
-			ClientInternalException& operator=(const ClientInternalException &ex);
+			FASTRPC_DllAPI ClientInternalException& operator=(const ClientInternalException &ex);
 
 			/**
 			 * \brief Assigment operation.
 			 *
 			 * \param ex ClientInternalException that will be moved.
 			 */
-			ClientInternalException& operator=(ClientInternalException&& ex);
+			FASTRPC_DllAPI ClientInternalException& operator=(ClientInternalException&& ex);
 
 			/// \brief Default constructor
-			virtual ~ClientInternalException() throw();
+			virtual FASTRPC_DllAPI ~ClientInternalException() throw();
 
 			/// \brief This function throws the object as an exception.
-			virtual void raise() const;
+			virtual FASTRPC_DllAPI void raise() const;
         };
         } // namespace exception
     } // namespace rpc

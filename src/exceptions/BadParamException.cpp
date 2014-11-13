@@ -10,14 +10,6 @@
 
 using namespace eprosima::rpc::exception;
 
-BadParamException::BadParamException(const std::string &message) : SystemException(message, 6)
-{
-}
-
-BadParamException::BadParamException(std::string&& message) : SystemException(std::move(message), 6)
-{
-}
-
 BadParamException::BadParamException(const BadParamException &ex) : SystemException(ex)
 {
 }

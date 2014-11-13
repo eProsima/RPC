@@ -44,7 +44,7 @@ namespace eprosima
              * @brief This class represents a TCP transport. It must be used by TCP servers.
              * @ingroup TRANSPORTMODULE
 			 */
-            class FASTRPC_DllAPI TCPServerTransport : public ServerTransport
+            class TCPServerTransport : public ServerTransport
             {
                 private:
                     TCPServerTransportBoost *m_boostInfo;
@@ -73,34 +73,34 @@ namespace eprosima
 					 * It gets the request from the TCP endpoint.
 					 * @param connection Incoming endpoint.
 					 */
-					void worker(TCPEndpoint* connection);
+					FASTRPC_DllAPI void worker(TCPEndpoint* connection);
 
 					/*!
 					 * @brief Default constructor.
 					 * @param to_connect Listening IP interface.
 					 */
-                    TCPServerTransport(const std::string &to_connect);
+                    FASTRPC_DllAPI TCPServerTransport(const char* const &to_connect);
 
 					/*!
 					 * @brief Default destructor.
 					 * @param to_connect Listening IP interface.
 					 */
-                    virtual ~TCPServerTransport();
+                    virtual FASTRPC_DllAPI ~TCPServerTransport();
 
 					/*!
 					 * @brief This method runs the TCP server.
 					 */
-                    void run();
+                    FASTRPC_DllAPI void run();
 
 					/*!
 					 * @brief This method stops the TCP server.
 					 */
-                    void stop();
+                    FASTRPC_DllAPI void stop();
 
                     /*!
                      * @brief This function returns the type of the transport.
                      */
-                    const char* getType() const {return "RAW";}
+                    FASTRPC_DllAPI const char* getType() const {return "RAW";}
                     
 					/*!
 					 * @brief This function is used to send a reply to a proxy.
@@ -108,7 +108,7 @@ namespace eprosima
 					 * @param dataLength Length of the data to send.
 					 * @param endpoint Target endpoint to send the data to.
 					 */
-					void sendReply(void *data, size_t dataLength, Endpoint *connection);
+					FASTRPC_DllAPI void sendReply(void *data, size_t dataLength, Endpoint *connection);
 
 					/*!
 					 * @brief This function is used to send a reply to a proxy.
@@ -117,7 +117,7 @@ namespace eprosima
 					 * @param dataToRead Size of the data to read
 					 * @param endpoint Endpoint to receive the data from
 					 */
-                    int receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint); 
+                    FASTRPC_DllAPI int receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint); 
             };
 
         } // namespace transport

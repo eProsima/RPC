@@ -21,7 +21,7 @@ namespace eprosima
              * @brief This class is thrown as an exception when the remote procedure call exceeds the maximum time.
              * @ingroup EXCEPTIONMODULE
              */
-            class FASTRPC_DllAPI ServerTimeoutException : public SystemException
+            class ServerTimeoutException : public SystemException
             {
                 public:
 
@@ -30,48 +30,41 @@ namespace eprosima
                      *
                      * \param message An error message. This message is copied.
                      */
-                    ServerTimeoutException(const std::string &message);
-
-                    /**
-                     * \brief Default constructor.
-                     *
-                     * \param message An error message. This message is moved.
-                     */
-                    ServerTimeoutException(std::string&& message);
+					FASTRPC_DllAPI ServerTimeoutException(const std::string &message) : SystemException(message.c_str(), 5) {}
 
                     /**
                      * \brief Default copy constructor.
                      *
                      * \param ex ServerTimeoutException that will be copied.
                      */
-                    ServerTimeoutException(const ServerTimeoutException &ex);
+                    FASTRPC_DllAPI ServerTimeoutException(const ServerTimeoutException &ex);
 
                     /**
                      * \brief Default move constructor.
                      *
                      * \param ex ServerTimeoutException that will be moved.
                      */
-                    ServerTimeoutException(ServerTimeoutException&& ex);
+                    FASTRPC_DllAPI ServerTimeoutException(ServerTimeoutException&& ex);
 
                     /**
                      * \brief Assigment operation.
                      *
                      * \param ex ServerTimeoutException that will be copied.
                      */
-                    ServerTimeoutException& operator=(const ServerTimeoutException &ex);
+                    FASTRPC_DllAPI ServerTimeoutException& operator=(const ServerTimeoutException &ex);
 
                     /**
                      * \brief Assigment operation.
                      *
                      * \param ex ServerTimeoutException that will be moved.
                      */
-                    ServerTimeoutException& operator=(ServerTimeoutException&& ex);
+                    FASTRPC_DllAPI ServerTimeoutException& operator=(ServerTimeoutException&& ex);
 
                     /// \brief Default constructor
-                    virtual ~ServerTimeoutException() throw();
+                    virtual FASTRPC_DllAPI ~ServerTimeoutException() throw();
 
                     /// \brief This function throws the object as an exception.
-                    virtual void raise() const;
+                    virtual FASTRPC_DllAPI void raise() const;
             };
         } // namespace exception
     } // namespace rpc

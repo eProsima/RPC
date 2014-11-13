@@ -173,6 +173,20 @@ ReplyHeader& ReplyHeader::operator=(ReplyHeader &&header)
     return *this;
 }
 
+void ReplyHeader::retMsg(const char* const &_retMsg)
+{
+    m_retMsg = _retMsg;
+}
+
+/*!
+    * @brief This function returns the server return message.
+    * @return Server return message
+    */
+const char* ReplyHeader::retMsg() const
+{
+    return m_retMsg.c_str();
+}
+
 size_t ReplyHeader::getMaxCdrSerializedSize(size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;

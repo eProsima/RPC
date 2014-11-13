@@ -10,14 +10,6 @@
 
 using namespace eprosima::rpc::exception;
 
-ClientInternalException::ClientInternalException(const std::string &message) : SystemException(message, 2)
-{
-}
-
-ClientInternalException::ClientInternalException(std::string&& message) : SystemException(std::move(message), 2)
-{
-}
-
 ClientInternalException::ClientInternalException(const ClientInternalException &ex) : SystemException(ex)
 {
 }

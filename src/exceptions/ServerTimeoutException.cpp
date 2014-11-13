@@ -10,14 +10,6 @@
 
 using namespace eprosima::rpc::exception;
 
-ServerTimeoutException::ServerTimeoutException(const std::string &message) : SystemException(message, 5)
-{
-}
-
-ServerTimeoutException::ServerTimeoutException(std::string&& message) : SystemException(std::move(message), 5)
-{
-}
-
 ServerTimeoutException::ServerTimeoutException(const ServerTimeoutException &ex) : SystemException(ex)
 {
 }

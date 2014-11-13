@@ -10,14 +10,6 @@
 
 using namespace eprosima::rpc::exception;
 
-InitializeException::InitializeException(const std::string &message) : SystemException(message, 1)
-{
-}
-
-InitializeException::InitializeException(std::string&& message) : SystemException(std::move(message), 1)
-{
-}
-
 InitializeException::InitializeException(const InitializeException &ex) : SystemException(ex)
 {
 }

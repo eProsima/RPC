@@ -19,15 +19,16 @@ const size_t MAX_INT64_CHARS = 20;
 using namespace eprosima::rpc;
 using namespace ::transport;
 
-std::string getAddress(const std::string &serverAddress)
+std::string getAddress(const char* const &serverAddress)
 {
 	// Check protocol
-	std::string address = serverAddress;
+	std::string serverAddress_s(serverAddress);
+	std::string address = serverAddress_s;
 
 	size_t index;
 	index = address.find("://");
 	if(index != std::string::npos) {
-		std::string protocol = serverAddress.substr(0, index);
+		std::string protocol = serverAddress_s.substr(0, index);
 		if(protocol.compare("http")==0) {
 			address += ":80";
 		} else if(protocol.compare("https")==0) {
@@ -41,7 +42,7 @@ std::string getAddress(const std::string &serverAddress)
     return address;
 }
 
-HttpProxyTransport::HttpProxyTransport(const std::string &serverAddress) : m_tcptransport(getAddress(serverAddress)),
+HttpProxyTransport::HttpProxyTransport(const char* const &serverAddress) : m_tcptransport(getAddress(serverAddress).c_str()),
     m_writeBuffer(NULL), m_writeBufferLength(0), m_writeBufferUse(0), m_readBuffer(NULL), m_readBufferLength(0),
     m_readBufferUse(0), m_readBufferCurrentPointer(0)
 {
