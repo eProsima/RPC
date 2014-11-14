@@ -22,7 +22,7 @@
 		<attribute name="base" />
 		<attribute name="grammar" />
 		<sequential>
-            <java classname="antlr.Tool" classpath="../classes/antlr-2.7.7.jar">
+            <java classname="org.antlr.v4.Tool" classpath="../classes/antlr-4.4.jar">
 				<arg value="-o" />
 				<arg value="@{base}" />
 				<arg value="@{grammar}" />
@@ -89,7 +89,7 @@
 
 		<path id="build.classpath">
 			<fileset dir="${lib.dir}">
-				<include name="antlr-2.7.7.jar" />
+				<include name="antlr-4.4.jar" />
 				<include name="stringtemplate-3.2.1.jar" />
 				<include name="antxr.jar" />
 			</fileset>
@@ -128,7 +128,7 @@
 	<target name="compile" depends="init, prepare-sources" description="Compiles the sources. (Default)">
 		<!-- Echo compilation properties -->
 		<echo>Building IDL ANTLR grammars... Some warnings are expected...</echo>
-        <antlr base="${idl.src.java}${file.separator}com/eprosima/idl/parser/grammar" grammar="${idl.grammar.dir}${file.separator}idl.g" />
+        <antlr base="${idl.src.java}${file.separator}com/eprosima/idl/parser/grammar" grammar="${idl.grammar.dir}${file.separator}IDL.g" />
 		<echo>Building WADL ANTXR grammars... Some warnings are expected...</echo>
 		<antxr base="${fastrpc.src.java}${file.separator}com/eprosima/fastrpc/wadl/grammar" grammar="${fastrpc.grammar.dir}${file.separator}wadl.antxr" />
 		<echo>Compiling java code...</echo>

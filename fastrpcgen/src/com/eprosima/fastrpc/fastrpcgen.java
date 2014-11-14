@@ -21,6 +21,8 @@ import org.antlr.stringtemplate.StringTemplateGroup;
 import org.antlr.stringtemplate.StringTemplateGroupLoader;
 import org.antlr.stringtemplate.CommonGroupLoader;
 import org.antlr.stringtemplate.language.DefaultTemplateLexer;
+import org.antlr.v4.runtime.ANTLRFileStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 
 import com.javadude.antxr.RecognitionException;
 import com.javadude.antxr.TokenStreamException;
@@ -781,12 +783,13 @@ public class fastrpcgen
 
             try
             {
-                InputStream input = new FileInputStream(idlParseFileName);
+				ANTLRFileStream input = new ANTLRFileStream(idlParseFileName);
                 IDLLexer lexer = new IDLLexer(input);
                 lexer.setContext(ctx);
-                IDLParser parser = new IDLParser(lexer);
+		        CommonTokenStream tokens = new CommonTokenStream(lexer);
+                IDLParser parser = new IDLParser(tokens);
                 // Pass the filename without the extension.
-                returnedValue = parser.specification(ctx, tmanager, maintemplates);
+                returnedValue = parser.specification(ctx, tmanager, maintemplates).returnedValue;;
             }
             catch(FileNotFoundException ex)
             {
@@ -948,12 +951,13 @@ public class fastrpcgen
 
             try
             {
-                InputStream input = new FileInputStream(idlParseFileName);
+				ANTLRFileStream input = new ANTLRFileStream(idlParseFileName);
                 IDLLexer lexer = new IDLLexer(input);
                 lexer.setContext(ctx);
-                IDLParser parser = new IDLParser(lexer);
+		        CommonTokenStream tokens = new CommonTokenStream(lexer);
+                IDLParser parser = new IDLParser(tokens);
                 // Pass the filename without the extension.
-                returnedValue = parser.specification(ctx, tmanager, maintemplates);
+                returnedValue = parser.specification(ctx, tmanager, maintemplates).returnedValue;;
             }
             catch(FileNotFoundException ex)
             {
@@ -1141,12 +1145,13 @@ public class fastrpcgen
 
             try
             {
-                InputStream input = new FileInputStream(idlParseFileName);
+				ANTLRFileStream input = new ANTLRFileStream(idlParseFileName);
                 IDLLexer lexer = new IDLLexer(input);
                 lexer.setContext(ctx);
-                IDLParser parser = new IDLParser(lexer);
+		        CommonTokenStream tokens = new CommonTokenStream(lexer);
+                IDLParser parser = new IDLParser(tokens);
                 // Pass the filename without the extension.
-                returnedValue = parser.specification(ctx, tmanager, maintemplates);
+                returnedValue = (parser.specification(ctx, tmanager, maintemplates)).returnedValue;
             }
             catch(FileNotFoundException ex)
             {
