@@ -6,7 +6,7 @@ LDFLAGS= -m64
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
 DEFINES=  -DRTI_LINUX -DRTI_UNIX
 
-INCLUDES= -I. -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I../../../../thirdparty/eProsima/code -I$(RPCDDSHOME)/include
+INCLUDES= -I. -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I../../../../thirdparty/eprosima-common-code -I$(RPCDDSHOME)/include
 
 LIBS = -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/x64Linux2.6gcc4.4.5 -lnddscore -lnddsc -lnddscpp -lrpcdds $(SYSLIBS)
 

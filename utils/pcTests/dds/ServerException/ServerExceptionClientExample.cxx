@@ -19,6 +19,10 @@
 #include "fastrpc/exceptions/Exceptions.h"
 
 #include <iostream>
+#include <string.h>
+#ifdef __linux
+#include <unistd.h>
+#endif
 
 using namespace eprosima::rpc;
 using namespace ::exception;
