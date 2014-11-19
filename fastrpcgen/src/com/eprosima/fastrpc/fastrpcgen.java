@@ -34,6 +34,7 @@ import com.eprosima.idl.parser.grammar.IDLLexer;
 import com.eprosima.idl.parser.grammar.IDLParser;
 import com.eprosima.idl.parser.exception.ParseException;
 import com.eprosima.idl.parser.tree.Interface;
+import com.eprosima.idl.parser.tree.Specification;
 import com.eprosima.idl.generator.manager.TemplateGroup;
 import com.eprosima.idl.generator.manager.TemplateManager;
 import com.eprosima.idl.util.Util;
@@ -789,7 +790,9 @@ public class fastrpcgen
 		        CommonTokenStream tokens = new CommonTokenStream(lexer);
                 IDLParser parser = new IDLParser(tokens);
                 // Pass the filename without the extension.
-                returnedValue = parser.specification(ctx, tmanager, maintemplates).returnedValue;;
+                //returnedValue = parser.specification(ctx, tmanager, maintemplates).returnedValue;
+				Specification specification = parser.specification(ctx, tmanager, maintemplates).spec;
+				returnedValue = specification != null;
             }
             catch(FileNotFoundException ex)
             {
@@ -957,7 +960,9 @@ public class fastrpcgen
 		        CommonTokenStream tokens = new CommonTokenStream(lexer);
                 IDLParser parser = new IDLParser(tokens);
                 // Pass the filename without the extension.
-                returnedValue = parser.specification(ctx, tmanager, maintemplates).returnedValue;;
+                //returnedValue = parser.specification(ctx, tmanager, maintemplates).returnedValue;
+				Specification specification = parser.specification(ctx, tmanager, maintemplates).spec;
+				returnedValue = specification != null;
             }
             catch(FileNotFoundException ex)
             {
@@ -1151,7 +1156,9 @@ public class fastrpcgen
 		        CommonTokenStream tokens = new CommonTokenStream(lexer);
                 IDLParser parser = new IDLParser(tokens);
                 // Pass the filename without the extension.
-                returnedValue = (parser.specification(ctx, tmanager, maintemplates)).returnedValue;
+                //returnedValue = (parser.specification(ctx, tmanager, maintemplates)).returnedValue;
+				Specification specification = parser.specification(ctx, tmanager, maintemplates).spec;
+				returnedValue = specification != null;
             }
             catch(FileNotFoundException ex)
             {
