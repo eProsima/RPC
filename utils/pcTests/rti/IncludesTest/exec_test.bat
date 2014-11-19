@@ -27,7 +27,7 @@ if not %errorstatus%==0 goto :EOF
 
 :: Release DLL Configuration
 :: Clean the Util visual solution
-msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Configuration="Release DLL" /p:Platform="%1"
 :: Build the Util visual solution
 msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Release DLL" /p:Platform="%1"
 set errorstatus=%ERRORLEVEL%
@@ -37,7 +37,7 @@ mkdir output\lib
 mkdir output\lib\%NDDSTARGET%
 copy output\util\lib\%NDDSTARGET%\Util.* output\lib\%NDDSTARGET%
 :: Clean the rest files visual solution
-msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Configuration="Release DLL" /p:Platform="%1"
 :: Build the rest files visual solution
 msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Release DLL" /p:Platform="%1"
 set errorstatus=%ERRORLEVEL%
@@ -56,7 +56,7 @@ if not %errorstatus%==0 goto :EOF
 
 :::: Debug Configuration
 :::: Clean the Util visual solution
-::msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+::msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Configuration="Debug" /p:Platform="%1"
 :::: Build the Util visual solution
 ::msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Debug" /p:Platform="%1"
 ::set errorstatus=%ERRORLEVEL%
@@ -66,7 +66,7 @@ if not %errorstatus%==0 goto :EOF
 ::mkdir output\lib\%NDDSTARGET%
 ::copy output\util\lib\%NDDSTARGET%\* output\lib\%NDDSTARGET%
 :::: Clean the visual solution
-::msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+::msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Configuration="Debug" /p:Platform="%1"
 :::: Build the visual solution
 ::msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Debug" /p:Platform="%1"
 ::set errorstatus=%ERRORLEVEL%
@@ -84,7 +84,7 @@ if not %errorstatus%==0 goto :EOF
 
 :: Release Configuration
 :: Clean the Util visual solution
-msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Configuration="Release" /p:Platform="%1"
 :: Build the Util visual solution
 msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Release" /p:Platform="%1"
 set errorstatus=%ERRORLEVEL%
@@ -94,7 +94,7 @@ mkdir output\lib
 mkdir output\lib\%NDDSTARGET%
 copy output\util\lib\%NDDSTARGET%\* output\lib\%NDDSTARGET%
 :: Clean the visual solution
-msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Configuration="Release" /p:Platform="%1"
 :: Build the visual solution
 msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Release" /p:Platform="%1"
 set errorstatus=%ERRORLEVEL%
@@ -112,7 +112,7 @@ if not %errorstatus%==0 goto :EOF
 
 :::: Debug Configuration
 :::: Clean the Util visual solution
-::msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+::msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Configuration="Debug" /p:Platform="%1"
 :::: Build the Util visual solution
 ::msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Debug" /p:Platform="%1"
 ::set errorstatus=%ERRORLEVEL%
@@ -122,7 +122,7 @@ if not %errorstatus%==0 goto :EOF
 ::mkdir output\lib\%NDDSTARGET%
 ::copy output\util\lib\%NDDSTARGET%\* output\lib\%NDDSTARGET%
 :::: Clean the visual solution
-::msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+::msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Configuration="Debug" /p:Platform="%1"
 :::: Build the visual solution
 ::msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Debug" /p:Platform="%1"
 ::set errorstatus=%ERRORLEVEL%
@@ -160,7 +160,7 @@ if not %errorstatus%==0 goto :EOF
 
 :: Release DLL Configuration
 :: Clean the Util visual solution
-msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Configuration="Release DLL" /p:Platform="%1"
 :: Build the Util visual solution
 msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Release DLL" /p:Platform="%1"
 set errorstatus=%ERRORLEVEL%
@@ -170,7 +170,7 @@ mkdir output\lib
 mkdir output\lib\%NDDSTARGET%
 copy output\util\lib\%NDDSTARGET%\* output\lib\%NDDSTARGET%
 :: Clean the rest files visual solution
-msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Configuration="Release DLL" /p:Platform="%1"
 :: Build the rest files visual solution
 msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Release DLL" /p:Platform="%1"
 set errorstatus=%ERRORLEVEL%
@@ -189,7 +189,7 @@ if not %errorstatus%==0 goto :EOF
 
 :::: Debug DLL Configuration
 :::: Clean the Util visual solution
-::msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+::msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Configuration="Debug DLL" /p:Platform="%1"
 :::: Build the Util visual solution
 ::msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Debug DLL" /p:Platform="%1"
 ::set errorstatus=%ERRORLEVEL%
@@ -199,7 +199,7 @@ if not %errorstatus%==0 goto :EOF
 ::mkdir output\lib\%NDDSTARGET%
 ::copy output\util\lib\%NDDSTARGET%\* output\lib\%NDDSTARGET%
 :::: Clean the visual solution
-::msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+::msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Configuration="Debug DLL" /p:Platform="%1"
 :::: Build the visual solution
 ::msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Debug DLL" /p:Platform="%1"
 ::set errorstatus=%ERRORLEVEL%
@@ -218,7 +218,7 @@ if not %errorstatus%==0 goto :EOF
 
 :: Release Configuration
 :: Clean the Util visual solution
-msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Configuration="Release" /p:Platform="%1"
 :: Build the Util visual solution
 msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Release" /p:Platform="%1"
 set errorstatus=%ERRORLEVEL%
@@ -228,7 +228,7 @@ mkdir output\lib
 mkdir output\lib\%NDDSTARGET%
 copy output\util\lib\%NDDSTARGET%\* output\lib\%NDDSTARGET%
 :: Clean the visual solution
-msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Configuration="Release" /p:Platform="%1"
 :: Build the visual solution
 msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Release" /p:Platform="%1"
 set errorstatus=%ERRORLEVEL%
@@ -246,7 +246,7 @@ if not %errorstatus%==0 goto :EOF
 
 :::: Debug Configuration
 :::: Clean the Util visual solution
-::msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+::msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Configuration="Debug" /p:Platform="%1"
 :::: Build the Util visual solution
 ::msbuild "output\util\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Debug" /p:Platform="%1"
 ::set errorstatus=%ERRORLEVEL%
@@ -256,7 +256,7 @@ if not %errorstatus%==0 goto :EOF
 ::mkdir output\lib\%NDDSTARGET%
 ::copy output\util\lib\%NDDSTARGET%\* output\lib\%NDDSTARGET%
 :::: Clean the visual solution
-::msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Platform="%1"
+::msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Clean /p:Configuration="Debug" /p:Platform="%1"
 :::: Build the visual solution
 ::msbuild "output\rpcsolution-%NDDSTARGET%.sln" /t:Build /p:Configuration="Debug" /p:Platform="%1"
 ::set errorstatus=%ERRORLEVEL%

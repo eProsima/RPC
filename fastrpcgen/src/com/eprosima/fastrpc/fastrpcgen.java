@@ -1702,7 +1702,8 @@ public class fastrpcgen
             // TODO For windows.
             if(m_exampleOption.substring(3, 6).equals("Win"))
             {
-                System.out.println("Generating VS2010 solution");
+		String vs = m_exampleOption.substring(8,14);
+                System.out.println("Generating " + vs + " solution");
 
                 if(m_exampleOption.startsWith("i86"))
                 {

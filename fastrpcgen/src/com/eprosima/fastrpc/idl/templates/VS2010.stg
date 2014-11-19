@@ -1,8 +1,15 @@
 group VS2010;
 
 solution(solution, example, configurations) ::= <<
+$if(solution.isVS2010)$
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
+
+$elseif(solution.isVS2013)$
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+
+$endif$
 $solution.projects : {$projectReferences(solution=solution, project=it, example=example)$$if(it.containsInterfaces)$$projectReferencesExtra(solution=solution, project=it, example=example)$$endif$};separator="\n"$
 Global
 $\t$GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +45,13 @@ project(solution, project, example, configurations, local) ::= <<
     <UseDebugLibraries>$if(it.debug)$true$else$false$endif$</UseDebugLibraries>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
+    $if(solution.isVS2010)$
+    <PlatformToolset>v100</PlatformToolset>
+
+    $elseif(solution.isVS2013)$
+    <PlatformToolset>v120</PlatformToolset>
+
+    $endif$
   </PropertyGroup>};separator="\n"$
   <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -148,6 +162,13 @@ projectClient(solution, project, example, configurations, local) ::= <<
     <UseDebugLibraries>$if(it.debug)$true$else$false$endif$</UseDebugLibraries>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
+    $if(solution.isVS2010)$
+    <PlatformToolset>v100</PlatformToolset>
+
+    $elseif(solution.isVS2013)$
+
+    <PlatformToolset>v120</PlatformToolset>
+    $endif$
   </PropertyGroup>};separator="\n"$
   <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -258,6 +279,13 @@ projectClientExample(solution, project, example, configurations, local) ::= <<
     <UseDebugLibraries>$if(it.debug)$true$else$false$endif$</UseDebugLibraries>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
+    $if(solution.isVS2010)$
+    <PlatformToolset>v100</PlatformToolset>
+
+    $elseif(solution.isVS2013)$
+
+    <PlatformToolset>v120</PlatformToolset>
+    $endif$
   </PropertyGroup>};separator="\n"$
   <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -349,6 +377,13 @@ projectServer(solution, project, example, configurations, local) ::= <<
     <UseDebugLibraries>$if(it.debug)$true$else$false$endif$</UseDebugLibraries>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
+    $if(solution.isVS2010)$
+    <PlatformToolset>v100</PlatformToolset>
+
+    $elseif(solution.isVS2013)$
+    <PlatformToolset>v120</PlatformToolset>
+
+    $endif$
   </PropertyGroup>};separator="\n"$
   <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -459,6 +494,13 @@ projectServerExample(solution, project, example, configurations, local) ::= <<
     <UseDebugLibraries>$if(it.debug)$true$else$false$endif$</UseDebugLibraries>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
+    $if(solution.isVS2010)$
+    <PlatformToolset>v100</PlatformToolset>
+
+    $elseif(solution.isVS2013)$
+    <PlatformToolset>v120</PlatformToolset>
+
+    $endif$
   </PropertyGroup>};separator="\n"$
   <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">

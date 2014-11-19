@@ -116,7 +116,7 @@ namespace eprosima
 						 * @return Reference to the RESTSerializer object
 						 */
                         inline
-                        FASTRPC_DllAPI RESTSerializer& serialize(const std::string &string_t) {serialize(string_t.c_str());}
+                        FASTRPC_DllAPI RESTSerializer& serialize(const std::string &string_t) {return serialize(string_t.c_str());}
 						
 						/*!
 						 * @brief This function deserializes a string

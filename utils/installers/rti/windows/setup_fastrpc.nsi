@@ -29,24 +29,32 @@ RequestExecutionLevel admin
 
 # Installer sections Has to be defined at the beginning because they are used by EnvVarPage.nsh
 SectionGroup "Libraries" SECGRP0000
-    Section "x64 libraries" SEC_LIB_x64
+    Section "x64Win64VS2010 libraries" SEC_LIB_x64VS2010
         SetOutPath $INSTDIR\lib\x64Win64VS2010
         SetOverwrite on
         File /r ..\..\..\..\lib\x64Win64VS2010\*
-        WriteRegStr HKLM "${REGKEY}\Components" "x64 libraries" 1
-		# Copy visual studio redistributable for x64
-        SetOutPath $TEMP
-        File "redistributables\vcredist_x64.exe"
+        WriteRegStr HKLM "${REGKEY}\Components" "x64Win64VS2010 libraries" 1
     SectionEnd
 
-    Section "i86 libraries" SEC_LIB_i86
+    Section "i86Win32VS2010 libraries" SEC_LIB_i86VS2010
         SetOutPath $INSTDIR\lib\i86Win32VS2010
         SetOverwrite on
         File /r ..\..\..\..\lib\i86Win32VS2010\*
-        WriteRegStr HKLM "${REGKEY}\Components" "i86 libraries" 1
-		# Copy visual studio redistributable for i86
-        SetOutPath $TEMP
-        File "redistributables\vcredist_x86.exe"
+        WriteRegStr HKLM "${REGKEY}\Components" "i86Win32VS2010 libraries" 1
+    SectionEnd
+
+    Section "x64Win64VS2013 libraries" SEC_LIB_x64VS2013
+        SetOutPath $INSTDIR\lib\x64Win64VS2013
+        SetOverwrite on
+        File /r ..\..\..\..\lib\x64Win64VS2013\*
+        WriteRegStr HKLM "${REGKEY}\Components" "x64Win64VS2010 libraries" 1
+    SectionEnd
+
+    Section "i86Win32VS2013 libraries" SEC_LIB_i86VS2013
+        SetOutPath $INSTDIR\lib\i86Win32VS2013
+        SetOverwrite on
+        File /r ..\..\..\..\lib\i86Win32VS2013\*
+        WriteRegStr HKLM "${REGKEY}\Components" "i86Win32VS2010 libraries" 1
     SectionEnd
 SectionGroupEnd
 
@@ -176,16 +184,28 @@ Section -post SEC0006
        ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\scripts"
        WriteRegStr HKLM "${REGKEY}\Components" "Script location" 1
     ${EndIf}
-    ${If} ${SectionIsSelected} ${SEC_LIB_x64}
-        ${If} $CheckboxX64_State == ${BST_CHECKED}
+    ${If} ${SectionIsSelected} ${SEC_LIB_x64VS2010}
+        ${If} $CheckboxX64VS2010_State == ${BST_CHECKED}
              ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\lib\x64Win64VS2010"
-             WriteRegStr HKLM "${REGKEY}\Components" "x64 libraries location" 1
+             WriteRegStr HKLM "${REGKEY}\Components" "x64Win64VS2010 libraries location" 1
         ${EndIf}
     ${EndIf}
-    ${If} ${SectionIsSelected} ${SEC_LIB_i86}
-        ${If} $CheckboxI86_State == ${BST_CHECKED}
+    ${If} ${SectionIsSelected} ${SEC_LIB_i86VS2010}
+        ${If} $CheckboxI86VS2010_State == ${BST_CHECKED}
              ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\lib\i86Win32VS2010"
-             WriteRegStr HKLM "${REGKEY}\Components" "i86 libraries location" 1
+             WriteRegStr HKLM "${REGKEY}\Components" "i86Win32VS2010 libraries location" 1
+        ${EndIf}
+    ${EndIf}
+    ${If} ${SectionIsSelected} ${SEC_LIB_x64VS2013}
+        ${If} $CheckboxX64VS2013_State == ${BST_CHECKED}
+             ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\lib\x64Win64VS2013"
+             WriteRegStr HKLM "${REGKEY}\Components" "x64Win64VS2013 libraries location" 1
+        ${EndIf}
+    ${EndIf}
+    ${If} ${SectionIsSelected} ${SEC_LIB_i86VS2013}
+        ${If} $CheckboxI86VS2013_State == ${BST_CHECKED}
+             ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\lib\i86Win32VS2013"
+             WriteRegStr HKLM "${REGKEY}\Components" "i86Win32VS2013 libraries location" 1
         ${EndIf}
     ${EndIf}
 	
@@ -207,14 +227,23 @@ done${UNSECTION_ID}:
 !macroend
 
 # Uninstaller sections
-Section /o "-un.i86 libraries" UNSEC_LIB_i86
+Section /o "-un.i86Win32VS2010 libraries" UNSEC_LIB_i86VS2010
     RmDir /r /REBOOTOK $INSTDIR\lib\i86Win32VS2010
-    DeleteRegValue HKLM "${REGKEY}\Components" "i86 libraries"
+    DeleteRegValue HKLM "${REGKEY}\Components" "i86Win32VS2010 libraries"
 SectionEnd
 
-Section /o "-un.x64 libraries" UNSEC_LIB_x64
+Section /o "-un.x64Win64VS2010 libraries" UNSEC_LIB_x64VS2010
     RmDir /r /REBOOTOK $INSTDIR\lib\x64Win64VS2010
-    DeleteRegValue HKLM "${REGKEY}\Components" "x64 libraries"
+    DeleteRegValue HKLM "${REGKEY}\Components" "x64Win64VS2010 libraries"
+SectionEnd
+Section /o "-un.i86Win32VS2013 libraries" UNSEC_LIB_i86VS2013
+    RmDir /r /REBOOTOK $INSTDIR\lib\i86Win32VS2013
+    DeleteRegValue HKLM "${REGKEY}\Components" "i86Win32VS2013 libraries"
+SectionEnd
+
+Section /o "-un.x64Win64VS2013 libraries" UNSEC_LIB_x64VS2013
+    RmDir /r /REBOOTOK $INSTDIR\lib\x64Win64VS2013
+    DeleteRegValue HKLM "${REGKEY}\Components" "x64Win64VS2013 libraries"
 SectionEnd
 
 Section -un.post UNSEC0006
@@ -239,8 +268,10 @@ Section -un.post UNSEC0006
     RmDir /r /REBOOTOK $INSTDIR
     
     ### Quitamos las variables de entorno
-    DeleteRegValue HKLM "${REGKEY}\Components" "i86 libraries location"
-    DeleteRegValue HKLM "${REGKEY}\Components" "x64 libraries location"
+    DeleteRegValue HKLM "${REGKEY}\Components" "i86Win32VS2010 libraries location"
+    DeleteRegValue HKLM "${REGKEY}\Components" "x64Win64VS2010 libraries location"
+    DeleteRegValue HKLM "${REGKEY}\Components" "i86Win32VS2013 libraries location"
+    DeleteRegValue HKLM "${REGKEY}\Components" "x64Win64VS2013 libraries location"
     DeleteRegValue HKLM "${REGKEY}\Components" "Script location"
     DeleteRegValue HKLM "${REGKEY}\Components" "FASTRPCHOME"
     
@@ -248,6 +279,8 @@ Section -un.post UNSEC0006
     ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\scripts"
     ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\lib\x64Win64VS2010"
     ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\lib\i86Win32VS2010"
+    ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\lib\x64Win64VS2013"
+    ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\lib\i86Win32VS2013"
 SectionEnd
 
 # Installer functions
@@ -268,8 +301,10 @@ Function .onInit
 FunctionEnd
 
 Function ComponentsPageLeave
-  ${Unless} ${SectionIsSelected} ${SEC_LIB_x64}
-  ${AndUnless} ${SectionIsSelected} ${SEC_LIB_i86}
+  ${Unless} ${SectionIsSelected} ${SEC_LIB_x64VS2010}
+  ${AndUnless} ${SectionIsSelected} ${SEC_LIB_i86VS2010}
+  ${AndUnless} ${SectionIsSelected} ${SEC_LIB_x64VS2013}
+  ${AndUnless} ${SectionIsSelected} ${SEC_LIB_i86VS2013}
     MessageBox MB_OK|MB_ICONINFORMATION `Please select at least one library component.`
     Abort
   ${EndUnless}
@@ -280,15 +315,19 @@ Function un.onInit
 
     ReadRegStr $INSTDIR HKLM "${REGKEY}" Path
     !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuGroup
-    !insertmacro SELECT_UNSECTION "x64 libraries" ${UNSEC_LIB_x64}
-    !insertmacro SELECT_UNSECTION "i86 libraries" ${UNSEC_LIB_i86}
+    !insertmacro SELECT_UNSECTION "x64Win64VS2010 libraries" ${UNSEC_LIB_x64VS2010}
+    !insertmacro SELECT_UNSECTION "i86Win32VS2010 libraries" ${UNSEC_LIB_i86VS2010}
+    !insertmacro SELECT_UNSECTION "x64Win64VS2013 libraries" ${UNSEC_LIB_x64VS2013}
+    !insertmacro SELECT_UNSECTION "i86Win32VS2013 libraries" ${UNSEC_LIB_i86VS2013}
 FunctionEnd
 
 # Section Descriptions
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
 !insertmacro MUI_DESCRIPTION_TEXT ${SECGRP0000} "eProsima FastRPC libraries."
-!insertmacro MUI_DESCRIPTION_TEXT ${SEC_LIB_x64} "Libraries for x64 platform."
-!insertmacro MUI_DESCRIPTION_TEXT ${SEC_LIB_i86} "Libraries for i86 platform."
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_LIB_x64VS2010} "Libraries for x64Win64VS2010 platform."
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_LIB_i86VS2010} "Libraries for i86Win32VS2010 platform."
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_LIB_x64VS2013} "Libraries for x64Win64VS2013 platform."
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_LIB_i86VS2013} "Libraries for i86Win32VS2013 platform."
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 

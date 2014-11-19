@@ -81,6 +81,16 @@ public class Solution extends com.eprosima.solution.Solution
 
 	return null;
     }
+
+    public boolean isIsVS2010()
+    {
+	    return m_example.substring(8, 14).equals("VS2010");
+    }
+
+    public boolean isIsVS2013()
+    {
+	    return m_example.substring(8, 14).equals("VS2013");
+    }
     
     private boolean m_serverside = true;
     private boolean m_clientside = true;
