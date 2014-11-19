@@ -199,8 +199,6 @@ Function ClickI86VS2013
         ${NSD_GetState} $CheckboxI86VS2010 $CheckboxX64VS2010_State
         ${NSD_SetState} $CheckboxX64VS2010 0
         ${NSD_GetState} $CheckboxX64VS2010 $CheckboxX64VS2010_State
-        ${NSD_SetState} $CheckboxI86VS2013 0
-        ${NSD_GetState} $CheckboxI86VS2013 $CheckboxX64VS2013_State
         ${NSD_SetState} $CheckboxX64VS2013 0
         ${NSD_GetState} $CheckboxX64VS2013 $CheckboxX64VS2013_State
     ${EndIf}
