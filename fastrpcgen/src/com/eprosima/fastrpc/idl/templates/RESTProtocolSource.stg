@@ -370,7 +370,7 @@ if(mediaType.find("xml") != string::npos)
 else if(mediaType.find("json") != string::npos)
     discriminator = 2;
 else {
-	// Deber  a haber Body Param y no est  , o est   en un formato no admitido. Error 400.
+	// Deberia haber Body Param y no esta, o esta en un formato no admitido. Error 400.
 	HttpMessage http400Response;
 	http400Response.setResponseCode(400);
 	http400Response.setResponseStatus("Bad request");
