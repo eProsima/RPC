@@ -48,7 +48,7 @@ $variable.typecode.cppTypename$ $variable.name$;$if(create)$$\n$memset(&$variabl
 $endif$
 >>
 
-// TODO ¿Se necesita?
+// TODO Se necesita?
 varComplexInitializeT(typeName, name) ::= <<
 $typeName$_initialize(&$name$);
 >>
