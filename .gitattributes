@@ -8,7 +8,7 @@
 *.cxx text
 *.h text
 *.java text
-*.stg text
+*.stg text eol=lf
 *.idl text
 
 # Declare files that will always have CRLF line endings on checkout.
