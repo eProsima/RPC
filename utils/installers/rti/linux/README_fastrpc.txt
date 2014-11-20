@@ -3,7 +3,7 @@ eProsima FastRPC installation requires the following steps:
 1. eProsima FastRPC requires the installation of eProsima FastCDR library on
 your system. eProsima FastCDR library is provided under the folder
 "requiredcomponents". Extract the content of the package
-"fastcdr_0.2.3.tar.gz" and execute:
+"fastcdr_0.2.4.tar.gz" and execute:
 
     For 32-bit machines
     $ cd fastcdr; ./configure --libdir=/usr/lib; make; make install
