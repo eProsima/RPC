@@ -93,10 +93,16 @@
 				<include name="stringtemplate-3.2.1.jar" />
 				<include name="antxr.jar" />
 			</fileset>
+			<fileset dir="${idl.dir}${file.separator}build${file.separator}libs" >
+				<include name="*.jar" />
+			</fileset>
 		</path>
 
 		<path id="run.classpath">
 			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${idl.dir}${file.separator}build${file.separator}libs" >
 				<include name="*.jar" />
 			</fileset>
 		</path>
@@ -113,6 +119,25 @@
 		<property name="library.includes" value="${bundle.includes}" />
 
 	</target>
+	
+	<!-- =================================================================== -->
+	<!-- IDL build and clean targets                                         -->
+	<!-- =================================================================== -->
+	<target name="compile-idl">
+		<!-- Echo compilation properties -->
+		<echo>Building IDL ANTLR grammars... Some warnings are expected...</echo>
+		<exec executable="cmd">
+			<arg value="/c"/>
+			<arg value="gradle -b ./../thirdparty/idl/build.gradle build"/>
+		</exec>
+	</target>
+	
+	<target name="clean-idl">
+		<exec executable="cmd">
+			<arg value="/c"/>
+			<arg value="gradle -b ./../thirdparty/idl/build.gradle clean"/>
+		</exec>
+	</target>
 
 
 	<!-- =================================================================== -->
@@ -125,10 +150,8 @@
 	<!-- =================================================================== -->
 	<!-- Compiles the source code                                            -->
 	<!-- =================================================================== -->
-	<target name="compile" depends="init, prepare-sources" description="Compiles the sources. (Default)">
-		<!-- Echo compilation properties -->
-		<echo>Building IDL ANTLR grammars... Some warnings are expected...</echo>
-        <antlr base="${idl.src.java}${file.separator}com/eprosima/idl/parser/grammar" grammar="${idl.grammar.dir}${file.separator}IDL.g" />
+	<target name="compile" depends="init, prepare-sources, compile-idl" description="Compiles the sources. (Default)">
+		<!-- <antlr base="${idl.src.java}${file.separator}com/eprosima/idl/parser/grammar" grammar="${idl.grammar.dir}${file.separator}IDL.g" /> -->
 		<echo>Building WADL ANTXR grammars... Some warnings are expected...</echo>
 		<antxr base="${fastrpc.src.java}${file.separator}com/eprosima/fastrpc/wadl/grammar" grammar="${fastrpc.grammar.dir}${file.separator}wadl.antxr" />
 		<echo>Compiling java code...</echo>
@@ -185,7 +208,7 @@
 	<!-- =================================================================== -->
 	<!-- Cleans up generated classes                                         -->
 	<!-- =================================================================== -->
-	<target name="clean-classes" depends="init">
+	<target name="clean-classes" depends="init, clean-idl">
 		<delete dir="${build.classes}" />
 	</target>
 </project>
