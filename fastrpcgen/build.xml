@@ -67,12 +67,10 @@
 		<property name="fastrpc.src.java" value="${fastrpc.src.dir}" />
 		<property name="fastrpc.grammar.dir" value="${fastrpc.dir}${file.separator}grammars" />
         <property name="idl.dir" value="${basedir}${file.separator}..${file.separator}thirdparty${file.separator}idl" />
-        <property name="idl.src.dir" value="${idl.dir}${file.separator}src" />
-		<property name="idl.src.java" value="${idl.src.dir}" />
+        <property name="idl.classes.dir" value="${idl.dir}${file.separator}build${file.separator}classes" />
         <property name="fastcdr.dir" value="${basedir}${file.separator}..${file.separator}thirdparty${file.separator}fastcdr" />
         <property name="fastcdr.src.dir" value="${fastcdr.dir}${file.separator}src${file.separator}java" />
 		<property name="fastcdr.src.java" value="${fastcdr.src.dir}" />
-		<property name="idl.grammar.dir" value="${idl.dir}${file.separator}grammars" />
         <property name="lib.dir" value="${basedir}${file.separator}..${file.separator}classes${file.separator}" />
 		<property name="test.dir" value="${basedir}${file.separator}test${file.separator}simple${file.separator}" />
 		<property name="tmp.dir" value="./tmp" />
@@ -93,18 +91,18 @@
 				<include name="stringtemplate-3.2.1.jar" />
 				<include name="antxr.jar" />
 			</fileset>
-			<fileset dir="${idl.dir}${file.separator}build${file.separator}libs" >
+			<!-- <fileset dir="${idl.dir}${file.separator}build${file.separator}libs" >
 				<include name="*.jar" />
-			</fileset>
+			</fileset> -->
 		</path>
 
 		<path id="run.classpath">
 			<fileset dir="${lib.dir}">
 				<include name="*.jar" />
 			</fileset>
-			<fileset dir="${idl.dir}${file.separator}build${file.separator}libs" >
+			<!-- <fileset dir="${idl.dir}${file.separator}build${file.separator}libs" >
 				<include name="*.jar" />
-			</fileset>
+			</fileset> -->
 		</path>
 
 		<property name="dist.basedir" value="${build.dir}" />
@@ -130,6 +128,9 @@
 			<arg value="/c"/>
 			<arg value="gradle -b ./../thirdparty/idl/build.gradle build"/>
 		</exec>
+		<copy todir="${build.classes}${file.separator}com${file.separator}eprosima" >
+			<fileset dir="${idl.classes.dir}${file.separator}main${file.separator}com${file.separator}eprosima" />
+		</copy>
 	</target>
 	
 	<target name="clean-idl">
@@ -156,13 +157,13 @@
 		<antxr base="${fastrpc.src.java}${file.separator}com/eprosima/fastrpc/wadl/grammar" grammar="${fastrpc.grammar.dir}${file.separator}wadl.antxr" />
 		<echo>Compiling java code...</echo>
 		<mkdir dir="${build.classes}" />
-        <javac source="1.6" target="1.6" srcdir="${idl.src.java}:${fastrpc.src.java}:${fastcdr.src.java}" destdir="${build.classes}">
+        <javac source="1.6" target="1.6" srcdir="${fastrpc.src.java}:${fastcdr.src.java}" destdir="${build.classes}">
 			<classpath refid="build.classpath"/>
 		</javac>
         <!--> Copy stringtemplates of idl parser <-->
-        <copy todir="${build.classes}">
+        <!-- <copy todir="${build.classes}">
             <fileset dir="${idl.src.java}" includes="**/*.stg"/>
-        </copy>
+        </copy> -->
         <!--> Copy stringtemplates of fastrpc.<-->
 		<copy todir="${build.classes}">
 			<fileset dir="${fastrpc.src.dir}" includes="**/*.stg" />
