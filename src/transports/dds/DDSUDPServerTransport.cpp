@@ -7,7 +7,8 @@
  *************************************************************************/
 
 #include "fastrpc/transports/dds/UDPServerTransport.h"
-#include "eProsima_c/macros/snprintf.h"
+#include "fastrpc/utils/macros/snprintf.h"
+#include "fastrpc/utils/dds/Middleware.h"
 
 #if defined(OPENDDS)
 #include "dds/DCPS/transport/framework/TransportRegistry.h"
@@ -20,7 +21,7 @@ static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::UDPServerT
 
 using namespace eprosima::rpc::transport::dds;
 
-UDPServerTransport::UDPServerTransport(std::string serviceName, std::string instanceName, int domainId) : ServerTransport(serviceName, instanceName, domainId)
+UDPServerTransport::UDPServerTransport(const char* const &serviceName, const char* const &instanceName, int domainId) : ServerTransport(serviceName, instanceName, domainId)
 {
 }
 

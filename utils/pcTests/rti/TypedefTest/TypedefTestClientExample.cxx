@@ -96,7 +96,7 @@ int main(int argc, char **argv)
     DatosDef_initialize(&getDatosDef_ret);
 
     d1.count = 1;
-    d1.message = DDS::String_dup("PRUEBA");;
+    d1.message = DDS_String_dup("PRUEBA");;
 
     try
     {
@@ -129,7 +129,7 @@ int main(int argc, char **argv)
     DatosDef_initialize(&getDatosDef2_ret);
 
     d21.count = 2;
-    d21.message = DDS::String_dup("PRUEBA2");;
+    d21.message = DDS_String_dup("PRUEBA2");;
 
     try
     {
@@ -162,7 +162,7 @@ int main(int argc, char **argv)
     DatosDefondo_initialize(&getDatosDefondo_ret);
 
     dd1.count = 1;
-    dd1.message = DDS::String_dup("PRUEBA");
+    dd1.message = DDS_String_dup("PRUEBA");
 
     try
     {
@@ -186,7 +186,7 @@ int main(int argc, char **argv)
     DatosDefondo_finalize(&dd2);    
     DatosDefondo_finalize(&getDatosDefondo_ret);    
 
-    cadena  c1  = DDS::String_dup("PRUEBA");       
+    cadena  c1  = DDS_String_dup("PRUEBA");       
     cadena  c2  = NULL;    
     cadena  getCadena_ret  = NULL;       
 
@@ -208,11 +208,11 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    if(c1 != NULL) DDS::String_free(c1);    
-    if(c2 != NULL) DDS::String_free(c2);    
-    if(getCadena_ret != NULL) DDS::String_free(getCadena_ret);    
+    if(c1 != NULL) DDS_String_free(c1);    
+    if(c2 != NULL) DDS_String_free(c2);    
+    if(getCadena_ret != NULL) DDS_String_free(getCadena_ret);    
 
-    correa  cc1  = DDS::String_dup("PRUEBA");       
+    correa  cc1  = DDS_String_dup("PRUEBA");       
     correa  cc2  = NULL;    
     correa  getCorrea_ret  = NULL;       
 
@@ -234,9 +234,9 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    if(cc1 != NULL) DDS::String_free(cc1);    
-    if(cc2 != NULL) DDS::String_free(cc2);    
-    if(getCorrea_ret != NULL) DDS::String_free(getCorrea_ret); 
+    if(cc1 != NULL) DDS_String_free(cc1);    
+    if(cc2 != NULL) DDS_String_free(cc2);    
+    if(getCorrea_ret != NULL) DDS_String_free(getCorrea_ret); 
 
     std::cout << "TEST SUCCESFULLY" << std::endl;
 

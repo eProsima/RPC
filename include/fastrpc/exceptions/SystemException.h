@@ -12,6 +12,7 @@
 #include "fastrpc/exceptions/Exception.h"
 
 #include <stdint.h>
+#include <string>
 
 namespace eprosima
 {
@@ -23,36 +24,36 @@ namespace eprosima
              * @brief This abstract class is used to create internal FASTRPC exceptions.
              * @ingroup EXCEPTIONMODULE
              */
-            class FASTRPC_DllAPI SystemException : public Exception
+            class SystemException : public Exception
             {
                 public:
 
                     /// \brief Default destructor.
-                    virtual ~SystemException() throw();
+                    virtual FASTRPC_DllAPI ~SystemException() throw();
 
                     /**
                      * \brief This function returns the number associated with the system exception.
                      *
                      * \return The number associated with the system exception.
                      */
-                    const int32_t& minor() const;
+                    FASTRPC_DllAPI const int32_t& minor() const;
 
                     /**
                      * \brief This function sets the number that will be associated with the system exception.
                      *
                      * \param minor The number that will be associated with the system exception.
                      */
-                    void minor(const int32_t &minor);
+                    FASTRPC_DllAPI void minor(const int32_t &minor);
 
                     /// \brief This function throws the object as an exception.
-                    virtual void raise() const = 0;
+                    virtual FASTRPC_DllAPI void raise() const = 0;
                     
 					/**
                      * \brief This function returns the error message.
                      *
                      * \return The error message.
                      */
-                    virtual const char* what() const throw();
+                    virtual FASTRPC_DllAPI const char* what() const throw();
 
                 protected:
 
@@ -61,28 +62,21 @@ namespace eprosima
                      *
                      * \param message An error message. This message is copied.
                      */
-                    SystemException(const std::string &message);
-
-                    /**
-                     * \brief Default constructor.
-                     *
-                     * \param message An error message. This message is moved.
-                     */
-                    SystemException(std::string&& message);
+                    FASTRPC_DllAPI explicit SystemException(const char* const &message);
 
                     /**
                      * \brief Default copy constructor.
                      *
                      * \param ex SystemException that will be copied.
                      */
-                    SystemException(const SystemException &ex);
+                    FASTRPC_DllAPI SystemException(const SystemException &ex);
 
                     /**
                      * \brief Default move constructor.
                      *
                      * \param ex SystemException that will be moved.
                      */
-                    SystemException(SystemException&& ex);
+                    FASTRPC_DllAPI SystemException(SystemException&& ex);
 
                     /**
                      * \brief Constructor.
@@ -90,29 +84,21 @@ namespace eprosima
                      * \param message An error message. This message is copied.
                      * \param minor The number that will be associated with the system exception.
                      */
-                    SystemException(const std::string &message, int32_t minor);
-
-                    /**
-                     * \brief Constructor.
-                     *
-                     * \param message An error message. This message is moved.
-                     * \param minor The number that will be associated with the system exception.
-                     */
-                    SystemException(std::string&& message, int32_t minor);
+                    FASTRPC_DllAPI explicit SystemException(const char* const &message, int32_t minor);
 
                     /**
                      * \brief Assigment operation.
                      *
                      * \param ex SystemException that will be copied.
                      */
-                    SystemException& operator=(const SystemException &ex);
+                    FASTRPC_DllAPI SystemException& operator=(const SystemException &ex);
 
                     /**
                      * \brief Assigment operation.
                      *
                      * \param ex SystemException that will be moved.
                      */
-                    SystemException& operator=(SystemException&& ex);
+                    FASTRPC_DllAPI SystemException& operator=(SystemException&& ex);
 
                 private:
 

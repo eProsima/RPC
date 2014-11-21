@@ -9,6 +9,8 @@
 #ifndef _TRANSPORTS_COMPONENTS_ENDPOINT_H_
 #define _TRANSPORTS_COMPONENTS_ENDPOINT_H_
 
+#include "fastrpc/fastrpc_dll.h"
+
 namespace eprosima
 {
     namespace rpc
@@ -19,7 +21,7 @@ namespace eprosima
 			* @brief This class represents an endpoint.
             * @ingroup TRANSPORTMODULE
 			*/
-            class Endpoint
+            class FASTRPC_DllAPI Endpoint
             {
                 protected:
 

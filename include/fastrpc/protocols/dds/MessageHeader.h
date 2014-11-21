@@ -10,6 +10,7 @@
 #define _PROTOCOLS_DDS_MESSAGEHEADER_H_
 
 #include "fastrpc/fastrpc_dll.h"
+#include "fastrpc/utils/macros/strdup.h"
 
 #include <stdint.h>
 #include <string.h>
@@ -274,7 +275,7 @@ namespace eprosima
                         {
 							if(m_remote_service_name != NULL)
 								free(m_remote_service_name);
-                            m_remote_service_name = strdup(_remote_service_name);
+                            m_remote_service_name = STRDUP(_remote_service_name);
                         }
 
                         /*!
@@ -339,45 +340,45 @@ namespace eprosima
                  * @brief Header information used in all generated reply topics.
 				 * @ingroup PROTOCOLMODULE
                  */
-                class FASTRPC_DllAPI ReplyHeader
+                class ReplyHeader
                 {
                     public:
 
                         //! @brief Default constructor
-                        ReplyHeader();
+                        FASTRPC_DllAPI ReplyHeader();
 
                         /*!
                          * @brief Copy constructor
                          * @param header ReplyHeader object to be copied.
                          */
-                        ReplyHeader(const ReplyHeader &header);
+                        FASTRPC_DllAPI ReplyHeader(const ReplyHeader &header);
 
                         /*!
                          * @brief Copy constructor
                          * @param header ReplyHeader object to be copied.
                          */
-                        ReplyHeader(ReplyHeader &&header);
+                        FASTRPC_DllAPI ReplyHeader(ReplyHeader &&header);
 
                         //! @brief Destructor
-                        ~ReplyHeader();
+                        FASTRPC_DllAPI ~ReplyHeader();
 
                         /*!
                          * @brief Copy assignment
                          * @param header ReplyHeader object to be copied.
                          */
-                        ReplyHeader& operator=(const ReplyHeader &header);
+                        FASTRPC_DllAPI ReplyHeader& operator=(const ReplyHeader &header);
 
                         /*!
                          * @brief Copy assignment
                          * @param header ReplyHeader object to be copied.
                          */
-                        ReplyHeader& operator=(ReplyHeader &&header);
+                        FASTRPC_DllAPI ReplyHeader& operator=(ReplyHeader &&header);
 
                         /*!
                          * @brief This function sets the client identifier.
                          * @param _clientId Client identifier
                          */
-                        inline void request_id(const SampleIdentity_t &_request_id)
+                        inline FASTRPC_DllAPI void request_id(const SampleIdentity_t &_request_id)
                         {
                             m_request_id = _request_id;
                         }
@@ -386,7 +387,7 @@ namespace eprosima
                          * @brief This function sets the client identifier.
                          * @param _clientId Client identifier
                          */
-                        inline void request_id(SampleIdentity_t &&_request_id)
+                        inline FASTRPC_DllAPI void request_id(SampleIdentity_t &&_request_id)
                         {
                             m_request_id = std::move(_request_id);
                         }
@@ -395,7 +396,7 @@ namespace eprosima
                          * @brief This function returns the client identifier.
                          * @return Client identifier
                          */
-                        inline const SampleIdentity_t& request_id() const
+                        inline FASTRPC_DllAPI const SampleIdentity_t& request_id() const
                         {
                             return m_request_id;
                         }
@@ -404,7 +405,7 @@ namespace eprosima
                          * @brief This function returns the client identifier.
                          * @return Client identifier
                          */
-                        inline SampleIdentity_t& request_id()
+                        inline FASTRPC_DllAPI SampleIdentity_t& request_id()
                         {
                             return m_request_id;
                         }
@@ -415,19 +416,19 @@ namespace eprosima
                          * @param current_alignment Buffer alignment.
                          * @return Maximum serialized size.
                          */
-                        static size_t getMaxCdrSerializedSize(size_t current_alignment);
+                        FASTRPC_DllAPI static size_t getMaxCdrSerializedSize(size_t current_alignment);
 
                         /*!
                          * @brief This function serializes the ReplyHeader object using CDR serialization.
                          * @param cdr CDR serialization object.
                          */
-                        void serialize(eprosima::fastcdr::Cdr &cdr) const;
+                        FASTRPC_DllAPI void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
                         /*!
                          * @brief This function deserializes the ReplyHeader object using CDR serialization.
                          * @param cdr CDR serialization object.
                          */
-                        void deserialize(eprosima::fastcdr::Cdr &cdr);
+                        FASTRPC_DllAPI void deserialize(eprosima::fastcdr::Cdr &cdr);
 
                     private:
 

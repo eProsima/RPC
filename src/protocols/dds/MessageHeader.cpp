@@ -1,4 +1,5 @@
 #include "fastrpc/protocols/dds/MessageHeader.h"
+#include "fastrpc/utils/macros/strdup.h"
 
 #include "fastcdr/Cdr.h"
 
@@ -146,14 +147,14 @@ RequestHeader::RequestHeader() : m_remote_service_name(NULL), m_instance_name(NU
 }
 
 RequestHeader::RequestHeader(const RequestHeader &header) :
-    m_request_id(header.m_request_id), m_remote_service_name(strdup(header.m_remote_service_name)),
-    m_instance_name(strdup(header.m_instance_name))
+    m_request_id(header.m_request_id), m_remote_service_name(STRDUP(header.m_remote_service_name)),
+    m_instance_name(STRDUP(header.m_instance_name))
 {
 }
 
 RequestHeader::RequestHeader(RequestHeader &&header) :
-    m_request_id(std::move(header.m_request_id)), m_remote_service_name(strdup(header.m_remote_service_name)),
-    m_instance_name(strdup(header.m_instance_name))
+    m_request_id(std::move(header.m_request_id)), m_remote_service_name(STRDUP(header.m_remote_service_name)),
+    m_instance_name(STRDUP(header.m_instance_name))
 {
 }
 
@@ -171,10 +172,10 @@ RequestHeader& RequestHeader::operator=(const RequestHeader &header)
     m_request_id = header.m_request_id;
 	if(m_remote_service_name != NULL)
 		free(m_remote_service_name);
-    m_remote_service_name = strdup(header.m_remote_service_name);
+    m_remote_service_name = STRDUP(header.m_remote_service_name);
 	if(m_instance_name != NULL)
 		free(m_instance_name);
-    m_instance_name = strdup(header.m_instance_name);
+    m_instance_name = STRDUP(header.m_instance_name);
 
     return *this;
 }
@@ -184,10 +185,10 @@ RequestHeader& RequestHeader::operator=(RequestHeader &&header)
     m_request_id = std::move(header.m_request_id);
     if(m_remote_service_name != NULL)
 		free(m_remote_service_name);
-    m_remote_service_name = strdup(header.m_remote_service_name);
+    m_remote_service_name = STRDUP(header.m_remote_service_name);
     if(m_instance_name != NULL)
 		free(m_instance_name);
-    m_instance_name = strdup(header.m_instance_name);
+    m_instance_name = STRDUP(header.m_instance_name);
 
     return *this;
 }

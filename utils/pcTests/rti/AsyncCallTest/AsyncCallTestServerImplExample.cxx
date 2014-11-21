@@ -33,10 +33,10 @@ char* AsyncCallTestServerImplExample::getString(/*in*/ const char* s1, /*inout*/
 {
     char*  getString_ret = NULL;    
 
-    s3 = DDS::String_dup(s2);
-    getString_ret = DDS::String_dup(s1);
-    DDS::String_free(s2);
-    s2 = DDS::String_alloc(strlen(s1) + strlen(s3) + 1);
+    s3 = DDS_String_dup(s2);
+    getString_ret = DDS_String_dup(s1);
+    DDS_String_free(s2);
+    s2 = DDS_String_alloc(strlen(s1) + strlen(s3) + 1);
 #if defined(RTI_WIN32)
     _snprintf(s2, strlen(s1) + strlen(s3) + 1, "%s%s", s1, s3);
 #elif defined(RTI_LINUX)

@@ -12,6 +12,7 @@
 #include "fastrpc/utils/Typedefs.h"
 #include "fastrpc/exceptions/ServerTimeoutException.h"
 
+
 #include <stdio.h>
 
 static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::AsyncThread";
@@ -27,8 +28,8 @@ bool asyncListSort(AsyncListPair i, AsyncListPair j)
 
 AsyncThread::AsyncThread() : m_guardWaitSet(NULL), m_exit(0)
 {
-    m_timeout.sec = DDS::DURATION_INFINITE_SEC;
-    m_timeout.nanosec = DDS::DURATION_INFINITE_NSEC;
+    m_timeout.sec = DDS_DURATION_INFINITE_SEC;
+    m_timeout.nanosec = DDS_DURATION_INFINITE_NSEC;
 }
 
 int AsyncThread::init()
@@ -94,14 +95,14 @@ void AsyncThread::exit()
 void AsyncThread::run()
 {
     const char* const METHOD_NAME = "run";
-    DDS::Duration_t timeout = {DDS::DURATION_INFINITE_SEC, DDS::DURATION_INFINITE_NSEC};
+    DDS::Duration_t timeout = {DDS_DURATION_INFINITE_SEC, DDS_DURATION_INFINITE_NSEC};
 
-    if(m_waitSet->attach_condition(m_guardWaitSet) == DDS::RETCODE_OK)
+    if(m_waitSet->attach_condition(m_guardWaitSet) == DDS_RETCODE_OK)
     {
         while(m_exit == 0)
         {
             DDS::ReturnCode_t retCode;
-            DDS::ConditionSeq conds;
+            DDSConditionSeq conds;
             AsyncVector::iterator it;
 
             boost::posix_time::ptime init_wait_moment = boost::posix_time::microsec_clock::local_time(); 
@@ -122,7 +123,7 @@ void AsyncThread::run()
                     it->first = boost::posix_time::milliseconds(0);
             }
 
-            if(retCode == DDS::RETCODE_OK)
+            if(retCode == DDS_RETCODE_OK)
             {
                 for(int i = 0; i < conds.length(); ++i)
                 {
@@ -155,7 +156,7 @@ void AsyncThread::run()
                     }
                 }
             }
-            else if(retCode == DDS::RETCODE_TIMEOUT)
+            else if(retCode == DDS_RETCODE_TIMEOUT)
             {
                 printf("WARNING <%s::%s>: Wait timeout. Retrying.\n", CLASS_NAME, METHOD_NAME);
 
@@ -181,8 +182,8 @@ void AsyncThread::run()
             if(m_vector.empty())
             {
                 timeout = m_timeout;
-                m_timeout.sec = DDS::DURATION_INFINITE_SEC;
-                m_timeout.nanosec = DDS::DURATION_INFINITE_NSEC;
+                m_timeout.sec = DDS_DURATION_INFINITE_SEC;
+                m_timeout.nanosec = DDS_DURATION_INFINITE_NSEC;
             }
             else
             {
@@ -237,7 +238,7 @@ int AsyncThread::addTask(DDS::QueryCondition *query, DDSAsyncTask *task, long ti
         std::sort(m_vector.begin(), m_vector.end(), asyncListSort);
 
         // Attach query.
-        if(m_waitSet->attach_condition(query) == DDS::RETCODE_OK)
+        if(m_waitSet->attach_condition(query) == DDS_RETCODE_OK)
         {
             returnedValue = 0;
         }

@@ -63,8 +63,6 @@ void TCPServerTransport::init(const std::string& address,
     /*
      * Server creation
      */
-    bool creationFailed = false;
-
     boost::asio::ip::tcp::endpoint endpoint(
             boost::asio::ip::address::from_string(finalAddress),
             atoi(port.c_str()));
@@ -78,7 +76,6 @@ void TCPServerTransport::init(const std::string& address,
     {
         std::cerr << "Error binding to " << endpoint.address().to_string()
             << ":" << endpoint.port() << ": " << e.what() << std::endl;
-        creationFailed = true;
 		return;
     }
 
@@ -90,12 +87,13 @@ void TCPServerTransport::init(const std::string& address,
     start_accept();
 }
 
-TCPServerTransport::TCPServerTransport(const std::string &to_connect) : m_boostInfo(NULL),
+TCPServerTransport::TCPServerTransport(const char* const &to_connect) : m_boostInfo(NULL),
     thread_(NULL)
 {
-    size_t index = to_connect.find(':', 1);
-    std::string address = to_connect.substr(0, index);
-    std::string port = to_connect.substr(index + 1, to_connect.size());
+	std::string to_connect_s(to_connect);
+    size_t index = to_connect_s.find(':', 1);
+    std::string address = to_connect_s.substr(0, index);
+    std::string port = to_connect_s.substr(index + 1, to_connect_s.size());
     m_boostInfo = new TCPServerTransportBoost();
     onBossProcess = new BossProcess();
     init(address, port);
@@ -190,7 +188,7 @@ void TCPServerTransport::worker(TCPEndpoint* connection)
     //std::cout << "Thread #" << boost::this_thread::get_id() << std::endl;
 
     // Create buffer for the thread.
-    size_t bufferSize = DEFAULT_BUFFER_SIZE, bufferLength = 0;
+    size_t bufferSize = DEFAULT_BUFFER_SIZE;
     void *buffer = calloc(bufferSize, sizeof(char));
 
     if(buffer != NULL)

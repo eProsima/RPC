@@ -8,6 +8,7 @@
 
 #include "fastrpc/transports/dds/Transport.h"
 #include "fastrpc/exceptions/InitializeException.h"
+#include "fastrpc/utils/dds/Middleware.h"
 
 #include <string>
 
@@ -50,7 +51,7 @@ void Transport::initialize()
 
             if (m_participant != NULL)
             {
-                if(m_participant->get_qos(participantQos) == DDS::RETCODE_OK)
+                if(m_participant->get_qos(participantQos) == DDS_RETCODE_OK)
                 {
 #if defined(OPENDDS)
                     setTransport(participantQos, m_participant);
@@ -62,7 +63,7 @@ void Transport::initialize()
 
                     if(m_publisher != NULL)
                     {
-                        if(m_publisher->get_qos(publisherQos) == DDS::RETCODE_OK)
+                        if(m_publisher->get_qos(publisherQos) == DDS_RETCODE_OK)
                         {
                             publisherQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
                             m_publisher->set_qos(publisherQos);
@@ -72,7 +73,7 @@ void Transport::initialize()
 
                             if(m_subscriber != NULL)
                             {
-                                if(m_subscriber->get_qos(subscriberQos) == DDS::RETCODE_OK)
+                                if(m_subscriber->get_qos(subscriberQos) == DDS_RETCODE_OK)
                                 {
                                     subscriberQos.entity_factory.autoenable_created_entities = BOOLEAN_FALSE;
                                     m_subscriber->set_qos(subscriberQos);
@@ -131,7 +132,7 @@ Transport::~Transport()
         if(m_subscriber != NULL)
         {
             retcode = m_participant->delete_subscriber(m_subscriber);
-            if (retcode != DDS::RETCODE_OK) {
+            if (retcode != DDS_RETCODE_OK) {
                 printf("ERROR<~%s:%s>: delete_subscriber() error %d\n", CLASS_NAME, METHOD_NAME, retcode);
             }
         }
@@ -139,18 +140,18 @@ Transport::~Transport()
         if(m_publisher != NULL)
         {
             retcode = m_participant->delete_publisher(m_publisher);
-            if (retcode != DDS::RETCODE_OK) {
+            if (retcode != DDS_RETCODE_OK) {
                 printf("ERROR<~%s:%s>: delete_publisher() error %d\n", CLASS_NAME, METHOD_NAME, retcode);
             }
         }
 
         retcode = m_participant->delete_contained_entities();
-        if (retcode != DDS::RETCODE_OK) {
+        if (retcode != DDS_RETCODE_OK) {
             printf("ERROR<~%s:%s>: delete_contained_entities() error %d\n", CLASS_NAME, METHOD_NAME, retcode);
         }
 
         retcode = TheParticipantFactory->delete_participant(m_participant);
-        if (retcode != DDS::RETCODE_OK) {
+        if (retcode != DDS_RETCODE_OK) {
             printf("ERROR<~%s:%s> delete_participant() error %d\n", CLASS_NAME, METHOD_NAME, retcode);
         }
 

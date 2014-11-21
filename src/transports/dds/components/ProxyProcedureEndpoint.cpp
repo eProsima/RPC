@@ -9,8 +9,9 @@
 #include "fastrpc/transports/dds/components/ProxyProcedureEndpoint.h"
 #include "fastrpc/transports/dds/DDSAsyncTask.h"
 #include "fastrpc/protocols/dds/MessageHeader.h"
-#include "eProsima_c/macros/snprintf.h"
+#include "fastrpc/utils/macros/snprintf.h"
 #include "fastrpc/utils/Typedefs.h"
+#include "fastrpc/utils/dds/Middleware.h"
 
 #include "boost/config/user.hpp"
 #include "boost/thread/mutex.hpp"
@@ -122,7 +123,7 @@ int ProxyProcedureEndpoint::createEntities(const char *name, const char *writert
                 m_transport.getPublisher()->get_default_datawriter_qos(wQos);
 
                 // TODO
-                wQos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
+                wQos.reliability.kind = DDS_RELIABLE_RELIABILITY_QOS;
                 wQos.history.depth = 100;
                 ::util::dds::set_datawriter_protocol(wQos);
 
@@ -146,7 +147,7 @@ int ProxyProcedureEndpoint::createEntities(const char *name, const char *writert
                                 m_transport.getSubscriber()->get_default_datareader_qos(rQos);
 
                                 // TODO
-                                rQos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
+                                rQos.reliability.kind = DDS_RELIABLE_RELIABILITY_QOS;
                                 rQos.history.depth = 100;
                                 ::util::dds::set_max_query_condition_filters(rQos);
                                 ::util::dds::set_datareader_protocol(rQos);
@@ -209,9 +210,9 @@ int ProxyProcedureEndpoint::enableEntities()
     const char* const METHOD_NAME = "enableEntities";
     int returnedValue = -1;
 
-    if(m_writerTopic->enable() == DDS::RETCODE_OK)
+    if(m_writerTopic->enable() == DDS_RETCODE_OK)
     {
-        if(m_writer->enable() == DDS::RETCODE_OK)
+        if(m_writer->enable() == DDS_RETCODE_OK)
         {
             // if not operation oneway.
             if(m_reader != NULL)
@@ -229,9 +230,9 @@ int ProxyProcedureEndpoint::enableEntities()
 
                 m_filter->set_expression(value, stringSeq);
 
-                if(m_readerTopic->enable() == DDS::RETCODE_OK)
+                if(m_readerTopic->enable() == DDS_RETCODE_OK)
                 {
-                    if(m_reader->enable() == DDS::RETCODE_OK)
+                    if(m_reader->enable() == DDS_RETCODE_OK)
                     {
                         returnedValue = 0;
                     }
@@ -395,8 +396,8 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
         {
             requestHeader = reinterpret_cast<eprosima::rpc::protocol::dds::RequestHeader*>(request);
             memcpy(requestHeader->request_id().guid().value(), m_proxyId, sizeof(m_proxyId));
-            requestHeader->remote_service_name(m_transport.getRemoteServiceName().c_str());
-            requestHeader->instance_name(m_transport.getInstanceName().c_str());
+            requestHeader->remote_service_name(m_transport.getRemoteServiceName());
+            requestHeader->instance_name(m_transport.getInstanceName());
         }
         else
         {
@@ -405,10 +406,10 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
             auxPointerToRequest += sizeof(m_proxyId);
             seqAuxPointer = auxPointerToRequest;
             auxPointerToRequest += sizeof(m_numSec);
-            *(char**)auxPointerToRequest = (char*)m_transport.getRemoteServiceName().c_str();
+            *(char**)auxPointerToRequest = (char*)m_transport.getRemoteServiceName();
             auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
             auxPointerToRequest = (char*)((char**)auxPointerToRequest + 1);
-            *(char**)auxPointerToRequest = (char*)m_transport.getInstanceName().c_str();
+            *(char**)auxPointerToRequest = (char*)m_transport.getInstanceName();
             auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
             auxPointerToRequest = (char*)((char**)auxPointerToRequest + 1);
         }
@@ -437,9 +438,9 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
             {
                 if(checkServerConnection(waitSet, m_transport.getTimeout()) == OK)
                 {
-                    DDS_InstanceHandle_t ih = DDS::HANDLE_NIL;
+                    DDS_InstanceHandle_t ih = DDS_HANDLE_NIL;
 
-                    if(DDS_DataWriter_write_untypedI(m_writer->get_c_datawriterI(), request, &ih) == DDS::RETCODE_OK)
+                    if(DDS_DataWriter_write_untypedI(m_writer->get_c_datawriterI(), request, &ih) == DDS_RETCODE_OK)
                     {
                         // Its not a oneway function.
                         if(m_reader != NULL && reply != NULL)
@@ -451,18 +452,18 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
                             stringSeq[0] = strdup(value);
                             retCode = query->set_query_parameters(stringSeq);
 
-                            if(retCode == DDS::RETCODE_OK)
+                            if(retCode == DDS_RETCODE_OK)
                             {
                                 retCode = waitSet->attach_condition(query);
 
-                                if(retCode == DDS::RETCODE_OK)
+                                if(retCode == DDS_RETCODE_OK)
                                 {
                                     DDS::ConditionSeq conds;
                                     DDS_TIMEOUT(ddsTimeout, tTimeout);
 
                                     retCode = waitSet->wait(conds, ddsTimeout);
 
-                                    if(retCode == DDS::RETCODE_OK)
+                                    if(retCode == DDS_RETCODE_OK)
                                     {
                                         if(conds.length() == 1 && conds[0] == query)
                                         {
@@ -543,10 +544,9 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
     ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
     DDS::WaitSet *waitSet = NULL;
     DDS::ReturnCode_t retCode;
-    boost::posix_time::time_duration tTimeout = boost::posix_time::milliseconds(m_transport.getTimeout());
     unsigned int numSec = 0;
     char value[50];
-    void *auxPointerToRequest = NULL, *seqAuxPointer = NULL;
+    char *auxPointerToRequest = NULL, *seqAuxPointer = NULL;
     char **auxPointerToRemoteServiceName = NULL;
     eprosima::rpc::protocol::dds::RequestHeader *requestHeader = NULL;
     DDS::QueryCondition *query = NULL;
@@ -557,8 +557,8 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
         {
             requestHeader = reinterpret_cast<eprosima::rpc::protocol::dds::RequestHeader*>(request);
             memcpy(requestHeader->request_id().guid().value(), m_proxyId, sizeof(m_proxyId));
-            requestHeader->remote_service_name(m_transport.getRemoteServiceName().c_str());
-            requestHeader->instance_name(m_transport.getInstanceName().c_str());
+            requestHeader->remote_service_name(m_transport.getRemoteServiceName());
+            requestHeader->instance_name(m_transport.getInstanceName());
         }
         else
         {
@@ -567,10 +567,10 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
             auxPointerToRequest += sizeof(m_proxyId);
             seqAuxPointer = auxPointerToRequest;
             auxPointerToRequest += sizeof(m_numSec);
-            *(char**)auxPointerToRequest = (char*)m_transport.getRemoteServiceName().c_str();
+            *(char**)auxPointerToRequest = (char*)m_transport.getRemoteServiceName();
             auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
             auxPointerToRequest = (char*)((char**)auxPointerToRequest + 1);
-            *(char**)auxPointerToRequest = (char*)m_transport.getInstanceName().c_str();
+            *(char**)auxPointerToRequest = (char*)m_transport.getInstanceName();
             auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
             auxPointerToRequest = (char*)((char**)auxPointerToRequest + 1);
         }
@@ -596,9 +596,9 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
             {
                 if(checkServerConnection(waitSet, m_transport.getTimeout()) == OK)
                 {
-                    DDS_InstanceHandle_t ih = DDS::HANDLE_NIL;
+                    DDS_InstanceHandle_t ih = DDS_HANDLE_NIL;
 
-                    if(DDS_DataWriter_write_untypedI(m_writer->get_c_datawriterI(), request, &ih) == DDS::RETCODE_OK)
+                    if(DDS_DataWriter_write_untypedI(m_writer->get_c_datawriterI(), request, &ih) == DDS_RETCODE_OK)
                     {
                         DDS::StringSeq stringSeq(1);
 
@@ -607,7 +607,7 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
                         stringSeq[0] = strdup(value);
                         retCode = query->set_query_parameters(stringSeq);
 
-                        if(retCode == DDS::RETCODE_OK)
+                        if(retCode == DDS_RETCODE_OK)
                         {
                             task->setProcedureEndpoint(this);
                             if(m_transport.addAsyncTask(query, task, m_transport.getTimeout()) == 0)
@@ -689,7 +689,7 @@ ReturnMessage ProxyProcedureEndpoint::checkServerConnection(DDS::WaitSet *waitSe
             {
                 statusCondition->set_enabled_statuses(DDS::PUBLICATION_MATCHED_STATUS);
 
-                if(waitSet->attach_condition(statusCondition) == DDS::RETCODE_OK)
+                if(waitSet->attach_condition(statusCondition) == DDS_RETCODE_OK)
                 {
                     DDS::ConditionSeq conds;
 
@@ -722,12 +722,12 @@ ReturnMessage ProxyProcedureEndpoint::checkServerConnection(DDS::WaitSet *waitSe
                 {
                     statusCondition->set_enabled_statuses(DDS::SUBSCRIPTION_MATCHED_STATUS);
 
-                    if(waitSet->attach_condition(statusCondition) == DDS::RETCODE_OK)
+                    if(waitSet->attach_condition(statusCondition) == DDS_RETCODE_OK)
                     {
                         DDS::ConditionSeq conds;
                         retCode = waitSet->wait(conds, ddsTimeout);
 
-                        if(!(retCode == DDS::RETCODE_TIMEOUT) && !(retCode == DDS::RETCODE_OK && conds.length() == 0))
+                        if(!(retCode == DDS::RETCODE_TIMEOUT) && !(retCode == DDS_RETCODE_OK && conds.length() == 0))
                         {
                             returnedValue = OK;
                         }
@@ -769,7 +769,7 @@ ReturnMessage ProxyProcedureEndpoint::takeReply(void *reply, DDS::QueryCondition
                 &infoSeq, 1, 1, BOOLEAN_TRUE, reply, m_dataSize, 1,
                 (DDS_ReadCondition*)query->get_c_condition(), BOOLEAN_TRUE);
 
-        if(retCode == DDS::RETCODE_OK)
+        if(retCode == DDS_RETCODE_OK)
         {
             if(sampleCount == 1)
             { 

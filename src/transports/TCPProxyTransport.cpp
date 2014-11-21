@@ -48,15 +48,16 @@ namespace eprosima { namespace rpc { namespace transport {
 using namespace eprosima::rpc;
 using namespace ::transport;
 
-TCPProxyTransport::TCPProxyTransport(const std::string &serverAddress) : m_boostInfo(NULL)
+TCPProxyTransport::TCPProxyTransport(const char* const &serverAddress) : m_boostInfo(NULL)
 {
 	string host = "127.0.0.1";
 	string port = "80";
-	if (serverAddress.size() > 0) {
-		size_t index = serverAddress.find(':', 1);
-		host = serverAddress.substr(0, index);
+	if (strlen(serverAddress) > 0) {
+		std::string serverAddress_s(serverAddress);
+		size_t index = serverAddress_s.find(':', 1);
+		host = serverAddress_s.substr(0, index);
 		if(index != string::npos)
-			port = serverAddress.substr(index + 1, serverAddress.size());
+			port = serverAddress_s.substr(index + 1, serverAddress_s.size());
 	}
     m_boostInfo = new TCPProxyTransportBoost();
 	boost::asio::ip::tcp::resolver::query query(boost::asio::ip::tcp::v4(), host, port);
@@ -64,7 +65,7 @@ TCPProxyTransport::TCPProxyTransport(const std::string &serverAddress) : m_boost
 	serverAddress_ = host;
 }
 
-TCPProxyTransport::TCPProxyTransport(const std::string &serverAddress, const std::string &serverPort) :
+TCPProxyTransport::TCPProxyTransport(const char* const &serverAddress, const char* const &serverPort) :
     m_boostInfo(NULL)
 {
     m_boostInfo = new TCPProxyTransportBoost();

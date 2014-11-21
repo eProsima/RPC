@@ -127,7 +127,9 @@ size_t CalculatorProtocol::worker(Protocol& protocol, void *&buffer, size_t &buf
                                     int32_t  addition_ret = 0;
 
 
+
                                     dcdr >> value1;
+
 
                                     dcdr >> value2;
 
@@ -144,6 +146,7 @@ size_t CalculatorProtocol::worker(Protocol& protocol, void *&buffer, size_t &buf
                                         scdr.serialize("addition");
 
                                         
+
                                             scdr << addition_ret;
 
                                             
@@ -174,6 +177,7 @@ size_t CalculatorProtocol::worker(Protocol& protocol, void *&buffer, size_t &buf
 
 
                                 }
+
                                                             else if(operation_name.compare("subtraction") == 0)
                                                             {
                                                                 int32_t  value1 = 0;
@@ -181,7 +185,9 @@ size_t CalculatorProtocol::worker(Protocol& protocol, void *&buffer, size_t &buf
                                                                 int32_t  subtraction_ret = 0;
 
 
+
                                                                 dcdr >> value1;
+
 
                                                                 dcdr >> value2;
 
@@ -198,6 +204,7 @@ size_t CalculatorProtocol::worker(Protocol& protocol, void *&buffer, size_t &buf
                                                                     scdr.serialize("subtraction");
 
                                                                     
+
                                                                         scdr << subtraction_ret;
 
                                                                         
@@ -270,9 +277,11 @@ int32_t CalculatorProtocol::Calculator_addition(/*in*/ int32_t value1, /*in*/ in
     scdr.serialize((int32_t)0);
     scdr.serialize(interface_name);
     scdr.serialize(operation_name);
+
         scdr << value1;
 
         
+
         scdr << value2;
 
         
@@ -331,6 +340,7 @@ int32_t CalculatorProtocol::Calculator_addition(/*in*/ int32_t value1, /*in*/ in
                             if(interface_name_r.compare(interface_name) == 0 &&
                                 operation_name_r.compare(operation_name) == 0)
                             {
+
                                                                 dcdr >> addition_ret;
                                                                 
                             }
@@ -399,9 +409,11 @@ int32_t CalculatorProtocol::Calculator_subtraction(/*in*/ int32_t value1, /*in*/
     scdr.serialize((int32_t)0);
     scdr.serialize(interface_name);
     scdr.serialize(operation_name);
+
         scdr << value1;
 
         
+
         scdr << value2;
 
         
@@ -460,6 +472,7 @@ int32_t CalculatorProtocol::Calculator_subtraction(/*in*/ int32_t value1, /*in*/
                             if(interface_name_r.compare(interface_name) == 0 &&
                                 operation_name_r.compare(operation_name) == 0)
                             {
+
                                                                 dcdr >> subtraction_ret;
                                                                 
                             }

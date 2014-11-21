@@ -19,7 +19,7 @@ namespace eprosima
              * @brief This class represents a TCP transport. It must be used by TCP clients.
              * @ingroup TRANSPORTMODULE
 			 */
-            class FASTRPC_DllAPI TCPProxyTransport:
+            class TCPProxyTransport:
                 public eprosima::rpc::transport::ProxyTransport
             {
                 private:
@@ -32,28 +32,28 @@ namespace eprosima
 					 * @brief Default constructor.
 					 * @param serverAddress Server address.
 					 */
-                    TCPProxyTransport(const std::string &serverAddress);
+                    FASTRPC_DllAPI TCPProxyTransport(const char* const &serverAddress);
 
                     /*! 
 					 * @brief Default constructor.
 					 * @param serverAddress Server address.
 					 * @param serverAddress Server port.
 					 */
-                    TCPProxyTransport(const std::string& serverAddress, const std::string& serverPort);
+                    FASTRPC_DllAPI TCPProxyTransport(const char* const &, const char* const &serverPort);
 
                     //! \brief Default destructor.
-                    virtual ~TCPProxyTransport();
+                    virtual FASTRPC_DllAPI ~TCPProxyTransport();
 
                     /*!
                      * @brief This function returns the type of the transport. In this case, it is RAW data.
                      */
-                    virtual const char* getType() const {return "RAW";}
+                    FASTRPC_DllAPI const char* getType() const {return "RAW";}
 
 					/*!
 					 * @brief Starts a TCP connection with a TCP server.
 					 * @return true if the operation is successful, false otherwise.
 					 */
-                    bool connect();
+                    FASTRPC_DllAPI bool connect();
 
 					/*!
 					 * @brief Sends an TCP message to the server.
@@ -61,7 +61,7 @@ namespace eprosima
 					 * @param bufferSize Size of the buffer.
 					 * @return true if the operation is successful, false otherwise.
 					 */
-                    bool send(const void* buffer, const size_t bufferSize);
+                    FASTRPC_DllAPI bool send(const void* buffer, const size_t bufferSize);
 
 					/*!
 					 * @brief Receives a TCP message from the server.
@@ -70,7 +70,7 @@ namespace eprosima
 					 * @param dataToRead Number of bytes received.
 					 * @return -1 if the operation fails.
 					 */
-                    int receive(void* buffer, const size_t bufferSize, size_t &dataToRead);
+                    FASTRPC_DllAPI int receive(void* buffer, const size_t bufferSize, size_t &dataToRead);
             };
         }// namespace transport
     }// namespace rpc

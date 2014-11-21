@@ -33,7 +33,7 @@ namespace eprosima
 					 * @brief Default constructor.
 					 * @param serverAddress Server IP address or URL.
 					 */
-                    HttpProxyTransport(const std::string &serverAddress);
+                    HttpProxyTransport(const char* const &serverAddress);
 
                     //! \brief Default destructor.
                     virtual ~HttpProxyTransport();

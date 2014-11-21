@@ -11,16 +11,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+
         <ClCompile Include="HelloWorldServer.cxx">
           <Filter>Source Files</Filter>
         </ClCompile>
         
   </ItemGroup>
   <ItemGroup>
+
         <ClInclude Include="HelloWorldServer.h">
           <Filter>Header Files</Filter>
         </ClInclude>
         
+
         <ClInclude Include="HelloWorldServerImpl.h">
           <Filter>Header Files</Filter>
         </ClInclude>

@@ -94,7 +94,7 @@ $interface.scopedname$_RequestPlugin::get_serialized_sample_max_size(
 
     }
 
-    current_alignment += $interface.scopedname$_Request::getMaxCdrSerializedSize(current_alignment);
+    current_alignment += (unsigned int)$interface.scopedname$_Request::getMaxCdrSerializedSize(current_alignment);
 
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -152,7 +152,7 @@ $interface.scopedname$_RequestPlugin::get_serialized_sample_size(
     return current_alignment - initial_alignment;
     */
 
-    return sample->getSerializedSize(current_alignment);
+    return (unsigned int)sample->getSerializedSize(current_alignment);
 }
 
 unsigned int 
@@ -708,7 +708,7 @@ $interface.scopedname$_ReplyPlugin::get_serialized_sample_max_size(
     }
 
 
-    current_alignment += $interface.scopedname$_Reply::getMaxCdrSerializedSize(current_alignment);
+    current_alignment += (unsigned int)$interface.scopedname$_Reply::getMaxCdrSerializedSize(current_alignment);
 
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -766,7 +766,7 @@ $interface.scopedname$_ReplyPlugin::get_serialized_sample_size(
     return current_alignment - initial_alignment;
     */
 
-    return sample->getSerializedSize(current_alignment);
+    return (unsigned int)sample->getSerializedSize(current_alignment);
 }
 
 unsigned int 

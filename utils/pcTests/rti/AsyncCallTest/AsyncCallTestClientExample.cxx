@@ -17,6 +17,7 @@
 #include "AsyncCallTestDDSProtocol.h"
 #include "fastrpc/transports/dds/UDPProxyTransport.h"
 #include "fastrpc/exceptions/Exceptions.h"
+#include "fastrpc/utils/Utilities.h"
 
 #include <iostream>
 
@@ -194,11 +195,7 @@ int main(int argc, char **argv)
 
         while(getLong_handler.getState() == 0)
         {
-#if defined(RTI_WIN32)
-            Sleep(1000);
-#elif defined(RTI_LINUX)
-            sleep(1);
-#endif
+	    eprosima::rpc::sleep(1000);
         }
 
         if(getLong_handler.getState() == 2)
@@ -220,11 +217,7 @@ int main(int argc, char **argv)
 
         while(getBoolean_handler.getState() == 0)
         {
-#if defined(RTI_WIN32)
-            Sleep(1000);
-#elif defined(RTI_LINUX)
-            sleep(1);
-#endif
+	    eprosima::rpc::sleep(1000);
         }
 
         if(getBoolean_handler.getState() == 2)
@@ -236,8 +229,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    char*  s1  = DDS::String_dup("PRUEBA");       
-    char*  s2  = DDS::String_dup("PRUEBA2");       
+    char*  s1  = DDS_String_dup("PRUEBA");       
+    char*  s2  = DDS_String_dup("PRUEBA2");       
     GetStringHandler getString_handler;
 
     try
@@ -246,11 +239,7 @@ int main(int argc, char **argv)
 
         while(getString_handler.getState() == 0)
         {
-#if defined(RTI_WIN32)
-            Sleep(1000);
-#elif defined(RTI_LINUX)
-            sleep(1);
-#endif
+	    eprosima::rpc::sleep(1000);
         }
 
         if(getString_handler.getState() == 2)
@@ -262,8 +251,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    if(s1 != NULL) DDS::String_free(s1);    
-    if(s2 != NULL) DDS::String_free(s2);    
+    if(s1 != NULL) DDS_String_free(s1);    
+    if(s2 != NULL) DDS_String_free(s2);    
 
     Structure ev;
     DuplicateHandler duplicate_handler;
@@ -279,11 +268,7 @@ int main(int argc, char **argv)
 
         while(duplicate_handler.getState() == 0)
         {
-#if defined(RTI_WIN32)
-            Sleep(1000);
-#elif defined(RTI_LINUX)
-            sleep(1);
-#endif
+	    eprosima::rpc::sleep(1000);
         }
 
         if(duplicate_handler.getState() == 2)
@@ -304,8 +289,8 @@ int main(int argc, char **argv)
 	DDS_Boolean  cbo1 = RTI_TRUE;       
     DDS_Boolean  cbo2 = RTI_FALSE;       
     GetBooleanHandler cgetBoolean_handler;
-	char*  cs1  = DDS::String_dup("PRUEBA");       
-    char*  cs2  = DDS::String_dup("PRUEBA2");       
+	char*  cs1  = DDS_String_dup("PRUEBA");       
+    char*  cs2  = DDS_String_dup("PRUEBA2");       
     GetStringHandler cgetString_handler;  
     Structure cev;
     DuplicateHandler cduplicate_handler;
@@ -328,8 +313,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    if(cs1 != NULL) DDS::String_free(cs1);    
-    if(cs2 != NULL) DDS::String_free(cs2);  
+    if(cs1 != NULL) DDS_String_free(cs1);    
+    if(cs2 != NULL) DDS_String_free(cs2);  
     Structure_finalize(&cev);   
 
     std::cout << "TEST SUCCESFULLY" << std::endl;

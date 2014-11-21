@@ -12,8 +12,6 @@
 #include "fastrpc/fastrpc_dll.h"
 #include "fastrpc/utils/Messages.h"
 
-#include <string>
-
 #define FASTRPC_DEFAULT_PERIOD_MILLISEC 5000
 
 namespace eprosima

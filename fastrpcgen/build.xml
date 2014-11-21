@@ -126,16 +126,26 @@
 	<target name="compile-idl">
 		<!-- Echo compilation properties -->
 		<echo>Building IDL ANTLR grammars... Some warnings are expected...</echo>
-		<exec executable="cmd">
+		<exec executable="cmd" osfamily="windows">
 			<arg value="/c"/>
 			<arg value="gradle -b ./../thirdparty/idl/build.gradle build"/>
+		</exec>
+		<exec executable="gradle" osfamily="unix">
+			<arg value="-b"/>
+			<arg value="./../thirdparty/idl/build.gradle"/>
+            <arg value="build"/>
 		</exec>
 	</target>
 	
 	<target name="clean-idl">
-		<exec executable="cmd">
+		<exec executable="cmd" osfamily="windows">
 			<arg value="/c"/>
 			<arg value="gradle -b ./../thirdparty/idl/build.gradle clean"/>
+		</exec>
+		<exec executable="gradle" osfamily="unix">
+			<arg value="-b"/>
+			<arg value="./../thirdparty/idl/build.gradle"/>
+            <arg value="clean"/>
 		</exec>
 	</target>
 

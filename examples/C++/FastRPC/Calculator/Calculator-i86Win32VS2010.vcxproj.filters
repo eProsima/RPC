@@ -11,24 +11,29 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+
         <ClCompile Include="Calculator.cxx">
           <Filter>Source Files</Filter>
         </ClCompile>
         
+
         <ClCompile Include="CalculatorCDRProtocol.cxx">
           <Filter>Source Files</Filter>
         </ClCompile>
         
   </ItemGroup>
   <ItemGroup>
+
         <ClInclude Include="Calculator.h">
           <Filter>Header Files</Filter>
         </ClInclude>
         
+
         <ClInclude Include="CalculatorProtocol.h">
           <Filter>Header Files</Filter>
         </ClInclude>
         
+
         <ClInclude Include="CalculatorCDRProtocol.h">
           <Filter>Header Files</Filter>
         </ClInclude>

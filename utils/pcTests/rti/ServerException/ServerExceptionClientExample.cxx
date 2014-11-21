@@ -64,8 +64,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    char*  s1  = DDS::String_dup("PRUEBA");       
-    char*  s2  = DDS::String_dup("PRUEBA2");       
+    char*  s1  = DDS_String_dup("PRUEBA");       
+    char*  s2  = DDS_String_dup("PRUEBA2");       
     char*  s3  = NULL;    
     char*  sendExceptionTwoRetValue = NULL;  
 

@@ -10,6 +10,7 @@
 #include "fastrpc/transports/dds/components/ProxyProcedureEndpoint.h"
 #include "fastrpc/transports/dds/AsyncThread.h"
 #include "fastrpc/exceptions/InitializeException.h"
+#include "fastrpc/utils/dds/Middleware.h"
 
 #include <string>
 
@@ -26,9 +27,9 @@ typedef struct encapsulation
     void *data;
 } encapsulation;
 
-ProxyTransport::ProxyTransport(std::string &remoteServiceName, std::string &instanceName, int domainId, long milliseconds) :
-    m_remoteServiceName(remoteServiceName), m_instanceName(instanceName), m_timeout(milliseconds), m_asyncThread(NULL),
-    ::transport::ProxyTransport(), ::transport::dds::Transport(domainId)
+ProxyTransport::ProxyTransport(const char* const &remoteServiceName, const char* const &instanceName, int domainId, long milliseconds) :
+    ::transport::ProxyTransport(), ::transport::dds::Transport(domainId),
+    m_remoteServiceName(remoteServiceName), m_instanceName(instanceName), m_timeout(milliseconds), m_asyncThread(NULL)
 {
     const char* const METHOD_NAME = "ProxyTransport";
 
@@ -62,14 +63,14 @@ const char* ProxyTransport::getType() const
     return "DDS";
 }
 
-std::string& ProxyTransport::getRemoteServiceName()
+const char* ProxyTransport::getRemoteServiceName() const
 {
-    return m_remoteServiceName;
+    return m_remoteServiceName.c_str();
 }
 
-std::string& ProxyTransport::getInstanceName()
+const char* ProxyTransport::getInstanceName() const
 {
-    return m_instanceName;
+    return m_instanceName.c_str();
 }
 
 long ProxyTransport::getTimeout()

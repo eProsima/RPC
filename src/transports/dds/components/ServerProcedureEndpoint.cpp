@@ -9,7 +9,7 @@
 #include "fastrpc/transports/dds/components/ServerProcedureEndpoint.h"
 #include "fastrpc/strategies/ServerStrategy.h"
 #include "fastrpc/strategies/ServerStrategyImpl.h"
-#include "eProsima_c/macros/snprintf.h"
+#include "fastrpc/utils/macros/snprintf.h"
 
 #include "boost/config/user.hpp"
 #include "boost/thread/mutex.hpp"
@@ -61,7 +61,7 @@ int ServerProcedureEndpoint::initialize(const char *name, const char *writertype
     return -1;
 }
 
-int ServerProcedureEndpoint::start(std::string &serviceName, std::string &instanceName)
+int ServerProcedureEndpoint::start(const char* const &serviceName, const char* const &instanceName)
 {
     const char* const METHOD_NAME = "start";
     int returnedValue = -1;
@@ -69,7 +69,7 @@ int ServerProcedureEndpoint::start(std::string &serviceName, std::string &instan
     m_mutex->lock();
     if(m_started++ == 0)
     {
-        if(createEntities(serviceName, instanceName) == 0)
+        if(createEntities(std::string(serviceName), std::string(instanceName)) == 0)
         {
             if((returnedValue = enableEntities()) != 0)
             {
@@ -127,7 +127,7 @@ void ServerProcedureEndpoint::stop()
     m_mutex->unlock();
 }
 
-int ServerProcedureEndpoint::createEntities(std::string &serviceName, std::string &instanceName)
+int ServerProcedureEndpoint::createEntities(const std::string &serviceName, const std::string &instanceName)
 {
     const char* const METHOD_NAME = "createEntities";
 
@@ -145,11 +145,11 @@ int ServerProcedureEndpoint::createEntities(std::string &serviceName, std::strin
             DDS::DataReaderQos rQos = DDS::DataReaderQos();
 
             m_transport.getSubscriber()->get_default_datareader_qos(rQos);
-            rQos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
+            rQos.reliability.kind = DDS_RELIABLE_RELIABILITY_QOS;
             rQos.history.depth = 100;
             ::util::dds::set_datareader_protocol(rQos);
 
-            m_reader = m_transport.getSubscriber()->create_datareader(m_filter, rQos, this, DDS::DATA_AVAILABLE_STATUS);
+            m_reader = m_transport.getSubscriber()->create_datareader(m_filter, rQos, this, DDS_DATA_AVAILABLE_STATUS);
 
             if(m_reader != NULL)
             {
@@ -162,7 +162,7 @@ int ServerProcedureEndpoint::createEntities(std::string &serviceName, std::strin
                         DDS::DataWriterQos wQos = DDS:: DataWriterQos();
 
                         m_transport.getPublisher()->get_default_datawriter_qos(wQos);
-                        wQos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
+                        wQos.reliability.kind = DDS_RELIABLE_RELIABILITY_QOS;
                         wQos.history.depth = 100;
                         ::util::dds::set_datawriter_protocol(wQos);
 
@@ -218,16 +218,16 @@ int ServerProcedureEndpoint::enableEntities()
     const char* const METHOD_NAME = "enableEntities";
     int returnedValue = -1;
 
-    if(m_readerTopic->enable() == DDS::RETCODE_OK)
+    if(m_readerTopic->enable() == DDS_RETCODE_OK)
     {
-        if(m_reader->enable() == DDS::RETCODE_OK)
+        if(m_reader->enable() == DDS_RETCODE_OK)
         {
             // If not oneway operation.
             if(m_writer != NULL)
             {
-                if(m_writerTopic->enable() == DDS::RETCODE_OK)
+                if(m_writerTopic->enable() == DDS_RETCODE_OK)
                 {
-                    if(m_writer->enable() == DDS::RETCODE_OK)
+                    if(m_writer->enable() == DDS_RETCODE_OK)
                     {
                         returnedValue = 0;
                     }
@@ -268,9 +268,9 @@ int ServerProcedureEndpoint::sendReply(void *data)
     {
         if(m_writer != NULL)
         {
-            DDS_InstanceHandle_t ih = DDS::HANDLE_NIL;
+            DDS_InstanceHandle_t ih = DDS_HANDLE_NIL;
 
-            if(DDS_DataWriter_write_untypedI(m_writer->get_c_datawriterI(), data, &ih) == DDS::RETCODE_OK)
+            if(DDS_DataWriter_write_untypedI(m_writer->get_c_datawriterI(), data, &ih) == DDS_RETCODE_OK)
             {
                 returnedValue = 0;
             }
@@ -294,12 +294,11 @@ int ServerProcedureEndpoint::sendReply(void *data)
 
 void ServerProcedureEndpoint::on_data_available(DDS::DataReader* reader)
 {
-    const char* const METHOD_NAME = "on_data_available";
 	DDS::SampleInfo info;
     void *data = m_create_data();
 
 	while(data != NULL && DDS_DataReader_read_or_take_next_sample_untypedI(reader->get_c_datareaderI(),
-                data, &info, BOOLEAN_TRUE) == DDS::RETCODE_OK)
+                data, &info, BOOLEAN_TRUE) == DDS_RETCODE_OK)
 	{
 		if(info.valid_data == BOOLEAN_TRUE)
 		{

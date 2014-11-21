@@ -1,8 +1,15 @@
 group VS2010;
 
 solution(solution, example, configurations) ::= <<
+$if(solution.isVS2010)$
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
+
+$elseif(solution.isVS2013)$
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+
+$endif$
 $solution.projects : {$projectReferences(solution=solution, project=it, example=example)$$if(it.containsInterfaces)$$projectReferencesExtra(solution=solution, project=it, example=example)$$endif$};separator="\n"$
 Global
 $\t$GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +45,13 @@ project(solution, project, example, configurations, local) ::= <<
     <UseDebugLibraries>$if(it.debug)$true$else$false$endif$</UseDebugLibraries>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
+    $if(solution.isVS2010)$
+    <PlatformToolset>v100</PlatformToolset>
+
+    $elseif(solution.isVS2013)$
+    <PlatformToolset>v120</PlatformToolset>
+
+    $endif$
   </PropertyGroup>};separator="\n"$
   <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -148,6 +162,13 @@ projectClient(solution, project, example, configurations, local) ::= <<
     <UseDebugLibraries>$if(it.debug)$true$else$false$endif$</UseDebugLibraries>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
+    $if(solution.isVS2010)$
+    <PlatformToolset>v100</PlatformToolset>
+
+    $elseif(solution.isVS2013)$
+
+    <PlatformToolset>v120</PlatformToolset>
+    $endif$
   </PropertyGroup>};separator="\n"$
   <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -258,6 +279,13 @@ projectClientExample(solution, project, example, configurations, local) ::= <<
     <UseDebugLibraries>$if(it.debug)$true$else$false$endif$</UseDebugLibraries>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
+    $if(solution.isVS2010)$
+    <PlatformToolset>v100</PlatformToolset>
+
+    $elseif(solution.isVS2013)$
+
+    <PlatformToolset>v120</PlatformToolset>
+    $endif$
   </PropertyGroup>};separator="\n"$
   <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -296,6 +324,7 @@ projectClientExample(solution, project, example, configurations, local) ::= <<
                               $project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;$if(!it.dll)$lib$endif$$project.name$Client$if(it.debug)$d$endif$.lib;$if(!it.dll)$WS2_32.lib;$endif$%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$solution.libraryPaths : {path |$path$;}$.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      $if(!it.dll)$<IgnoreSpecificDefaultLibraries>libcmt$if(it.debug)$d$endif$.lib</IgnoreSpecificDefaultLibraries>$endif$
     </Link>
   </ItemDefinitionGroup>};separator="\n"$
   <ItemGroup>
@@ -348,6 +377,13 @@ projectServer(solution, project, example, configurations, local) ::= <<
     <UseDebugLibraries>$if(it.debug)$true$else$false$endif$</UseDebugLibraries>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
+    $if(solution.isVS2010)$
+    <PlatformToolset>v100</PlatformToolset>
+
+    $elseif(solution.isVS2013)$
+    <PlatformToolset>v120</PlatformToolset>
+
+    $endif$
   </PropertyGroup>};separator="\n"$
   <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -458,6 +494,13 @@ projectServerExample(solution, project, example, configurations, local) ::= <<
     <UseDebugLibraries>$if(it.debug)$true$else$false$endif$</UseDebugLibraries>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
+    $if(solution.isVS2010)$
+    <PlatformToolset>v100</PlatformToolset>
+
+    $elseif(solution.isVS2013)$
+    <PlatformToolset>v120</PlatformToolset>
+
+    $endif$
   </PropertyGroup>};separator="\n"$
   <Import Project="\$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -477,6 +520,7 @@ projectServerExample(solution, project, example, configurations, local) ::= <<
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
       <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK$endif$;$solution.defines : {define |$define$;}$$if(local)$$solution.productDefine$$endif$%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -496,6 +540,7 @@ projectServerExample(solution, project, example, configurations, local) ::= <<
                               $project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;$if(!it.dll)$lib$endif$$project.name$Server$if(it.debug)$d$endif$.lib;$if(!it.dll)$WS2_32.lib;$endif$%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$solution.libraryPaths : {path |$path$;}$.\lib\\$example$;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      $if(!it.dll)$<IgnoreSpecificDefaultLibraries>libcmt$if(it.debug)$d$endif$.lib</IgnoreSpecificDefaultLibraries>$endif$
     </Link>
   </ItemDefinitionGroup>};separator="\n"$
   <ItemGroup>
@@ -684,5 +729,5 @@ $if(conf.debug)$true$else$false$endif$
  * Uses:
  */ 
 runtimeLibrary(conf) ::= <<
-$if(it.dll)$$if(it.debug)$MultiThreadedDebugDLL$else$MultiThreadedDLL$endif$$else$$if(it.debug)$MultiThreadedDebug$else$MultiThreaded$endif$$endif$
+$if(conf.dll)$$if(conf.debug)$MultiThreadedDebugDLL$else$MultiThreadedDLL$endif$$else$$if(conf.debug)$MultiThreadedDebug$else$MultiThreaded$endif$$endif$
 >>

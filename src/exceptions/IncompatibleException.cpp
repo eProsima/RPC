@@ -10,14 +10,6 @@
 
 using namespace eprosima::rpc::exception;
 
-IncompatibleException::IncompatibleException(const std::string &message) : SystemException(message, 1)
-{
-}
-
-IncompatibleException::IncompatibleException(std::string&& message) : SystemException(std::move(message), 1)
-{
-}
-
 IncompatibleException::IncompatibleException(const IncompatibleException &ex) : SystemException(ex)
 {
 }

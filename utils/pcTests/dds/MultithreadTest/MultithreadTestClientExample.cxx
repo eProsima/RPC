@@ -20,6 +20,9 @@
 
 #include "boost/config/user.hpp"
 #include "boost/thread.hpp"
+#ifdef __linux
+#include <unistd.h>
+#endif
 
 using namespace eprosima::rpc;
 using namespace ::exception;

@@ -17,7 +17,7 @@
 
 #include "CalculatorTopics.h"
 
-#include "ndds/ndds_cpp.h"
+#include "rpcdds/utils/dds/Middleware.h"
 
 #if defined(_WIN32)
 #if defined(EPROSIMA_USER_DLL_EXPORT)

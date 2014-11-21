@@ -26,12 +26,14 @@ cd "thirdparty\fastcdr"
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 :: Get the current vesion of FastCDR
-call ..\..\thirdparty\dev-env\scripts\common_pack_functions.bat :getVersionFromCPP VERSIONFASTCDR ..\..\include\fastcdr\FastCdr_version.h
+call ..\..\thirdparty\dev-env\scripts\common_pack_functions.bat :getVersionFromCPP VERSIONFASTCDR ..\..\thirdparty\fastcdr\include\fastcdr\FastCdr_version.h
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 :: Compile CDR library.
 rmdir /S /Q lib\i86Win32VS2010
+rmdir /S /Q lib\i86Win32VS2013
 rmdir /S /Q lib\x64Win64VS2010
+rmdir /S /Q lib\x64Win64VS2013
 cd "utils\scripts"
 call build_cdr.bat
 set errorstatus=%ERRORLEVEL%
@@ -43,7 +45,9 @@ rd /S /Q "utils\doxygen\output"
 
 :: Compile FastRPC library.
 rmdir /S /Q lib\i86Win32VS2010
+rmdir /S /Q lib\i86Win32VS2013
 rmdir /S /Q lib\x64Win64VS2010
+rmdir /S /Q lib\x64Win64VS2013
 cd "utils\scripts"
 call build_rpcdds.bat
 set errorstatus=%ERRORLEVEL%
@@ -65,128 +69,332 @@ set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 cd ".."
 
+:: Copy VS2013 libraries
+
 :: Copy BOOST libraries needed in 
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_chrono-vc100-mt-1_53.lib lib\i86Win32VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\libboost_chrono-vc120-mt-1_57.lib lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_chrono-vc100-mt-gd-1_53.lib lib\i86Win32VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\libboost_chrono-vc120-mt-gd-1_57.lib lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_date_time-vc100-mt-1_53.lib lib\i86Win32VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\libboost_date_time-vc120-mt-1_57.lib lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_date_time-vc100-mt-gd-1_53.lib lib\i86Win32VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\libboost_date_time-vc120-mt-gd-1_57.lib lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_regex-vc100-mt-1_53.lib lib\i86Win32VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\libboost_regex-vc120-mt-1_57.lib lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_regex-vc100-mt-gd-1_53.lib lib\i86Win32VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\libboost_regex-vc120-mt-gd-1_57.lib lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_system-vc100-mt-1_53.lib lib\i86Win32VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\libboost_system-vc120-mt-1_57.lib lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_system-vc100-mt-gd-1_53.lib lib\i86Win32VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\libboost_system-vc120-mt-gd-1_57.lib lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_thread-vc100-mt-1_53.lib lib\i86Win32VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\libboost_thread-vc120-mt-1_57.lib lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_thread-vc100-mt-gd-1_53.lib lib\i86Win32VS2010\
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_chrono-vc100-mt-1_53.dll lib\i86Win32VS2010\
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_chrono-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_date_time-vc100-mt-1_53.dll lib\i86Win32VS2010\
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_date_time-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_regex-vc100-mt-1_53.dll lib\i86Win32VS2010\
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_regex-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_system-vc100-mt-1_53.dll lib\i86Win32VS2010\
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_system-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_thread-vc100-mt-1_53.dll lib\i86Win32VS2010\
-set errorstatus=%ERRORLEVEL%
-if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_thread-vc100-mt-gd-1_53.dll lib\i86Win32VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\libboost_thread-vc120-mt-gd-1_57.lib lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_chrono-vc100-mt-1_53.lib lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\boost_chrono-vc120-mt-1_57.dll lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_chrono-vc100-mt-gd-1_53.lib lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\boost_chrono-vc120-mt-gd-1_57.dll lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_date_time-vc100-mt-1_53.lib lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\boost_date_time-vc120-mt-1_57.dll lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_date_time-vc100-mt-gd-1_53.lib lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\boost_date_time-vc120-mt-gd-1_57.dll lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_regex-vc100-mt-1_53.lib lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\boost_regex-vc120-mt-1_57.dll lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_regex-vc100-mt-gd-1_53.lib lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\boost_regex-vc120-mt-gd-1_57.dll lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_system-vc100-mt-1_53.lib lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\boost_system-vc120-mt-1_57.dll lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_system-vc100-mt-gd-1_53.lib lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\boost_system-vc120-mt-gd-1_57.dll lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_thread-vc100-mt-1_53.lib lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\boost_thread-vc120-mt-1_57.dll lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_thread-vc100-mt-gd-1_53.lib lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\i86Win32VS2013\boost_thread-vc120-mt-gd-1_57.dll lib\i86Win32VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_chrono-vc100-mt-1_53.dll lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\libboost_chrono-vc120-mt-1_57.lib lib\x64Win64VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_chrono-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\libboost_chrono-vc120-mt-gd-1_57.lib lib\x64Win64VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_date_time-vc100-mt-1_53.dll lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\libboost_date_time-vc120-mt-1_57.lib lib\x64Win64VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_date_time-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\libboost_date_time-vc120-mt-gd-1_57.lib lib\x64Win64VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_regex-vc100-mt-1_53.dll lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\libboost_regex-vc120-mt-1_57.lib lib\x64Win64VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_regex-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\libboost_regex-vc120-mt-gd-1_57.lib lib\x64Win64VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_system-vc100-mt-1_53.dll lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\libboost_system-vc120-mt-1_57.lib lib\x64Win64VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_system-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\libboost_system-vc120-mt-gd-1_57.lib lib\x64Win64VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_thread-vc100-mt-1_53.dll lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\libboost_thread-vc120-mt-1_57.lib lib\x64Win64VS2013\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
-copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_thread-vc100-mt-gd-1_53.dll lib\x64Win64VS2010\
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\libboost_thread-vc120-mt-gd-1_57.lib lib\x64Win64VS2013\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\boost_chrono-vc120-mt-1_57.dll lib\x64Win64VS2013\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\boost_chrono-vc120-mt-gd-1_57.dll lib\x64Win64VS2013\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\boost_date_time-vc120-mt-1_57.dll lib\x64Win64VS2013\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\boost_date_time-vc120-mt-gd-1_57.dll lib\x64Win64VS2013\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\boost_regex-vc120-mt-1_57.dll lib\x64Win64VS2013\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\boost_regex-vc120-mt-gd-1_57.dll lib\x64Win64VS2013\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\boost_system-vc120-mt-1_57.dll lib\x64Win64VS2013\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\boost_system-vc120-mt-gd-1_57.dll lib\x64Win64VS2013\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\boost_thread-vc120-mt-1_57.dll lib\x64Win64VS2013\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2013\boost_thread-vc120-mt-gd-1_57.dll lib\x64Win64VS2013\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+
+:: Copy fastcdr libraries needed in
+copy thirdparty\fastcdr\lib\i86Win32VS2013\fastcdr-%VERSIONFASTCDR%.dll lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2013\fastcdr-%VERSIONFASTCDR%.lib lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2013\fastcdr-%VERSIONFASTCDR%.pdb lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2013\fastcdr-%VERSIONFASTCDR%.exp lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2013\fastcdrd-%VERSIONFASTCDR%.dll lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2013\fastcdrd-%VERSIONFASTCDR%.lib lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2013\fastcdrd-%VERSIONFASTCDR%.pdb lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2013\fastcdrd-%VERSIONFASTCDR%.exp lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2013\libfastcdr-%VERSIONFASTCDR%.lib lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2013\libfastcdr-%VERSIONFASTCDR%.pdb lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2013\libfastcdrd-%VERSIONFASTCDR%.lib lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2013\libfastcdrd-%VERSIONFASTCDR%.pdb lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+
+copy thirdparty\fastcdr\lib\x64Win64VS2013\fastcdr-%VERSIONFASTCDR%.dll lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2013\fastcdr-%VERSIONFASTCDR%.lib lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2013\fastcdr-%VERSIONFASTCDR%.pdb lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2013\fastcdr-%VERSIONFASTCDR%.exp lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2013\fastcdrd-%VERSIONFASTCDR%.dll lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2013\fastcdrd-%VERSIONFASTCDR%.lib lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2013\fastcdrd-%VERSIONFASTCDR%.pdb lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2013\fastcdrd-%VERSIONFASTCDR%.exp lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2013\libfastcdr-%VERSIONFASTCDR%.lib lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2013\libfastcdr-%VERSIONFASTCDR%.pdb lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2013\libfastcdrd-%VERSIONFASTCDR%.lib lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2013\libfastcdrd-%VERSIONFASTCDR%.pdb lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+
+:: Copy VS2010 libraries
+
+:: Copy BOOST libraries needed in 
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_chrono-vc100-mt-1_57.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_chrono-vc100-mt-gd-1_57.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_date_time-vc100-mt-1_57.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_date_time-vc100-mt-gd-1_57.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_regex-vc100-mt-1_57.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_regex-vc100-mt-gd-1_57.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_system-vc100-mt-1_57.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_system-vc100-mt-gd-1_57.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_thread-vc100-mt-1_57.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\libboost_thread-vc100-mt-gd-1_57.lib lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_chrono-vc100-mt-1_57.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_chrono-vc100-mt-gd-1_57.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_date_time-vc100-mt-1_57.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_date_time-vc100-mt-gd-1_57.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_regex-vc100-mt-1_57.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_regex-vc100-mt-gd-1_57.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_system-vc100-mt-1_57.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_system-vc100-mt-gd-1_57.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_thread-vc100-mt-1_57.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\i86Win32VS2010\boost_thread-vc100-mt-gd-1_57.dll lib\i86Win32VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_chrono-vc100-mt-1_57.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_chrono-vc100-mt-gd-1_57.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_date_time-vc100-mt-1_57.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_date_time-vc100-mt-gd-1_57.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_regex-vc100-mt-1_57.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_regex-vc100-mt-gd-1_57.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_system-vc100-mt-1_57.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_system-vc100-mt-gd-1_57.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_thread-vc100-mt-1_57.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\libboost_thread-vc100-mt-gd-1_57.lib lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_chrono-vc100-mt-1_57.dll lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_chrono-vc100-mt-gd-1_57.dll lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_date_time-vc100-mt-1_57.dll lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_date_time-vc100-mt-gd-1_57.dll lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_regex-vc100-mt-1_57.dll lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_regex-vc100-mt-gd-1_57.dll lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_system-vc100-mt-1_57.dll lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_system-vc100-mt-gd-1_57.dll lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_thread-vc100-mt-1_57.dll lib\x64Win64VS2010\
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy %BOOST_LIBRARYDIR%\x64Win64VS2010\boost_thread-vc100-mt-gd-1_57.dll lib\x64Win64VS2010\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 
@@ -197,16 +405,34 @@ if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdr-%VERSIONFASTCDR%.lib lib\i86Win32VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdr-%VERSIONFASTCDR%.pdb lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdr-%VERSIONFASTCDR%.exp lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdrd-%VERSIONFASTCDR%.dll lib\i86Win32VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdrd-%VERSIONFASTCDR%.lib lib\i86Win32VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdrd-%VERSIONFASTCDR%.pdb lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2010\fastcdrd-%VERSIONFASTCDR%.exp lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\i86Win32VS2010\libfastcdr-%VERSIONFASTCDR%.lib lib\i86Win32VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2010\libfastcdr-%VERSIONFASTCDR%.pdb lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\i86Win32VS2010\libfastcdrd-%VERSIONFASTCDR%.lib lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\i86Win32VS2010\libfastcdrd-%VERSIONFASTCDR%.pdb lib\i86Win32VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 
@@ -216,16 +442,34 @@ if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdr-%VERSIONFASTCDR%.lib lib\x64Win64VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdr-%VERSIONFASTCDR%.pdb lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdr-%VERSIONFASTCDR%.exp lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdrd-%VERSIONFASTCDR%.dll lib\x64Win64VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdrd-%VERSIONFASTCDR%.lib lib\x64Win64VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdrd-%VERSIONFASTCDR%.pdb lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2010\fastcdrd-%VERSIONFASTCDR%.exp lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\x64Win64VS2010\libfastcdr-%VERSIONFASTCDR%.lib lib\x64Win64VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2010\libfastcdr-%VERSIONFASTCDR%.pdb lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
 copy thirdparty\fastcdr\lib\x64Win64VS2010\libfastcdrd-%VERSIONFASTCDR%.lib lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastcdr\lib\x64Win64VS2010\libfastcdrd-%VERSIONFASTCDR%.pdb lib\x64Win64VS2010
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 

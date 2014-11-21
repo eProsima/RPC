@@ -10,11 +10,7 @@
 
 using namespace eprosima::rpc::exception;
 
-SystemException::SystemException(const std::string &message) : Exception(), m_message(message), m_minor(0)
-{
-}
-
-SystemException::SystemException(std::string&& message) : Exception(), m_message(std::move(message)), m_minor(0)
+SystemException::SystemException(const char* const &message) : Exception(), m_message(message), m_minor(0)
 {
 }
 
@@ -22,15 +18,11 @@ SystemException::SystemException(const SystemException &ex) : Exception(ex), m_m
 {
 }
 
-SystemException::SystemException(SystemException&& ex) : Exception(std::move(ex)), m_message(ex.m_message), m_minor(ex.m_minor)
+SystemException::SystemException(SystemException&& ex) : Exception(std::move(ex)), m_message(std::move(ex.m_message)), m_minor(ex.m_minor)
 {
 }
 
-SystemException::SystemException(const std::string &message, int32_t minor) : Exception(), m_message(message), m_minor(minor)
-{
-}
-
-SystemException::SystemException(std::string&& message, int32_t minor) : Exception(), m_message(std::move(message)), m_minor(minor)
+SystemException::SystemException(const  char* const &message, int32_t minor) : Exception(), m_message(message), m_minor(minor)
 {
 }
 

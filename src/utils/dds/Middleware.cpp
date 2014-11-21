@@ -115,8 +115,6 @@ void eprosima::rpc::util::dds::increase_buffers(DDS::DomainParticipantQos &pQos)
 
 DDS::DomainParticipantFactory* eprosima::rpc::util::dds::getFactory(int domainId)
 {
-    const char* const METHOD_NAME = "getFactory";
-
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     return TheParticipantFactory;
 #elif defined(OPENDDS)

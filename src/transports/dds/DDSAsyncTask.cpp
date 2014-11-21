@@ -10,6 +10,7 @@
 #include "fastrpc/transports/dds/components/ProxyProcedureEndpoint.h"
 #include "fastrpc/exceptions/ClientInternalException.h"
 #include "fastrpc/exceptions/ServerTimeoutException.h"
+#include "fastrpc/utils/dds/Middleware.h"
 
 using namespace eprosima::rpc;
 using namespace ::transport::dds;
@@ -17,7 +18,7 @@ using namespace ::exception;
 
 static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::DDSAsyncTask";
 
-DDSAsyncTask::DDSAsyncTask() : m_pe(NULL), eprosima::rpc::transport::AsyncTask()
+DDSAsyncTask::DDSAsyncTask() : eprosima::rpc::transport::AsyncTask(), m_pe(NULL)
 {
 }
 
@@ -31,7 +32,7 @@ ProxyProcedureEndpoint* DDSAsyncTask::getProcedureEndpoint()
     return m_pe;
 }
 
-void DDSAsyncTask::execute(DDS::QueryCondition *query)
+void DDSAsyncTask::execute(DDSQueryCondition *query)
 {
     const char* const METHOD_NAME = "execute";
 

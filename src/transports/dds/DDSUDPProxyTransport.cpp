@@ -7,7 +7,8 @@
  *************************************************************************/
 
 #include "fastrpc/transports/dds/UDPProxyTransport.h"
-#include "eProsima_c/macros/snprintf.h"
+#include "fastrpc/utils/macros/snprintf.h"
+#include "fastrpc/utils/dds/Middleware.h"
 
 #if defined(OPENDDS)
 #include "dds/DCPS/transport/framework/TransportRegistry.h"
@@ -20,13 +21,13 @@ static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::UDPProxyTr
 
 using namespace eprosima::rpc::transport::dds;
 
-UDPProxyTransport::UDPProxyTransport(std::string remoteServiceName, std::string instanceName, int domainId, long milliseconds) : m_to_connect(NULL),
-    ProxyTransport(remoteServiceName, instanceName, domainId, milliseconds)
+UDPProxyTransport::UDPProxyTransport(const char* const &remoteServiceName, const char* const &instanceName, int domainId, long milliseconds) :
+    ProxyTransport(remoteServiceName, instanceName, domainId, milliseconds), m_to_connect(NULL)
 {
 }
 
-UDPProxyTransport::UDPProxyTransport(const char *to_connect, std::string remoteServiceName, std::string instanceName, int domainId, long milliseconds) : m_to_connect(NULL),
-    ProxyTransport(remoteServiceName, instanceName, domainId, milliseconds)
+UDPProxyTransport::UDPProxyTransport(const char* const &to_connect, const char* const &remoteServiceName, const char* const &instanceName, int domainId, long milliseconds) :
+    ProxyTransport(remoteServiceName, instanceName, domainId, milliseconds), m_to_connect(NULL)
 {
     m_to_connect = strdup(to_connect);
 }

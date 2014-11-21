@@ -7,14 +7,15 @@
  *************************************************************************/
 
 #include "fastrpc/transports/dds/TCPServerTransport.h"
-#include "eProsima_c/macros/snprintf.h"
+#include "fastrpc/utils/macros/snprintf.h"
+#include "fastrpc/utils/dds/Middleware.h"
 
 static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::TCPServerTransport";
 
 using namespace eprosima::rpc::transport::dds;
 
-TCPServerTransport::TCPServerTransport(const char *public_address, const char *server_bind_port, std::string serviceName, std::string instanceName, int domainId) :
-    m_public_address(NULL), m_server_bind_port(NULL), ServerTransport(serviceName, instanceName, domainId)
+TCPServerTransport::TCPServerTransport(const char* const &public_address, const char* const &server_bind_port, const char* const &serviceName, const char* const &instanceName, int domainId) :
+    ServerTransport(serviceName, instanceName, domainId), m_public_address(NULL), m_server_bind_port(NULL) 
 {
     m_public_address = strdup(public_address);
     m_server_bind_port = strdup(server_bind_port);

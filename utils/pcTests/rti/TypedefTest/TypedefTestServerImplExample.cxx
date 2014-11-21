@@ -79,8 +79,8 @@ cadena TypedefTestServerImplExample::getCadena(/*in*/ cadena c1, /*out*/ cadena&
 {
     cadena  getCadena_ret = NULL;    
    
-	getCadena_ret = DDS::String_dup(c1);
-	c2 = DDS::String_dup(c1);
+	getCadena_ret = DDS_String_dup(c1);
+	c2 = DDS_String_dup(c1);
     return getCadena_ret;
 } 
  
@@ -88,8 +88,8 @@ correa TypedefTestServerImplExample::getCorrea(/*in*/ correa cc1, /*out*/ correa
 {
     correa  getCorrea_ret = NULL;    
    
-	getCorrea_ret = DDS::String_dup(cc1);
-	cc2 = DDS::String_dup(cc1);
+	getCorrea_ret = DDS_String_dup(cc1);
+	cc2 = DDS_String_dup(cc1);
 
     return getCorrea_ret;
 } 

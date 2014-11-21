@@ -384,10 +384,10 @@ int main(int argc, char **argv)
     sarray_initialize(&sar1);
     sarray_initialize(&sar2);
 
-    sar1[0] = DDS::String_dup("PRUEBA1");
-    sar1[1] = DDS::String_dup("PRUEBA2");
-    sar2[0] = DDS::String_dup("PRUEBA3");
-    sar2[1] = DDS::String_dup("PRUEBA4");
+    sar1[0] = DDS_String_dup("PRUEBA1");
+    sar1[1] = DDS_String_dup("PRUEBA2");
+    sar2[0] = DDS_String_dup("PRUEBA3");
+    sar2[1] = DDS_String_dup("PRUEBA4");
 
     try
     {
@@ -417,18 +417,18 @@ int main(int argc, char **argv)
     ssarray_initialize(&ssar1);
     ssarray_initialize(&ssar2);
 
-    ssar1[0][0] = DDS::String_dup("PRUEBA1");
-    ssar1[0][1] = DDS::String_dup("PRUEBA2");
-    ssar1[0][2] = DDS::String_dup("PRUEBA3");
-    ssar1[1][0] = DDS::String_dup("PRUEBA4");
-    ssar1[1][1] = DDS::String_dup("PRUEBA5");
-    ssar1[1][2] = DDS::String_dup("PRUEBA6");
-    ssar2[0][0] = DDS::String_dup("PRUEBA7");
-    ssar2[0][1] = DDS::String_dup("PRUEBA8");
-    ssar2[0][2] = DDS::String_dup("PRUEBA9");
-    ssar2[1][0] = DDS::String_dup("PRUEBA10");
-    ssar2[1][1] = DDS::String_dup("PRUEBA11");
-    ssar2[1][2] = DDS::String_dup("PRUEBA12");
+    ssar1[0][0] = DDS_String_dup("PRUEBA1");
+    ssar1[0][1] = DDS_String_dup("PRUEBA2");
+    ssar1[0][2] = DDS_String_dup("PRUEBA3");
+    ssar1[1][0] = DDS_String_dup("PRUEBA4");
+    ssar1[1][1] = DDS_String_dup("PRUEBA5");
+    ssar1[1][2] = DDS_String_dup("PRUEBA6");
+    ssar2[0][0] = DDS_String_dup("PRUEBA7");
+    ssar2[0][1] = DDS_String_dup("PRUEBA8");
+    ssar2[0][2] = DDS_String_dup("PRUEBA9");
+    ssar2[1][0] = DDS_String_dup("PRUEBA10");
+    ssar2[1][1] = DDS_String_dup("PRUEBA11");
+    ssar2[1][2] = DDS_String_dup("PRUEBA12");
 
     try
     {
@@ -463,13 +463,13 @@ int main(int argc, char **argv)
     darray_initialize(&dar2);
 
     dar1[0].count = 1;
-    dar1[0].message = DDS::String_dup("PRUEBA1");
+    dar1[0].message = DDS_String_dup("PRUEBA1");
     dar1[1].count = 2;
-    dar1[1].message = DDS::String_dup("PRUEBA2");
+    dar1[1].message = DDS_String_dup("PRUEBA2");
     dar2[0].count = 3;
-    dar2[0].message = DDS::String_dup("PRUEBA3");
+    dar2[0].message = DDS_String_dup("PRUEBA3");
     dar2[1].count = 4;
-    dar2[1].message = DDS::String_dup("PRUEBA4");
+    dar2[1].message = DDS_String_dup("PRUEBA4");
 
     try
     {
@@ -501,29 +501,29 @@ int main(int argc, char **argv)
     ddarray_initialize(&ddar2);
 
     ddar1[0][0].count = 1;
-    ddar1[0][0].message = DDS::String_dup("PRUEBA1");
+    ddar1[0][0].message = DDS_String_dup("PRUEBA1");
     ddar1[0][1].count = 2;
-    ddar1[0][1].message = DDS::String_dup("PRUEBA2");
+    ddar1[0][1].message = DDS_String_dup("PRUEBA2");
     ddar1[0][2].count = 3;
-    ddar1[0][2].message = DDS::String_dup("PRUEBA3");
+    ddar1[0][2].message = DDS_String_dup("PRUEBA3");
     ddar1[1][0].count = 4;
-    ddar1[1][0].message = DDS::String_dup("PRUEBA4");
+    ddar1[1][0].message = DDS_String_dup("PRUEBA4");
     ddar1[1][1].count = 5;
-    ddar1[1][1].message = DDS::String_dup("PRUEBA5");
+    ddar1[1][1].message = DDS_String_dup("PRUEBA5");
     ddar1[1][2].count = 6;
-    ddar1[1][2].message = DDS::String_dup("PRUEBA6");
+    ddar1[1][2].message = DDS_String_dup("PRUEBA6");
     ddar2[0][0].count = 7;
-    ddar2[0][0].message = DDS::String_dup("PRUEBA7");
+    ddar2[0][0].message = DDS_String_dup("PRUEBA7");
     ddar2[0][1].count = 8;
-    ddar2[0][1].message = DDS::String_dup("PRUEBA8");
+    ddar2[0][1].message = DDS_String_dup("PRUEBA8");
     ddar2[0][2].count = 9;
-    ddar2[0][2].message = DDS::String_dup("PRUEBA9");
+    ddar2[0][2].message = DDS_String_dup("PRUEBA9");
     ddar2[1][0].count = 10;
-    ddar2[1][0].message = DDS::String_dup("PRUEBA10");
+    ddar2[1][0].message = DDS_String_dup("PRUEBA10");
     ddar2[1][1].count = 11;
-    ddar2[1][1].message = DDS::String_dup("PRUEBA11");
+    ddar2[1][1].message = DDS_String_dup("PRUEBA11");
     ddar2[1][2].count = 12;
-    ddar2[1][2].message = DDS::String_dup("PRUEBA12");
+    ddar2[1][2].message = DDS_String_dup("PRUEBA12");
 
     try
     {
@@ -561,13 +561,13 @@ int main(int argc, char **argv)
     cdarray_initialize(&cdar2);
 
     cdar1[0].count = 1;
-    cdar1[0].message = DDS::String_dup("PRUEBA1");
+    cdar1[0].message = DDS_String_dup("PRUEBA1");
     cdar1[1].count = 2;
-    cdar1[1].message = DDS::String_dup("PRUEBA2");
+    cdar1[1].message = DDS_String_dup("PRUEBA2");
     cdar2[0].count = 3;
-    cdar2[0].message = DDS::String_dup("PRUEBA3");
+    cdar2[0].message = DDS_String_dup("PRUEBA3");
     cdar2[1].count = 4;
-    cdar2[1].message = DDS::String_dup("PRUEBA4");
+    cdar2[1].message = DDS_String_dup("PRUEBA4");
 
     try
     {
@@ -598,102 +598,102 @@ int main(int argc, char **argv)
     SequenceTest::Arrays_initialize(&array1);
     SequenceTest::Arrays_initialize(&array2);
 
-    array1.strings[0] = DDS::String_dup("PRUEBA1");
-    array1.strings[1] = DDS::String_dup("PRUEBA2");
-    array1.stringss[0][0] = DDS::String_dup("PRUEBA1");
-    array1.stringss[0][1] = DDS::String_dup("PRUEBA2");
-    array1.stringss[0][2] = DDS::String_dup("PRUEBA3");
-    array1.stringss[1][0] = DDS::String_dup("PRUEBA4");
-    array1.stringss[1][1] = DDS::String_dup("PRUEBA5");
-    array1.stringss[1][2] = DDS::String_dup("PRUEBA6");
+    array1.strings[0] = DDS_String_dup("PRUEBA1");
+    array1.strings[1] = DDS_String_dup("PRUEBA2");
+    array1.stringss[0][0] = DDS_String_dup("PRUEBA1");
+    array1.stringss[0][1] = DDS_String_dup("PRUEBA2");
+    array1.stringss[0][2] = DDS_String_dup("PRUEBA3");
+    array1.stringss[1][0] = DDS_String_dup("PRUEBA4");
+    array1.stringss[1][1] = DDS_String_dup("PRUEBA5");
+    array1.stringss[1][2] = DDS_String_dup("PRUEBA6");
     array1.datos[0].count = 1;
-    array1.datos[0].message = DDS::String_dup("PRUEBA1");
+    array1.datos[0].message = DDS_String_dup("PRUEBA1");
     array1.datos[1].count = 2;
-    array1.datos[1].message = DDS::String_dup("PRUEBA2");
+    array1.datos[1].message = DDS_String_dup("PRUEBA2");
     array1.datoss[0][0].count = 1;
-    array1.datoss[0][0].message = DDS::String_dup("PRUEBA1");
+    array1.datoss[0][0].message = DDS_String_dup("PRUEBA1");
     array1.datoss[0][1].count = 2;
-    array1.datoss[0][1].message = DDS::String_dup("PRUEBA2");
+    array1.datoss[0][1].message = DDS_String_dup("PRUEBA2");
     array1.datoss[0][2].count = 3;
-    array1.datoss[0][2].message = DDS::String_dup("PRUEBA3");
+    array1.datoss[0][2].message = DDS_String_dup("PRUEBA3");
     array1.datoss[1][0].count = 4;
-    array1.datoss[1][0].message = DDS::String_dup("PRUEBA4");
+    array1.datoss[1][0].message = DDS_String_dup("PRUEBA4");
     array1.datoss[1][1].count = 5;
-    array1.datoss[1][1].message = DDS::String_dup("PRUEBA5");
+    array1.datoss[1][1].message = DDS_String_dup("PRUEBA5");
     array1.datoss[1][2].count = 6;
-    array1.datoss[1][2].message = DDS::String_dup("PRUEBA6");
+    array1.datoss[1][2].message = DDS_String_dup("PRUEBA6");
     array1.arradat[0][0][0].count = 1;
-    array1.arradat[0][0][0].message = DDS::String_dup("PRUEBA1");
+    array1.arradat[0][0][0].message = DDS_String_dup("PRUEBA1");
     array1.arradat[0][0][1].count = 2;
-    array1.arradat[0][0][1].message = DDS::String_dup("PRUEBA2");
+    array1.arradat[0][0][1].message = DDS_String_dup("PRUEBA2");
     array1.arradat[0][0][2].count = 3;
-    array1.arradat[0][0][2].message = DDS::String_dup("PRUEBA3");
+    array1.arradat[0][0][2].message = DDS_String_dup("PRUEBA3");
     array1.arradat[0][1][0].count = 4;
-    array1.arradat[0][1][0].message = DDS::String_dup("PRUEBA4");
+    array1.arradat[0][1][0].message = DDS_String_dup("PRUEBA4");
     array1.arradat[0][1][1].count = 5;
-    array1.arradat[0][1][1].message = DDS::String_dup("PRUEBA5");
+    array1.arradat[0][1][1].message = DDS_String_dup("PRUEBA5");
     array1.arradat[0][1][2].count = 6;
-    array1.arradat[0][1][2].message = DDS::String_dup("PRUEBA6");
+    array1.arradat[0][1][2].message = DDS_String_dup("PRUEBA6");
     array1.arradat[1][0][0].count = 7;
-    array1.arradat[1][0][0].message = DDS::String_dup("PRUEBA7");
+    array1.arradat[1][0][0].message = DDS_String_dup("PRUEBA7");
     array1.arradat[1][0][1].count = 8;
-    array1.arradat[1][0][1].message = DDS::String_dup("PRUEBA8");
+    array1.arradat[1][0][1].message = DDS_String_dup("PRUEBA8");
     array1.arradat[1][0][2].count = 9;
-    array1.arradat[1][0][2].message = DDS::String_dup("PRUEBA9");
+    array1.arradat[1][0][2].message = DDS_String_dup("PRUEBA9");
     array1.arradat[1][1][0].count = 10;
-    array1.arradat[1][1][0].message = DDS::String_dup("PRUEBA10");
+    array1.arradat[1][1][0].message = DDS_String_dup("PRUEBA10");
     array1.arradat[1][1][1].count = 11;
-    array1.arradat[1][1][1].message = DDS::String_dup("PRUEBA11");
+    array1.arradat[1][1][1].message = DDS_String_dup("PRUEBA11");
     array1.arradat[1][1][2].count = 12;
-    array1.arradat[1][1][2].message = DDS::String_dup("PRUEBA12");
-    array2.strings[0] = DDS::String_dup("PRUEBA13");
-    array2.strings[1] = DDS::String_dup("PRUEBA14");
-    array2.stringss[0][0] = DDS::String_dup("PRUEBA13");
-    array2.stringss[0][1] = DDS::String_dup("PRUEBA14");
-    array2.stringss[0][2] = DDS::String_dup("PRUEBA15");
-    array2.stringss[1][0] = DDS::String_dup("PRUEBA16");
-    array2.stringss[1][1] = DDS::String_dup("PRUEBA17");
-    array2.stringss[1][2] = DDS::String_dup("PRUEBA18");
+    array1.arradat[1][1][2].message = DDS_String_dup("PRUEBA12");
+    array2.strings[0] = DDS_String_dup("PRUEBA13");
+    array2.strings[1] = DDS_String_dup("PRUEBA14");
+    array2.stringss[0][0] = DDS_String_dup("PRUEBA13");
+    array2.stringss[0][1] = DDS_String_dup("PRUEBA14");
+    array2.stringss[0][2] = DDS_String_dup("PRUEBA15");
+    array2.stringss[1][0] = DDS_String_dup("PRUEBA16");
+    array2.stringss[1][1] = DDS_String_dup("PRUEBA17");
+    array2.stringss[1][2] = DDS_String_dup("PRUEBA18");
     array2.datos[0].count = 13;
-    array2.datos[0].message = DDS::String_dup("PRUEBA13");
+    array2.datos[0].message = DDS_String_dup("PRUEBA13");
     array2.datos[1].count = 14;
-    array2.datos[1].message = DDS::String_dup("PRUEBA14");
+    array2.datos[1].message = DDS_String_dup("PRUEBA14");
     array2.datoss[0][0].count = 13;
-    array2.datoss[0][0].message = DDS::String_dup("PRUEBA13");
+    array2.datoss[0][0].message = DDS_String_dup("PRUEBA13");
     array2.datoss[0][1].count = 14;
-    array2.datoss[0][1].message = DDS::String_dup("PRUEBA14");
+    array2.datoss[0][1].message = DDS_String_dup("PRUEBA14");
     array2.datoss[0][2].count = 15;
-    array2.datoss[0][2].message = DDS::String_dup("PRUEBA15");
+    array2.datoss[0][2].message = DDS_String_dup("PRUEBA15");
     array2.datoss[1][0].count = 16;
-    array2.datoss[1][0].message = DDS::String_dup("PRUEBA16");
+    array2.datoss[1][0].message = DDS_String_dup("PRUEBA16");
     array2.datoss[1][1].count = 17;
-    array2.datoss[1][1].message = DDS::String_dup("PRUEBA17");
+    array2.datoss[1][1].message = DDS_String_dup("PRUEBA17");
     array2.datoss[1][2].count = 18;
-    array2.datoss[1][2].message = DDS::String_dup("PRUEBA18");
+    array2.datoss[1][2].message = DDS_String_dup("PRUEBA18");
     array2.arradat[0][0][0].count = 13;
-    array2.arradat[0][0][0].message = DDS::String_dup("PRUEBA13");
+    array2.arradat[0][0][0].message = DDS_String_dup("PRUEBA13");
     array2.arradat[0][0][1].count = 14;
-    array2.arradat[0][0][1].message = DDS::String_dup("PRUEBA14");
+    array2.arradat[0][0][1].message = DDS_String_dup("PRUEBA14");
     array2.arradat[0][0][2].count = 15;
-    array2.arradat[0][0][2].message = DDS::String_dup("PRUEBA15");
+    array2.arradat[0][0][2].message = DDS_String_dup("PRUEBA15");
     array2.arradat[0][1][0].count = 16;
-    array2.arradat[0][1][0].message = DDS::String_dup("PRUEBA16");
+    array2.arradat[0][1][0].message = DDS_String_dup("PRUEBA16");
     array2.arradat[0][1][1].count = 17;
-    array2.arradat[0][1][1].message = DDS::String_dup("PRUEBA17");
+    array2.arradat[0][1][1].message = DDS_String_dup("PRUEBA17");
     array2.arradat[0][1][2].count = 18;
-    array2.arradat[0][1][2].message = DDS::String_dup("PRUEBA18");
+    array2.arradat[0][1][2].message = DDS_String_dup("PRUEBA18");
     array2.arradat[1][0][0].count = 19;
-    array2.arradat[1][0][0].message = DDS::String_dup("PRUEBA19");
+    array2.arradat[1][0][0].message = DDS_String_dup("PRUEBA19");
     array2.arradat[1][0][1].count = 20;
-    array2.arradat[1][0][1].message = DDS::String_dup("PRUEBA20");
+    array2.arradat[1][0][1].message = DDS_String_dup("PRUEBA20");
     array2.arradat[1][0][2].count = 21;
-    array2.arradat[1][0][2].message = DDS::String_dup("PRUEBA21");
+    array2.arradat[1][0][2].message = DDS_String_dup("PRUEBA21");
     array2.arradat[1][1][0].count = 22;
-    array2.arradat[1][1][0].message = DDS::String_dup("PRUEBA22");
+    array2.arradat[1][1][0].message = DDS_String_dup("PRUEBA22");
     array2.arradat[1][1][1].count = 23;
-    array2.arradat[1][1][1].message = DDS::String_dup("PRUEBA23");
+    array2.arradat[1][1][1].message = DDS_String_dup("PRUEBA23");
     array2.arradat[1][1][2].count = 24;
-    array2.arradat[1][1][2].message = DDS::String_dup("PRUEBA24");
+    array2.arradat[1][1][2].message = DDS_String_dup("PRUEBA24");
 
     try
     {

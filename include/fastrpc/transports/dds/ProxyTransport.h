@@ -12,10 +12,13 @@
 #include "fastrpc/transports/dds/Transport.h"
 #include "fastrpc/transports/ProxyTransport.h"
 #include "fastrpc/utils/Messages.h"
-#include "fastrpc/utils/dds/Middleware.h"
 
 #include <string>
 #include <map>
+
+class DDSDomainParticipant;
+struct DDS_DomainParticipantQos;
+class DDSQueryCondition;
 
 namespace eprosima
 {
@@ -26,6 +29,19 @@ namespace eprosima
             namespace dds
             {
                 class ProxyProcedureEndpoint;
+			}
+		}
+	}
+}
+
+namespace eprosima
+{
+    namespace rpc
+    {
+        namespace transport
+        {
+            namespace dds
+            {
                 class DDSAsyncTask;
                 class AsyncThread;
 
@@ -34,34 +50,34 @@ namespace eprosima
                  * using DDS.
                  * @ingroup TRANSPORTMODULE
                  */
-                class FASTRPC_DllAPI ProxyTransport : public eprosima::rpc::transport::ProxyTransport, public Transport
+                class ProxyTransport : public eprosima::rpc::transport::ProxyTransport, public Transport
                 {
                     public:
 
                         /*!
                          * @brief Default destructor.
                          */
-                        virtual ~ProxyTransport();
+                        virtual FASTRPC_DllAPI ~ProxyTransport();
 
                         /*!
                          * @brief This abstract function returns the type of the transport.
                          *        This function has to be implemented by the child classes.
                          */
-                        virtual const char* getType() const;
+                        virtual FASTRPC_DllAPI const char* getType() const;
 
 						/*!
                          * @brief This function returns the DDS service name.
 						 * @return DDS service name.
                          */
-                        std::string& getRemoteServiceName();
+                        FASTRPC_DllAPI const char* getRemoteServiceName() const;
 
-                        std::string& getInstanceName();
+                        FASTRPC_DllAPI const char* getInstanceName() const;
 
 						/*!
                          * @brief This function gets the timeout value.
 						 * @return Timeout value.
                          */
-                        long getTimeout();
+                        FASTRPC_DllAPI long getTimeout();
 
                         /*! TODO Actualizar
                          * @brief This function creates a new proxy procedure endpoint.
@@ -78,7 +94,7 @@ namespace eprosima
                          * @return 0 if the function works. -1 in other case.
                          * TODO
                          */
-                        eprosima::rpc::transport::Endpoint*
+                        FASTRPC_DllAPI eprosima::rpc::transport::Endpoint*
                             createProcedureEndpoint(const char *name, const char *writertypename,
                                     const char *readertypename, bool eprosima_types,
                                     Transport::Create_data create_data, Transport::Copy_data copy_data,
@@ -92,14 +108,14 @@ namespace eprosima
                          * @param timeout The timeout used for this request.
                          * @return A 0 value is returned if function works successfully. In any other case, -1 is returned.
                          */
-                        int addAsyncTask(DDS::QueryCondition *query, DDSAsyncTask *task, long timeout);
+                        FASTRPC_DllAPI int addAsyncTask(DDSQueryCondition *query, DDSAsyncTask *task, long timeout);
 
                         /**
                          * @brief This function deletes all the asynchronous tasks associated with the ProxyProcedureEndpoint endpoint.
                          *
                          * @param pe Pointer to the ProxyProcedureEndpoint. It cannot be NULL.
                          */
-                        void deleteAssociatedAsyncTasks(ProxyProcedureEndpoint *pe);
+                        FASTRPC_DllAPI void deleteAssociatedAsyncTasks(ProxyProcedureEndpoint *pe);
 
                     protected:
 
@@ -109,13 +125,13 @@ namespace eprosima
                          * @param participantQos Reference to the DDS domain participant QoS.
                          * @param participant The domain participant that will be set to use a specific transport.
                          */
-                        virtual int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant) = 0;
+                        virtual FASTRPC_DllAPI int setTransport(DDS_DomainParticipantQos &participantQos, DDSDomainParticipant *participant) = 0;
 
                         /*!
                          * @brief Default constructor.
                          * @param domainId Optional parameter that specifies the domain identifier will be used in DDS.
                          */
-                        ProxyTransport(std::string &remoteServiceName, std::string &instanceName, int domainId = 0, long milliseconds = 10000L);
+                        FASTRPC_DllAPI ProxyTransport(const char* const &remoteServiceName, const char* const &instanceName, int domainId = 0, long milliseconds = 10000L);
 
                     private:
 

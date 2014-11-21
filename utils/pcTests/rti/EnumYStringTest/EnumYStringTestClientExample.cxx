@@ -68,8 +68,8 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    char*  s1  = DDS::String_dup("PRUEBA");       
-    char*  s2  = DDS::String_dup("PRUEBA2");       
+    char*  s1  = DDS_String_dup("PRUEBA");       
+    char*  s2  = DDS_String_dup("PRUEBA2");       
     char*  s3  = NULL;    
     char*  getStringRetValue = NULL;       
 
@@ -92,13 +92,13 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    if(s1 != NULL) DDS::String_free(s1);    
-    if(s2 != NULL) DDS::String_free(s2);    
-    if(s3 != NULL) DDS::String_free(s3);    
-    if(getStringRetValue != NULL) DDS::String_free(getStringRetValue);    
+    if(s1 != NULL) DDS_String_free(s1);    
+    if(s2 != NULL) DDS_String_free(s2);    
+    if(s3 != NULL) DDS_String_free(s3);    
+    if(getStringRetValue != NULL) DDS_String_free(getStringRetValue);    
 
-    char*  sb1  = DDS::String_dup("PRUEBA");       
-    char*  sb2  = DDS::String_dup("PRUEBA2");       
+    char*  sb1  = DDS_String_dup("PRUEBA");       
+    char*  sb2  = DDS_String_dup("PRUEBA2");       
     char*  sb3  = NULL;    
     char*  getStringBoundedRetValue = NULL;       
 
@@ -121,10 +121,10 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    if(sb1 != NULL) DDS::String_free(sb1);    
-    if(sb2 != NULL) DDS::String_free(sb2);    
-    if(sb3 != NULL) DDS::String_free(sb3);    
-    if(getStringBoundedRetValue != NULL) DDS::String_free(getStringBoundedRetValue);
+    if(sb1 != NULL) DDS_String_free(sb1);    
+    if(sb2 != NULL) DDS_String_free(sb2);    
+    if(sb3 != NULL) DDS_String_free(sb3);    
+    if(getStringBoundedRetValue != NULL) DDS_String_free(getStringBoundedRetValue);
 
     std::cout << "TEST SUCCESFULLY" << std::endl;
 

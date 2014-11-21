@@ -10,14 +10,6 @@
 
 using namespace eprosima::rpc::exception;
 
-ServerNotFoundException::ServerNotFoundException(const std::string &message) : SystemException(message, 4)
-{
-}
-
-ServerNotFoundException::ServerNotFoundException(std::string&& message) : SystemException(std::move(message), 4)
-{
-}
-
 ServerNotFoundException::ServerNotFoundException(const ServerNotFoundException &ex) : SystemException(ex)
 {
 }

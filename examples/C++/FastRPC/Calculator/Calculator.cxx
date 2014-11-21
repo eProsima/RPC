@@ -16,6 +16,7 @@
 
 #include "fastcdr/FastCdr.h"
 #include "fastrpc/exceptions/BadParamException.h"
+using namespace eprosima::rpc::exception;
 
 #include <utility>
 

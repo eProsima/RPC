@@ -11,24 +11,29 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+
         <ClCompile Include="Bank.cxx">
           <Filter>Source Files</Filter>
         </ClCompile>
         
+
         <ClCompile Include="BankRESTProtocol.cxx">
           <Filter>Source Files</Filter>
         </ClCompile>
         
   </ItemGroup>
   <ItemGroup>
+
         <ClInclude Include="Bank.h">
           <Filter>Header Files</Filter>
         </ClInclude>
         
+
         <ClInclude Include="BankProtocol.h">
           <Filter>Header Files</Filter>
         </ClInclude>
         
+
         <ClInclude Include="BankRESTProtocol.h">
           <Filter>Header Files</Filter>
         </ClInclude>

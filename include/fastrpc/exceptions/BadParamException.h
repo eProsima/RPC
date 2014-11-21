@@ -22,7 +22,7 @@ namespace eprosima
              * in a object.
              * @ingroup EXCEPTIONMODULE
              */
-            class FASTRPC_DllAPI BadParamException : public SystemException
+            class BadParamException : public SystemException
             {
                 public:
 
@@ -31,48 +31,41 @@ namespace eprosima
                      *
                      * \param message An error message. This message is copied.
                      */
-                    BadParamException(const std::string &message);
-
-                    /**
-                     * \brief Default constructor.
-                     *
-                     * \param message An error message. This message is moved.
-                     */
-                    BadParamException(std::string&& message);
+					FASTRPC_DllAPI BadParamException(const std::string &message) : SystemException(message.c_str(), 6) {}
 
                     /**
                      * \brief Default copy constructor.
                      *
                      * \param ex BadParamException that will be copied.
                      */
-                    BadParamException(const BadParamException &ex);
+                    FASTRPC_DllAPI BadParamException(const BadParamException &ex);
 
                     /**
                      * \brief Default move constructor.
                      *
                      * \param ex BadParamException that will be moved.
                      */
-                    BadParamException(BadParamException&& ex);
+                    FASTRPC_DllAPI BadParamException(BadParamException&& ex);
 
                     /**
                      * \brief Assigment operation.
                      *
                      * \param ex BadParamException that will be copied.
                      */
-                    BadParamException& operator=(const BadParamException &ex);
+                    FASTRPC_DllAPI BadParamException& operator=(const BadParamException &ex);
 
                     /**
                      * \brief Assigment operation.
                      *
                      * \param ex BadParamException that will be moved.
                      */
-                    BadParamException& operator=(BadParamException&& ex);
+                    FASTRPC_DllAPI BadParamException& operator=(BadParamException&& ex);
 
                     /// \brief Default constructor
-                    virtual ~BadParamException() throw();
+                    virtual FASTRPC_DllAPI ~BadParamException() throw();
 
                     /// \brief This function throws the object as an exception.
-                    virtual void raise() const;
+                    virtual FASTRPC_DllAPI void raise() const;
             };
         } // namespace exception
     } // namespace rpc

@@ -11,10 +11,16 @@
 #include "fastrpc/fastrpc_dll.h"
 #include "fastrpc/transports/dds/ServerTransport.h"
 #include "fastrpc/transports/components/Endpoint.h"
-#include "fastrpc/utils/dds/Middleware.h"
 #include "fastrpc/utils/Messages.h"
 
 #include <string>
+
+#if defined(_WIN32) && defined(NDDS_DLL_VARIABLE)
+class __declspec(dllimport) DDSDataReaderListener;
+class __declspec(dllimport) DDSListener;
+#endif
+
+#include "fastrpc/utils/dds/Middleware.h"
 
 namespace boost
 {
@@ -34,7 +40,7 @@ namespace eprosima
                  * Also this class encapsulate the DDS datawriter and the DDS datareader.
 				 * @ingroup TRANSPORTMODULE
                  */
-                class FASTRPC_DllAPI ServerProcedureEndpoint : public Endpoint, public DDS::DataReaderListener
+                class ServerProcedureEndpoint : public Endpoint, public DDSDataReaderListener
                 {
                     public:
 
@@ -42,10 +48,10 @@ namespace eprosima
                          * @brief Default constructor.
                          * @param Transport that creates the proxy procedure endpoint. It cannot be NULL.
                          */
-                        ServerProcedureEndpoint(ServerTransport &transport);
+                        FASTRPC_DllAPI ServerProcedureEndpoint(ServerTransport &transport);
 
                         //! @brief Default destructor.
-                        virtual ~ServerProcedureEndpoint();
+                        virtual FASTRPC_DllAPI ~ServerProcedureEndpoint();
 
 						/*! TODO Actualizar
 						 * @brief Initializes the endpoint.
@@ -58,7 +64,7 @@ namespace eprosima
 						 * @param ProcessFunc Pointer to the function invoked when a message is received from the server
 						 * @param dataSize Size of the DataReader data structure
 						 */
-                        int initialize(const char *name, const char *writertypename, const char *readertypename,
+                        FASTRPC_DllAPI int initialize(const char *name, const char *writertypename, const char *readertypename,
                                 Transport::Create_data create_data, Transport::Destroy_data destroy_data,
                                 Transport::ProcessFunc, int dataSize);
 						
@@ -66,59 +72,59 @@ namespace eprosima
                          * @brief This method creates the DDS entities needed to run this DDS Endpoint.
                          * @param serviceName Name of the service.
                          */
-                        int start(std::string &serviceName, std::string &instanceName);
+                        FASTRPC_DllAPI int start(const char* const &serviceName, const char* const &instanceName);
 
 						/*!
                          * @brief This method deletes the DDS entities needed to run this DDS Endpoint.
                          * @param serviceName Name of the service.
                          */
-                        void stop();
+                        FASTRPC_DllAPI void stop();
 
 						/*!
                          * @brief Gets the callback used to processes a request.
 						 * @return Function callback used to processes a request.
                          */
-                        inline
+                        inline FASTRPC_DllAPI
                             Transport::ProcessFunc getProcessFunc(){return m_process_func;}
 
 						/*!
                          * @brief Sends the reply.
                          * @param serviceName Name of the service.
                          */
-                        int sendReply(void *data);
+                        FASTRPC_DllAPI int sendReply(void *data);
 
                         /// @brief DDS callback.
-                        virtual void on_data_available(DDS::DataReader* reader);
+                        virtual FASTRPC_DllAPI void on_data_available(DDSDataReader* reader);
 
                         /// @brief DDS callback.
-                        virtual void on_requested_deadline_missed(
-                                DDS::DataReader* reader,
-                                const DDS::RequestedDeadlineMissedStatus& status) {}
+                        virtual FASTRPC_DllAPI void on_requested_deadline_missed(
+                                DDSDataReader* reader,
+                                const DDS_RequestedDeadlineMissedStatus& status) {}
 
                         /// @brief DDS callback.
-                        virtual void on_requested_incompatible_qos(
-                                DDS::DataReader* reader,
-                                const DDS::RequestedIncompatibleQosStatus& status) {}
+                        virtual FASTRPC_DllAPI void on_requested_incompatible_qos(
+                                DDSDataReader* reader,
+                                const DDS_RequestedIncompatibleQosStatus& status) {}
 
                         /// @brief DDS callback.
-                        virtual void on_sample_rejected(
-                                DDS::DataReader* reader,
-                                const DDS::SampleRejectedStatus& status) {}
+                        virtual FASTRPC_DllAPI void on_sample_rejected(
+                                DDSDataReader* reader,
+                                const DDS_SampleRejectedStatus& status) {}
 
                         /// @brief DDS callback.
-                        virtual void on_liveliness_changed(
-                                DDS::DataReader* reader,
-                                const DDS::LivelinessChangedStatus& status) {}
+                        virtual FASTRPC_DllAPI void on_liveliness_changed(
+                                DDSDataReader* reader,
+                                const DDS_LivelinessChangedStatus& status) {}
 
                         /// @brief DDS callback.
-                        virtual void on_sample_lost(
-                                DDS::DataReader* reader,
-                                const DDS::SampleLostStatus& status) {}
+                        virtual FASTRPC_DllAPI void on_sample_lost(
+                                DDSDataReader* reader,
+                                const DDS_SampleLostStatus& status) {}
 
                         /// @brief DDS callback.
-                        virtual void on_subscription_matched(
-                                DDS::DataReader* reader,
-                                const DDS::SubscriptionMatchedStatus& status) {}
+                        virtual FASTRPC_DllAPI void on_subscription_matched(
+                                DDSDataReader* reader,
+                                const DDS_SubscriptionMatchedStatus& status) {}
 
                     private:
 
@@ -126,7 +132,7 @@ namespace eprosima
                          * @brief This function creates the DDS entities.
                          * @return A 0 value is returned if the initialization works successfully. In other case -1 is returned.
                          */
-                        int createEntities(std::string &serviceName, std::string &instanceName);
+                        int createEntities(const std::string &serviceName, const std::string &instanceName);
 
                         /*!
                          * @brief This function enables the DDS entities.
@@ -146,18 +152,18 @@ namespace eprosima
                         std::string m_readerTypeName;
 
                         //!@brief The topic used to send.
-                        DDS::Topic *m_writerTopic;
+                        DDSTopic *m_writerTopic;
 
                         //! @brief The topic used to receive.
-                        DDS::Topic *m_readerTopic;
+                        DDSTopic *m_readerTopic;
 
-                        DDS::ContentFilteredTopic *m_filter;
+                        DDSContentFilteredTopic *m_filter;
 
                         //! @brief The data writer used to send.
-                        DDS::DataWriter *m_writer;
+                        DDSDataWriter *m_writer;
 
                         //! @brief The data reader used to receive.
-                        DDS::DataReader *m_reader;
+                        DDSDataReader *m_reader;
 
                         Transport::Create_data m_create_data;
 

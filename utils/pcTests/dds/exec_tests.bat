@@ -73,8 +73,8 @@ for /D %%D in ("*") do (
             if !exec_target_bool!==1 (
                 :: i86 target
                 :: Set environtment
-                call ..\..\..\thirdparty\dev-env\scripts\common_dds_functions.bat :setRTItarget i86Win32VS2010
-                call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\i86Win32VS2010;%BOOST_ROOT%\lib\i86Win32VS2010"
+                call ..\..\..\thirdparty\dev-env\scripts\common_dds_functions.bat :setRTItarget i86Win32VS2013
+                call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\i86Win32VS2013;..\..\..\thirdparty\fastcdr\lib\i86Win32VS2013;%BOOST_LIBRARYDIR%\i86Win32VS2013"
                 call "%%D\exec_test.bat" Win32
                 :: Restore environtment
                 call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :restoreTargetPath
@@ -86,8 +86,8 @@ for /D %%D in ("*") do (
             if "%test_targets%"=="" set exec_target_bool=2
             if "%test_targets%"=="x64" set exec_target_bool=2
             if !exec_target_bool!==2 (
-                call ..\..\..\thirdparty\dev-env\scripts\common_dds_functions.bat :setRTItarget x64Win64VS2010
-                call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\x64Win64VS2010;%BOOST_ROOT%\lib\x64Win64VS2010"
+                call ..\..\..\thirdparty\dev-env\scripts\common_dds_functions.bat :setRTItarget x64Win64VS2013
+                call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\x64Win64VS2013;..\..\..\thirdparty\fastcdr\lib\x64Win64VS2013;%BOOST_LIBRARYDIR%\x64Win64VS2013"
                 call "%%D\exec_test.bat" x64
                 :: Restore environtment
                 call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :restoreTargetPath
@@ -101,9 +101,9 @@ for /D %%D in ("*") do (
             if "%test_targets%"=="i86" set exec_target_bool=3
             if !exec_target_bool!==3 (
                 :: Set environtment
-                call ..\..\..\thirdparty\dev-env\scripts\common_dds_functions.bat :setRTItarget i86Win32VS2010
-                call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\i86Win32VS2010;%BOOST_ROOT%\lib\i86Win32VS2010"
-                call :execTest i86Win32VS2010 Win32 %%D
+                call ..\..\..\thirdparty\dev-env\scripts\common_dds_functions.bat :setRTItarget i86Win32VS2013
+                call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\i86Win32VS2013;..\..\..\thirdparty\fastcdr\lib\i86Win32VS2013;%BOOST_LIBRARYDIR%\i86Win32VS2013"
+                call :execTest i86Win32VS2013 Win32 %%D
                 :: Restore environtment
                 call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :restoreTargetPath
                 call ..\..\..\thirdparty\dev-env\scripts\common_dds_functions.bat :restoreRTItarget
@@ -115,9 +115,9 @@ for /D %%D in ("*") do (
             if "%test_targets%"=="x64" set exec_target_bool=4
             if !exec_target_bool!==4 (
                 :: Set environtment
-                call ..\..\..\thirdparty\dev-env\scripts\common_dds_functions.bat :setRTItarget x64Win64VS2010
-                call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\x64Win64VS2010;%BOOST_ROOT%\lib\x64Win64VS2010"
-                call :execTest x64Win64VS2010 x64 %%D
+                call ..\..\..\thirdparty\dev-env\scripts\common_dds_functions.bat :setRTItarget x64Win64VS2013
+                call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\x64Win64VS2013;..\..\..\thirdparty\fastcdr\lib\x64Win64VS2013;%BOOST_LIBRARYDIR%\x64Win64VS2013"
+                call :execTest x64Win64VS2013 x64 %%D
                 :: Restore environtment
                 call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :restoreTargetPath
                 call ..\..\..\thirdparty\dev-env\scripts\common_dds_functions.bat :restoreRTItarget
@@ -153,7 +153,7 @@ if not %errorstatus%==0 goto :EOF
 
 :: Release DLL Configuration
 :: Clean the visual solution
-msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
+msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Configuration="Release DLL" /p:Platform="%2"
 :: Build the visual solution
 msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Release DLL" /p:Platform="%2"
 set errorstatus=%ERRORLEVEL%
@@ -172,7 +172,7 @@ if not %errorstatus%==0 goto :EOF
 
 :::: Debug DLL Configuration
 :::: Clean the visual solution
-::msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
+::msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Configuration="Debug DLL" /p:Platform="%2"
 :::: Build the visual solution
 ::msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Debug DLL" /p:Platform="%2"
 ::set errorstatus=%ERRORLEVEL%
@@ -191,7 +191,7 @@ if not %errorstatus%==0 goto :EOF
 
 :: Release Configuration
 :: Clean the visual solution
-msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
+msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Configuration="Release" /p:Platform="%2"
 :: Build the visual solution
 msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Release" /p:Platform="%2"
 set errorstatus=%ERRORLEVEL%
@@ -209,7 +209,7 @@ if not %errorstatus%==0 goto :EOF
 
 :::: Debug Configuration
 :::: Clean the visual solution
-::msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
+::msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Configuration="Debug" /p:Platform="%2"
 :::: Build the visual solution
 ::msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Debug" /p:Platform="%2"
 ::set errorstatus=%ERRORLEVEL%
@@ -242,7 +242,7 @@ if not %errorstatus%==0 goto :EOF
 
 :: Release DLL Configuration
 :: Clean the visual solution
-msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
+msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Configuration="Release DLL" /p:Platform="%2"
 :: Build the visual solution
 msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Release DLL" /p:Platform="%2"
 set errorstatus=%ERRORLEVEL%
@@ -261,7 +261,7 @@ if not %errorstatus%==0 goto :EOF
 
 :::: Debug DLL Configuration
 :::: Clean the visual solution
-::msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
+::msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Configuration="Debug DLL" /p:Platform="%2"
 :::: Build the visual solution
 ::msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Debug DLL" /p:Platform="%2"
 ::set errorstatus=%ERRORLEVEL%
@@ -280,7 +280,7 @@ if not %errorstatus%==0 goto :EOF
 
 :: Release Configuration
 :: Clean the visual solution
-msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
+msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Configuration="Release" /p:Platform="%2"
 :: Build the visual solution
 msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Release" /p:Platform="%2"
 set errorstatus=%ERRORLEVEL%
@@ -298,7 +298,7 @@ if not %errorstatus%==0 goto :EOF
 
 :::: Debug Configuration
 :::: Clean the visual solution
-::msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Platform="%2"
+::msbuild "output\rpcsolution-%1.sln" /t:Clean /p:Configuration="Debug" /p:Platform="%2"
 :::: Build the visual solution
 ::msbuild "output\rpcsolution-%1.sln" /t:Build /p:Configuration="Debug" /p:Platform="%2"
 ::set errorstatus=%ERRORLEVEL%
