@@ -96,40 +96,40 @@ reqrepRefFinalize(type, reqrep, name) ::= <<
 $type$_$reqrep$_finalize(&$name$);
 >>
 
-getTypenameOperation(operation, suffix, varname) ::= <<
-$varname$ = $operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::get_type_name();
+getTypenameOperation(interface, operation, suffix, varname) ::= <<
+$varname$ = $interface.scopedname$_$operation.name$$suffix$TypeSupport::get_type_name();
 >>
 
 getTypenameInterface(interface, suffix, varname) ::= <<
 $varname$ = $interface.scopedname$$suffix$TypeSupport::get_type_name();
 >>
 
-registerTypenameOperationAndCheck(operation, suffix, varname) ::= <<
-$operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::register_type(m_ddsTransport->getParticipant(), $varname$) != DDS::RETCODE_OK
+registerTypenameOperationAndCheck(interface, operation, suffix, varname) ::= <<
+$interface.scopedname$_$operation.name$$suffix$TypeSupport::register_type(m_ddsTransport->getParticipant(), $varname$) != DDS::RETCODE_OK
 >>
 
 registerTypenameInterfaceAndCheck(interface, suffix, varname) ::= <<
 $interface.scopedname$$suffix$TypeSupport::register_type(m_ddsTransport->getParticipant(), $varname$) != DDS::RETCODE_OK
 >>
 
-createDataCallback(operation, suffix) ::= <<
-(::transport::dds::Transport::Create_data)$operation.parent.scopedname$_$operation.name$$suffix$PluginSupport_create_data
+createDataCallback(interface, operation, suffix) ::= <<
+(::transport::dds::Transport::Create_data)$interface.scopedname$_$operation.name$$suffix$PluginSupport_create_data
 >>
 
 createDataCallbackInterface(interface, suffix) ::= <<
 (::transport::dds::Transport::Create_data)$interface.scopedname$$suffix$PluginSupport_create_data
 >>
 
-copyDataCallback(operation, suffix) ::= <<
-(::transport::dds::Transport::Copy_data)$operation.parent.scopedname$_$operation.name$$suffix$PluginSupport_copy_data
+copyDataCallback(interface, operation, suffix) ::= <<
+(::transport::dds::Transport::Copy_data)$interface.scopedname$_$operation.name$$suffix$PluginSupport_copy_data
 >>
 
 copyDataCallbackInterface(interface, suffix) ::= <<
 (::transport::dds::Transport::Copy_data)$interface.scopedname$$suffix$PluginSupport_copy_data
 >>
 
-destroyDataCallback(operation, suffix) ::= <<
-(::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$_$operation.name$$suffix$PluginSupport_destroy_data
+destroyDataCallback(interface, operation, suffix) ::= <<
+(::transport::dds::Transport::Destroy_data)$interface.scopedname$_$operation.name$$suffix$PluginSupport_destroy_data
 >>
 
 destroyDataCallbackInterface(interface, suffix) ::= <<

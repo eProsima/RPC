@@ -50,7 +50,7 @@ $paramRetType(operation.rettype)$ $interface.name$Proxy::$operation.name$($param
 
 $if(ctx.dds)$
 $if(!operation.oneway)$
-void $interface.name$Proxy::$operation.name$_async($operation.parent.name$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$)
+void $interface.name$Proxy::$operation.name$_async($interface.name$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$)
 {
     dynamic_cast<eprosima::rpc::protocol::$ctx.filename$Protocol&>(getProtocol()).$interface.formatedScopedname$_$operation.name$_async(obj$extractParams(params=operation.inputparam, separatorInicial=", ")$);
 }

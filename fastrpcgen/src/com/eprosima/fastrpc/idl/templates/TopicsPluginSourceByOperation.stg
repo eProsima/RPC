@@ -33,77 +33,18 @@ $definitions; separator="\n"$
 
 interface(ctx, interface, export_list) ::= <<
 $export_list$
->>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
-exception(ctx, exception) ::= <<
-DDS_TypeCode* $if(exception.hasScope)$$exception.scope$$if(exception.parent)$$if(exception.parent.isInterface)$Plugin$endif$$endif$::$endif$$exception.name$Plugin::get_typecode()
-{
-    static bool is_initialized = false;
-
-    $exception.members : { member |$ddsTypeCodeDecls(ctx=ctx, name=member.name, typecode=member.typecode)$}; separator="\n"$
-
-    static DDS_TypeCode_Member $exception.name$_g_tc_members[$length(exception.members)$] =
-    {
-        $exception.members : { member |
-        {
-            (char *)"$member.name$",
-            {
-                0,
-                DDS_BOOLEAN_FALSE,
-                -1,
-                NULL
-            },
-            0,
-            0,
-            0,
-            NULL,
-            RTI_CDR_REQUIRED_MEMBER,
-            DDS_PRIVATE_MEMBER,
-            1,
-            NULL
-        }}; separator=",\n"$
-    };
-
-    static DDS_TypeCode $exception.name$_g_tc =
-    {{
-         DDS_TK_STRUCT,
-         DDS_BOOLEAN_FALSE,
-         -1,
-         (char*)"$exception.scopedname$",
-         NULL,
-         0,
-         0,
-         NULL,
-         $length(exception.members)$,
-         $exception.name$_g_tc_members,
-         DDS_VM_NONE
-    }};
-    
-    if(!is_initialized)
-    {
-        $exception.members : { member |$exception.name$_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=member.name, typecode=member.typecode)$;}; separator="\n"$
-        is_initialized = true;
-    }
-
-    return &$exception.name$_g_tc;
-}
->>
-
-operation(ctx, operation, param_list) ::= <<
+ 
+$interface.all_operations : { operation |
 // Request operations
-DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_InPlugin::get_typecode()
+DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_InPlugin::get_typecode()
 {
-    //printf("=> $operation.parent.scopedname$_$operation.name$_InPlugin::get_typecode\n");
+    //printf("=> $interface.scopedname$_$operation.name$_InPlugin::get_typecode\n");
     static bool is_initialized = false;
 
     $operation.inputparam : { param |$ddsTypeCodeDecls(ctx=ctx, name=param.name, typecode=param.typecode)$}; separator="\n"$
 
     $if(operation.inputparam)$
-    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_In_g_tc_members[$length(operation.inputparam)$] =
+    static DDS_TypeCode_Member $interface.name$_$operation.name$_In_g_tc_members[$length(operation.inputparam)$] =
     {
         $operation.inputparam : { param |
         {
@@ -125,7 +66,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_InPlugin::ge
         }}; separator=",\n"$
     };
     $else$
-    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_In_g_tc_members[1] =
+    static DDS_TypeCode_Member $interface.name$_$operation.name$_In_g_tc_members[1] =
     {
         {
             (char *)"dummy",
@@ -147,77 +88,77 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_InPlugin::ge
     };
     $endif$
 
-    static DDS_TypeCode $operation.parent.name$_$operation.name$_In_g_tc =
+    static DDS_TypeCode $interface.name$_$operation.name$_In_g_tc =
     {{
          DDS_TK_STRUCT,
          DDS_BOOLEAN_FALSE,
          -1,
-         (char*)"$operation.parent.scopedname$_$operation.name$_In",
+         (char*)"$interface.scopedname$_$operation.name$_In",
          NULL,
          0,
          0,
          NULL,
          $if(operation.inputparam)$$length(operation.inputparam)$$else$1$endif$,
-         $operation.parent.name$_$operation.name$_In_g_tc_members,
+         $interface.name$_$operation.name$_In_g_tc_members,
          DDS_VM_NONE
     }};
     
     if(!is_initialized)
     {
         $if(operation.inputparam)$
-        $operation.inputparam : { param |$operation.parent.name$_$operation.name$_In_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=param.name, typecode=param.typecode)$;}; separator="\n"$
+        $operation.inputparam : { param |$interface.name$_$operation.name$_In_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=param.name, typecode=param.typecode)$;}; separator="\n"$
         $else$
-        $operation.parent.name$_$operation.name$_In_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode*)&DDS_g_tc_long;
+        $interface.name$_$operation.name$_In_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode*)&DDS_g_tc_long;
         $endif$
 
         is_initialized = true;
     }
 
-    return &$operation.parent.name$_$operation.name$_In_g_tc;
+    return &$interface.name$_$operation.name$_In_g_tc;
 }
 
-const char *$operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::m_typename = "$operation.parent.scopedname$_$operation.name$_Request";
+const char *$interface.scopedname$Plugin::$operation.name$_RequestPlugin::m_typename = "$interface.scopedname$_$operation.name$_Request";
 
-const char* $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_typename()
+const char* $interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_typename()
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_typename\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_typename\n");
     return m_typename;
 }
 
-$operation.parent.scopedname$_$operation.name$_Request*
-$operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::create_data(void)
+$interface.scopedname$_$operation.name$_Request*
+$interface.scopedname$Plugin::$operation.name$_RequestPlugin::create_data(void)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::create_data\n");
-    $operation.parent.scopedname$_$operation.name$_Request *request = new $operation.parent.scopedname$_$operation.name$_Request();
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::create_data\n");
+    $interface.scopedname$_$operation.name$_Request *request = new $interface.scopedname$_$operation.name$_Request();
     return request;
 }
 
 void 
-$operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::destroy_data(
-    $operation.parent.scopedname$_$operation.name$_Request *sample)
+$interface.scopedname$Plugin::$operation.name$_RequestPlugin::destroy_data(
+    $interface.scopedname$_$operation.name$_Request *sample)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::destroy_data\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::destroy_data\n");
     if(sample != NULL)
         delete sample;
 }
 
 void 
-$operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::copy_data(
-    $operation.parent.name$_$operation.name$_Request *dst,
-    const $operation.parent.name$_$operation.name$_Request *src)
+$interface.scopedname$Plugin::$operation.name$_RequestPlugin::copy_data(
+    $interface.name$_$operation.name$_Request *dst,
+    const $interface.name$_$operation.name$_Request *src)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::copy_data\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::copy_data\n");
     *dst = *src;
 }
 
 unsigned int 
-$operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_max_size(
+$interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_max_size\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_max_size\n");
     unsigned int initial_alignment = current_alignment;
 
     unsigned int encapsulation_size = current_alignment;
@@ -235,7 +176,7 @@ $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_seriali
 
     }
 
-    current_alignment += (unsigned int)$operation.parent.scopedname$_$operation.name$_Request::getMaxCdrSerializedSize(current_alignment);
+    current_alignment += (unsigned int)$interface.scopedname$_$operation.name$_Request::getMaxCdrSerializedSize(current_alignment);
 
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -246,14 +187,14 @@ $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_seriali
 }
 
 unsigned int
-$operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_size(
+$interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const $operation.parent.scopedname$_$operation.name$_Request * sample)
+    const $interface.scopedname$_$operation.name$_Request * sample)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_size\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_size\n");
     /* TODO
     unsigned int initial_alignment = current_alignment;
 
@@ -297,45 +238,45 @@ $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_seriali
 }
 
 unsigned int 
-$operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_min_size(
+$interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_min_size\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_min_size\n");
     // TODO
     return 0;
 }
 
 PRESTypePluginParticipantData 
-$operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::on_participant_attached(
+$interface.scopedname$Plugin::$operation.name$_RequestPlugin::on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
     void *container_plugin_context,
     RTICdrTypeCode *typeCode)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::on_participant_attached\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::on_participant_attached\n");
     return PRESTypePluginDefaultParticipantData_new(participant_info);
 }
 
 void
-$operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::on_participant_detached(
+$interface.scopedname$Plugin::$operation.name$_RequestPlugin::on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::on_participant_detached\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::on_participant_detached\n");
     PRESTypePluginDefaultParticipantData_delete(participant_data);
 }
 
 PRESTypePluginEndpointData 
-$operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::on_endpoint_attached(
+$interface.scopedname$Plugin::$operation.name$_RequestPlugin::on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::on_endpoint_attached\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::on_endpoint_attached\n");
     PRESTypePluginEndpointData epd = NULL;
     unsigned int serializedSampleMaxSize;
 
@@ -343,16 +284,16 @@ $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::on_endpoint
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::create_data,
+            $interface.scopedname$Plugin::$operation.name$_RequestPlugin::create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::destroy_data,
+            $interface.scopedname$Plugin::$operation.name$_RequestPlugin::destroy_data,
             NULL, NULL);
 
     if(epd != NULL)
     {
         if(endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER)
         {
-            serializedSampleMaxSize = $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_max_size(
+            serializedSampleMaxSize = $interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_max_size(
                     epd, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, 0);
 
             PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
@@ -361,9 +302,9 @@ $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::on_endpoint
                         epd,
                         endpoint_info,
                         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                        $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_max_size, epd,
+                        $interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_max_size, epd,
                         (PRESTypePluginGetSerializedSampleSizeFunction)
-                        $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_size,
+                        $interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_size,
                         epd) == RTI_FALSE)
             {
                 PRESTypePluginDefaultEndpointData_delete(epd);
@@ -376,37 +317,37 @@ $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::on_endpoint
 }
 
 void 
-$operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::on_endpoint_detached(
+$interface.scopedname$Plugin::$operation.name$_RequestPlugin::on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::on_endpoint_detached\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::on_endpoint_detached\n");
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
 
 RTIBool 
-$operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::copy_sample(
+$interface.scopedname$Plugin::$operation.name$_RequestPlugin::copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    $operation.parent.name$_$operation.name$_Request *dst,
-    const $operation.parent.name$_$operation.name$_Request *src)
+    $interface.name$_$operation.name$_Request *dst,
+    const $interface.name$_$operation.name$_Request *src)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::copy_sample\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::copy_sample\n");
     // TODO exception?
     *dst = *src;
-    $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::copy_data(dst, src);
+    $interface.scopedname$Plugin::$operation.name$_RequestPlugin::copy_data(dst, src);
     return RTI_TRUE;
 }
 
 RTIBool 
-$operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::serialize(
+$interface.scopedname$Plugin::$operation.name$_RequestPlugin::serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const $operation.parent.scopedname$_$operation.name$_Request *sample, 
+    const $interface.scopedname$_$operation.name$_Request *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
     RTIBool serialize_sample, 
     void *endpoint_plugin_qos)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::serialize\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::serialize\n");
     eprosima::fastcdr::FastBuffer buffer(stream->_buffer, stream->_bufferLength);
     eprosima::fastcdr::Cdr scdr(buffer, (eprosima::fastcdr::Cdr::Endianness)stream->_endian, eprosima::fastcdr::Cdr::DDS_CDR);
     scdr.moveAlignmentForward(stream->_relativeBuffer - stream->_buffer);
@@ -448,17 +389,17 @@ $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::serialize(
 }
 
 RTIBool 
-$operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::deserialize(
+$interface.scopedname$Plugin::$operation.name$_RequestPlugin::deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    $operation.parent.scopedname$_$operation.name$_Request **sample,
+    $interface.scopedname$_$operation.name$_Request **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
     void *endpoint_plugin_qos)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::deserialize\n");
-    $operation.parent.scopedname$_$operation.name$_Request *_sample = *sample;
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::deserialize\n");
+    $interface.scopedname$_$operation.name$_Request *_sample = *sample;
     eprosima::fastcdr::FastBuffer buffer(stream->_buffer, stream->_bufferLength);
     eprosima::fastcdr::Cdr dcdr(buffer, (eprosima::fastcdr::Cdr::Endianness)stream->_endian, eprosima::fastcdr::Cdr::DDS_CDR);
     dcdr.moveAlignmentForward(stream->_relativeBuffer - stream->_buffer);
@@ -481,18 +422,18 @@ $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::deserialize
 }
 
 PRESTypePluginKeyKind 
-$operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_key_kind(void)
+$interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_key_kind(void)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_key_kind\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_key_kind\n");
     return PRES_TYPEPLUGIN_NO_KEY;
 }
 
-DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_typecode()
+DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_typecode()
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_typecode\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_typecode\n");
     static bool is_initialized = false;
 
-    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_Request_g_tc_members[2] =
+    static DDS_TypeCode_Member $interface.name$_$operation.name$_Request_g_tc_members[2] =
     {
         // TODO Add header.
         {
@@ -532,7 +473,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugi
         }
     };
 
-    static DDS_TypeCode $operation.parent.name$_$operation.name$_Request_g_tc =
+    static DDS_TypeCode $interface.name$_$operation.name$_Request_g_tc =
     {{
          DDS_TK_STRUCT,
          DDS_BOOLEAN_FALSE,
@@ -543,23 +484,23 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugi
          0,
          NULL,
          2,
-         $operation.parent.name$_$operation.name$_Request_g_tc_members,
+         $interface.name$_$operation.name$_Request_g_tc_members,
          DDS_VM_NONE
     }};
     
     if(!is_initialized)
     {
-        $operation.parent.name$_$operation.name$_Request_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::RequestHeaderPlugin::get_typecode();
-        $operation.parent.name$_$operation.name$_Request_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)$operation.parent.scopedname$Plugin::$operation.name$_InPlugin::get_typecode();
+        $interface.name$_$operation.name$_Request_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::RequestHeaderPlugin::get_typecode();
+        $interface.name$_$operation.name$_Request_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)$interface.scopedname$Plugin::$operation.name$_InPlugin::get_typecode();
         is_initialized = true;
     }
 
-    return &$operation.parent.name$_$operation.name$_Request_g_tc;
+    return &$interface.name$_$operation.name$_Request_g_tc;
 }
 
-struct PRESTypePlugin *$operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::new_plugin(void)
+struct PRESTypePlugin *$interface.scopedname$Plugin::$operation.name$_RequestPlugin::new_plugin(void)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::new_plugin\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::new_plugin\n");
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = PRES_TYPE_PLUGIN_VERSION_2_0;
 
@@ -572,20 +513,20 @@ struct PRESTypePlugin *$operation.parent.scopedname$Plugin::$operation.name$_Req
         /* set up parent's function pointers */
         plugin->onParticipantAttached =
             (PRESTypePluginOnParticipantAttachedCallback)
-            $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::on_participant_attached;
+            $interface.scopedname$Plugin::$operation.name$_RequestPlugin::on_participant_attached;
         plugin->onParticipantDetached =
             (PRESTypePluginOnParticipantDetachedCallback)
-            $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::on_participant_detached;
+            $interface.scopedname$Plugin::$operation.name$_RequestPlugin::on_participant_detached;
         plugin->onEndpointAttached =
             (PRESTypePluginOnEndpointAttachedCallback)
-            $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::on_endpoint_attached;
+            $interface.scopedname$Plugin::$operation.name$_RequestPlugin::on_endpoint_attached;
         plugin->onEndpointDetached =
             (PRESTypePluginOnEndpointDetachedCallback)
-            $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::on_endpoint_detached;
+            $interface.scopedname$Plugin::$operation.name$_RequestPlugin::on_endpoint_detached;
 
         plugin->copySampleFnc =
             (PRESTypePluginCopySampleFunction)
-            $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::copy_sample;
+            $interface.scopedname$Plugin::$operation.name$_RequestPlugin::copy_sample;
         plugin->createSampleFnc =
             (PRESTypePluginCreateSampleFunction)
             PRESTypePluginDefaultEndpointData_createSample;
@@ -595,16 +536,16 @@ struct PRESTypePlugin *$operation.parent.scopedname$Plugin::$operation.name$_Req
 
         plugin->serializeFnc =
             (PRESTypePluginSerializeFunction)
-            $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::serialize;
+            $interface.scopedname$Plugin::$operation.name$_RequestPlugin::serialize;
         plugin->deserializeFnc =
             (PRESTypePluginDeserializeFunction)
-            $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::deserialize;
+            $interface.scopedname$Plugin::$operation.name$_RequestPlugin::deserialize;
         plugin->getSerializedSampleMaxSizeFnc =
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-            $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_max_size;
+            $interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_max_size;
         plugin->getSerializedSampleMinSizeFnc =
             (PRESTypePluginGetSerializedSampleMinSizeFunction)
-            $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_min_size;
+            $interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_min_size;
 
 
         plugin->getSampleFnc =
@@ -617,7 +558,7 @@ struct PRESTypePlugin *$operation.parent.scopedname$Plugin::$operation.name$_Req
 
         plugin->getKeyKindFnc =
             (PRESTypePluginGetKeyKindFunction)
-            $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_key_kind;
+            $interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_key_kind;
 
 
         /* These functions are only used for keyed types. As this is not a keyed
@@ -634,7 +575,7 @@ struct PRESTypePlugin *$operation.parent.scopedname$Plugin::$operation.name$_Req
         plugin->serializedSampleToKeyHashFnc = NULL;
         plugin->serializedKeyToKeyHashFnc = NULL;
 
-        plugin->typeCode =  (struct RTICdrTypeCode *)$operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_typecode();
+        plugin->typeCode =  (struct RTICdrTypeCode *)$interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_typecode();
 
         plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
@@ -647,7 +588,7 @@ struct PRESTypePlugin *$operation.parent.scopedname$Plugin::$operation.name$_Req
             PRESTypePluginDefaultEndpointData_returnBuffer;
         plugin->getSerializedSampleSizeFnc =
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_size;
+            $interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sample_size;
 
         plugin->endpointTypeName = m_typename;
 
@@ -658,28 +599,28 @@ struct PRESTypePlugin *$operation.parent.scopedname$Plugin::$operation.name$_Req
 }
 
 void
-$operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::delete_plugin(struct PRESTypePlugin *plugin)
+$interface.scopedname$Plugin::$operation.name$_RequestPlugin::delete_plugin(struct PRESTypePlugin *plugin)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::delete_plugin\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::delete_plugin\n");
     RTIOsapiHeap_freeStructure(plugin);
 }
 
-bool $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::register_type(DDSDomainParticipant *participant, const char *type_name)
+bool $interface.scopedname$Plugin::$operation.name$_RequestPlugin::register_type(DDSDomainParticipant *participant, const char *type_name)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::register_type\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::register_type\n");
     bool returnedValue = false;
     struct PRESTypePlugin *typeDDSPlugin = NULL;
     static DDSTypeSupport *typePlugin = NULL;
 
     if(participant != NULL)
     {
-        typeDDSPlugin = $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::new_plugin();
+        typeDDSPlugin = $interface.scopedname$Plugin::$operation.name$_RequestPlugin::new_plugin();
 
         if(typeDDSPlugin != NULL)
         {
             if(typePlugin == NULL)
             {
-                typePlugin = new $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin();
+                typePlugin = new $interface.scopedname$Plugin::$operation.name$_RequestPlugin();
             }
 
             typeDDSPlugin->_userBuffer = (PRESWord*)typePlugin;
@@ -687,45 +628,45 @@ bool $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::regist
             if(DDS_DomainParticipant_register_type(participant->get_c_domain_participantI(), type_name, typeDDSPlugin, NULL) == DDS_RETCODE_OK)
                 returnedValue = true;
 
-            $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::delete_plugin(typeDDSPlugin);
+            $interface.scopedname$Plugin::$operation.name$_RequestPlugin::delete_plugin(typeDDSPlugin);
         }
     }
 
     return returnedValue;
 }
 
-DDSDataReader* $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::create_datareaderI(DDSDataReader* dataReader)
+DDSDataReader* $interface.scopedname$Plugin::$operation.name$_RequestPlugin::create_datareaderI(DDSDataReader* dataReader)
 {
-    return new $operation.parent.scopedname$Plugin::$operation.name$_RequestDataReader(dataReader);
+    return new $interface.scopedname$Plugin::$operation.name$_RequestDataReader(dataReader);
 }
 
-DDS_ReturnCode_t $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::destroy_datareaderI(DDSDataReader* dataReader)
+DDS_ReturnCode_t $interface.scopedname$Plugin::$operation.name$_RequestPlugin::destroy_datareaderI(DDSDataReader* dataReader)
 {
-    delete ($operation.parent.scopedname$Plugin::$operation.name$_RequestDataReader*)dataReader;
+    delete ($interface.scopedname$Plugin::$operation.name$_RequestDataReader*)dataReader;
     return DDS_RETCODE_OK;
 }
 
-DDSDataWriter* $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::create_datawriterI(DDSDataWriter* dataWriter)
+DDSDataWriter* $interface.scopedname$Plugin::$operation.name$_RequestPlugin::create_datawriterI(DDSDataWriter* dataWriter)
 {
-    return new $operation.parent.scopedname$Plugin::$operation.name$_RequestDataWriter(dataWriter);
+    return new $interface.scopedname$Plugin::$operation.name$_RequestDataWriter(dataWriter);
 }
 
-DDS_ReturnCode_t $operation.parent.scopedname$Plugin::$operation.name$_RequestPlugin::destroy_datawriterI(DDSDataWriter* dataWriter)
+DDS_ReturnCode_t $interface.scopedname$Plugin::$operation.name$_RequestPlugin::destroy_datawriterI(DDSDataWriter* dataWriter)
 {
-    delete ($operation.parent.scopedname$Plugin::$operation.name$_RequestDataWriter*)dataWriter;
+    delete ($interface.scopedname$Plugin::$operation.name$_RequestDataWriter*)dataWriter;
     return DDS_RETCODE_OK;
 }
 
 // Reply operations
 $if(!operation.oneway)$
-DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_OutPlugin::get_typecode()
+DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_OutPlugin::get_typecode()
 {
     static bool is_initialized = false;
 
     $[operation.outputparam, operation.rettypeparam] : { param |$ddsTypeCodeDecls(ctx=ctx, name=param.name, typecode=param.typecode)$}; separator="\n"$
 
     $if([operation.outputparam, operation.rettypeparam])$
-    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_Out_g_tc_members[$length([operation.outputparam, operation.rettypeparam])$] =
+    static DDS_TypeCode_Member $interface.name$_$operation.name$_Out_g_tc_members[$length([operation.outputparam, operation.rettypeparam])$] =
     {
         $[operation.outputparam, operation.rettypeparam] : { param |
         {
@@ -747,7 +688,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_OutPlugin::g
         }}; separator=",\n"$
     };
     $else$
-    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_Out_g_tc_members[1] =
+    static DDS_TypeCode_Member $interface.name$_$operation.name$_Out_g_tc_members[1] =
     {
         {
             (char *)"dummy",
@@ -769,41 +710,41 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_OutPlugin::g
     };
     $endif$
 
-    static DDS_TypeCode $operation.parent.name$_$operation.name$_Out_g_tc =
+    static DDS_TypeCode $interface.name$_$operation.name$_Out_g_tc =
     {{
          DDS_TK_STRUCT,
          DDS_BOOLEAN_FALSE,
          -1,
-         (char*)"$operation.parent.scopedname$_$operation.name$_Out",
+         (char*)"$interface.scopedname$_$operation.name$_Out",
          NULL,
          0,
          0,
          NULL,
          $if([operation.outputparam, operation.rettypeparam])$$length([operation.outputparam, operation.rettypeparam])$$else$1$endif$,
-         $operation.parent.name$_$operation.name$_Out_g_tc_members,
+         $interface.name$_$operation.name$_Out_g_tc_members,
          DDS_VM_NONE
     }};
     
     if(!is_initialized)
     {
         $if([operation.outputparam, operation.rettypeparam])$
-        $[operation.outputparam, operation.rettypeparam] : { param |$operation.parent.name$_$operation.name$_Out_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=param.name, typecode=param.typecode)$;}; separator="\n"$
+        $[operation.outputparam, operation.rettypeparam] : { param |$interface.name$_$operation.name$_Out_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=param.name, typecode=param.typecode)$;}; separator="\n"$
         $else$
-        $operation.parent.name$_$operation.name$_Out_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode*)&DDS_g_tc_long;
+        $interface.name$_$operation.name$_Out_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode*)&DDS_g_tc_long;
         $endif$
 
         is_initialized = true;
     }
 
-    return &$operation.parent.name$_$operation.name$_Out_g_tc;
+    return &$interface.name$_$operation.name$_Out_g_tc;
 }
 
-DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_ResultPlugin::get_typecode()
+DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_ResultPlugin::get_typecode()
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ResultPlugin::get_typecode\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ResultPlugin::get_typecode\n");
     static bool is_initialized = false;
 
-    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_Result_g_tc_members[$length(operation.exceptions)$ + 3] =
+    static DDS_TypeCode_Member $interface.name$_$operation.name$_Result_g_tc_members[$length(operation.exceptions)$ + 3] =
     {
         {
             (char *)"unknown_exception",/* Member name */
@@ -879,78 +820,78 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_ResultPlugin
         }}; separator="\n"$
     };
 
-    static DDS_TypeCode $operation.parent.name$_$operation.name$_Result_g_tc =
+    static DDS_TypeCode $interface.name$_$operation.name$_Result_g_tc =
     {{
          DDS_TK_UNION,
          DDS_BOOLEAN_FALSE,
          -1,
-         (char*)"$operation.parent.scopedname$_$operation.name$_Result",
+         (char*)"$interface.scopedname$_$operation.name$_Result",
          NULL,
          0,
          0,
          NULL,
          $length(operation.exceptions)$ + 3,
-         $operation.parent.name$_$operation.name$_Result_g_tc_members,
+         $interface.name$_$operation.name$_Result_g_tc_members,
          DDS_VM_NONE
     }};
     
     if(!is_initialized)
     {
-        $operation.parent.name$_$operation.name$_Result_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::UnknownExceptionPlugin::get_typecode();
-        $operation.parent.name$_$operation.name$_Result_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)$operation.parent.scopedname$Plugin::$operation.name$_OutPlugin::get_typecode();
-        $operation.parent.name$_$operation.name$_Result_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::SystemExceptionCodePlugin::get_typecode();
-        $operation.exceptions : { exception |$operation.parent.name$_$operation.name$_Result_g_tc_members[$i$ + 2]._representation._typeCode = (RTICdrTypeCode*)$if(exception.hasScope)$$exception.scope$$if(exception.parent)$$if(exception.parent.isInterface)$Plugin$endif$$endif$::$endif$$exception.name$Plugin::get_typecode();}; separator="\n"$
+        $interface.name$_$operation.name$_Result_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::UnknownExceptionPlugin::get_typecode();
+        $interface.name$_$operation.name$_Result_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)$interface.scopedname$Plugin::$operation.name$_OutPlugin::get_typecode();
+        $interface.name$_$operation.name$_Result_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::SystemExceptionCodePlugin::get_typecode();
+        $operation.exceptions : { exception |$interface.name$_$operation.name$_Result_g_tc_members[$i$ + 2]._representation._typeCode = (RTICdrTypeCode*)$if(exception.hasScope)$$exception.scope$$if(exception.parent)$$if(exception.parent.isInterface)$Plugin$endif$$endif$::$endif$$exception.name$Plugin::get_typecode();}; separator="\n"$
 
-        $operation.parent.name$_$operation.name$_Result_g_tc._data._typeCode = (RTICdrTypeCode*)&DDS_g_tc_long;
+        $interface.name$_$operation.name$_Result_g_tc._data._typeCode = (RTICdrTypeCode*)&DDS_g_tc_long;
 
         is_initialized = true;
     }
 
-    return &$operation.parent.name$_$operation.name$_Result_g_tc;
+    return &$interface.name$_$operation.name$_Result_g_tc;
 }
 
-const char *$operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::m_typename = "$operation.parent.scopedname$_$operation.name$_Reply";
+const char *$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::m_typename = "$interface.scopedname$_$operation.name$_Reply";
 
-const char* $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_typename()
+const char* $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_typename()
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_typename\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_typename\n");
     return m_typename;
 }
 
 void 
-$operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::copy_data(
-    $operation.parent.name$_$operation.name$_Reply *dst,
-    const $operation.parent.name$_$operation.name$_Reply *src)
+$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::copy_data(
+    $interface.name$_$operation.name$_Reply *dst,
+    const $interface.name$_$operation.name$_Reply *src)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::copy_data\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::copy_data\n");
     *dst = *src;
 }
 
-$operation.parent.scopedname$_$operation.name$_Reply*
-$operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::create_data(void)
+$interface.scopedname$_$operation.name$_Reply*
+$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::create_data(void)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::create_data\n");
-    $operation.parent.scopedname$_$operation.name$_Reply *reply = new $operation.parent.scopedname$_$operation.name$_Reply();
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::create_data\n");
+    $interface.scopedname$_$operation.name$_Reply *reply = new $interface.scopedname$_$operation.name$_Reply();
     return reply;
 }
 
 void 
-$operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::destroy_data(
-    $operation.parent.scopedname$_$operation.name$_Reply *sample)
+$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::destroy_data(
+    $interface.scopedname$_$operation.name$_Reply *sample)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::destroy_data\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::destroy_data\n");
     if(sample != NULL)
         delete sample;
 }
 
 unsigned int 
-$operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_max_size(
+$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_max_size\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_max_size\n");
     unsigned int initial_alignment = current_alignment;
 
     unsigned int encapsulation_size = current_alignment;
@@ -969,7 +910,7 @@ $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialize
     }
 
 
-    current_alignment += (unsigned int)$operation.parent.scopedname$_$operation.name$_Reply::getMaxCdrSerializedSize(current_alignment);
+    current_alignment += (unsigned int)$interface.scopedname$_$operation.name$_Reply::getMaxCdrSerializedSize(current_alignment);
 
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -980,14 +921,14 @@ $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialize
 }
 
 unsigned int
-$operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_size(
+$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const $operation.parent.scopedname$_$operation.name$_Reply * sample)
+    const $interface.scopedname$_$operation.name$_Reply * sample)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_size\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_size\n");
     /* TODO
     unsigned int initial_alignment = current_alignment;
 
@@ -1031,45 +972,45 @@ $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialize
 }
 
 unsigned int 
-$operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_min_size(
+$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_min_size\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_min_size\n");
     // TODO
     return 0;
 }
 
 PRESTypePluginParticipantData 
-$operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::on_participant_attached(
+$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::on_participant_attached(
     void *registration_data, 
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration, 
     void *container_plugin_context,
     RTICdrTypeCode *typeCode)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::on_participant_attached\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::on_participant_attached\n");
     return PRESTypePluginDefaultParticipantData_new(participant_info);
 }
 
 void
-$operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::on_participant_detached(
+$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::on_participant_detached\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::on_participant_detached\n");
     PRESTypePluginDefaultParticipantData_delete(participant_data);
 }
 
 PRESTypePluginEndpointData 
-$operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::on_endpoint_attached(
+$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
     void *container_plugin_context)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::on_endpoint_attached\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::on_endpoint_attached\n");
     PRESTypePluginEndpointData epd = NULL;
     unsigned int serializedSampleMaxSize;
 
@@ -1077,16 +1018,16 @@ $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::on_endpoint_a
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::create_data,
+            $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::destroy_data,
+            $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::destroy_data,
             NULL, NULL);
 
     if(epd != NULL)
     {
         if(endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER)
         {
-            serializedSampleMaxSize = $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_max_size(
+            serializedSampleMaxSize = $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_max_size(
                     epd, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, 0);
 
             PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
@@ -1095,9 +1036,9 @@ $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::on_endpoint_a
                         epd,
                         endpoint_info,
                         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                        $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_max_size, epd,
+                        $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_max_size, epd,
                         (PRESTypePluginGetSerializedSampleSizeFunction)
-                        $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_size,
+                        $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_size,
                         epd) == RTI_FALSE)
             {
                 PRESTypePluginDefaultEndpointData_delete(epd);
@@ -1110,35 +1051,35 @@ $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::on_endpoint_a
 }
 
 void 
-$operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::on_endpoint_detached(
+$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::on_endpoint_detached\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::on_endpoint_detached\n");
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
 
 RTIBool 
-$operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::copy_sample(
+$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    $operation.parent.name$_$operation.name$_Reply *dst,
-    const $operation.parent.name$_$operation.name$_Reply *src)
+    $interface.name$_$operation.name$_Reply *dst,
+    const $interface.name$_$operation.name$_Reply *src)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::copy_sample\n");
-    $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::copy_data(dst, src);
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::copy_sample\n");
+    $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::copy_data(dst, src);
     return RTI_TRUE;
 }
 
 RTIBool 
-$operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::serialize(
+$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const $operation.parent.scopedname$_$operation.name$_Reply *sample, 
+    const $interface.scopedname$_$operation.name$_Reply *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
     RTIBool serialize_sample, 
     void *endpoint_plugin_qos)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::serialize\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::serialize\n");
     eprosima::fastcdr::FastBuffer buffer(stream->_buffer, stream->_bufferLength);
     eprosima::fastcdr::Cdr scdr(buffer, (eprosima::fastcdr::Cdr::Endianness)stream->_endian, eprosima::fastcdr::Cdr::DDS_CDR);
     scdr.moveAlignmentForward(stream->_relativeBuffer - stream->_buffer);
@@ -1179,17 +1120,17 @@ $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::serialize(
 }
 
 RTIBool 
-$operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::deserialize(
+$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    $operation.parent.scopedname$_$operation.name$_Reply **sample,
+    $interface.scopedname$_$operation.name$_Reply **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
     void *endpoint_plugin_qos)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::deserialize\n");
-    $operation.parent.scopedname$_$operation.name$_Reply *_sample = *sample;
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::deserialize\n");
+    $interface.scopedname$_$operation.name$_Reply *_sample = *sample;
     eprosima::fastcdr::FastBuffer buffer(stream->_buffer, stream->_bufferLength);
     eprosima::fastcdr::Cdr dcdr(buffer, (eprosima::fastcdr::Cdr::Endianness)stream->_endian, eprosima::fastcdr::Cdr::DDS_CDR);
     dcdr.moveAlignmentForward(stream->_relativeBuffer - stream->_buffer);
@@ -1211,18 +1152,18 @@ $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::deserialize(
 }
 
 PRESTypePluginKeyKind 
-$operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_key_kind(void)
+$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_key_kind(void)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_key_kind\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_key_kind\n");
     return PRES_TYPEPLUGIN_NO_KEY;
 }
 
-DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_typecode()
+DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_typecode()
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_typecode\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_typecode\n");
     static bool is_initialized = false;
 
-    static DDS_TypeCode_Member $operation.parent.name$_$operation.name$_Reply_g_tc_members[2] =
+    static DDS_TypeCode_Member $interface.name$_$operation.name$_Reply_g_tc_members[2] =
     {
         // TODO Add header.
         {
@@ -1262,7 +1203,7 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin:
         }
     };
 
-    static DDS_TypeCode $operation.parent.name$_$operation.name$_Reply_g_tc =
+    static DDS_TypeCode $interface.name$_$operation.name$_Reply_g_tc =
     {{
          DDS_TK_STRUCT,
          DDS_BOOLEAN_FALSE,
@@ -1273,24 +1214,24 @@ DDS_TypeCode* $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin:
          0,
          NULL,
          2,
-         $operation.parent.name$_$operation.name$_Reply_g_tc_members,
+         $interface.name$_$operation.name$_Reply_g_tc_members,
          DDS_VM_NONE
     }};
     
     if(!is_initialized)
     {
-        $operation.parent.name$_$operation.name$_Reply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::ReplyHeaderPlugin::get_typecode();
-        $operation.parent.name$_$operation.name$_Reply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)$operation.parent.scopedname$Plugin::$operation.name$_ResultPlugin::get_typecode();
+        $interface.name$_$operation.name$_Reply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::ReplyHeaderPlugin::get_typecode();
+        $interface.name$_$operation.name$_Reply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)$interface.scopedname$Plugin::$operation.name$_ResultPlugin::get_typecode();
 
         is_initialized = true;
     }
 
-    return &$operation.parent.name$_$operation.name$_Reply_g_tc;
+    return &$interface.name$_$operation.name$_Reply_g_tc;
 }
 
-struct PRESTypePlugin *$operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::new_plugin(void)
+struct PRESTypePlugin *$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::new_plugin(void)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::new_plugin\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::new_plugin\n");
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = PRES_TYPE_PLUGIN_VERSION_2_0;
 
@@ -1303,20 +1244,20 @@ struct PRESTypePlugin *$operation.parent.scopedname$Plugin::$operation.name$_Rep
         /* set up parent's function pointers */
         plugin->onParticipantAttached =
             (PRESTypePluginOnParticipantAttachedCallback)
-            $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::on_participant_attached;
+            $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::on_participant_attached;
         plugin->onParticipantDetached =
             (PRESTypePluginOnParticipantDetachedCallback)
-            $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::on_participant_detached;
+            $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::on_participant_detached;
         plugin->onEndpointAttached =
             (PRESTypePluginOnEndpointAttachedCallback)
-            $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::on_endpoint_attached;
+            $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::on_endpoint_attached;
         plugin->onEndpointDetached =
             (PRESTypePluginOnEndpointDetachedCallback)
-            $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::on_endpoint_detached;
+            $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::on_endpoint_detached;
 
         plugin->copySampleFnc =
             (PRESTypePluginCopySampleFunction)
-            $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::copy_sample;
+            $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::copy_sample;
         plugin->createSampleFnc =
             (PRESTypePluginCreateSampleFunction)
             PRESTypePluginDefaultEndpointData_createSample;
@@ -1326,16 +1267,16 @@ struct PRESTypePlugin *$operation.parent.scopedname$Plugin::$operation.name$_Rep
 
         plugin->serializeFnc =
             (PRESTypePluginSerializeFunction)
-            $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::serialize;
+            $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::serialize;
         plugin->deserializeFnc =
             (PRESTypePluginDeserializeFunction)
-            $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::deserialize;
+            $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::deserialize;
         plugin->getSerializedSampleMaxSizeFnc =
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-            $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_max_size;
+            $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_max_size;
         plugin->getSerializedSampleMinSizeFnc =
             (PRESTypePluginGetSerializedSampleMinSizeFunction)
-            $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_min_size;
+            $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_min_size;
 
 
         plugin->getSampleFnc =
@@ -1348,7 +1289,7 @@ struct PRESTypePlugin *$operation.parent.scopedname$Plugin::$operation.name$_Rep
 
         plugin->getKeyKindFnc =
             (PRESTypePluginGetKeyKindFunction)
-            $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_key_kind;
+            $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_key_kind;
 
 
         /* These functions are only used for keyed types. As this is not a keyed
@@ -1365,7 +1306,7 @@ struct PRESTypePlugin *$operation.parent.scopedname$Plugin::$operation.name$_Rep
         plugin->serializedSampleToKeyHashFnc = NULL;
         plugin->serializedKeyToKeyHashFnc = NULL;
 
-        plugin->typeCode =  (struct RTICdrTypeCode *)$operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_typecode();
+        plugin->typeCode =  (struct RTICdrTypeCode *)$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_typecode();
 
         plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
@@ -1378,7 +1319,7 @@ struct PRESTypePlugin *$operation.parent.scopedname$Plugin::$operation.name$_Rep
             PRESTypePluginDefaultEndpointData_returnBuffer;
         plugin->getSerializedSampleSizeFnc =
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_size;
+            $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sample_size;
 
         plugin->endpointTypeName = m_typename;
 
@@ -1389,28 +1330,28 @@ struct PRESTypePlugin *$operation.parent.scopedname$Plugin::$operation.name$_Rep
 }
 
 void
-$operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::delete_plugin(struct PRESTypePlugin *plugin)
+$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::delete_plugin(struct PRESTypePlugin *plugin)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::delete_plugin\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::delete_plugin\n");
     RTIOsapiHeap_freeStructure(plugin);
 }
 
-bool $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::register_type(DDSDomainParticipant *participant, const char *type_name)
+bool $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::register_type(DDSDomainParticipant *participant, const char *type_name)
 {
-    //printf("=> $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::register_type\n");
+    //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::register_type\n");
     bool returnedValue = false;
     struct PRESTypePlugin *typeDDSPlugin = NULL;
     static DDSTypeSupport *typePlugin = NULL;
 
     if(participant != NULL)
     {
-        typeDDSPlugin = $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::new_plugin();
+        typeDDSPlugin = $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::new_plugin();
 
         if(typeDDSPlugin != NULL)
         {
             if(typePlugin == NULL)
             {
-                typePlugin = new $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin();
+                typePlugin = new $interface.scopedname$Plugin::$operation.name$_ReplyPlugin();
             }
 
             typeDDSPlugin->_userBuffer = (PRESWord*)typePlugin;
@@ -1418,38 +1359,99 @@ bool $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::register
             if(DDS_DomainParticipant_register_type(participant->get_c_domain_participantI(), type_name, typeDDSPlugin, NULL) == DDS_RETCODE_OK)
                 returnedValue = true;
 
-            $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::delete_plugin(typeDDSPlugin);
+            $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::delete_plugin(typeDDSPlugin);
         }
     }
 
     return returnedValue;
 }
 
-DDSDataReader* $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::create_datareaderI(DDSDataReader* dataReader)
+DDSDataReader* $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::create_datareaderI(DDSDataReader* dataReader)
 {
-    return new $operation.parent.scopedname$Plugin::$operation.name$_ReplyDataReader(dataReader);
+    return new $interface.scopedname$Plugin::$operation.name$_ReplyDataReader(dataReader);
 }
 
-DDS_ReturnCode_t $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::destroy_datareaderI(DDSDataReader* dataReader)
+DDS_ReturnCode_t $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::destroy_datareaderI(DDSDataReader* dataReader)
 {
-    delete ($operation.parent.scopedname$Plugin::$operation.name$_ReplyDataReader*)dataReader;
+    delete ($interface.scopedname$Plugin::$operation.name$_ReplyDataReader*)dataReader;
     return DDS_RETCODE_OK;
 }
 
-DDSDataWriter* $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::create_datawriterI(DDSDataWriter* dataWriter)
+DDSDataWriter* $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::create_datawriterI(DDSDataWriter* dataWriter)
 {
-    return new $operation.parent.scopedname$Plugin::$operation.name$_ReplyDataWriter(dataWriter);
+    return new $interface.scopedname$Plugin::$operation.name$_ReplyDataWriter(dataWriter);
 }
 
-DDS_ReturnCode_t $operation.parent.scopedname$Plugin::$operation.name$_ReplyPlugin::destroy_datawriterI(DDSDataWriter* dataWriter)
+DDS_ReturnCode_t $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::destroy_datawriterI(DDSDataWriter* dataWriter)
 {
-    delete ($operation.parent.scopedname$Plugin::$operation.name$_ReplyDataWriter*)dataWriter;
+    delete ($interface.scopedname$Plugin::$operation.name$_ReplyDataWriter*)dataWriter;
     return DDS_RETCODE_OK;
 }
 
 $endif$
+}; separator="\n"$
 
 >>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, exception) ::= <<
+DDS_TypeCode* $if(exception.hasScope)$$exception.scope$$if(exception.parent)$$if(exception.parent.isInterface)$Plugin$endif$$endif$::$endif$$exception.name$Plugin::get_typecode()
+{
+    static bool is_initialized = false;
+
+    $exception.members : { member |$ddsTypeCodeDecls(ctx=ctx, name=member.name, typecode=member.typecode)$}; separator="\n"$
+
+    static DDS_TypeCode_Member $exception.name$_g_tc_members[$length(exception.members)$] =
+    {
+        $exception.members : { member |
+        {
+            (char *)"$member.name$",
+            {
+                0,
+                DDS_BOOLEAN_FALSE,
+                -1,
+                NULL
+            },
+            0,
+            0,
+            0,
+            NULL,
+            RTI_CDR_REQUIRED_MEMBER,
+            DDS_PRIVATE_MEMBER,
+            1,
+            NULL
+        }}; separator=",\n"$
+    };
+
+    static DDS_TypeCode $exception.name$_g_tc =
+    {{
+         DDS_TK_STRUCT,
+         DDS_BOOLEAN_FALSE,
+         -1,
+         (char*)"$exception.scopedname$",
+         NULL,
+         0,
+         0,
+         NULL,
+         $length(exception.members)$,
+         $exception.name$_g_tc_members,
+         DDS_VM_NONE
+    }};
+    
+    if(!is_initialized)
+    {
+        $exception.members : { member |$exception.name$_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=member.name, typecode=member.typecode)$;}; separator="\n"$
+        is_initialized = true;
+    }
+
+    return &$exception.name$_g_tc;
+}
+>>
+
+operation(ctx, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 

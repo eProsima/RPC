@@ -28,8 +28,18 @@ $definitions; separator="\n"$
  * The export_list will be the definition of synchronize functions.
  */
 interface(ctx, interface, export_list) ::= <<
-$export_list$
+$interface.all_operations : { operation |
+$paramRetType(operation.rettype)$ $interface.name$ServerImplExample::$operation.name$($paramDeclarations(params=operation.parameters)$)
+{
+    $varDecl(variable=operation.rettypeparam)$
+   
+    $if(operation.rettypeparam)$
+    return $operation.rettypeparam.name$;
+    $endif$
+} 
+}; separator="\n"$
 
+$export_list$
 >>
 
 export_list(exports) ::= <<
@@ -38,17 +48,7 @@ $exports; separator="\n"$
 
 exception(ctx, exception) ::= <<>>
 
-operation(ctx, operation, param_list) ::= <<
-$paramRetType(operation.rettype)$ $operation.parent.name$ServerImplExample::$operation.name$($paramDeclarations(params=operation.parameters)$)
-{
-    $varDecl(variable=operation.rettypeparam)$
-   
-    $if(operation.rettypeparam)$
-    return $operation.rettypeparam.name$;
-    $endif$
-} 
-
->>
+operation(ctx, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 

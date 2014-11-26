@@ -193,8 +193,6 @@ $definitions; separator="\n"$
 >>
 
 interface(ctx, interface, export_list) ::= <<
-$export_list$
-
 $if(ctx.server)$
 void $ctx.filename$Protocol::$interface.formatedScopedname$_serve(eprosima::rpc::protocol::Protocol &protocol,
     void *_data , eprosima::rpc::transport::Endpoint *endpoint)
@@ -204,13 +202,13 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_serve(eprosima::rpc:
 
     switch($requestUnionDiscriminatorByInterface(varname="requestData")$)
     {
-        $interface.operations : { operation |
+        $interface.all_operations : { operation |
         case $operation.md5$:
         {
         $operation.parameters : {param | $varDecl(variable=param, create=param.onlyOutput)$}; separator="\n"$
         $varDecl(variable=operation.rettypeparam, create="yes")$   
         $if(!operation.oneway)$
-        $operation.parent.scopedname$_Reply replyData;
+        $interface.scopedname$_Reply replyData;
         $copyHeaderInfo(reqvarname="requestData", repvarname="replyData")$
 
         $replyUnionDiscriminatorByInterface(varname="replyData")$ = $operation.md5$;
@@ -222,16 +220,16 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_serve(eprosima::rpc:
 
         try
         {
-            if(_protocol._$operation.parent.formatedScopedname$_impl != NULL)
+            if(_protocol._$interface.formatedScopedname$_impl != NULL)
             {
-                $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$_protocol._$operation.parent.formatedScopedname$_impl->$operation.name$($extractParams(params=operation.parameters)$);
+                $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$_protocol._$interface.formatedScopedname$_impl->$operation.name$($extractParams(params=operation.parameters)$);
 
                 $if(!operation.oneway)$
                 $replyOperationUnionDiscriminatorByInterface(operation=operation, varname="replyData")$ = 0;
 
                 $[operation.outputparam, operation.rettypeparam] : { param |$addParamToTopic(param=param, varname=replyOperationUnionDataAccessByInterface(operation=operation, varname="replyData", dataname="out_"))$};separator="\n"$
 
-                _protocol.$operation.parent.formatedScopedname$_se->sendReply(&replyData);
+                _protocol.$interface.formatedScopedname$_se->sendReply(&replyData);
                 $endif$
             }
             // TODO Send exception.
@@ -248,7 +246,7 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_serve(eprosima::rpc:
             $exception.members : { member |$addExceptionMemberToTopic(exception=exception, member=member, varname=replyOperationUnionDataByInterface(operation=operation, varname="replyData"))$}; separator="\n"$
             $endif$
 
-            _protocol.$operation.parent.formatedScopedname$_se->sendReply(&replyData);
+            _protocol.$interface.formatedScopedname$_se->sendReply(&replyData);
             $endif$
         }
         }; separator="\n"$
@@ -260,11 +258,11 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_serve(eprosima::rpc:
             $replyOperationUnionDiscriminatorByInterface(operation=operation, varname="replyData")$ = 1;
             $replyOperationUnionDataAccessByInterface(operation=operation, varname="replyData", dataname="sysx_")$ = $if(ctx.rtiTypes)$(SystemExceptionCode)$endif$SERVER_INTERNAL_ERROR;
 
-            _protocol.$operation.parent.formatedScopedname$_se->sendReply(&replyData);
+            _protocol.$interface.formatedScopedname$_se->sendReply(&replyData);
             $endif$
         }
 
-        $reqrepRefFinalize(type=operation.parent.scopedname, reqrep="Request", name="requestData")$
+        $reqrepRefFinalize(type=interface.scopedname, reqrep="Request", name="requestData")$
 
         $[operation.outputparam, operation.rettypeparam] : {param | $varDel(variable=param)$}; separator="\n"$
 
@@ -275,32 +273,24 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_serve(eprosima::rpc:
 }
 $endif$
 
->>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
-exception(ctx, exception) ::= <<>>
-
-operation(ctx, operation, param_list) ::= <<
+$interface.all_operations : { operation |
 $if(ctx.client)$
-$paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$)
+$paramRetType(operation.rettype)$ $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$)
 {
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
     $varDecl(variable=operation.rettypeparam)$
-    $operation.parent.scopedname$_Request instance;
+    $interface.scopedname$_Request instance;
     $if(!operation.oneway)$
-    $operation.parent.scopedname$_Reply retInstance;
+    $interface.scopedname$_Reply retInstance;
 
-    $varComplexInitializeT(typeName=[operation.parent.scopedname, "_Reply"], name="retInstance")$
+    $varComplexInitializeT(typeName=[interface.scopedname, "_Reply"], name="retInstance")$
     $endif$
 
     $requestUnionDiscriminatorByInterface(varname="instance")$ = $operation.md5$;
     
     $operation.inputparam : { param |$addParamToTopic(param=param, varname=requestOperationDataByInterface(operation=operation, varname="instance"), isRequest="yes")$};separator="\n"$
 
-    retcode = $operation.parent.formatedScopedname$_pe->send(&instance, $if(!operation.oneway)$&retInstance$else$NULL$endif$);
+    retcode = $interface.formatedScopedname$_pe->send(&instance, $if(!operation.oneway)$&retInstance$else$NULL$endif$);
     
     $if(!operation.oneway)$
     if(retcode == OK)
@@ -362,17 +352,17 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
 $endif$
 
 $if(!operation.oneway)$
-void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$_async($operation.parent.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$)
+void $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$_async($interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$)
 {
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
-    $operation.parent.scopedname$_Request instance;
-    $operation.parent.scopedname$_$operation.name$Task *task = new $operation.parent.scopedname$_$operation.name$Task(obj);
+    $interface.scopedname$_Request instance;
+    $interface.scopedname$_$operation.name$Task *task = new $interface.scopedname$_$operation.name$Task(obj);
 
     $requestUnionDiscriminatorByInterface(varname="instance")$ = $operation.md5$;
     
     $operation.inputparam : { param |$addParamToTopic(param=param, varname=requestOperationDataByInterface(operation=operation, varname="instance"), isRequest="yes")$};separator="\n"$
 
-    retcode = $operation.parent.formatedScopedname$_pe->send_async(&instance, task);
+    retcode = $interface.formatedScopedname$_pe->send_async(&instance, task);
     
     switch (retcode)
     {
@@ -388,8 +378,18 @@ void $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.na
 }
 
 $endif$
+}; separator="\n"$
 
+$export_list$
 >>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 

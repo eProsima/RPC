@@ -32,24 +32,14 @@ $definitions; separator="\n"$
  * The export_list will be the definition of synchronize functions.
  */
 interface(ctx, interface, export_list) ::= <<
-$export_list$
->>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
-
->>
-
-exception(ctx, exception) ::= <<>>
-
-operation(ctx, operation, param_list) ::= <<
+$interface.all_operations : { operation |
 $if(!operation.oneway)$
 /*!
  * @brief This abstract class defines the callbacks that eProsima RPC will call in an asynchronous call.
  *        These callback has to be implemented in a derived class.
  * @ingroup $ctx.trimfilename$
  */
-class $operation.parent.name$_$operation.name$CallbackHandler
+class $interface.name$_$operation.name$CallbackHandler
 {
     public:
         /*!
@@ -76,7 +66,19 @@ class $operation.parent.name$_$operation.name$CallbackHandler
 };
 
 $endif$
+}; separator="\n"$
+
+$export_list$
 >>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 

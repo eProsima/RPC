@@ -7,12 +7,16 @@ module ModuleA
             long count;
         };
 
-        void function1(in Dato data);
+        Dato function1(in Dato data);
+
+        oneway void function1_set(in Dato data);
+
+        Dato function1_get();
     };
 
     interface Interface2 : Interface1
     {
-        void function2(in long count);
+        long function2(in long count);
     };
 };
 
@@ -25,6 +29,6 @@ module ModuleB
             string str;
         };
 
-        void function3(in Dato data);
+        Dato function3(in Dato data);
     };
 };

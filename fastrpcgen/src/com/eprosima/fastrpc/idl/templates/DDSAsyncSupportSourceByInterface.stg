@@ -34,39 +34,30 @@ $definitions; separator="\n"$
 >>
 
 interface(ctx, interface, export_list) ::= <<
-$export_list$
->>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
-exception(ctx, exception) ::= <<>>
-
-operation(ctx, operation, param_list) ::= <<
+$interface.all_operations : { operation |
 $if(!operation.oneway)$
-$operation.parent.name$_$operation.name$Task::$operation.parent.name$_$operation.name$Task($operation.parent.name$_$operation.name$CallbackHandler &obj) :
+$interface.name$_$operation.name$Task::$interface.name$_$operation.name$Task($interface.name$_$operation.name$CallbackHandler &obj) :
     DDSAsyncTask(), m_obj(obj)
 {
-    $varComplexInitializeT(typeName=[operation.parent.name, "_Reply"], name="m_reply")$
+    $varComplexInitializeT(typeName=[interface.name, "_Reply"], name="m_reply")$
 }
 
-$operation.parent.name$_$operation.name$Task::~$operation.parent.name$_$operation.name$Task()
+$interface.name$_$operation.name$Task::~$interface.name$_$operation.name$Task()
 {
-    $varComplexDelT(typeName=[operation.parent.name, "_Reply"], name="m_reply")$
+    $varComplexDelT(typeName=[interface.name, "_Reply"], name="m_reply")$
 }
 
-$operation.parent.name$_$operation.name$CallbackHandler& $operation.parent.name$_$operation.name$Task::getObject()
+$interface.name$_$operation.name$CallbackHandler& $interface.name$_$operation.name$Task::getObject()
 {
     return m_obj;
 }
 
-void* $operation.parent.name$_$operation.name$Task::getReplyInstance()
+void* $interface.name$_$operation.name$Task::getReplyInstance()
 {
     return &m_reply;
 }
 
-void $operation.parent.name$_$operation.name$Task::execute()
+void $interface.name$_$operation.name$Task::execute()
 {  
     $operation.outputparam : {param | $varDecl(variable=param)$}; separator="\n"$
     $varDecl(variable=operation.rettypeparam)$
@@ -99,20 +90,31 @@ void $operation.parent.name$_$operation.name$Task::execute()
     }
 }
 
-void $operation.parent.name$_$operation.name$Task::on_exception(const SystemException &ex)
+void $interface.name$_$operation.name$Task::on_exception(const SystemException &ex)
 {
     getObject().on_exception(ex);
 }
 
 $if(operation.exceptions)$
-void $operation.parent.name$_$operation.name$Task::on_exception(const UserException &ex)
+void $interface.name$_$operation.name$Task::on_exception(const UserException &ex)
 {
     getObject().on_exception(ex);
 }
 $endif$
 
 $endif$
+}; separator="\n"$
+
+$export_list$
 >>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 

@@ -74,7 +74,7 @@ class FASTRPCUSERDllExport $interface.name$Proxy : public eprosima::rpc::proxy::
         $if(ctx.dds)$
         $if(!operation.oneway)$
         //! @brief Proxy asynchronous method for the operation $operation.name$.
-        void $operation.name$_async($operation.parent.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$);
+        void $operation.name$_async($interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$);
 
         $endif$
         $endif$

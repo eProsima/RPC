@@ -11,6 +11,24 @@ public class Interface extends com.eprosima.idl.parser.tree.Interface
     }
 
     ////////// DDS block ////////////
+    public ArrayList<Operation> getNotAllOnewayOperations()
+    {
+        if(m_notAllOnewayOperations == null)
+        {
+            m_notAllOnewayOperations = new ArrayList<Operation>();
+            
+            for(int count = 0; count < getAll_operations().size(); ++count)
+            {
+                if(!getAll_operations().get(count).isOneway())
+                {
+                    m_notAllOnewayOperations.add(getAll_operations().get(count));
+                }
+            }
+        }
+        
+        return m_notAllOnewayOperations;
+    }
+
     public ArrayList<Operation> getNotOnewayOperations()
     {
         if(m_notOnewayOperations == null)
@@ -105,4 +123,5 @@ public class Interface extends com.eprosima.idl.parser.tree.Interface
     /////// End of RESTful block //////
 
     private ArrayList<Operation> m_notOnewayOperations = null;
+    private ArrayList<Operation> m_notAllOnewayOperations = null;
 }

@@ -58,6 +58,43 @@ class user_cpp_DllExport $interface.name$Plugin
 
         $export_list$
 
+        $interface.all_operations : { operation |
+        /*!
+         * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+         */
+        class user_cpp_DllExport $operation.name$_InPlugin
+        {
+            public:
+        
+                static DDS_TypeCode* get_typecode();
+        };
+        
+        $if(!operation.oneway)$
+        
+        /*!
+         * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+         */
+        class user_cpp_DllExport $operation.name$_OutPlugin
+        {
+            public:
+        
+                static DDS_TypeCode* get_typecode();
+        };
+        
+        /*!
+         * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+         */
+        class user_cpp_DllExport $operation.name$_ResultPlugin : public DDSTypeSupport
+        {
+            public:
+        
+                static DDS_TypeCode* get_typecode();
+        };
+        
+        $endif$
+        }; separator="\n"$
+
+
     private:
 
         $interface.name$Plugin(){}
@@ -346,42 +383,7 @@ class user_cpp_DllExport $exception.name$Plugin
 };
 >>
 
-operation(ctx, operation, param_list) ::= <<
-/*!
- * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
- */
-class user_cpp_DllExport $operation.name$_InPlugin
-{
-    public:
-
-        static DDS_TypeCode* get_typecode();
-};
-
-$if(!operation.oneway)$
-
-/*!
- * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
- */
-class user_cpp_DllExport $operation.name$_OutPlugin
-{
-    public:
-
-        static DDS_TypeCode* get_typecode();
-};
-
-/*!
- * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
- */
-class user_cpp_DllExport $operation.name$_ResultPlugin : public DDSTypeSupport
-{
-    public:
-
-        static DDS_TypeCode* get_typecode();
-};
-
-$endif$
-
->>
+operation(ctx, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 

@@ -33,22 +33,13 @@ $definitions; separator="\n"$
 >>
 
 interface(ctx, interface, export_list) ::= <<
-$export_list$
->>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
-exception(ctx, exception) ::= <<>>
-
-operation(ctx, operation, param_list) ::= <<
+$interface.all_operations : { operation |
 $if(!operation.oneway)$
 /*!
- * @brief This class represents a asynchronous task created to wait the reply of the procedure $operation.parent.name$::$operation.name$ from the server in an asynchronous call.
+ * @brief This class represents a asynchronous task created to wait the reply of the procedure $interface.name$::$operation.name$ from the server in an asynchronous call.
  * @ingroup $ctx.trimfilename$
  */
-class $operation.parent.name$_$operation.name$Task : public eprosima::rpc::transport::dds::DDSAsyncTask
+class $interface.name$_$operation.name$Task : public eprosima::rpc::transport::dds::DDSAsyncTask
 {
     public:
 
@@ -59,10 +50,10 @@ class $operation.parent.name$_$operation.name$Task : public eprosima::rpc::trans
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
-        $operation.parent.name$_$operation.name$Task($operation.parent.name$_$operation.name$CallbackHandler &obj);
+        $interface.name$_$operation.name$Task($interface.name$_$operation.name$CallbackHandler &obj);
 
         //! @brief Destructor.
-        virtual ~$operation.parent.name$_$operation.name$Task();
+        virtual ~$interface.name$_$operation.name$Task();
         
         /*!
          * @brief This funcion is called when the reply sample is received.
@@ -92,7 +83,7 @@ class $operation.parent.name$_$operation.name$Task : public eprosima::rpc::trans
          *
          * @return The object that implements the callbacks.
          */
-        $operation.parent.name$_$operation.name$CallbackHandler& getObject();
+        $interface.name$_$operation.name$CallbackHandler& getObject();
 
         /*!
          * @brief This function returns the allocated reply sample.
@@ -102,13 +93,23 @@ class $operation.parent.name$_$operation.name$Task : public eprosima::rpc::trans
         
         private:
         
-        $operation.parent.name$_$operation.name$CallbackHandler &m_obj;
+        $interface.name$_$operation.name$CallbackHandler &m_obj;
 
-        $operation.parent.name$_$operation.name$_Reply m_reply;
+        $interface.name$_$operation.name$_Reply m_reply;
 };
-
 $endif$
+}; separator="\n"$
+
+$export_list$
 >>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 

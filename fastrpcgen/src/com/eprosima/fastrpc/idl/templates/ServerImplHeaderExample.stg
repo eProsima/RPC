@@ -39,6 +39,11 @@ class $interface.name$ServerImplExample : public $interface.scopedname$ServerImp
 
         //! @brief Destructor.
         virtual ~$interface.name$ServerImplExample(){}
+ 
+        $interface.all_operations : { operation |
+        //! @brief Implementation of the remote procedure $operation.name$
+        $paramRetType(operation.rettype)$ $operation.name$($paramDeclarations(params=operation.parameters)$);
+        }; separator="\n"$
 
         $export_list$;
 };
@@ -51,11 +56,7 @@ $exports; separator="\n"$
 
 exception(ctx, exception) ::= <<>>
 
-operation(ctx, operation, param_list) ::= <<
-//! @brief Implementation of the remote procedure $operation.name$
-$paramRetType(operation.rettype)$ $operation.name$($paramDeclarations(params=operation.parameters)$);
-
->>
+operation(ctx, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 
