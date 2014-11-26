@@ -4,9 +4,6 @@
 [submodule "thirdparty/fastcdr"]
 	path = thirdparty/fastcdr
 	url = git@git.sambaserver.eprosima.com:fastcdr/fastcdr.git
-[submodule "thirdparty/boost-threadpool"]
-	path = thirdparty/boost-threadpool
-	url = git@git.sambaserver.eprosima.com:eprosima-common/boost-threadpool.git
 [submodule "thirdparty/dev-env"]
 	path = thirdparty/dev-env
 	url = git@git.sambaserver.eprosima.com:eprosima-common/dev-env.git
