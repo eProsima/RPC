@@ -14,6 +14,7 @@
 
 #include "CalculatorExceptions.h"
 #include <string.h>
+#include <utility>
 
 using namespace eprosima::rpc;
 using namespace ::exception;
