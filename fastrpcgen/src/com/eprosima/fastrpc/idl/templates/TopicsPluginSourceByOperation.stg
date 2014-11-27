@@ -811,7 +811,7 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_ResultPlugin::get_t
             },
             0,
             1,
-            $exception.md5$,
+            (RTICdrLong)$exception.md5$,
             NULL,
             RTI_CDR_NONKEY_MEMBER,
             DDS_PRIVATE_MEMBER,

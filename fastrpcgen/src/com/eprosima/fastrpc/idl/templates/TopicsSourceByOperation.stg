@@ -292,7 +292,7 @@ $interface.scopedname$_$operation.name$_Result::$interface.name$_$operation.name
             break;
 
         $operation.exceptions : { exception |
-        case $exception.md5$:
+        case (int32_t)$exception.md5$:
             m_$exception.formatedScopedname$_ex = x.m_$exception.formatedScopedname$_ex;
             break;
         }; separator="\n"$
@@ -313,7 +313,7 @@ $interface.scopedname$_$operation.name$_Result::$interface.name$_$operation.name
             break;
 
         $operation.exceptions : { exception |
-        case $exception.md5$:
+        case (int32_t)$exception.md5$:
             m_$exception.formatedScopedname$_ex = std::move(x.m_$exception.formatedScopedname$_ex);
             break;
         }; separator="\n"$
@@ -334,7 +334,7 @@ $interface.scopedname$_$operation.name$_Result& $interface.scopedname$_$operatio
             break;
 
         $operation.exceptions : { exception |
-        case $exception.md5$:
+        case (int32_t)$exception.md5$:
             m_$exception.formatedScopedname$_ex = x.m_$exception.formatedScopedname$_ex;
             break;
         }; separator="\n"$
@@ -357,7 +357,7 @@ $interface.scopedname$_$operation.name$_Result& $interface.scopedname$_$operatio
             break;
 
         $operation.exceptions : { exception |
-        case $exception.md5$:
+        case (int32_t)$exception.md5$:
             m_$exception.formatedScopedname$_ex = std::move(x.m_$exception.formatedScopedname$_ex);
             break;
         }; separator="\n"$
@@ -513,7 +513,7 @@ void $interface.scopedname$_$operation.name$_Result::serialize(eprosima::fastcdr
             break;
 
         $operation.exceptions : { exception |
-        case $exception.md5$:
+        case (int32_t)$exception.md5$:
             scdr << m_$exception.formatedScopedname$_ex;
             break;
         }; separator="\n"$
@@ -538,7 +538,7 @@ void $interface.scopedname$_$operation.name$_Result::deserialize(eprosima::fastc
             break;
 
         $operation.exceptions : { exception |
-        case $exception.md5$:
+        case (int32_t)$exception.md5$:
             dcdr \>> m_$exception.formatedScopedname$_ex;
             break;
         }; separator="\n"$
@@ -676,18 +676,18 @@ public_exception_union_member_declaration(class, exception) ::= <<
 void $class$::$exception.formatedScopedname$_ex(const $exception.scopedname$ &_$exception.formatedScopedname$_ex)
 {
     m_$exception.formatedScopedname$_ex = _$exception.formatedScopedname$_ex;
-    m__d = $exception.md5$;
+    m__d = (int32_t)$exception.md5$;
 }
 
 void $class$::$exception.formatedScopedname$_ex($exception.scopedname$ &&_$exception.formatedScopedname$_ex)
 {
     m_$exception.formatedScopedname$_ex = std::move(_$exception.formatedScopedname$_ex);
-    m__d = $exception.md5$;
+    m__d = (int32_t)$exception.md5$;
 }
 
 const $exception.scopedname$& $class$::$exception.formatedScopedname$_ex() const
 {
-    if(m__d != $exception.md5$)
+    if(m__d != (int32_t)$exception.md5$)
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
     return m_$exception.formatedScopedname$_ex;
@@ -695,7 +695,7 @@ const $exception.scopedname$& $class$::$exception.formatedScopedname$_ex() const
 
 $exception.scopedname$& $class$::$exception.formatedScopedname$_ex()
 {
-    if(m__d != $exception.md5$)
+    if(m__d != (int32_t)$exception.md5$)
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
     return m_$exception.formatedScopedname$_ex;
