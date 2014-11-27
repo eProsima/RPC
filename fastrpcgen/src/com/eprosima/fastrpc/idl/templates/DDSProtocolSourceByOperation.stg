@@ -159,7 +159,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 $destroyDataCallback(operation=operation, suffix="Reply")$,
                 NULL,
                 sizeof($interface.scopedname$_$operation.name$Reply)
-                $else$NULL, $eprosimaTypesBool()$, NULL, NULL, NULL, 0$endif$));
+                $else$NULL, $eprosimaTypesBool()$, NULL, NULL, NULL, NULL, 0$endif$));
             }
             $endif$
             $if(ctx.server)$
