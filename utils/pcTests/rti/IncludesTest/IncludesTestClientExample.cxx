@@ -18,9 +18,6 @@
 #include "fastrpc/transports/dds/UDPProxyTransport.h"
 #include "fastrpc/exceptions/Exceptions.h"
 
-#include "SameDirectoryExceptions.h"
-#include "util/UtilExceptions.h"
-
 #include <iostream>
 
 using namespace eprosima::rpc;

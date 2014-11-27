@@ -13,8 +13,6 @@
  */
 
 #include "IncludesTestServerImplExample.h"
-#include "SameDirectoryExceptions.h"
-#include "util/UtilExceptions.h"
 
 IncludesTestNS::IncludesTest IncludesTestIfcServerImplExample::set(/*in*/ const SameDirectoryNS::SameDirectory& sd, /*inout*/ Level2NS::Level2& lvl, /*out*/ IncludesTestNS::IncludesTest& incl)
 {
