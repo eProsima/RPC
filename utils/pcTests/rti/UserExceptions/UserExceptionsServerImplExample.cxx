@@ -13,7 +13,6 @@
  */
 
 #include "UserExceptionsServerImplExample.h"
-#include "UserExceptionsExceptions.h"
 
 void IfcServerImplExample::sendLevel1(/*in*/ DDS_Long l1, /*inout*/ DDS_Long& l2, /*out*/ DDS_Long& l3)
 {
