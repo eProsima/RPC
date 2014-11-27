@@ -1,17 +1,29 @@
-group RTIExceptionsHeader;
+group RTIExtensionHeader;
 
 main(ctx, definitions) ::= <<
-$fileHeader(ctx=ctx,  file=[ctx.filename, "Exceptions.h"], description=["This header file contains the declaration of user exceptions in ", ctx.filename, ".idl"])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "Extension.h"], description=["This header file contains the declaration of user exceptions in ", ctx.filename, ".idl"])$
 
-#ifndef _$ctx.filename;format="toUpper"$EXCEPTIONS_H_
-#define _$ctx.filename;format="toUpper"$EXCEPTIONS_H_
+#ifndef _$ctx.filename;format="toUpper"$EXTENSION_H_
+#define _$ctx.filename;format="toUpper"$EXTENSION_H_
 
 #include "$ctx.product$/exceptions/UserException.h"
 #include "$ctx.filename$Support.h"
 
+$ctx.directIncludeDependencies : {include | #include "$include$Extension.h"}; separator="\n"$
+
+#if defined(_WIN32)
+#if defined(EPROSIMA_USER_DLL_EXPORT)
+#define eProsima_user_DllExport __declspec( dllexport )
+#else
+#define eProsima_user_DllExport
+#endif
+#else
+#define eProsima_user_DllExport
+#endif
+
 $definitions; separator="\n"$
 
-#endif // _$ctx.filename;format="toUpper"$EXCEPTIONS_H_
+#endif // _$ctx.filename;format="toUpper"$EXTENSION_H_
 >>
 
 module(ctx, module, definition_list) ::= <<
@@ -31,6 +43,15 @@ namespace $interface.name$
 {
     $export_list$
 }
+
+class FASTRPCUSERDllExport $interface.name$Ext $if(interface.bases)$: $interface.bases : {base |public $base.scopedname$Ext}; separator=", "$$endif$
+{
+    public:
+        
+        $interface.operations : { operation |
+            virtual $paramRetType(operation.rettype)$ $operation.name$($paramDeclarations(params=operation.parameters)$) = 0;
+        }; separator="\n"$
+};
 >>
 
 export_list(exports) ::= <<

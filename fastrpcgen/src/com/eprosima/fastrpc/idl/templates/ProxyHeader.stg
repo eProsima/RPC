@@ -10,7 +10,13 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "Proxy.h"], description=["This header 
 #include "$ctx.filename$.h"
 $if(ctx.dds)$
 #include "$ctx.filename$AsyncCallbackHandlers.h"
+
 $endif$
+$if(ctx.rtiTypes)$
+#include "$ctx.filename$Extension.h"
+
+$endif$
+
 
 namespace eprosima
 {
@@ -48,7 +54,7 @@ interface(ctx, interface, export_list) ::= <<
  * @brief This class implements a specific server's proxy for the defined interface $interface.name$.
  * @ingroup $ctx.trimfilename$
  */
-class FASTRPCUSERDllExport $interface.name$Proxy : public eprosima::rpc::proxy::Proxy, public $interface.name$
+class FASTRPCUSERDllExport $interface.name$Proxy : public eprosima::rpc::proxy::Proxy, public $interface.name$$if(ctx.rtiTypes)$Ext$endif$
 {
     public:
    

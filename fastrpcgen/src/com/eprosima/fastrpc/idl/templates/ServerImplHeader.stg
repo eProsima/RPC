@@ -9,6 +9,11 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "ServerImpl.h"], description=["This he
 #include "$ctx.product$/utils/Messages.h"
 #include "$ctx.filename$.h"
 
+$if(ctx.rtiTypes)$
+#include "$ctx.filename$Extension.h"
+
+$endif$
+
 $definitions; separator="\n"$
 
 #endif // _$ctx.filename;format="toUpper"$SERVER_IMPL_H_
@@ -34,7 +39,7 @@ interface(ctx, interface, export_list) ::= <<
  * @brief This class is the skeleton of the servant and its remote procedures has to be implemented.
  * @ingroup $ctx.trimfilename$
  */
-class $interface.name$ServerImpl : public $interface.name$
+class $interface.name$ServerImpl : public $interface.name$$if(ctx.rtiTypes)$Ext$endif$
 {
     public:
 

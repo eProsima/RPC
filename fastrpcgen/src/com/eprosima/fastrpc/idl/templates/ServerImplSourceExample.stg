@@ -5,13 +5,6 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "ServerImplExample.cxx"], description=
 
 #include "$ctx.filename$ServerImplExample.h"
 
-$if(ctx.rtiTypes)$
-$ctx.includeDependencies : { include |#include "$include$Exceptions.h"}; separator="\n"$
-
-#include "$ctx.filename$Exceptions.h"
-
-$endif$
-
 $definitions; separator="\n"$
 >>
 

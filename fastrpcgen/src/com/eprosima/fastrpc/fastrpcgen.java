@@ -701,6 +701,9 @@ public class fastrpcgen
                             ddsGen(m_tempDir + onlyFileName + "RequestReply.idl", idlLineCommand, idlLineCommandForWorkDirSet,
                                     false, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
 
+                            // TODO Remove in future when rtiddsgen2 works successfully.
+                            Utils.addPragma(m_outputDir + onlyFileName + "RequestReply.cxx", m_outputDir);
+
                             // Add RTI file to the project info.
                             // TODO Do for Opendds.
                             project.addCommonIncludeFile(onlyFileName + "RequestReply.h");
@@ -1118,8 +1121,8 @@ public class fastrpcgen
                 // Load template to generate IDL for topics.
                 tmanager.addGroup("TopicsIDL" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface"));
                 // Load template to generate source exception types.
-                tmanager.addGroup("RTIExceptionsHeader");
-                tmanager.addGroup("RTIExceptionsSource");
+                tmanager.addGroup("RTIExtensionHeader");
+                tmanager.addGroup("RTIExtensionSource");
             }
             // Load template to generate the DDS protocol.
             tmanager.addGroup("ProtocolHeader");
@@ -1225,12 +1228,12 @@ public class fastrpcgen
                         if(returnedValue = Utils.writeFile(m_tempDir + onlyFileName + "RequestReply.idl", maintemplates.getTemplate("TopicsIDL" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface")), true))
                         {	
                             // Zone used to write all files using the generated string templates.
-                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Exceptions.h", maintemplates.getTemplate("RTIExceptionsHeader"), m_replace))
+                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Extension.h", maintemplates.getTemplate("RTIExtensionHeader"), m_replace))
                             {
-                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Exceptions.cxx", maintemplates.getTemplate("RTIExceptionsSource"), m_replace))
+                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Extension.cxx", maintemplates.getTemplate("RTIExtensionSource"), m_replace))
                                 {
-                                    project.addCommonIncludeFile(onlyFileName + "Exceptions.h");
-                                    project.addCommonSrcFile(onlyFileName + "Exceptions.cxx");
+                                    project.addCommonIncludeFile(onlyFileName + "Extension.h");
+                                    project.addCommonSrcFile(onlyFileName + "Extension.cxx");
                                 }
                             }
                         }

@@ -183,7 +183,7 @@ for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -path ./.sv
 done
 
 # Remove output directory
-rm -r output
+#rm -r output
 
 # Restore environment for FASTRPC
 . ../../../thirdparty/dev-env/scripts/common_dds_functions.sh restoreRTIversion

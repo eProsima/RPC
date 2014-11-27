@@ -1,9 +1,9 @@
-group RTIExceptionsSource;
+group RTIExtensionSource;
 
 main(ctx, definitions) ::= <<
-$fileHeader(ctx=ctx,  file=[ctx.filename, "Exceptions.cxx"], description=["TODO This source file contains the declaration of common types in ", ctx.filename, ".idl"])$
+$fileHeader(ctx=ctx,  file=[ctx.filename, "Extension.cxx"], description=["TODO This source file contains the declaration of common types in ", ctx.filename, ".idl"])$
 
-#include "$ctx.filename$Exceptions.h"
+#include "$ctx.filename$Extension.h"
 #include <string.h>
 #include <utility>
 

@@ -25,17 +25,9 @@ $definitions; separator="\n"$
 
 interface(ctx, interface, export_list) ::= <<
 $export_list$
->>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
-exception(ctx, exception) ::= <<>>
-
-operation(ctx, operation, param_list) ::= <<
-
-struct $operation.parent.name$_$operation.name$_In
+ 
+$interface.all_operations : { operation |
+struct $interface.name$_$operation.name$_In
 {
     $if(operation.inputparam)$
     $operation.inputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
@@ -44,14 +36,14 @@ struct $operation.parent.name$_$operation.name$_In
     $endif$
 }; $nolevelIDLdefine()$
 
-$preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
+$preRepIDLDefines(name=[interface.name, "_", operation.name])$
 /*!
  * @brief Topic used to receive/send requests for the procedure $operation.name$.
  * @ingroup $ctx.trimfilename$
  */
-struct $operation.parent.name$_$operation.name$_Request{
+struct $interface.name$_$operation.name$_Request{
     RequestHeader header;
-    $operation.parent.name$_$operation.name$_In $operation.name$;
+    $interface.name$_$operation.name$_In $operation.name$;
 }; $levelIDLdefine()$
 
 $if(!operation.oneway)$
@@ -59,7 +51,7 @@ $if(!operation.oneway)$
  * @brief This structure encapsulates the output parameters.
  * @ingroup $ctx.trimfilename$
  */
-struct $operation.parent.name$_$operation.name$_Out
+struct $interface.name$_$operation.name$_Out
 {
     $if([operation.outputparam, operation.rettype])$
     $if(operation.rettype)$$operation.rettype.idlTypename$ return_;$endif$
@@ -73,12 +65,12 @@ struct $operation.parent.name$_$operation.name$_Out
  * @brief This union is used to encapsulate output parameters and user exceptions.
  * @ingroup $ctx.trimfilename$
  */
-union $operation.parent.name$_$operation.name$_Result switch (long)
+union $interface.name$_$operation.name$_Result switch (long)
 {
    default:
       UnknownException unknown_exception;
    case 0:
-      $operation.parent.name$_$operation.name$_Out out_;
+      $interface.name$_$operation.name$_Out out_;
    case 1:
       SystemExceptionCode sysx_;
    $operation.exceptions : { exception |
@@ -87,18 +79,26 @@ union $operation.parent.name$_$operation.name$_Result switch (long)
    }; separator="\n"$
 }; $nolevelIDLdefine()$
 
-$preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
+$preRepIDLDefines(name=[interface.name, "_", operation.name])$
 /*!
  * @brief Topic used to receive/send replies for the procedure $operation.name$.
  * @ingroup $ctx.trimfilename$
  */
-struct $operation.parent.name$_$operation.name$_Reply{
+struct $interface.name$_$operation.name$_Reply{
     ReplyHeader header;
-    $operation.parent.name$_$operation.name$_Result $operation.name$;
+    $interface.name$_$operation.name$_Result $operation.name$;
 }; $levelIDLdefine()$
 $endif$
-
+}; separator="\n"$
 >>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 

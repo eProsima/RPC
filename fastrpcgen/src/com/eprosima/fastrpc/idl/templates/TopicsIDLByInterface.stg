@@ -26,6 +26,54 @@ $definitions; separator="\n"$
 interface(ctx, interface, export_list) ::= <<
 $export_list$
 
+$interface.all_operations : { operation |
+$preRepIDLDefines(name=[interface.name, "_", operation.name])$
+/*!
+ * @brief Structure used to receive/send requests for the procedure $operation.name$.
+ * @ingroup $ctx.trimfilename$
+ */
+struct $interface.name$_$operation.name$_In
+{
+    $if(operation.inputparam)$
+    $operation.inputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
+    $else$
+    long dummy;
+    $endif$
+}; $nolevelIDLdefine()$
+
+$if(!operation.oneway)$
+struct $interface.name$_$operation.name$_Out
+{
+    $if([operation.outputparam, operation.rettype])$
+    $if(operation.rettype)$$operation.rettype.idlTypename$ return_;$endif$
+    $operation.outputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
+    $else$
+    long dummy;
+    $endif$
+}; $nolevelIDLdefine()$
+
+$preRepIDLDefines(name=[interface.name, "_", operation.name])$
+/*!
+ * @brief Structure used to receive/send replies for the procedure $operation.name$.
+ * @ingroup $ctx.trimfilename$
+ */
+union $interface.name$_$operation.name$_Result switch (long)
+{
+   default:
+      UnknownException unknown_exception;
+   case 0:
+      $interface.name$_$operation.name$_Out out_;
+   case 1:
+      SystemExceptionCode sysx_;
+   $operation.exceptions : { exception |
+   case $exception.md5$:
+      $exception.scopedname$_t $exception.formatedScopedname$_ex;
+   }; separator="\n"$
+}; $nolevelIDLdefine()$
+$endif$
+}; separator="\n"$
+
+
 /*!
  * @brief This union is used in the DDS topic to encapsulate the operations in request samples.
  * @ingroup $ctx.trimfilename$
@@ -34,9 +82,9 @@ union $interface.name$_Call switch (long)
 {
     default:
         UnknownOperation unknown_operation;
-    $interface.operations : { operation |
+    $interface.all_operations : { operation |
     case $operation.md5$:
-        $operation.parent.name$_$operation.name$_In $operation.name$;
+        $interface.name$_$operation.name$_In $operation.name$;
     }; separator="\n"$
 }; $nolevelIDLdefine()$
 
@@ -61,10 +109,10 @@ union $interface.name$_Return switch (long)
 {
     default:
         UnknownOperation unknown_operation;
-    $interface.operations : { operation |
+    $interface.all_operations : { operation |
     $if(!operation.oneway)$
     case $operation.md5$:
-        $operation.parent.name$_$operation.name$_Result $operation.name$;
+        $interface.name$_$operation.name$_Result $operation.name$;
     $endif$
     }; separator="\n"$
 }; $nolevelIDLdefine()$
@@ -89,54 +137,7 @@ $exports; separator="\n"$
 
 exception(ctx, exception) ::= <<>>
 
-operation(ctx, operation, param_list) ::= <<
-
-$preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
-/*!
- * @brief Structure used to receive/send requests for the procedure $operation.name$.
- * @ingroup $ctx.trimfilename$
- */
-struct $operation.parent.name$_$operation.name$_In
-{
-    $if(operation.inputparam)$
-    $operation.inputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
-    $else$
-    long dummy;
-    $endif$
-}; $nolevelIDLdefine()$
-
-$if(!operation.oneway)$
-struct $operation.parent.name$_$operation.name$_Out
-{
-    $if([operation.outputparam, operation.rettype])$
-    $if(operation.rettype)$$operation.rettype.idlTypename$ return_;$endif$
-    $operation.outputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
-    $else$
-    long dummy;
-    $endif$
-}; $nolevelIDLdefine()$
-
-$preRepIDLDefines(name=[operation.parent.name, "_", operation.name])$
-/*!
- * @brief Structure used to receive/send replies for the procedure $operation.name$.
- * @ingroup $ctx.trimfilename$
- */
-union $operation.parent.name$_$operation.name$_Result switch (long)
-{
-   default:
-      UnknownException unknown_exception;
-   case 0:
-      $operation.parent.name$_$operation.name$_Out out_;
-   case 1:
-      SystemExceptionCode sysx_;
-   $operation.exceptions : { exception |
-   case $exception.md5$:
-      $exception.scopedname$_t $exception.formatedScopedname$_ex;
-   }; separator="\n"$
-}; $nolevelIDLdefine()$
-$endif$
-
->>
+operation(ctx, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 
