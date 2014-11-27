@@ -198,20 +198,33 @@
 		</copy>
 	</target>
 
+    <target name="includejars" depends="init,compile" description="Incluide dependent Jar files.">
+        <copy todir="${build.dir}">
+            <restrict>
+                <name name="*.class"/>
+                <archives>
+                    <zips>
+                        <fileset dir="${lib.dir}" includes="antlr-4.4.jar,antlr-2.7.7.jar,stringtemplate-3.2.1.jar,antxr.jar" />
+                    </zips>
+                </archives>
+            </restrict>
+        </copy>
+    </target>
+
 	<!-- =================================================================== -->
 	<!-- Creates the jar archive                                             -->
 	<!-- =================================================================== -->
-	<target name="fastrpcgen_jar" depends="init,compile" description="Builds the fastrpcgen library (.jar).">
+	<target name="fastrpcgen_jar" depends="init,compile,includejars" description="Builds the fastrpcgen library (.jar).">
 		<jar jarfile="${build.fastrpcgen.jar}" basedir="${build.classes}" manifest="manifest">
 		</jar>
 	</target>
 
-	<target name="rpcddsgen_jar" depends="init,compile" description="Builds the rpcddsgen library (.jar).">
+	<target name="rpcddsgen_jar" depends="init,compile,includejars" description="Builds the rpcddsgen library (.jar).">
 		<jar jarfile="${build.rpcddsgen.jar}" basedir="${build.classes}" manifest="manifest_rpcddsgen">
 		</jar>
 	</target>
 
-	<target name="rpcrestgen_jar" depends="init,compile" description="Builds the rpcrestgen library (.jar).">
+	<target name="rpcrestgen_jar" depends="init,compile,includejars" description="Builds the rpcrestgen library (.jar).">
 		<jar jarfile="${build.rpcrestgen.jar}" basedir="${build.classes}" manifest="manifest_rpcrestgen">
 		</jar>
 	</target>
