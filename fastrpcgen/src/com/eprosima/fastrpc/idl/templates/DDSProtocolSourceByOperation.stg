@@ -354,7 +354,7 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$_ser
         $endif$
     }
     }; separator="\n"$
-    catch(const ServerInternalException &ex)
+    catch(const ServerInternalException &$if(!operation.oneway)$ex$endif$)
     {
         $if(!operation.oneway)$
         //TODO Quitar el unsetReply
@@ -363,8 +363,6 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$_ser
         $replyOperationUnionDataAccessByOperation(operation=operation, varname="replyData", dataname="sysx_")$ = $if(ctx.rtiTypes)$(SystemExceptionCode)$endif$SERVER_INTERNAL_ERROR;
         
         _protocol.$interface.formatedScopedname$_$operation.name$_se->sendReply(&replyData);
-        $else$
-        ex;
         $endif$
     }
     
