@@ -1,5 +1,7 @@
 SUBDIRS = include
 
+ACLOCAL_AMFLAGS = -I m4 --install
+
 lib_LTLIBRARIES = libfastrpc.la
 libfastrpc_la_SOURCES = FASTRPC_SOURCES
 

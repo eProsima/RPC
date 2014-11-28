@@ -7,8 +7,8 @@ License: LGPLv3
 URL: http://www.eprosima.com
 Source0: %{name}_%{version}_rpm.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires: autoconf automake libtool, antlr, stringtemplate, ant, boost-system, boost-thread, fastcdr
-Requires: antlr, stringtemplate, boost-system, boost-thread, fastcdr
+BuildRequires: autoconf automake libtool, boost-system, boost-thread, fastcdr
+Requires: boost-system, boost-thread, fastcdr
 
 %description
 eProsima FastRPC provides an implementation of this general concept of invoking remote procedures. eProsima 
@@ -22,16 +22,11 @@ the details for this remote interaction, permitting them to focus on the applica
 %build
 %configure
 make %{?_smp_mflags}
-cd fastrpcgen
-ant -Dbuildrootdir="%{buildroot}" jar
-cd ..
 
 %install
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
-cd fastrpcgen
-ant -Dbuildrootdir="%{buildroot}" install
-cd ..
+cp classes/fastrpcgen.jar %{buildroot}/usr/share/java
 
 %clean
 rm -rf %{buildroot}

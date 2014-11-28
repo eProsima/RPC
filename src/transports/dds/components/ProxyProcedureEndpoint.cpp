@@ -448,7 +448,7 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
                             DDS::StringSeq stringSeq(1);
 
                             stringSeq.length(1);
-                            SNPRINTF(value, 50, "%u", numSec);
+                            SNPRINTF(value, 50, "%lu", numSec);
                             stringSeq[0] = strdup(value);
                             retCode = query->set_query_parameters(stringSeq);
 
@@ -603,7 +603,7 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
                         DDS::StringSeq stringSeq(1);
 
                         stringSeq.length(1);
-                        SNPRINTF(value, 50, "%u", numSec);
+                        SNPRINTF(value, 50, "%lu", numSec);
                         stringSeq[0] = strdup(value);
                         retCode = query->set_query_parameters(stringSeq);
 

@@ -1,5 +1,7 @@
 SUBDIRS = include
 
+ACLOCAL_AMFLAGS = -I m4 --install
+
 lib_LTLIBRARIES = librpcrest.la
 librpcrest_la_SOURCES = RPCREST_SOURCES
 

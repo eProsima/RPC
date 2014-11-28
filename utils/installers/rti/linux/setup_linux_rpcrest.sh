@@ -134,17 +134,6 @@ function installer
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 
-    # Copy Java dependent classes.
-    cp ../../../../classes/antlr-2.7.7.jar tmp/$project/classes
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-    cp ../../../../classes/antxr.jar tmp/$project/classes
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-    cp ../../../../classes/stringtemplate-3.2.1.jar tmp/$project/classes
-    errorstatus=$?
-    if [ $errorstatus != 0 ]; then return; fi
-
     # Copy script
     mkdir -p tmp/$project/scripts
     cp ../../../../scripts/rpcrestgen.sh tmp/$project/scripts
@@ -164,65 +153,14 @@ function installer
 
 function rpminstaller
 {
-    rm tmp/$project/classes/antlr-2.7.7.jar
-    rm tmp/$project/classes/rpcrestgen.jar
-    if [[ "${distroversion}" == "Fedora"* ]]; then 
-        rm tmp/$project/classes/stringtemplate-3.2.1.jar
-    fi
-
 	# Change the script form local to general script.
 	cp ../../../../scripts/rpcrestgen_rpm.sh tmp/$project/scripts/rpcrestgen.sh
 	errorstatus=$?
 	if [ $errorstatus != 0 ]; then return; fi
 	chmod 755 tmp/$project/scripts/rpcrestgen.sh
 
-	# JAVA application
-	mkdir -p tmp/$project/fastrpcgen
-
-	# Copy the build.xml
-	if [[ "${distroversion}" == "CentOS6"* ]]; then
-		cp build_rpm_rpcrest_centos.xml tmp/$project/fastrpcgen/build.xml
-	else
-		cp build_rpm_rpcrest.xml tmp/$project/fastrpcgen/build.xml
-	fi
-	errorstatus=$?
-	if [ $errorstatus != 0 ]; then return; fi
-	cp ../../../../fastrpcgen/manifest_rpcrestgen tmp/$project/fastrpcgen
-	errorstatus=$?
-
-	if [ $errorstatus != 0 ]; then return; fi
-	# Copy grammar
-	cp -r ../../../../thirdparty/idl/grammars tmp/$project/fastrpcgen
-	errorstatus=$?
-	if [ $errorstatus != 0 ]; then return; fi
-
-	# Copy Java code
-	cp -r ../../../../fastrpcgen/src tmp/$project/fastrpcgen
-	errorstatus=$?
-	if [ $errorstatus != 0 ]; then return; fi
-	cp -r ../../../../thirdparty/idl/src tmp/$project/fastrpcgen
-	errorstatus=$?
-	if [ $errorstatus != 0 ]; then return; fi
-    # TODO Warning Esto se hace en nuestro build.xml
-    cp ../../../../thirdparty/fastcdr/src/java/com/eprosima/fastcdr/templates/Types.stg tmp/$project/fastrpcgen/src/com/eprosima/fastrpc/idl/templates
-	errorstatus=$?
-	if [ $errorstatus != 0 ]; then return; fi
-    cp ../../../../thirdparty/fastcdr/src/java/com/eprosima/fastcdr/templates/TypesHeader.stg tmp/$project/fastrpcgen/src/com/eprosima/fastrpc/idl/templates
-	errorstatus=$?
-	if [ $errorstatus != 0 ]; then return; fi
-    cp ../../../../thirdparty/fastcdr/src/java/com/eprosima/fastcdr/templates/TypesSource.stg tmp/$project/fastrpcgen/src/com/eprosima/fastrpc/idl/templates
-	errorstatus=$?
-	if [ $errorstatus != 0 ]; then return; fi
-    cp ../../../../src/platforms tmp/$project/src
-	errorstatus=$?
-	if [ $errorstatus != 0 ]; then return; fi
-
 	# Copy SPEC file
-	if [[ "${distroversion}" == "CentOS6"* ]]; then
-		sed "s/VERSION/${version}/g" rpcrest_centos.spec > ~/rpmbuild/SPECS/rpcrest.spec
-	else
-		sed "s/VERSION/${version}/g" rpcrest.spec > ~/rpmbuild/SPECS/rpcrest.spec
-	fi
+    sed "s/VERSION/${version}/g" rpcrest.spec > ~/rpmbuild/SPECS/rpcrest.spec
 	errorstatus=$?
 	if [ $errorstatus != 0 ]; then return; fi
 

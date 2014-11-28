@@ -5,7 +5,7 @@
 
 # Configuration
 BASE_FLAGS=""
-BASE_JARS="antlr antxr stringtemplate rpcrestgen"
+BASE_JARS="rpcrestgen"
 BASE_OPTIONS=""
 MAIN_CLASS=com.eprosima.fastrpc.rpcrestgen
 
