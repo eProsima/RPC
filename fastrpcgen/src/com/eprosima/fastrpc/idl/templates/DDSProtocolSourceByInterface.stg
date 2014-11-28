@@ -250,7 +250,7 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_serve(eprosima::rpc:
             $endif$
         }
         }; separator="\n"$
-        catch(const ServerInternalException &$if(!operation.oneway)$ex$endif$)
+        catch(const ServerInternalException &)
         {
             $if(!operation.oneway)$
             //TODO Quitar el unsetReply
