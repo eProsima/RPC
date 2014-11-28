@@ -30,7 +30,7 @@ class Calculator_additionCallbackHandler
         /*!
          * This function is called when is received the reply from the server.
          */
-        virtual void addition(/*out*/ DDS_Long addition_ret) = 0;
+        virtual void addition(/*out*/ DDS_Long return_) = 0;
         
         /*!
          * @brief This function is called when an exception occurs.
@@ -52,7 +52,7 @@ class Calculator_subtractionCallbackHandler
         /*!
          * This function is called when is received the reply from the server.
          */
-        virtual void subtraction(/*out*/ DDS_Long subtraction_ret) = 0;
+        virtual void subtraction(/*out*/ DDS_Long return_) = 0;
         
         /*!
          * @brief This function is called when an exception occurs.
@@ -62,6 +62,9 @@ class Calculator_subtractionCallbackHandler
          */
         virtual void on_exception(const eprosima::rpc::exception::SystemException &ex) = 0;
 };
+
+
+
 
 
 

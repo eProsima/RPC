@@ -1,8 +1,8 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This generated file is licensed to you under the terms described in the
- * FASTRPC_LICENSE file included in this FASTRPC distribution.
+ * rpcdds_LICENSE file included in this rpcdds distribution.
  *
  *************************************************************************
  * 
@@ -17,8 +17,6 @@
 #include "CalculatorDDSProtocol.h"
 #include "rpcdds/transports/dds/UDPProxyTransport.h"
 #include "rpcdds/exceptions/Exceptions.h"
-
-#include "CalculatorExceptions.h"
 
 #include <iostream>
 
@@ -46,7 +44,7 @@ int main(int argc, char **argv)
                 try
                 {
                     protocol = new CalculatorProtocol();
-                    transport = new UDPProxyTransport("CalculatorService");
+                    transport = new UDPProxyTransport("CalculatorService", "Instance");
                     proxy = new CalculatorProxy(*transport, *protocol);
                 }
                 catch(InitializeException &ex)

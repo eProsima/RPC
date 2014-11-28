@@ -17,26 +17,26 @@
 #include "fastcdr/Cdr.h"
 #include "rpcdds/exceptions/BadParamException.h"
 
-Calculator_additionRequest::Calculator_additionRequest()
-: m_value1(0), m_value2(0)
+
+
+
+Calculator_addition_In::Calculator_addition_In()
+: m_value1(0), m_value2(0){
+}
+
+Calculator_addition_In::~Calculator_addition_In()
 {
 }
 
-Calculator_additionRequest::~Calculator_additionRequest()
-{
+Calculator_addition_In::Calculator_addition_In(const Calculator_addition_In &x)
+: m_value1(x.m_value1), m_value2(x.m_value2){
 }
 
-Calculator_additionRequest::Calculator_additionRequest(const Calculator_additionRequest &x)
-: m_value1(x.m_value1), m_value2(x.m_value2)
-{
+Calculator_addition_In::Calculator_addition_In(Calculator_addition_In &&x)
+: m_value1(std::move(x.m_value1)), m_value2(std::move(x.m_value2)){
 }
 
-Calculator_additionRequest::Calculator_additionRequest(Calculator_additionRequest &&x)
-: m_value1(std::move(x.m_value1)), m_value2(std::move(x.m_value2))
-{
-}
-
-Calculator_additionRequest& Calculator_additionRequest::operator=(const Calculator_additionRequest &x)
+Calculator_addition_In& Calculator_addition_In::operator=(const Calculator_addition_In &x)
 {
     m_value1 = x.m_value1;;
     m_value2 = x.m_value2;;
@@ -44,7 +44,7 @@ Calculator_additionRequest& Calculator_additionRequest::operator=(const Calculat
     return *this;
 }
 
-Calculator_additionRequest& Calculator_additionRequest::operator=(Calculator_additionRequest &&x)
+Calculator_addition_In& Calculator_addition_In::operator=(Calculator_addition_In &&x)
 {
     m_value1 = x.m_value1;;
     m_value2 = x.m_value2;;
@@ -52,17 +52,17 @@ Calculator_additionRequest& Calculator_additionRequest::operator=(Calculator_add
     return *this;
 }
 
-size_t Calculator_additionRequest::getMaxCdrSerializedSize(size_t current_alignment)
+size_t Calculator_addition_In::getMaxCdrSerializedSize(size_t current_alignment)
 {
-    size_t current_align = current_alignment;
+    size_t initial_alignment = current_alignment;
             
-    current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
-    current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
-    return current_align;
+    return current_alignment - initial_alignment;
 }
 
-size_t Calculator_additionRequest::getSerializedSize(size_t current_alignment) const
+size_t Calculator_addition_In::getSerializedSize(size_t current_alignment) const
 {
     size_t current_align = current_alignment;
 
@@ -72,7 +72,7 @@ size_t Calculator_additionRequest::getSerializedSize(size_t current_alignment) c
     return current_align;
 }
 
-void Calculator_additionRequest::serialize(eprosima::fastcdr::Cdr &scdr) const
+void Calculator_addition_In::serialize(eprosima::fastcdr::Cdr &scdr) const
 {
     scdr << m_value1;
 
@@ -80,297 +80,151 @@ void Calculator_additionRequest::serialize(eprosima::fastcdr::Cdr &scdr) const
 
 }
 
-void Calculator_additionRequest::deserialize(eprosima::fastcdr::Cdr &dcdr)
+void Calculator_addition_In::deserialize(eprosima::fastcdr::Cdr &dcdr)
 {
     dcdr >> m_value1;
     dcdr >> m_value2;
 }
 
-Calculator_additionReply::Calculator_additionReply()
-: m_addition_ret(0)
+
+Calculator_addition_Out::Calculator_addition_Out()
+: m_return_(0){
+}
+
+Calculator_addition_Out::~Calculator_addition_Out()
 {
 }
 
-Calculator_additionReply::~Calculator_additionReply()
-{
+Calculator_addition_Out::Calculator_addition_Out(const Calculator_addition_Out &x)
+: m_return_(x.m_return_){
 }
 
-Calculator_additionReply::Calculator_additionReply(const Calculator_additionReply &x)
-: m_addition_ret(x.m_addition_ret)
-{
+Calculator_addition_Out::Calculator_addition_Out(Calculator_addition_Out &&x)
+: m_return_(std::move(x.m_return_)){
 }
 
-Calculator_additionReply::Calculator_additionReply(Calculator_additionReply &&x)
-: m_addition_ret(std::move(x.m_addition_ret))
+Calculator_addition_Out& Calculator_addition_Out::operator=(const Calculator_addition_Out &x)
 {
-}
-
-Calculator_additionReply& Calculator_additionReply::operator=(const Calculator_additionReply &x)
-{
-    m_addition_ret = x.m_addition_ret;;
+    m_return_ = x.m_return_;;
     
     return *this;
 }
 
-Calculator_additionReply& Calculator_additionReply::operator=(Calculator_additionReply &&x)
+Calculator_addition_Out& Calculator_addition_Out::operator=(Calculator_addition_Out &&x)
 {
-    m_addition_ret = x.m_addition_ret;;
+    m_return_ = x.m_return_;;
     
     return *this;
 }
 
-size_t Calculator_additionReply::getMaxCdrSerializedSize(size_t current_alignment)
+size_t Calculator_addition_Out::getMaxCdrSerializedSize(size_t current_alignment)
 {
-    size_t current_align = current_alignment;
+    size_t initial_alignment = current_alignment;
             
-    current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
-    return current_align;
+    return current_alignment - initial_alignment;
 }
 
-size_t Calculator_additionReply::getSerializedSize(size_t current_alignment) const
+size_t Calculator_addition_Out::getSerializedSize(size_t current_alignment) const
 {
     size_t current_align = current_alignment;
+    // TODO Header
 
-    current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
-    current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
-
-    return current_align;
-}
-
-void Calculator_additionReply::serialize(eprosima::fastcdr::Cdr &scdr) const
-{
-    scdr << m_addition_ret;
-
-}
-
-void Calculator_additionReply::deserialize(eprosima::fastcdr::Cdr &dcdr)
-{
-    dcdr >> m_addition_ret;
-}
-
-Calculator_subtractionRequest::Calculator_subtractionRequest()
-: m_value1(0), m_value2(0)
-{
-}
-
-Calculator_subtractionRequest::~Calculator_subtractionRequest()
-{
-}
-
-Calculator_subtractionRequest::Calculator_subtractionRequest(const Calculator_subtractionRequest &x)
-: m_value1(x.m_value1), m_value2(x.m_value2)
-{
-}
-
-Calculator_subtractionRequest::Calculator_subtractionRequest(Calculator_subtractionRequest &&x)
-: m_value1(std::move(x.m_value1)), m_value2(std::move(x.m_value2))
-{
-}
-
-Calculator_subtractionRequest& Calculator_subtractionRequest::operator=(const Calculator_subtractionRequest &x)
-{
-    m_value1 = x.m_value1;;
-    m_value2 = x.m_value2;;
-    
-    return *this;
-}
-
-Calculator_subtractionRequest& Calculator_subtractionRequest::operator=(Calculator_subtractionRequest &&x)
-{
-    m_value1 = x.m_value1;;
-    m_value2 = x.m_value2;;
-    
-    return *this;
-}
-
-size_t Calculator_subtractionRequest::getMaxCdrSerializedSize(size_t current_alignment)
-{
-    size_t current_align = current_alignment;
-            
-    current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
-    current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
+    //current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
+current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
 
     return current_align;
 }
 
-size_t Calculator_subtractionRequest::getSerializedSize(size_t current_alignment) const
+void Calculator_addition_Out::serialize(eprosima::fastcdr::Cdr &scdr) const
 {
-    size_t current_align = current_alignment;
-
-    current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
-    current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
-
-    return current_align;
-}
-
-void Calculator_subtractionRequest::serialize(eprosima::fastcdr::Cdr &scdr) const
-{
-    scdr << m_value1;
-
-    scdr << m_value2;
+    scdr << m_return_;
 
 }
 
-void Calculator_subtractionRequest::deserialize(eprosima::fastcdr::Cdr &dcdr)
+void Calculator_addition_Out::deserialize(eprosima::fastcdr::Cdr &dcdr)
 {
-    dcdr >> m_value1;
-    dcdr >> m_value2;
+    dcdr >> m_return_;
 }
 
-Calculator_subtractionReply::Calculator_subtractionReply()
-: m_subtraction_ret(0)
+Calculator_addition_Result::Calculator_addition_Result() : m__d(2)
 {
 }
 
-Calculator_subtractionReply::~Calculator_subtractionReply()
+Calculator_addition_Result::~Calculator_addition_Result()
 {
 }
 
-Calculator_subtractionReply::Calculator_subtractionReply(const Calculator_subtractionReply &x)
-: m_subtraction_ret(x.m_subtraction_ret)
-{
-}
-
-Calculator_subtractionReply::Calculator_subtractionReply(Calculator_subtractionReply &&x)
-: m_subtraction_ret(std::move(x.m_subtraction_ret))
-{
-}
-
-Calculator_subtractionReply& Calculator_subtractionReply::operator=(const Calculator_subtractionReply &x)
-{
-    m_subtraction_ret = x.m_subtraction_ret;;
-    
-    return *this;
-}
-
-Calculator_subtractionReply& Calculator_subtractionReply::operator=(Calculator_subtractionReply &&x)
-{
-    m_subtraction_ret = x.m_subtraction_ret;;
-    
-    return *this;
-}
-
-size_t Calculator_subtractionReply::getMaxCdrSerializedSize(size_t current_alignment)
-{
-    size_t current_align = current_alignment;
-            
-    current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
-
-    return current_align;
-}
-
-size_t Calculator_subtractionReply::getSerializedSize(size_t current_alignment) const
-{
-    size_t current_align = current_alignment;
-
-    current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
-    current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
-
-    return current_align;
-}
-
-void Calculator_subtractionReply::serialize(eprosima::fastcdr::Cdr &scdr) const
-{
-    scdr << m_subtraction_ret;
-
-}
-
-void Calculator_subtractionReply::deserialize(eprosima::fastcdr::Cdr &dcdr)
-{
-    dcdr >> m_subtraction_ret;
-}
-
-
-CalculatorRequest_union::CalculatorRequest_union() : m__d(1)
-{
-}
-
-CalculatorRequest_union::~CalculatorRequest_union()
-{
-}
-
-CalculatorRequest_union::CalculatorRequest_union(const CalculatorRequest_union &x)
+Calculator_addition_Result::Calculator_addition_Result(const Calculator_addition_Result &x)
 {
     m__d = x.m__d;
     
     switch(m__d)
     {
+        case 0:
+            m_out_ = x.m_out_;
+            break;
+        case 1:
+            m_sysx_ = x.m_sysx_;
+            break;
 
-                case 1:
-                    m_addition = x.m_addition;
-                    break;
-                
-
-                case 2:
-                    m_subtraction = x.m_subtraction;
-                    break;
-                
     }
 }
 
-CalculatorRequest_union::CalculatorRequest_union(CalculatorRequest_union &&x)
+Calculator_addition_Result::Calculator_addition_Result(Calculator_addition_Result &&x)
 {
     m__d = x.m__d;
     
     switch(m__d)
     {
+        case 0:
+            m_out_ = std::move(x.m_out_);
+            break;
+        case 1:
+            m_sysx_ = x.m_sysx_;
+            break;
 
-                case 1:
-                    m_addition = std::move(x.m_addition);
-                    break;
-                
-
-                case 2:
-                    m_subtraction = std::move(x.m_subtraction);
-                    break;
-                
     }
 }
 
-CalculatorRequest_union& CalculatorRequest_union::operator=(const CalculatorRequest_union &x)
+Calculator_addition_Result& Calculator_addition_Result::operator=(const Calculator_addition_Result &x)
 {
     m__d = x.m__d;
     
     switch(m__d)
     {
+        case 0:
+            m_out_ = x.m_out_;
+            break;
+        case 1:
+            m_sysx_ = x.m_sysx_;
+            break;
 
-                case 1:
-                    m_addition = x.m_addition;
-                    break;
-                
-
-                case 2:
-                    m_subtraction = x.m_subtraction;
-                    break;
-                
     }
     
     return *this;
 }
 
-CalculatorRequest_union& CalculatorRequest_union::operator=(CalculatorRequest_union &&x)
+Calculator_addition_Result& Calculator_addition_Result::operator=(Calculator_addition_Result &&x)
 {
     m__d = x.m__d;
     
     switch(m__d)
     {
+        case 0:
+            m_out_ = std::move(x.m_out_);
+            break;
+        case 1:
+            m_sysx_ = x.m_sysx_;
+            break;
 
-                case 1:
-                    m_addition = std::move(x.m_addition);
-                    break;
-                
-
-                case 2:
-                    m_subtraction = std::move(x.m_subtraction);
-                    break;
-                
     }
     
     return *this;
 }
 
-void CalculatorRequest_union::_d(int32_t __d)
+void Calculator_addition_Result::_d(int32_t __d)
 {
     if(m__d != __d)
     {
@@ -380,106 +234,112 @@ void CalculatorRequest_union::_d(int32_t __d)
     m__d = __d;
 }
 
-int32_t CalculatorRequest_union::_d() const
+int32_t Calculator_addition_Result::_d() const
 {
     return m__d;
 }
 
-int32_t& CalculatorRequest_union::_d()
+int32_t& Calculator_addition_Result::_d()
 {
     return m__d;
 }
 
-
-void CalculatorRequest_union::addition(const Calculator_additionRequest &_addition)
+void Calculator_addition_Result::unknown_exception(eprosima::rpc::protocol::dds::UnknownException _unknown_exception)
 {
-    m_addition = _addition;
+    m_unknown_exception = _unknown_exception;
+    m__d = 2;
+}
+
+eprosima::rpc::protocol::dds::UnknownException Calculator_addition_Result::unknown_exception() const
+{
+    if(m__d != 2)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_unknown_exception;
+}
+
+eprosima::rpc::protocol::dds::UnknownException& Calculator_addition_Result::unknown_exception()
+{
+    if(m__d != 2)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_unknown_exception;
+}
+
+void Calculator_addition_Result::out_(const Calculator_addition_Out &_out_)
+{
+    m_out_ = _out_;
+    m__d = 0;
+}
+
+void Calculator_addition_Result::out_(Calculator_addition_Out &&_out_)
+{
+    m_out_ = std::move(_out_);
+    m__d = 0;
+}
+
+const Calculator_addition_Out& Calculator_addition_Result::out_() const
+{
+    if(m__d != 0)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    
+    return m_out_;
+}
+
+Calculator_addition_Out& Calculator_addition_Result::out_()
+{
+    if(m__d != 0)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    
+    return m_out_;
+}
+
+void Calculator_addition_Result::sysx_(eprosima::rpc::ReturnMessage _sysx_)
+{
+    m_sysx_ = _sysx_;
     m__d = 1;
 }
 
-void CalculatorRequest_union::addition(Calculator_additionRequest &&_addition)
-{
-    m_addition = std::move(_addition);
-    m__d = 1;
-}
-
-const Calculator_additionRequest& CalculatorRequest_union::addition() const
+eprosima::rpc::ReturnMessage Calculator_addition_Result::sysx_() const
 {
     if(m__d != 1)
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
-    return m_addition;
+    return m_sysx_;
 }
 
-Calculator_additionRequest& CalculatorRequest_union::addition()
+eprosima::rpc::ReturnMessage& Calculator_addition_Result::sysx_()
 {
     if(m__d != 1)
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
-    return m_addition;
+    return m_sysx_;
 }
 
 
-void CalculatorRequest_union::subtraction(const Calculator_subtractionRequest &_subtraction)
+size_t Calculator_addition_Result::getMaxCdrSerializedSize(size_t current_alignment)
 {
-    m_subtraction = _subtraction;
-    m__d = 2;
-}
-
-void CalculatorRequest_union::subtraction(Calculator_subtractionRequest &&_subtraction)
-{
-    m_subtraction = std::move(_subtraction);
-    m__d = 2;
-}
-
-const Calculator_subtractionRequest& CalculatorRequest_union::subtraction() const
-{
-    if(m__d != 2)
-        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
-    
-    return m_subtraction;
-}
-
-Calculator_subtractionRequest& CalculatorRequest_union::subtraction()
-{
-    if(m__d != 2)
-        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
-    
-    return m_subtraction;
-}
-
-
-size_t CalculatorRequest_union::getMaxCdrSerializedSize(size_t current_alignment)
-{
-    size_t current_align = current_alignment;
-    size_t reset_align = 0;
+    size_t initial_alignment = current_alignment;
+    size_t reset_alignment = 0;
     size_t union_max_size_serialized = 0;
 
-    current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+    // sysx_ attribute. The unknown_exception is minor.
+    union_max_size_serialized = current_alignment;
+    union_max_size_serialized += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+    reset_alignment = current_alignment;
+    reset_alignment += Calculator_addition_Out::getMaxCdrSerializedSize(reset_alignment);
+
+    if(union_max_size_serialized < reset_alignment)
+        union_max_size_serialized = reset_alignment;
 
 
-        reset_align = current_align;
-
-        reset_align = Calculator_additionRequest::getMaxCdrSerializedSize(reset_align);
-
-        if(union_max_size_serialized < reset_align)
-            union_max_size_serialized = reset_align;
-
-        
-
-        reset_align = current_align;
-
-        reset_align = Calculator_subtractionRequest::getMaxCdrSerializedSize(reset_align);
-
-        if(union_max_size_serialized < reset_align)
-            union_max_size_serialized = reset_align;
-
-        
-
-    return union_max_size_serialized;
+    return union_max_size_serialized - initial_alignment;
 }
 
-size_t CalculatorRequest_union::getSerializedSize(size_t current_alignment) const
+size_t Calculator_addition_Result::getSerializedSize(size_t current_alignment) const
 {
     size_t current_align = current_alignment;
     // TODO Discriminator
@@ -487,196 +347,251 @@ size_t CalculatorRequest_union::getSerializedSize(size_t current_alignment) cons
     return current_align;
 }
 
-void CalculatorRequest_union::serialize(eprosima::fastcdr::Cdr &scdr) const
+void Calculator_addition_Result::serialize(eprosima::fastcdr::Cdr &scdr) const
 {
     scdr << m__d;
 
     switch(m__d)
     {
+        case 0:
+            scdr << m_out_;
+            break;
+        case 1:
+            scdr << (int32_t)m_sysx_;
+            break;
 
-                case 1:
-                    scdr << m_addition;
-                    break;
-                
 
-                case 2:
-                    scdr << m_subtraction;
-                    break;
-                
+        default:
+            scdr << m_unknown_exception;
+            break;
     }
 }
 
-void CalculatorRequest_union::deserialize(eprosima::fastcdr::Cdr &dcdr)
+void Calculator_addition_Result::deserialize(eprosima::fastcdr::Cdr &dcdr)
 {
     dcdr >> m__d;
 
     switch(m__d)
     {
+        case 0:
+            dcdr >> m_out_;
+            break;
+        case 1:
+            dcdr >> (int32_t&)m_sysx_;
+            break;
 
-                case 1:
-                    dcdr >> m_addition;
-                    break;
-                
 
-                case 2:
-                    dcdr >> m_subtraction;
-                    break;
-                
+        default:
+            dcdr >> m_unknown_exception;
+            break;
     }
 }
 
-CalculatorRequest::CalculatorRequest()
+Calculator_subtraction_In::Calculator_subtraction_In()
+: m_value1(0), m_value2(0){
+}
+
+Calculator_subtraction_In::~Calculator_subtraction_In()
 {
 }
 
-CalculatorRequest::~CalculatorRequest()
-{
+Calculator_subtraction_In::Calculator_subtraction_In(const Calculator_subtraction_In &x)
+: m_value1(x.m_value1), m_value2(x.m_value2){
 }
 
-CalculatorRequest::CalculatorRequest(const CalculatorRequest &x)
-: m__header(x.m__header), m_unio(x.m_unio)
-{
+Calculator_subtraction_In::Calculator_subtraction_In(Calculator_subtraction_In &&x)
+: m_value1(std::move(x.m_value1)), m_value2(std::move(x.m_value2)){
 }
 
-CalculatorRequest::CalculatorRequest(CalculatorRequest &&x)
-: m__header(std::move(x.m__header)), m_unio(std::move(x.m_unio))
+Calculator_subtraction_In& Calculator_subtraction_In::operator=(const Calculator_subtraction_In &x)
 {
-}
-
-CalculatorRequest& CalculatorRequest::operator=(const CalculatorRequest &x)
-{
-    m__header = x.m__header;
-    m_unio = x.m_unio;
+    m_value1 = x.m_value1;;
+    m_value2 = x.m_value2;;
     
     return *this;
 }
 
-CalculatorRequest& CalculatorRequest::operator=(CalculatorRequest &&x)
+Calculator_subtraction_In& Calculator_subtraction_In::operator=(Calculator_subtraction_In &&x)
 {
-    m__header = std::move(x.m__header);
-    m_unio = std::move(x.m_unio);
+    m_value1 = x.m_value1;;
+    m_value2 = x.m_value2;;
     
     return *this;
 }
 
-size_t CalculatorRequest::getMaxCdrSerializedSize(size_t current_alignment)
+size_t Calculator_subtraction_In::getMaxCdrSerializedSize(size_t current_alignment)
 {
-    size_t current_align = current_alignment;
-    current_align =  eprosima::rpc::protocol::dds::RequestHeader::getMaxCdrSerializedSize(current_align);
-    current_align = CalculatorRequest_union::getMaxCdrSerializedSize(current_align);
+    size_t initial_alignment = current_alignment;
             
-    return current_align;
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+    return current_alignment - initial_alignment;
 }
 
-size_t CalculatorRequest::getSerializedSize(size_t current_alignment) const
+size_t Calculator_subtraction_In::getSerializedSize(size_t current_alignment) const
 {
     size_t current_align = current_alignment;
-    // TODO Header and unio
+
+    current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
+    current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
 
     return current_align;
 }
 
-void CalculatorRequest::serialize(eprosima::fastcdr::Cdr &scdr) const
+void Calculator_subtraction_In::serialize(eprosima::fastcdr::Cdr &scdr) const
 {
-    scdr << m__header;
-    scdr << m_unio;
+    scdr << m_value1;
+
+    scdr << m_value2;
+
 }
 
-void CalculatorRequest::deserialize(eprosima::fastcdr::Cdr &dcdr)
+void Calculator_subtraction_In::deserialize(eprosima::fastcdr::Cdr &dcdr)
 {
-    dcdr >> m__header;
-    dcdr >> m_unio;
+    dcdr >> m_value1;
+    dcdr >> m_value2;
 }
 
-CalculatorReply_union::CalculatorReply_union() : m__d(1)
+
+Calculator_subtraction_Out::Calculator_subtraction_Out()
+: m_return_(0){
+}
+
+Calculator_subtraction_Out::~Calculator_subtraction_Out()
 {
 }
 
-CalculatorReply_union::~CalculatorReply_union()
+Calculator_subtraction_Out::Calculator_subtraction_Out(const Calculator_subtraction_Out &x)
+: m_return_(x.m_return_){
+}
+
+Calculator_subtraction_Out::Calculator_subtraction_Out(Calculator_subtraction_Out &&x)
+: m_return_(std::move(x.m_return_)){
+}
+
+Calculator_subtraction_Out& Calculator_subtraction_Out::operator=(const Calculator_subtraction_Out &x)
+{
+    m_return_ = x.m_return_;;
+    
+    return *this;
+}
+
+Calculator_subtraction_Out& Calculator_subtraction_Out::operator=(Calculator_subtraction_Out &&x)
+{
+    m_return_ = x.m_return_;;
+    
+    return *this;
+}
+
+size_t Calculator_subtraction_Out::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+            
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+    return current_alignment - initial_alignment;
+}
+
+size_t Calculator_subtraction_Out::getSerializedSize(size_t current_alignment) const
+{
+    size_t current_align = current_alignment;
+    // TODO Header
+
+    //current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
+current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
+
+    return current_align;
+}
+
+void Calculator_subtraction_Out::serialize(eprosima::fastcdr::Cdr &scdr) const
+{
+    scdr << m_return_;
+
+}
+
+void Calculator_subtraction_Out::deserialize(eprosima::fastcdr::Cdr &dcdr)
+{
+    dcdr >> m_return_;
+}
+
+Calculator_subtraction_Result::Calculator_subtraction_Result() : m__d(2)
 {
 }
 
-CalculatorReply_union::CalculatorReply_union(const CalculatorReply_union &x)
+Calculator_subtraction_Result::~Calculator_subtraction_Result()
+{
+}
+
+Calculator_subtraction_Result::Calculator_subtraction_Result(const Calculator_subtraction_Result &x)
 {
     m__d = x.m__d;
     
     switch(m__d)
     {
+        case 0:
+            m_out_ = x.m_out_;
+            break;
+        case 1:
+            m_sysx_ = x.m_sysx_;
+            break;
 
-                case 1:
-                    m_addition = x.m_addition;
-                    break;
-                
-
-                case 2:
-                    m_subtraction = x.m_subtraction;
-                    break;
-                
     }
 }
 
-CalculatorReply_union::CalculatorReply_union(CalculatorReply_union &&x)
+Calculator_subtraction_Result::Calculator_subtraction_Result(Calculator_subtraction_Result &&x)
 {
     m__d = x.m__d;
     
     switch(m__d)
     {
+        case 0:
+            m_out_ = std::move(x.m_out_);
+            break;
+        case 1:
+            m_sysx_ = x.m_sysx_;
+            break;
 
-                case 1:
-                    m_addition = std::move(x.m_addition);
-                    break;
-                
-
-                case 2:
-                    m_subtraction = std::move(x.m_subtraction);
-                    break;
-                
     }
 }
 
-CalculatorReply_union& CalculatorReply_union::operator=(const CalculatorReply_union &x)
+Calculator_subtraction_Result& Calculator_subtraction_Result::operator=(const Calculator_subtraction_Result &x)
 {
     m__d = x.m__d;
     
     switch(m__d)
     {
+        case 0:
+            m_out_ = x.m_out_;
+            break;
+        case 1:
+            m_sysx_ = x.m_sysx_;
+            break;
 
-                case 1:
-                    m_addition = x.m_addition;
-                    break;
-                
-
-                case 2:
-                    m_subtraction = x.m_subtraction;
-                    break;
-                
     }
     
     return *this;
 }
 
-CalculatorReply_union& CalculatorReply_union::operator=(CalculatorReply_union &&x)
+Calculator_subtraction_Result& Calculator_subtraction_Result::operator=(Calculator_subtraction_Result &&x)
 {
     m__d = x.m__d;
     
     switch(m__d)
     {
+        case 0:
+            m_out_ = std::move(x.m_out_);
+            break;
+        case 1:
+            m_sysx_ = x.m_sysx_;
+            break;
 
-                case 1:
-                    m_addition = std::move(x.m_addition);
-                    break;
-                
-
-                case 2:
-                    m_subtraction = std::move(x.m_subtraction);
-                    break;
-                
     }
     
     return *this;
 }
 
-void CalculatorReply_union::_d(int32_t __d)
+void Calculator_subtraction_Result::_d(int32_t __d)
 {
     if(m__d != __d)
     {
@@ -686,106 +601,112 @@ void CalculatorReply_union::_d(int32_t __d)
     m__d = __d;
 }
 
-int32_t CalculatorReply_union::_d() const
+int32_t Calculator_subtraction_Result::_d() const
 {
     return m__d;
 }
 
-int32_t& CalculatorReply_union::_d()
+int32_t& Calculator_subtraction_Result::_d()
 {
     return m__d;
 }
 
-
-void CalculatorReply_union::addition(const Calculator_additionReply &_addition)
+void Calculator_subtraction_Result::unknown_exception(eprosima::rpc::protocol::dds::UnknownException _unknown_exception)
 {
-    m_addition = _addition;
+    m_unknown_exception = _unknown_exception;
+    m__d = 2;
+}
+
+eprosima::rpc::protocol::dds::UnknownException Calculator_subtraction_Result::unknown_exception() const
+{
+    if(m__d != 2)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_unknown_exception;
+}
+
+eprosima::rpc::protocol::dds::UnknownException& Calculator_subtraction_Result::unknown_exception()
+{
+    if(m__d != 2)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_unknown_exception;
+}
+
+void Calculator_subtraction_Result::out_(const Calculator_subtraction_Out &_out_)
+{
+    m_out_ = _out_;
+    m__d = 0;
+}
+
+void Calculator_subtraction_Result::out_(Calculator_subtraction_Out &&_out_)
+{
+    m_out_ = std::move(_out_);
+    m__d = 0;
+}
+
+const Calculator_subtraction_Out& Calculator_subtraction_Result::out_() const
+{
+    if(m__d != 0)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    
+    return m_out_;
+}
+
+Calculator_subtraction_Out& Calculator_subtraction_Result::out_()
+{
+    if(m__d != 0)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    
+    return m_out_;
+}
+
+void Calculator_subtraction_Result::sysx_(eprosima::rpc::ReturnMessage _sysx_)
+{
+    m_sysx_ = _sysx_;
     m__d = 1;
 }
 
-void CalculatorReply_union::addition(Calculator_additionReply &&_addition)
-{
-    m_addition = std::move(_addition);
-    m__d = 1;
-}
-
-const Calculator_additionReply& CalculatorReply_union::addition() const
+eprosima::rpc::ReturnMessage Calculator_subtraction_Result::sysx_() const
 {
     if(m__d != 1)
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
-    return m_addition;
+    return m_sysx_;
 }
 
-Calculator_additionReply& CalculatorReply_union::addition()
+eprosima::rpc::ReturnMessage& Calculator_subtraction_Result::sysx_()
 {
     if(m__d != 1)
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
-    return m_addition;
+    return m_sysx_;
 }
 
 
-void CalculatorReply_union::subtraction(const Calculator_subtractionReply &_subtraction)
+size_t Calculator_subtraction_Result::getMaxCdrSerializedSize(size_t current_alignment)
 {
-    m_subtraction = _subtraction;
-    m__d = 2;
-}
-
-void CalculatorReply_union::subtraction(Calculator_subtractionReply &&_subtraction)
-{
-    m_subtraction = std::move(_subtraction);
-    m__d = 2;
-}
-
-const Calculator_subtractionReply& CalculatorReply_union::subtraction() const
-{
-    if(m__d != 2)
-        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
-    
-    return m_subtraction;
-}
-
-Calculator_subtractionReply& CalculatorReply_union::subtraction()
-{
-    if(m__d != 2)
-        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
-    
-    return m_subtraction;
-}
-
-
-size_t CalculatorReply_union::getMaxCdrSerializedSize(size_t current_alignment)
-{
-    size_t current_align = current_alignment;
-    size_t reset_align = 0;
+    size_t initial_alignment = current_alignment;
+    size_t reset_alignment = 0;
     size_t union_max_size_serialized = 0;
 
-    current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+    // sysx_ attribute. The unknown_exception is minor.
+    union_max_size_serialized = current_alignment;
+    union_max_size_serialized += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+    reset_alignment = current_alignment;
+    reset_alignment += Calculator_subtraction_Out::getMaxCdrSerializedSize(reset_alignment);
+
+    if(union_max_size_serialized < reset_alignment)
+        union_max_size_serialized = reset_alignment;
 
 
-        reset_align = current_align;
-
-        reset_align = Calculator_additionReply::getMaxCdrSerializedSize(reset_align);
-
-        if(union_max_size_serialized < reset_align)
-            union_max_size_serialized = reset_align;
-
-        
-
-        reset_align = current_align;
-
-        reset_align = Calculator_subtractionReply::getMaxCdrSerializedSize(reset_align);
-
-        if(union_max_size_serialized < reset_align)
-            union_max_size_serialized = reset_align;
-
-        
-
-    return union_max_size_serialized;
+    return union_max_size_serialized - initial_alignment;
 }
 
-size_t CalculatorReply_union::getSerializedSize(size_t current_alignment) const
+size_t Calculator_subtraction_Result::getSerializedSize(size_t current_alignment) const
 {
     size_t current_align = current_alignment;
     // TODO Discriminator
@@ -793,88 +714,671 @@ size_t CalculatorReply_union::getSerializedSize(size_t current_alignment) const
     return current_align;
 }
 
-void CalculatorReply_union::serialize(eprosima::fastcdr::Cdr &scdr) const
+void Calculator_subtraction_Result::serialize(eprosima::fastcdr::Cdr &scdr) const
 {
     scdr << m__d;
 
     switch(m__d)
     {
+        case 0:
+            scdr << m_out_;
+            break;
+        case 1:
+            scdr << (int32_t)m_sysx_;
+            break;
 
-                case 1:
-                    scdr << m_addition;
-                    break;
-                
 
-                case 2:
-                    scdr << m_subtraction;
-                    break;
-                
+        default:
+            scdr << m_unknown_exception;
+            break;
     }
 }
 
-void CalculatorReply_union::deserialize(eprosima::fastcdr::Cdr &dcdr)
+void Calculator_subtraction_Result::deserialize(eprosima::fastcdr::Cdr &dcdr)
 {
     dcdr >> m__d;
 
     switch(m__d)
     {
+        case 0:
+            dcdr >> m_out_;
+            break;
+        case 1:
+            dcdr >> (int32_t&)m_sysx_;
+            break;
 
-                case 1:
-                    dcdr >> m_addition;
+
+        default:
+            dcdr >> m_unknown_exception;
+            break;
+    }
+}
+
+
+Calculator_Call::Calculator_Call() : m__d(0)
+{
+}
+
+Calculator_Call::~Calculator_Call()
+{
+}
+
+Calculator_Call::Calculator_Call(const Calculator_Call &x)
+{
+    m__d = x.m__d;
+    
+    switch(m__d)
+    {
+                case (int32_t)0xCBC6CEAA:
+                    m_addition = x.m_addition;
                     break;
                 
-
-                case 2:
-                    dcdr >> m_subtraction;
+                case (int32_t)0xCA019A14:
+                    m_subtraction = x.m_subtraction;
                     break;
                 
     }
 }
 
-CalculatorReply::CalculatorReply()
+Calculator_Call::Calculator_Call(Calculator_Call &&x)
 {
+    m__d = x.m__d;
+    
+    switch(m__d)
+    {
+                case (int32_t)0xCBC6CEAA:
+                    m_addition = std::move(x.m_addition);
+                    break;
+                
+                case (int32_t)0xCA019A14:
+                    m_subtraction = std::move(x.m_subtraction);
+                    break;
+                
+    }
 }
 
-CalculatorReply::~CalculatorReply()
+Calculator_Call& Calculator_Call::operator=(const Calculator_Call &x)
 {
-}
-
-CalculatorReply::CalculatorReply(const CalculatorReply &x)
-: m__header(x.m__header), m_unio(x.m_unio)
-{
-}
-
-CalculatorReply::CalculatorReply(CalculatorReply &&x)
-: m__header(std::move(x.m__header)), m_unio(std::move(x.m_unio))
-{
-}
-
-CalculatorReply& CalculatorReply::operator=(const CalculatorReply &x)
-{
-    m__header = x.m__header;
-    m_unio = x.m_unio;
+    m__d = x.m__d;
+    
+    switch(m__d)
+    {
+                case (int32_t)0xCBC6CEAA:
+                    m_addition = x.m_addition;
+                    break;
+                
+                case (int32_t)0xCA019A14:
+                    m_subtraction = x.m_subtraction;
+                    break;
+                
+    }
     
     return *this;
 }
 
-CalculatorReply& CalculatorReply::operator=(CalculatorReply &&x)
+Calculator_Call& Calculator_Call::operator=(Calculator_Call &&x)
 {
-    m__header = std::move(x.m__header);
-    m_unio = std::move(x.m_unio);
+    m__d = x.m__d;
+    
+    switch(m__d)
+    {
+                case (int32_t)0xCBC6CEAA:
+                    m_addition = std::move(x.m_addition);
+                    break;
+                
+                case (int32_t)0xCA019A14:
+                    m_subtraction = std::move(x.m_subtraction);
+                    break;
+                
+    }
     
     return *this;
 }
 
-size_t CalculatorReply::getMaxCdrSerializedSize(size_t current_alignment)
+void Calculator_Call::_d(int32_t __d)
+{
+    if(m__d != __d)
+    {
+        throw eprosima::rpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
+    }
+    
+    m__d = __d;
+}
+
+int32_t Calculator_Call::_d() const
+{
+    return m__d;
+}
+
+int32_t& Calculator_Call::_d()
+{
+    return m__d;
+}
+
+void Calculator_Call::unknown_operation(eprosima::rpc::protocol::dds::UnknownOperation _unknown_operation)
+{
+    m_unknown_operation = _unknown_operation;
+    m__d = 0;
+}
+
+eprosima::rpc::protocol::dds::UnknownOperation Calculator_Call::unknown_operation() const
+{
+    if(m__d != 0)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    
+    return m_unknown_operation;
+}
+
+eprosima::rpc::protocol::dds::UnknownOperation& Calculator_Call::unknown_operation()
+{
+    if(m__d != 0)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    
+    return m_unknown_operation;
+}
+
+void Calculator_Call::addition(const Calculator_addition_In &_addition)
+{
+    m_addition = _addition;
+    m__d = (int32_t)0xCBC6CEAA;
+}
+
+void Calculator_Call::addition(Calculator_addition_In &&_addition)
+{
+    m_addition = std::move(_addition);
+    m__d = (int32_t)0xCBC6CEAA;
+}
+
+const Calculator_addition_In& Calculator_Call::addition() const
+{
+    if(m__d != (int32_t)0xCBC6CEAA)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    
+    return m_addition;
+}
+
+Calculator_addition_In& Calculator_Call::addition()
+{
+    if(m__d != (int32_t)0xCBC6CEAA)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    
+    return m_addition;
+}
+
+void Calculator_Call::subtraction(const Calculator_subtraction_In &_subtraction)
+{
+    m_subtraction = _subtraction;
+    m__d = (int32_t)0xCA019A14;
+}
+
+void Calculator_Call::subtraction(Calculator_subtraction_In &&_subtraction)
+{
+    m_subtraction = std::move(_subtraction);
+    m__d = (int32_t)0xCA019A14;
+}
+
+const Calculator_subtraction_In& Calculator_Call::subtraction() const
+{
+    if(m__d != (int32_t)0xCA019A14)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    
+    return m_subtraction;
+}
+
+Calculator_subtraction_In& Calculator_Call::subtraction()
+{
+    if(m__d != (int32_t)0xCA019A14)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    
+    return m_subtraction;
+}
+
+
+size_t Calculator_Call::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+    size_t reset_alignment = 0;
+    size_t union_max_size_serialized = 0;
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+    // Default unknown_operation attribute;
+    union_max_size_serialized = current_alignment + 1;
+
+        reset_alignment = current_alignment;
+
+        reset_alignment += Calculator_addition_In::getMaxCdrSerializedSize(reset_alignment);
+
+        if(union_max_size_serialized < reset_alignment)
+            union_max_size_serialized = reset_alignment;
+
+        
+        reset_alignment = current_alignment;
+
+        reset_alignment += Calculator_subtraction_In::getMaxCdrSerializedSize(reset_alignment);
+
+        if(union_max_size_serialized < reset_alignment)
+            union_max_size_serialized = reset_alignment;
+
+        
+
+    return union_max_size_serialized - initial_alignment;
+}
+
+size_t Calculator_Call::getSerializedSize(size_t current_alignment) const
 {
     size_t current_align = current_alignment;
-    current_align =  eprosima::rpc::protocol::dds::ReplyHeader::getMaxCdrSerializedSize(current_align);
-    current_align = CalculatorReply_union::getMaxCdrSerializedSize(current_align);
-            
+    // TODO Discriminator
+
     return current_align;
 }
 
-size_t CalculatorReply::getSerializedSize(size_t current_alignment) const
+void Calculator_Call::serialize(eprosima::fastcdr::Cdr &scdr) const
+{
+    scdr << m__d;
+
+    switch(m__d)
+    {
+                case (int32_t)0xCBC6CEAA:
+                    scdr << m_addition;
+                    break;
+                
+                case (int32_t)0xCA019A14:
+                    scdr << m_subtraction;
+                    break;
+                
+        default:
+            scdr << m_unknown_operation;
+            break;
+    }
+}
+
+void Calculator_Call::deserialize(eprosima::fastcdr::Cdr &dcdr)
+{
+    dcdr >> m__d;
+
+    switch(m__d)
+    {
+                case (int32_t)0xCBC6CEAA:
+                    dcdr >> m_addition;
+                    break;
+                
+                case (int32_t)0xCA019A14:
+                    dcdr >> m_subtraction;
+                    break;
+                
+        default:
+            dcdr >> m_unknown_operation;
+            break;
+    }
+}
+
+Calculator_Request::Calculator_Request()
+{
+}
+
+Calculator_Request::~Calculator_Request()
+{
+}
+
+Calculator_Request::Calculator_Request(const Calculator_Request &x)
+: m_header(x.m_header), m_request(x.m_request)
+{
+}
+
+Calculator_Request::Calculator_Request(Calculator_Request &&x)
+: m_header(std::move(x.m_header)), m_request(std::move(x.m_request))
+{
+}
+
+Calculator_Request& Calculator_Request::operator=(const Calculator_Request &x)
+{
+    m_header = x.m_header;
+    m_request = x.m_request;
+    
+    return *this;
+}
+
+Calculator_Request& Calculator_Request::operator=(Calculator_Request &&x)
+{
+    m_header = std::move(x.m_header);
+    m_request = std::move(x.m_request);
+    
+    return *this;
+}
+
+size_t Calculator_Request::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+    current_alignment +=  eprosima::rpc::protocol::dds::RequestHeader::getMaxCdrSerializedSize(current_alignment);
+    current_alignment += Calculator_Call::getMaxCdrSerializedSize(current_alignment);
+            
+    return current_alignment - initial_alignment;
+}
+
+size_t Calculator_Request::getSerializedSize(size_t current_alignment) const
+{
+    size_t current_align = current_alignment;
+    // TODO Header and request
+
+    return current_align;
+}
+
+void Calculator_Request::serialize(eprosima::fastcdr::Cdr &scdr) const
+{
+    scdr << m_header;
+    scdr << m_request;
+}
+
+void Calculator_Request::deserialize(eprosima::fastcdr::Cdr &dcdr)
+{
+    dcdr >> m_header;
+    dcdr >> m_request;
+}
+
+Calculator_Return::Calculator_Return() : m__d(0)
+{
+}
+
+Calculator_Return::~Calculator_Return()
+{
+}
+
+Calculator_Return::Calculator_Return(const Calculator_Return &x)
+{
+    m__d = x.m__d;
+    
+    switch(m__d)
+    {
+                case (int32_t)0xCBC6CEAA:
+                    m_addition = x.m_addition;
+                    break;
+                
+                case (int32_t)0xCA019A14:
+                    m_subtraction = x.m_subtraction;
+                    break;
+                
+    }
+}
+
+Calculator_Return::Calculator_Return(Calculator_Return &&x)
+{
+    m__d = x.m__d;
+    
+    switch(m__d)
+    {
+                case (int32_t)0xCBC6CEAA:
+                    m_addition = std::move(x.m_addition);
+                    break;
+                
+                case (int32_t)0xCA019A14:
+                    m_subtraction = std::move(x.m_subtraction);
+                    break;
+                
+    }
+}
+
+Calculator_Return& Calculator_Return::operator=(const Calculator_Return &x)
+{
+    m__d = x.m__d;
+    
+    switch(m__d)
+    {
+                case (int32_t)0xCBC6CEAA:
+                    m_addition = x.m_addition;
+                    break;
+                
+                case (int32_t)0xCA019A14:
+                    m_subtraction = x.m_subtraction;
+                    break;
+                
+    }
+    
+    return *this;
+}
+
+Calculator_Return& Calculator_Return::operator=(Calculator_Return &&x)
+{
+    m__d = x.m__d;
+    
+    switch(m__d)
+    {
+                case (int32_t)0xCBC6CEAA:
+                    m_addition = std::move(x.m_addition);
+                    break;
+                
+                case (int32_t)0xCA019A14:
+                    m_subtraction = std::move(x.m_subtraction);
+                    break;
+                
+    }
+    
+    return *this;
+}
+
+void Calculator_Return::_d(int32_t __d)
+{
+    if(m__d != __d)
+    {
+        throw eprosima::rpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
+    }
+    
+    m__d = __d;
+}
+
+int32_t Calculator_Return::_d() const
+{
+    return m__d;
+}
+
+int32_t& Calculator_Return::_d()
+{
+    return m__d;
+}
+
+void Calculator_Return::unknown_operation(eprosima::rpc::protocol::dds::UnknownOperation _unknown_operation)
+{
+    m_unknown_operation = _unknown_operation;
+    m__d = 0;
+}
+
+eprosima::rpc::protocol::dds::UnknownOperation Calculator_Return::unknown_operation() const
+{
+    if(m__d != 0)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    
+    return m_unknown_operation;
+}
+
+eprosima::rpc::protocol::dds::UnknownOperation& Calculator_Return::unknown_operation()
+{
+    if(m__d != 0)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    
+    return m_unknown_operation;
+}
+
+void Calculator_Return::addition(const Calculator_addition_Result &_addition)
+{
+    m_addition = _addition;
+    m__d = (int32_t)0xCBC6CEAA;
+}
+
+void Calculator_Return::addition(Calculator_addition_Result &&_addition)
+{
+    m_addition = std::move(_addition);
+    m__d = (int32_t)0xCBC6CEAA;
+}
+
+const Calculator_addition_Result& Calculator_Return::addition() const
+{
+    if(m__d != (int32_t)0xCBC6CEAA)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    
+    return m_addition;
+}
+
+Calculator_addition_Result& Calculator_Return::addition()
+{
+    if(m__d != (int32_t)0xCBC6CEAA)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    
+    return m_addition;
+}
+
+void Calculator_Return::subtraction(const Calculator_subtraction_Result &_subtraction)
+{
+    m_subtraction = _subtraction;
+    m__d = (int32_t)0xCA019A14;
+}
+
+void Calculator_Return::subtraction(Calculator_subtraction_Result &&_subtraction)
+{
+    m_subtraction = std::move(_subtraction);
+    m__d = (int32_t)0xCA019A14;
+}
+
+const Calculator_subtraction_Result& Calculator_Return::subtraction() const
+{
+    if(m__d != (int32_t)0xCA019A14)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    
+    return m_subtraction;
+}
+
+Calculator_subtraction_Result& Calculator_Return::subtraction()
+{
+    if(m__d != (int32_t)0xCA019A14)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+    
+    return m_subtraction;
+}
+
+
+size_t Calculator_Return::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+    size_t reset_alignment = 0;
+    size_t union_max_size_serialized = 0;
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+    // Default unknown_operation attribute;
+    union_max_size_serialized = current_alignment + 1;
+
+        reset_alignment = current_alignment;
+
+        reset_alignment += Calculator_addition_Result::getMaxCdrSerializedSize(reset_alignment);
+
+        if(union_max_size_serialized < reset_alignment)
+            union_max_size_serialized = reset_alignment;
+
+        
+        reset_alignment = current_alignment;
+
+        reset_alignment += Calculator_subtraction_Result::getMaxCdrSerializedSize(reset_alignment);
+
+        if(union_max_size_serialized < reset_alignment)
+            union_max_size_serialized = reset_alignment;
+
+        
+
+    return union_max_size_serialized - initial_alignment;
+}
+
+size_t Calculator_Return::getSerializedSize(size_t current_alignment) const
+{
+    size_t current_align = current_alignment;
+    // TODO Discriminator
+
+    return current_align;
+}
+
+void Calculator_Return::serialize(eprosima::fastcdr::Cdr &scdr) const
+{
+    scdr << m__d;
+
+    switch(m__d)
+    {
+                case (int32_t)0xCBC6CEAA:
+                    scdr << m_addition;
+                    break;
+                
+                case (int32_t)0xCA019A14:
+                    scdr << m_subtraction;
+                    break;
+                
+        default:
+            scdr << m_unknown_operation;
+            break;
+    }
+}
+
+void Calculator_Return::deserialize(eprosima::fastcdr::Cdr &dcdr)
+{
+    dcdr >> m__d;
+
+    switch(m__d)
+    {
+                case (int32_t)0xCBC6CEAA:
+                    dcdr >> m_addition;
+                    break;
+                
+                case (int32_t)0xCA019A14:
+                    dcdr >> m_subtraction;
+                    break;
+                
+        default:
+            dcdr >>  m_unknown_operation;
+            break;
+    }
+}
+
+Calculator_Reply::Calculator_Reply()
+{
+}
+
+Calculator_Reply::~Calculator_Reply()
+{
+}
+
+Calculator_Reply::Calculator_Reply(const Calculator_Reply &x)
+: m_header(x.m_header), m_reply(x.m_reply)
+{
+}
+
+Calculator_Reply::Calculator_Reply(Calculator_Reply &&x)
+: m_header(std::move(x.m_header)), m_reply(std::move(x.m_reply))
+{
+}
+
+Calculator_Reply& Calculator_Reply::operator=(const Calculator_Reply &x)
+{
+    m_header = x.m_header;
+    m_reply = x.m_reply;
+    
+    return *this;
+}
+
+Calculator_Reply& Calculator_Reply::operator=(Calculator_Reply &&x)
+{
+    m_header = std::move(x.m_header);
+    m_reply = std::move(x.m_reply);
+    
+    return *this;
+}
+
+size_t Calculator_Reply::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+    current_alignment +=  eprosima::rpc::protocol::dds::ReplyHeader::getMaxCdrSerializedSize(current_alignment);
+    current_alignment += Calculator_Return::getMaxCdrSerializedSize(current_alignment);
+            
+    return current_alignment - initial_alignment;
+}
+
+size_t Calculator_Reply::getSerializedSize(size_t current_alignment) const
 {
     size_t current_align = current_alignment;
     // TODO Header and unio
@@ -882,14 +1386,14 @@ size_t CalculatorReply::getSerializedSize(size_t current_alignment) const
     return current_align;
 }
 
-void CalculatorReply::serialize(eprosima::fastcdr::Cdr &scdr) const
+void Calculator_Reply::serialize(eprosima::fastcdr::Cdr &scdr) const
 {
-    scdr << m__header;
-    scdr << m_unio;
+    scdr << m_header;
+    scdr << m_reply;
 }
 
-void CalculatorReply::deserialize(eprosima::fastcdr::Cdr &dcdr)
+void Calculator_Reply::deserialize(eprosima::fastcdr::Cdr &dcdr)
 {
-    dcdr >> m__header;
-    dcdr >> m_unio;
+    dcdr >> m_header;
+    dcdr >> m_reply;
 }

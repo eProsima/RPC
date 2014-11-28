@@ -42,7 +42,7 @@ int main(int argc, char **argv)
     {
         pool = new ThreadPoolStrategy(threadPoolSize);
         protocol = new CalculatorProtocol();
-        transport = new UDPServerTransport("CalculatorService");
+        transport = new UDPServerTransport("CalculatorService", "Instance");
         server = new CalculatorServer(*pool, *transport, *protocol, servant);
         server->serve();
     }

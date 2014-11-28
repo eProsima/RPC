@@ -70,6 +70,15 @@ namespace eprosima
                         bool activateInterface(const char* interfaceName);
                         
                         /*!
+                         * @brief This method implements the server part of the protocol for the interface Calculator.
+                         * It is called when a request sample is received.
+                         * @param protocol DDS protocol object that is in used.
+                         * @param data Pointer to the received request sample. Cannot be NULL.
+                         * @param endpoint Pointer to the endpoint that sent the request reply. Cannot be NULL.
+                         */
+                        static void Calculator_serve(eprosima::rpc::protocol::Protocol &protocol,
+                            void *data , eprosima::rpc::transport::Endpoint *endpoint);
+                        /*!
                          * @brief This method implements the proxy part of the protocol for the operation addition.
                          * It is called from the Proxy interface.
                          */
@@ -95,21 +104,13 @@ namespace eprosima
 
 
 
-                        /*!
-                         * @brief This method implements the server part of the protocol for the interface Calculator.
-                         * It is called when a request sample is received.
-                         * @param protocol DDS protocol object that is in used.
-                         * @param data Pointer to the received request sample. Cannot be NULL.
-                         * @param endpoint Pointer to the endpoint that sent the request reply. Cannot be NULL.
-                         */
-                        static void Calculator_serve(eprosima::rpc::protocol::Protocol &protocol,
-                            void *data , eprosima::rpc::transport::Endpoint *endpoint);
+
+
                         
                     private:
                     
                         eprosima::rpc::transport::dds::Transport *m_ddsTransport;
                     
-
                                                 const char* const Calculator_str;
                                                 
                                                 eprosima::rpc::transport::dds::ProxyProcedureEndpoint *Calculator_pe;

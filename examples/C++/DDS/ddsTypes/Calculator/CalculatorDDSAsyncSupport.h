@@ -71,7 +71,7 @@ class Calculator_additionTask : public eprosima::rpc::transport::dds::DDSAsyncTa
         
         Calculator_additionCallbackHandler &m_obj;
 
-        CalculatorReply m_reply;
+        Calculator_Reply m_reply;
 };
 
 /*!
@@ -125,8 +125,11 @@ class Calculator_subtractionTask : public eprosima::rpc::transport::dds::DDSAsyn
         
         Calculator_subtractionCallbackHandler &m_obj;
 
-        CalculatorReply m_reply;
+        Calculator_Reply m_reply;
 };
+
+
+
 
 
 #endif // _Calculator_DDS_ASYNC_SUPPORT_H_

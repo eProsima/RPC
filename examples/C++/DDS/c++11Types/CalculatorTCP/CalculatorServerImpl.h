@@ -22,7 +22,7 @@
  * @brief This class is the skeleton of the servant and its remote procedures has to be implemented.
  * @ingroup CALCULATOR
  */
-class CalculatorServerImpl
+class CalculatorServerImpl : public Calculator
 {
     public:
 
@@ -32,11 +32,7 @@ class CalculatorServerImpl
         //! @brief Destructor.
         virtual ~CalculatorServerImpl(){}
 
-        //! @brief Skeleton of the operation addition.
-        virtual int32_t addition(/*in*/ int32_t value1, /*in*/ int32_t value2) = 0;
 
-        //! @brief Skeleton of the operation subtraction.
-        virtual int32_t subtraction(/*in*/ int32_t value1, /*in*/ int32_t value2) = 0;
 ;
 };
 

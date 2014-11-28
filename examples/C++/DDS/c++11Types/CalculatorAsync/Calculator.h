@@ -46,10 +46,14 @@ namespace eprosima
  * @brief This class represents the interface Calculator defined by the user in the IDL file.
  * @ingroup CALCULATOR
  */
-namespace Calculator
+class FASTRPCUSERDllExport Calculator 
 {
+    public:
 
+    virtual int32_t addition(/*in*/ int32_t value1, /*in*/ int32_t value2) = 0;
 
-}
+    virtual int32_t subtraction(/*in*/ int32_t value1, /*in*/ int32_t value2) = 0;
+
+};
 
 #endif // _Calculator_H_

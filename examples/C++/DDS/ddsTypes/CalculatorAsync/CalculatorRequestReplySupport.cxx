@@ -31,7 +31,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'CalculatorRequest' support classes.
+   Configure and implement 'Calculator_Request' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -47,11 +47,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   CalculatorRequestTYPENAME
+#define TTYPENAME   Calculator_RequestTYPENAME
 
 /* Defines */
-#define TDataWriter CalculatorRequestDataWriter
-#define TData       ::CalculatorRequest
+#define TDataWriter Calculator_RequestDataWriter
+#define TData       ::Calculator_Request
 
 
 #ifdef __cplusplus
@@ -77,12 +77,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   CalculatorRequestTYPENAME
+#define TTYPENAME   Calculator_RequestTYPENAME
 
 /* Defines */
-#define TDataReader CalculatorRequestDataReader
-#define TDataSeq    CalculatorRequestSeq
-#define TData       ::CalculatorRequest
+#define TDataReader Calculator_RequestDataReader
+#define TDataSeq    Calculator_RequestSeq
+#define TData       ::Calculator_Request
 
 
 #ifdef __cplusplus
@@ -110,15 +110,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    CalculatorRequestTYPENAME
-#define TPlugin_new  ::CalculatorRequestPlugin_new
-#define TPlugin_delete  ::CalculatorRequestPlugin_delete
+#define TTYPENAME    Calculator_RequestTYPENAME
+#define TPlugin_new  ::Calculator_RequestPlugin_new
+#define TPlugin_delete  ::Calculator_RequestPlugin_delete
 
 /* Defines */
-#define TTypeSupport CalculatorRequestTypeSupport
-#define TData        ::CalculatorRequest
-#define TDataReader  CalculatorRequestDataReader
-#define TDataWriter  CalculatorRequestDataWriter
+#define TTypeSupport Calculator_RequestTypeSupport
+#define TData        ::Calculator_Request
+#define TDataReader  Calculator_RequestDataReader
+#define TDataWriter  Calculator_RequestDataWriter
 #ifdef __cplusplus
 
 
@@ -152,7 +152,7 @@
               TDataReader,
               TTypeSupport
 
-   Configure and implement 'CalculatorReply' support classes.
+   Configure and implement 'Calculator_Reply' support classes.
 
    Note: Only the #defined classes get defined
 */
@@ -168,11 +168,11 @@
 */
 
 /* Requires */
-#define TTYPENAME   CalculatorReplyTYPENAME
+#define TTYPENAME   Calculator_ReplyTYPENAME
 
 /* Defines */
-#define TDataWriter CalculatorReplyDataWriter
-#define TData       ::CalculatorReply
+#define TDataWriter Calculator_ReplyDataWriter
+#define TData       ::Calculator_Reply
 
 
 #ifdef __cplusplus
@@ -198,12 +198,12 @@
 */
 
 /* Requires */
-#define TTYPENAME   CalculatorReplyTYPENAME
+#define TTYPENAME   Calculator_ReplyTYPENAME
 
 /* Defines */
-#define TDataReader CalculatorReplyDataReader
-#define TDataSeq    CalculatorReplySeq
-#define TData       ::CalculatorReply
+#define TDataReader Calculator_ReplyDataReader
+#define TDataSeq    Calculator_ReplySeq
+#define TData       ::Calculator_Reply
 
 
 #ifdef __cplusplus
@@ -231,15 +231,15 @@
 */
 
 /* Requires */
-#define TTYPENAME    CalculatorReplyTYPENAME
-#define TPlugin_new  ::CalculatorReplyPlugin_new
-#define TPlugin_delete  ::CalculatorReplyPlugin_delete
+#define TTYPENAME    Calculator_ReplyTYPENAME
+#define TPlugin_new  ::Calculator_ReplyPlugin_new
+#define TPlugin_delete  ::Calculator_ReplyPlugin_delete
 
 /* Defines */
-#define TTypeSupport CalculatorReplyTypeSupport
-#define TData        ::CalculatorReply
-#define TDataReader  CalculatorReplyDataReader
-#define TDataWriter  CalculatorReplyDataWriter
+#define TTypeSupport Calculator_ReplyTypeSupport
+#define TData        ::Calculator_Reply
+#define TDataReader  Calculator_ReplyDataReader
+#define TDataWriter  Calculator_ReplyDataWriter
 #ifdef __cplusplus
 
 

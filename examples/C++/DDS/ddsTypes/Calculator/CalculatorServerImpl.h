@@ -18,11 +18,13 @@
 #include "rpcdds/utils/Messages.h"
 #include "Calculator.h"
 
+#include "CalculatorExtension.h"
+
 /*!
  * @brief This class is the skeleton of the servant and its remote procedures has to be implemented.
  * @ingroup CALCULATOR
  */
-class CalculatorServerImpl
+class CalculatorServerImpl : public CalculatorExt
 {
     public:
 
@@ -32,11 +34,7 @@ class CalculatorServerImpl
         //! @brief Destructor.
         virtual ~CalculatorServerImpl(){}
 
-        //! @brief Skeleton of the operation addition.
-        virtual DDS_Long addition(/*in*/ DDS_Long value1, /*in*/ DDS_Long value2) = 0;
 
-        //! @brief Skeleton of the operation subtraction.
-        virtual DDS_Long subtraction(/*in*/ DDS_Long value1, /*in*/ DDS_Long value2) = 0;
 ;
 };
 

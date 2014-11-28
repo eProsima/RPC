@@ -18,6 +18,8 @@
 #include "rpcdds/client/Proxy.h"
 #include "Calculator.h"
 #include "CalculatorAsyncCallbackHandlers.h"
+
+
 namespace eprosima
 {
     namespace rpc
@@ -33,7 +35,7 @@ namespace eprosima
  * @brief This class implements a specific server's proxy for the defined interface Calculator.
  * @ingroup CALCULATOR
  */
-class FASTRPCUSERDllExport CalculatorProxy : public eprosima::rpc::proxy::Proxy
+class FASTRPCUSERDllExport CalculatorProxy : public eprosima::rpc::proxy::Proxy, public Calculator
 {
     public:
    
@@ -51,18 +53,23 @@ class FASTRPCUSERDllExport CalculatorProxy : public eprosima::rpc::proxy::Proxy
 
         //! @brief Destructor.
         virtual ~CalculatorProxy();
+
+                //! @brief Proxy method for the operation addition.
+                int32_t addition(/*in*/ int32_t value1, /*in*/ int32_t value2);
+
+                //! @brief Proxy asynchronous method for the operation addition.
+                void addition_async(Calculator_additionCallbackHandler &obj, /*in*/ int32_t value1, /*in*/ int32_t value2);
+
+                
+                //! @brief Proxy method for the operation subtraction.
+                int32_t subtraction(/*in*/ int32_t value1, /*in*/ int32_t value2);
+
+                //! @brief Proxy asynchronous method for the operation subtraction.
+                void subtraction_async(Calculator_subtractionCallbackHandler &obj, /*in*/ int32_t value1, /*in*/ int32_t value2);
+
+                
         
-        //! @brief Proxy method for the operation addition.
-        int32_t addition(/*in*/ int32_t value1, /*in*/ int32_t value2);
 
-        //! @brief Proxy asynchronous method for the operation addition.
-        void addition_async(Calculator_additionCallbackHandler &obj, /*in*/ int32_t value1, /*in*/ int32_t value2);
-
-        //! @brief Proxy method for the operation subtraction.
-        int32_t subtraction(/*in*/ int32_t value1, /*in*/ int32_t value2);
-
-        //! @brief Proxy asynchronous method for the operation subtraction.
-        void subtraction_async(Calculator_subtractionCallbackHandler &obj, /*in*/ int32_t value1, /*in*/ int32_t value2);
 
 };
 

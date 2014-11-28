@@ -25,12 +25,12 @@ CalculatorProxy::CalculatorProxy(eprosima::rpc::transport::ProxyTransport &trans
 CalculatorProxy::~CalculatorProxy()
 {
 }
-
+ 
 DDS_Long CalculatorProxy::addition(/*in*/ DDS_Long value1, /*in*/ DDS_Long value2)
 {
-    DDS_Long addition_ret =
+    DDS_Long return_ =
     dynamic_cast<eprosima::rpc::protocol::CalculatorProtocol&>(getProtocol()).Calculator_addition(value1, value2);
-    return addition_ret;
+    return return_;
 }
 
 void CalculatorProxy::addition_async(Calculator_additionCallbackHandler &obj, /*in*/ DDS_Long value1, /*in*/ DDS_Long value2)
@@ -40,13 +40,16 @@ void CalculatorProxy::addition_async(Calculator_additionCallbackHandler &obj, /*
 
 DDS_Long CalculatorProxy::subtraction(/*in*/ DDS_Long value1, /*in*/ DDS_Long value2)
 {
-    DDS_Long subtraction_ret =
+    DDS_Long return_ =
     dynamic_cast<eprosima::rpc::protocol::CalculatorProtocol&>(getProtocol()).Calculator_subtraction(value1, value2);
-    return subtraction_ret;
+    return return_;
 }
 
 void CalculatorProxy::subtraction_async(Calculator_subtractionCallbackHandler &obj, /*in*/ DDS_Long value1, /*in*/ DDS_Long value2)
 {
     dynamic_cast<eprosima::rpc::protocol::CalculatorProtocol&>(getProtocol()).Calculator_subtraction_async(obj, value1, value2);
 }
+
+
+
 

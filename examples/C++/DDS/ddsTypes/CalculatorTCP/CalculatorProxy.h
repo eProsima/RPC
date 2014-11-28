@@ -18,6 +18,9 @@
 #include "rpcdds/client/Proxy.h"
 #include "Calculator.h"
 #include "CalculatorAsyncCallbackHandlers.h"
+#include "CalculatorExtension.h"
+
+
 namespace eprosima
 {
     namespace rpc
@@ -33,7 +36,7 @@ namespace eprosima
  * @brief This class implements a specific server's proxy for the defined interface Calculator.
  * @ingroup CALCULATOR
  */
-class FASTRPCUSERDllExport CalculatorProxy : public eprosima::rpc::proxy::Proxy
+class FASTRPCUSERDllExport CalculatorProxy : public eprosima::rpc::proxy::Proxy, public CalculatorExt
 {
     public:
    
@@ -51,18 +54,23 @@ class FASTRPCUSERDllExport CalculatorProxy : public eprosima::rpc::proxy::Proxy
 
         //! @brief Destructor.
         virtual ~CalculatorProxy();
+
+                //! @brief Proxy method for the operation addition.
+                DDS_Long addition(/*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
+
+                //! @brief Proxy asynchronous method for the operation addition.
+                void addition_async(Calculator_additionCallbackHandler &obj, /*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
+
+                
+                //! @brief Proxy method for the operation subtraction.
+                DDS_Long subtraction(/*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
+
+                //! @brief Proxy asynchronous method for the operation subtraction.
+                void subtraction_async(Calculator_subtractionCallbackHandler &obj, /*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
+
+                
         
-        //! @brief Proxy method for the operation addition.
-        DDS_Long addition(/*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
 
-        //! @brief Proxy asynchronous method for the operation addition.
-        void addition_async(Calculator_additionCallbackHandler &obj, /*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
-
-        //! @brief Proxy method for the operation subtraction.
-        DDS_Long subtraction(/*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
-
-        //! @brief Proxy asynchronous method for the operation subtraction.
-        void subtraction_async(Calculator_subtractionCallbackHandler &obj, /*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
 
 };
 

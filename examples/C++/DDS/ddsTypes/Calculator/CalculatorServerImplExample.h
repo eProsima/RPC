@@ -30,12 +30,15 @@ class CalculatorServerImplExample : public CalculatorServerImpl
 
         //! @brief Destructor.
         virtual ~CalculatorServerImplExample(){}
+ 
+                //! @brief Implementation of the remote procedure addition
+                DDS_Long addition(/*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
+                
+                //! @brief Implementation of the remote procedure subtraction
+                DDS_Long subtraction(/*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
+                
 
-        //! @brief Implementation of the remote procedure addition
-        DDS_Long addition(/*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
 
-        //! @brief Implementation of the remote procedure subtraction
-        DDS_Long subtraction(/*in*/ DDS_Long value1, /*in*/ DDS_Long value2);
 ;
 };
 

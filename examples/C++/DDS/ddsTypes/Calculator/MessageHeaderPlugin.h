@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef MessageHeaderPlugin_953112883_h
-#define MessageHeaderPlugin_953112883_h
+#ifndef MessageHeaderPlugin_953112849_h
+#define MessageHeaderPlugin_953112849_h
 
 #include "MessageHeader.h"
 
@@ -31,68 +31,68 @@ struct RTICdrStream;
 
 
 
-#define IdentificationPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample  
-#define IdentificationPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-#define IdentificationPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+#define UnknownOperationPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample  
+#define UnknownOperationPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define UnknownOperationPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
  
 
-#define IdentificationPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-#define IdentificationPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+#define UnknownOperationPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define UnknownOperationPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-NDDSUSERDllExport extern Identification*
-IdentificationPluginSupport_create_data_w_params(
+NDDSUSERDllExport extern UnknownOperation*
+UnknownOperationPluginSupport_create_data_w_params(
     const struct DDS_TypeAllocationParams_t * alloc_params);
 
-NDDSUSERDllExport extern Identification*
-IdentificationPluginSupport_create_data_ex(RTIBool allocate_pointers);
+NDDSUSERDllExport extern UnknownOperation*
+UnknownOperationPluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-NDDSUSERDllExport extern Identification*
-IdentificationPluginSupport_create_data(void);
+NDDSUSERDllExport extern UnknownOperation*
+UnknownOperationPluginSupport_create_data(void);
 
 NDDSUSERDllExport extern RTIBool 
-IdentificationPluginSupport_copy_data(
-    Identification *out,
-    const Identification *in);
+UnknownOperationPluginSupport_copy_data(
+    UnknownOperation *out,
+    const UnknownOperation *in);
 
 NDDSUSERDllExport extern void 
-IdentificationPluginSupport_destroy_data_w_params(
-    Identification *sample,
+UnknownOperationPluginSupport_destroy_data_w_params(
+    UnknownOperation *sample,
     const struct DDS_TypeDeallocationParams_t * dealloc_params);
 
 NDDSUSERDllExport extern void 
-IdentificationPluginSupport_destroy_data_ex(
-    Identification *sample,RTIBool deallocate_pointers);
+UnknownOperationPluginSupport_destroy_data_ex(
+    UnknownOperation *sample,RTIBool deallocate_pointers);
 
 NDDSUSERDllExport extern void 
-IdentificationPluginSupport_destroy_data(
-    Identification *sample);
+UnknownOperationPluginSupport_destroy_data(
+    UnknownOperation *sample);
 
 NDDSUSERDllExport extern void 
-IdentificationPluginSupport_print_data(
-    const Identification *sample,
+UnknownOperationPluginSupport_print_data(
+    const UnknownOperation *sample,
     const char *desc,
     unsigned int indent);
 
  
 
 NDDSUSERDllExport extern RTIBool 
-IdentificationPlugin_copy_sample(
+UnknownOperationPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    Identification *out,
-    const Identification *in);
+    UnknownOperation *out,
+    const UnknownOperation *in);
 
 /* --------------------------------------------------------------------------------------
     (De)Serialize functions:
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern RTIBool 
-IdentificationPlugin_serialize(
+UnknownOperationPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const Identification *sample,
+    const UnknownOperation *sample,
     struct RTICdrStream *stream, 
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -100,20 +100,9 @@ IdentificationPlugin_serialize(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-IdentificationPlugin_deserialize_sample(
+UnknownOperationPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    Identification *sample, 
-    struct RTICdrStream *stream,
-    RTIBool deserialize_encapsulation,
-    RTIBool deserialize_sample, 
-    void *endpoint_plugin_qos);
-
- 
-NDDSUSERDllExport extern RTIBool 
-IdentificationPlugin_deserialize(
-    PRESTypePluginEndpointData endpoint_data,
-    Identification **sample, 
-    RTIBool * drop_sample,
+    UnknownOperation *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -123,7 +112,7 @@ IdentificationPlugin_deserialize(
 
 
 NDDSUSERDllExport extern RTIBool
-IdentificationPlugin_skip(
+UnknownOperationPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream, 
     RTIBool skip_encapsulation,  
@@ -131,26 +120,26 @@ IdentificationPlugin_skip(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern unsigned int 
-IdentificationPlugin_get_serialized_sample_max_size(
+UnknownOperationPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int 
-IdentificationPlugin_get_serialized_sample_min_size(
+UnknownOperationPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern unsigned int
-IdentificationPlugin_get_serialized_sample_size(
+UnknownOperationPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const Identification * sample);
+    const UnknownOperation * sample);
 
 
 
@@ -159,19 +148,19 @@ IdentificationPlugin_get_serialized_sample_size(
  * -------------------------------------------------------------------------------------- */
 
 NDDSUSERDllExport extern PRESTypePluginKeyKind 
-IdentificationPlugin_get_key_kind(void);
+UnknownOperationPlugin_get_key_kind(void);
 
 NDDSUSERDllExport extern unsigned int 
-IdentificationPlugin_get_serialized_key_max_size(
+UnknownOperationPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 NDDSUSERDllExport extern RTIBool 
-IdentificationPlugin_serialize_key(
+UnknownOperationPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const Identification *sample,
+    const UnknownOperation *sample,
     struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -179,9 +168,441 @@ IdentificationPlugin_serialize_key(
     void *endpoint_plugin_qos);
 
 NDDSUSERDllExport extern RTIBool 
-IdentificationPlugin_deserialize_key_sample(
+UnknownOperationPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    Identification * sample,
+    UnknownOperation * sample,
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_key,
+    void *endpoint_plugin_qos);
+
+
+
+NDDSUSERDllExport extern RTIBool
+UnknownOperationPlugin_serialized_sample_to_key(
+    PRESTypePluginEndpointData endpoint_data,
+    UnknownOperation *sample,
+    struct RTICdrStream *stream, 
+    RTIBool deserialize_encapsulation,  
+    RTIBool deserialize_key, 
+    void *endpoint_plugin_qos);
+
+
+
+#define UnknownExceptionPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample  
+#define UnknownExceptionPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define UnknownExceptionPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+ 
+
+#define UnknownExceptionPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define UnknownExceptionPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+
+/* --------------------------------------------------------------------------------------
+    Support functions:
+ * -------------------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern UnknownException*
+UnknownExceptionPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params);
+
+NDDSUSERDllExport extern UnknownException*
+UnknownExceptionPluginSupport_create_data_ex(RTIBool allocate_pointers);
+
+NDDSUSERDllExport extern UnknownException*
+UnknownExceptionPluginSupport_create_data(void);
+
+NDDSUSERDllExport extern RTIBool 
+UnknownExceptionPluginSupport_copy_data(
+    UnknownException *out,
+    const UnknownException *in);
+
+NDDSUSERDllExport extern void 
+UnknownExceptionPluginSupport_destroy_data_w_params(
+    UnknownException *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params);
+
+NDDSUSERDllExport extern void 
+UnknownExceptionPluginSupport_destroy_data_ex(
+    UnknownException *sample,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+UnknownExceptionPluginSupport_destroy_data(
+    UnknownException *sample);
+
+NDDSUSERDllExport extern void 
+UnknownExceptionPluginSupport_print_data(
+    const UnknownException *sample,
+    const char *desc,
+    unsigned int indent);
+
+ 
+
+NDDSUSERDllExport extern RTIBool 
+UnknownExceptionPlugin_copy_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    UnknownException *out,
+    const UnknownException *in);
+
+/* --------------------------------------------------------------------------------------
+    (De)Serialize functions:
+ * -------------------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern RTIBool 
+UnknownExceptionPlugin_serialize(
+    PRESTypePluginEndpointData endpoint_data,
+    const UnknownException *sample,
+    struct RTICdrStream *stream, 
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_sample, 
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern RTIBool 
+UnknownExceptionPlugin_deserialize_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    UnknownException *sample, 
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos);
+
+
+
+
+NDDSUSERDllExport extern RTIBool
+UnknownExceptionPlugin_skip(
+    PRESTypePluginEndpointData endpoint_data,
+    struct RTICdrStream *stream, 
+    RTIBool skip_encapsulation,  
+    RTIBool skip_sample, 
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern unsigned int 
+UnknownExceptionPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+NDDSUSERDllExport extern unsigned int 
+UnknownExceptionPlugin_get_serialized_sample_min_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+NDDSUSERDllExport extern unsigned int
+UnknownExceptionPlugin_get_serialized_sample_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment,
+    const UnknownException * sample);
+
+
+
+/* --------------------------------------------------------------------------------------
+    Key Management functions:
+ * -------------------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern PRESTypePluginKeyKind 
+UnknownExceptionPlugin_get_key_kind(void);
+
+NDDSUSERDllExport extern unsigned int 
+UnknownExceptionPlugin_get_serialized_key_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+NDDSUSERDllExport extern RTIBool 
+UnknownExceptionPlugin_serialize_key(
+    PRESTypePluginEndpointData endpoint_data,
+    const UnknownException *sample,
+    struct RTICdrStream *stream,
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_key,
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern RTIBool 
+UnknownExceptionPlugin_deserialize_key_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    UnknownException * sample,
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_key,
+    void *endpoint_plugin_qos);
+
+
+
+NDDSUSERDllExport extern RTIBool
+UnknownExceptionPlugin_serialized_sample_to_key(
+    PRESTypePluginEndpointData endpoint_data,
+    UnknownException *sample,
+    struct RTICdrStream *stream, 
+    RTIBool deserialize_encapsulation,  
+    RTIBool deserialize_key, 
+    void *endpoint_plugin_qos);
+
+
+
+/* ------------------------------------------------------------------------
+ * (De)Serialization Methods
+ * ------------------------------------------------------------------------ */
+
+NDDSUSERDllExport extern RTIBool
+SystemExceptionCodePlugin_serialize(
+    PRESTypePluginEndpointData endpoint_data,
+    const SystemExceptionCode *sample, struct RTICdrStream *stream,
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_sample, 
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern RTIBool
+SystemExceptionCodePlugin_deserialize_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    SystemExceptionCode *sample, 
+    struct RTICdrStream *stream, 
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern RTIBool
+SystemExceptionCodePlugin_skip(
+    PRESTypePluginEndpointData endpoint_data,
+    struct RTICdrStream *stream, 
+    RTIBool skip_encapsulation,  
+    RTIBool skip_sample, 
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern unsigned int
+SystemExceptionCodePlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+NDDSUSERDllExport extern unsigned int
+SystemExceptionCodePlugin_get_serialized_sample_min_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+NDDSUSERDllExport extern unsigned int
+SystemExceptionCodePlugin_get_serialized_sample_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment,
+    const SystemExceptionCode * sample);
+
+
+/* ------------------------------------------------------------------------
+    Key Management functions:
+ * ------------------------------------------------------------------------ */
+
+NDDSUSERDllExport extern RTIBool 
+SystemExceptionCodePlugin_serialize_key(
+    PRESTypePluginEndpointData endpoint_data,
+    const SystemExceptionCode *sample,
+    struct RTICdrStream *stream,
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_key,
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern RTIBool 
+SystemExceptionCodePlugin_deserialize_key_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    SystemExceptionCode *sample,
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_key,
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern unsigned int 
+SystemExceptionCodePlugin_get_serialized_key_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+NDDSUSERDllExport extern RTIBool
+SystemExceptionCodePlugin_serialized_sample_to_key(
+    PRESTypePluginEndpointData endpoint_data,
+    SystemExceptionCode *sample,
+    struct RTICdrStream *stream, 
+    RTIBool deserialize_encapsulation,  
+    RTIBool deserialize_key, 
+    void *endpoint_plugin_qos);
+
+ 
+
+
+/* ----------------------------------------------------------------------------
+    Support functions:
+ * ---------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern void
+SystemExceptionCodePluginSupport_print_data(
+    const SystemExceptionCode *sample, const char *desc, int indent_level);
+
+
+
+#define GUID_tPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample  
+#define GUID_tPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define GUID_tPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+ 
+
+#define GUID_tPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define GUID_tPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+
+/* --------------------------------------------------------------------------------------
+    Support functions:
+ * -------------------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern GUID_t*
+GUID_tPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params);
+
+NDDSUSERDllExport extern GUID_t*
+GUID_tPluginSupport_create_data_ex(RTIBool allocate_pointers);
+
+NDDSUSERDllExport extern GUID_t*
+GUID_tPluginSupport_create_data(void);
+
+NDDSUSERDllExport extern RTIBool 
+GUID_tPluginSupport_copy_data(
+    GUID_t *out,
+    const GUID_t *in);
+
+NDDSUSERDllExport extern void 
+GUID_tPluginSupport_destroy_data_w_params(
+    GUID_t *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params);
+
+NDDSUSERDllExport extern void 
+GUID_tPluginSupport_destroy_data_ex(
+    GUID_t *sample,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+GUID_tPluginSupport_destroy_data(
+    GUID_t *sample);
+
+NDDSUSERDllExport extern void 
+GUID_tPluginSupport_print_data(
+    const GUID_t *sample,
+    const char *desc,
+    unsigned int indent);
+
+ 
+
+NDDSUSERDllExport extern RTIBool 
+GUID_tPlugin_copy_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    GUID_t *out,
+    const GUID_t *in);
+
+/* --------------------------------------------------------------------------------------
+    (De)Serialize functions:
+ * -------------------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern RTIBool 
+GUID_tPlugin_serialize(
+    PRESTypePluginEndpointData endpoint_data,
+    const GUID_t *sample,
+    struct RTICdrStream *stream, 
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_sample, 
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern RTIBool 
+GUID_tPlugin_deserialize_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    GUID_t *sample, 
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos);
+
+ 
+NDDSUSERDllExport extern RTIBool 
+GUID_tPlugin_deserialize(
+    PRESTypePluginEndpointData endpoint_data,
+    GUID_t **sample, 
+    RTIBool * drop_sample,
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos);
+
+
+
+
+NDDSUSERDllExport extern RTIBool
+GUID_tPlugin_skip(
+    PRESTypePluginEndpointData endpoint_data,
+    struct RTICdrStream *stream, 
+    RTIBool skip_encapsulation,  
+    RTIBool skip_sample, 
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern unsigned int 
+GUID_tPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+NDDSUSERDllExport extern unsigned int 
+GUID_tPlugin_get_serialized_sample_min_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+NDDSUSERDllExport extern unsigned int
+GUID_tPlugin_get_serialized_sample_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment,
+    const GUID_t * sample);
+
+
+
+/* --------------------------------------------------------------------------------------
+    Key Management functions:
+ * -------------------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern PRESTypePluginKeyKind 
+GUID_tPlugin_get_key_kind(void);
+
+NDDSUSERDllExport extern unsigned int 
+GUID_tPlugin_get_serialized_key_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+NDDSUSERDllExport extern RTIBool 
+GUID_tPlugin_serialize_key(
+    PRESTypePluginEndpointData endpoint_data,
+    const GUID_t *sample,
+    struct RTICdrStream *stream,
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_key,
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern RTIBool 
+GUID_tPlugin_deserialize_key_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    GUID_t * sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -189,9 +610,9 @@ IdentificationPlugin_deserialize_key_sample(
 
  
 NDDSUSERDllExport extern RTIBool 
-IdentificationPlugin_deserialize_key(
+GUID_tPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    Identification ** sample,
+    GUID_t ** sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -200,14 +621,233 @@ IdentificationPlugin_deserialize_key(
 
 
 NDDSUSERDllExport extern RTIBool
-IdentificationPlugin_serialized_sample_to_key(
+GUID_tPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    Identification *sample,
+    GUID_t *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
     void *endpoint_plugin_qos);
 
+
+
+#define SampleIdentity_tPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample  
+#define SampleIdentity_tPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+#define SampleIdentity_tPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+ 
+
+#define SampleIdentity_tPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+#define SampleIdentity_tPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+
+/* --------------------------------------------------------------------------------------
+    Support functions:
+ * -------------------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern SampleIdentity_t*
+SampleIdentity_tPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params);
+
+NDDSUSERDllExport extern SampleIdentity_t*
+SampleIdentity_tPluginSupport_create_data_ex(RTIBool allocate_pointers);
+
+NDDSUSERDllExport extern SampleIdentity_t*
+SampleIdentity_tPluginSupport_create_data(void);
+
+NDDSUSERDllExport extern RTIBool 
+SampleIdentity_tPluginSupport_copy_data(
+    SampleIdentity_t *out,
+    const SampleIdentity_t *in);
+
+NDDSUSERDllExport extern void 
+SampleIdentity_tPluginSupport_destroy_data_w_params(
+    SampleIdentity_t *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params);
+
+NDDSUSERDllExport extern void 
+SampleIdentity_tPluginSupport_destroy_data_ex(
+    SampleIdentity_t *sample,RTIBool deallocate_pointers);
+
+NDDSUSERDllExport extern void 
+SampleIdentity_tPluginSupport_destroy_data(
+    SampleIdentity_t *sample);
+
+NDDSUSERDllExport extern void 
+SampleIdentity_tPluginSupport_print_data(
+    const SampleIdentity_t *sample,
+    const char *desc,
+    unsigned int indent);
+
+
+/* ----------------------------------------------------------------------------
+    Callback functions:
+ * ---------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern PRESTypePluginParticipantData 
+SampleIdentity_tPlugin_on_participant_attached(
+    void *registration_data, 
+    const struct PRESTypePluginParticipantInfo *participant_info,
+    RTIBool top_level_registration, 
+    void *container_plugin_context,
+    RTICdrTypeCode *typeCode);
+
+NDDSUSERDllExport extern void 
+SampleIdentity_tPlugin_on_participant_detached(
+    PRESTypePluginParticipantData participant_data);
+    
+NDDSUSERDllExport extern PRESTypePluginEndpointData 
+SampleIdentity_tPlugin_on_endpoint_attached(
+    PRESTypePluginParticipantData participant_data,
+    const struct PRESTypePluginEndpointInfo *endpoint_info,
+    RTIBool top_level_registration, 
+    void *container_plugin_context);
+
+NDDSUSERDllExport extern void 
+SampleIdentity_tPlugin_on_endpoint_detached(
+    PRESTypePluginEndpointData endpoint_data);
+    
+NDDSUSERDllExport extern void    
+SampleIdentity_tPlugin_return_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    SampleIdentity_t *sample,
+    void *handle);    
+ 
+
+NDDSUSERDllExport extern RTIBool 
+SampleIdentity_tPlugin_copy_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    SampleIdentity_t *out,
+    const SampleIdentity_t *in);
+
+/* --------------------------------------------------------------------------------------
+    (De)Serialize functions:
+ * -------------------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern RTIBool 
+SampleIdentity_tPlugin_serialize(
+    PRESTypePluginEndpointData endpoint_data,
+    const SampleIdentity_t *sample,
+    struct RTICdrStream *stream, 
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_sample, 
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern RTIBool 
+SampleIdentity_tPlugin_deserialize_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    SampleIdentity_t *sample, 
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos);
+
+ 
+NDDSUSERDllExport extern RTIBool 
+SampleIdentity_tPlugin_deserialize(
+    PRESTypePluginEndpointData endpoint_data,
+    SampleIdentity_t **sample, 
+    RTIBool * drop_sample,
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos);
+
+
+
+
+NDDSUSERDllExport extern RTIBool
+SampleIdentity_tPlugin_skip(
+    PRESTypePluginEndpointData endpoint_data,
+    struct RTICdrStream *stream, 
+    RTIBool skip_encapsulation,  
+    RTIBool skip_sample, 
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern unsigned int 
+SampleIdentity_tPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+NDDSUSERDllExport extern unsigned int 
+SampleIdentity_tPlugin_get_serialized_sample_min_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+NDDSUSERDllExport extern unsigned int
+SampleIdentity_tPlugin_get_serialized_sample_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment,
+    const SampleIdentity_t * sample);
+
+
+
+/* --------------------------------------------------------------------------------------
+    Key Management functions:
+ * -------------------------------------------------------------------------------------- */
+
+NDDSUSERDllExport extern PRESTypePluginKeyKind 
+SampleIdentity_tPlugin_get_key_kind(void);
+
+NDDSUSERDllExport extern unsigned int 
+SampleIdentity_tPlugin_get_serialized_key_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+NDDSUSERDllExport extern RTIBool 
+SampleIdentity_tPlugin_serialize_key(
+    PRESTypePluginEndpointData endpoint_data,
+    const SampleIdentity_t *sample,
+    struct RTICdrStream *stream,
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_key,
+    void *endpoint_plugin_qos);
+
+NDDSUSERDllExport extern RTIBool 
+SampleIdentity_tPlugin_deserialize_key_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    SampleIdentity_t * sample,
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_key,
+    void *endpoint_plugin_qos);
+
+ 
+NDDSUSERDllExport extern RTIBool 
+SampleIdentity_tPlugin_deserialize_key(
+    PRESTypePluginEndpointData endpoint_data,
+    SampleIdentity_t ** sample,
+    RTIBool * drop_sample,
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_key,
+    void *endpoint_plugin_qos);
+
+
+NDDSUSERDllExport extern RTIBool
+SampleIdentity_tPlugin_serialized_sample_to_key(
+    PRESTypePluginEndpointData endpoint_data,
+    SampleIdentity_t *sample,
+    struct RTICdrStream *stream, 
+    RTIBool deserialize_encapsulation,  
+    RTIBool deserialize_key, 
+    void *endpoint_plugin_qos);
+
+     
+/* Plugin Functions */
+NDDSUSERDllExport extern struct PRESTypePlugin*
+SampleIdentity_tPlugin_new(void);
+
+NDDSUSERDllExport extern void
+SampleIdentity_tPlugin_delete(struct PRESTypePlugin *);
 
 
 #define RequestHeaderPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample  
@@ -575,4 +1215,4 @@ ReplyHeaderPlugin_serialized_sample_to_key(
 #define NDDSUSERDllExport
 #endif        
 
-#endif /* MessageHeaderPlugin_953112883_h */
+#endif /* MessageHeaderPlugin_953112849_h */

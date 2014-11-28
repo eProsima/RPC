@@ -18,9 +18,6 @@
 #include "CalculatorProtocol.h"
 #include "rpcdds/exceptions/ServerInternalException.h"
 
-
-#include "CalculatorExceptions.h"
-
 CalculatorServer::CalculatorServer(eprosima::rpc::strategy::ServerStrategy &strategy, eprosima::rpc::transport::ServerTransport &transport,
             eprosima::rpc::protocol::CalculatorProtocol &protocol, CalculatorServerImpl &servant) :
     Server(strategy, transport, protocol), _impl(servant)

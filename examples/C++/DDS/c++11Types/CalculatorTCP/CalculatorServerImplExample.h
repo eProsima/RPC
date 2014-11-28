@@ -1,8 +1,8 @@
 /*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
+ * Copyright (c) 2013 eProsima. All rights reserved.
  *
  * This generated file is licensed to you under the terms described in the
- * FASTRPC_LICENSE file included in this FASTRPC distribution.
+ * rpcdds_LICENSE file included in this rpcdds distribution.
  *
  *************************************************************************
  * 
@@ -28,14 +28,17 @@ class CalculatorServerImplExample : public CalculatorServerImpl
         //! @brief The default constructor.
         CalculatorServerImplExample(){}
 
-        //! @brief The default destructor.
+        //! @brief Destructor.
         virtual ~CalculatorServerImplExample(){}
+ 
+                //! @brief Implementation of the remote procedure addition
+                int32_t addition(/*in*/ int32_t value1, /*in*/ int32_t value2);
+                
+                //! @brief Implementation of the remote procedure subtraction
+                int32_t subtraction(/*in*/ int32_t value1, /*in*/ int32_t value2);
+                
 
-        //! @brief Implementation of the remote procedure addition
-        int32_t addition(/*in*/ int32_t value1, /*in*/ int32_t value2);
 
-        //! @brief Implementation of the remote procedure subtraction
-        int32_t subtraction(/*in*/ int32_t value1, /*in*/ int32_t value2);
 ;
 };
 

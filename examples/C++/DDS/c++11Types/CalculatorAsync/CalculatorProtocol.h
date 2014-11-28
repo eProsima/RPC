@@ -48,7 +48,6 @@ namespace eprosima
                          */
                     virtual bool activateInterface(const char* interfaceName) = 0;
                     
-
                                        /*!
                                         * @brief This method links a specific servant with the protocol.
                                         * @param impl Servant implementation.
@@ -80,6 +79,9 @@ namespace eprosima
                      *        It has to be implemented by the child classes.
                      */
                     virtual void Calculator_subtraction_async(Calculator_subtractionCallbackHandler &obj, /*in*/ int32_t value1, /*in*/ int32_t value2) = 0;
+
+
+
 
 
                     

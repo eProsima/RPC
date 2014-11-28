@@ -58,23 +58,23 @@
 
 
 /* --------------------------------------------------------------------------------------
- *  Type Calculator_additionRequest
+ *  Type Calculator_addition_In
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-Calculator_additionRequest*
-Calculator_additionRequestPluginSupport_create_data_w_params(
+Calculator_addition_In*
+Calculator_addition_InPluginSupport_create_data_w_params(
     const struct DDS_TypeAllocationParams_t * alloc_params){
-    Calculator_additionRequest *sample = NULL;
+    Calculator_addition_In *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, Calculator_additionRequest);
+        &sample, Calculator_addition_In);
 
     if(sample != NULL) {
-        if (!::Calculator_additionRequest_initialize_w_params(sample,alloc_params)) {
+        if (!::Calculator_addition_In_initialize_w_params(sample,alloc_params)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -83,15 +83,15 @@ Calculator_additionRequestPluginSupport_create_data_w_params(
 }
 
 
-Calculator_additionRequest *
-Calculator_additionRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    Calculator_additionRequest *sample = NULL;
+Calculator_addition_In *
+Calculator_addition_InPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    Calculator_addition_In *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, Calculator_additionRequest);
+        &sample, Calculator_addition_In);
 
     if(sample != NULL) {
-        if (!::Calculator_additionRequest_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+        if (!::Calculator_addition_In_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -100,55 +100,55 @@ Calculator_additionRequestPluginSupport_create_data_ex(RTIBool allocate_pointers
 }
 
 
-Calculator_additionRequest *
-Calculator_additionRequestPluginSupport_create_data(void)
+Calculator_addition_In *
+Calculator_addition_InPluginSupport_create_data(void)
 {
-    return ::Calculator_additionRequestPluginSupport_create_data_ex(RTI_TRUE);
+    return ::Calculator_addition_InPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-Calculator_additionRequestPluginSupport_destroy_data_w_params(
-    Calculator_additionRequest *sample,
+Calculator_addition_InPluginSupport_destroy_data_w_params(
+    Calculator_addition_In *sample,
     const struct DDS_TypeDeallocationParams_t * dealloc_params) {
 
-    ::Calculator_additionRequest_finalize_w_params(sample,dealloc_params);
+    ::Calculator_addition_In_finalize_w_params(sample,dealloc_params);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-Calculator_additionRequestPluginSupport_destroy_data_ex(
-    Calculator_additionRequest *sample,RTIBool deallocate_pointers) {
+Calculator_addition_InPluginSupport_destroy_data_ex(
+    Calculator_addition_In *sample,RTIBool deallocate_pointers) {
 
-    ::Calculator_additionRequest_finalize_ex(sample,deallocate_pointers);
+    ::Calculator_addition_In_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-Calculator_additionRequestPluginSupport_destroy_data(
-    Calculator_additionRequest *sample) {
+Calculator_addition_InPluginSupport_destroy_data(
+    Calculator_addition_In *sample) {
 
-    ::Calculator_additionRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    ::Calculator_addition_InPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-Calculator_additionRequestPluginSupport_copy_data(
-    Calculator_additionRequest *dst,
-    const Calculator_additionRequest *src)
+Calculator_addition_InPluginSupport_copy_data(
+    Calculator_addition_In *dst,
+    const Calculator_addition_In *src)
 {
-    return ::Calculator_additionRequest_copy(dst,src);
+    return ::Calculator_addition_In_copy(dst,src);
 }
 
 
 void 
-Calculator_additionRequestPluginSupport_print_data(
-    const Calculator_additionRequest *sample,
+Calculator_addition_InPluginSupport_print_data(
+    const Calculator_addition_In *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -183,13 +183,13 @@ Calculator_additionRequestPluginSupport_print_data(
 
 
 RTIBool 
-Calculator_additionRequestPlugin_copy_sample(
+Calculator_addition_InPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    Calculator_additionRequest *dst,
-    const Calculator_additionRequest *src)
+    Calculator_addition_In *dst,
+    const Calculator_addition_In *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return ::Calculator_additionRequestPluginSupport_copy_data(dst,src);
+    return ::Calculator_addition_InPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -197,7 +197,7 @@ Calculator_additionRequestPlugin_copy_sample(
  * -------------------------------------------------------------------------------------- */
 
 unsigned int 
-Calculator_additionRequestPlugin_get_serialized_sample_max_size(
+Calculator_addition_InPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -205,9 +205,9 @@ Calculator_additionRequestPlugin_get_serialized_sample_max_size(
 
 
 RTIBool 
-Calculator_additionRequestPlugin_serialize(
+Calculator_addition_InPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const Calculator_additionRequest *sample, 
+    const Calculator_addition_In *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -259,9 +259,9 @@ Calculator_additionRequestPlugin_serialize(
 
 
 RTIBool 
-Calculator_additionRequestPlugin_deserialize_sample(
+Calculator_addition_InPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    Calculator_additionRequest *sample,
+    Calculator_addition_In *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -287,7 +287,7 @@ Calculator_additionRequestPlugin_deserialize_sample(
     
     
     if(deserialize_sample) {
-        ::Calculator_additionRequest_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+        ::Calculator_addition_In_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
     
     if (!RTICdrStream_deserializeLong(
         stream, &sample->value1)) {
@@ -321,9 +321,9 @@ fin:
  
 
 RTIBool 
-Calculator_additionRequestPlugin_deserialize(
+Calculator_addition_InPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    Calculator_additionRequest **sample,
+    Calculator_addition_In **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -336,7 +336,7 @@ Calculator_additionRequestPlugin_deserialize(
     
     stream->_xTypesState.unassignable = RTI_FALSE;
 
-    result = ::Calculator_additionRequestPlugin_deserialize_sample( 
+    result = ::Calculator_addition_InPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -354,7 +354,7 @@ Calculator_additionRequestPlugin_deserialize(
 
 
 
-RTIBool Calculator_additionRequestPlugin_skip(
+RTIBool Calculator_addition_InPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -413,7 +413,7 @@ fin:
 
 
 unsigned int 
-Calculator_additionRequestPlugin_get_serialized_sample_max_size(
+Calculator_addition_InPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -458,7 +458,7 @@ Calculator_additionRequestPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-Calculator_additionRequestPlugin_get_serialized_sample_min_size(
+Calculator_addition_InPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -509,12 +509,12 @@ Calculator_additionRequestPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-Calculator_additionRequestPlugin_get_serialized_sample_size(
+Calculator_addition_InPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const Calculator_additionRequest * sample) 
+    const Calculator_addition_In * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -566,7 +566,7 @@ Calculator_additionRequestPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-Calculator_additionRequestPlugin_get_key_kind(void)
+Calculator_addition_InPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_NO_KEY;
@@ -575,9 +575,9 @@ Calculator_additionRequestPlugin_get_key_kind(void)
 
 
 RTIBool 
-Calculator_additionRequestPlugin_serialize_key(
+Calculator_addition_InPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const Calculator_additionRequest *sample, 
+    const Calculator_addition_In *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -603,7 +603,7 @@ Calculator_additionRequestPlugin_serialize_key(
 
     if(serialize_key) {
 
-        if (!::Calculator_additionRequestPlugin_serialize(
+        if (!::Calculator_addition_InPlugin_serialize(
                 endpoint_data,
                 sample,
                 stream,
@@ -625,9 +625,9 @@ Calculator_additionRequestPlugin_serialize_key(
 }
 
 
-RTIBool Calculator_additionRequestPlugin_deserialize_key_sample(
+RTIBool Calculator_addition_InPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    Calculator_additionRequest *sample, 
+    Calculator_addition_In *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -652,7 +652,7 @@ RTIBool Calculator_additionRequestPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-        if (!::Calculator_additionRequestPlugin_deserialize_sample(
+        if (!::Calculator_addition_InPlugin_deserialize_sample(
                 endpoint_data, sample, stream,
                 RTI_FALSE, RTI_TRUE, 
                 endpoint_plugin_qos)) {
@@ -672,9 +672,9 @@ RTIBool Calculator_additionRequestPlugin_deserialize_key_sample(
 
 
  
-RTIBool Calculator_additionRequestPlugin_deserialize_key(
+RTIBool Calculator_addition_InPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    Calculator_additionRequest **sample, 
+    Calculator_addition_In **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -686,7 +686,7 @@ RTIBool Calculator_additionRequestPlugin_deserialize_key(
     
     stream->_xTypesState.unassignable = RTI_FALSE;
     
-    result = ::Calculator_additionRequestPlugin_deserialize_key_sample(
+    result = ::Calculator_addition_InPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
         
@@ -702,7 +702,7 @@ RTIBool Calculator_additionRequestPlugin_deserialize_key(
 
 
 unsigned int
-Calculator_additionRequestPlugin_get_serialized_key_max_size(
+Calculator_addition_InPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -732,7 +732,7 @@ Calculator_additionRequestPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment += ::Calculator_additionRequestPlugin_get_serialized_sample_max_size(
+    current_alignment += ::Calculator_addition_InPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
     
     if (include_encapsulation) {
@@ -744,9 +744,9 @@ Calculator_additionRequestPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-Calculator_additionRequestPlugin_serialized_sample_to_key(
+Calculator_addition_InPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    Calculator_additionRequest *sample,
+    Calculator_addition_In *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -770,7 +770,7 @@ Calculator_additionRequestPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-        if (!::Calculator_additionRequestPlugin_deserialize_sample(
+        if (!::Calculator_addition_InPlugin_deserialize_sample(
             endpoint_data, sample, stream, RTI_FALSE, 
             RTI_TRUE, endpoint_plugin_qos)) {
             return RTI_FALSE;
@@ -803,23 +803,23 @@ fin:
  * ------------------------------------------------------------------------ */
 
 /* --------------------------------------------------------------------------------------
- *  Type Calculator_additionReply
+ *  Type Calculator_addition_Out
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-Calculator_additionReply*
-Calculator_additionReplyPluginSupport_create_data_w_params(
+Calculator_addition_Out*
+Calculator_addition_OutPluginSupport_create_data_w_params(
     const struct DDS_TypeAllocationParams_t * alloc_params){
-    Calculator_additionReply *sample = NULL;
+    Calculator_addition_Out *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, Calculator_additionReply);
+        &sample, Calculator_addition_Out);
 
     if(sample != NULL) {
-        if (!::Calculator_additionReply_initialize_w_params(sample,alloc_params)) {
+        if (!::Calculator_addition_Out_initialize_w_params(sample,alloc_params)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -828,15 +828,15 @@ Calculator_additionReplyPluginSupport_create_data_w_params(
 }
 
 
-Calculator_additionReply *
-Calculator_additionReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    Calculator_additionReply *sample = NULL;
+Calculator_addition_Out *
+Calculator_addition_OutPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    Calculator_addition_Out *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, Calculator_additionReply);
+        &sample, Calculator_addition_Out);
 
     if(sample != NULL) {
-        if (!::Calculator_additionReply_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+        if (!::Calculator_addition_Out_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -845,55 +845,55 @@ Calculator_additionReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
 }
 
 
-Calculator_additionReply *
-Calculator_additionReplyPluginSupport_create_data(void)
+Calculator_addition_Out *
+Calculator_addition_OutPluginSupport_create_data(void)
 {
-    return ::Calculator_additionReplyPluginSupport_create_data_ex(RTI_TRUE);
+    return ::Calculator_addition_OutPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-Calculator_additionReplyPluginSupport_destroy_data_w_params(
-    Calculator_additionReply *sample,
+Calculator_addition_OutPluginSupport_destroy_data_w_params(
+    Calculator_addition_Out *sample,
     const struct DDS_TypeDeallocationParams_t * dealloc_params) {
 
-    ::Calculator_additionReply_finalize_w_params(sample,dealloc_params);
+    ::Calculator_addition_Out_finalize_w_params(sample,dealloc_params);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-Calculator_additionReplyPluginSupport_destroy_data_ex(
-    Calculator_additionReply *sample,RTIBool deallocate_pointers) {
+Calculator_addition_OutPluginSupport_destroy_data_ex(
+    Calculator_addition_Out *sample,RTIBool deallocate_pointers) {
 
-    ::Calculator_additionReply_finalize_ex(sample,deallocate_pointers);
+    ::Calculator_addition_Out_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-Calculator_additionReplyPluginSupport_destroy_data(
-    Calculator_additionReply *sample) {
+Calculator_addition_OutPluginSupport_destroy_data(
+    Calculator_addition_Out *sample) {
 
-    ::Calculator_additionReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    ::Calculator_addition_OutPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-Calculator_additionReplyPluginSupport_copy_data(
-    Calculator_additionReply *dst,
-    const Calculator_additionReply *src)
+Calculator_addition_OutPluginSupport_copy_data(
+    Calculator_addition_Out *dst,
+    const Calculator_addition_Out *src)
 {
-    return ::Calculator_additionReply_copy(dst,src);
+    return ::Calculator_addition_Out_copy(dst,src);
 }
 
 
 void 
-Calculator_additionReplyPluginSupport_print_data(
-    const Calculator_additionReply *sample,
+Calculator_addition_OutPluginSupport_print_data(
+    const Calculator_addition_Out *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -914,7 +914,7 @@ Calculator_additionReplyPluginSupport_print_data(
 
 
     RTICdrType_printLong(
-        &sample->addition_ret, "addition_ret", indent_level + 1);
+        &sample->return_, "return_", indent_level + 1);
             
 
 
@@ -924,13 +924,13 @@ Calculator_additionReplyPluginSupport_print_data(
 
 
 RTIBool 
-Calculator_additionReplyPlugin_copy_sample(
+Calculator_addition_OutPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    Calculator_additionReply *dst,
-    const Calculator_additionReply *src)
+    Calculator_addition_Out *dst,
+    const Calculator_addition_Out *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return ::Calculator_additionReplyPluginSupport_copy_data(dst,src);
+    return ::Calculator_addition_OutPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -938,7 +938,7 @@ Calculator_additionReplyPlugin_copy_sample(
  * -------------------------------------------------------------------------------------- */
 
 unsigned int 
-Calculator_additionReplyPlugin_get_serialized_sample_max_size(
+Calculator_addition_OutPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -946,9 +946,9 @@ Calculator_additionReplyPlugin_get_serialized_sample_max_size(
 
 
 RTIBool 
-Calculator_additionReplyPlugin_serialize(
+Calculator_addition_OutPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const Calculator_additionReply *sample, 
+    const Calculator_addition_Out *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -976,7 +976,7 @@ Calculator_additionReplyPlugin_serialize(
     if(serialize_sample) {
     
     if (!RTICdrStream_serializeLong(
-        stream, &sample->addition_ret)) {
+        stream, &sample->return_)) {
         return RTI_FALSE;
     }
             
@@ -994,9 +994,9 @@ Calculator_additionReplyPlugin_serialize(
 
 
 RTIBool 
-Calculator_additionReplyPlugin_deserialize_sample(
+Calculator_addition_OutPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    Calculator_additionReply *sample,
+    Calculator_addition_Out *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -1022,10 +1022,10 @@ Calculator_additionReplyPlugin_deserialize_sample(
     
     
     if(deserialize_sample) {
-        ::Calculator_additionReply_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+        ::Calculator_addition_Out_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
     
     if (!RTICdrStream_deserializeLong(
-        stream, &sample->addition_ret)) {
+        stream, &sample->return_)) {
         goto fin;
     }
 
@@ -1051,9 +1051,9 @@ fin:
  
 
 RTIBool 
-Calculator_additionReplyPlugin_deserialize(
+Calculator_addition_OutPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    Calculator_additionReply **sample,
+    Calculator_addition_Out **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -1066,7 +1066,7 @@ Calculator_additionReplyPlugin_deserialize(
     
     stream->_xTypesState.unassignable = RTI_FALSE;
 
-    result = ::Calculator_additionReplyPlugin_deserialize_sample( 
+    result = ::Calculator_addition_OutPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -1084,7 +1084,7 @@ Calculator_additionReplyPlugin_deserialize(
 
 
 
-RTIBool Calculator_additionReplyPlugin_skip(
+RTIBool Calculator_addition_OutPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -1138,7 +1138,7 @@ fin:
 
 
 unsigned int 
-Calculator_additionReplyPlugin_get_serialized_sample_max_size(
+Calculator_addition_OutPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1179,7 +1179,7 @@ Calculator_additionReplyPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-Calculator_additionReplyPlugin_get_serialized_sample_min_size(
+Calculator_addition_OutPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1226,12 +1226,12 @@ Calculator_additionReplyPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-Calculator_additionReplyPlugin_get_serialized_sample_size(
+Calculator_addition_OutPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const Calculator_additionReply * sample) 
+    const Calculator_addition_Out * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -1279,7 +1279,7 @@ Calculator_additionReplyPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-Calculator_additionReplyPlugin_get_key_kind(void)
+Calculator_addition_OutPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_NO_KEY;
@@ -1288,9 +1288,9 @@ Calculator_additionReplyPlugin_get_key_kind(void)
 
 
 RTIBool 
-Calculator_additionReplyPlugin_serialize_key(
+Calculator_addition_OutPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const Calculator_additionReply *sample, 
+    const Calculator_addition_Out *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1316,7 +1316,7 @@ Calculator_additionReplyPlugin_serialize_key(
 
     if(serialize_key) {
 
-        if (!::Calculator_additionReplyPlugin_serialize(
+        if (!::Calculator_addition_OutPlugin_serialize(
                 endpoint_data,
                 sample,
                 stream,
@@ -1338,9 +1338,9 @@ Calculator_additionReplyPlugin_serialize_key(
 }
 
 
-RTIBool Calculator_additionReplyPlugin_deserialize_key_sample(
+RTIBool Calculator_addition_OutPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    Calculator_additionReply *sample, 
+    Calculator_addition_Out *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -1365,7 +1365,7 @@ RTIBool Calculator_additionReplyPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-        if (!::Calculator_additionReplyPlugin_deserialize_sample(
+        if (!::Calculator_addition_OutPlugin_deserialize_sample(
                 endpoint_data, sample, stream,
                 RTI_FALSE, RTI_TRUE, 
                 endpoint_plugin_qos)) {
@@ -1385,9 +1385,9 @@ RTIBool Calculator_additionReplyPlugin_deserialize_key_sample(
 
 
  
-RTIBool Calculator_additionReplyPlugin_deserialize_key(
+RTIBool Calculator_addition_OutPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    Calculator_additionReply **sample, 
+    Calculator_addition_Out **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -1399,7 +1399,7 @@ RTIBool Calculator_additionReplyPlugin_deserialize_key(
     
     stream->_xTypesState.unassignable = RTI_FALSE;
     
-    result = ::Calculator_additionReplyPlugin_deserialize_key_sample(
+    result = ::Calculator_addition_OutPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
         
@@ -1415,7 +1415,7 @@ RTIBool Calculator_additionReplyPlugin_deserialize_key(
 
 
 unsigned int
-Calculator_additionReplyPlugin_get_serialized_key_max_size(
+Calculator_addition_OutPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -1445,7 +1445,7 @@ Calculator_additionReplyPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment += ::Calculator_additionReplyPlugin_get_serialized_sample_max_size(
+    current_alignment += ::Calculator_addition_OutPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
     
     if (include_encapsulation) {
@@ -1457,9 +1457,9 @@ Calculator_additionReplyPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-Calculator_additionReplyPlugin_serialized_sample_to_key(
+Calculator_addition_OutPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    Calculator_additionReply *sample,
+    Calculator_addition_Out *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -1483,7 +1483,7 @@ Calculator_additionReplyPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-        if (!::Calculator_additionReplyPlugin_deserialize_sample(
+        if (!::Calculator_addition_OutPlugin_deserialize_sample(
             endpoint_data, sample, stream, RTI_FALSE, 
             RTI_TRUE, endpoint_plugin_qos)) {
             return RTI_FALSE;
@@ -1516,23 +1516,23 @@ fin:
  * ------------------------------------------------------------------------ */
 
 /* --------------------------------------------------------------------------------------
- *  Type Calculator_subtractionRequest
+ *  Type Calculator_addition_Result
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-Calculator_subtractionRequest*
-Calculator_subtractionRequestPluginSupport_create_data_w_params(
+Calculator_addition_Result*
+Calculator_addition_ResultPluginSupport_create_data_w_params(
     const struct DDS_TypeAllocationParams_t * alloc_params){
-    Calculator_subtractionRequest *sample = NULL;
+    Calculator_addition_Result *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, Calculator_subtractionRequest);
+        &sample, Calculator_addition_Result);
 
     if(sample != NULL) {
-        if (!::Calculator_subtractionRequest_initialize_w_params(sample,alloc_params)) {
+        if (!::Calculator_addition_Result_initialize_w_params(sample,alloc_params)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -1541,15 +1541,15 @@ Calculator_subtractionRequestPluginSupport_create_data_w_params(
 }
 
 
-Calculator_subtractionRequest *
-Calculator_subtractionRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    Calculator_subtractionRequest *sample = NULL;
+Calculator_addition_Result *
+Calculator_addition_ResultPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    Calculator_addition_Result *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, Calculator_subtractionRequest);
+        &sample, Calculator_addition_Result);
 
     if(sample != NULL) {
-        if (!::Calculator_subtractionRequest_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+        if (!::Calculator_addition_Result_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -1558,1513 +1558,55 @@ Calculator_subtractionRequestPluginSupport_create_data_ex(RTIBool allocate_point
 }
 
 
-Calculator_subtractionRequest *
-Calculator_subtractionRequestPluginSupport_create_data(void)
+Calculator_addition_Result *
+Calculator_addition_ResultPluginSupport_create_data(void)
 {
-    return ::Calculator_subtractionRequestPluginSupport_create_data_ex(RTI_TRUE);
+    return ::Calculator_addition_ResultPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-Calculator_subtractionRequestPluginSupport_destroy_data_w_params(
-    Calculator_subtractionRequest *sample,
+Calculator_addition_ResultPluginSupport_destroy_data_w_params(
+    Calculator_addition_Result *sample,
     const struct DDS_TypeDeallocationParams_t * dealloc_params) {
 
-    ::Calculator_subtractionRequest_finalize_w_params(sample,dealloc_params);
+    ::Calculator_addition_Result_finalize_w_params(sample,dealloc_params);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-Calculator_subtractionRequestPluginSupport_destroy_data_ex(
-    Calculator_subtractionRequest *sample,RTIBool deallocate_pointers) {
+Calculator_addition_ResultPluginSupport_destroy_data_ex(
+    Calculator_addition_Result *sample,RTIBool deallocate_pointers) {
 
-    ::Calculator_subtractionRequest_finalize_ex(sample,deallocate_pointers);
+    ::Calculator_addition_Result_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-Calculator_subtractionRequestPluginSupport_destroy_data(
-    Calculator_subtractionRequest *sample) {
+Calculator_addition_ResultPluginSupport_destroy_data(
+    Calculator_addition_Result *sample) {
 
-    ::Calculator_subtractionRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    ::Calculator_addition_ResultPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-Calculator_subtractionRequestPluginSupport_copy_data(
-    Calculator_subtractionRequest *dst,
-    const Calculator_subtractionRequest *src)
+Calculator_addition_ResultPluginSupport_copy_data(
+    Calculator_addition_Result *dst,
+    const Calculator_addition_Result *src)
 {
-    return ::Calculator_subtractionRequest_copy(dst,src);
+    return ::Calculator_addition_Result_copy(dst,src);
 }
 
 
 void 
-Calculator_subtractionRequestPluginSupport_print_data(
-    const Calculator_subtractionRequest *sample,
-    const char *desc,
-    unsigned int indent_level)
-{
-
-
-    RTICdrType_printIndent(indent_level);
-
-    if (desc != NULL) {
-      RTILog_debug("%s:\n", desc);
-    } else {
-      RTILog_debug("\n");
-    }
-
-    if (sample == NULL) {
-      RTILog_debug("NULL\n");
-      return;
-    }
-
-
-    RTICdrType_printLong(
-        &sample->value1, "value1", indent_level + 1);
-            
-
-    RTICdrType_printLong(
-        &sample->value2, "value2", indent_level + 1);
-            
-
-
-}
-
- 
-
-
-RTIBool 
-Calculator_subtractionRequestPlugin_copy_sample(
-    PRESTypePluginEndpointData endpoint_data,
-    Calculator_subtractionRequest *dst,
-    const Calculator_subtractionRequest *src)
-{
-    if (endpoint_data) {} /* To avoid warnings */
-    return ::Calculator_subtractionRequestPluginSupport_copy_data(dst,src);
-}
-
-/* --------------------------------------------------------------------------------------
-    (De)Serialize functions:
- * -------------------------------------------------------------------------------------- */
-
-unsigned int 
-Calculator_subtractionRequestPlugin_get_serialized_sample_max_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment);
-
-
-RTIBool 
-Calculator_subtractionRequestPlugin_serialize(
-    PRESTypePluginEndpointData endpoint_data,
-    const Calculator_subtractionRequest *sample, 
-    struct RTICdrStream *stream,    
-    RTIBool serialize_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    RTIBool serialize_sample, 
-    void *endpoint_plugin_qos)
-{
-    char * position = NULL;
-    RTIBool retval = RTI_TRUE;
-
-    if (endpoint_data) {} /* To avoid warnings */
-    if (endpoint_plugin_qos) {} /* To avoid warnings */
-
-
-    if(serialize_encapsulation) {
-  
-        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-            return RTI_FALSE;
-        }
-
-        position = RTICdrStream_resetAlignment(stream);
-
-    }
-
-
-    if(serialize_sample) {
-    
-    if (!RTICdrStream_serializeLong(
-        stream, &sample->value1)) {
-        return RTI_FALSE;
-    }
-            
-
-    if (!RTICdrStream_serializeLong(
-        stream, &sample->value2)) {
-        return RTI_FALSE;
-    }
-            
-
-    }
-
-
-    if(serialize_encapsulation) {
-        RTICdrStream_restoreAlignment(stream,position);
-    }
-
-
-  return retval;
-}
-
-
-RTIBool 
-Calculator_subtractionRequestPlugin_deserialize_sample(
-    PRESTypePluginEndpointData endpoint_data,
-    Calculator_subtractionRequest *sample,
-    struct RTICdrStream *stream,   
-    RTIBool deserialize_encapsulation,
-    RTIBool deserialize_sample, 
-    void *endpoint_plugin_qos)
-{
-    char * position = NULL;
-
-    RTIBool done = RTI_FALSE;
-
-    if (endpoint_data) {} /* To avoid warnings */
-    if (endpoint_plugin_qos) {} /* To avoid warnings */
-
-
-    if(deserialize_encapsulation) {
-        /* Deserialize encapsulation */
-        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
-            return RTI_FALSE;
-        }
-
-        position = RTICdrStream_resetAlignment(stream);
-
-    }
-    
-    
-    if(deserialize_sample) {
-        ::Calculator_subtractionRequest_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
-    
-    if (!RTICdrStream_deserializeLong(
-        stream, &sample->value1)) {
-        goto fin;
-    }
-
-    if (!RTICdrStream_deserializeLong(
-        stream, &sample->value2)) {
-        goto fin;
-    }
-
-    }
-
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && 
-        RTICdrStream_getRemainder(stream) >=
-            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
-        return RTI_FALSE;   
-    }
-
-    if(deserialize_encapsulation) {
-        RTICdrStream_restoreAlignment(stream,position);
-    }
-
-
-    return RTI_TRUE;
-}
-
- 
- 
-
-RTIBool 
-Calculator_subtractionRequestPlugin_deserialize(
-    PRESTypePluginEndpointData endpoint_data,
-    Calculator_subtractionRequest **sample,
-    RTIBool * drop_sample,
-    struct RTICdrStream *stream,   
-    RTIBool deserialize_encapsulation,
-    RTIBool deserialize_sample, 
-    void *endpoint_plugin_qos)
-{
-
-    RTIBool result;
-    if (drop_sample) {} /* To avoid warnings */
-    
-    stream->_xTypesState.unassignable = RTI_FALSE;
-
-    result = ::Calculator_subtractionRequestPlugin_deserialize_sample( 
-        endpoint_data, (sample != NULL)?*sample:NULL,
-        stream, deserialize_encapsulation, deserialize_sample, 
-        endpoint_plugin_qos);
-        
-    if (result) {
-        if (stream->_xTypesState.unassignable) {
-            result = RTI_FALSE;
-        }
-    }
-    
-    return result;
- 
-}
-
-
-
-
-RTIBool Calculator_subtractionRequestPlugin_skip(
-    PRESTypePluginEndpointData endpoint_data,
-    struct RTICdrStream *stream,   
-    RTIBool skip_encapsulation,
-    RTIBool skip_sample, 
-    void *endpoint_plugin_qos)
-{
-    char * position = NULL;
-
-    RTIBool done = RTI_FALSE;
-
-    if (endpoint_data) {} /* To avoid warnings */
-    if (endpoint_plugin_qos) {} /* To avoid warnings */
-
-
-    if(skip_encapsulation) {
-        if (!RTICdrStream_skipEncapsulation(stream)) {
-            return RTI_FALSE;
-        }
-
-
-        position = RTICdrStream_resetAlignment(stream);
-
-    }
-
-    if (skip_sample) {
-
-    if (!RTICdrStream_skipLong(stream)) {
-        goto fin;
-    }
-            
-
-    if (!RTICdrStream_skipLong(stream)) {
-        goto fin;
-    }
-            
-
-
-    }
-    
-
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && 
-        RTICdrStream_getRemainder(stream) >=
-            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
-        return RTI_FALSE;   
-    }
-
-    if(skip_encapsulation) {
-        RTICdrStream_restoreAlignment(stream,position);
-    }
-
-
-    return RTI_TRUE;
-}
-
-
-unsigned int 
-Calculator_subtractionRequestPlugin_get_serialized_sample_max_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment)
-{
-
-    unsigned int initial_alignment = current_alignment;
-
-    unsigned int encapsulation_size = current_alignment;
-
-    if (endpoint_data) {} /* To avoid warnings */
-
-
-    if (include_encapsulation) {
-
-        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
-            return 1;
-        }
-
-        RTICdrStream_getEncapsulationSize(encapsulation_size);
-        encapsulation_size -= current_alignment;
-        current_alignment = 0;
-        initial_alignment = 0;
-
-    }
-
-
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
-            
-
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
-            
-
-    if (include_encapsulation) {
-        current_alignment += encapsulation_size;
-    }
-
-    return current_alignment - initial_alignment;
-}
-
-
-unsigned int 
-Calculator_subtractionRequestPlugin_get_serialized_sample_min_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment)
-{
-
-    unsigned int initial_alignment = current_alignment;
-
-    unsigned int encapsulation_size = current_alignment;
-
-    if (endpoint_data) {} /* To avoid warnings */
-
-
-    if (include_encapsulation) {
-
-        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
-            return 1;
-        }
-
-        RTICdrStream_getEncapsulationSize(encapsulation_size);
-        encapsulation_size -= current_alignment;
-        current_alignment = 0;
-        initial_alignment = 0;
-
-    }
-
-
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
-            
-
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
-            
-
-    if (include_encapsulation) {
-        current_alignment += encapsulation_size;
-    }
-
-    return current_alignment - initial_alignment;
-}
-
-
-/* Returns the size of the sample in its serialized form (in bytes).
- * It can also be an estimation in excess of the real buffer needed 
- * during a call to the serialize() function.
- * The value reported does not have to include the space for the
- * encapsulation flags.
- */
-unsigned int
-Calculator_subtractionRequestPlugin_get_serialized_sample_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment,
-    const Calculator_subtractionRequest * sample) 
-{
-
-    unsigned int initial_alignment = current_alignment;
-
-    unsigned int encapsulation_size = current_alignment;
-
-    if (endpoint_data) {} /* To avoid warnings */
-    if (sample) {} /* To avoid warnings */
-
-
-    if (include_encapsulation) {
-
-        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
-            return 1;
-        }
-
-        RTICdrStream_getEncapsulationSize(encapsulation_size);
-        encapsulation_size -= current_alignment;
-        current_alignment = 0;
-        initial_alignment = 0;
-
-    }
-
-
-    current_alignment += RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
-            
-
-    current_alignment += RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
-            
-
-    if (include_encapsulation) {
-        current_alignment += encapsulation_size;
-    }
-
-    return current_alignment - initial_alignment;
-}
-
-
-
-
-
-
-
-/* --------------------------------------------------------------------------------------
-    Key Management functions:
- * -------------------------------------------------------------------------------------- */
-
-
-PRESTypePluginKeyKind 
-Calculator_subtractionRequestPlugin_get_key_kind(void)
-{
-
-    return PRES_TYPEPLUGIN_NO_KEY;
-     
-}
-
-
-RTIBool 
-Calculator_subtractionRequestPlugin_serialize_key(
-    PRESTypePluginEndpointData endpoint_data,
-    const Calculator_subtractionRequest *sample, 
-    struct RTICdrStream *stream,    
-    RTIBool serialize_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    RTIBool serialize_key,
-    void *endpoint_plugin_qos)
-{
-    char * position = NULL;
-
-    if (endpoint_data) {} /* To avoid warnings */
-    if (endpoint_plugin_qos) {} /* To avoid warnings */
-
-
-    if(serialize_encapsulation) {
-    
-        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-            return RTI_FALSE;
-        }
-
-
-        position = RTICdrStream_resetAlignment(stream);
-
-    }
-
-    if(serialize_key) {
-
-        if (!::Calculator_subtractionRequestPlugin_serialize(
-                endpoint_data,
-                sample,
-                stream,
-                RTI_FALSE, encapsulation_id,
-                RTI_TRUE,
-                endpoint_plugin_qos)) {
-            return RTI_FALSE;
-        }
-    
-    }
-
-
-    if(serialize_encapsulation) {
-        RTICdrStream_restoreAlignment(stream,position);
-    }
-
-
-    return RTI_TRUE;
-}
-
-
-RTIBool Calculator_subtractionRequestPlugin_deserialize_key_sample(
-    PRESTypePluginEndpointData endpoint_data,
-    Calculator_subtractionRequest *sample, 
-    struct RTICdrStream *stream,
-    RTIBool deserialize_encapsulation,
-    RTIBool deserialize_key,
-    void *endpoint_plugin_qos)
-{
-    char * position = NULL;
-
-    if (endpoint_data) {} /* To avoid warnings */
-    if (endpoint_plugin_qos) {} /* To avoid warnings */
-
-
-    if(deserialize_encapsulation) {
-        /* Deserialize encapsulation */
-        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
-            return RTI_FALSE;  
-        }
-
-
-        position = RTICdrStream_resetAlignment(stream);
-
-    }
-
-    if (deserialize_key) {
-
-        if (!::Calculator_subtractionRequestPlugin_deserialize_sample(
-                endpoint_data, sample, stream,
-                RTI_FALSE, RTI_TRUE, 
-                endpoint_plugin_qos)) {
-            return RTI_FALSE;
-        }
-    
-    }
-
-
-    if(deserialize_encapsulation) {
-        RTICdrStream_restoreAlignment(stream,position);
-    }
-
-
-    return RTI_TRUE;
-}
-
-
- 
-RTIBool Calculator_subtractionRequestPlugin_deserialize_key(
-    PRESTypePluginEndpointData endpoint_data,
-    Calculator_subtractionRequest **sample, 
-    RTIBool * drop_sample,
-    struct RTICdrStream *stream,
-    RTIBool deserialize_encapsulation,
-    RTIBool deserialize_key,
-    void *endpoint_plugin_qos)
-{
-    RTIBool result;
-    if (drop_sample) {} /* To avoid warnings */
-    
-    stream->_xTypesState.unassignable = RTI_FALSE;
-    
-    result = ::Calculator_subtractionRequestPlugin_deserialize_key_sample(
-        endpoint_data, (sample != NULL)?*sample:NULL, stream,
-        deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
-        
-    if (result) {
-        if (stream->_xTypesState.unassignable) {
-            result = RTI_FALSE;
-        }
-    }
-    
-    return result;
-}
-
-
-
-unsigned int
-Calculator_subtractionRequestPlugin_get_serialized_key_max_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment)
-{
-
-    unsigned int encapsulation_size = current_alignment;
-
-
-    unsigned int initial_alignment = current_alignment;
-
-
-    if (endpoint_data) {} /* To avoid warnings */
-
-
-    if (include_encapsulation) {
-        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
-            return 1;
-        }
-
-
-        RTICdrStream_getEncapsulationSize(encapsulation_size);
-        encapsulation_size -= current_alignment;
-        current_alignment = 0;
-        initial_alignment = 0;
-
-    }
-        
-
-    current_alignment += ::Calculator_subtractionRequestPlugin_get_serialized_sample_max_size(
-        endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
-    
-    if (include_encapsulation) {
-        current_alignment += encapsulation_size;
-    }
-
-    return current_alignment - initial_alignment;
-}
-
-
-RTIBool 
-Calculator_subtractionRequestPlugin_serialized_sample_to_key(
-    PRESTypePluginEndpointData endpoint_data,
-    Calculator_subtractionRequest *sample,
-    struct RTICdrStream *stream, 
-    RTIBool deserialize_encapsulation,  
-    RTIBool deserialize_key, 
-    void *endpoint_plugin_qos)
-{
-    char * position = NULL;
-
-    RTIBool done = RTI_FALSE;
-
-    if (stream == NULL) goto fin; /* To avoid warnings */
-
-
-    if(deserialize_encapsulation) {
-        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
-            return RTI_FALSE;
-        }
-
-        position = RTICdrStream_resetAlignment(stream);
-
-    }
-
-    if (deserialize_key) {
-
-        if (!::Calculator_subtractionRequestPlugin_deserialize_sample(
-            endpoint_data, sample, stream, RTI_FALSE, 
-            RTI_TRUE, endpoint_plugin_qos)) {
-            return RTI_FALSE;
-        }
-
-    }
-
-
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && 
-        RTICdrStream_getRemainder(stream) >=
-            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
-        return RTI_FALSE;   
-    }
-
-    if(deserialize_encapsulation) {
-        RTICdrStream_restoreAlignment(stream,position);
-    }
-
-
-    return RTI_TRUE;
-}
-
-
-
-
-/* ------------------------------------------------------------------------
- * Plug-in Installation Methods
- * ------------------------------------------------------------------------ */
-
-/* --------------------------------------------------------------------------------------
- *  Type Calculator_subtractionReply
- * -------------------------------------------------------------------------------------- */
-
-/* --------------------------------------------------------------------------------------
-    Support functions:
- * -------------------------------------------------------------------------------------- */
-
-Calculator_subtractionReply*
-Calculator_subtractionReplyPluginSupport_create_data_w_params(
-    const struct DDS_TypeAllocationParams_t * alloc_params){
-    Calculator_subtractionReply *sample = NULL;
-
-    RTIOsapiHeap_allocateStructure(
-        &sample, Calculator_subtractionReply);
-
-    if(sample != NULL) {
-        if (!::Calculator_subtractionReply_initialize_w_params(sample,alloc_params)) {
-            RTIOsapiHeap_freeStructure(sample);
-            return NULL;
-        }
-    }        
-    return sample; 
-}
-
-
-Calculator_subtractionReply *
-Calculator_subtractionReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    Calculator_subtractionReply *sample = NULL;
-
-    RTIOsapiHeap_allocateStructure(
-        &sample, Calculator_subtractionReply);
-
-    if(sample != NULL) {
-        if (!::Calculator_subtractionReply_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
-            RTIOsapiHeap_freeStructure(sample);
-            return NULL;
-        }
-    }        
-    return sample; 
-}
-
-
-Calculator_subtractionReply *
-Calculator_subtractionReplyPluginSupport_create_data(void)
-{
-    return ::Calculator_subtractionReplyPluginSupport_create_data_ex(RTI_TRUE);
-}
-
-
-void 
-Calculator_subtractionReplyPluginSupport_destroy_data_w_params(
-    Calculator_subtractionReply *sample,
-    const struct DDS_TypeDeallocationParams_t * dealloc_params) {
-
-    ::Calculator_subtractionReply_finalize_w_params(sample,dealloc_params);
-
-    RTIOsapiHeap_freeStructure(sample);
-}
-
-
-void 
-Calculator_subtractionReplyPluginSupport_destroy_data_ex(
-    Calculator_subtractionReply *sample,RTIBool deallocate_pointers) {
-
-    ::Calculator_subtractionReply_finalize_ex(sample,deallocate_pointers);
-
-    RTIOsapiHeap_freeStructure(sample);
-}
-
-
-void 
-Calculator_subtractionReplyPluginSupport_destroy_data(
-    Calculator_subtractionReply *sample) {
-
-    ::Calculator_subtractionReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
-
-}
-
-
-RTIBool 
-Calculator_subtractionReplyPluginSupport_copy_data(
-    Calculator_subtractionReply *dst,
-    const Calculator_subtractionReply *src)
-{
-    return ::Calculator_subtractionReply_copy(dst,src);
-}
-
-
-void 
-Calculator_subtractionReplyPluginSupport_print_data(
-    const Calculator_subtractionReply *sample,
-    const char *desc,
-    unsigned int indent_level)
-{
-
-
-    RTICdrType_printIndent(indent_level);
-
-    if (desc != NULL) {
-      RTILog_debug("%s:\n", desc);
-    } else {
-      RTILog_debug("\n");
-    }
-
-    if (sample == NULL) {
-      RTILog_debug("NULL\n");
-      return;
-    }
-
-
-    RTICdrType_printLong(
-        &sample->subtraction_ret, "subtraction_ret", indent_level + 1);
-            
-
-
-}
-
- 
-
-
-RTIBool 
-Calculator_subtractionReplyPlugin_copy_sample(
-    PRESTypePluginEndpointData endpoint_data,
-    Calculator_subtractionReply *dst,
-    const Calculator_subtractionReply *src)
-{
-    if (endpoint_data) {} /* To avoid warnings */
-    return ::Calculator_subtractionReplyPluginSupport_copy_data(dst,src);
-}
-
-/* --------------------------------------------------------------------------------------
-    (De)Serialize functions:
- * -------------------------------------------------------------------------------------- */
-
-unsigned int 
-Calculator_subtractionReplyPlugin_get_serialized_sample_max_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment);
-
-
-RTIBool 
-Calculator_subtractionReplyPlugin_serialize(
-    PRESTypePluginEndpointData endpoint_data,
-    const Calculator_subtractionReply *sample, 
-    struct RTICdrStream *stream,    
-    RTIBool serialize_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    RTIBool serialize_sample, 
-    void *endpoint_plugin_qos)
-{
-    char * position = NULL;
-    RTIBool retval = RTI_TRUE;
-
-    if (endpoint_data) {} /* To avoid warnings */
-    if (endpoint_plugin_qos) {} /* To avoid warnings */
-
-
-    if(serialize_encapsulation) {
-  
-        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-            return RTI_FALSE;
-        }
-
-        position = RTICdrStream_resetAlignment(stream);
-
-    }
-
-
-    if(serialize_sample) {
-    
-    if (!RTICdrStream_serializeLong(
-        stream, &sample->subtraction_ret)) {
-        return RTI_FALSE;
-    }
-            
-
-    }
-
-
-    if(serialize_encapsulation) {
-        RTICdrStream_restoreAlignment(stream,position);
-    }
-
-
-  return retval;
-}
-
-
-RTIBool 
-Calculator_subtractionReplyPlugin_deserialize_sample(
-    PRESTypePluginEndpointData endpoint_data,
-    Calculator_subtractionReply *sample,
-    struct RTICdrStream *stream,   
-    RTIBool deserialize_encapsulation,
-    RTIBool deserialize_sample, 
-    void *endpoint_plugin_qos)
-{
-    char * position = NULL;
-
-    RTIBool done = RTI_FALSE;
-
-    if (endpoint_data) {} /* To avoid warnings */
-    if (endpoint_plugin_qos) {} /* To avoid warnings */
-
-
-    if(deserialize_encapsulation) {
-        /* Deserialize encapsulation */
-        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
-            return RTI_FALSE;
-        }
-
-        position = RTICdrStream_resetAlignment(stream);
-
-    }
-    
-    
-    if(deserialize_sample) {
-        ::Calculator_subtractionReply_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
-    
-    if (!RTICdrStream_deserializeLong(
-        stream, &sample->subtraction_ret)) {
-        goto fin;
-    }
-
-    }
-
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && 
-        RTICdrStream_getRemainder(stream) >=
-            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
-        return RTI_FALSE;   
-    }
-
-    if(deserialize_encapsulation) {
-        RTICdrStream_restoreAlignment(stream,position);
-    }
-
-
-    return RTI_TRUE;
-}
-
- 
- 
-
-RTIBool 
-Calculator_subtractionReplyPlugin_deserialize(
-    PRESTypePluginEndpointData endpoint_data,
-    Calculator_subtractionReply **sample,
-    RTIBool * drop_sample,
-    struct RTICdrStream *stream,   
-    RTIBool deserialize_encapsulation,
-    RTIBool deserialize_sample, 
-    void *endpoint_plugin_qos)
-{
-
-    RTIBool result;
-    if (drop_sample) {} /* To avoid warnings */
-    
-    stream->_xTypesState.unassignable = RTI_FALSE;
-
-    result = ::Calculator_subtractionReplyPlugin_deserialize_sample( 
-        endpoint_data, (sample != NULL)?*sample:NULL,
-        stream, deserialize_encapsulation, deserialize_sample, 
-        endpoint_plugin_qos);
-        
-    if (result) {
-        if (stream->_xTypesState.unassignable) {
-            result = RTI_FALSE;
-        }
-    }
-    
-    return result;
- 
-}
-
-
-
-
-RTIBool Calculator_subtractionReplyPlugin_skip(
-    PRESTypePluginEndpointData endpoint_data,
-    struct RTICdrStream *stream,   
-    RTIBool skip_encapsulation,
-    RTIBool skip_sample, 
-    void *endpoint_plugin_qos)
-{
-    char * position = NULL;
-
-    RTIBool done = RTI_FALSE;
-
-    if (endpoint_data) {} /* To avoid warnings */
-    if (endpoint_plugin_qos) {} /* To avoid warnings */
-
-
-    if(skip_encapsulation) {
-        if (!RTICdrStream_skipEncapsulation(stream)) {
-            return RTI_FALSE;
-        }
-
-
-        position = RTICdrStream_resetAlignment(stream);
-
-    }
-
-    if (skip_sample) {
-
-    if (!RTICdrStream_skipLong(stream)) {
-        goto fin;
-    }
-            
-
-
-    }
-    
-
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && 
-        RTICdrStream_getRemainder(stream) >=
-            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
-        return RTI_FALSE;   
-    }
-
-    if(skip_encapsulation) {
-        RTICdrStream_restoreAlignment(stream,position);
-    }
-
-
-    return RTI_TRUE;
-}
-
-
-unsigned int 
-Calculator_subtractionReplyPlugin_get_serialized_sample_max_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment)
-{
-
-    unsigned int initial_alignment = current_alignment;
-
-    unsigned int encapsulation_size = current_alignment;
-
-    if (endpoint_data) {} /* To avoid warnings */
-
-
-    if (include_encapsulation) {
-
-        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
-            return 1;
-        }
-
-        RTICdrStream_getEncapsulationSize(encapsulation_size);
-        encapsulation_size -= current_alignment;
-        current_alignment = 0;
-        initial_alignment = 0;
-
-    }
-
-
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
-            
-
-    if (include_encapsulation) {
-        current_alignment += encapsulation_size;
-    }
-
-    return current_alignment - initial_alignment;
-}
-
-
-unsigned int 
-Calculator_subtractionReplyPlugin_get_serialized_sample_min_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment)
-{
-
-    unsigned int initial_alignment = current_alignment;
-
-    unsigned int encapsulation_size = current_alignment;
-
-    if (endpoint_data) {} /* To avoid warnings */
-
-
-    if (include_encapsulation) {
-
-        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
-            return 1;
-        }
-
-        RTICdrStream_getEncapsulationSize(encapsulation_size);
-        encapsulation_size -= current_alignment;
-        current_alignment = 0;
-        initial_alignment = 0;
-
-    }
-
-
-    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
-            
-
-    if (include_encapsulation) {
-        current_alignment += encapsulation_size;
-    }
-
-    return current_alignment - initial_alignment;
-}
-
-
-/* Returns the size of the sample in its serialized form (in bytes).
- * It can also be an estimation in excess of the real buffer needed 
- * during a call to the serialize() function.
- * The value reported does not have to include the space for the
- * encapsulation flags.
- */
-unsigned int
-Calculator_subtractionReplyPlugin_get_serialized_sample_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment,
-    const Calculator_subtractionReply * sample) 
-{
-
-    unsigned int initial_alignment = current_alignment;
-
-    unsigned int encapsulation_size = current_alignment;
-
-    if (endpoint_data) {} /* To avoid warnings */
-    if (sample) {} /* To avoid warnings */
-
-
-    if (include_encapsulation) {
-
-        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
-            return 1;
-        }
-
-        RTICdrStream_getEncapsulationSize(encapsulation_size);
-        encapsulation_size -= current_alignment;
-        current_alignment = 0;
-        initial_alignment = 0;
-
-    }
-
-
-    current_alignment += RTICdrType_getLongMaxSizeSerialized(
-        current_alignment);
-            
-
-    if (include_encapsulation) {
-        current_alignment += encapsulation_size;
-    }
-
-    return current_alignment - initial_alignment;
-}
-
-
-
-
-
-
-
-/* --------------------------------------------------------------------------------------
-    Key Management functions:
- * -------------------------------------------------------------------------------------- */
-
-
-PRESTypePluginKeyKind 
-Calculator_subtractionReplyPlugin_get_key_kind(void)
-{
-
-    return PRES_TYPEPLUGIN_NO_KEY;
-     
-}
-
-
-RTIBool 
-Calculator_subtractionReplyPlugin_serialize_key(
-    PRESTypePluginEndpointData endpoint_data,
-    const Calculator_subtractionReply *sample, 
-    struct RTICdrStream *stream,    
-    RTIBool serialize_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    RTIBool serialize_key,
-    void *endpoint_plugin_qos)
-{
-    char * position = NULL;
-
-    if (endpoint_data) {} /* To avoid warnings */
-    if (endpoint_plugin_qos) {} /* To avoid warnings */
-
-
-    if(serialize_encapsulation) {
-    
-        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
-            return RTI_FALSE;
-        }
-
-
-        position = RTICdrStream_resetAlignment(stream);
-
-    }
-
-    if(serialize_key) {
-
-        if (!::Calculator_subtractionReplyPlugin_serialize(
-                endpoint_data,
-                sample,
-                stream,
-                RTI_FALSE, encapsulation_id,
-                RTI_TRUE,
-                endpoint_plugin_qos)) {
-            return RTI_FALSE;
-        }
-    
-    }
-
-
-    if(serialize_encapsulation) {
-        RTICdrStream_restoreAlignment(stream,position);
-    }
-
-
-    return RTI_TRUE;
-}
-
-
-RTIBool Calculator_subtractionReplyPlugin_deserialize_key_sample(
-    PRESTypePluginEndpointData endpoint_data,
-    Calculator_subtractionReply *sample, 
-    struct RTICdrStream *stream,
-    RTIBool deserialize_encapsulation,
-    RTIBool deserialize_key,
-    void *endpoint_plugin_qos)
-{
-    char * position = NULL;
-
-    if (endpoint_data) {} /* To avoid warnings */
-    if (endpoint_plugin_qos) {} /* To avoid warnings */
-
-
-    if(deserialize_encapsulation) {
-        /* Deserialize encapsulation */
-        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
-            return RTI_FALSE;  
-        }
-
-
-        position = RTICdrStream_resetAlignment(stream);
-
-    }
-
-    if (deserialize_key) {
-
-        if (!::Calculator_subtractionReplyPlugin_deserialize_sample(
-                endpoint_data, sample, stream,
-                RTI_FALSE, RTI_TRUE, 
-                endpoint_plugin_qos)) {
-            return RTI_FALSE;
-        }
-    
-    }
-
-
-    if(deserialize_encapsulation) {
-        RTICdrStream_restoreAlignment(stream,position);
-    }
-
-
-    return RTI_TRUE;
-}
-
-
- 
-RTIBool Calculator_subtractionReplyPlugin_deserialize_key(
-    PRESTypePluginEndpointData endpoint_data,
-    Calculator_subtractionReply **sample, 
-    RTIBool * drop_sample,
-    struct RTICdrStream *stream,
-    RTIBool deserialize_encapsulation,
-    RTIBool deserialize_key,
-    void *endpoint_plugin_qos)
-{
-    RTIBool result;
-    if (drop_sample) {} /* To avoid warnings */
-    
-    stream->_xTypesState.unassignable = RTI_FALSE;
-    
-    result = ::Calculator_subtractionReplyPlugin_deserialize_key_sample(
-        endpoint_data, (sample != NULL)?*sample:NULL, stream,
-        deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
-        
-    if (result) {
-        if (stream->_xTypesState.unassignable) {
-            result = RTI_FALSE;
-        }
-    }
-    
-    return result;
-}
-
-
-
-unsigned int
-Calculator_subtractionReplyPlugin_get_serialized_key_max_size(
-    PRESTypePluginEndpointData endpoint_data,
-    RTIBool include_encapsulation,
-    RTIEncapsulationId encapsulation_id,
-    unsigned int current_alignment)
-{
-
-    unsigned int encapsulation_size = current_alignment;
-
-
-    unsigned int initial_alignment = current_alignment;
-
-
-    if (endpoint_data) {} /* To avoid warnings */
-
-
-    if (include_encapsulation) {
-        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
-            return 1;
-        }
-
-
-        RTICdrStream_getEncapsulationSize(encapsulation_size);
-        encapsulation_size -= current_alignment;
-        current_alignment = 0;
-        initial_alignment = 0;
-
-    }
-        
-
-    current_alignment += ::Calculator_subtractionReplyPlugin_get_serialized_sample_max_size(
-        endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
-    
-    if (include_encapsulation) {
-        current_alignment += encapsulation_size;
-    }
-
-    return current_alignment - initial_alignment;
-}
-
-
-RTIBool 
-Calculator_subtractionReplyPlugin_serialized_sample_to_key(
-    PRESTypePluginEndpointData endpoint_data,
-    Calculator_subtractionReply *sample,
-    struct RTICdrStream *stream, 
-    RTIBool deserialize_encapsulation,  
-    RTIBool deserialize_key, 
-    void *endpoint_plugin_qos)
-{
-    char * position = NULL;
-
-    RTIBool done = RTI_FALSE;
-
-    if (stream == NULL) goto fin; /* To avoid warnings */
-
-
-    if(deserialize_encapsulation) {
-        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
-            return RTI_FALSE;
-        }
-
-        position = RTICdrStream_resetAlignment(stream);
-
-    }
-
-    if (deserialize_key) {
-
-        if (!::Calculator_subtractionReplyPlugin_deserialize_sample(
-            endpoint_data, sample, stream, RTI_FALSE, 
-            RTI_TRUE, endpoint_plugin_qos)) {
-            return RTI_FALSE;
-        }
-
-    }
-
-
-    done = RTI_TRUE;
-fin:
-    if (done != RTI_TRUE && 
-        RTICdrStream_getRemainder(stream) >=
-            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
-        return RTI_FALSE;   
-    }
-
-    if(deserialize_encapsulation) {
-        RTICdrStream_restoreAlignment(stream,position);
-    }
-
-
-    return RTI_TRUE;
-}
-
-
-
-
-/* ------------------------------------------------------------------------
- * Plug-in Installation Methods
- * ------------------------------------------------------------------------ */
-
-/* --------------------------------------------------------------------------------------
- *  Type CalculatorRequest_union
- * -------------------------------------------------------------------------------------- */
-
-/* --------------------------------------------------------------------------------------
-    Support functions:
- * -------------------------------------------------------------------------------------- */
-
-CalculatorRequest_union*
-CalculatorRequest_unionPluginSupport_create_data_w_params(
-    const struct DDS_TypeAllocationParams_t * alloc_params){
-    CalculatorRequest_union *sample = NULL;
-
-    RTIOsapiHeap_allocateStructure(
-        &sample, CalculatorRequest_union);
-
-    if(sample != NULL) {
-        if (!::CalculatorRequest_union_initialize_w_params(sample,alloc_params)) {
-            RTIOsapiHeap_freeStructure(sample);
-            return NULL;
-        }
-    }        
-    return sample; 
-}
-
-
-CalculatorRequest_union *
-CalculatorRequest_unionPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    CalculatorRequest_union *sample = NULL;
-
-    RTIOsapiHeap_allocateStructure(
-        &sample, CalculatorRequest_union);
-
-    if(sample != NULL) {
-        if (!::CalculatorRequest_union_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
-            RTIOsapiHeap_freeStructure(sample);
-            return NULL;
-        }
-    }        
-    return sample; 
-}
-
-
-CalculatorRequest_union *
-CalculatorRequest_unionPluginSupport_create_data(void)
-{
-    return ::CalculatorRequest_unionPluginSupport_create_data_ex(RTI_TRUE);
-}
-
-
-void 
-CalculatorRequest_unionPluginSupport_destroy_data_w_params(
-    CalculatorRequest_union *sample,
-    const struct DDS_TypeDeallocationParams_t * dealloc_params) {
-
-    ::CalculatorRequest_union_finalize_w_params(sample,dealloc_params);
-
-    RTIOsapiHeap_freeStructure(sample);
-}
-
-
-void 
-CalculatorRequest_unionPluginSupport_destroy_data_ex(
-    CalculatorRequest_union *sample,RTIBool deallocate_pointers) {
-
-    ::CalculatorRequest_union_finalize_ex(sample,deallocate_pointers);
-
-    RTIOsapiHeap_freeStructure(sample);
-}
-
-
-void 
-CalculatorRequest_unionPluginSupport_destroy_data(
-    CalculatorRequest_union *sample) {
-
-    ::CalculatorRequest_unionPluginSupport_destroy_data_ex(sample,RTI_TRUE);
-
-}
-
-
-RTIBool 
-CalculatorRequest_unionPluginSupport_copy_data(
-    CalculatorRequest_union *dst,
-    const CalculatorRequest_union *src)
-{
-    return ::CalculatorRequest_union_copy(dst,src);
-}
-
-
-void 
-CalculatorRequest_unionPluginSupport_print_data(
-    const CalculatorRequest_union *sample,
+Calculator_addition_ResultPluginSupport_print_data(
+    const Calculator_addition_Result *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -3089,19 +1631,27 @@ CalculatorRequest_unionPluginSupport_print_data(
             
 
     switch(sample->_d) {
-          case 1:
+          default:
         {                                    
         
-    Calculator_additionRequestPluginSupport_print_data(
-        &sample->_u.addition, "_u.addition", indent_level + 1);
+    UnknownExceptionPluginSupport_print_data(
+        &sample->_u.unknown_exception, "_u.unknown_exception", indent_level + 1);
+            
+
+        };
+      case 0:
+        {                                    
+        
+    Calculator_addition_OutPluginSupport_print_data(
+        &sample->_u.out_, "_u.out_", indent_level + 1);
             
 
         } break;
-      case 2:
+      case 1:
         {                                    
         
-    Calculator_subtractionRequestPluginSupport_print_data(
-        &sample->_u.subtraction, "_u.subtraction", indent_level + 1);
+    SystemExceptionCodePluginSupport_print_data(
+        &sample->_u.sysx_, "_u.sysx_", indent_level + 1);
             
 
         } break;
@@ -3115,13 +1665,13 @@ CalculatorRequest_unionPluginSupport_print_data(
 
 
 RTIBool 
-CalculatorRequest_unionPlugin_copy_sample(
+Calculator_addition_ResultPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorRequest_union *dst,
-    const CalculatorRequest_union *src)
+    Calculator_addition_Result *dst,
+    const Calculator_addition_Result *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return ::CalculatorRequest_unionPluginSupport_copy_data(dst,src);
+    return ::Calculator_addition_ResultPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -3129,7 +1679,7 @@ CalculatorRequest_unionPlugin_copy_sample(
  * -------------------------------------------------------------------------------------- */
 
 unsigned int 
-CalculatorRequest_unionPlugin_get_serialized_sample_max_size(
+Calculator_addition_ResultPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -3137,9 +1687,9 @@ CalculatorRequest_unionPlugin_get_serialized_sample_max_size(
 
 
 RTIBool 
-CalculatorRequest_unionPlugin_serialize(
+Calculator_addition_ResultPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const CalculatorRequest_union *sample, 
+    const Calculator_addition_Result *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -3173,12 +1723,27 @@ CalculatorRequest_unionPlugin_serialize(
             
 
     switch(sample->_d) {
-          case 1:
+          default:
         {                                    
         
-    if (!Calculator_additionRequestPlugin_serialize(
+    if (!UnknownExceptionPlugin_serialize(
             endpoint_data,
-            &sample->_u.addition, 
+            &sample->_u.unknown_exception, 
+            stream, 
+            RTI_FALSE, encapsulation_id, 
+            RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
+      case 0:
+        {                                    
+        
+    if (!Calculator_addition_OutPlugin_serialize(
+            endpoint_data,
+            &sample->_u.out_, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
@@ -3188,12 +1753,12 @@ CalculatorRequest_unionPlugin_serialize(
             
 
         } break;
-      case 2:
+      case 1:
         {                                    
         
-    if (!Calculator_subtractionRequestPlugin_serialize(
+    if (!SystemExceptionCodePlugin_serialize(
             endpoint_data,
-            &sample->_u.subtraction, 
+            &sample->_u.sysx_, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
@@ -3219,9 +1784,9 @@ CalculatorRequest_unionPlugin_serialize(
 
 
 RTIBool 
-CalculatorRequest_unionPlugin_deserialize_sample(
+Calculator_addition_ResultPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorRequest_union *sample,
+    Calculator_addition_Result *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -3252,12 +1817,26 @@ CalculatorRequest_unionPlugin_deserialize_sample(
     }
 
     switch(sample->_d) {
-          case 1:
+          default:
         {                                    
         
-    if (!Calculator_additionRequestPlugin_deserialize_sample(
+    if (!UnknownExceptionPlugin_deserialize_sample(
             endpoint_data,
-            &sample->_u.addition,
+            &sample->_u.unknown_exception,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
+      case 0:
+        {                                    
+        
+    if (!Calculator_addition_OutPlugin_deserialize_sample(
+            endpoint_data,
+            &sample->_u.out_,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
@@ -3266,12 +1845,12 @@ CalculatorRequest_unionPlugin_deserialize_sample(
             
 
         } break;
-      case 2:
+      case 1:
         {                                    
         
-    if (!Calculator_subtractionRequestPlugin_deserialize_sample(
+    if (!SystemExceptionCodePlugin_deserialize_sample(
             endpoint_data,
-            &sample->_u.subtraction,
+            &sample->_u.sysx_,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
@@ -3297,9 +1876,9 @@ CalculatorRequest_unionPlugin_deserialize_sample(
  
 
 RTIBool 
-CalculatorRequest_unionPlugin_deserialize(
+Calculator_addition_ResultPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorRequest_union **sample,
+    Calculator_addition_Result **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -3312,7 +1891,7 @@ CalculatorRequest_unionPlugin_deserialize(
     
     stream->_xTypesState.unassignable = RTI_FALSE;
 
-    result = ::CalculatorRequest_unionPlugin_deserialize_sample( 
+    result = ::Calculator_addition_ResultPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -3330,7 +1909,7 @@ CalculatorRequest_unionPlugin_deserialize(
 
 
 
-RTIBool CalculatorRequest_unionPlugin_skip(
+RTIBool Calculator_addition_ResultPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -3362,10 +1941,23 @@ DDS_Long    disc;
     }
 
     switch(disc) {
-          case 1:
+          default:
         {                                    
         
-    if (!Calculator_additionRequestPlugin_skip(
+    if (!UnknownExceptionPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
+      case 0:
+        {                                    
+        
+    if (!Calculator_addition_OutPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
@@ -3375,10 +1967,10 @@ DDS_Long    disc;
             
 
         } break;
-      case 2:
+      case 1:
         {                                    
         
-    if (!Calculator_subtractionRequestPlugin_skip(
+    if (!SystemExceptionCodePlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
@@ -3405,7 +1997,7 @@ DDS_Long    disc;
 
 
 unsigned int 
-CalculatorRequest_unionPlugin_get_serialized_sample_max_size(
+Calculator_addition_ResultPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -3439,11 +2031,15 @@ CalculatorRequest_unionPlugin_get_serialized_sample_max_size(
         current_alignment);
             
 
-    union_max_size_serialized = RTIOsapiUtility_max( Calculator_additionRequestPlugin_get_serialized_sample_max_size(
+    union_max_size_serialized = RTIOsapiUtility_max( UnknownExceptionPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
             
 
-    union_max_size_serialized = RTIOsapiUtility_max( Calculator_subtractionRequestPlugin_get_serialized_sample_max_size(
+    union_max_size_serialized = RTIOsapiUtility_max( Calculator_addition_OutPlugin_get_serialized_sample_max_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
+            
+
+    union_max_size_serialized = RTIOsapiUtility_max( SystemExceptionCodePlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
             
 
@@ -3456,7 +2052,7 @@ CalculatorRequest_unionPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-CalculatorRequest_unionPlugin_get_serialized_sample_min_size(
+Calculator_addition_ResultPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -3490,11 +2086,15 @@ CalculatorRequest_unionPlugin_get_serialized_sample_min_size(
         current_alignment);
             
 
-    union_min_size_serialized = RTIOsapiUtility_min( Calculator_additionRequestPlugin_get_serialized_sample_min_size(
+    union_min_size_serialized = RTIOsapiUtility_min( UnknownExceptionPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
             
 
-    union_min_size_serialized = RTIOsapiUtility_min( Calculator_subtractionRequestPlugin_get_serialized_sample_min_size(
+    union_min_size_serialized = RTIOsapiUtility_min( Calculator_addition_OutPlugin_get_serialized_sample_min_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
+            
+
+    union_min_size_serialized = RTIOsapiUtility_min( SystemExceptionCodePlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
             
 
@@ -3513,12 +2113,12 @@ CalculatorRequest_unionPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-CalculatorRequest_unionPlugin_get_serialized_sample_size(
+Calculator_addition_ResultPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const CalculatorRequest_union * sample) 
+    const Calculator_addition_Result * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -3548,21 +2148,30 @@ CalculatorRequest_unionPlugin_get_serialized_sample_size(
             
 
     switch(sample->_d) {
-          case 1:
+          default:
         {                                    
         
-    current_alignment += Calculator_additionRequestPlugin_get_serialized_sample_size(
+    current_alignment += UnknownExceptionPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->_u.addition);
+        current_alignment, &sample->_u.unknown_exception);
+            
+
+        };
+      case 0:
+        {                                    
+        
+    current_alignment += Calculator_addition_OutPlugin_get_serialized_sample_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, 
+        current_alignment, &sample->_u.out_);
             
 
         } break;
-      case 2:
+      case 1:
         {                                    
         
-    current_alignment += Calculator_subtractionRequestPlugin_get_serialized_sample_size(
+    current_alignment += SystemExceptionCodePlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->_u.subtraction);
+        current_alignment, &sample->_u.sysx_);
             
 
         } break;
@@ -3588,7 +2197,7 @@ CalculatorRequest_unionPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-CalculatorRequest_unionPlugin_get_key_kind(void)
+Calculator_addition_ResultPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_NO_KEY;
@@ -3597,9 +2206,9 @@ CalculatorRequest_unionPlugin_get_key_kind(void)
 
 
 RTIBool 
-CalculatorRequest_unionPlugin_serialize_key(
+Calculator_addition_ResultPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const CalculatorRequest_union *sample, 
+    const Calculator_addition_Result *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -3625,7 +2234,7 @@ CalculatorRequest_unionPlugin_serialize_key(
 
     if(serialize_key) {
 
-        if (!::CalculatorRequest_unionPlugin_serialize(
+        if (!::Calculator_addition_ResultPlugin_serialize(
                 endpoint_data,
                 sample,
                 stream,
@@ -3647,9 +2256,9 @@ CalculatorRequest_unionPlugin_serialize_key(
 }
 
 
-RTIBool CalculatorRequest_unionPlugin_deserialize_key_sample(
+RTIBool Calculator_addition_ResultPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorRequest_union *sample, 
+    Calculator_addition_Result *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -3674,7 +2283,7 @@ RTIBool CalculatorRequest_unionPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-        if (!::CalculatorRequest_unionPlugin_deserialize_sample(
+        if (!::Calculator_addition_ResultPlugin_deserialize_sample(
                 endpoint_data, sample, stream,
                 RTI_FALSE, RTI_TRUE, 
                 endpoint_plugin_qos)) {
@@ -3694,9 +2303,9 @@ RTIBool CalculatorRequest_unionPlugin_deserialize_key_sample(
 
 
  
-RTIBool CalculatorRequest_unionPlugin_deserialize_key(
+RTIBool Calculator_addition_ResultPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorRequest_union **sample, 
+    Calculator_addition_Result **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -3708,7 +2317,7 @@ RTIBool CalculatorRequest_unionPlugin_deserialize_key(
     
     stream->_xTypesState.unassignable = RTI_FALSE;
     
-    result = ::CalculatorRequest_unionPlugin_deserialize_key_sample(
+    result = ::Calculator_addition_ResultPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
         
@@ -3724,7 +2333,7 @@ RTIBool CalculatorRequest_unionPlugin_deserialize_key(
 
 
 unsigned int
-CalculatorRequest_unionPlugin_get_serialized_key_max_size(
+Calculator_addition_ResultPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -3754,7 +2363,7 @@ CalculatorRequest_unionPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment += ::CalculatorRequest_unionPlugin_get_serialized_sample_max_size(
+    current_alignment += ::Calculator_addition_ResultPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
     
     if (include_encapsulation) {
@@ -3766,9 +2375,9 @@ CalculatorRequest_unionPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-CalculatorRequest_unionPlugin_serialized_sample_to_key(
+Calculator_addition_ResultPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorRequest_union *sample,
+    Calculator_addition_Result *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -3788,7 +2397,7 @@ CalculatorRequest_unionPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-        if (!::CalculatorRequest_unionPlugin_deserialize_sample(
+        if (!::Calculator_addition_ResultPlugin_deserialize_sample(
             endpoint_data, sample, stream, RTI_FALSE, 
             RTI_TRUE, endpoint_plugin_qos)) {
             return RTI_FALSE;
@@ -3813,23 +2422,23 @@ CalculatorRequest_unionPlugin_serialized_sample_to_key(
  * ------------------------------------------------------------------------ */
 
 /* --------------------------------------------------------------------------------------
- *  Type CalculatorRequest
+ *  Type Calculator_subtraction_In
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-CalculatorRequest*
-CalculatorRequestPluginSupport_create_data_w_params(
+Calculator_subtraction_In*
+Calculator_subtraction_InPluginSupport_create_data_w_params(
     const struct DDS_TypeAllocationParams_t * alloc_params){
-    CalculatorRequest *sample = NULL;
+    Calculator_subtraction_In *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, CalculatorRequest);
+        &sample, Calculator_subtraction_In);
 
     if(sample != NULL) {
-        if (!::CalculatorRequest_initialize_w_params(sample,alloc_params)) {
+        if (!::Calculator_subtraction_In_initialize_w_params(sample,alloc_params)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -3838,15 +2447,15 @@ CalculatorRequestPluginSupport_create_data_w_params(
 }
 
 
-CalculatorRequest *
-CalculatorRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    CalculatorRequest *sample = NULL;
+Calculator_subtraction_In *
+Calculator_subtraction_InPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    Calculator_subtraction_In *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, CalculatorRequest);
+        &sample, Calculator_subtraction_In);
 
     if(sample != NULL) {
-        if (!::CalculatorRequest_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+        if (!::Calculator_subtraction_In_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -3855,55 +2464,3325 @@ CalculatorRequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
 }
 
 
-CalculatorRequest *
-CalculatorRequestPluginSupport_create_data(void)
+Calculator_subtraction_In *
+Calculator_subtraction_InPluginSupport_create_data(void)
 {
-    return ::CalculatorRequestPluginSupport_create_data_ex(RTI_TRUE);
+    return ::Calculator_subtraction_InPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-CalculatorRequestPluginSupport_destroy_data_w_params(
-    CalculatorRequest *sample,
+Calculator_subtraction_InPluginSupport_destroy_data_w_params(
+    Calculator_subtraction_In *sample,
     const struct DDS_TypeDeallocationParams_t * dealloc_params) {
 
-    ::CalculatorRequest_finalize_w_params(sample,dealloc_params);
+    ::Calculator_subtraction_In_finalize_w_params(sample,dealloc_params);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-CalculatorRequestPluginSupport_destroy_data_ex(
-    CalculatorRequest *sample,RTIBool deallocate_pointers) {
+Calculator_subtraction_InPluginSupport_destroy_data_ex(
+    Calculator_subtraction_In *sample,RTIBool deallocate_pointers) {
 
-    ::CalculatorRequest_finalize_ex(sample,deallocate_pointers);
+    ::Calculator_subtraction_In_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-CalculatorRequestPluginSupport_destroy_data(
-    CalculatorRequest *sample) {
+Calculator_subtraction_InPluginSupport_destroy_data(
+    Calculator_subtraction_In *sample) {
 
-    ::CalculatorRequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    ::Calculator_subtraction_InPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-CalculatorRequestPluginSupport_copy_data(
-    CalculatorRequest *dst,
-    const CalculatorRequest *src)
+Calculator_subtraction_InPluginSupport_copy_data(
+    Calculator_subtraction_In *dst,
+    const Calculator_subtraction_In *src)
 {
-    return ::CalculatorRequest_copy(dst,src);
+    return ::Calculator_subtraction_In_copy(dst,src);
 }
 
 
 void 
-CalculatorRequestPluginSupport_print_data(
-    const CalculatorRequest *sample,
+Calculator_subtraction_InPluginSupport_print_data(
+    const Calculator_subtraction_In *sample,
+    const char *desc,
+    unsigned int indent_level)
+{
+
+
+    RTICdrType_printIndent(indent_level);
+
+    if (desc != NULL) {
+      RTILog_debug("%s:\n", desc);
+    } else {
+      RTILog_debug("\n");
+    }
+
+    if (sample == NULL) {
+      RTILog_debug("NULL\n");
+      return;
+    }
+
+
+    RTICdrType_printLong(
+        &sample->value1, "value1", indent_level + 1);
+            
+
+    RTICdrType_printLong(
+        &sample->value2, "value2", indent_level + 1);
+            
+
+
+}
+
+ 
+
+
+RTIBool 
+Calculator_subtraction_InPlugin_copy_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_subtraction_In *dst,
+    const Calculator_subtraction_In *src)
+{
+    if (endpoint_data) {} /* To avoid warnings */
+    return ::Calculator_subtraction_InPluginSupport_copy_data(dst,src);
+}
+
+/* --------------------------------------------------------------------------------------
+    (De)Serialize functions:
+ * -------------------------------------------------------------------------------------- */
+
+unsigned int 
+Calculator_subtraction_InPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+
+RTIBool 
+Calculator_subtraction_InPlugin_serialize(
+    PRESTypePluginEndpointData endpoint_data,
+    const Calculator_subtraction_In *sample, 
+    struct RTICdrStream *stream,    
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_sample, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+    RTIBool retval = RTI_TRUE;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+
+    if(serialize_sample) {
+    
+    if (!RTICdrStream_serializeLong(
+        stream, &sample->value1)) {
+        return RTI_FALSE;
+    }
+            
+
+    if (!RTICdrStream_serializeLong(
+        stream, &sample->value2)) {
+        return RTI_FALSE;
+    }
+            
+
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+  return retval;
+}
+
+
+RTIBool 
+Calculator_subtraction_InPlugin_deserialize_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_subtraction_In *sample,
+    struct RTICdrStream *stream,   
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(deserialize_encapsulation) {
+        /* Deserialize encapsulation */
+        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
+            return RTI_FALSE;
+        }
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+    
+    
+    if(deserialize_sample) {
+        ::Calculator_subtraction_In_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
+    if (!RTICdrStream_deserializeLong(
+        stream, &sample->value1)) {
+        goto fin;
+    }
+
+    if (!RTICdrStream_deserializeLong(
+        stream, &sample->value2)) {
+        goto fin;
+    }
+
+    }
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
+        return RTI_FALSE;   
+    }
+
+    if(deserialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+ 
+ 
+
+RTIBool 
+Calculator_subtraction_InPlugin_deserialize(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_subtraction_In **sample,
+    RTIBool * drop_sample,
+    struct RTICdrStream *stream,   
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos)
+{
+
+    RTIBool result;
+    if (drop_sample) {} /* To avoid warnings */
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
+
+    result = ::Calculator_subtraction_InPlugin_deserialize_sample( 
+        endpoint_data, (sample != NULL)?*sample:NULL,
+        stream, deserialize_encapsulation, deserialize_sample, 
+        endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
+ 
+}
+
+
+
+
+RTIBool Calculator_subtraction_InPlugin_skip(
+    PRESTypePluginEndpointData endpoint_data,
+    struct RTICdrStream *stream,   
+    RTIBool skip_encapsulation,
+    RTIBool skip_sample, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(skip_encapsulation) {
+        if (!RTICdrStream_skipEncapsulation(stream)) {
+            return RTI_FALSE;
+        }
+
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if (skip_sample) {
+
+    if (!RTICdrStream_skipLong(stream)) {
+        goto fin;
+    }
+            
+
+    if (!RTICdrStream_skipLong(stream)) {
+        goto fin;
+    }
+            
+
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
+        return RTI_FALSE;   
+    }
+
+    if(skip_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+unsigned int 
+Calculator_subtraction_InPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment)
+{
+
+    unsigned int initial_alignment = current_alignment;
+
+    unsigned int encapsulation_size = current_alignment;
+
+    if (endpoint_data) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+
+
+    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return current_alignment - initial_alignment;
+}
+
+
+unsigned int 
+Calculator_subtraction_InPlugin_get_serialized_sample_min_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment)
+{
+
+    unsigned int initial_alignment = current_alignment;
+
+    unsigned int encapsulation_size = current_alignment;
+
+    if (endpoint_data) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+
+
+    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return current_alignment - initial_alignment;
+}
+
+
+/* Returns the size of the sample in its serialized form (in bytes).
+ * It can also be an estimation in excess of the real buffer needed 
+ * during a call to the serialize() function.
+ * The value reported does not have to include the space for the
+ * encapsulation flags.
+ */
+unsigned int
+Calculator_subtraction_InPlugin_get_serialized_sample_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment,
+    const Calculator_subtraction_In * sample) 
+{
+
+    unsigned int initial_alignment = current_alignment;
+
+    unsigned int encapsulation_size = current_alignment;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (sample) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+
+
+    current_alignment += RTICdrType_getLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    current_alignment += RTICdrType_getLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return current_alignment - initial_alignment;
+}
+
+
+
+
+
+
+
+/* --------------------------------------------------------------------------------------
+    Key Management functions:
+ * -------------------------------------------------------------------------------------- */
+
+
+PRESTypePluginKeyKind 
+Calculator_subtraction_InPlugin_get_key_kind(void)
+{
+
+    return PRES_TYPEPLUGIN_NO_KEY;
+     
+}
+
+
+RTIBool 
+Calculator_subtraction_InPlugin_serialize_key(
+    PRESTypePluginEndpointData endpoint_data,
+    const Calculator_subtraction_In *sample, 
+    struct RTICdrStream *stream,    
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_key,
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(serialize_encapsulation) {
+    
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
+
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if(serialize_key) {
+
+        if (!::Calculator_subtraction_InPlugin_serialize(
+                endpoint_data,
+                sample,
+                stream,
+                RTI_FALSE, encapsulation_id,
+                RTI_TRUE,
+                endpoint_plugin_qos)) {
+            return RTI_FALSE;
+        }
+    
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+RTIBool Calculator_subtraction_InPlugin_deserialize_key_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_subtraction_In *sample, 
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_key,
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(deserialize_encapsulation) {
+        /* Deserialize encapsulation */
+        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
+            return RTI_FALSE;  
+        }
+
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if (deserialize_key) {
+
+        if (!::Calculator_subtraction_InPlugin_deserialize_sample(
+                endpoint_data, sample, stream,
+                RTI_FALSE, RTI_TRUE, 
+                endpoint_plugin_qos)) {
+            return RTI_FALSE;
+        }
+    
+    }
+
+
+    if(deserialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+ 
+RTIBool Calculator_subtraction_InPlugin_deserialize_key(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_subtraction_In **sample, 
+    RTIBool * drop_sample,
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_key,
+    void *endpoint_plugin_qos)
+{
+    RTIBool result;
+    if (drop_sample) {} /* To avoid warnings */
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
+    
+    result = ::Calculator_subtraction_InPlugin_deserialize_key_sample(
+        endpoint_data, (sample != NULL)?*sample:NULL, stream,
+        deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
+}
+
+
+
+unsigned int
+Calculator_subtraction_InPlugin_get_serialized_key_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment)
+{
+
+    unsigned int encapsulation_size = current_alignment;
+
+
+    unsigned int initial_alignment = current_alignment;
+
+
+    if (endpoint_data) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+        
+
+    current_alignment += ::Calculator_subtraction_InPlugin_get_serialized_sample_max_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
+    
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return current_alignment - initial_alignment;
+}
+
+
+RTIBool 
+Calculator_subtraction_InPlugin_serialized_sample_to_key(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_subtraction_In *sample,
+    struct RTICdrStream *stream, 
+    RTIBool deserialize_encapsulation,  
+    RTIBool deserialize_key, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
+
+
+    if(deserialize_encapsulation) {
+        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
+            return RTI_FALSE;
+        }
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if (deserialize_key) {
+
+        if (!::Calculator_subtraction_InPlugin_deserialize_sample(
+            endpoint_data, sample, stream, RTI_FALSE, 
+            RTI_TRUE, endpoint_plugin_qos)) {
+            return RTI_FALSE;
+        }
+
+    }
+
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
+        return RTI_FALSE;   
+    }
+
+    if(deserialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+
+
+/* ------------------------------------------------------------------------
+ * Plug-in Installation Methods
+ * ------------------------------------------------------------------------ */
+
+/* --------------------------------------------------------------------------------------
+ *  Type Calculator_subtraction_Out
+ * -------------------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------------------
+    Support functions:
+ * -------------------------------------------------------------------------------------- */
+
+Calculator_subtraction_Out*
+Calculator_subtraction_OutPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params){
+    Calculator_subtraction_Out *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, Calculator_subtraction_Out);
+
+    if(sample != NULL) {
+        if (!::Calculator_subtraction_Out_initialize_w_params(sample,alloc_params)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
+Calculator_subtraction_Out *
+Calculator_subtraction_OutPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    Calculator_subtraction_Out *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, Calculator_subtraction_Out);
+
+    if(sample != NULL) {
+        if (!::Calculator_subtraction_Out_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
+Calculator_subtraction_Out *
+Calculator_subtraction_OutPluginSupport_create_data(void)
+{
+    return ::Calculator_subtraction_OutPluginSupport_create_data_ex(RTI_TRUE);
+}
+
+
+void 
+Calculator_subtraction_OutPluginSupport_destroy_data_w_params(
+    Calculator_subtraction_Out *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params) {
+
+    ::Calculator_subtraction_Out_finalize_w_params(sample,dealloc_params);
+
+    RTIOsapiHeap_freeStructure(sample);
+}
+
+
+void 
+Calculator_subtraction_OutPluginSupport_destroy_data_ex(
+    Calculator_subtraction_Out *sample,RTIBool deallocate_pointers) {
+
+    ::Calculator_subtraction_Out_finalize_ex(sample,deallocate_pointers);
+
+    RTIOsapiHeap_freeStructure(sample);
+}
+
+
+void 
+Calculator_subtraction_OutPluginSupport_destroy_data(
+    Calculator_subtraction_Out *sample) {
+
+    ::Calculator_subtraction_OutPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+
+}
+
+
+RTIBool 
+Calculator_subtraction_OutPluginSupport_copy_data(
+    Calculator_subtraction_Out *dst,
+    const Calculator_subtraction_Out *src)
+{
+    return ::Calculator_subtraction_Out_copy(dst,src);
+}
+
+
+void 
+Calculator_subtraction_OutPluginSupport_print_data(
+    const Calculator_subtraction_Out *sample,
+    const char *desc,
+    unsigned int indent_level)
+{
+
+
+    RTICdrType_printIndent(indent_level);
+
+    if (desc != NULL) {
+      RTILog_debug("%s:\n", desc);
+    } else {
+      RTILog_debug("\n");
+    }
+
+    if (sample == NULL) {
+      RTILog_debug("NULL\n");
+      return;
+    }
+
+
+    RTICdrType_printLong(
+        &sample->return_, "return_", indent_level + 1);
+            
+
+
+}
+
+ 
+
+
+RTIBool 
+Calculator_subtraction_OutPlugin_copy_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_subtraction_Out *dst,
+    const Calculator_subtraction_Out *src)
+{
+    if (endpoint_data) {} /* To avoid warnings */
+    return ::Calculator_subtraction_OutPluginSupport_copy_data(dst,src);
+}
+
+/* --------------------------------------------------------------------------------------
+    (De)Serialize functions:
+ * -------------------------------------------------------------------------------------- */
+
+unsigned int 
+Calculator_subtraction_OutPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+
+RTIBool 
+Calculator_subtraction_OutPlugin_serialize(
+    PRESTypePluginEndpointData endpoint_data,
+    const Calculator_subtraction_Out *sample, 
+    struct RTICdrStream *stream,    
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_sample, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+    RTIBool retval = RTI_TRUE;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+
+    if(serialize_sample) {
+    
+    if (!RTICdrStream_serializeLong(
+        stream, &sample->return_)) {
+        return RTI_FALSE;
+    }
+            
+
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+  return retval;
+}
+
+
+RTIBool 
+Calculator_subtraction_OutPlugin_deserialize_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_subtraction_Out *sample,
+    struct RTICdrStream *stream,   
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(deserialize_encapsulation) {
+        /* Deserialize encapsulation */
+        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
+            return RTI_FALSE;
+        }
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+    
+    
+    if(deserialize_sample) {
+        ::Calculator_subtraction_Out_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+    
+    if (!RTICdrStream_deserializeLong(
+        stream, &sample->return_)) {
+        goto fin;
+    }
+
+    }
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
+        return RTI_FALSE;   
+    }
+
+    if(deserialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+ 
+ 
+
+RTIBool 
+Calculator_subtraction_OutPlugin_deserialize(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_subtraction_Out **sample,
+    RTIBool * drop_sample,
+    struct RTICdrStream *stream,   
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos)
+{
+
+    RTIBool result;
+    if (drop_sample) {} /* To avoid warnings */
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
+
+    result = ::Calculator_subtraction_OutPlugin_deserialize_sample( 
+        endpoint_data, (sample != NULL)?*sample:NULL,
+        stream, deserialize_encapsulation, deserialize_sample, 
+        endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
+ 
+}
+
+
+
+
+RTIBool Calculator_subtraction_OutPlugin_skip(
+    PRESTypePluginEndpointData endpoint_data,
+    struct RTICdrStream *stream,   
+    RTIBool skip_encapsulation,
+    RTIBool skip_sample, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(skip_encapsulation) {
+        if (!RTICdrStream_skipEncapsulation(stream)) {
+            return RTI_FALSE;
+        }
+
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if (skip_sample) {
+
+    if (!RTICdrStream_skipLong(stream)) {
+        goto fin;
+    }
+            
+
+
+    }
+    
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
+        return RTI_FALSE;   
+    }
+
+    if(skip_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+unsigned int 
+Calculator_subtraction_OutPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment)
+{
+
+    unsigned int initial_alignment = current_alignment;
+
+    unsigned int encapsulation_size = current_alignment;
+
+    if (endpoint_data) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+
+
+    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return current_alignment - initial_alignment;
+}
+
+
+unsigned int 
+Calculator_subtraction_OutPlugin_get_serialized_sample_min_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment)
+{
+
+    unsigned int initial_alignment = current_alignment;
+
+    unsigned int encapsulation_size = current_alignment;
+
+    if (endpoint_data) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+
+
+    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return current_alignment - initial_alignment;
+}
+
+
+/* Returns the size of the sample in its serialized form (in bytes).
+ * It can also be an estimation in excess of the real buffer needed 
+ * during a call to the serialize() function.
+ * The value reported does not have to include the space for the
+ * encapsulation flags.
+ */
+unsigned int
+Calculator_subtraction_OutPlugin_get_serialized_sample_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment,
+    const Calculator_subtraction_Out * sample) 
+{
+
+    unsigned int initial_alignment = current_alignment;
+
+    unsigned int encapsulation_size = current_alignment;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (sample) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+
+
+    current_alignment += RTICdrType_getLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return current_alignment - initial_alignment;
+}
+
+
+
+
+
+
+
+/* --------------------------------------------------------------------------------------
+    Key Management functions:
+ * -------------------------------------------------------------------------------------- */
+
+
+PRESTypePluginKeyKind 
+Calculator_subtraction_OutPlugin_get_key_kind(void)
+{
+
+    return PRES_TYPEPLUGIN_NO_KEY;
+     
+}
+
+
+RTIBool 
+Calculator_subtraction_OutPlugin_serialize_key(
+    PRESTypePluginEndpointData endpoint_data,
+    const Calculator_subtraction_Out *sample, 
+    struct RTICdrStream *stream,    
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_key,
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(serialize_encapsulation) {
+    
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
+
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if(serialize_key) {
+
+        if (!::Calculator_subtraction_OutPlugin_serialize(
+                endpoint_data,
+                sample,
+                stream,
+                RTI_FALSE, encapsulation_id,
+                RTI_TRUE,
+                endpoint_plugin_qos)) {
+            return RTI_FALSE;
+        }
+    
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+RTIBool Calculator_subtraction_OutPlugin_deserialize_key_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_subtraction_Out *sample, 
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_key,
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(deserialize_encapsulation) {
+        /* Deserialize encapsulation */
+        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
+            return RTI_FALSE;  
+        }
+
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if (deserialize_key) {
+
+        if (!::Calculator_subtraction_OutPlugin_deserialize_sample(
+                endpoint_data, sample, stream,
+                RTI_FALSE, RTI_TRUE, 
+                endpoint_plugin_qos)) {
+            return RTI_FALSE;
+        }
+    
+    }
+
+
+    if(deserialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+ 
+RTIBool Calculator_subtraction_OutPlugin_deserialize_key(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_subtraction_Out **sample, 
+    RTIBool * drop_sample,
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_key,
+    void *endpoint_plugin_qos)
+{
+    RTIBool result;
+    if (drop_sample) {} /* To avoid warnings */
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
+    
+    result = ::Calculator_subtraction_OutPlugin_deserialize_key_sample(
+        endpoint_data, (sample != NULL)?*sample:NULL, stream,
+        deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
+}
+
+
+
+unsigned int
+Calculator_subtraction_OutPlugin_get_serialized_key_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment)
+{
+
+    unsigned int encapsulation_size = current_alignment;
+
+
+    unsigned int initial_alignment = current_alignment;
+
+
+    if (endpoint_data) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+        
+
+    current_alignment += ::Calculator_subtraction_OutPlugin_get_serialized_sample_max_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
+    
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return current_alignment - initial_alignment;
+}
+
+
+RTIBool 
+Calculator_subtraction_OutPlugin_serialized_sample_to_key(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_subtraction_Out *sample,
+    struct RTICdrStream *stream, 
+    RTIBool deserialize_encapsulation,  
+    RTIBool deserialize_key, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    RTIBool done = RTI_FALSE;
+
+    if (stream == NULL) goto fin; /* To avoid warnings */
+
+
+    if(deserialize_encapsulation) {
+        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
+            return RTI_FALSE;
+        }
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if (deserialize_key) {
+
+        if (!::Calculator_subtraction_OutPlugin_deserialize_sample(
+            endpoint_data, sample, stream, RTI_FALSE, 
+            RTI_TRUE, endpoint_plugin_qos)) {
+            return RTI_FALSE;
+        }
+
+    }
+
+
+    done = RTI_TRUE;
+fin:
+    if (done != RTI_TRUE && 
+        RTICdrStream_getRemainder(stream) >=
+            RTI_CDR_PARAMETER_HEADER_ALIGNMENT) {
+        return RTI_FALSE;   
+    }
+
+    if(deserialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+
+
+/* ------------------------------------------------------------------------
+ * Plug-in Installation Methods
+ * ------------------------------------------------------------------------ */
+
+/* --------------------------------------------------------------------------------------
+ *  Type Calculator_subtraction_Result
+ * -------------------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------------------
+    Support functions:
+ * -------------------------------------------------------------------------------------- */
+
+Calculator_subtraction_Result*
+Calculator_subtraction_ResultPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params){
+    Calculator_subtraction_Result *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, Calculator_subtraction_Result);
+
+    if(sample != NULL) {
+        if (!::Calculator_subtraction_Result_initialize_w_params(sample,alloc_params)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
+Calculator_subtraction_Result *
+Calculator_subtraction_ResultPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    Calculator_subtraction_Result *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, Calculator_subtraction_Result);
+
+    if(sample != NULL) {
+        if (!::Calculator_subtraction_Result_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
+Calculator_subtraction_Result *
+Calculator_subtraction_ResultPluginSupport_create_data(void)
+{
+    return ::Calculator_subtraction_ResultPluginSupport_create_data_ex(RTI_TRUE);
+}
+
+
+void 
+Calculator_subtraction_ResultPluginSupport_destroy_data_w_params(
+    Calculator_subtraction_Result *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params) {
+
+    ::Calculator_subtraction_Result_finalize_w_params(sample,dealloc_params);
+
+    RTIOsapiHeap_freeStructure(sample);
+}
+
+
+void 
+Calculator_subtraction_ResultPluginSupport_destroy_data_ex(
+    Calculator_subtraction_Result *sample,RTIBool deallocate_pointers) {
+
+    ::Calculator_subtraction_Result_finalize_ex(sample,deallocate_pointers);
+
+    RTIOsapiHeap_freeStructure(sample);
+}
+
+
+void 
+Calculator_subtraction_ResultPluginSupport_destroy_data(
+    Calculator_subtraction_Result *sample) {
+
+    ::Calculator_subtraction_ResultPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+
+}
+
+
+RTIBool 
+Calculator_subtraction_ResultPluginSupport_copy_data(
+    Calculator_subtraction_Result *dst,
+    const Calculator_subtraction_Result *src)
+{
+    return ::Calculator_subtraction_Result_copy(dst,src);
+}
+
+
+void 
+Calculator_subtraction_ResultPluginSupport_print_data(
+    const Calculator_subtraction_Result *sample,
+    const char *desc,
+    unsigned int indent_level)
+{
+
+
+    RTICdrType_printIndent(indent_level);
+
+    if (desc != NULL) {
+      RTILog_debug("%s:\n", desc);
+    } else {
+      RTILog_debug("\n");
+    }
+
+    if (sample == NULL) {
+      RTILog_debug("NULL\n");
+      return;
+    }
+
+
+    RTICdrType_printLong(
+        &sample->_d, "_d", indent_level + 1);
+            
+
+    switch(sample->_d) {
+          default:
+        {                                    
+        
+    UnknownExceptionPluginSupport_print_data(
+        &sample->_u.unknown_exception, "_u.unknown_exception", indent_level + 1);
+            
+
+        };
+      case 0:
+        {                                    
+        
+    Calculator_subtraction_OutPluginSupport_print_data(
+        &sample->_u.out_, "_u.out_", indent_level + 1);
+            
+
+        } break;
+      case 1:
+        {                                    
+        
+    SystemExceptionCodePluginSupport_print_data(
+        &sample->_u.sysx_, "_u.sysx_", indent_level + 1);
+            
+
+        } break;
+              
+    }
+      
+
+}
+
+ 
+
+
+RTIBool 
+Calculator_subtraction_ResultPlugin_copy_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_subtraction_Result *dst,
+    const Calculator_subtraction_Result *src)
+{
+    if (endpoint_data) {} /* To avoid warnings */
+    return ::Calculator_subtraction_ResultPluginSupport_copy_data(dst,src);
+}
+
+/* --------------------------------------------------------------------------------------
+    (De)Serialize functions:
+ * -------------------------------------------------------------------------------------- */
+
+unsigned int 
+Calculator_subtraction_ResultPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+
+RTIBool 
+Calculator_subtraction_ResultPlugin_serialize(
+    PRESTypePluginEndpointData endpoint_data,
+    const Calculator_subtraction_Result *sample, 
+    struct RTICdrStream *stream,    
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_sample, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+    RTIBool retval = RTI_TRUE;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+
+    if(serialize_sample) {
+    
+    if (!RTICdrStream_serializeLong(
+        stream, &sample->_d)) {
+        return RTI_FALSE;
+    }
+            
+
+    switch(sample->_d) {
+          default:
+        {                                    
+        
+    if (!UnknownExceptionPlugin_serialize(
+            endpoint_data,
+            &sample->_u.unknown_exception, 
+            stream, 
+            RTI_FALSE, encapsulation_id, 
+            RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
+      case 0:
+        {                                    
+        
+    if (!Calculator_subtraction_OutPlugin_serialize(
+            endpoint_data,
+            &sample->_u.out_, 
+            stream, 
+            RTI_FALSE, encapsulation_id, 
+            RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        } break;
+      case 1:
+        {                                    
+        
+    if (!SystemExceptionCodePlugin_serialize(
+            endpoint_data,
+            &sample->_u.sysx_, 
+            stream, 
+            RTI_FALSE, encapsulation_id, 
+            RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        } break;
+              
+    }
+      
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+  return retval;
+}
+
+
+RTIBool 
+Calculator_subtraction_ResultPlugin_deserialize_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_subtraction_Result *sample,
+    struct RTICdrStream *stream,   
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(deserialize_encapsulation) {
+        /* Deserialize encapsulation */
+        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
+            return RTI_FALSE;
+        }
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+    
+    
+    if(deserialize_sample) {
+    
+    if (!RTICdrStream_deserializeLong(
+        stream, &sample->_d)) {
+        return RTI_FALSE;
+    }
+
+    switch(sample->_d) {
+          default:
+        {                                    
+        
+    if (!UnknownExceptionPlugin_deserialize_sample(
+            endpoint_data,
+            &sample->_u.unknown_exception,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
+      case 0:
+        {                                    
+        
+    if (!Calculator_subtraction_OutPlugin_deserialize_sample(
+            endpoint_data,
+            &sample->_u.out_,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        } break;
+      case 1:
+        {                                    
+        
+    if (!SystemExceptionCodePlugin_deserialize_sample(
+            endpoint_data,
+            &sample->_u.sysx_,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        } break;
+              
+    }
+      
+    }
+
+    if(deserialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+ 
+ 
+
+RTIBool 
+Calculator_subtraction_ResultPlugin_deserialize(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_subtraction_Result **sample,
+    RTIBool * drop_sample,
+    struct RTICdrStream *stream,   
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos)
+{
+
+    RTIBool result;
+    if (drop_sample) {} /* To avoid warnings */
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
+
+    result = ::Calculator_subtraction_ResultPlugin_deserialize_sample( 
+        endpoint_data, (sample != NULL)?*sample:NULL,
+        stream, deserialize_encapsulation, deserialize_sample, 
+        endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
+ 
+}
+
+
+
+
+RTIBool Calculator_subtraction_ResultPlugin_skip(
+    PRESTypePluginEndpointData endpoint_data,
+    struct RTICdrStream *stream,   
+    RTIBool skip_encapsulation,
+    RTIBool skip_sample, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(skip_encapsulation) {
+        if (!RTICdrStream_skipEncapsulation(stream)) {
+            return RTI_FALSE;
+        }
+
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if (skip_sample) {
+DDS_Long    disc;
+
+    if (!RTICdrStream_deserializeLong(
+        stream, &disc)) {
+        return RTI_FALSE;
+    }
+
+    switch(disc) {
+          default:
+        {                                    
+        
+    if (!UnknownExceptionPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
+      case 0:
+        {                                    
+        
+    if (!Calculator_subtraction_OutPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        } break;
+      case 1:
+        {                                    
+        
+    if (!SystemExceptionCodePlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        } break;
+              
+    }
+      
+
+    }
+    
+
+    if(skip_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+unsigned int 
+Calculator_subtraction_ResultPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment)
+{
+
+    unsigned int union_max_size_serialized = 0;
+
+    unsigned int initial_alignment = current_alignment;
+
+    unsigned int encapsulation_size = current_alignment;
+
+    if (endpoint_data) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+
+
+    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    union_max_size_serialized = RTIOsapiUtility_max( UnknownExceptionPlugin_get_serialized_sample_max_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
+            
+
+    union_max_size_serialized = RTIOsapiUtility_max( Calculator_subtraction_OutPlugin_get_serialized_sample_max_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
+            
+
+    union_max_size_serialized = RTIOsapiUtility_max( SystemExceptionCodePlugin_get_serialized_sample_max_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
+            
+
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return union_max_size_serialized + current_alignment - initial_alignment;
+}
+
+
+unsigned int 
+Calculator_subtraction_ResultPlugin_get_serialized_sample_min_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment)
+{
+
+    unsigned int union_min_size_serialized = 0xffffffff;
+
+    unsigned int initial_alignment = current_alignment;
+
+    unsigned int encapsulation_size = current_alignment;
+
+    if (endpoint_data) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+
+
+    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    union_min_size_serialized = RTIOsapiUtility_min( UnknownExceptionPlugin_get_serialized_sample_min_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
+            
+
+    union_min_size_serialized = RTIOsapiUtility_min( Calculator_subtraction_OutPlugin_get_serialized_sample_min_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
+            
+
+    union_min_size_serialized = RTIOsapiUtility_min( SystemExceptionCodePlugin_get_serialized_sample_min_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
+            
+
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return union_min_size_serialized + current_alignment - initial_alignment;
+}
+
+
+/* Returns the size of the sample in its serialized form (in bytes).
+ * It can also be an estimation in excess of the real buffer needed 
+ * during a call to the serialize() function.
+ * The value reported does not have to include the space for the
+ * encapsulation flags.
+ */
+unsigned int
+Calculator_subtraction_ResultPlugin_get_serialized_sample_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment,
+    const Calculator_subtraction_Result * sample) 
+{
+
+    unsigned int initial_alignment = current_alignment;
+
+    unsigned int encapsulation_size = current_alignment;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (sample) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+
+
+    current_alignment += RTICdrType_getLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    switch(sample->_d) {
+          default:
+        {                                    
+        
+    current_alignment += UnknownExceptionPlugin_get_serialized_sample_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, 
+        current_alignment, &sample->_u.unknown_exception);
+            
+
+        };
+      case 0:
+        {                                    
+        
+    current_alignment += Calculator_subtraction_OutPlugin_get_serialized_sample_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, 
+        current_alignment, &sample->_u.out_);
+            
+
+        } break;
+      case 1:
+        {                                    
+        
+    current_alignment += SystemExceptionCodePlugin_get_serialized_sample_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, 
+        current_alignment, &sample->_u.sysx_);
+            
+
+        } break;
+              
+    }
+      
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return current_alignment - initial_alignment;
+}
+
+
+
+
+
+
+
+/* --------------------------------------------------------------------------------------
+    Key Management functions:
+ * -------------------------------------------------------------------------------------- */
+
+
+PRESTypePluginKeyKind 
+Calculator_subtraction_ResultPlugin_get_key_kind(void)
+{
+
+    return PRES_TYPEPLUGIN_NO_KEY;
+     
+}
+
+
+RTIBool 
+Calculator_subtraction_ResultPlugin_serialize_key(
+    PRESTypePluginEndpointData endpoint_data,
+    const Calculator_subtraction_Result *sample, 
+    struct RTICdrStream *stream,    
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_key,
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(serialize_encapsulation) {
+    
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
+
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if(serialize_key) {
+
+        if (!::Calculator_subtraction_ResultPlugin_serialize(
+                endpoint_data,
+                sample,
+                stream,
+                RTI_FALSE, encapsulation_id,
+                RTI_TRUE,
+                endpoint_plugin_qos)) {
+            return RTI_FALSE;
+        }
+    
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+RTIBool Calculator_subtraction_ResultPlugin_deserialize_key_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_subtraction_Result *sample, 
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_key,
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(deserialize_encapsulation) {
+        /* Deserialize encapsulation */
+        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
+            return RTI_FALSE;  
+        }
+
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if (deserialize_key) {
+
+        if (!::Calculator_subtraction_ResultPlugin_deserialize_sample(
+                endpoint_data, sample, stream,
+                RTI_FALSE, RTI_TRUE, 
+                endpoint_plugin_qos)) {
+            return RTI_FALSE;
+        }
+    
+    }
+
+
+    if(deserialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+ 
+RTIBool Calculator_subtraction_ResultPlugin_deserialize_key(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_subtraction_Result **sample, 
+    RTIBool * drop_sample,
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_key,
+    void *endpoint_plugin_qos)
+{
+    RTIBool result;
+    if (drop_sample) {} /* To avoid warnings */
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
+    
+    result = ::Calculator_subtraction_ResultPlugin_deserialize_key_sample(
+        endpoint_data, (sample != NULL)?*sample:NULL, stream,
+        deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
+}
+
+
+
+unsigned int
+Calculator_subtraction_ResultPlugin_get_serialized_key_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment)
+{
+
+    unsigned int encapsulation_size = current_alignment;
+
+
+    unsigned int initial_alignment = current_alignment;
+
+
+    if (endpoint_data) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+        
+
+    current_alignment += ::Calculator_subtraction_ResultPlugin_get_serialized_sample_max_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
+    
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return current_alignment - initial_alignment;
+}
+
+
+RTIBool 
+Calculator_subtraction_ResultPlugin_serialized_sample_to_key(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_subtraction_Result *sample,
+    struct RTICdrStream *stream, 
+    RTIBool deserialize_encapsulation,  
+    RTIBool deserialize_key, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+
+    if(deserialize_encapsulation) {
+        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
+            return RTI_FALSE;
+        }
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if (deserialize_key) {
+
+        if (!::Calculator_subtraction_ResultPlugin_deserialize_sample(
+            endpoint_data, sample, stream, RTI_FALSE, 
+            RTI_TRUE, endpoint_plugin_qos)) {
+            return RTI_FALSE;
+        }
+
+    }
+
+
+    if(deserialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+
+
+/* ------------------------------------------------------------------------
+ * Plug-in Installation Methods
+ * ------------------------------------------------------------------------ */
+
+/* --------------------------------------------------------------------------------------
+ *  Type Calculator_Call
+ * -------------------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------------------
+    Support functions:
+ * -------------------------------------------------------------------------------------- */
+
+Calculator_Call*
+Calculator_CallPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params){
+    Calculator_Call *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, Calculator_Call);
+
+    if(sample != NULL) {
+        if (!::Calculator_Call_initialize_w_params(sample,alloc_params)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
+Calculator_Call *
+Calculator_CallPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    Calculator_Call *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, Calculator_Call);
+
+    if(sample != NULL) {
+        if (!::Calculator_Call_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
+Calculator_Call *
+Calculator_CallPluginSupport_create_data(void)
+{
+    return ::Calculator_CallPluginSupport_create_data_ex(RTI_TRUE);
+}
+
+
+void 
+Calculator_CallPluginSupport_destroy_data_w_params(
+    Calculator_Call *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params) {
+
+    ::Calculator_Call_finalize_w_params(sample,dealloc_params);
+
+    RTIOsapiHeap_freeStructure(sample);
+}
+
+
+void 
+Calculator_CallPluginSupport_destroy_data_ex(
+    Calculator_Call *sample,RTIBool deallocate_pointers) {
+
+    ::Calculator_Call_finalize_ex(sample,deallocate_pointers);
+
+    RTIOsapiHeap_freeStructure(sample);
+}
+
+
+void 
+Calculator_CallPluginSupport_destroy_data(
+    Calculator_Call *sample) {
+
+    ::Calculator_CallPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+
+}
+
+
+RTIBool 
+Calculator_CallPluginSupport_copy_data(
+    Calculator_Call *dst,
+    const Calculator_Call *src)
+{
+    return ::Calculator_Call_copy(dst,src);
+}
+
+
+void 
+Calculator_CallPluginSupport_print_data(
+    const Calculator_Call *sample,
+    const char *desc,
+    unsigned int indent_level)
+{
+
+
+    RTICdrType_printIndent(indent_level);
+
+    if (desc != NULL) {
+      RTILog_debug("%s:\n", desc);
+    } else {
+      RTILog_debug("\n");
+    }
+
+    if (sample == NULL) {
+      RTILog_debug("NULL\n");
+      return;
+    }
+
+
+    RTICdrType_printLong(
+        &sample->_d, "_d", indent_level + 1);
+            
+
+    switch(sample->_d) {
+          default:
+        {                                    
+        
+    UnknownOperationPluginSupport_print_data(
+        &sample->_u.unknown_operation, "_u.unknown_operation", indent_level + 1);
+            
+
+        };
+      case 0xCBC6CEAA:
+        {                                    
+        
+    Calculator_addition_InPluginSupport_print_data(
+        &sample->_u.addition, "_u.addition", indent_level + 1);
+            
+
+        } break;
+      case 0xCA019A14:
+        {                                    
+        
+    Calculator_subtraction_InPluginSupport_print_data(
+        &sample->_u.subtraction, "_u.subtraction", indent_level + 1);
+            
+
+        } break;
+              
+    }
+      
+
+}
+
+ 
+
+
+RTIBool 
+Calculator_CallPlugin_copy_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_Call *dst,
+    const Calculator_Call *src)
+{
+    if (endpoint_data) {} /* To avoid warnings */
+    return ::Calculator_CallPluginSupport_copy_data(dst,src);
+}
+
+/* --------------------------------------------------------------------------------------
+    (De)Serialize functions:
+ * -------------------------------------------------------------------------------------- */
+
+unsigned int 
+Calculator_CallPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment);
+
+
+RTIBool 
+Calculator_CallPlugin_serialize(
+    PRESTypePluginEndpointData endpoint_data,
+    const Calculator_Call *sample, 
+    struct RTICdrStream *stream,    
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_sample, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+    RTIBool retval = RTI_TRUE;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(serialize_encapsulation) {
+  
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+
+    if(serialize_sample) {
+    
+    if (!RTICdrStream_serializeLong(
+        stream, &sample->_d)) {
+        return RTI_FALSE;
+    }
+            
+
+    switch(sample->_d) {
+          default:
+        {                                    
+        
+    if (!UnknownOperationPlugin_serialize(
+            endpoint_data,
+            &sample->_u.unknown_operation, 
+            stream, 
+            RTI_FALSE, encapsulation_id, 
+            RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
+      case 0xCBC6CEAA:
+        {                                    
+        
+    if (!Calculator_addition_InPlugin_serialize(
+            endpoint_data,
+            &sample->_u.addition, 
+            stream, 
+            RTI_FALSE, encapsulation_id, 
+            RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        } break;
+      case 0xCA019A14:
+        {                                    
+        
+    if (!Calculator_subtraction_InPlugin_serialize(
+            endpoint_data,
+            &sample->_u.subtraction, 
+            stream, 
+            RTI_FALSE, encapsulation_id, 
+            RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        } break;
+              
+    }
+      
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+  return retval;
+}
+
+
+RTIBool 
+Calculator_CallPlugin_deserialize_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_Call *sample,
+    struct RTICdrStream *stream,   
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(deserialize_encapsulation) {
+        /* Deserialize encapsulation */
+        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
+            return RTI_FALSE;
+        }
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+    
+    
+    if(deserialize_sample) {
+    
+    if (!RTICdrStream_deserializeLong(
+        stream, &sample->_d)) {
+        return RTI_FALSE;
+    }
+
+    switch(sample->_d) {
+          default:
+        {                                    
+        
+    if (!UnknownOperationPlugin_deserialize_sample(
+            endpoint_data,
+            &sample->_u.unknown_operation,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
+      case 0xCBC6CEAA:
+        {                                    
+        
+    if (!Calculator_addition_InPlugin_deserialize_sample(
+            endpoint_data,
+            &sample->_u.addition,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        } break;
+      case 0xCA019A14:
+        {                                    
+        
+    if (!Calculator_subtraction_InPlugin_deserialize_sample(
+            endpoint_data,
+            &sample->_u.subtraction,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        } break;
+              
+    }
+      
+    }
+
+    if(deserialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+ 
+ 
+
+RTIBool 
+Calculator_CallPlugin_deserialize(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_Call **sample,
+    RTIBool * drop_sample,
+    struct RTICdrStream *stream,   
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_sample, 
+    void *endpoint_plugin_qos)
+{
+
+    RTIBool result;
+    if (drop_sample) {} /* To avoid warnings */
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
+
+    result = ::Calculator_CallPlugin_deserialize_sample( 
+        endpoint_data, (sample != NULL)?*sample:NULL,
+        stream, deserialize_encapsulation, deserialize_sample, 
+        endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
+ 
+}
+
+
+
+
+RTIBool Calculator_CallPlugin_skip(
+    PRESTypePluginEndpointData endpoint_data,
+    struct RTICdrStream *stream,   
+    RTIBool skip_encapsulation,
+    RTIBool skip_sample, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(skip_encapsulation) {
+        if (!RTICdrStream_skipEncapsulation(stream)) {
+            return RTI_FALSE;
+        }
+
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if (skip_sample) {
+DDS_Long    disc;
+
+    if (!RTICdrStream_deserializeLong(
+        stream, &disc)) {
+        return RTI_FALSE;
+    }
+
+    switch(disc) {
+          default:
+        {                                    
+        
+    if (!UnknownOperationPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
+      case 0xCBC6CEAA:
+        {                                    
+        
+    if (!Calculator_addition_InPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        } break;
+      case 0xCA019A14:
+        {                                    
+        
+    if (!Calculator_subtraction_InPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        } break;
+              
+    }
+      
+
+    }
+    
+
+    if(skip_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+unsigned int 
+Calculator_CallPlugin_get_serialized_sample_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment)
+{
+
+    unsigned int union_max_size_serialized = 0;
+
+    unsigned int initial_alignment = current_alignment;
+
+    unsigned int encapsulation_size = current_alignment;
+
+    if (endpoint_data) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+
+
+    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    union_max_size_serialized = RTIOsapiUtility_max( UnknownOperationPlugin_get_serialized_sample_max_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
+            
+
+    union_max_size_serialized = RTIOsapiUtility_max( Calculator_addition_InPlugin_get_serialized_sample_max_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
+            
+
+    union_max_size_serialized = RTIOsapiUtility_max( Calculator_subtraction_InPlugin_get_serialized_sample_max_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
+            
+
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return union_max_size_serialized + current_alignment - initial_alignment;
+}
+
+
+unsigned int 
+Calculator_CallPlugin_get_serialized_sample_min_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment)
+{
+
+    unsigned int union_min_size_serialized = 0xffffffff;
+
+    unsigned int initial_alignment = current_alignment;
+
+    unsigned int encapsulation_size = current_alignment;
+
+    if (endpoint_data) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+
+
+    current_alignment +=  RTICdrType_getLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    union_min_size_serialized = RTIOsapiUtility_min( UnknownOperationPlugin_get_serialized_sample_min_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
+            
+
+    union_min_size_serialized = RTIOsapiUtility_min( Calculator_addition_InPlugin_get_serialized_sample_min_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
+            
+
+    union_min_size_serialized = RTIOsapiUtility_min( Calculator_subtraction_InPlugin_get_serialized_sample_min_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
+            
+
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return union_min_size_serialized + current_alignment - initial_alignment;
+}
+
+
+/* Returns the size of the sample in its serialized form (in bytes).
+ * It can also be an estimation in excess of the real buffer needed 
+ * during a call to the serialize() function.
+ * The value reported does not have to include the space for the
+ * encapsulation flags.
+ */
+unsigned int
+Calculator_CallPlugin_get_serialized_sample_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment,
+    const Calculator_Call * sample) 
+{
+
+    unsigned int initial_alignment = current_alignment;
+
+    unsigned int encapsulation_size = current_alignment;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (sample) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+
+
+    current_alignment += RTICdrType_getLongMaxSizeSerialized(
+        current_alignment);
+            
+
+    switch(sample->_d) {
+          default:
+        {                                    
+        
+    current_alignment += UnknownOperationPlugin_get_serialized_sample_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, 
+        current_alignment, &sample->_u.unknown_operation);
+            
+
+        };
+      case 0xCBC6CEAA:
+        {                                    
+        
+    current_alignment += Calculator_addition_InPlugin_get_serialized_sample_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, 
+        current_alignment, &sample->_u.addition);
+            
+
+        } break;
+      case 0xCA019A14:
+        {                                    
+        
+    current_alignment += Calculator_subtraction_InPlugin_get_serialized_sample_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, 
+        current_alignment, &sample->_u.subtraction);
+            
+
+        } break;
+              
+    }
+      
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return current_alignment - initial_alignment;
+}
+
+
+
+
+
+
+
+/* --------------------------------------------------------------------------------------
+    Key Management functions:
+ * -------------------------------------------------------------------------------------- */
+
+
+PRESTypePluginKeyKind 
+Calculator_CallPlugin_get_key_kind(void)
+{
+
+    return PRES_TYPEPLUGIN_NO_KEY;
+     
+}
+
+
+RTIBool 
+Calculator_CallPlugin_serialize_key(
+    PRESTypePluginEndpointData endpoint_data,
+    const Calculator_Call *sample, 
+    struct RTICdrStream *stream,    
+    RTIBool serialize_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    RTIBool serialize_key,
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(serialize_encapsulation) {
+    
+        if (!RTICdrStream_serializeAndSetCdrEncapsulation(stream, encapsulation_id)) {
+            return RTI_FALSE;
+        }
+
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if(serialize_key) {
+
+        if (!::Calculator_CallPlugin_serialize(
+                endpoint_data,
+                sample,
+                stream,
+                RTI_FALSE, encapsulation_id,
+                RTI_TRUE,
+                endpoint_plugin_qos)) {
+            return RTI_FALSE;
+        }
+    
+    }
+
+
+    if(serialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+RTIBool Calculator_CallPlugin_deserialize_key_sample(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_Call *sample, 
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_key,
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+    if (endpoint_data) {} /* To avoid warnings */
+    if (endpoint_plugin_qos) {} /* To avoid warnings */
+
+
+    if(deserialize_encapsulation) {
+        /* Deserialize encapsulation */
+        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
+            return RTI_FALSE;  
+        }
+
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if (deserialize_key) {
+
+        if (!::Calculator_CallPlugin_deserialize_sample(
+                endpoint_data, sample, stream,
+                RTI_FALSE, RTI_TRUE, 
+                endpoint_plugin_qos)) {
+            return RTI_FALSE;
+        }
+    
+    }
+
+
+    if(deserialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+ 
+RTIBool Calculator_CallPlugin_deserialize_key(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_Call **sample, 
+    RTIBool * drop_sample,
+    struct RTICdrStream *stream,
+    RTIBool deserialize_encapsulation,
+    RTIBool deserialize_key,
+    void *endpoint_plugin_qos)
+{
+    RTIBool result;
+    if (drop_sample) {} /* To avoid warnings */
+    
+    stream->_xTypesState.unassignable = RTI_FALSE;
+    
+    result = ::Calculator_CallPlugin_deserialize_key_sample(
+        endpoint_data, (sample != NULL)?*sample:NULL, stream,
+        deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
+        
+    if (result) {
+        if (stream->_xTypesState.unassignable) {
+            result = RTI_FALSE;
+        }
+    }
+    
+    return result;
+}
+
+
+
+unsigned int
+Calculator_CallPlugin_get_serialized_key_max_size(
+    PRESTypePluginEndpointData endpoint_data,
+    RTIBool include_encapsulation,
+    RTIEncapsulationId encapsulation_id,
+    unsigned int current_alignment)
+{
+
+    unsigned int encapsulation_size = current_alignment;
+
+
+    unsigned int initial_alignment = current_alignment;
+
+
+    if (endpoint_data) {} /* To avoid warnings */
+
+
+    if (include_encapsulation) {
+        if (!RTICdrEncapsulation_validEncapsulationId(encapsulation_id)) {
+            return 1;
+        }
+
+
+        RTICdrStream_getEncapsulationSize(encapsulation_size);
+        encapsulation_size -= current_alignment;
+        current_alignment = 0;
+        initial_alignment = 0;
+
+    }
+        
+
+    current_alignment += ::Calculator_CallPlugin_get_serialized_sample_max_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
+    
+    if (include_encapsulation) {
+        current_alignment += encapsulation_size;
+    }
+
+    return current_alignment - initial_alignment;
+}
+
+
+RTIBool 
+Calculator_CallPlugin_serialized_sample_to_key(
+    PRESTypePluginEndpointData endpoint_data,
+    Calculator_Call *sample,
+    struct RTICdrStream *stream, 
+    RTIBool deserialize_encapsulation,  
+    RTIBool deserialize_key, 
+    void *endpoint_plugin_qos)
+{
+    char * position = NULL;
+
+
+    if(deserialize_encapsulation) {
+        if (!RTICdrStream_deserializeAndSetCdrEncapsulation(stream)) {
+            return RTI_FALSE;
+        }
+
+        position = RTICdrStream_resetAlignment(stream);
+
+    }
+
+    if (deserialize_key) {
+
+        if (!::Calculator_CallPlugin_deserialize_sample(
+            endpoint_data, sample, stream, RTI_FALSE, 
+            RTI_TRUE, endpoint_plugin_qos)) {
+            return RTI_FALSE;
+        }
+
+    }
+
+
+    if(deserialize_encapsulation) {
+        RTICdrStream_restoreAlignment(stream,position);
+    }
+
+
+    return RTI_TRUE;
+}
+
+
+
+
+/* ------------------------------------------------------------------------
+ * Plug-in Installation Methods
+ * ------------------------------------------------------------------------ */
+
+/* --------------------------------------------------------------------------------------
+ *  Type Calculator_Request
+ * -------------------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------------------
+    Support functions:
+ * -------------------------------------------------------------------------------------- */
+
+Calculator_Request*
+Calculator_RequestPluginSupport_create_data_w_params(
+    const struct DDS_TypeAllocationParams_t * alloc_params){
+    Calculator_Request *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, Calculator_Request);
+
+    if(sample != NULL) {
+        if (!::Calculator_Request_initialize_w_params(sample,alloc_params)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
+Calculator_Request *
+Calculator_RequestPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    Calculator_Request *sample = NULL;
+
+    RTIOsapiHeap_allocateStructure(
+        &sample, Calculator_Request);
+
+    if(sample != NULL) {
+        if (!::Calculator_Request_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+            RTIOsapiHeap_freeStructure(sample);
+            return NULL;
+        }
+    }        
+    return sample; 
+}
+
+
+Calculator_Request *
+Calculator_RequestPluginSupport_create_data(void)
+{
+    return ::Calculator_RequestPluginSupport_create_data_ex(RTI_TRUE);
+}
+
+
+void 
+Calculator_RequestPluginSupport_destroy_data_w_params(
+    Calculator_Request *sample,
+    const struct DDS_TypeDeallocationParams_t * dealloc_params) {
+
+    ::Calculator_Request_finalize_w_params(sample,dealloc_params);
+
+    RTIOsapiHeap_freeStructure(sample);
+}
+
+
+void 
+Calculator_RequestPluginSupport_destroy_data_ex(
+    Calculator_Request *sample,RTIBool deallocate_pointers) {
+
+    ::Calculator_Request_finalize_ex(sample,deallocate_pointers);
+
+    RTIOsapiHeap_freeStructure(sample);
+}
+
+
+void 
+Calculator_RequestPluginSupport_destroy_data(
+    Calculator_Request *sample) {
+
+    ::Calculator_RequestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+
+}
+
+
+RTIBool 
+Calculator_RequestPluginSupport_copy_data(
+    Calculator_Request *dst,
+    const Calculator_Request *src)
+{
+    return ::Calculator_Request_copy(dst,src);
+}
+
+
+void 
+Calculator_RequestPluginSupport_print_data(
+    const Calculator_Request *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -3924,11 +5803,11 @@ CalculatorRequestPluginSupport_print_data(
 
 
     RequestHeaderPluginSupport_print_data(
-        &sample->_header, "_header", indent_level + 1);
+        &sample->header, "header", indent_level + 1);
             
 
-    CalculatorRequest_unionPluginSupport_print_data(
-        &sample->unio, "unio", indent_level + 1);
+    Calculator_CallPluginSupport_print_data(
+        &sample->request, "request", indent_level + 1);
             
 
 
@@ -3942,7 +5821,7 @@ CalculatorRequestPluginSupport_print_data(
 
 
 PRESTypePluginParticipantData 
-CalculatorRequestPlugin_on_participant_attached(
+Calculator_RequestPlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration,
@@ -3961,7 +5840,7 @@ CalculatorRequestPlugin_on_participant_attached(
 
 
 void 
-CalculatorRequestPlugin_on_participant_detached(
+Calculator_RequestPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
 
@@ -3970,7 +5849,7 @@ CalculatorRequestPlugin_on_participant_detached(
 
 
 PRESTypePluginEndpointData
-CalculatorRequestPlugin_on_endpoint_attached(
+Calculator_RequestPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
@@ -3987,9 +5866,9 @@ CalculatorRequestPlugin_on_endpoint_attached(
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            ::CalculatorRequestPluginSupport_create_data,
+            ::Calculator_RequestPluginSupport_create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            ::CalculatorRequestPluginSupport_destroy_data,
+            ::Calculator_RequestPluginSupport_destroy_data,
             NULL, NULL);
 
     if (epd == NULL) {
@@ -3999,7 +5878,7 @@ CalculatorRequestPlugin_on_endpoint_attached(
     
 
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
-        serializedSampleMaxSize = ::CalculatorRequestPlugin_get_serialized_sample_max_size(
+        serializedSampleMaxSize = ::Calculator_RequestPlugin_get_serialized_sample_max_size(
             epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
             
         PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
@@ -4008,9 +5887,9 @@ CalculatorRequestPlugin_on_endpoint_attached(
                 epd,
                 endpoint_info,
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                ::CalculatorRequestPlugin_get_serialized_sample_max_size, epd,
+                ::Calculator_RequestPlugin_get_serialized_sample_max_size, epd,
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            ::CalculatorRequestPlugin_get_serialized_sample_size,
+            ::Calculator_RequestPlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
             return NULL;
@@ -4024,7 +5903,7 @@ CalculatorRequestPlugin_on_endpoint_attached(
 
 
 void 
-CalculatorRequestPlugin_on_endpoint_detached(
+Calculator_RequestPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
 
@@ -4033,13 +5912,13 @@ CalculatorRequestPlugin_on_endpoint_detached(
 
 
 void    
-CalculatorRequestPlugin_return_sample(
+Calculator_RequestPlugin_return_sample(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorRequest *sample,
+    Calculator_Request *sample,
     void *handle)
 {
     
-    CalculatorRequest_finalize_optional_members(sample, RTI_TRUE);
+    Calculator_Request_finalize_optional_members(sample, RTI_TRUE);
            
     PRESTypePluginDefaultEndpointData_returnSample(
         endpoint_data, sample, handle);
@@ -4048,13 +5927,13 @@ CalculatorRequestPlugin_return_sample(
 
 
 RTIBool 
-CalculatorRequestPlugin_copy_sample(
+Calculator_RequestPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorRequest *dst,
-    const CalculatorRequest *src)
+    Calculator_Request *dst,
+    const Calculator_Request *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return ::CalculatorRequestPluginSupport_copy_data(dst,src);
+    return ::Calculator_RequestPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -4062,7 +5941,7 @@ CalculatorRequestPlugin_copy_sample(
  * -------------------------------------------------------------------------------------- */
 
 unsigned int 
-CalculatorRequestPlugin_get_serialized_sample_max_size(
+Calculator_RequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -4070,9 +5949,9 @@ CalculatorRequestPlugin_get_serialized_sample_max_size(
 
 
 RTIBool 
-CalculatorRequestPlugin_serialize(
+Calculator_RequestPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const CalculatorRequest *sample, 
+    const Calculator_Request *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -4101,7 +5980,7 @@ CalculatorRequestPlugin_serialize(
     
     if (!RequestHeaderPlugin_serialize(
             endpoint_data,
-            &sample->_header, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
@@ -4110,9 +5989,9 @@ CalculatorRequestPlugin_serialize(
     }
             
 
-    if (!CalculatorRequest_unionPlugin_serialize(
+    if (!Calculator_CallPlugin_serialize(
             endpoint_data,
-            &sample->unio, 
+            &sample->request, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
@@ -4134,9 +6013,9 @@ CalculatorRequestPlugin_serialize(
 
 
 RTIBool 
-CalculatorRequestPlugin_deserialize_sample(
+Calculator_RequestPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorRequest *sample,
+    Calculator_Request *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -4162,11 +6041,11 @@ CalculatorRequestPlugin_deserialize_sample(
     
     
     if(deserialize_sample) {
-        ::CalculatorRequest_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+        ::Calculator_Request_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
     
     if (!RequestHeaderPlugin_deserialize_sample(
             endpoint_data,
-            &sample->_header,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
@@ -4174,9 +6053,9 @@ CalculatorRequestPlugin_deserialize_sample(
     }
             
 
-    if (!CalculatorRequest_unionPlugin_deserialize_sample(
+    if (!Calculator_CallPlugin_deserialize_sample(
             endpoint_data,
-            &sample->unio,
+            &sample->request,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
@@ -4206,9 +6085,9 @@ fin:
  
 
 RTIBool 
-CalculatorRequestPlugin_deserialize(
+Calculator_RequestPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorRequest **sample,
+    Calculator_Request **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -4221,7 +6100,7 @@ CalculatorRequestPlugin_deserialize(
     
     stream->_xTypesState.unassignable = RTI_FALSE;
 
-    result = ::CalculatorRequestPlugin_deserialize_sample( 
+    result = ::Calculator_RequestPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -4239,7 +6118,7 @@ CalculatorRequestPlugin_deserialize(
 
 
 
-RTIBool CalculatorRequestPlugin_skip(
+RTIBool Calculator_RequestPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -4275,7 +6154,7 @@ RTIBool CalculatorRequestPlugin_skip(
     }
             
 
-    if (!CalculatorRequest_unionPlugin_skip(
+    if (!Calculator_CallPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
@@ -4306,7 +6185,7 @@ fin:
 
 
 unsigned int 
-CalculatorRequestPlugin_get_serialized_sample_max_size(
+Calculator_RequestPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -4338,7 +6217,7 @@ CalculatorRequestPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
 
-    current_alignment +=  CalculatorRequest_unionPlugin_get_serialized_sample_max_size(
+    current_alignment +=  Calculator_CallPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
 
@@ -4351,7 +6230,7 @@ CalculatorRequestPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-CalculatorRequestPlugin_get_serialized_sample_min_size(
+Calculator_RequestPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -4383,7 +6262,7 @@ CalculatorRequestPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
 
-    current_alignment +=  CalculatorRequest_unionPlugin_get_serialized_sample_min_size(
+    current_alignment +=  Calculator_CallPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
 
@@ -4402,12 +6281,12 @@ CalculatorRequestPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-CalculatorRequestPlugin_get_serialized_sample_size(
+Calculator_RequestPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const CalculatorRequest * sample) 
+    const Calculator_Request * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -4434,12 +6313,12 @@ CalculatorRequestPlugin_get_serialized_sample_size(
 
     current_alignment += RequestHeaderPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->_header);
+        current_alignment, &sample->header);
             
 
-    current_alignment += CalculatorRequest_unionPlugin_get_serialized_sample_size(
+    current_alignment += Calculator_CallPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->unio);
+        current_alignment, &sample->request);
             
 
     if (include_encapsulation) {
@@ -4461,7 +6340,7 @@ CalculatorRequestPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-CalculatorRequestPlugin_get_key_kind(void)
+Calculator_RequestPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_NO_KEY;
@@ -4470,9 +6349,9 @@ CalculatorRequestPlugin_get_key_kind(void)
 
 
 RTIBool 
-CalculatorRequestPlugin_serialize_key(
+Calculator_RequestPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const CalculatorRequest *sample, 
+    const Calculator_Request *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -4498,7 +6377,7 @@ CalculatorRequestPlugin_serialize_key(
 
     if(serialize_key) {
 
-        if (!::CalculatorRequestPlugin_serialize(
+        if (!::Calculator_RequestPlugin_serialize(
                 endpoint_data,
                 sample,
                 stream,
@@ -4520,9 +6399,9 @@ CalculatorRequestPlugin_serialize_key(
 }
 
 
-RTIBool CalculatorRequestPlugin_deserialize_key_sample(
+RTIBool Calculator_RequestPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorRequest *sample, 
+    Calculator_Request *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -4547,7 +6426,7 @@ RTIBool CalculatorRequestPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-        if (!::CalculatorRequestPlugin_deserialize_sample(
+        if (!::Calculator_RequestPlugin_deserialize_sample(
                 endpoint_data, sample, stream,
                 RTI_FALSE, RTI_TRUE, 
                 endpoint_plugin_qos)) {
@@ -4567,9 +6446,9 @@ RTIBool CalculatorRequestPlugin_deserialize_key_sample(
 
 
  
-RTIBool CalculatorRequestPlugin_deserialize_key(
+RTIBool Calculator_RequestPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorRequest **sample, 
+    Calculator_Request **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -4581,7 +6460,7 @@ RTIBool CalculatorRequestPlugin_deserialize_key(
     
     stream->_xTypesState.unassignable = RTI_FALSE;
     
-    result = ::CalculatorRequestPlugin_deserialize_key_sample(
+    result = ::Calculator_RequestPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
         
@@ -4597,7 +6476,7 @@ RTIBool CalculatorRequestPlugin_deserialize_key(
 
 
 unsigned int
-CalculatorRequestPlugin_get_serialized_key_max_size(
+Calculator_RequestPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -4627,7 +6506,7 @@ CalculatorRequestPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment += ::CalculatorRequestPlugin_get_serialized_sample_max_size(
+    current_alignment += ::Calculator_RequestPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
     
     if (include_encapsulation) {
@@ -4639,9 +6518,9 @@ CalculatorRequestPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-CalculatorRequestPlugin_serialized_sample_to_key(
+Calculator_RequestPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorRequest *sample,
+    Calculator_Request *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -4665,7 +6544,7 @@ CalculatorRequestPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-        if (!::CalculatorRequestPlugin_deserialize_sample(
+        if (!::Calculator_RequestPlugin_deserialize_sample(
             endpoint_data, sample, stream, RTI_FALSE, 
             RTI_TRUE, endpoint_plugin_qos)) {
             return RTI_FALSE;
@@ -4697,7 +6576,7 @@ fin:
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
  
-struct PRESTypePlugin *CalculatorRequestPlugin_new(void) 
+struct PRESTypePlugin *Calculator_RequestPlugin_new(void) 
 { 
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -4714,51 +6593,51 @@ struct PRESTypePlugin *CalculatorRequestPlugin_new(void)
     /* set up parent's function pointers */
     plugin->onParticipantAttached =
         (PRESTypePluginOnParticipantAttachedCallback)
-        ::CalculatorRequestPlugin_on_participant_attached;
+        ::Calculator_RequestPlugin_on_participant_attached;
     plugin->onParticipantDetached =
         (PRESTypePluginOnParticipantDetachedCallback)
-        ::CalculatorRequestPlugin_on_participant_detached;
+        ::Calculator_RequestPlugin_on_participant_detached;
     plugin->onEndpointAttached =
         (PRESTypePluginOnEndpointAttachedCallback)
-        ::CalculatorRequestPlugin_on_endpoint_attached;
+        ::Calculator_RequestPlugin_on_endpoint_attached;
     plugin->onEndpointDetached =
         (PRESTypePluginOnEndpointDetachedCallback)
-        ::CalculatorRequestPlugin_on_endpoint_detached;
+        ::Calculator_RequestPlugin_on_endpoint_detached;
 
     plugin->copySampleFnc =
         (PRESTypePluginCopySampleFunction)
-        ::CalculatorRequestPlugin_copy_sample;
+        ::Calculator_RequestPlugin_copy_sample;
     plugin->createSampleFnc =
         (PRESTypePluginCreateSampleFunction)
-        CalculatorRequestPlugin_create_sample;
+        Calculator_RequestPlugin_create_sample;
     plugin->destroySampleFnc =
         (PRESTypePluginDestroySampleFunction)
-        CalculatorRequestPlugin_destroy_sample;
+        Calculator_RequestPlugin_destroy_sample;
 
     plugin->serializeFnc =
         (PRESTypePluginSerializeFunction)
-        ::CalculatorRequestPlugin_serialize;
+        ::Calculator_RequestPlugin_serialize;
     plugin->deserializeFnc =
         (PRESTypePluginDeserializeFunction)
-        ::CalculatorRequestPlugin_deserialize;
+        ::Calculator_RequestPlugin_deserialize;
     plugin->getSerializedSampleMaxSizeFnc =
         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-        ::CalculatorRequestPlugin_get_serialized_sample_max_size;
+        ::Calculator_RequestPlugin_get_serialized_sample_max_size;
     plugin->getSerializedSampleMinSizeFnc =
         (PRESTypePluginGetSerializedSampleMinSizeFunction)
-        ::CalculatorRequestPlugin_get_serialized_sample_min_size;
+        ::Calculator_RequestPlugin_get_serialized_sample_min_size;
 
 
     plugin->getSampleFnc =
         (PRESTypePluginGetSampleFunction)
-        CalculatorRequestPlugin_get_sample;
+        Calculator_RequestPlugin_get_sample;
     plugin->returnSampleFnc =
         (PRESTypePluginReturnSampleFunction)
-        CalculatorRequestPlugin_return_sample;
+        Calculator_RequestPlugin_return_sample;
 
     plugin->getKeyKindFnc =
         (PRESTypePluginGetKeyKindFunction)
-        ::CalculatorRequestPlugin_get_key_kind;
+        ::Calculator_RequestPlugin_get_key_kind;
 
  
     /* These functions are only used for keyed types. As this is not a keyed
@@ -4775,50 +6654,50 @@ struct PRESTypePlugin *CalculatorRequestPlugin_new(void)
     plugin->serializedSampleToKeyHashFnc = NULL;
     plugin->serializedKeyToKeyHashFnc = NULL;
     
-    plugin->typeCode =  (struct RTICdrTypeCode *)::CalculatorRequest_get_typecode();
+    plugin->typeCode =  (struct RTICdrTypeCode *)::Calculator_Request_get_typecode();
     
     plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
     /* Serialized buffer */
     plugin->getBuffer = 
         (PRESTypePluginGetBufferFunction)
-        CalculatorRequestPlugin_get_buffer;
+        Calculator_RequestPlugin_get_buffer;
     plugin->returnBuffer = 
         (PRESTypePluginReturnBufferFunction)
-        CalculatorRequestPlugin_return_buffer;
+        Calculator_RequestPlugin_return_buffer;
     plugin->getSerializedSampleSizeFnc =
         (PRESTypePluginGetSerializedSampleSizeFunction)
-        ::CalculatorRequestPlugin_get_serialized_sample_size;
+        ::Calculator_RequestPlugin_get_serialized_sample_size;
 
-    plugin->endpointTypeName = CalculatorRequestTYPENAME;
+    plugin->endpointTypeName = Calculator_RequestTYPENAME;
 
     return plugin;
 }
 
 void
-CalculatorRequestPlugin_delete(struct PRESTypePlugin *plugin)
+Calculator_RequestPlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
 } 
 
 /* --------------------------------------------------------------------------------------
- *  Type CalculatorReply_union
+ *  Type Calculator_Return
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-CalculatorReply_union*
-CalculatorReply_unionPluginSupport_create_data_w_params(
+Calculator_Return*
+Calculator_ReturnPluginSupport_create_data_w_params(
     const struct DDS_TypeAllocationParams_t * alloc_params){
-    CalculatorReply_union *sample = NULL;
+    Calculator_Return *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, CalculatorReply_union);
+        &sample, Calculator_Return);
 
     if(sample != NULL) {
-        if (!::CalculatorReply_union_initialize_w_params(sample,alloc_params)) {
+        if (!::Calculator_Return_initialize_w_params(sample,alloc_params)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -4827,15 +6706,15 @@ CalculatorReply_unionPluginSupport_create_data_w_params(
 }
 
 
-CalculatorReply_union *
-CalculatorReply_unionPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    CalculatorReply_union *sample = NULL;
+Calculator_Return *
+Calculator_ReturnPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    Calculator_Return *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, CalculatorReply_union);
+        &sample, Calculator_Return);
 
     if(sample != NULL) {
-        if (!::CalculatorReply_union_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+        if (!::Calculator_Return_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -4844,55 +6723,55 @@ CalculatorReply_unionPluginSupport_create_data_ex(RTIBool allocate_pointers){
 }
 
 
-CalculatorReply_union *
-CalculatorReply_unionPluginSupport_create_data(void)
+Calculator_Return *
+Calculator_ReturnPluginSupport_create_data(void)
 {
-    return ::CalculatorReply_unionPluginSupport_create_data_ex(RTI_TRUE);
+    return ::Calculator_ReturnPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-CalculatorReply_unionPluginSupport_destroy_data_w_params(
-    CalculatorReply_union *sample,
+Calculator_ReturnPluginSupport_destroy_data_w_params(
+    Calculator_Return *sample,
     const struct DDS_TypeDeallocationParams_t * dealloc_params) {
 
-    ::CalculatorReply_union_finalize_w_params(sample,dealloc_params);
+    ::Calculator_Return_finalize_w_params(sample,dealloc_params);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-CalculatorReply_unionPluginSupport_destroy_data_ex(
-    CalculatorReply_union *sample,RTIBool deallocate_pointers) {
+Calculator_ReturnPluginSupport_destroy_data_ex(
+    Calculator_Return *sample,RTIBool deallocate_pointers) {
 
-    ::CalculatorReply_union_finalize_ex(sample,deallocate_pointers);
+    ::Calculator_Return_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-CalculatorReply_unionPluginSupport_destroy_data(
-    CalculatorReply_union *sample) {
+Calculator_ReturnPluginSupport_destroy_data(
+    Calculator_Return *sample) {
 
-    ::CalculatorReply_unionPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    ::Calculator_ReturnPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-CalculatorReply_unionPluginSupport_copy_data(
-    CalculatorReply_union *dst,
-    const CalculatorReply_union *src)
+Calculator_ReturnPluginSupport_copy_data(
+    Calculator_Return *dst,
+    const Calculator_Return *src)
 {
-    return ::CalculatorReply_union_copy(dst,src);
+    return ::Calculator_Return_copy(dst,src);
 }
 
 
 void 
-CalculatorReply_unionPluginSupport_print_data(
-    const CalculatorReply_union *sample,
+Calculator_ReturnPluginSupport_print_data(
+    const Calculator_Return *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -4917,18 +6796,26 @@ CalculatorReply_unionPluginSupport_print_data(
             
 
     switch(sample->_d) {
-          case 1:
+          default:
         {                                    
         
-    Calculator_additionReplyPluginSupport_print_data(
+    UnknownOperationPluginSupport_print_data(
+        &sample->_u.unknown_operation, "_u.unknown_operation", indent_level + 1);
+            
+
+        };
+      case 0xCBC6CEAA:
+        {                                    
+        
+    Calculator_addition_ResultPluginSupport_print_data(
         &sample->_u.addition, "_u.addition", indent_level + 1);
             
 
         } break;
-      case 2:
+      case 0xCA019A14:
         {                                    
         
-    Calculator_subtractionReplyPluginSupport_print_data(
+    Calculator_subtraction_ResultPluginSupport_print_data(
         &sample->_u.subtraction, "_u.subtraction", indent_level + 1);
             
 
@@ -4943,13 +6830,13 @@ CalculatorReply_unionPluginSupport_print_data(
 
 
 RTIBool 
-CalculatorReply_unionPlugin_copy_sample(
+Calculator_ReturnPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorReply_union *dst,
-    const CalculatorReply_union *src)
+    Calculator_Return *dst,
+    const Calculator_Return *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return ::CalculatorReply_unionPluginSupport_copy_data(dst,src);
+    return ::Calculator_ReturnPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -4957,7 +6844,7 @@ CalculatorReply_unionPlugin_copy_sample(
  * -------------------------------------------------------------------------------------- */
 
 unsigned int 
-CalculatorReply_unionPlugin_get_serialized_sample_max_size(
+Calculator_ReturnPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -4965,9 +6852,9 @@ CalculatorReply_unionPlugin_get_serialized_sample_max_size(
 
 
 RTIBool 
-CalculatorReply_unionPlugin_serialize(
+Calculator_ReturnPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const CalculatorReply_union *sample, 
+    const Calculator_Return *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -5001,10 +6888,25 @@ CalculatorReply_unionPlugin_serialize(
             
 
     switch(sample->_d) {
-          case 1:
+          default:
         {                                    
         
-    if (!Calculator_additionReplyPlugin_serialize(
+    if (!UnknownOperationPlugin_serialize(
+            endpoint_data,
+            &sample->_u.unknown_operation, 
+            stream, 
+            RTI_FALSE, encapsulation_id, 
+            RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
+      case 0xCBC6CEAA:
+        {                                    
+        
+    if (!Calculator_addition_ResultPlugin_serialize(
             endpoint_data,
             &sample->_u.addition, 
             stream, 
@@ -5016,10 +6918,10 @@ CalculatorReply_unionPlugin_serialize(
             
 
         } break;
-      case 2:
+      case 0xCA019A14:
         {                                    
         
-    if (!Calculator_subtractionReplyPlugin_serialize(
+    if (!Calculator_subtraction_ResultPlugin_serialize(
             endpoint_data,
             &sample->_u.subtraction, 
             stream, 
@@ -5047,9 +6949,9 @@ CalculatorReply_unionPlugin_serialize(
 
 
 RTIBool 
-CalculatorReply_unionPlugin_deserialize_sample(
+Calculator_ReturnPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorReply_union *sample,
+    Calculator_Return *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -5080,10 +6982,24 @@ CalculatorReply_unionPlugin_deserialize_sample(
     }
 
     switch(sample->_d) {
-          case 1:
+          default:
         {                                    
         
-    if (!Calculator_additionReplyPlugin_deserialize_sample(
+    if (!UnknownOperationPlugin_deserialize_sample(
+            endpoint_data,
+            &sample->_u.unknown_operation,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
+      case 0xCBC6CEAA:
+        {                                    
+        
+    if (!Calculator_addition_ResultPlugin_deserialize_sample(
             endpoint_data,
             &sample->_u.addition,
             stream, 
@@ -5094,10 +7010,10 @@ CalculatorReply_unionPlugin_deserialize_sample(
             
 
         } break;
-      case 2:
+      case 0xCA019A14:
         {                                    
         
-    if (!Calculator_subtractionReplyPlugin_deserialize_sample(
+    if (!Calculator_subtraction_ResultPlugin_deserialize_sample(
             endpoint_data,
             &sample->_u.subtraction,
             stream, 
@@ -5125,9 +7041,9 @@ CalculatorReply_unionPlugin_deserialize_sample(
  
 
 RTIBool 
-CalculatorReply_unionPlugin_deserialize(
+Calculator_ReturnPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorReply_union **sample,
+    Calculator_Return **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -5140,7 +7056,7 @@ CalculatorReply_unionPlugin_deserialize(
     
     stream->_xTypesState.unassignable = RTI_FALSE;
 
-    result = ::CalculatorReply_unionPlugin_deserialize_sample( 
+    result = ::Calculator_ReturnPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -5158,7 +7074,7 @@ CalculatorReply_unionPlugin_deserialize(
 
 
 
-RTIBool CalculatorReply_unionPlugin_skip(
+RTIBool Calculator_ReturnPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -5190,10 +7106,23 @@ DDS_Long    disc;
     }
 
     switch(disc) {
-          case 1:
+          default:
         {                                    
         
-    if (!Calculator_additionReplyPlugin_skip(
+    if (!UnknownOperationPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
+      case 0xCBC6CEAA:
+        {                                    
+        
+    if (!Calculator_addition_ResultPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
@@ -5203,10 +7132,10 @@ DDS_Long    disc;
             
 
         } break;
-      case 2:
+      case 0xCA019A14:
         {                                    
         
-    if (!Calculator_subtractionReplyPlugin_skip(
+    if (!Calculator_subtraction_ResultPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
@@ -5233,7 +7162,7 @@ DDS_Long    disc;
 
 
 unsigned int 
-CalculatorReply_unionPlugin_get_serialized_sample_max_size(
+Calculator_ReturnPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -5267,11 +7196,15 @@ CalculatorReply_unionPlugin_get_serialized_sample_max_size(
         current_alignment);
             
 
-    union_max_size_serialized = RTIOsapiUtility_max( Calculator_additionReplyPlugin_get_serialized_sample_max_size(
+    union_max_size_serialized = RTIOsapiUtility_max( UnknownOperationPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
             
 
-    union_max_size_serialized = RTIOsapiUtility_max( Calculator_subtractionReplyPlugin_get_serialized_sample_max_size(
+    union_max_size_serialized = RTIOsapiUtility_max( Calculator_addition_ResultPlugin_get_serialized_sample_max_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
+            
+
+    union_max_size_serialized = RTIOsapiUtility_max( Calculator_subtraction_ResultPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
             
 
@@ -5284,7 +7217,7 @@ CalculatorReply_unionPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-CalculatorReply_unionPlugin_get_serialized_sample_min_size(
+Calculator_ReturnPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -5318,11 +7251,15 @@ CalculatorReply_unionPlugin_get_serialized_sample_min_size(
         current_alignment);
             
 
-    union_min_size_serialized = RTIOsapiUtility_min( Calculator_additionReplyPlugin_get_serialized_sample_min_size(
+    union_min_size_serialized = RTIOsapiUtility_min( UnknownOperationPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
             
 
-    union_min_size_serialized = RTIOsapiUtility_min( Calculator_subtractionReplyPlugin_get_serialized_sample_min_size(
+    union_min_size_serialized = RTIOsapiUtility_min( Calculator_addition_ResultPlugin_get_serialized_sample_min_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
+            
+
+    union_min_size_serialized = RTIOsapiUtility_min( Calculator_subtraction_ResultPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
             
 
@@ -5341,12 +7278,12 @@ CalculatorReply_unionPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-CalculatorReply_unionPlugin_get_serialized_sample_size(
+Calculator_ReturnPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const CalculatorReply_union * sample) 
+    const Calculator_Return * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -5376,19 +7313,28 @@ CalculatorReply_unionPlugin_get_serialized_sample_size(
             
 
     switch(sample->_d) {
-          case 1:
+          default:
         {                                    
         
-    current_alignment += Calculator_additionReplyPlugin_get_serialized_sample_size(
+    current_alignment += UnknownOperationPlugin_get_serialized_sample_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, 
+        current_alignment, &sample->_u.unknown_operation);
+            
+
+        };
+      case 0xCBC6CEAA:
+        {                                    
+        
+    current_alignment += Calculator_addition_ResultPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->_u.addition);
             
 
         } break;
-      case 2:
+      case 0xCA019A14:
         {                                    
         
-    current_alignment += Calculator_subtractionReplyPlugin_get_serialized_sample_size(
+    current_alignment += Calculator_subtraction_ResultPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->_u.subtraction);
             
@@ -5416,7 +7362,7 @@ CalculatorReply_unionPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-CalculatorReply_unionPlugin_get_key_kind(void)
+Calculator_ReturnPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_NO_KEY;
@@ -5425,9 +7371,9 @@ CalculatorReply_unionPlugin_get_key_kind(void)
 
 
 RTIBool 
-CalculatorReply_unionPlugin_serialize_key(
+Calculator_ReturnPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const CalculatorReply_union *sample, 
+    const Calculator_Return *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -5453,7 +7399,7 @@ CalculatorReply_unionPlugin_serialize_key(
 
     if(serialize_key) {
 
-        if (!::CalculatorReply_unionPlugin_serialize(
+        if (!::Calculator_ReturnPlugin_serialize(
                 endpoint_data,
                 sample,
                 stream,
@@ -5475,9 +7421,9 @@ CalculatorReply_unionPlugin_serialize_key(
 }
 
 
-RTIBool CalculatorReply_unionPlugin_deserialize_key_sample(
+RTIBool Calculator_ReturnPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorReply_union *sample, 
+    Calculator_Return *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -5502,7 +7448,7 @@ RTIBool CalculatorReply_unionPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-        if (!::CalculatorReply_unionPlugin_deserialize_sample(
+        if (!::Calculator_ReturnPlugin_deserialize_sample(
                 endpoint_data, sample, stream,
                 RTI_FALSE, RTI_TRUE, 
                 endpoint_plugin_qos)) {
@@ -5522,9 +7468,9 @@ RTIBool CalculatorReply_unionPlugin_deserialize_key_sample(
 
 
  
-RTIBool CalculatorReply_unionPlugin_deserialize_key(
+RTIBool Calculator_ReturnPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorReply_union **sample, 
+    Calculator_Return **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -5536,7 +7482,7 @@ RTIBool CalculatorReply_unionPlugin_deserialize_key(
     
     stream->_xTypesState.unassignable = RTI_FALSE;
     
-    result = ::CalculatorReply_unionPlugin_deserialize_key_sample(
+    result = ::Calculator_ReturnPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
         
@@ -5552,7 +7498,7 @@ RTIBool CalculatorReply_unionPlugin_deserialize_key(
 
 
 unsigned int
-CalculatorReply_unionPlugin_get_serialized_key_max_size(
+Calculator_ReturnPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -5582,7 +7528,7 @@ CalculatorReply_unionPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment += ::CalculatorReply_unionPlugin_get_serialized_sample_max_size(
+    current_alignment += ::Calculator_ReturnPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
     
     if (include_encapsulation) {
@@ -5594,9 +7540,9 @@ CalculatorReply_unionPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-CalculatorReply_unionPlugin_serialized_sample_to_key(
+Calculator_ReturnPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorReply_union *sample,
+    Calculator_Return *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -5616,7 +7562,7 @@ CalculatorReply_unionPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-        if (!::CalculatorReply_unionPlugin_deserialize_sample(
+        if (!::Calculator_ReturnPlugin_deserialize_sample(
             endpoint_data, sample, stream, RTI_FALSE, 
             RTI_TRUE, endpoint_plugin_qos)) {
             return RTI_FALSE;
@@ -5641,23 +7587,23 @@ CalculatorReply_unionPlugin_serialized_sample_to_key(
  * ------------------------------------------------------------------------ */
 
 /* --------------------------------------------------------------------------------------
- *  Type CalculatorReply
+ *  Type Calculator_Reply
  * -------------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------------
     Support functions:
  * -------------------------------------------------------------------------------------- */
 
-CalculatorReply*
-CalculatorReplyPluginSupport_create_data_w_params(
+Calculator_Reply*
+Calculator_ReplyPluginSupport_create_data_w_params(
     const struct DDS_TypeAllocationParams_t * alloc_params){
-    CalculatorReply *sample = NULL;
+    Calculator_Reply *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, CalculatorReply);
+        &sample, Calculator_Reply);
 
     if(sample != NULL) {
-        if (!::CalculatorReply_initialize_w_params(sample,alloc_params)) {
+        if (!::Calculator_Reply_initialize_w_params(sample,alloc_params)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -5666,15 +7612,15 @@ CalculatorReplyPluginSupport_create_data_w_params(
 }
 
 
-CalculatorReply *
-CalculatorReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    CalculatorReply *sample = NULL;
+Calculator_Reply *
+Calculator_ReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
+    Calculator_Reply *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, CalculatorReply);
+        &sample, Calculator_Reply);
 
     if(sample != NULL) {
-        if (!::CalculatorReply_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+        if (!::Calculator_Reply_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -5683,55 +7629,55 @@ CalculatorReplyPluginSupport_create_data_ex(RTIBool allocate_pointers){
 }
 
 
-CalculatorReply *
-CalculatorReplyPluginSupport_create_data(void)
+Calculator_Reply *
+Calculator_ReplyPluginSupport_create_data(void)
 {
-    return ::CalculatorReplyPluginSupport_create_data_ex(RTI_TRUE);
+    return ::Calculator_ReplyPluginSupport_create_data_ex(RTI_TRUE);
 }
 
 
 void 
-CalculatorReplyPluginSupport_destroy_data_w_params(
-    CalculatorReply *sample,
+Calculator_ReplyPluginSupport_destroy_data_w_params(
+    Calculator_Reply *sample,
     const struct DDS_TypeDeallocationParams_t * dealloc_params) {
 
-    ::CalculatorReply_finalize_w_params(sample,dealloc_params);
+    ::Calculator_Reply_finalize_w_params(sample,dealloc_params);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-CalculatorReplyPluginSupport_destroy_data_ex(
-    CalculatorReply *sample,RTIBool deallocate_pointers) {
+Calculator_ReplyPluginSupport_destroy_data_ex(
+    Calculator_Reply *sample,RTIBool deallocate_pointers) {
 
-    ::CalculatorReply_finalize_ex(sample,deallocate_pointers);
+    ::Calculator_Reply_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 
 void 
-CalculatorReplyPluginSupport_destroy_data(
-    CalculatorReply *sample) {
+Calculator_ReplyPluginSupport_destroy_data(
+    Calculator_Reply *sample) {
 
-    ::CalculatorReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    ::Calculator_ReplyPluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 
 RTIBool 
-CalculatorReplyPluginSupport_copy_data(
-    CalculatorReply *dst,
-    const CalculatorReply *src)
+Calculator_ReplyPluginSupport_copy_data(
+    Calculator_Reply *dst,
+    const Calculator_Reply *src)
 {
-    return ::CalculatorReply_copy(dst,src);
+    return ::Calculator_Reply_copy(dst,src);
 }
 
 
 void 
-CalculatorReplyPluginSupport_print_data(
-    const CalculatorReply *sample,
+Calculator_ReplyPluginSupport_print_data(
+    const Calculator_Reply *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -5752,11 +7698,11 @@ CalculatorReplyPluginSupport_print_data(
 
 
     ReplyHeaderPluginSupport_print_data(
-        &sample->_header, "_header", indent_level + 1);
+        &sample->header, "header", indent_level + 1);
             
 
-    CalculatorReply_unionPluginSupport_print_data(
-        &sample->unio, "unio", indent_level + 1);
+    Calculator_ReturnPluginSupport_print_data(
+        &sample->reply, "reply", indent_level + 1);
             
 
 
@@ -5770,7 +7716,7 @@ CalculatorReplyPluginSupport_print_data(
 
 
 PRESTypePluginParticipantData 
-CalculatorReplyPlugin_on_participant_attached(
+Calculator_ReplyPlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration,
@@ -5789,7 +7735,7 @@ CalculatorReplyPlugin_on_participant_attached(
 
 
 void 
-CalculatorReplyPlugin_on_participant_detached(
+Calculator_ReplyPlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
 
@@ -5798,7 +7744,7 @@ CalculatorReplyPlugin_on_participant_detached(
 
 
 PRESTypePluginEndpointData
-CalculatorReplyPlugin_on_endpoint_attached(
+Calculator_ReplyPlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
@@ -5815,9 +7761,9 @@ CalculatorReplyPlugin_on_endpoint_attached(
             participant_data,
             endpoint_info,
             (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-            ::CalculatorReplyPluginSupport_create_data,
+            ::Calculator_ReplyPluginSupport_create_data,
             (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-            ::CalculatorReplyPluginSupport_destroy_data,
+            ::Calculator_ReplyPluginSupport_destroy_data,
             NULL, NULL);
 
     if (epd == NULL) {
@@ -5827,7 +7773,7 @@ CalculatorReplyPlugin_on_endpoint_attached(
     
 
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
-        serializedSampleMaxSize = ::CalculatorReplyPlugin_get_serialized_sample_max_size(
+        serializedSampleMaxSize = ::Calculator_ReplyPlugin_get_serialized_sample_max_size(
             epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
             
         PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
@@ -5836,9 +7782,9 @@ CalculatorReplyPlugin_on_endpoint_attached(
                 epd,
                 endpoint_info,
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                ::CalculatorReplyPlugin_get_serialized_sample_max_size, epd,
+                ::Calculator_ReplyPlugin_get_serialized_sample_max_size, epd,
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            ::CalculatorReplyPlugin_get_serialized_sample_size,
+            ::Calculator_ReplyPlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
             return NULL;
@@ -5852,7 +7798,7 @@ CalculatorReplyPlugin_on_endpoint_attached(
 
 
 void 
-CalculatorReplyPlugin_on_endpoint_detached(
+Calculator_ReplyPlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
 
@@ -5861,13 +7807,13 @@ CalculatorReplyPlugin_on_endpoint_detached(
 
 
 void    
-CalculatorReplyPlugin_return_sample(
+Calculator_ReplyPlugin_return_sample(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorReply *sample,
+    Calculator_Reply *sample,
     void *handle)
 {
     
-    CalculatorReply_finalize_optional_members(sample, RTI_TRUE);
+    Calculator_Reply_finalize_optional_members(sample, RTI_TRUE);
            
     PRESTypePluginDefaultEndpointData_returnSample(
         endpoint_data, sample, handle);
@@ -5876,13 +7822,13 @@ CalculatorReplyPlugin_return_sample(
 
 
 RTIBool 
-CalculatorReplyPlugin_copy_sample(
+Calculator_ReplyPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorReply *dst,
-    const CalculatorReply *src)
+    Calculator_Reply *dst,
+    const Calculator_Reply *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return ::CalculatorReplyPluginSupport_copy_data(dst,src);
+    return ::Calculator_ReplyPluginSupport_copy_data(dst,src);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -5890,7 +7836,7 @@ CalculatorReplyPlugin_copy_sample(
  * -------------------------------------------------------------------------------------- */
 
 unsigned int 
-CalculatorReplyPlugin_get_serialized_sample_max_size(
+Calculator_ReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -5898,9 +7844,9 @@ CalculatorReplyPlugin_get_serialized_sample_max_size(
 
 
 RTIBool 
-CalculatorReplyPlugin_serialize(
+Calculator_ReplyPlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const CalculatorReply *sample, 
+    const Calculator_Reply *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -5929,7 +7875,7 @@ CalculatorReplyPlugin_serialize(
     
     if (!ReplyHeaderPlugin_serialize(
             endpoint_data,
-            &sample->_header, 
+            &sample->header, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
@@ -5938,9 +7884,9 @@ CalculatorReplyPlugin_serialize(
     }
             
 
-    if (!CalculatorReply_unionPlugin_serialize(
+    if (!Calculator_ReturnPlugin_serialize(
             endpoint_data,
-            &sample->unio, 
+            &sample->reply, 
             stream, 
             RTI_FALSE, encapsulation_id, 
             RTI_TRUE, 
@@ -5962,9 +7908,9 @@ CalculatorReplyPlugin_serialize(
 
 
 RTIBool 
-CalculatorReplyPlugin_deserialize_sample(
+Calculator_ReplyPlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorReply *sample,
+    Calculator_Reply *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -5990,11 +7936,11 @@ CalculatorReplyPlugin_deserialize_sample(
     
     
     if(deserialize_sample) {
-        ::CalculatorReply_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+        ::Calculator_Reply_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
     
     if (!ReplyHeaderPlugin_deserialize_sample(
             endpoint_data,
-            &sample->_header,
+            &sample->header,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
@@ -6002,9 +7948,9 @@ CalculatorReplyPlugin_deserialize_sample(
     }
             
 
-    if (!CalculatorReply_unionPlugin_deserialize_sample(
+    if (!Calculator_ReturnPlugin_deserialize_sample(
             endpoint_data,
-            &sample->unio,
+            &sample->reply,
             stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
@@ -6034,9 +7980,9 @@ fin:
  
 
 RTIBool 
-CalculatorReplyPlugin_deserialize(
+Calculator_ReplyPlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorReply **sample,
+    Calculator_Reply **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -6049,7 +7995,7 @@ CalculatorReplyPlugin_deserialize(
     
     stream->_xTypesState.unassignable = RTI_FALSE;
 
-    result = ::CalculatorReplyPlugin_deserialize_sample( 
+    result = ::Calculator_ReplyPlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -6067,7 +8013,7 @@ CalculatorReplyPlugin_deserialize(
 
 
 
-RTIBool CalculatorReplyPlugin_skip(
+RTIBool Calculator_ReplyPlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -6103,7 +8049,7 @@ RTIBool CalculatorReplyPlugin_skip(
     }
             
 
-    if (!CalculatorReply_unionPlugin_skip(
+    if (!Calculator_ReturnPlugin_skip(
             endpoint_data,
             stream, 
             RTI_FALSE, RTI_TRUE, 
@@ -6134,7 +8080,7 @@ fin:
 
 
 unsigned int 
-CalculatorReplyPlugin_get_serialized_sample_max_size(
+Calculator_ReplyPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -6166,7 +8112,7 @@ CalculatorReplyPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
 
-    current_alignment +=  CalculatorReply_unionPlugin_get_serialized_sample_max_size(
+    current_alignment +=  Calculator_ReturnPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
 
@@ -6179,7 +8125,7 @@ CalculatorReplyPlugin_get_serialized_sample_max_size(
 
 
 unsigned int 
-CalculatorReplyPlugin_get_serialized_sample_min_size(
+Calculator_ReplyPlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -6211,7 +8157,7 @@ CalculatorReplyPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
 
-    current_alignment +=  CalculatorReply_unionPlugin_get_serialized_sample_min_size(
+    current_alignment +=  Calculator_ReturnPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment);
             
 
@@ -6230,12 +8176,12 @@ CalculatorReplyPlugin_get_serialized_sample_min_size(
  * encapsulation flags.
  */
 unsigned int
-CalculatorReplyPlugin_get_serialized_sample_size(
+Calculator_ReplyPlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const CalculatorReply * sample) 
+    const Calculator_Reply * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -6262,12 +8208,12 @@ CalculatorReplyPlugin_get_serialized_sample_size(
 
     current_alignment += ReplyHeaderPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->_header);
+        current_alignment, &sample->header);
             
 
-    current_alignment += CalculatorReply_unionPlugin_get_serialized_sample_size(
+    current_alignment += Calculator_ReturnPlugin_get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->unio);
+        current_alignment, &sample->reply);
             
 
     if (include_encapsulation) {
@@ -6289,7 +8235,7 @@ CalculatorReplyPlugin_get_serialized_sample_size(
 
 
 PRESTypePluginKeyKind 
-CalculatorReplyPlugin_get_key_kind(void)
+Calculator_ReplyPlugin_get_key_kind(void)
 {
 
     return PRES_TYPEPLUGIN_NO_KEY;
@@ -6298,9 +8244,9 @@ CalculatorReplyPlugin_get_key_kind(void)
 
 
 RTIBool 
-CalculatorReplyPlugin_serialize_key(
+Calculator_ReplyPlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const CalculatorReply *sample, 
+    const Calculator_Reply *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -6326,7 +8272,7 @@ CalculatorReplyPlugin_serialize_key(
 
     if(serialize_key) {
 
-        if (!::CalculatorReplyPlugin_serialize(
+        if (!::Calculator_ReplyPlugin_serialize(
                 endpoint_data,
                 sample,
                 stream,
@@ -6348,9 +8294,9 @@ CalculatorReplyPlugin_serialize_key(
 }
 
 
-RTIBool CalculatorReplyPlugin_deserialize_key_sample(
+RTIBool Calculator_ReplyPlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorReply *sample, 
+    Calculator_Reply *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -6375,7 +8321,7 @@ RTIBool CalculatorReplyPlugin_deserialize_key_sample(
 
     if (deserialize_key) {
 
-        if (!::CalculatorReplyPlugin_deserialize_sample(
+        if (!::Calculator_ReplyPlugin_deserialize_sample(
                 endpoint_data, sample, stream,
                 RTI_FALSE, RTI_TRUE, 
                 endpoint_plugin_qos)) {
@@ -6395,9 +8341,9 @@ RTIBool CalculatorReplyPlugin_deserialize_key_sample(
 
 
  
-RTIBool CalculatorReplyPlugin_deserialize_key(
+RTIBool Calculator_ReplyPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorReply **sample, 
+    Calculator_Reply **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -6409,7 +8355,7 @@ RTIBool CalculatorReplyPlugin_deserialize_key(
     
     stream->_xTypesState.unassignable = RTI_FALSE;
     
-    result = ::CalculatorReplyPlugin_deserialize_key_sample(
+    result = ::Calculator_ReplyPlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
         
@@ -6425,7 +8371,7 @@ RTIBool CalculatorReplyPlugin_deserialize_key(
 
 
 unsigned int
-CalculatorReplyPlugin_get_serialized_key_max_size(
+Calculator_ReplyPlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -6455,7 +8401,7 @@ CalculatorReplyPlugin_get_serialized_key_max_size(
     }
         
 
-    current_alignment += ::CalculatorReplyPlugin_get_serialized_sample_max_size(
+    current_alignment += ::Calculator_ReplyPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE, encapsulation_id, current_alignment);
     
     if (include_encapsulation) {
@@ -6467,9 +8413,9 @@ CalculatorReplyPlugin_get_serialized_key_max_size(
 
 
 RTIBool 
-CalculatorReplyPlugin_serialized_sample_to_key(
+Calculator_ReplyPlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    CalculatorReply *sample,
+    Calculator_Reply *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -6493,7 +8439,7 @@ CalculatorReplyPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-        if (!::CalculatorReplyPlugin_deserialize_sample(
+        if (!::Calculator_ReplyPlugin_deserialize_sample(
             endpoint_data, sample, stream, RTI_FALSE, 
             RTI_TRUE, endpoint_plugin_qos)) {
             return RTI_FALSE;
@@ -6525,7 +8471,7 @@ fin:
  * Plug-in Installation Methods
  * ------------------------------------------------------------------------ */
  
-struct PRESTypePlugin *CalculatorReplyPlugin_new(void) 
+struct PRESTypePlugin *Calculator_ReplyPlugin_new(void) 
 { 
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -6542,51 +8488,51 @@ struct PRESTypePlugin *CalculatorReplyPlugin_new(void)
     /* set up parent's function pointers */
     plugin->onParticipantAttached =
         (PRESTypePluginOnParticipantAttachedCallback)
-        ::CalculatorReplyPlugin_on_participant_attached;
+        ::Calculator_ReplyPlugin_on_participant_attached;
     plugin->onParticipantDetached =
         (PRESTypePluginOnParticipantDetachedCallback)
-        ::CalculatorReplyPlugin_on_participant_detached;
+        ::Calculator_ReplyPlugin_on_participant_detached;
     plugin->onEndpointAttached =
         (PRESTypePluginOnEndpointAttachedCallback)
-        ::CalculatorReplyPlugin_on_endpoint_attached;
+        ::Calculator_ReplyPlugin_on_endpoint_attached;
     plugin->onEndpointDetached =
         (PRESTypePluginOnEndpointDetachedCallback)
-        ::CalculatorReplyPlugin_on_endpoint_detached;
+        ::Calculator_ReplyPlugin_on_endpoint_detached;
 
     plugin->copySampleFnc =
         (PRESTypePluginCopySampleFunction)
-        ::CalculatorReplyPlugin_copy_sample;
+        ::Calculator_ReplyPlugin_copy_sample;
     plugin->createSampleFnc =
         (PRESTypePluginCreateSampleFunction)
-        CalculatorReplyPlugin_create_sample;
+        Calculator_ReplyPlugin_create_sample;
     plugin->destroySampleFnc =
         (PRESTypePluginDestroySampleFunction)
-        CalculatorReplyPlugin_destroy_sample;
+        Calculator_ReplyPlugin_destroy_sample;
 
     plugin->serializeFnc =
         (PRESTypePluginSerializeFunction)
-        ::CalculatorReplyPlugin_serialize;
+        ::Calculator_ReplyPlugin_serialize;
     plugin->deserializeFnc =
         (PRESTypePluginDeserializeFunction)
-        ::CalculatorReplyPlugin_deserialize;
+        ::Calculator_ReplyPlugin_deserialize;
     plugin->getSerializedSampleMaxSizeFnc =
         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-        ::CalculatorReplyPlugin_get_serialized_sample_max_size;
+        ::Calculator_ReplyPlugin_get_serialized_sample_max_size;
     plugin->getSerializedSampleMinSizeFnc =
         (PRESTypePluginGetSerializedSampleMinSizeFunction)
-        ::CalculatorReplyPlugin_get_serialized_sample_min_size;
+        ::Calculator_ReplyPlugin_get_serialized_sample_min_size;
 
 
     plugin->getSampleFnc =
         (PRESTypePluginGetSampleFunction)
-        CalculatorReplyPlugin_get_sample;
+        Calculator_ReplyPlugin_get_sample;
     plugin->returnSampleFnc =
         (PRESTypePluginReturnSampleFunction)
-        CalculatorReplyPlugin_return_sample;
+        Calculator_ReplyPlugin_return_sample;
 
     plugin->getKeyKindFnc =
         (PRESTypePluginGetKeyKindFunction)
-        ::CalculatorReplyPlugin_get_key_kind;
+        ::Calculator_ReplyPlugin_get_key_kind;
 
  
     /* These functions are only used for keyed types. As this is not a keyed
@@ -6603,28 +8549,28 @@ struct PRESTypePlugin *CalculatorReplyPlugin_new(void)
     plugin->serializedSampleToKeyHashFnc = NULL;
     plugin->serializedKeyToKeyHashFnc = NULL;
     
-    plugin->typeCode =  (struct RTICdrTypeCode *)::CalculatorReply_get_typecode();
+    plugin->typeCode =  (struct RTICdrTypeCode *)::Calculator_Reply_get_typecode();
     
     plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
 
     /* Serialized buffer */
     plugin->getBuffer = 
         (PRESTypePluginGetBufferFunction)
-        CalculatorReplyPlugin_get_buffer;
+        Calculator_ReplyPlugin_get_buffer;
     plugin->returnBuffer = 
         (PRESTypePluginReturnBufferFunction)
-        CalculatorReplyPlugin_return_buffer;
+        Calculator_ReplyPlugin_return_buffer;
     plugin->getSerializedSampleSizeFnc =
         (PRESTypePluginGetSerializedSampleSizeFunction)
-        ::CalculatorReplyPlugin_get_serialized_sample_size;
+        ::Calculator_ReplyPlugin_get_serialized_sample_size;
 
-    plugin->endpointTypeName = CalculatorReplyTYPENAME;
+    plugin->endpointTypeName = Calculator_ReplyTYPENAME;
 
     return plugin;
 }
 
 void
-CalculatorReplyPlugin_delete(struct PRESTypePlugin *plugin)
+Calculator_ReplyPlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
 } 

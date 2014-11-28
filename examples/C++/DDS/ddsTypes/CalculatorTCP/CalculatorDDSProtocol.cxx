@@ -28,7 +28,6 @@ using namespace ::transport;
 using namespace ::exception;
 
 CalculatorProtocol::CalculatorProtocol() : ::protocol::CalculatorProtocol(), m_ddsTransport(NULL)
-
 , Calculator_str("Calculator")
 , Calculator_pe(NULL), Calculator_se(NULL)
 {
@@ -69,16 +68,16 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
         
         if(strcmp(interfaceName, "Calculator") == 0)
         {
-            requesttypeName = CalculatorRequestTypeSupport::get_type_name();
+            requesttypeName = Calculator_RequestTypeSupport::get_type_name();
     
-            if(CalculatorRequestTypeSupport::register_type(m_ddsTransport->getParticipant(), requesttypeName) != DDS::RETCODE_OK)
+            if(Calculator_RequestTypeSupport::register_type(m_ddsTransport->getParticipant(), requesttypeName) != DDS::RETCODE_OK)
             {
                 return false;
             }
             
-            replytypeName = CalculatorReplyTypeSupport::get_type_name();
+            replytypeName = Calculator_ReplyTypeSupport::get_type_name();
     
-            if(CalculatorReplyTypeSupport::register_type(m_ddsTransport->getParticipant(), replytypeName) != DDS::RETCODE_OK)
+            if(Calculator_ReplyTypeSupport::register_type(m_ddsTransport->getParticipant(), replytypeName) != DDS::RETCODE_OK)
             {
                 return false;
             }
@@ -89,11 +88,11 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
                 requesttypeName,
                 replytypeName,
                 false,
-                (::transport::dds::Transport::Create_data)CalculatorReplyPluginSupport_create_data,
-                (::transport::dds::Transport::Copy_data)CalculatorReplyPluginSupport_copy_data,
-                (::transport::dds::Transport::Destroy_data)CalculatorReplyPluginSupport_destroy_data,
+                (::transport::dds::Transport::Create_data)Calculator_ReplyPluginSupport_create_data,
+                (::transport::dds::Transport::Copy_data)Calculator_ReplyPluginSupport_copy_data,
+                (::transport::dds::Transport::Destroy_data)Calculator_ReplyPluginSupport_destroy_data,
                 NULL,
-                sizeof(CalculatorReply)
+                sizeof(Calculator_Reply)
                 ));
             }
             if(behaviour == ::transport::SERVER_BEHAVIOUR)
@@ -102,14 +101,15 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
                     replytypeName,
                     requesttypeName,
 		            false,
-                    (::transport::dds::Transport::Create_data)CalculatorRequestPluginSupport_create_data,
-                    (::transport::dds::Transport::Copy_data)CalculatorRequestPluginSupport_copy_data,
-                    (::transport::dds::Transport::Destroy_data)CalculatorRequestPluginSupport_destroy_data,
+                    (::transport::dds::Transport::Create_data)Calculator_RequestPluginSupport_create_data,
+                    (::transport::dds::Transport::Copy_data)Calculator_RequestPluginSupport_copy_data,
+                    (::transport::dds::Transport::Destroy_data)Calculator_RequestPluginSupport_destroy_data,
                     CalculatorProtocol::Calculator_serve,
-                    sizeof(CalculatorRequest)));
+                    sizeof(Calculator_Request)));
             }
         }
-
+        
+        return true;
     }
     else
     {
@@ -119,28 +119,135 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
     return false;
 }
 
+void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &protocol,
+    void *_data , eprosima::rpc::transport::Endpoint *endpoint)
+{
+    CalculatorProtocol &_protocol = dynamic_cast<CalculatorProtocol&>(protocol);
+    Calculator_Request &requestData = *(Calculator_Request*)_data;
+
+    switch(requestData.request._d)
+    {
+                case 0xCBC6CEAA:
+                {
+                DDS_Long  value1 = 0;
+                DDS_Long  value2 = 0;
+                DDS_Long  return_ = 0;   
+                Calculator_Reply replyData;
+                memcpy(replyData.header.request_id.guid.value, requestData.header.request_id.guid.value, sizeof(replyData.header.request_id.guid.value));
+                replyData.header.request_id.sequence_number = requestData.header.request_id.sequence_number;
+
+                replyData.reply._d = 0xCBC6CEAA;
+
+
+                value1 = requestData.request._u.addition.value1;
+                value2 = requestData.request._u.addition.value2;
+
+                try
+                {
+                    if(_protocol._Calculator_impl != NULL)
+                    {
+                        return_ = _protocol._Calculator_impl->addition(value1, value2);
+
+                        replyData.reply._u.addition._d = 0;
+
+                        replyData.reply._u.addition._u.out_.return_ = return_;
+
+                        _protocol.Calculator_se->sendReply(&replyData);
+                    }
+                    // TODO Send exception.
+                }
+                catch(const ServerInternalException &ex)
+                {
+                    //TODO Quitar el unsetReply
+                    //memset((char*)&replyData + sizeof(replyData.header), 0, sizeof(replyData) - sizeof(replyData.header));
+                    replyData.reply._u.addition._d = 1;
+                    replyData.reply._u.addition._u.sysx_ = (SystemExceptionCode)SERVER_INTERNAL_ERROR;
+
+                    _protocol.Calculator_se->sendReply(&replyData);
+                }
+
+                Calculator_Request_finalize(&requestData);
+
+
+                }
+                break;
+                
+                case 0xCA019A14:
+                {
+                DDS_Long  value1 = 0;
+                DDS_Long  value2 = 0;
+                DDS_Long  return_ = 0;   
+                Calculator_Reply replyData;
+                memcpy(replyData.header.request_id.guid.value, requestData.header.request_id.guid.value, sizeof(replyData.header.request_id.guid.value));
+                replyData.header.request_id.sequence_number = requestData.header.request_id.sequence_number;
+
+                replyData.reply._d = 0xCA019A14;
+
+
+                value1 = requestData.request._u.subtraction.value1;
+                value2 = requestData.request._u.subtraction.value2;
+
+                try
+                {
+                    if(_protocol._Calculator_impl != NULL)
+                    {
+                        return_ = _protocol._Calculator_impl->subtraction(value1, value2);
+
+                        replyData.reply._u.subtraction._d = 0;
+
+                        replyData.reply._u.subtraction._u.out_.return_ = return_;
+
+                        _protocol.Calculator_se->sendReply(&replyData);
+                    }
+                    // TODO Send exception.
+                }
+                catch(const ServerInternalException &ex)
+                {
+                    //TODO Quitar el unsetReply
+                    //memset((char*)&replyData + sizeof(replyData.header), 0, sizeof(replyData) - sizeof(replyData.header));
+                    replyData.reply._u.subtraction._d = 1;
+                    replyData.reply._u.subtraction._u.sysx_ = (SystemExceptionCode)SERVER_INTERNAL_ERROR;
+
+                    _protocol.Calculator_se->sendReply(&replyData);
+                }
+
+                Calculator_Request_finalize(&requestData);
+
+
+                }
+                break;
+                
+    };        
+}
 DDS_Long CalculatorProtocol::Calculator_addition(/*in*/ DDS_Long value1, /*in*/ DDS_Long value2)
 {
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
-    DDS_Long  addition_ret = 0;
-    CalculatorRequest instance;
-    CalculatorReply retInstance;
+    DDS_Long  return_ = 0;
+    Calculator_Request instance;
+    Calculator_Reply retInstance;
 
-    CalculatorReply_initialize(&retInstance);
+    Calculator_Reply_initialize(&retInstance);
 
-    instance.unio._d = 1;
+    instance.request._d = 0xCBC6CEAA;
     
-    instance.unio._u.addition.value1 = value1;
-    instance.unio._u.addition.value2 = value2;
+    instance.request._u.addition.value1 = value1;
+    instance.request._u.addition.value2 = value2;
 
     retcode = Calculator_pe->send(&instance, &retInstance);
     
-    if(retcode == OPERATION_SUCCESSFUL)
+    if(retcode == OK)
     {
-    
-        retcode = (ReturnMessage)retInstance._header.retCode;
-        addition_ret = retInstance.unio._u.addition.addition_ret;
-    
+        switch (retInstance.reply._u.addition._d)
+        {
+            case 0:
+		        return_ = retInstance.reply._u.addition._u.out_.return_;
+                break;
+            case 1:
+                retcode = (eprosima::rpc::ReturnMessage)retInstance.reply._u.addition._u.sysx_;
+                break;
+            default:
+                throw ClientInternalException("Error extracting information from server");
+        }
     }
       
     switch (retcode)
@@ -148,32 +255,32 @@ DDS_Long CalculatorProtocol::Calculator_addition(/*in*/ DDS_Long value1, /*in*/ 
         case CLIENT_INTERNAL_ERROR:
             throw ClientInternalException("Error in client side");
             break;
-        case NO_SERVER:
+        case SERVER_NOT_FOUND:
             throw ServerNotFoundException("Cannot connect to the server");
             break;
-        case SERVER_TIMEOUT:
+        case TIMEOUT:
             throw ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case SERVER_INTERNAL_ERROR:
-            throw ServerInternalException(retInstance._header.retMsg);
+            throw ServerInternalException("");
             break;
         default:
             break;
     };
     
 
-    return addition_ret;
+    return return_;
 }
 void CalculatorProtocol::Calculator_addition_async(Calculator_additionCallbackHandler &obj, /*in*/ DDS_Long value1, /*in*/ DDS_Long value2)
 {
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
-    CalculatorRequest instance;
+    Calculator_Request instance;
     Calculator_additionTask *task = new Calculator_additionTask(obj);
 
-    instance.unio._d = 1;
+    instance.request._d = 0xCBC6CEAA;
     
-    instance.unio._u.addition.value1 = value1;
-    instance.unio._u.addition.value2 = value2;
+    instance.request._u.addition.value1 = value1;
+    instance.request._u.addition.value2 = value2;
 
     retcode = Calculator_pe->send_async(&instance, task);
     
@@ -182,7 +289,7 @@ void CalculatorProtocol::Calculator_addition_async(Calculator_additionCallbackHa
         case CLIENT_INTERNAL_ERROR:
             throw ClientInternalException("Error in client side");
             break;
-        case NO_SERVER:
+        case SERVER_NOT_FOUND:
             throw ServerNotFoundException("Cannot connect to the server");
             break;
         default:
@@ -193,25 +300,32 @@ void CalculatorProtocol::Calculator_addition_async(Calculator_additionCallbackHa
 DDS_Long CalculatorProtocol::Calculator_subtraction(/*in*/ DDS_Long value1, /*in*/ DDS_Long value2)
 {
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
-    DDS_Long  subtraction_ret = 0;
-    CalculatorRequest instance;
-    CalculatorReply retInstance;
+    DDS_Long  return_ = 0;
+    Calculator_Request instance;
+    Calculator_Reply retInstance;
 
-    CalculatorReply_initialize(&retInstance);
+    Calculator_Reply_initialize(&retInstance);
 
-    instance.unio._d = 2;
+    instance.request._d = 0xCA019A14;
     
-    instance.unio._u.subtraction.value1 = value1;
-    instance.unio._u.subtraction.value2 = value2;
+    instance.request._u.subtraction.value1 = value1;
+    instance.request._u.subtraction.value2 = value2;
 
     retcode = Calculator_pe->send(&instance, &retInstance);
     
-    if(retcode == OPERATION_SUCCESSFUL)
+    if(retcode == OK)
     {
-    
-        retcode = (ReturnMessage)retInstance._header.retCode;
-        subtraction_ret = retInstance.unio._u.subtraction.subtraction_ret;
-    
+        switch (retInstance.reply._u.subtraction._d)
+        {
+            case 0:
+		        return_ = retInstance.reply._u.subtraction._u.out_.return_;
+                break;
+            case 1:
+                retcode = (eprosima::rpc::ReturnMessage)retInstance.reply._u.subtraction._u.sysx_;
+                break;
+            default:
+                throw ClientInternalException("Error extracting information from server");
+        }
     }
       
     switch (retcode)
@@ -219,32 +333,32 @@ DDS_Long CalculatorProtocol::Calculator_subtraction(/*in*/ DDS_Long value1, /*in
         case CLIENT_INTERNAL_ERROR:
             throw ClientInternalException("Error in client side");
             break;
-        case NO_SERVER:
+        case SERVER_NOT_FOUND:
             throw ServerNotFoundException("Cannot connect to the server");
             break;
-        case SERVER_TIMEOUT:
+        case TIMEOUT:
             throw ServerTimeoutException("Timeout waiting the server's reply");
             break;
         case SERVER_INTERNAL_ERROR:
-            throw ServerInternalException(retInstance._header.retMsg);
+            throw ServerInternalException("");
             break;
         default:
             break;
     };
     
 
-    return subtraction_ret;
+    return return_;
 }
 void CalculatorProtocol::Calculator_subtraction_async(Calculator_subtractionCallbackHandler &obj, /*in*/ DDS_Long value1, /*in*/ DDS_Long value2)
 {
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
-    CalculatorRequest instance;
+    Calculator_Request instance;
     Calculator_subtractionTask *task = new Calculator_subtractionTask(obj);
 
-    instance.unio._d = 2;
+    instance.request._d = 0xCA019A14;
     
-    instance.unio._u.subtraction.value1 = value1;
-    instance.unio._u.subtraction.value2 = value2;
+    instance.request._u.subtraction.value1 = value1;
+    instance.request._u.subtraction.value2 = value2;
 
     retcode = Calculator_pe->send_async(&instance, task);
     
@@ -253,7 +367,7 @@ void CalculatorProtocol::Calculator_subtraction_async(Calculator_subtractionCall
         case CLIENT_INTERNAL_ERROR:
             throw ClientInternalException("Error in client side");
             break;
-        case NO_SERVER:
+        case SERVER_NOT_FOUND:
             throw ServerNotFoundException("Cannot connect to the server");
             break;
         default:
@@ -262,113 +376,4 @@ void CalculatorProtocol::Calculator_subtraction_async(Calculator_subtractionCall
 }
 
 
-void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &protocol,
-    void *data , eprosima::rpc::transport::Endpoint *endpoint)
-{
-    CalculatorProtocol &_protocol = dynamic_cast<CalculatorProtocol&>(protocol);
-    CalculatorRequest &requestData = *(CalculatorRequest*)data;
 
-    switch(requestData.unio._d)
-    {
-
-                case 1:
-                {
-                DDS_Long  value1 = 0;
-                DDS_Long  value2 = 0;
-                DDS_Long  addition_ret = 0;   
-                CalculatorReply replyData;
-                replyData._header.clientId.value_1 = requestData._header.clientId.value_1;
-                replyData._header.clientId.value_2 = requestData._header.clientId.value_2;
-                replyData._header.clientId.value_3 = requestData._header.clientId.value_3;
-                replyData._header.clientId.value_4 = requestData._header.clientId.value_4;
-                replyData._header.requestSequenceNumber = requestData._header.requestSequenceNumber;
-
-                replyData.unio._d = 1;
-
-
-                value1 = requestData.unio._u.addition.value1;
-                value2 = requestData.unio._u.addition.value2;
-
-                try
-                {
-                    if(_protocol._Calculator_impl != NULL)
-                    {
-                        addition_ret = _protocol._Calculator_impl->addition(value1, value2);
-
-
-                        replyData.unio._u.addition.addition_ret = addition_ret;
-
-                        replyData._header.retCode = OPERATION_SUCCESSFUL;
-                        replyData._header.retMsg = (char*)"";
-
-                        _protocol.Calculator_se->sendReply(&replyData);
-                    }
-                    // TODO Send exception.
-                }
-                catch(const ServerInternalException &ex)
-                {
-                    memset((char*)&replyData + sizeof(replyData._header), 0, sizeof(replyData) - sizeof(replyData._header));
-                    replyData._header.retCode = SERVER_INTERNAL_ERROR;
-                    replyData._header.retMsg = (char*)ex.what();
-
-                    _protocol.Calculator_se->sendReply(&replyData);
-                }
-
-                CalculatorRequest_finalize(&requestData);
-
-
-                }
-                break;
-                
-
-                case 2:
-                {
-                DDS_Long  value1 = 0;
-                DDS_Long  value2 = 0;
-                DDS_Long  subtraction_ret = 0;   
-                CalculatorReply replyData;
-                replyData._header.clientId.value_1 = requestData._header.clientId.value_1;
-                replyData._header.clientId.value_2 = requestData._header.clientId.value_2;
-                replyData._header.clientId.value_3 = requestData._header.clientId.value_3;
-                replyData._header.clientId.value_4 = requestData._header.clientId.value_4;
-                replyData._header.requestSequenceNumber = requestData._header.requestSequenceNumber;
-
-                replyData.unio._d = 2;
-
-
-                value1 = requestData.unio._u.subtraction.value1;
-                value2 = requestData.unio._u.subtraction.value2;
-
-                try
-                {
-                    if(_protocol._Calculator_impl != NULL)
-                    {
-                        subtraction_ret = _protocol._Calculator_impl->subtraction(value1, value2);
-
-
-                        replyData.unio._u.subtraction.subtraction_ret = subtraction_ret;
-
-                        replyData._header.retCode = OPERATION_SUCCESSFUL;
-                        replyData._header.retMsg = (char*)"";
-
-                        _protocol.Calculator_se->sendReply(&replyData);
-                    }
-                    // TODO Send exception.
-                }
-                catch(const ServerInternalException &ex)
-                {
-                    memset((char*)&replyData + sizeof(replyData._header), 0, sizeof(replyData) - sizeof(replyData._header));
-                    replyData._header.retCode = SERVER_INTERNAL_ERROR;
-                    replyData._header.retMsg = (char*)ex.what();
-
-                    _protocol.Calculator_se->sendReply(&replyData);
-                }
-
-                CalculatorRequest_finalize(&requestData);
-
-
-                }
-                break;
-                
-    };        
-}
