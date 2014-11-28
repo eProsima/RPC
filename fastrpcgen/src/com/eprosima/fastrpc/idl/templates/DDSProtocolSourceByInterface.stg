@@ -259,6 +259,8 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_serve(eprosima::rpc:
             $replyOperationUnionDataAccessByInterface(operation=operation, varname="replyData", dataname="sysx_")$ = $if(ctx.rtiTypes)$(SystemExceptionCode)$endif$SERVER_INTERNAL_ERROR;
 
             _protocol.$interface.formatedScopedname$_se->sendReply(&replyData);
+            $else$
+            ex;
             $endif$
         }
 
