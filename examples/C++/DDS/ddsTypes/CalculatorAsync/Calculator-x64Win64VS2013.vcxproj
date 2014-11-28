@@ -167,7 +167,7 @@
       </Lib>
     </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CalculatorExceptions.cxx" />
+    <ClCompile Include="CalculatorExtension.cxx" />
     <ClCompile Include="CalculatorDDSProtocol.cxx" />
     <ClCompile Include="CalculatorDDSAsyncSupport.cxx" />
     <ClCompile Include="Calculator.cxx" />
@@ -178,7 +178,7 @@
     <ClCompile Include="CalculatorRequestReplySupport.cxx" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CalculatorExceptions.h" />
+    <ClInclude Include="CalculatorExtension.h" />
     <ClInclude Include="CalculatorProtocol.h" />
     <ClInclude Include="CalculatorDDSProtocol.h" />
     <ClInclude Include="CalculatorAsyncCallbackHandlers.h" />

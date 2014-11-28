@@ -103,7 +103,7 @@
         <AdditionalDependencies>nddscored.lib;nddscd.lib;nddscppd.lib;
   ;MultithreadTestd.lib;MultithreadTestClientd.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+	<AdditionalLibraryDirectories>$(BOOST_LIBRARYDIR)/i86Win32VS2013;$(RPCDDSHOME)/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
@@ -121,7 +121,7 @@
         <AdditionalDependencies>nddscore.lib;nddsc.lib;nddscpp.lib;
   ;MultithreadTest.lib;MultithreadTestClient.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(BOOST_LIBRARYDIR)/i86Win32VS2013;$(RPCDDSHOME)/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -139,7 +139,7 @@
         <AdditionalDependencies>nddscorezd.lib;nddsczd.lib;nddscppzd.lib;
   ;libMultithreadTestd.lib;libMultithreadTestClientd.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(BOOST_LIBRARYDIR)/i86Win32VS2013;$(RPCDDSHOME)/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -157,7 +157,7 @@
         <AdditionalDependencies>nddscorez.lib;nddscz.lib;nddscppz.lib;
   ;libMultithreadTest.lib;libMultithreadTestClient.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(BOOST_LIBRARYDIR)/i86Win32VS2013;$(RPCDDSHOME)/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
     </ItemDefinitionGroup>
   <ItemGroup>

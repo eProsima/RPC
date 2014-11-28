@@ -11,34 +11,28 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-
         <ClCompile Include="MessageHeader.cxx">
           <Filter>Source Files</Filter>
         </ClCompile>
         
-
         <ClCompile Include="MessageHeaderPlugin.cxx">
           <Filter>Source Files</Filter>
         </ClCompile>
         
-
         <ClCompile Include="MessageHeaderSupport.cxx">
           <Filter>Source Files</Filter>
         </ClCompile>
         
   </ItemGroup>
   <ItemGroup>
-
         <ClInclude Include="MessageHeader.h">
           <Filter>Header Files</Filter>
         </ClInclude>
         
-
         <ClInclude Include="MessageHeaderPlugin.h">
           <Filter>Header Files</Filter>
         </ClInclude>
         
-
         <ClInclude Include="MessageHeaderSupport.h">
           <Filter>Header Files</Filter>
         </ClInclude>
