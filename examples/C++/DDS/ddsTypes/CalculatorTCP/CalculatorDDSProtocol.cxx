@@ -156,7 +156,7 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
                     }
                     // TODO Send exception.
                 }
-                catch(const ServerInternalException &ex)
+                catch(const ServerInternalException &)
                 {
                     //TODO Quitar el unsetReply
                     //memset((char*)&replyData + sizeof(replyData.header), 0, sizeof(replyData) - sizeof(replyData.header));
@@ -201,7 +201,7 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
                     }
                     // TODO Send exception.
                 }
-                catch(const ServerInternalException &ex)
+                catch(const ServerInternalException &)
                 {
                     //TODO Quitar el unsetReply
                     //memset((char*)&replyData + sizeof(replyData.header), 0, sizeof(replyData) - sizeof(replyData.header));

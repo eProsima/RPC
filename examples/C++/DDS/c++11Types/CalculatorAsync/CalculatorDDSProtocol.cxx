@@ -155,7 +155,7 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
                     }
                     // TODO Send exception.
                 }
-                catch(const ServerInternalException &ex)
+                catch(const ServerInternalException &)
                 {
                     //TODO Quitar el unsetReply
                     //
@@ -199,7 +199,7 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
                     }
                     // TODO Send exception.
                 }
-                catch(const ServerInternalException &ex)
+                catch(const ServerInternalException &)
                 {
                     //TODO Quitar el unsetReply
                     //
