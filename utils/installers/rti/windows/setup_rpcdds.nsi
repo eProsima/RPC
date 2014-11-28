@@ -126,9 +126,6 @@ Section -post SEC0006
     # Copy rpcddsgen java classes.
     SetOutPath $INSTDIR\classes
     SetOverwrite on
-    File /r ..\..\..\..\classes\antlr-2.7.7.jar
-    File /r ..\..\..\..\classes\antxr.jar
-    File /r ..\..\..\..\classes\stringtemplate-3.2.1.jar
     File /r ..\..\..\..\classes\rpcddsgen.jar
         
     # Copy rpcddsgen script.
