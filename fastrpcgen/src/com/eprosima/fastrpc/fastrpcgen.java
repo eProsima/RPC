@@ -441,6 +441,9 @@ public class fastrpcgen
 				} else if(m_protocol == PROTOCOL.REST) {
 					solution.addInclude("$(RPCRESTHOME)/thirdparty/eprosima-common-code");
 				}				
+
+                if(!m_exampleOption.contains("Win"))
+                    solution.addLibraryPath("$(BOOST_LIBRARYDIR)/" + m_exampleOption);
 			}
             solution.addInclude("$(" + m_appEnv + ")/include");
             if(m_exampleOption != null)
