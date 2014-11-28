@@ -4,12 +4,11 @@ LN= g++
 AR=ar
 LDFLAGS= -m32
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
-DEFINES=  -DRTI_LINUX -DRTI_UNIX
+DEFINES= -DRTI_LINUX -DRTI_UNIX
 
-INCLUDES= -I.  -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds 
+INCLUDES= -I. -I$(RPCDDSHOME)/include -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds
 
-LIBS =  -lrpcdds  -L$(NDDSHOME)/lib/i86Linux2.6gcc4.4.5 \
-       -lnddsc -lnddscore -lnddscpp -lfastcdr $(SYSLIBS)
+LIBS = -L$(RPCDDSHOME)/lib/i86Linux2.6gcc4.4.5 -L$(NDDSHOME)/lib/i86Linux2.6gcc4.4.5 -lfastcdr -lnddscore -lnddsc -lnddscpp -lrpcdds $(SYSLIBS)
 
 DIRECTORIES= output.dir output/i86Linux2.6gcc4.4.5.dir lib.dir lib/i86Linux2.6gcc4.4.5.dir bin.dir bin/i86Linux2.6gcc4.4.5.dir
 

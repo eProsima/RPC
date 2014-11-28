@@ -14,6 +14,7 @@
 
 #include "CalculatorDDSAsyncSupport.h"
 #include "rpcdds/exceptions/ServerInternalException.h"
+#include "rpcdds/exceptions/ClientInternalException.h"
 #include "rpcdds/utils/Messages.h"
 
 using namespace eprosima::rpc;
@@ -40,20 +41,22 @@ void* Calculator_additionTask::getReplyInstance()
 
 void Calculator_additionTask::execute()
 {  
-    int32_t  addition_ret = 0;
-    ReturnMessage retcode = OPERATION_SUCCESSFUL;
+    int32_t  return_ = 0;
+    ReturnMessage retcode = eprosima::rpc::OK;
     
-    retcode = (ReturnMessage)m_reply._header().retCode();
-    addition_ret = m_reply.unio().addition().addition_ret(); 
-        
-    if(retcode == OPERATION_SUCCESSFUL)
+    switch (m_reply.reply().addition()._d())
     {
-        getObject().addition(addition_ret);
-    }
-    else
-    {
-        if(retcode == SERVER_INTERNAL_ERROR)
-            getObject().on_exception(ServerInternalException(m_reply._header().retMsg()));
+        case 0:
+            return_ = m_reply.reply().addition().out_().return_(); 
+		    getObject().addition(return_);
+            break;
+        case 1:
+            retcode = (eprosima::rpc::ReturnMessage)m_reply.reply().addition().sysx_();
+            if(retcode == eprosima::rpc::SERVER_INTERNAL_ERROR)
+                getObject().on_exception(ServerInternalException(""));
+            break;
+        default:
+            getObject().on_exception(ClientInternalException("Error extracting information from server"));
     }
 }
 
@@ -84,20 +87,22 @@ void* Calculator_subtractionTask::getReplyInstance()
 
 void Calculator_subtractionTask::execute()
 {  
-    int32_t  subtraction_ret = 0;
-    ReturnMessage retcode = OPERATION_SUCCESSFUL;
+    int32_t  return_ = 0;
+    ReturnMessage retcode = eprosima::rpc::OK;
     
-    retcode = (ReturnMessage)m_reply._header().retCode();
-    subtraction_ret = m_reply.unio().subtraction().subtraction_ret(); 
-        
-    if(retcode == OPERATION_SUCCESSFUL)
+    switch (m_reply.reply().subtraction()._d())
     {
-        getObject().subtraction(subtraction_ret);
-    }
-    else
-    {
-        if(retcode == SERVER_INTERNAL_ERROR)
-            getObject().on_exception(ServerInternalException(m_reply._header().retMsg()));
+        case 0:
+            return_ = m_reply.reply().subtraction().out_().return_(); 
+		    getObject().subtraction(return_);
+            break;
+        case 1:
+            retcode = (eprosima::rpc::ReturnMessage)m_reply.reply().subtraction().sysx_();
+            if(retcode == eprosima::rpc::SERVER_INTERNAL_ERROR)
+                getObject().on_exception(ServerInternalException(""));
+            break;
+        default:
+            getObject().on_exception(ClientInternalException("Error extracting information from server"));
     }
 }
 
@@ -105,4 +110,7 @@ void Calculator_subtractionTask::on_exception(const SystemException &ex)
 {
     getObject().on_exception(ex);
 }
+
+
+
 

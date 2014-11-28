@@ -27,7 +27,6 @@ using namespace ::transport;
 using namespace ::exception;
 
 CalculatorProtocol::CalculatorProtocol() : ::protocol::CalculatorProtocol(), m_ddsTransport(NULL)
-
 , Calculator_str("Calculator")
 , Calculator_pe(NULL), Calculator_se(NULL)
 {
@@ -68,16 +67,16 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
         
         if(strcmp(interfaceName, "Calculator") == 0)
         {
-            requesttypeName = CalculatorRequestPlugin::get_typename();
+            requesttypeName = Calculator_RequestPlugin::get_typename();
     
-            if(!CalculatorRequestPlugin::register_type(m_ddsTransport->getParticipant(), requesttypeName))
+            if(!Calculator_RequestPlugin::register_type(m_ddsTransport->getParticipant(), requesttypeName))
             {
                 return false;
             }
             
-            replytypeName = CalculatorReplyPlugin::get_typename();
+            replytypeName = Calculator_ReplyPlugin::get_typename();
     
-            if(!CalculatorReplyPlugin::register_type(m_ddsTransport->getParticipant(), replytypeName))
+            if(!Calculator_ReplyPlugin::register_type(m_ddsTransport->getParticipant(), replytypeName))
             {
                 return false;
             }
@@ -88,11 +87,11 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
                 requesttypeName,
                 replytypeName,
                 true,
-                (::transport::dds::Transport::Create_data)CalculatorReplyPlugin::create_data,
-                (::transport::dds::Transport::Copy_data)CalculatorReplyPlugin::copy_data,
-                (::transport::dds::Transport::Destroy_data)CalculatorReplyPlugin::destroy_data,
+                (::transport::dds::Transport::Create_data)Calculator_ReplyPlugin::create_data,
+                (::transport::dds::Transport::Copy_data)Calculator_ReplyPlugin::copy_data,
+                (::transport::dds::Transport::Destroy_data)Calculator_ReplyPlugin::destroy_data,
                 NULL,
-                sizeof(CalculatorReply)
+                sizeof(Calculator_Reply)
                 ));
             }
             if(behaviour == ::transport::SERVER_BEHAVIOUR)
@@ -101,14 +100,15 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
                     replytypeName,
                     requesttypeName,
 		            true,
-                    (::transport::dds::Transport::Create_data)CalculatorRequestPlugin::create_data,
-                    (::transport::dds::Transport::Copy_data)CalculatorRequestPlugin::copy_data,
-                    (::transport::dds::Transport::Destroy_data)CalculatorRequestPlugin::destroy_data,
+                    (::transport::dds::Transport::Create_data)Calculator_RequestPlugin::create_data,
+                    (::transport::dds::Transport::Copy_data)Calculator_RequestPlugin::copy_data,
+                    (::transport::dds::Transport::Destroy_data)Calculator_RequestPlugin::destroy_data,
                     CalculatorProtocol::Calculator_serve,
-                    sizeof(CalculatorRequest)));
+                    sizeof(Calculator_Request)));
             }
         }
-
+        
+        return true;
     }
     else
     {
@@ -118,186 +118,38 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
     return false;
 }
 
-int32_t CalculatorProtocol::Calculator_addition(/*in*/ int32_t value1, /*in*/ int32_t value2)
-{
-    ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
-    int32_t  addition_ret = 0;
-    CalculatorRequest instance;
-    CalculatorReply retInstance;
-
-
-
-    instance.unio()._d() = 1;
-    
-    instance.unio().addition().value1(value1);
-    instance.unio().addition().value2(value2);
-
-    retcode = Calculator_pe->send(&instance, &retInstance);
-    
-    if(retcode == OPERATION_SUCCESSFUL)
-    {
-    
-        retcode = (ReturnMessage)retInstance._header().retCode();
-        addition_ret = retInstance.unio().addition().addition_ret(); 
-    
-    }
-      
-    switch (retcode)
-    {
-        case CLIENT_INTERNAL_ERROR:
-            throw ClientInternalException("Error in client side");
-            break;
-        case NO_SERVER:
-            throw ServerNotFoundException("Cannot connect to the server");
-            break;
-        case SERVER_TIMEOUT:
-            throw ServerTimeoutException("Timeout waiting the server's reply");
-            break;
-        case SERVER_INTERNAL_ERROR:
-            throw ServerInternalException(retInstance._header().retMsg());
-            break;
-        default:
-            break;
-    };
-    
-
-    return addition_ret;
-}
-void CalculatorProtocol::Calculator_addition_async(Calculator_additionCallbackHandler &obj, /*in*/ int32_t value1, /*in*/ int32_t value2)
-{
-    ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
-    CalculatorRequest instance;
-    Calculator_additionTask *task = new Calculator_additionTask(obj);
-
-    instance.unio()._d() = 1;
-    
-    instance.unio().addition().value1(value1);
-    instance.unio().addition().value2(value2);
-
-    retcode = Calculator_pe->send_async(&instance, task);
-    
-    switch (retcode)
-    {
-        case CLIENT_INTERNAL_ERROR:
-            throw ClientInternalException("Error in client side");
-            break;
-        case NO_SERVER:
-            throw ServerNotFoundException("Cannot connect to the server");
-            break;
-        default:
-            break;
-    }
-}
-
-int32_t CalculatorProtocol::Calculator_subtraction(/*in*/ int32_t value1, /*in*/ int32_t value2)
-{
-    ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
-    int32_t  subtraction_ret = 0;
-    CalculatorRequest instance;
-    CalculatorReply retInstance;
-
-
-
-    instance.unio()._d() = 2;
-    
-    instance.unio().subtraction().value1(value1);
-    instance.unio().subtraction().value2(value2);
-
-    retcode = Calculator_pe->send(&instance, &retInstance);
-    
-    if(retcode == OPERATION_SUCCESSFUL)
-    {
-    
-        retcode = (ReturnMessage)retInstance._header().retCode();
-        subtraction_ret = retInstance.unio().subtraction().subtraction_ret(); 
-    
-    }
-      
-    switch (retcode)
-    {
-        case CLIENT_INTERNAL_ERROR:
-            throw ClientInternalException("Error in client side");
-            break;
-        case NO_SERVER:
-            throw ServerNotFoundException("Cannot connect to the server");
-            break;
-        case SERVER_TIMEOUT:
-            throw ServerTimeoutException("Timeout waiting the server's reply");
-            break;
-        case SERVER_INTERNAL_ERROR:
-            throw ServerInternalException(retInstance._header().retMsg());
-            break;
-        default:
-            break;
-    };
-    
-
-    return subtraction_ret;
-}
-void CalculatorProtocol::Calculator_subtraction_async(Calculator_subtractionCallbackHandler &obj, /*in*/ int32_t value1, /*in*/ int32_t value2)
-{
-    ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
-    CalculatorRequest instance;
-    Calculator_subtractionTask *task = new Calculator_subtractionTask(obj);
-
-    instance.unio()._d() = 2;
-    
-    instance.unio().subtraction().value1(value1);
-    instance.unio().subtraction().value2(value2);
-
-    retcode = Calculator_pe->send_async(&instance, task);
-    
-    switch (retcode)
-    {
-        case CLIENT_INTERNAL_ERROR:
-            throw ClientInternalException("Error in client side");
-            break;
-        case NO_SERVER:
-            throw ServerNotFoundException("Cannot connect to the server");
-            break;
-        default:
-            break;
-    }
-}
-
-
 void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &protocol,
-    void *data , eprosima::rpc::transport::Endpoint *endpoint)
+    void *_data , eprosima::rpc::transport::Endpoint *endpoint)
 {
     CalculatorProtocol &_protocol = dynamic_cast<CalculatorProtocol&>(protocol);
-    CalculatorRequest &requestData = *(CalculatorRequest*)data;
+    Calculator_Request &requestData = *(Calculator_Request*)_data;
 
-    switch(requestData.unio()._d())
+    switch(requestData.request()._d())
     {
-
-                case 1:
+                case 0xCBC6CEAA:
                 {
                 int32_t  value1 = 0;
                 int32_t  value2 = 0;
-                int32_t  addition_ret = 0;   
-                CalculatorReply replyData;
-                replyData._header().clientId().value_1() = requestData._header().clientId().value_1();
-                replyData._header().clientId().value_2() = requestData._header().clientId().value_2();
-                replyData._header().clientId().value_3() = requestData._header().clientId().value_3();
-                replyData._header().clientId().value_4() = requestData._header().clientId().value_4();
-                replyData._header().requestSequenceNumber() = requestData._header().requestSequenceNumber();
+                int32_t  return_ = 0;   
+                Calculator_Reply replyData;
+                memcpy(replyData.header().request_id().guid().value(), requestData.header().request_id().guid().value(), 16);
+                replyData.header().request_id().sequence_number() = requestData.header().request_id().sequence_number();
 
-                replyData.unio()._d() = 1;
+                replyData.reply()._d() = 0xCBC6CEAA;
 
 
-                value1 = requestData.unio().addition().value1(); 
-                value2 = requestData.unio().addition().value2(); 
+                value1 = requestData.request().addition().value1(); 
+                value2 = requestData.request().addition().value2(); 
 
                 try
                 {
                     if(_protocol._Calculator_impl != NULL)
                     {
-                        addition_ret = _protocol._Calculator_impl->addition(value1, value2);
+                        return_ = _protocol._Calculator_impl->addition(value1, value2);
 
+                        replyData.reply().addition()._d() = 0;
 
-                        replyData.unio().addition().addition_ret(addition_ret);
-
-                        replyData._header().retCode(OPERATION_SUCCESSFUL);
+                        replyData.reply().addition().out_().return_(return_);
 
                         _protocol.Calculator_se->sendReply(&replyData);
                     }
@@ -305,8 +157,10 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
                 }
                 catch(const ServerInternalException &ex)
                 {
-                    replyData._header().retCode(SERVER_INTERNAL_ERROR);
-                    replyData._header().retMsg(std::move(ex.what()));
+                    //TODO Quitar el unsetReply
+                    //
+                    replyData.reply().addition()._d() = 1;
+                    replyData.reply().addition().sysx_() = SERVER_INTERNAL_ERROR;
 
                     _protocol.Calculator_se->sendReply(&replyData);
                 }
@@ -316,35 +170,30 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
                 }
                 break;
                 
-
-                case 2:
+                case 0xCA019A14:
                 {
                 int32_t  value1 = 0;
                 int32_t  value2 = 0;
-                int32_t  subtraction_ret = 0;   
-                CalculatorReply replyData;
-                replyData._header().clientId().value_1() = requestData._header().clientId().value_1();
-                replyData._header().clientId().value_2() = requestData._header().clientId().value_2();
-                replyData._header().clientId().value_3() = requestData._header().clientId().value_3();
-                replyData._header().clientId().value_4() = requestData._header().clientId().value_4();
-                replyData._header().requestSequenceNumber() = requestData._header().requestSequenceNumber();
+                int32_t  return_ = 0;   
+                Calculator_Reply replyData;
+                memcpy(replyData.header().request_id().guid().value(), requestData.header().request_id().guid().value(), 16);
+                replyData.header().request_id().sequence_number() = requestData.header().request_id().sequence_number();
 
-                replyData.unio()._d() = 2;
+                replyData.reply()._d() = 0xCA019A14;
 
 
-                value1 = requestData.unio().subtraction().value1(); 
-                value2 = requestData.unio().subtraction().value2(); 
+                value1 = requestData.request().subtraction().value1(); 
+                value2 = requestData.request().subtraction().value2(); 
 
                 try
                 {
                     if(_protocol._Calculator_impl != NULL)
                     {
-                        subtraction_ret = _protocol._Calculator_impl->subtraction(value1, value2);
+                        return_ = _protocol._Calculator_impl->subtraction(value1, value2);
 
+                        replyData.reply().subtraction()._d() = 0;
 
-                        replyData.unio().subtraction().subtraction_ret(subtraction_ret);
-
-                        replyData._header().retCode(OPERATION_SUCCESSFUL);
+                        replyData.reply().subtraction().out_().return_(return_);
 
                         _protocol.Calculator_se->sendReply(&replyData);
                     }
@@ -352,8 +201,10 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
                 }
                 catch(const ServerInternalException &ex)
                 {
-                    replyData._header().retCode(SERVER_INTERNAL_ERROR);
-                    replyData._header().retMsg(std::move(ex.what()));
+                    //TODO Quitar el unsetReply
+                    //
+                    replyData.reply().subtraction()._d() = 1;
+                    replyData.reply().subtraction().sysx_() = SERVER_INTERNAL_ERROR;
 
                     _protocol.Calculator_se->sendReply(&replyData);
                 }
@@ -365,3 +216,161 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
                 
     };        
 }
+int32_t CalculatorProtocol::Calculator_addition(/*in*/ int32_t value1, /*in*/ int32_t value2)
+{
+    ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
+    int32_t  return_ = 0;
+    Calculator_Request instance;
+    Calculator_Reply retInstance;
+
+
+
+    instance.request()._d() = 0xCBC6CEAA;
+    
+    instance.request().addition().value1(value1);
+    instance.request().addition().value2(value2);
+
+    retcode = Calculator_pe->send(&instance, &retInstance);
+    
+    if(retcode == OK)
+    {
+        switch (retInstance.reply().addition()._d())
+        {
+            case 0:
+		        return_ = retInstance.reply().addition().out_().return_(); 
+                break;
+            case 1:
+                retcode = (eprosima::rpc::ReturnMessage)retInstance.reply().addition().sysx_();
+                break;
+            default:
+                throw ClientInternalException("Error extracting information from server");
+        }
+    }
+      
+    switch (retcode)
+    {
+        case CLIENT_INTERNAL_ERROR:
+            throw ClientInternalException("Error in client side");
+            break;
+        case SERVER_NOT_FOUND:
+            throw ServerNotFoundException("Cannot connect to the server");
+            break;
+        case TIMEOUT:
+            throw ServerTimeoutException("Timeout waiting the server's reply");
+            break;
+        case SERVER_INTERNAL_ERROR:
+            throw ServerInternalException("");
+            break;
+        default:
+            break;
+    };
+    
+
+    return return_;
+}
+void CalculatorProtocol::Calculator_addition_async(Calculator_additionCallbackHandler &obj, /*in*/ int32_t value1, /*in*/ int32_t value2)
+{
+    ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
+    Calculator_Request instance;
+    Calculator_additionTask *task = new Calculator_additionTask(obj);
+
+    instance.request()._d() = 0xCBC6CEAA;
+    
+    instance.request().addition().value1(value1);
+    instance.request().addition().value2(value2);
+
+    retcode = Calculator_pe->send_async(&instance, task);
+    
+    switch (retcode)
+    {
+        case CLIENT_INTERNAL_ERROR:
+            throw ClientInternalException("Error in client side");
+            break;
+        case SERVER_NOT_FOUND:
+            throw ServerNotFoundException("Cannot connect to the server");
+            break;
+        default:
+            break;
+    }
+}
+
+int32_t CalculatorProtocol::Calculator_subtraction(/*in*/ int32_t value1, /*in*/ int32_t value2)
+{
+    ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
+    int32_t  return_ = 0;
+    Calculator_Request instance;
+    Calculator_Reply retInstance;
+
+
+
+    instance.request()._d() = 0xCA019A14;
+    
+    instance.request().subtraction().value1(value1);
+    instance.request().subtraction().value2(value2);
+
+    retcode = Calculator_pe->send(&instance, &retInstance);
+    
+    if(retcode == OK)
+    {
+        switch (retInstance.reply().subtraction()._d())
+        {
+            case 0:
+		        return_ = retInstance.reply().subtraction().out_().return_(); 
+                break;
+            case 1:
+                retcode = (eprosima::rpc::ReturnMessage)retInstance.reply().subtraction().sysx_();
+                break;
+            default:
+                throw ClientInternalException("Error extracting information from server");
+        }
+    }
+      
+    switch (retcode)
+    {
+        case CLIENT_INTERNAL_ERROR:
+            throw ClientInternalException("Error in client side");
+            break;
+        case SERVER_NOT_FOUND:
+            throw ServerNotFoundException("Cannot connect to the server");
+            break;
+        case TIMEOUT:
+            throw ServerTimeoutException("Timeout waiting the server's reply");
+            break;
+        case SERVER_INTERNAL_ERROR:
+            throw ServerInternalException("");
+            break;
+        default:
+            break;
+    };
+    
+
+    return return_;
+}
+void CalculatorProtocol::Calculator_subtraction_async(Calculator_subtractionCallbackHandler &obj, /*in*/ int32_t value1, /*in*/ int32_t value2)
+{
+    ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
+    Calculator_Request instance;
+    Calculator_subtractionTask *task = new Calculator_subtractionTask(obj);
+
+    instance.request()._d() = 0xCA019A14;
+    
+    instance.request().subtraction().value1(value1);
+    instance.request().subtraction().value2(value2);
+
+    retcode = Calculator_pe->send_async(&instance, task);
+    
+    switch (retcode)
+    {
+        case CLIENT_INTERNAL_ERROR:
+            throw ClientInternalException("Error in client side");
+            break;
+        case SERVER_NOT_FOUND:
+            throw ServerNotFoundException("Cannot connect to the server");
+            break;
+        default:
+            break;
+    }
+}
+
+
+

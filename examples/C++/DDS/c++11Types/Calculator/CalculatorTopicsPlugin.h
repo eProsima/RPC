@@ -36,45 +36,73 @@ class user_cpp_DllExport CalculatorPlugin
 {
     public:
 
-        /*!
-         * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
-         */
-        class user_cpp_DllExport additionRequestPlugin
-        {
-            public:
 
-                static DDS_TypeCode* get_typecode();
-        };
 
-        /*!
-         * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
-         */
-        class user_cpp_DllExport additionReplyPlugin : public DDSTypeSupport
-        {
-            public:
 
-                static DDS_TypeCode* get_typecode();
-        };
-
-        /*!
-         * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
-         */
-        class user_cpp_DllExport subtractionRequestPlugin
-        {
-            public:
-
-                static DDS_TypeCode* get_typecode();
-        };
-
-        /*!
-         * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
-         */
-        class user_cpp_DllExport subtractionReplyPlugin : public DDSTypeSupport
-        {
-            public:
-
-                static DDS_TypeCode* get_typecode();
-        };
+                /*!
+                 * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+                 */
+                class user_cpp_DllExport addition_InPlugin
+                {
+                    public:
+                
+                        static DDS_TypeCode* get_typecode();
+                };
+                
+                
+                /*!
+                 * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+                 */
+                class user_cpp_DllExport addition_OutPlugin
+                {
+                    public:
+                
+                        static DDS_TypeCode* get_typecode();
+                };
+                
+                /*!
+                 * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+                 */
+                class user_cpp_DllExport addition_ResultPlugin : public DDSTypeSupport
+                {
+                    public:
+                
+                        static DDS_TypeCode* get_typecode();
+                };
+                
+                
+                /*!
+                 * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+                 */
+                class user_cpp_DllExport subtraction_InPlugin
+                {
+                    public:
+                
+                        static DDS_TypeCode* get_typecode();
+                };
+                
+                
+                /*!
+                 * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+                 */
+                class user_cpp_DllExport subtraction_OutPlugin
+                {
+                    public:
+                
+                        static DDS_TypeCode* get_typecode();
+                };
+                
+                /*!
+                 * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+                 */
+                class user_cpp_DllExport subtraction_ResultPlugin : public DDSTypeSupport
+                {
+                    public:
+                
+                        static DDS_TypeCode* get_typecode();
+                };
+                
+                
 
 
     private:
@@ -85,27 +113,27 @@ class user_cpp_DllExport CalculatorPlugin
 /*!
  * @brief Request DataReader.
  */
-class user_cpp_DllExport CalculatorRequestDataReader : public DDSDataReader
+class user_cpp_DllExport Calculator_RequestDataReader : public DDSDataReader
 {
     public:
 
-        CalculatorRequestDataReader(DDSDataReader *impl) : DDSDataReader(impl){}
+        Calculator_RequestDataReader(DDSDataReader *impl) : DDSDataReader(impl){}
 };
 
 /*!
  * @brief Request DataWriter.
  */
-class user_cpp_DllExport CalculatorRequestDataWriter : public DDSDataWriter
+class user_cpp_DllExport Calculator_RequestDataWriter : public DDSDataWriter
 {
     public:
 
-        CalculatorRequestDataWriter(DDSDataWriter *impl) : DDSDataWriter(impl){}
+        Calculator_RequestDataWriter(DDSDataWriter *impl) : DDSDataWriter(impl){}
 };
 
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class user_cpp_DllExport CalculatorRequest_unionPlugin
+class user_cpp_DllExport Calculator_CallPlugin
 {
     public:
 
@@ -115,18 +143,18 @@ class user_cpp_DllExport CalculatorRequest_unionPlugin
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class user_cpp_DllExport CalculatorRequestPlugin : public DDSTypeSupport
+class user_cpp_DllExport Calculator_RequestPlugin : public DDSTypeSupport
 {
     public:
 
         static const char* get_typename();
 
-        static CalculatorRequest* create_data(void);
+        static Calculator_Request* create_data(void);
         
-        static void destroy_data(CalculatorRequest *sample);
+        static void destroy_data(Calculator_Request *sample);
         
-        static void copy_data(CalculatorRequest *dst,
-            const CalculatorRequest *src);
+        static void copy_data(Calculator_Request *dst,
+            const Calculator_Request *src);
         
         static unsigned int get_serialized_sample_max_size(
             PRESTypePluginEndpointData endpoint_data,
@@ -139,7 +167,7 @@ class user_cpp_DllExport CalculatorRequestPlugin : public DDSTypeSupport
             RTIBool include_encapsulation,
             RTIEncapsulationId encapsulation_id,
             unsigned int current_alignment,
-            const CalculatorRequest * sample);
+            const Calculator_Request * sample);
         
         static unsigned int get_serialized_sample_min_size(
             PRESTypePluginEndpointData endpoint_data,
@@ -168,11 +196,11 @@ class user_cpp_DllExport CalculatorRequestPlugin : public DDSTypeSupport
         
         static RTIBool copy_sample(
             PRESTypePluginEndpointData endpoint_data,
-            CalculatorRequest *dst,
-            const CalculatorRequest *src);
+            Calculator_Request *dst,
+            const Calculator_Request *src);
         
         static RTIBool serialize(PRESTypePluginEndpointData endpoint_data,
-            const CalculatorRequest *sample, 
+            const Calculator_Request *sample, 
             struct RTICdrStream *stream,    
             RTIBool serialize_encapsulation,
             RTIEncapsulationId encapsulation_id,
@@ -180,7 +208,7 @@ class user_cpp_DllExport CalculatorRequestPlugin : public DDSTypeSupport
             void *endpoint_plugin_qos);
         
         static RTIBool deserialize(PRESTypePluginEndpointData endpoint_data,
-            CalculatorRequest **sample,
+            Calculator_Request **sample,
             RTIBool * drop_sample,
             struct RTICdrStream *stream,   
             RTIBool deserialize_encapsulation,
@@ -217,27 +245,27 @@ class user_cpp_DllExport CalculatorRequestPlugin : public DDSTypeSupport
 /*!
  * @brief Reply DataReader.
  */
-class user_cpp_DllExport CalculatorReplyDataReader : public DDSDataReader
+class user_cpp_DllExport Calculator_ReplyDataReader : public DDSDataReader
 {
     public:
 
-        CalculatorReplyDataReader(DDSDataReader *impl) : DDSDataReader(impl){}
+        Calculator_ReplyDataReader(DDSDataReader *impl) : DDSDataReader(impl){}
 };
 
 /*!
  * @brief Reply DataWriter.
  */
-class user_cpp_DllExport CalculatorReplyDataWriter : public DDSDataWriter
+class user_cpp_DllExport Calculator_ReplyDataWriter : public DDSDataWriter
 {
     public:
 
-        CalculatorReplyDataWriter(DDSDataWriter *impl) : DDSDataWriter(impl){}
+        Calculator_ReplyDataWriter(DDSDataWriter *impl) : DDSDataWriter(impl){}
 };
 
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class user_cpp_DllExport CalculatorReply_unionPlugin
+class user_cpp_DllExport Calculator_ReturnPlugin
 {
     public:
 
@@ -247,18 +275,18 @@ class user_cpp_DllExport CalculatorReply_unionPlugin
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class user_cpp_DllExport CalculatorReplyPlugin : public DDSTypeSupport
+class user_cpp_DllExport Calculator_ReplyPlugin : public DDSTypeSupport
 {
     public:
 
         static const char* get_typename();
         
-        static CalculatorReply* create_data(void);
+        static Calculator_Reply* create_data(void);
         
-        static void destroy_data(CalculatorReply *sample);
+        static void destroy_data(Calculator_Reply *sample);
         
-        static void copy_data(CalculatorReply *dst,
-            const CalculatorReply *src);
+        static void copy_data(Calculator_Reply *dst,
+            const Calculator_Reply *src);
         
         static unsigned int get_serialized_sample_max_size(
             PRESTypePluginEndpointData endpoint_data,
@@ -271,7 +299,7 @@ class user_cpp_DllExport CalculatorReplyPlugin : public DDSTypeSupport
             RTIBool include_encapsulation,
             RTIEncapsulationId encapsulation_id,
             unsigned int current_alignment,
-            const CalculatorReply * sample);
+            const Calculator_Reply * sample);
         
         static unsigned int get_serialized_sample_min_size(
             PRESTypePluginEndpointData endpoint_data,
@@ -297,11 +325,11 @@ class user_cpp_DllExport CalculatorReplyPlugin : public DDSTypeSupport
         static void on_endpoint_detached(PRESTypePluginEndpointData endpoint_data);
         
         static RTIBool copy_sample(PRESTypePluginEndpointData endpoint_data,
-            CalculatorReply *dst,
-            const CalculatorReply *src);
+            Calculator_Reply *dst,
+            const Calculator_Reply *src);
         
         static RTIBool serialize(PRESTypePluginEndpointData endpoint_data,
-            const CalculatorReply *sample, 
+            const Calculator_Reply *sample, 
             struct RTICdrStream *stream,    
             RTIBool serialize_encapsulation,
             RTIEncapsulationId encapsulation_id,
@@ -309,7 +337,7 @@ class user_cpp_DllExport CalculatorReplyPlugin : public DDSTypeSupport
             void *endpoint_plugin_qos);
         
         static RTIBool deserialize(PRESTypePluginEndpointData endpoint_data,
-            CalculatorReply **sample,
+            Calculator_Reply **sample,
             RTIBool * drop_sample,
             struct RTICdrStream *stream,   
             RTIBool deserialize_encapsulation,
