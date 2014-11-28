@@ -11,7 +11,7 @@
 
 #include "fastrpc/exceptions/Exception.h"
 
-#include <stdint.h>
+#include <cstdint>
 
 namespace eprosima
 {

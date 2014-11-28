@@ -13,6 +13,8 @@
 #include "fastrpc/transports/components/Endpoint.h"
 #include "fastrpc/utils/Messages.h"
 
+#include <cstdint>
+
 namespace boost
 {
     class mutex;

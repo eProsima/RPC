@@ -12,7 +12,7 @@
 #include "fastrpc/fastrpc_dll.h"
 #include "fastrpc/utils/macros/strdup.h"
 
-#include <stdint.h>
+#include <cstdint>
 #include <string.h>
 #include <string>
 
@@ -295,7 +295,7 @@ namespace eprosima
                         {
 							if(m_instance_name != NULL)
 								free(m_instance_name);
-                            m_instance_name = strdup(_instance_name);
+                            m_instance_name = STRDUP(_instance_name);
                         }
 
                         /*!

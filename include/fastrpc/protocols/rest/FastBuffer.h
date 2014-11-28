@@ -9,7 +9,7 @@
 #ifndef TCP_SERIALIZER_FASTBUFFER
 #define TCP_SERIALIZER_FASTBUFFER
 
-#include <stdint.h>
+#include <cstdint>
 #include <cstdio>
 #include <string.h>
 #include <cstddef>

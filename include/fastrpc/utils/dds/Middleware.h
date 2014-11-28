@@ -9,6 +9,8 @@
 #ifndef _UTILS_DDS_MIDDLEWARE_H_
 #define _UTILS_DDS_MIDDLEWARE_H_
 
+#include <cstdint>
+
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
 
 #if defined(_WIN32) && defined(NDDS_DLL_VARIABLE)

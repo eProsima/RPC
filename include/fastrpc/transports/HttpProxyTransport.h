@@ -12,7 +12,7 @@
 #include "fastrpc/fastrpc_dll.h"
 #include "fastrpc/transports/TCPProxyTransport.h"
 
-#include <stdint.h>
+#include <cstdint>
 
 namespace eprosima
 {
