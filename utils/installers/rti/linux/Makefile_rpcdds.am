@@ -19,7 +19,9 @@ install-data-hook:
 	mkdir -p $(DESTDIR)$(datadir)/doc/rpcdds; \
 	cp -r doc/* $(DESTDIR)$(datadir)/doc/rpcdds; \
 	mkdir -p $(DESTDIR)$(datadir)/rpcdds; \
-	cp -r examples $(DESTDIR)$(datadir)/rpcdds/;
+	cp -r examples $(DESTDIR)$(datadir)/rpcdds/; \
+	mkdir -p $(DESTDIR)$(datadir)/rpcdds/idl; \
+	cp -r idl/MessageHeader.idl $(DESTDIR)$(datadir)/rpcdds/idl/;
 
 uninstall-hook:
 	rm -r $(DESTDIR)$(datadir)/doc/rpcdds; \

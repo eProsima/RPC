@@ -26,7 +26,8 @@ make %{?_smp_mflags}
 %install
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
-cp classes/rpcrestgen.jar %{buildroot}/usr/share/java
+mkdir -p %{buildroot}/usr/share/java/
+cp classes/rpcrestgen.jar %{buildroot}/usr/share/java/
 
 %clean
 rm -rf %{buildroot}
