@@ -3,6 +3,14 @@ group AsyncSupportSourceByInterface;
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "AsyncSupport.cxx"], description=["This source file contains functionality to use asynchronous calls for all interfaces."])$
 
+$if(ctx.rtiTypes)$
+//TODO Remove when only one VS project will be generated
+#if defined(_WIN32) && defined(NDDS_USER_DLL_EXPORT)
+class __declspec(dllimport) DDSDomainEntity;
+class __declspec(dllimport) DDSEntity;
+#endif
+$endif$
+
 #include "$ctx.filename$DDSAsyncSupport.h"
 #include "$ctx.product$/exceptions/ServerInternalException.h"
 #include "$ctx.product$/exceptions/ClientInternalException.h"

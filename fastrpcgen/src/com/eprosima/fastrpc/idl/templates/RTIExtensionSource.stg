@@ -3,12 +3,26 @@ group RTIExtensionSource;
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "Extension.cxx"], description=["TODO This source file contains the declaration of common types in ", ctx.filename, ".idl"])$
 
+$if(ctx.rtiTypes)$
+//TODO Remove when only one VS project will be generated
+#if defined(_WIN32) && defined(NDDS_USER_DLL_EXPORT)
+class __declspec(dllimport) DDSDomainEntity;
+class __declspec(dllimport) DDSEntity;
+#endif
+$endif$
+
 #include "$ctx.filename$Extension.h"
+#include <fastrpc/utils/macros/strdup.h>
 #include <string.h>
 #include <utility>
 
 using namespace eprosima::rpc;
 using namespace ::exception;
+
+#ifdef _WIN32
+// Remove linker warning LNK4221 on Visual Studio
+namespace { char dummy; }
+#endif
 
 $definitions; separator="\n"$
 >>
@@ -55,7 +69,7 @@ $exception.scopedname$& $exception.scopedname$::operator=(const $exception.name$
 
 $exception.scopedname$& $exception.scopedname$::operator=($exception.name$&& ex)
 {
-	operator=(std::move(ex));
+	UserException::operator=(std::move(ex));
 	$exception.members : { member |$move(member=member, dataname="ex")$}; separator="\n"$
 	return *this;
 }
@@ -95,7 +109,7 @@ $if(!constructor)$
 if($member.name$ != NULL)
     free($member.name$);
 $endif$
-$member.name$ = strdup($dataname$.$member.name$);
+$member.name$ = STRDUP($dataname$.$member.name$);
 $else$
 $member.name$ = $dataname$.$member.name$;
 $endif$

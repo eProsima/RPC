@@ -63,7 +63,7 @@ Function InstallRedistributables
     ${EndIf}
 
     install2010:
-    messageBox MB_YESNO|MB_ICONQUESTION "$(^Name) needs Visual Studio 2010 Redistributable packages.$\nDo you want to install them?" IDNO notinstall2010
+    messageBox MB_YESNO|MB_ICONQUESTION "$(^Name) needs Visual Studio 2010 Redistributable packages.$\nDo you want to download and install them?" IDNO notinstall2010
 
     ${If} ${RunningX64}
         NSISdl::download http://download.microsoft.com/download/A/8/0/A80747C3-41BD-45DF-B505-E9710D2744E0/vcredist_x64.exe $TEMP\vcredist_x64.exe
@@ -90,7 +90,7 @@ Function InstallRedistributables
     ${EndIf}
 
     install2013:
-    messageBox MB_YESNO|MB_ICONQUESTION "$(^Name) needs Visual Studio 2013 Redistributable packages.$\nDo you want to install them?" IDNO notinstall2013
+    messageBox MB_YESNO|MB_ICONQUESTION "$(^Name) needs Visual Studio 2013 Redistributable packages.$\nDo you want to download and install them?" IDNO notinstall2013
 
     ${If} ${RunningX64}
         NSISdl::download http://download.microsoft.com/download/2/E/6/2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3/vcredist_x64.exe $TEMP\vcredist_x64.exe

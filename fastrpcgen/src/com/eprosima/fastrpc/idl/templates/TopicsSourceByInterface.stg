@@ -773,6 +773,7 @@ $interface.scopedname$_Return::$interface.name$_Return(const $interface.name$_Re
 {
     m__d = x.m__d;
     
+    $if(interface.notAllOnewayOperaiton)$
     switch(m__d)
     {
         $interface.notAllOnewayOperations : { operation |
@@ -781,12 +782,14 @@ $interface.scopedname$_Return::$interface.name$_Return(const $interface.name$_Re
             break;
         }; separator="\n"$
     }
+    $endif$
 }
 
 $interface.scopedname$_Return::$interface.name$_Return($interface.name$_Return &&x)
 {
     m__d = x.m__d;
     
+    $if(interface.notAllOnewayOperaiton)$
     switch(m__d)
     {
         $interface.notAllOnewayOperations : { operation |
@@ -795,12 +798,14 @@ $interface.scopedname$_Return::$interface.name$_Return($interface.name$_Return &
             break;
         }; separator="\n"$
     }
+    $endif$
 }
 
 $interface.scopedname$_Return& $interface.scopedname$_Return::operator=(const $interface.name$_Return &x)
 {
     m__d = x.m__d;
     
+    $if(interface.notAllOnewayOperaiton)$
     switch(m__d)
     {
         $interface.notAllOnewayOperations : { operation |
@@ -809,6 +814,7 @@ $interface.scopedname$_Return& $interface.scopedname$_Return::operator=(const $i
             break;
         }; separator="\n"$
     }
+    $endif$
     
     return *this;
 }
@@ -817,6 +823,7 @@ $interface.scopedname$_Return& $interface.scopedname$_Return::operator=($interfa
 {
     m__d = x.m__d;
     
+    $if(interface.notAllOnewayOperaiton)$
     switch(m__d)
     {
         $interface.notAllOnewayOperations : { operation |
@@ -825,6 +832,7 @@ $interface.scopedname$_Return& $interface.scopedname$_Return::operator=($interfa
             break;
         }; separator="\n"$
     }
+    $endif$
     
     return *this;
 }
@@ -937,6 +945,7 @@ void $interface.scopedname$_Return::serialize(eprosima::fastcdr::Cdr &scdr) cons
 {
     scdr << m__d;
 
+    $if(interface.notAllOnewayOperaiton)$
     switch(m__d)
     {
         $interface.notAllOnewayOperations : { operation |
@@ -948,12 +957,14 @@ void $interface.scopedname$_Return::serialize(eprosima::fastcdr::Cdr &scdr) cons
             scdr << m_unknown_operation;
             break;
     }
+    $endif$
 }
 
 void $interface.scopedname$_Return::deserialize(eprosima::fastcdr::Cdr &dcdr)
 {
     dcdr \>> m__d;
 
+    $if(interface.notAllOnewayOperaiton)$
     switch(m__d)
     {
         $interface.notAllOnewayOperations : { operation |
@@ -965,6 +976,7 @@ void $interface.scopedname$_Return::deserialize(eprosima::fastcdr::Cdr &dcdr)
             dcdr \>>  m_unknown_operation;
             break;
     }
+    $endif$
 }
 
 $interface.scopedname$_Reply::$interface.name$_Reply()
