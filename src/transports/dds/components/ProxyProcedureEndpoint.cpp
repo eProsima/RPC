@@ -16,7 +16,7 @@
 #include "boost/config/user.hpp"
 #include "boost/thread/mutex.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
-#include <inttypes.h>
+#include <cinttypes>
 
 static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::ProxyProcedureEndpoint";
 
