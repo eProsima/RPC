@@ -16,6 +16,7 @@
 #include "boost/config/user.hpp"
 #include "boost/thread/mutex.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
+#include <inttypes.h>
 
 static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::ProxyProcedureEndpoint";
 
@@ -448,7 +449,11 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
                             DDS::StringSeq stringSeq(1);
 
                             stringSeq.length(1);
-                            SNPRINTF(value, 50, "%Ld", numSec);
+#ifdef _WIN32
+                        SNPRINTF(value, 50, "%I64d", numSec);
+#else
+                        SNPRINTF(value, 50, "%" PRId64"", numSec);
+#endif
                             stringSeq[0] = strdup(value);
                             retCode = query->set_query_parameters(stringSeq);
 
@@ -603,7 +608,11 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
                         DDS::StringSeq stringSeq(1);
 
                         stringSeq.length(1);
-                        SNPRINTF(value, 50, "%Ld", numSec);
+#ifdef _WIN32
+                        SNPRINTF(value, 50, "%I64d", numSec);
+#else
+                        SNPRINTF(value, 50, "%" PRId64"", numSec);
+#endif
                         stringSeq[0] = strdup(value);
                         retCode = query->set_query_parameters(stringSeq);
 
