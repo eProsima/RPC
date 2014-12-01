@@ -5,6 +5,10 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wnarrowing"
 #endif
+#if defined(_WIN32) && defined(NDDS_USER_DLL_EXPORT)
+class __declspec(dllimport) DDSDomainEntity;
+class __declspec(dllimport) DDSEntity;
+#endif
 
 /*
   WARNING: THIS FILE IS AUTO-GENERATED. DO NOT MODIFY.

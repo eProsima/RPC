@@ -44,7 +44,7 @@ int main(int argc, char **argv)
                 try
                 {
                     protocol = new CalculatorProtocol();
-                    transport = new TCPProxyTransport("80.32.132.11:7600", "CalculatorService", "Instance");
+                    transport = new TCPProxyTransport("127.0.0.1:7600", "CalculatorService", "Instance");
                     proxy = new CalculatorProxy(*transport, *protocol);
                 }
                 catch(InitializeException &ex)

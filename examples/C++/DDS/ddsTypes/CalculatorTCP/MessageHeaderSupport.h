@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef MessageHeaderSupport_953112849_h
-#define MessageHeaderSupport_953112849_h
+#ifndef MessageHeaderSupport_953112912_h
+#define MessageHeaderSupport_953112912_h
 
 /* Uses */
 #include "MessageHeader.h"
@@ -70,4 +70,4 @@ DDS_DATAREADER_C(SampleIdentity_tDataReader, SampleIdentity_tSeq, SampleIdentity
 
 
 
-#endif  /* MessageHeaderSupport_953112849_h */
+#endif  /* MessageHeaderSupport_953112912_h */

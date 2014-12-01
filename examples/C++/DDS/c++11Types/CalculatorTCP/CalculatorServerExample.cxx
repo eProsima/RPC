@@ -42,7 +42,7 @@ int main(int argc, char **argv)
     {
         pool = new ThreadPoolStrategy(threadPoolSize);
         protocol = new CalculatorProtocol();
-        transport = new TCPServerTransport("80.32.132.11:7600", "7600", "CalculatorService", "Instance");
+        transport = new TCPServerTransport("127.0.0.1:7600", "7600", "CalculatorService", "Instance");
         server = new CalculatorServer(*pool, *transport, *protocol, servant);
         server->serve();
     }

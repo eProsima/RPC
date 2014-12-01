@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef MessageHeader_953112849_h
-#define MessageHeader_953112849_h
+#ifndef MessageHeader_953112912_h
+#define MessageHeader_953112912_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -584,4 +584,4 @@ RTIBool ReplyHeader_copy(
 
 
 
-#endif /* MessageHeader_953112849_h */
+#endif /* MessageHeader_953112912_h */

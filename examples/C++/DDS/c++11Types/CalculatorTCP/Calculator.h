@@ -33,6 +33,20 @@
 #define eProsima_user_DllExport
 #endif
 
+#if defined(_WIN32)
+#if defined(EPROSIMA_USER_DLL_EXPORT)
+#if defined(Calculator_SOURCE)
+#define Calculator_DllAPI __declspec( dllexport )
+#else
+#define Calculator_DllAPI __declspec( dllimport )
+#endif // Calculator_SOURCE
+#else
+#define Calculator_DllAPI
+#endif
+#else
+#define Calculator_DllAPI
+#endif // _WIN32
+
 namespace eprosima
 {
     namespace fastcdr
@@ -46,7 +60,7 @@ namespace eprosima
  * @brief This class represents the interface Calculator defined by the user in the IDL file.
  * @ingroup CALCULATOR
  */
-class FASTRPCUSERDllExport Calculator 
+class Calculator_DllAPI Calculator 
 {
     public:
 

@@ -39,49 +39,49 @@
  * for the operation Calculator::addition.
  * @ingroup CALCULATOR
  */
-class user_cpp_DllExport Calculator_addition_In
+class Calculator_addition_In
 {
 public:
 
     /*!
      * @brief Default constructor.
      */
-    Calculator_addition_In();
+    user_cpp_DllExport Calculator_addition_In();
     
     /*!
      * @brief Destructor.
      */
-    ~Calculator_addition_In();
+    user_cpp_DllExport ~Calculator_addition_In();
     
     /*
      * @brief Copy constructor.
      * @param x Reference to the object Calculator_addition_In that will be copied.
      */
-    Calculator_addition_In(const Calculator_addition_In &x);
+    user_cpp_DllExport Calculator_addition_In(const Calculator_addition_In &x);
     
     /*!
      * @brief Move constructor.
      * @param x Reference to the object Calculator_addition_In that will be copied.
      */
-    Calculator_addition_In(Calculator_addition_In &&x);
+    user_cpp_DllExport Calculator_addition_In(Calculator_addition_In &&x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_addition that will be copied.
      */
-    Calculator_addition_In& operator=(const Calculator_addition_In &x);
+    user_cpp_DllExport Calculator_addition_In& operator=(const Calculator_addition_In &x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_addition that will be copied.
      */
-    Calculator_addition_In& operator=(Calculator_addition_In &&x);
+    user_cpp_DllExport Calculator_addition_In& operator=(Calculator_addition_In &&x);
 
     /*!
      * @brief This function sets a value in member value1
      * @param _value1 New value for member value1
      */
-    inline void value1(int32_t _value1)
+    inline user_cpp_DllExport void value1(int32_t _value1)
     {
         m_value1 = _value1;
     }
@@ -90,7 +90,7 @@ public:
      * @brief This function returns the value of member value1
      * @return Value of member value1
      */
-    inline int32_t value1() const
+    inline user_cpp_DllExport int32_t value1() const
     {
         return m_value1;
     }
@@ -99,7 +99,7 @@ public:
      * @brief This function returns a reference to member value1
      * @return Reference to member value1
      */
-    inline int32_t& value1()
+    inline user_cpp_DllExport int32_t& value1()
     {
         return m_value1;
     }
@@ -107,7 +107,7 @@ public:
      * @brief This function sets a value in member value2
      * @param _value2 New value for member value2
      */
-    inline void value2(int32_t _value2)
+    inline user_cpp_DllExport void value2(int32_t _value2)
     {
         m_value2 = _value2;
     }
@@ -116,7 +116,7 @@ public:
      * @brief This function returns the value of member value2
      * @return Value of member value2
      */
-    inline int32_t value2() const
+    inline user_cpp_DllExport int32_t value2() const
     {
         return m_value2;
     }
@@ -125,7 +125,7 @@ public:
      * @brief This function returns a reference to member value2
      * @return Reference to member value2
      */
-    inline int32_t& value2()
+    inline user_cpp_DllExport int32_t& value2()
     {
         return m_value2;
     }
@@ -136,7 +136,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Maximum serialized size.
      */
-    static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
+    user_cpp_DllExport static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
     /*!
      * @brief This function returns the serialized size of an object
@@ -144,19 +144,19 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
 
     /*!
      * @brief This function serializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void serialize(eprosima::fastcdr::Cdr &cdr) const;
+    user_cpp_DllExport void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
     /*!
      * @brief This function deserializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void deserialize(eprosima::fastcdr::Cdr &cdr);
+    user_cpp_DllExport void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
 
@@ -168,48 +168,48 @@ private:
  * @brief This class encapsulates output paramaters for operation Calculator::addition.
  * @ingroup CALCULATOR
  */
-class user_cpp_DllExport Calculator_addition_Out
+class Calculator_addition_Out
 {
 public:
     /*!
      * @brief Default constructor.
      */
-    Calculator_addition_Out();
+    user_cpp_DllExport Calculator_addition_Out();
     
     /*!
      * @brief Destructor.
      */
-    ~Calculator_addition_Out();
+    user_cpp_DllExport ~Calculator_addition_Out();
     
     /*!
      * @brief Copy constructor.
      * @param x Reference to the object Calculator_addition_Out that will be copied.
      */
-    Calculator_addition_Out(const Calculator_addition_Out &x);
+    user_cpp_DllExport Calculator_addition_Out(const Calculator_addition_Out &x);
     
     /*!
      * @brief Move constructor.
      * @param x Reference to the object Calculator_addition_Out that will be copied.
      */
-    Calculator_addition_Out(Calculator_addition_Out &&x);
+    user_cpp_DllExport Calculator_addition_Out(Calculator_addition_Out &&x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_addition that will be copied.
      */
-    Calculator_addition_Out& operator=(const Calculator_addition_Out &x);
+    user_cpp_DllExport Calculator_addition_Out& operator=(const Calculator_addition_Out &x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_addition that will be copied.
      */
-    Calculator_addition_Out& operator=(Calculator_addition_Out &&x);
+    user_cpp_DllExport Calculator_addition_Out& operator=(Calculator_addition_Out &&x);
 
     /*!
      * @brief This function sets a value in member return_
      * @param _return_ New value for member return_
      */
-    inline void return_(int32_t _return_)
+    inline user_cpp_DllExport void return_(int32_t _return_)
     {
         m_return_ = _return_;
     }
@@ -218,7 +218,7 @@ public:
      * @brief This function returns the value of member return_
      * @return Value of member return_
      */
-    inline int32_t return_() const
+    inline user_cpp_DllExport int32_t return_() const
     {
         return m_return_;
     }
@@ -227,7 +227,7 @@ public:
      * @brief This function returns a reference to member return_
      * @return Reference to member return_
      */
-    inline int32_t& return_()
+    inline user_cpp_DllExport int32_t& return_()
     {
         return m_return_;
     }
@@ -238,7 +238,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Maximum serialized size.
      */
-    static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
+    user_cpp_DllExport static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
     /*!
      * @brief This function returns the serialized size of an object
@@ -246,19 +246,19 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
 
     /*!
      * @brief This function serializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void serialize(eprosima::fastcdr::Cdr &cdr) const;
+    user_cpp_DllExport void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
     /*!
      * @brief This function deserializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void deserialize(eprosima::fastcdr::Cdr &cdr);
+    user_cpp_DllExport void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
 
@@ -271,100 +271,100 @@ private:
  * 
  * @ingroup CALCULATOR
  */
-class user_cpp_DllExport Calculator_addition_Result
+class Calculator_addition_Result
 {
 public:
 
     /*!
      * @brief Default constructor.
      */
-    Calculator_addition_Result();
+    user_cpp_DllExport Calculator_addition_Result();
     
     /*!
      * @brief Destructor.
      */
-    ~Calculator_addition_Result();
+    user_cpp_DllExport ~Calculator_addition_Result();
     
     /*!
      * @brief Copy constructor.
      * @param x Reference to the object Calculator_addition_Result that will be copied.
      */
-    Calculator_addition_Result(const Calculator_addition_Result &x);
+    user_cpp_DllExport Calculator_addition_Result(const Calculator_addition_Result &x);
     
     /*!
      * @brief Move constructor.
      * @param x Reference to the object Calculator_addition_Result that will be copied.
      */
-    Calculator_addition_Result(Calculator_addition_Result &&x);
+    user_cpp_DllExport Calculator_addition_Result(Calculator_addition_Result &&x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_addition that will be copied.
      */
-    Calculator_addition_Result& operator=(const Calculator_addition_Result &x);
+    user_cpp_DllExport Calculator_addition_Result& operator=(const Calculator_addition_Result &x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_addition that will be copied.
      */
-    Calculator_addition_Result& operator=(Calculator_addition_Result &&x);
+    user_cpp_DllExport Calculator_addition_Result& operator=(Calculator_addition_Result &&x);
 
     /*!
      * @brief This function sets the discriminator value.
      * @param __d New value for the discriminator.
      * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
      */
-    void _d(int32_t __d);
+    user_cpp_DllExport void _d(int32_t __d);
     
     /*!
      * @brief This function returns the value of the discriminator.
      * @return Value of the discriminator
      */
-    int32_t _d() const;
+    user_cpp_DllExport int32_t _d() const;
     
     /*!
      * @brief This function returns a reference to the discriminator.
      * @return Reference to the discriminator.
      */
-    int32_t& _d();
+    user_cpp_DllExport int32_t& _d();
 
-    void unknown_exception(eprosima::rpc::protocol::dds::UnknownException _unknown_exception);
+    user_cpp_DllExport void unknown_exception(eprosima::rpc::protocol::dds::UnknownException _unknown_exception);
 
-    eprosima::rpc::protocol::dds::UnknownException unknown_exception() const;
+    user_cpp_DllExport eprosima::rpc::protocol::dds::UnknownException unknown_exception() const;
     
-    eprosima::rpc::protocol::dds::UnknownException& unknown_exception();
+    user_cpp_DllExport eprosima::rpc::protocol::dds::UnknownException& unknown_exception();
 
     /*!
      * @brief This function copies the value in member out_
      * @param _out_ New value to be copied in member out_
      */
-    void out_(const Calculator_addition_Out &_out_);
+    user_cpp_DllExport void out_(const Calculator_addition_Out &_out_);
 
     /*!
      * @brief This function moves the value in member out_
      * @param _out_ New value to be moved in member out_
      */
-    void out_(Calculator_addition_Out &&_out_);
+    user_cpp_DllExport void out_(Calculator_addition_Out &&_out_);
 
     /*!
      * @brief This function returns a constant reference to member out_
      * @return Constant reference to member out_
      * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the requested union member is not the current selection.
      */
-    const Calculator_addition_Out& out_() const;
+    user_cpp_DllExport const Calculator_addition_Out& out_() const;
 
     /*!
      * @brief This function returns a reference to member out_
      * @return Reference to member out_
      * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the requested union member is not the current selection.
      */
-    Calculator_addition_Out& out_();
+    user_cpp_DllExport Calculator_addition_Out& out_();
 
-    void sysx_(eprosima::rpc::ReturnMessage _sysx_);
+    user_cpp_DllExport void sysx_(eprosima::rpc::ReturnMessage _sysx_);
 
-    eprosima::rpc::ReturnMessage sysx_() const;
+    user_cpp_DllExport eprosima::rpc::ReturnMessage sysx_() const;
     
-    eprosima::rpc::ReturnMessage& sysx_();
+    user_cpp_DllExport eprosima::rpc::ReturnMessage& sysx_();
 
 
     /*!
@@ -373,7 +373,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Maximum serialized size.
      */
-    static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
+    user_cpp_DllExport static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
     /*!
      * @brief This function returns the serialized size of an object
@@ -381,19 +381,19 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
 
     /*!
      * @brief This function serializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void serialize(eprosima::fastcdr::Cdr &cdr) const;
+    user_cpp_DllExport void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
     /*!
      * @brief This function deserializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void deserialize(eprosima::fastcdr::Cdr &cdr);
+    user_cpp_DllExport void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
 
@@ -412,49 +412,49 @@ private:
  * for the operation Calculator::subtraction.
  * @ingroup CALCULATOR
  */
-class user_cpp_DllExport Calculator_subtraction_In
+class Calculator_subtraction_In
 {
 public:
 
     /*!
      * @brief Default constructor.
      */
-    Calculator_subtraction_In();
+    user_cpp_DllExport Calculator_subtraction_In();
     
     /*!
      * @brief Destructor.
      */
-    ~Calculator_subtraction_In();
+    user_cpp_DllExport ~Calculator_subtraction_In();
     
     /*
      * @brief Copy constructor.
      * @param x Reference to the object Calculator_subtraction_In that will be copied.
      */
-    Calculator_subtraction_In(const Calculator_subtraction_In &x);
+    user_cpp_DllExport Calculator_subtraction_In(const Calculator_subtraction_In &x);
     
     /*!
      * @brief Move constructor.
      * @param x Reference to the object Calculator_subtraction_In that will be copied.
      */
-    Calculator_subtraction_In(Calculator_subtraction_In &&x);
+    user_cpp_DllExport Calculator_subtraction_In(Calculator_subtraction_In &&x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_subtraction that will be copied.
      */
-    Calculator_subtraction_In& operator=(const Calculator_subtraction_In &x);
+    user_cpp_DllExport Calculator_subtraction_In& operator=(const Calculator_subtraction_In &x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_subtraction that will be copied.
      */
-    Calculator_subtraction_In& operator=(Calculator_subtraction_In &&x);
+    user_cpp_DllExport Calculator_subtraction_In& operator=(Calculator_subtraction_In &&x);
 
     /*!
      * @brief This function sets a value in member value1
      * @param _value1 New value for member value1
      */
-    inline void value1(int32_t _value1)
+    inline user_cpp_DllExport void value1(int32_t _value1)
     {
         m_value1 = _value1;
     }
@@ -463,7 +463,7 @@ public:
      * @brief This function returns the value of member value1
      * @return Value of member value1
      */
-    inline int32_t value1() const
+    inline user_cpp_DllExport int32_t value1() const
     {
         return m_value1;
     }
@@ -472,7 +472,7 @@ public:
      * @brief This function returns a reference to member value1
      * @return Reference to member value1
      */
-    inline int32_t& value1()
+    inline user_cpp_DllExport int32_t& value1()
     {
         return m_value1;
     }
@@ -480,7 +480,7 @@ public:
      * @brief This function sets a value in member value2
      * @param _value2 New value for member value2
      */
-    inline void value2(int32_t _value2)
+    inline user_cpp_DllExport void value2(int32_t _value2)
     {
         m_value2 = _value2;
     }
@@ -489,7 +489,7 @@ public:
      * @brief This function returns the value of member value2
      * @return Value of member value2
      */
-    inline int32_t value2() const
+    inline user_cpp_DllExport int32_t value2() const
     {
         return m_value2;
     }
@@ -498,7 +498,7 @@ public:
      * @brief This function returns a reference to member value2
      * @return Reference to member value2
      */
-    inline int32_t& value2()
+    inline user_cpp_DllExport int32_t& value2()
     {
         return m_value2;
     }
@@ -509,7 +509,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Maximum serialized size.
      */
-    static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
+    user_cpp_DllExport static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
     /*!
      * @brief This function returns the serialized size of an object
@@ -517,19 +517,19 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
 
     /*!
      * @brief This function serializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void serialize(eprosima::fastcdr::Cdr &cdr) const;
+    user_cpp_DllExport void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
     /*!
      * @brief This function deserializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void deserialize(eprosima::fastcdr::Cdr &cdr);
+    user_cpp_DllExport void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
 
@@ -541,48 +541,48 @@ private:
  * @brief This class encapsulates output paramaters for operation Calculator::subtraction.
  * @ingroup CALCULATOR
  */
-class user_cpp_DllExport Calculator_subtraction_Out
+class Calculator_subtraction_Out
 {
 public:
     /*!
      * @brief Default constructor.
      */
-    Calculator_subtraction_Out();
+    user_cpp_DllExport Calculator_subtraction_Out();
     
     /*!
      * @brief Destructor.
      */
-    ~Calculator_subtraction_Out();
+    user_cpp_DllExport ~Calculator_subtraction_Out();
     
     /*!
      * @brief Copy constructor.
      * @param x Reference to the object Calculator_subtraction_Out that will be copied.
      */
-    Calculator_subtraction_Out(const Calculator_subtraction_Out &x);
+    user_cpp_DllExport Calculator_subtraction_Out(const Calculator_subtraction_Out &x);
     
     /*!
      * @brief Move constructor.
      * @param x Reference to the object Calculator_subtraction_Out that will be copied.
      */
-    Calculator_subtraction_Out(Calculator_subtraction_Out &&x);
+    user_cpp_DllExport Calculator_subtraction_Out(Calculator_subtraction_Out &&x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_subtraction that will be copied.
      */
-    Calculator_subtraction_Out& operator=(const Calculator_subtraction_Out &x);
+    user_cpp_DllExport Calculator_subtraction_Out& operator=(const Calculator_subtraction_Out &x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_subtraction that will be copied.
      */
-    Calculator_subtraction_Out& operator=(Calculator_subtraction_Out &&x);
+    user_cpp_DllExport Calculator_subtraction_Out& operator=(Calculator_subtraction_Out &&x);
 
     /*!
      * @brief This function sets a value in member return_
      * @param _return_ New value for member return_
      */
-    inline void return_(int32_t _return_)
+    inline user_cpp_DllExport void return_(int32_t _return_)
     {
         m_return_ = _return_;
     }
@@ -591,7 +591,7 @@ public:
      * @brief This function returns the value of member return_
      * @return Value of member return_
      */
-    inline int32_t return_() const
+    inline user_cpp_DllExport int32_t return_() const
     {
         return m_return_;
     }
@@ -600,7 +600,7 @@ public:
      * @brief This function returns a reference to member return_
      * @return Reference to member return_
      */
-    inline int32_t& return_()
+    inline user_cpp_DllExport int32_t& return_()
     {
         return m_return_;
     }
@@ -611,7 +611,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Maximum serialized size.
      */
-    static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
+    user_cpp_DllExport static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
     /*!
      * @brief This function returns the serialized size of an object
@@ -619,19 +619,19 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
 
     /*!
      * @brief This function serializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void serialize(eprosima::fastcdr::Cdr &cdr) const;
+    user_cpp_DllExport void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
     /*!
      * @brief This function deserializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void deserialize(eprosima::fastcdr::Cdr &cdr);
+    user_cpp_DllExport void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
 
@@ -644,100 +644,100 @@ private:
  * 
  * @ingroup CALCULATOR
  */
-class user_cpp_DllExport Calculator_subtraction_Result
+class Calculator_subtraction_Result
 {
 public:
 
     /*!
      * @brief Default constructor.
      */
-    Calculator_subtraction_Result();
+    user_cpp_DllExport Calculator_subtraction_Result();
     
     /*!
      * @brief Destructor.
      */
-    ~Calculator_subtraction_Result();
+    user_cpp_DllExport ~Calculator_subtraction_Result();
     
     /*!
      * @brief Copy constructor.
      * @param x Reference to the object Calculator_subtraction_Result that will be copied.
      */
-    Calculator_subtraction_Result(const Calculator_subtraction_Result &x);
+    user_cpp_DllExport Calculator_subtraction_Result(const Calculator_subtraction_Result &x);
     
     /*!
      * @brief Move constructor.
      * @param x Reference to the object Calculator_subtraction_Result that will be copied.
      */
-    Calculator_subtraction_Result(Calculator_subtraction_Result &&x);
+    user_cpp_DllExport Calculator_subtraction_Result(Calculator_subtraction_Result &&x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_subtraction that will be copied.
      */
-    Calculator_subtraction_Result& operator=(const Calculator_subtraction_Result &x);
+    user_cpp_DllExport Calculator_subtraction_Result& operator=(const Calculator_subtraction_Result &x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_subtraction that will be copied.
      */
-    Calculator_subtraction_Result& operator=(Calculator_subtraction_Result &&x);
+    user_cpp_DllExport Calculator_subtraction_Result& operator=(Calculator_subtraction_Result &&x);
 
     /*!
      * @brief This function sets the discriminator value.
      * @param __d New value for the discriminator.
      * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
      */
-    void _d(int32_t __d);
+    user_cpp_DllExport void _d(int32_t __d);
     
     /*!
      * @brief This function returns the value of the discriminator.
      * @return Value of the discriminator
      */
-    int32_t _d() const;
+    user_cpp_DllExport int32_t _d() const;
     
     /*!
      * @brief This function returns a reference to the discriminator.
      * @return Reference to the discriminator.
      */
-    int32_t& _d();
+    user_cpp_DllExport int32_t& _d();
 
-    void unknown_exception(eprosima::rpc::protocol::dds::UnknownException _unknown_exception);
+    user_cpp_DllExport void unknown_exception(eprosima::rpc::protocol::dds::UnknownException _unknown_exception);
 
-    eprosima::rpc::protocol::dds::UnknownException unknown_exception() const;
+    user_cpp_DllExport eprosima::rpc::protocol::dds::UnknownException unknown_exception() const;
     
-    eprosima::rpc::protocol::dds::UnknownException& unknown_exception();
+    user_cpp_DllExport eprosima::rpc::protocol::dds::UnknownException& unknown_exception();
 
     /*!
      * @brief This function copies the value in member out_
      * @param _out_ New value to be copied in member out_
      */
-    void out_(const Calculator_subtraction_Out &_out_);
+    user_cpp_DllExport void out_(const Calculator_subtraction_Out &_out_);
 
     /*!
      * @brief This function moves the value in member out_
      * @param _out_ New value to be moved in member out_
      */
-    void out_(Calculator_subtraction_Out &&_out_);
+    user_cpp_DllExport void out_(Calculator_subtraction_Out &&_out_);
 
     /*!
      * @brief This function returns a constant reference to member out_
      * @return Constant reference to member out_
      * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the requested union member is not the current selection.
      */
-    const Calculator_subtraction_Out& out_() const;
+    user_cpp_DllExport const Calculator_subtraction_Out& out_() const;
 
     /*!
      * @brief This function returns a reference to member out_
      * @return Reference to member out_
      * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the requested union member is not the current selection.
      */
-    Calculator_subtraction_Out& out_();
+    user_cpp_DllExport Calculator_subtraction_Out& out_();
 
-    void sysx_(eprosima::rpc::ReturnMessage _sysx_);
+    user_cpp_DllExport void sysx_(eprosima::rpc::ReturnMessage _sysx_);
 
-    eprosima::rpc::ReturnMessage sysx_() const;
+    user_cpp_DllExport eprosima::rpc::ReturnMessage sysx_() const;
     
-    eprosima::rpc::ReturnMessage& sysx_();
+    user_cpp_DllExport eprosima::rpc::ReturnMessage& sysx_();
 
 
     /*!
@@ -746,7 +746,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Maximum serialized size.
      */
-    static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
+    user_cpp_DllExport static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
     /*!
      * @brief This function returns the serialized size of an object
@@ -754,19 +754,19 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
 
     /*!
      * @brief This function serializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void serialize(eprosima::fastcdr::Cdr &cdr) const;
+    user_cpp_DllExport void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
     /*!
      * @brief This function deserializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void deserialize(eprosima::fastcdr::Cdr &cdr);
+    user_cpp_DllExport void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
 
@@ -785,115 +785,115 @@ private:
  * @brief This class represents the union used in the DDS topic to encapsulate the operations in request samples.
  * @ingroup CALCULATOR
  */
-class user_cpp_DllExport Calculator_Call
+class Calculator_Call
 {
 public:
 
     /*!
      * @brief Default constructor.
      */
-    Calculator_Call();
+    user_cpp_DllExport Calculator_Call();
     
     /*!
      * @brief Destructor.
      */
-    ~Calculator_Call();
+    user_cpp_DllExport ~Calculator_Call();
     
     /*!
      * @brief Copy constructor.
      * @param x Reference to the object Calculator_Call that will be copied.
      */
-    Calculator_Call(const Calculator_Call &x);
+    user_cpp_DllExport Calculator_Call(const Calculator_Call &x);
     
     /*!
      * @brief Move constructor.
      * @param x Reference to the object Calculator_Call that will be copied.
      */
-    Calculator_Call(Calculator_Call &&x);
+    user_cpp_DllExport Calculator_Call(Calculator_Call &&x);
     
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_Call that will be copied.
      */
-    Calculator_Call& operator=(const Calculator_Call &x);
+    user_cpp_DllExport Calculator_Call& operator=(const Calculator_Call &x);
     
     /*!
      * @brief Move assignment.
      * @param x Reference to the object Calculator_Call that will be copied.
      */
-    Calculator_Call& operator=(Calculator_Call &&x);
+    user_cpp_DllExport Calculator_Call& operator=(Calculator_Call &&x);
     
     /*!
      * @brief This function sets the discriminator value.
      * @param __d New value for the discriminator.
      * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
      */
-    void _d(int32_t __d);
+    user_cpp_DllExport void _d(int32_t __d);
     
     /*!
      * @brief This function returns the value of the discriminator.
      * @return Value of the discriminator
      */
-    int32_t _d() const;
+    user_cpp_DllExport int32_t _d() const;
     
     /*!
      * @brief This function returns a reference to the discriminator.
      * @return Reference to the discriminator.
      */
-    int32_t& _d();
+    user_cpp_DllExport int32_t& _d();
 
-    void unknown_operation(eprosima::rpc::protocol::dds::UnknownOperation _unknown_operation);
+    user_cpp_DllExport void unknown_operation(eprosima::rpc::protocol::dds::UnknownOperation _unknown_operation);
 
-    eprosima::rpc::protocol::dds::UnknownOperation unknown_operation() const;
+    user_cpp_DllExport eprosima::rpc::protocol::dds::UnknownOperation unknown_operation() const;
 
-    eprosima::rpc::protocol::dds::UnknownOperation& unknown_operation();
+    user_cpp_DllExport eprosima::rpc::protocol::dds::UnknownOperation& unknown_operation();
 
     /*!
      * @brief This function copies the value in member addition
      * @param _addition New value to be copied in member addition
      */
-    void addition(const Calculator_addition_In &_addition);
+    user_cpp_DllExport void addition(const Calculator_addition_In &_addition);
 
     /*!
      * @brief This function moves the value in member addition
      * @param _addition New value to be moved in member addition
      */
-    void addition(Calculator_addition_In &&_addition);
+    user_cpp_DllExport void addition(Calculator_addition_In &&_addition);
 
     /*!
      * @brief This function returns a constant reference to member addition
      * @return Constant reference to member addition
      */
-    const Calculator_addition_In& addition() const;
+    user_cpp_DllExport const Calculator_addition_In& addition() const;
 
     /*!
      * @brief This function returns a reference to member addition
      * @return Reference to member addition
      */
-    Calculator_addition_In& addition();
+    user_cpp_DllExport Calculator_addition_In& addition();
     /*!
      * @brief This function copies the value in member subtraction
      * @param _subtraction New value to be copied in member subtraction
      */
-    void subtraction(const Calculator_subtraction_In &_subtraction);
+    user_cpp_DllExport void subtraction(const Calculator_subtraction_In &_subtraction);
 
     /*!
      * @brief This function moves the value in member subtraction
      * @param _subtraction New value to be moved in member subtraction
      */
-    void subtraction(Calculator_subtraction_In &&_subtraction);
+    user_cpp_DllExport void subtraction(Calculator_subtraction_In &&_subtraction);
 
     /*!
      * @brief This function returns a constant reference to member subtraction
      * @return Constant reference to member subtraction
      */
-    const Calculator_subtraction_In& subtraction() const;
+    user_cpp_DllExport const Calculator_subtraction_In& subtraction() const;
 
     /*!
      * @brief This function returns a reference to member subtraction
      * @return Reference to member subtraction
      */
-    Calculator_subtraction_In& subtraction();
+    user_cpp_DllExport Calculator_subtraction_In& subtraction();
 
     /*!
      * @brief This function returns the maximum serialized size of an object
@@ -901,7 +901,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Maximum serialized size.
      */
-    static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
+    user_cpp_DllExport static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
     /*!
      * @brief This function returns the serialized size of an object
@@ -909,19 +909,19 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
 
     /*!
      * @brief This function serializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void serialize(eprosima::fastcdr::Cdr &cdr) const;
+    user_cpp_DllExport void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
     /*!
      * @brief This function deserializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void deserialize(eprosima::fastcdr::Cdr &cdr);
+    user_cpp_DllExport void deserialize(eprosima::fastcdr::Cdr &cdr);
     
 private:
     int32_t m__d;
@@ -936,49 +936,49 @@ private:
  * for the interface Calculator.
  * @ingroup CALCULATOR
  */
-class user_cpp_DllExport Calculator_Request
+class Calculator_Request
 {
 public:
 
     /*!
      * @brief Default constructor.
      */
-    Calculator_Request();
+    user_cpp_DllExport Calculator_Request();
     
     /*!
      * @brief Destructor.
      */
-    ~Calculator_Request();
+    user_cpp_DllExport ~Calculator_Request();
     
     /*!
      * @brief Copy constructor.
      * @param x Reference to the object Calculator_Request that will be copied.
      */
-    Calculator_Request(const Calculator_Request &x);
+    user_cpp_DllExport Calculator_Request(const Calculator_Request &x);
     
     /*!
      * @brief Move constructor.
      * @param x Reference to the object Calculator_Request that will be copied.
      */
-    Calculator_Request(Calculator_Request &&x);
+    user_cpp_DllExport Calculator_Request(Calculator_Request &&x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator that will be copied.
      */
-    Calculator_Request& operator=(const Calculator_Request &x);
+    user_cpp_DllExport Calculator_Request& operator=(const Calculator_Request &x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator that will be copied.
      */
-    Calculator_Request& operator=(Calculator_Request &&x);
+    user_cpp_DllExport Calculator_Request& operator=(Calculator_Request &&x);
 
     /*!
      * @brief This method sets the request header information.
      * @param _header Request header.
      */
-    inline void header(const eprosima::rpc::protocol::dds::RequestHeader &_header)
+    inline user_cpp_DllExport void header(const eprosima::rpc::protocol::dds::RequestHeader &_header)
     {
         m_header = _header;
     }
@@ -987,7 +987,7 @@ public:
      * @brief This method sets the request header information.
      * @param _header Request header.
      */
-    inline void header(eprosima::rpc::protocol::dds::RequestHeader &&_header)
+    inline user_cpp_DllExport void header(eprosima::rpc::protocol::dds::RequestHeader &&_header)
     {
         m_header = std::move(_header);
     }
@@ -996,7 +996,7 @@ public:
      * @brief This method returns the request header information.
      * @return Request header.
      */
-    inline const eprosima::rpc::protocol::dds::RequestHeader& header() const
+    inline user_cpp_DllExport const eprosima::rpc::protocol::dds::RequestHeader& header() const
     {
         return m_header;
     }
@@ -1005,7 +1005,7 @@ public:
      * @brief This method returns the request header information.
      * @return Request header.
      */
-    inline eprosima::rpc::protocol::dds::RequestHeader& header()
+    inline user_cpp_DllExport eprosima::rpc::protocol::dds::RequestHeader& header()
     {
         return m_header;
     }
@@ -1014,7 +1014,7 @@ public:
      * @brief This method sets the union that encapsulates the interface operations.
      * @param _request Union.
      */
-    inline void request(const Calculator_Call &_request)
+    inline user_cpp_DllExport void request(const Calculator_Call &_request)
     {
         m_request = _request;
     }
@@ -1023,7 +1023,7 @@ public:
      * @brief This method sets the union that encapsulates the interface operations.
      * @param _request Union.
      */
-    inline void request(Calculator_Call &&_request)
+    inline user_cpp_DllExport void request(Calculator_Call &&_request)
     {
         m_request = std::move(_request);
     }
@@ -1032,7 +1032,7 @@ public:
      * @brief This method returns the union that encapsulates the interface operations.
      * @return Union.
      */
-    inline const Calculator_Call& request() const
+    inline user_cpp_DllExport const Calculator_Call& request() const
     {
         return m_request;
     }
@@ -1041,7 +1041,7 @@ public:
      * @brief This method returns the union that encapsulates the interface operations.
      * @return Union.
      */
-    inline Calculator_Call& request()
+    inline user_cpp_DllExport Calculator_Call& request()
     {
         return m_request;
     }
@@ -1052,7 +1052,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Maximum serialized size.
      */
-    static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
+    user_cpp_DllExport static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
     /*!
      * @brief This function returns the serialized size of an object
@@ -1060,19 +1060,19 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
 
     /*!
      * @brief This function serializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void serialize(eprosima::fastcdr::Cdr &cdr) const;
+    user_cpp_DllExport void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
     /*!
      * @brief This function deserializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void deserialize(eprosima::fastcdr::Cdr &cdr);
+    user_cpp_DllExport void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
 
@@ -1085,115 +1085,115 @@ private:
  * @brief This class represents the union used in the DDS topic to encapsulate the operations in reply samples.
  * @ingroup CALCULATOR
  */
-class user_cpp_DllExport Calculator_Return
+class Calculator_Return
 {
 public:
 
     /*!
      * @brief Default constructor.
      */
-    Calculator_Return();
+    user_cpp_DllExport Calculator_Return();
     
     /*!
      * @brief Destructor.
      */
-    ~Calculator_Return();
+    user_cpp_DllExport ~Calculator_Return();
     
     /*!
      * @brief Copy constructor.
      * @param x Reference to the object Calculator_Return that will be copied.
      */
-    Calculator_Return(const Calculator_Return &x);
+    user_cpp_DllExport Calculator_Return(const Calculator_Return &x);
     
     /*!
      * @brief Move constructor.
      * @param x Reference to the object Calculator_Return that will be copied.
      */
-    Calculator_Return(Calculator_Return &&x);
+    user_cpp_DllExport Calculator_Return(Calculator_Return &&x);
     
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator_Return that will be copied.
      */
-    Calculator_Return& operator=(const Calculator_Return &x);
+    user_cpp_DllExport Calculator_Return& operator=(const Calculator_Return &x);
     
     /*!
      * @brief Move assignment.
      * @param x Reference to the object Calculator_Return that will be copied.
      */
-    Calculator_Return& operator=(Calculator_Return &&x);
+    user_cpp_DllExport Calculator_Return& operator=(Calculator_Return &&x);
     
     /*!
      * @brief This function sets the discriminator value.
      * @param __d New value for the discriminator.
      * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
      */
-    void _d(int32_t __d);
+    user_cpp_DllExport void _d(int32_t __d);
     
     /*!
      * @brief This function returns the value of the discriminator.
      * @return Value of the discriminator
      */
-    int32_t _d() const;
+    user_cpp_DllExport int32_t _d() const;
     
     /*!
      * @brief This function returns a reference to the discriminator.
      * @return Reference to the discriminator.
      */
-    int32_t& _d();
+    user_cpp_DllExport int32_t& _d();
 
-    void unknown_operation(eprosima::rpc::protocol::dds::UnknownOperation _unknown_operation);
+    user_cpp_DllExport void unknown_operation(eprosima::rpc::protocol::dds::UnknownOperation _unknown_operation);
 
-    eprosima::rpc::protocol::dds::UnknownOperation unknown_operation() const;
+    user_cpp_DllExport eprosima::rpc::protocol::dds::UnknownOperation unknown_operation() const;
 
-    eprosima::rpc::protocol::dds::UnknownOperation& unknown_operation();
+    user_cpp_DllExport eprosima::rpc::protocol::dds::UnknownOperation& unknown_operation();
 
     /*!
      * @brief This function copies the value in member addition
      * @param _addition New value to be copied in member addition
      */
-    void addition(const Calculator_addition_Result &_addition);
+    user_cpp_DllExport void addition(const Calculator_addition_Result &_addition);
 
     /*!
      * @brief This function moves the value in member addition
      * @param _addition New value to be moved in member addition
      */
-    void addition(Calculator_addition_Result &&_addition);
+    user_cpp_DllExport void addition(Calculator_addition_Result &&_addition);
 
     /*!
      * @brief This function returns a constant reference to member addition
      * @return Constant reference to member addition
      */
-    const Calculator_addition_Result& addition() const;
+    user_cpp_DllExport const Calculator_addition_Result& addition() const;
 
     /*!
      * @brief This function returns a reference to member addition
      * @return Reference to member addition
      */
-    Calculator_addition_Result& addition();
+    user_cpp_DllExport Calculator_addition_Result& addition();
     /*!
      * @brief This function copies the value in member subtraction
      * @param _subtraction New value to be copied in member subtraction
      */
-    void subtraction(const Calculator_subtraction_Result &_subtraction);
+    user_cpp_DllExport void subtraction(const Calculator_subtraction_Result &_subtraction);
 
     /*!
      * @brief This function moves the value in member subtraction
      * @param _subtraction New value to be moved in member subtraction
      */
-    void subtraction(Calculator_subtraction_Result &&_subtraction);
+    user_cpp_DllExport void subtraction(Calculator_subtraction_Result &&_subtraction);
 
     /*!
      * @brief This function returns a constant reference to member subtraction
      * @return Constant reference to member subtraction
      */
-    const Calculator_subtraction_Result& subtraction() const;
+    user_cpp_DllExport const Calculator_subtraction_Result& subtraction() const;
 
     /*!
      * @brief This function returns a reference to member subtraction
      * @return Reference to member subtraction
      */
-    Calculator_subtraction_Result& subtraction();
+    user_cpp_DllExport Calculator_subtraction_Result& subtraction();
 
     /*!
      * @brief This function returns the maximum serialized size of an object
@@ -1201,7 +1201,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Maximum serialized size.
      */
-    static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
+    user_cpp_DllExport static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
     /*!
      * @brief This function returns the serialized size of an object
@@ -1209,19 +1209,19 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
 
     /*!
      * @brief This function serializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void serialize(eprosima::fastcdr::Cdr &cdr) const;
+    user_cpp_DllExport void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
     /*!
      * @brief This function deserializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void deserialize(eprosima::fastcdr::Cdr &cdr);
+    user_cpp_DllExport void deserialize(eprosima::fastcdr::Cdr &cdr);
     
 private:
     int32_t m__d;
@@ -1237,49 +1237,49 @@ private:
  * for the interface Calculator.
  * @ingroup CALCULATOR
  */
-class user_cpp_DllExport Calculator_Reply
+class Calculator_Reply
 {
 public:
 
     /*!
      * @brief Default constructor.
      */
-    Calculator_Reply();
+    user_cpp_DllExport Calculator_Reply();
     
     /*!
      * @brief Destructor.
      */
-    ~Calculator_Reply();
+    user_cpp_DllExport ~Calculator_Reply();
     
     /*
      * @brief Copy constructor.
      * @param x Reference to the object Calculator_Reply that will be copied.
      */
-    Calculator_Reply(const Calculator_Reply &x);
+    user_cpp_DllExport Calculator_Reply(const Calculator_Reply &x);
     
     /*!
      * @brief Move constructor.
      * @param x Reference to the object Calculator_Reply that will be copied.
      */
-    Calculator_Reply(Calculator_Reply &&x);
+    user_cpp_DllExport Calculator_Reply(Calculator_Reply &&x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator that will be copied.
      */
-    Calculator_Reply& operator=(const Calculator_Reply &x);
+    user_cpp_DllExport Calculator_Reply& operator=(const Calculator_Reply &x);
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object Calculator that will be copied.
      */
-    Calculator_Reply& operator=(Calculator_Reply &&x);
+    user_cpp_DllExport Calculator_Reply& operator=(Calculator_Reply &&x);
 
     /*!
      * @brief This method sets the reply header information.
      * @param _header Reply header.
      */
-    inline void header(const eprosima::rpc::protocol::dds::ReplyHeader &_header)
+    inline user_cpp_DllExport void header(const eprosima::rpc::protocol::dds::ReplyHeader &_header)
     {
         m_header = _header;
     }
@@ -1288,7 +1288,7 @@ public:
      * @brief This method sets the reply header information.
      * @param _header Reply header.
      */
-    inline void header(eprosima::rpc::protocol::dds::ReplyHeader &&_header)
+    inline user_cpp_DllExport void header(eprosima::rpc::protocol::dds::ReplyHeader &&_header)
     {
         m_header = std::move(_header);
     }
@@ -1297,7 +1297,7 @@ public:
      * @brief This method returns the reply header information.
      * @return Reply header.
      */
-    inline const eprosima::rpc::protocol::dds::ReplyHeader& header() const
+    inline user_cpp_DllExport const eprosima::rpc::protocol::dds::ReplyHeader& header() const
     {
         return m_header;
     }
@@ -1306,7 +1306,7 @@ public:
      * @brief This method returns the reply header information.
      * @return Reply header.
      */
-    inline eprosima::rpc::protocol::dds::ReplyHeader& header()
+    inline user_cpp_DllExport eprosima::rpc::protocol::dds::ReplyHeader& header()
     {
         return m_header;
     }
@@ -1315,7 +1315,7 @@ public:
      * @brief This method sets the union that encapsulates the interface operations.
      * @param _reply Union.
      */
-    inline void reply(const Calculator_Return &_reply)
+    inline user_cpp_DllExport void reply(const Calculator_Return &_reply)
     {
         m_reply = _reply;
     }
@@ -1324,7 +1324,7 @@ public:
      * @brief This method sets the union that encapsulates the interface operations.
      * @param _reply Union.
      */
-    inline void reply(Calculator_Return &&_reply)
+    inline user_cpp_DllExport void reply(Calculator_Return &&_reply)
     {
         m_reply = std::move(_reply);
     }
@@ -1333,7 +1333,7 @@ public:
      * @brief This method sets the union that encapsulates the interface operations.
      * @return Union.
      */
-    inline const Calculator_Return& reply() const
+    inline user_cpp_DllExport const Calculator_Return& reply() const
     {
         return m_reply;
     }
@@ -1342,7 +1342,7 @@ public:
      * @brief This method sets the union that encapsulates the interface operations.
      * @return Union.
      */
-    inline Calculator_Return& reply()
+    inline user_cpp_DllExport Calculator_Return& reply()
     {
         return m_reply;
     }
@@ -1353,7 +1353,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Maximum serialized size.
      */
-    static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
+    user_cpp_DllExport static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
     /*!
      * @brief This function returns the serialized size of an object
@@ -1361,19 +1361,19 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
 
     /*!
      * @brief This function serializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void serialize(eprosima::fastcdr::Cdr &cdr) const;
+    user_cpp_DllExport void serialize(eprosima::fastcdr::Cdr &cdr) const;
 
     /*!
      * @brief This function deserializes an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-    void deserialize(eprosima::fastcdr::Cdr &cdr);
+    user_cpp_DllExport void deserialize(eprosima::fastcdr::Cdr &cdr);
 
 private:
 

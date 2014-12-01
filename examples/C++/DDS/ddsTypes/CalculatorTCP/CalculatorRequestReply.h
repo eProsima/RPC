@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef CalculatorRequestReply_540432627_h
-#define CalculatorRequestReply_540432627_h
+#ifndef CalculatorRequestReply_540432763_h
+#define CalculatorRequestReply_540432763_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -941,4 +941,4 @@ RTIBool Calculator_Reply_copy(
 
 
 
-#endif /* CalculatorRequestReply_540432627_h */
+#endif /* CalculatorRequestReply_540432763_h */
