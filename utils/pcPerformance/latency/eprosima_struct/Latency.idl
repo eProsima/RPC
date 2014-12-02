@@ -1,0 +1,14 @@
+struct element
+{
+    boolean att1;
+    string att2;
+    long att3;
+    short att4;
+    boolean att5;
+};
+
+typedef sequence<element, 2048> st;
+
+interface Latency {
+	st latency(in st param);
+};
