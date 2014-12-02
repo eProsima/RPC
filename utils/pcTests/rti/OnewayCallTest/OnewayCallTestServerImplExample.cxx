@@ -13,39 +13,53 @@
  */
 
 #include "OnewayCallTestServerImplExample.h"
+#include <fastrpc/utils/Utilities.h>
 
 static DDS_Long l = 0;
+static bool setLong_call = false;
 static DDS_Boolean b = RTI_FALSE;
+static bool setBoolean_call = false;
 static char *s = NULL;
+static bool setString_call = false;
 static Structure st;
+static bool setStruct_call = false;
  
 void OnewayCallTestServerImplExample::setLong(/*in*/ DDS_Long lo1) 
 {
 	l = lo1;
+    setLong_call = true;
 } 
  
 DDS_Long OnewayCallTestServerImplExample::getLong() 
 {
+    while(!setLong_call)
+        eprosima::rpc::sleep(100);
     return l;
 } 
  
 void OnewayCallTestServerImplExample::setBoolean(/*in*/ DDS_Boolean bo1) 
 {
     b = bo1;
+    setBoolean_call = true;
 } 
  
 DDS_Boolean OnewayCallTestServerImplExample::getBoolean() 
 {
+    while(!setBoolean_call)
+        eprosima::rpc::sleep(100);
     return b;
 } 
  
 void OnewayCallTestServerImplExample::setString(/*in*/ const char* s1) 
 {
     s = strdup(s1);
+    setString_call = true;
 } 
  
 char* OnewayCallTestServerImplExample::getString() 
 {
+    while(!setString_call)
+        eprosima::rpc::sleep(100);
     return s;
 } 
  
@@ -53,9 +67,12 @@ void OnewayCallTestServerImplExample::setStruct(/*in*/ const Structure& ev)
 {
     st.dato = ev.dato;
     st.message = strdup(ev.message);
+    setStruct_call = true;
 } 
  
 Structure OnewayCallTestServerImplExample::getStruct() 
 {
+    while(!setStruct_call)
+        eprosima::rpc::sleep(100);
     return st;
 } 
