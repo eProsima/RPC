@@ -112,15 +112,15 @@ size_t $ctx.filename$Protocol::worker(Protocol& protocol, void *&buffer, size_t 
                     {
                         if(_protocol._$first(ctx.scopedInterfaces).formatedScopedname$_impl != NULL)
                         {
-                            $if(first(first(ctx.scopedInterfaces).operations))$
-                                if(operation_name.compare("$first(first(ctx.scopedInterfaces).operations).name$") == 0)
+                            $if(first(first(ctx.scopedInterfaces).all_operations))$
+                                if(operation_name.compare("$first(first(ctx.scopedInterfaces).all_operations).name$") == 0)
                                 {
-                                    $operation_worker(ctx=ctx, operation=first(first(ctx.scopedInterfaces).operations))$
+                                    $operation_worker(ctx=ctx, interface=first(ctx.scopedInterfaces), operation=first(first(ctx.scopedInterfaces).all_operations))$
                                 }
-                            $rest(first(ctx.scopedInterfaces).operations) : {operation |
+                            $rest(first(ctx.scopedInterfaces).all_operations) : {operation |
                                 else if(operation_name.compare("$operation.name$") == 0)
                                 {
-                                    $operation_worker(ctx=ctx, operation=operation)$
+                                    $operation_worker(ctx=ctx, interface=first(ctx.scopedInterfaces),operation=operation)$
                                 }
                             }$
                             $endif$
@@ -135,15 +135,15 @@ size_t $ctx.filename$Protocol::worker(Protocol& protocol, void *&buffer, size_t 
                     {
                         if(_protocol._$interface.formatedScopedname$_impl != NULL)
                         {
-                            $if(first(interface.operations))$
-                                if(operation_name.compare("$first(interface.operations).name$") == 0)
+                            $if(first(interface.all_operations))$
+                                if(operation_name.compare("$first(interface.all_operations).name$") == 0)
                                 {
-                                    $operation_worker(ctx=ctx, operation=first(interface.operations))$
+                                    $operation_worker(ctx=ctx, interface=interface, operation=first(interface.all_operations))$
                                 }
-                            $rest(interface.operations) : {operation |
+                            $rest(interface.all_operations) : {operation |
                                 else if(operation_name.compare("$operation.name$") == 0)
                                 {
-                                    $operation_worker(ctx=ctx, operation=operation)$
+                                    $operation_worker(ctx=ctx, interface=interface, operation=operation)$
                                 }
                             }$
                             $endif$
@@ -191,19 +191,12 @@ $definitions; separator="\n"$
 
 interface(ctx, interface, export_list) ::= <<
 $export_list$
->>
 
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
-exception(ctx, exception) ::= <<>>
-
-operation(ctx, operation, param_list) ::= <<
+$interface.all_operations : { operation |
 $if(ctx.client)$
-$paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$)
+$paramRetType(operation.rettype)$ $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$)
 {
-    const char* const interface_name = "$operation.parent.scopedname$";
+    const char* const interface_name = "$interface.scopedname$";
     const char* const operation_name = "$operation.name$";
     // TODO In DDS the initialization is not necessary. But in CDR it is, for example a union with a char* (string) needs to be initialized to NULL.
     $varDecl(variable=operation.rettypeparam)$
@@ -363,8 +356,16 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$operation.parent.form
     $endif$
 }
 $endif$
-
+}; separator="\n"$
 >>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 
@@ -381,7 +382,7 @@ union_type(ctx, union) ::= <<>>
 enum_type(ctx, enum) ::= <<>>
 
 /*************** Utils *****************/
-operation_worker(ctx, operation) ::= <<
+operation_worker(ctx, interface, operation) ::= <<
 $operation.parameters : {param | $varDecl(variable=param)$}; separator="\n"$
 $varDecl(variable=operation.rettypeparam)$
 
@@ -393,14 +394,14 @@ $object_deserialization(ctx=ctx, object=param)$
 
 try
 {
-    $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$_protocol._$operation.parent.formatedScopedname$_impl->$operation.name$($extractParams(params=operation.parameters)$);
+    $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$_protocol._$interface.formatedScopedname$_impl->$operation.name$($extractParams(params=operation.parameters)$);
     
     $if(!operation.oneway)$
     eprosima::fastcdr::FastBuffer scdrBuffer;
     eprosima::fastcdr::FastCdr scdr(scdrBuffer);
     scdr.jump(8);
     scdr.serialize((int32_t)1);
-    scdr.serialize("$operation.parent.scopedname$");
+    scdr.serialize("$interface.scopedname$");
     scdr.serialize("$operation.name$");
 
     $if(operation.exceptions)$
@@ -425,7 +426,7 @@ catch(const $exception.scopedname$ &ex)
     eprosima::fastcdr::FastCdr scdr(scdrBuffer);
     scdr.jump(8);
     scdr.serialize((int32_t)1);
-    scdr.serialize("$operation.parent.scopedname$");
+    scdr.serialize("$interface.scopedname$");
     scdr.serialize("$operation.name$");
     scdr.serialize((int32_t)$i$);
     scdr << ex;
