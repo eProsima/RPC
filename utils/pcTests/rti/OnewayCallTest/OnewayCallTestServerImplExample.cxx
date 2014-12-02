@@ -14,6 +14,7 @@
 
 #include "OnewayCallTestServerImplExample.h"
 #include <fastrpc/utils/Utilities.h>
+#include <fastrpc/utils/macros/strdup.h>
 
 static DDS_Long l = 0;
 static bool setLong_call = false;
@@ -52,7 +53,7 @@ DDS_Boolean OnewayCallTestServerImplExample::getBoolean()
  
 void OnewayCallTestServerImplExample::setString(/*in*/ const char* s1) 
 {
-    s = strdup(s1);
+    s = STRDUP(s1);
     setString_call = true;
 } 
  
@@ -66,7 +67,7 @@ char* OnewayCallTestServerImplExample::getString()
 void OnewayCallTestServerImplExample::setStruct(/*in*/ const Structure& ev) 
 {
     st.dato = ev.dato;
-    st.message = strdup(ev.message);
+    st.message = STRDUP(ev.message);
     setStruct_call = true;
 } 
  
