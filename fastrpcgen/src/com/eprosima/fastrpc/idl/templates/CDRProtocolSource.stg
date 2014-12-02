@@ -438,7 +438,7 @@ catch(const $exception.scopedname$ &ex)
     dynamic_cast<ServerTransport&>(_protocol.getTransport()).sendReply(buffer, scdr.getSerializedDataLength(), endpoint);
 }
 }; separator="\n"$
-catch(const ServerInternalException &ex)
+catch(const ServerInternalException &$if(!operation.oneway)$ex$endif$)
 {
     $if(!operation.oneway)$
     eprosima::fastcdr::FastBuffer scdrBuffer;
