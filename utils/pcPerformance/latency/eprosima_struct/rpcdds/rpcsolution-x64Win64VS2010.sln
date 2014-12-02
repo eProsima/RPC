@@ -1,0 +1,78 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Latency", "Latency-x64Win64VS2010.vcxproj", "{705C080E-6219-7E77-7D46-7DFA83160E0A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LatencyClient", "LatencyClient-x64Win64VS2010.vcxproj", "{9C67C028-FF48-AC8C-6F5A-6E905DFACBF0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{705C080E-6219-7E77-7D46-7DFA83160E0A} = {705C080E-6219-7E77-7D46-7DFA83160E0A}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LatencyClientExample", "LatencyClientExample-x64Win64VS2010.vcxproj", "{961A7C04-F2BA-6C43-B185-43092C7721AA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9C67C028-FF48-AC8C-6F5A-6E905DFACBF0} = {9C67C028-FF48-AC8C-6F5A-6E905DFACBF0}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LatencyServer", "LatencyServer-x64Win64VS2010.vcxproj", "{00820A73-241F-7172-5A0A-F44E3F5750B7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{705C080E-6219-7E77-7D46-7DFA83160E0A} = {705C080E-6219-7E77-7D46-7DFA83160E0A}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LatencyServerExample", "LatencyServerExample-x64Win64VS2010.vcxproj", "{0B7E787F-3AE8-84F3-0C5F-99BE8CF6A64E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{00820A73-241F-7172-5A0A-F44E3F5750B7} = {00820A73-241F-7172-5A0A-F44E3F5750B7}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug DLL|x64 = Debug DLL|x64
+		Release DLL|x64 = Release DLL|x64
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{705C080E-6219-7E77-7D46-7DFA83160E0A}.Debug DLL|x64.ActiveCfg = Debug DLL|x64
+		{705C080E-6219-7E77-7D46-7DFA83160E0A}.Debug DLL|x64.Build.0 = Debug DLL|x64
+		{9C67C028-FF48-AC8C-6F5A-6E905DFACBF0}.Debug DLL|x64.ActiveCfg = Debug DLL|x64
+		{9C67C028-FF48-AC8C-6F5A-6E905DFACBF0}.Debug DLL|x64.Build.0 = Debug DLL|x64
+		{961A7C04-F2BA-6C43-B185-43092C7721AA}.Debug DLL|x64.ActiveCfg = Debug DLL|x64
+		{961A7C04-F2BA-6C43-B185-43092C7721AA}.Debug DLL|x64.Build.0 = Debug DLL|x64
+		{00820A73-241F-7172-5A0A-F44E3F5750B7}.Debug DLL|x64.ActiveCfg = Debug DLL|x64
+		{00820A73-241F-7172-5A0A-F44E3F5750B7}.Debug DLL|x64.Build.0 = Debug DLL|x64
+		{0B7E787F-3AE8-84F3-0C5F-99BE8CF6A64E}.Debug DLL|x64.ActiveCfg = Debug DLL|x64
+		{0B7E787F-3AE8-84F3-0C5F-99BE8CF6A64E}.Debug DLL|x64.Build.0 = Debug DLL|x64
+		{705C080E-6219-7E77-7D46-7DFA83160E0A}.Release DLL|x64.ActiveCfg = Release DLL|x64
+		{705C080E-6219-7E77-7D46-7DFA83160E0A}.Release DLL|x64.Build.0 = Release DLL|x64
+		{9C67C028-FF48-AC8C-6F5A-6E905DFACBF0}.Release DLL|x64.ActiveCfg = Release DLL|x64
+		{9C67C028-FF48-AC8C-6F5A-6E905DFACBF0}.Release DLL|x64.Build.0 = Release DLL|x64
+		{961A7C04-F2BA-6C43-B185-43092C7721AA}.Release DLL|x64.ActiveCfg = Release DLL|x64
+		{961A7C04-F2BA-6C43-B185-43092C7721AA}.Release DLL|x64.Build.0 = Release DLL|x64
+		{00820A73-241F-7172-5A0A-F44E3F5750B7}.Release DLL|x64.ActiveCfg = Release DLL|x64
+		{00820A73-241F-7172-5A0A-F44E3F5750B7}.Release DLL|x64.Build.0 = Release DLL|x64
+		{0B7E787F-3AE8-84F3-0C5F-99BE8CF6A64E}.Release DLL|x64.ActiveCfg = Release DLL|x64
+		{0B7E787F-3AE8-84F3-0C5F-99BE8CF6A64E}.Release DLL|x64.Build.0 = Release DLL|x64
+		{705C080E-6219-7E77-7D46-7DFA83160E0A}.Debug|x64.ActiveCfg = Debug|x64
+		{705C080E-6219-7E77-7D46-7DFA83160E0A}.Debug|x64.Build.0 = Debug|x64
+		{9C67C028-FF48-AC8C-6F5A-6E905DFACBF0}.Debug|x64.ActiveCfg = Debug|x64
+		{9C67C028-FF48-AC8C-6F5A-6E905DFACBF0}.Debug|x64.Build.0 = Debug|x64
+		{961A7C04-F2BA-6C43-B185-43092C7721AA}.Debug|x64.ActiveCfg = Debug|x64
+		{961A7C04-F2BA-6C43-B185-43092C7721AA}.Debug|x64.Build.0 = Debug|x64
+		{00820A73-241F-7172-5A0A-F44E3F5750B7}.Debug|x64.ActiveCfg = Debug|x64
+		{00820A73-241F-7172-5A0A-F44E3F5750B7}.Debug|x64.Build.0 = Debug|x64
+		{0B7E787F-3AE8-84F3-0C5F-99BE8CF6A64E}.Debug|x64.ActiveCfg = Debug|x64
+		{0B7E787F-3AE8-84F3-0C5F-99BE8CF6A64E}.Debug|x64.Build.0 = Debug|x64
+		{705C080E-6219-7E77-7D46-7DFA83160E0A}.Release|x64.ActiveCfg = Release|x64
+		{705C080E-6219-7E77-7D46-7DFA83160E0A}.Release|x64.Build.0 = Release|x64
+		{9C67C028-FF48-AC8C-6F5A-6E905DFACBF0}.Release|x64.ActiveCfg = Release|x64
+		{9C67C028-FF48-AC8C-6F5A-6E905DFACBF0}.Release|x64.Build.0 = Release|x64
+		{961A7C04-F2BA-6C43-B185-43092C7721AA}.Release|x64.ActiveCfg = Release|x64
+		{961A7C04-F2BA-6C43-B185-43092C7721AA}.Release|x64.Build.0 = Release|x64
+		{00820A73-241F-7172-5A0A-F44E3F5750B7}.Release|x64.ActiveCfg = Release|x64
+		{00820A73-241F-7172-5A0A-F44E3F5750B7}.Release|x64.Build.0 = Release|x64
+		{0B7E787F-3AE8-84F3-0C5F-99BE8CF6A64E}.Release|x64.ActiveCfg = Release|x64
+		{0B7E787F-3AE8-84F3-0C5F-99BE8CF6A64E}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

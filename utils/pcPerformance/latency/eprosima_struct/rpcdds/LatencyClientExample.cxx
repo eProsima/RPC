@@ -14,8 +14,8 @@
 
 #include "LatencyProxy.h"
 #include "Latency.h"
-#include "LatencyCDRProtocol.h"
-#include "fastrpc/transports/TCPProxyTransport.h"
+#include "LatencyDDSProtocol.h"
+#include "fastrpc/transports/dds/UDPProxyTransport.h"
 #include "fastrpc/exceptions/Exceptions.h"
 
 #include <iostream>
@@ -23,14 +23,15 @@
 
 #ifdef _WIN32
 #include "boost/date_time/posix_time/posix_time.hpp"
+#include <windows.h>
 #else
 #include <chrono>
 #endif
 
 using namespace eprosima::rpc;
 using namespace ::exception;
-using namespace ::transport;
-using namespace ::protocol::fastcdr;
+using namespace ::transport::dds;
+using namespace ::protocol::dds;
 using namespace std;
 
 void printResultTile()
@@ -47,7 +48,7 @@ void printResult(int samples,int bytes,double res )
 int main(int argc, char **argv)
 {
     LatencyProtocol *protocol = NULL;
-    TCPProxyTransport *transport = NULL;
+    UDPProxyTransport *transport = NULL;
     LatencyProxy *proxy = NULL;
 
 	int samples = 10000;
@@ -108,13 +109,12 @@ int main(int argc, char **argv)
 	double m_overhead = std::chrono::duration_cast<microseconds>(m_t2 - m_t1).count()/1001;
 
 #endif
-    
+
     // Creation of the proxy for interface "Latency".
     try
     {
         protocol = new LatencyProtocol();
-		std::string ip_dir(ip + ":8080");
-		transport = new TCPProxyTransport(ip_dir.c_str());
+        transport = new UDPProxyTransport("LatencyService");
         proxy = new LatencyProxy(*transport, *protocol);
     }
     catch(InitializeException &ex)
@@ -125,13 +125,30 @@ int main(int argc, char **argv)
 
 	printResultTile();
 
-    element elm;
+	element elm;
     elm.att1(true);
     elm.att2("ABCDEFG");
     elm.att3(65000);
     elm.att4(564);
     elm.att5(false);
     
+    // Create and initialize parameters.
+    st  param;
+    // Create and initialize return value.
+    st  latency_ret;
+
+    // Call to remote procedure "latency".
+    /*try
+    {
+        latency_ret = proxy->latency(param);
+    }
+    catch(SystemException &ex)
+    {
+        std::cout << ex.what() << std::endl;
+    }*/
+
+	Sleep(5000);
+
 	if(bytes == 0) {
 		//int bytessizes[] = {16,32,64,128,256,512,1024,2048,4096,8192};
 		int bytessizes[] = {1,2,4,8,16,32,64,128,256,512};
@@ -153,9 +170,9 @@ int main(int argc, char **argv)
 			for(isam = 0; isam<samples; ++isam) {
 			    // Call to remote procedure "latency".
 			    try {
-				proxy->latency(payload);
+					proxy->latency(payload);
 			    } catch(SystemException &ex) {
-				std::cout << ex.what() << std::endl;
+					std::cout << ex.what() << std::endl;
 			    }
 			}
 
@@ -215,12 +232,13 @@ int main(int argc, char **argv)
 		}
 		printResult(samples, bytes, result);
 	}
-         
-    delete proxy;
-    delete transport;
-    delete protocol;
+    
+    delete proxy ;
+    delete transport ;
+    delete protocol ;
    
     return 0;
 }
+
 
 
