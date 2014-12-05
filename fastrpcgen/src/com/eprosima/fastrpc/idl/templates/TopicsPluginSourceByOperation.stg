@@ -332,8 +332,7 @@ $interface.scopedname$Plugin::$operation.name$_RequestPlugin::copy_sample(
 {
     //printf("=> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::copy_sample\n");
     // TODO exception?
-    *dst = *src;
-    $interface.scopedname$Plugin::$operation.name$_RequestPlugin::copy_data(dst, src);
+    *dst = std::move(*src);
     return RTI_TRUE;
 }
 
@@ -1065,7 +1064,7 @@ $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::copy_sample(
     const $interface.name$_$operation.name$_Reply *src)
 {
     //printf("=> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::copy_sample\n");
-    $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::copy_data(dst, src);
+    *dst = std::move(*src);
     return RTI_TRUE;
 }
 
