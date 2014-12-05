@@ -14,6 +14,7 @@
 
 #include "LatencyProxy.h"
 #include "Latency.h"
+#include "LatencyExtension.h"
 #include "LatencyDDSProtocol.h"
 #include <rpcdds/transports/dds/UDPProxyTransport.h>
 #include <rpcdds/exceptions/Exceptions.h>
@@ -21,6 +22,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <vector>
 
 #ifdef _WIN32
 #include "boost/date_time/posix_time/posix_time.hpp"
@@ -127,27 +129,13 @@ int main(int argc, char **argv)
 	printResultTile();
 
 	element elm;
-    elm.att1(true);
-    elm.att2("ABCDEFG");
-    elm.att3(65000);
-    elm.att4(564);
-    elm.att5(false);
+    element_initialize(&elm);
+    elm.att1 = RTI_TRUE;
+    elm.att2 = DDS_String_dup("ABCDEFG");
+    elm.att3 = 65000;
+    elm.att4 = 564;
+    elm.att5 = RTI_FALSE;
     
-    // Create and initialize parameters.
-    st  param;
-    // Create and initialize return value.
-    st  latency_ret;
-
-    // Call to remote procedure "latency".
-    /*try
-    {
-        latency_ret = proxy->latency(param);
-    }
-    catch(SystemException &ex)
-    {
-        std::cout << ex.what() << std::endl;
-    }*/
-
     eprosima::rpc::sleep(5000);
 
 	if(bytes == 0) {
@@ -157,9 +145,12 @@ int main(int argc, char **argv)
 		for(std::vector<int>::iterator it = v_bytes.begin();it!=v_bytes.end();++it) {
 
             st payload;
+            st_initialize(&payload);
+            payload.ensure_length(*it, *it);
+
 			for(int i = 0; i < *it; ++i) 
             {
-                payload.push_back(elm);
+                payload.set_at(i, elm);
 			}
 
 #ifdef _WIN32
@@ -193,12 +184,17 @@ int main(int argc, char **argv)
 #endif
 			}
 			printResult(samples, *it, result);
+
+            st_finalize(&payload);
 		}
 	} else {
 
         st payload;
+        st_initialize(&payload);
+        payload.ensure_length(bytes, bytes);
+
 		for(int i = 0; i < bytes; ++i) {
-            payload.push_back(elm);
+            payload.set_at(i, elm);
 		}
 
 #ifdef _WIN32
@@ -232,6 +228,8 @@ int main(int argc, char **argv)
 #endif
 		}
 		printResult(samples, bytes, result);
+
+        st_finalize(&payload);
 	}
     
     delete proxy ;

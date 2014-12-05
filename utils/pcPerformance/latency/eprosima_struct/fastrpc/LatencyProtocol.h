@@ -66,6 +66,7 @@ namespace eprosima
                     virtual st Latency_latency(/*in*/ const st& param) = 0;
 
 
+
                     
                 protected:
                 

@@ -18,6 +18,7 @@
 #include "rpcdds/client/Proxy.h"
 #include "Latency.h"
 #include "LatencyAsyncCallbackHandlers.h"
+#include "LatencyExtension.h"
 
 
 namespace eprosima
@@ -37,7 +38,7 @@ namespace eprosima
  * @brief This class implements a specific server's proxy for the defined interface Latency.
  * @ingroup LATENCY
  */
-class FASTRPCUSERDllExport LatencyProxy : public eprosima::rpc::proxy::Proxy, public Latency
+class FASTRPCUSERDllExport LatencyProxy : public eprosima::rpc::proxy::Proxy, public LatencyExt
 {
     public:
    

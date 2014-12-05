@@ -18,6 +18,8 @@
 #include "LatencyProtocol.h"
 #include "rpcdds/utils/Messages.h"
 
+#include "LatencyExtension.h"
+
 namespace eprosima
 {
     namespace rpc

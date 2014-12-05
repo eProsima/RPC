@@ -18,7 +18,8 @@
 #include "rpcdds/transports/dds/DDSAsyncTask.h"
 #include "rpcdds/exceptions/UserException.h"
 #include "LatencyAsyncCallbackHandlers.h"
-#include "LatencyTopics.h"
+#include "LatencyRequestReplyPlugin.h"
+#include "LatencyRequestReplySupport.h"
 
 
 /*!

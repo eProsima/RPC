@@ -33,6 +33,20 @@
 #define eProsima_user_DllExport
 #endif
 
+#if defined(_WIN32)
+#if defined(EPROSIMA_USER_DLL_EXPORT)
+#if defined(Latency_SOURCE)
+#define Latency_DllAPI __declspec( dllexport )
+#else
+#define Latency_DllAPI __declspec( dllimport )
+#endif // Latency_SOURCE
+#else
+#define Latency_DllAPI
+#endif
+#else
+#define Latency_DllAPI
+#endif // _WIN32
+
 namespace eprosima
 {
     namespace fastcdr
@@ -44,49 +58,49 @@ namespace eprosima
  * @brief This class represents the structure element defined by the user in the IDL file.
  * @ingroup LATENCY
  */
-class eProsima_user_DllExport element
+class element
 {
 public:
 
     /*!
      * @brief Default constructor.
      */
-    element();
+    eProsima_user_DllExport element();
     
     /*!
      * @brief Default destructor.
      */
-    ~element();
+    eProsima_user_DllExport ~element();
     
     /*!
      * @brief Copy constructor.
      * @param x Reference to the object element that will be copied.
      */
-    element(const element &x);
+    eProsima_user_DllExport element(const element &x);
     
     /*!
      * @brief Move constructor.
      * @param x Reference to the object element that will be copied.
      */
-    element(element &&x);
+    eProsima_user_DllExport element(element &&x);
     
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object element that will be copied.
      */
-    element& operator=(const element &x);
+    eProsima_user_DllExport element& operator=(const element &x);
     
     /*!
      * @brief Move assignment.
      * @param x Reference to the object element that will be copied.
      */
-    element& operator=(element &&x);
+    eProsima_user_DllExport element& operator=(element &&x);
     
     /*!
      * @brief This function sets a value in member att1
      * @param _att1 New value for member att1
      */
-    inline void att1(bool _att1)
+    inline eProsima_user_DllExport void att1(bool _att1)
     {
         m_att1 = _att1;
     }
@@ -95,7 +109,7 @@ public:
      * @brief This function returns the value of member att1
      * @return Value of member att1
      */
-    inline bool att1() const
+    inline eProsima_user_DllExport bool att1() const
     {
         return m_att1;
     }
@@ -104,7 +118,7 @@ public:
      * @brief This function returns a reference to member att1
      * @return Reference to member att1
      */
-    inline bool& att1()
+    inline eProsima_user_DllExport bool& att1()
     {
         return m_att1;
     }
@@ -112,7 +126,7 @@ public:
      * @brief This function sets a value in member att2
      * @param _att2 New value for member att2
      */
-    inline void att2(std::string _att2)
+    inline eProsima_user_DllExport void att2(std::string _att2)
     {
         m_att2 = _att2;
     }
@@ -121,7 +135,7 @@ public:
      * @brief This function returns the value of member att2
      * @return Value of member att2
      */
-    inline std::string att2() const
+    inline eProsima_user_DllExport std::string att2() const
     {
         return m_att2;
     }
@@ -130,7 +144,7 @@ public:
      * @brief This function returns a reference to member att2
      * @return Reference to member att2
      */
-    inline std::string& att2()
+    inline eProsima_user_DllExport std::string& att2()
     {
         return m_att2;
     }
@@ -138,7 +152,7 @@ public:
      * @brief This function sets a value in member att3
      * @param _att3 New value for member att3
      */
-    inline void att3(int32_t _att3)
+    inline eProsima_user_DllExport void att3(int32_t _att3)
     {
         m_att3 = _att3;
     }
@@ -147,7 +161,7 @@ public:
      * @brief This function returns the value of member att3
      * @return Value of member att3
      */
-    inline int32_t att3() const
+    inline eProsima_user_DllExport int32_t att3() const
     {
         return m_att3;
     }
@@ -156,7 +170,7 @@ public:
      * @brief This function returns a reference to member att3
      * @return Reference to member att3
      */
-    inline int32_t& att3()
+    inline eProsima_user_DllExport int32_t& att3()
     {
         return m_att3;
     }
@@ -164,7 +178,7 @@ public:
      * @brief This function sets a value in member att4
      * @param _att4 New value for member att4
      */
-    inline void att4(int16_t _att4)
+    inline eProsima_user_DllExport void att4(int16_t _att4)
     {
         m_att4 = _att4;
     }
@@ -173,7 +187,7 @@ public:
      * @brief This function returns the value of member att4
      * @return Value of member att4
      */
-    inline int16_t att4() const
+    inline eProsima_user_DllExport int16_t att4() const
     {
         return m_att4;
     }
@@ -182,7 +196,7 @@ public:
      * @brief This function returns a reference to member att4
      * @return Reference to member att4
      */
-    inline int16_t& att4()
+    inline eProsima_user_DllExport int16_t& att4()
     {
         return m_att4;
     }
@@ -190,7 +204,7 @@ public:
      * @brief This function sets a value in member att5
      * @param _att5 New value for member att5
      */
-    inline void att5(bool _att5)
+    inline eProsima_user_DllExport void att5(bool _att5)
     {
         m_att5 = _att5;
     }
@@ -199,7 +213,7 @@ public:
      * @brief This function returns the value of member att5
      * @return Value of member att5
      */
-    inline bool att5() const
+    inline eProsima_user_DllExport bool att5() const
     {
         return m_att5;
     }
@@ -208,7 +222,7 @@ public:
      * @brief This function returns a reference to member att5
      * @return Reference to member att5
      */
-    inline bool& att5()
+    inline eProsima_user_DllExport bool& att5()
     {
         return m_att5;
     }
@@ -219,20 +233,20 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Maximum serialized size.
      */
-    static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
+    eProsima_user_DllExport static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
 
 
     /*!
      * @brief This function serializes an object using FastCDR serialization.
      * @param cdr FastCDR serialization object.
      */
-    void serialize(eprosima::fastcdr::FastCdr &cdr) const;
+    eProsima_user_DllExport void serialize(eprosima::fastcdr::FastCdr &cdr) const;
 
     /*!
      * @brief This function deserializes an object using FastCDR serialization.
      * @param cdr FastCDR serialization object.
      */
-    void deserialize(eprosima::fastcdr::FastCdr &cdr);
+    eProsima_user_DllExport void deserialize(eprosima::fastcdr::FastCdr &cdr);
     
 private:
     bool m_att1;
@@ -246,8 +260,12 @@ typedef std::vector<element> st;
  * @brief This class represents the interface Latency defined by the user in the IDL file.
  * @ingroup LATENCY
  */
-namespace Latency
+class Latency_DllAPI Latency 
 {
-}
+    public:
+
+    virtual st latency(/*in*/ const st& param) = 0;
+
+};
 
 #endif // _Latency_H_

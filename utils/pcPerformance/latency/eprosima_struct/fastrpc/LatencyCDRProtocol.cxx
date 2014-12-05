@@ -123,7 +123,7 @@ size_t LatencyProtocol::worker(Protocol& protocol, void *&buffer, size_t &buffer
                                 if(operation_name.compare("latency") == 0)
                                 {
                                     st  param;
-                                    st  latency_ret;
+                                    st  return_;
 
 
 
@@ -133,7 +133,7 @@ size_t LatencyProtocol::worker(Protocol& protocol, void *&buffer, size_t &buffer
 
                                     try
                                     {
-                                        latency_ret = _protocol._Latency_impl->latency(param);
+                                        return_ = _protocol._Latency_impl->latency(param);
                                         
                                         eprosima::fastcdr::FastBuffer scdrBuffer;
                                         eprosima::fastcdr::FastCdr scdr(scdrBuffer);
@@ -143,10 +143,10 @@ size_t LatencyProtocol::worker(Protocol& protocol, void *&buffer, size_t &buffer
                                         scdr.serialize("latency");
 
                                         
-                                            if(latency_ret.size() <= 2048)
-                                            scdr << latency_ret;
+                                            if(return_.size() <= 2048)
+                                            scdr << return_;
                                             else
-                                                throw eprosima::rpc::exception::BadParamException(std::string("latency_ret field exceeds the maximum length"));
+                                                throw eprosima::rpc::exception::BadParamException(std::string("return_ field exceeds the maximum length"));
                                             
                                         
                                         char *buffer = scdrBuffer.getBuffer();
@@ -205,12 +205,13 @@ size_t LatencyProtocol::worker(Protocol& protocol, void *&buffer, size_t &buffer
 
 
 
+
 st LatencyProtocol::Latency_latency(/*in*/ const st& param)
 {
     const char* const interface_name = "Latency";
     const char* const operation_name = "latency";
     // TODO In DDS the initialization is not necessary. But in CDR it is, for example a union with a char* (string) needs to be initialized to NULL.
-    st  latency_ret;
+    st  return_;
     
     eprosima::rpc::transport::ProxyTransport &proxyTransport = dynamic_cast<eprosima::rpc::transport::ProxyTransport&>(getTransport());
     
@@ -278,7 +279,7 @@ st LatencyProtocol::Latency_latency(/*in*/ const st& param)
                             if(interface_name_r.compare(interface_name) == 0 &&
                                 operation_name_r.compare(operation_name) == 0)
                             {
-                                                                dcdr >> latency_ret;
+                                                                dcdr >> return_;
                                                                 
                             }
                             else
@@ -331,5 +332,5 @@ st LatencyProtocol::Latency_latency(/*in*/ const st& param)
         throw ServerNotFoundException("Cannot connect to the server");
     }
     
-    return latency_ret;
+    return return_;
 }

@@ -17,6 +17,8 @@
 
 #include "fastrpc/client/Proxy.h"
 #include "Latency.h"
+
+
 namespace eprosima
 {
     namespace rpc
@@ -34,7 +36,7 @@ namespace eprosima
  * @brief This class implements a specific server's proxy for the defined interface Latency.
  * @ingroup LATENCY
  */
-class FASTRPCUSERDllExport LatencyProxy : public eprosima::rpc::proxy::Proxy
+class FASTRPCUSERDllExport LatencyProxy : public eprosima::rpc::proxy::Proxy, public Latency
 {
     public:
    
@@ -52,11 +54,12 @@ class FASTRPCUSERDllExport LatencyProxy : public eprosima::rpc::proxy::Proxy
 
         //! @brief Destructor.
         virtual ~LatencyProxy();
+
+                //! @brief Proxy method for the operation latency.
+                st latency(/*in*/ const st& param);
+
+                
         
-        //! @brief Proxy method for the operation latency.
-        st latency(/*in*/ const st& param);
-
-
 };
 
 
