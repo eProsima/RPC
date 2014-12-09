@@ -1591,8 +1591,8 @@ public class fastrpcgen
             finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
 
             Process auxddsgen = Runtime.getRuntime().exec(finalCommandArray);
-            ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR", false, null);
-            ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT", false, null);
+            ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR", false, null, true);
+            ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT", false, null, true);
             auxerrorOutput.start();
             auxnormalOutput.start();
             int auxexitVal = auxddsgen.waitFor();
@@ -1631,8 +1631,8 @@ public class fastrpcgen
         ddsgen = Runtime.getRuntime().exec(finalCommandArray);
         //else
         //	ddsgen = Runtime.getRuntime().exec(finalCommandArray, null, new File(m_outputDir));
-        ProcessOutput errorOutput = new ProcessOutput(ddsgen.getErrorStream(), "ERROR", m_middleware.equals("rti"), null);
-        ProcessOutput normalOutput = new ProcessOutput(ddsgen.getInputStream(), "OUTPUT", m_middleware.equals("rti"), null);
+        ProcessOutput errorOutput = new ProcessOutput(ddsgen.getErrorStream(), "ERROR", m_middleware.equals("rti"), null, true);
+        ProcessOutput normalOutput = new ProcessOutput(ddsgen.getInputStream(), "OUTPUT", m_middleware.equals("rti"), null, true);
         errorOutput.start();
         normalOutput.start();
         int exitVal = ddsgen.waitFor();
@@ -1685,8 +1685,8 @@ public class fastrpcgen
             finalCommandArray = (String[])finalCommandLine.toArray(finalCommandArray);
 
             Process auxddsgen = Runtime.getRuntime().exec(finalCommandArray);
-            ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR", false, null);
-            ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT", false, null);
+            ProcessOutput auxerrorOutput = new ProcessOutput(auxddsgen.getErrorStream(), "ERROR", false, null, true);
+            ProcessOutput auxnormalOutput = new ProcessOutput(auxddsgen.getInputStream(), "OUTPUT", false, null, true);
             auxerrorOutput.start();
             auxnormalOutput.start();
             int auxexitVal = auxddsgen.waitFor();
@@ -2006,8 +2006,8 @@ public class fastrpcgen
         try
         {
             Process preprocessor = Runtime.getRuntime().exec(lineCommandArray);
-            ProcessOutput errorOutput = new ProcessOutput(preprocessor.getErrorStream(), "ERROR", false, null);
-            ProcessOutput normalOutput = new ProcessOutput(preprocessor.getInputStream(), "OUTPUT", false, of);
+            ProcessOutput errorOutput = new ProcessOutput(preprocessor.getErrorStream(), "ERROR", false, null, false);
+            ProcessOutput normalOutput = new ProcessOutput(preprocessor.getInputStream(), "OUTPUT", false, of, true);
             errorOutput.start();
             normalOutput.start();
             exitVal = preprocessor.waitFor();
@@ -2125,13 +2125,15 @@ class ProcessOutput extends Thread
     boolean m_check_failures;
     boolean m_found_error = false;
     final String clLine = "#line";
+    boolean m_printLine = false;
 
-    ProcessOutput(InputStream is, String type, boolean check_failures, OutputStream of)
+    ProcessOutput(InputStream is, String type, boolean check_failures, OutputStream of, boolean printLine)
     {
         this.is = is;
         this.type = type;
         m_check_failures = check_failures;
         this.of = of;
+	m_printLine = printLine;
     }
 
     public void run()
@@ -2144,7 +2146,10 @@ class ProcessOutput extends Thread
             while ( (line = br.readLine()) != null)
             {
                 if(of == null)
-                    System.out.println(line);
+		{
+		    if(m_printLine)
+                        System.out.println(line);
+		}
                 else
                 {
                     // Sustituir los \\ que pone cl.exe por \
