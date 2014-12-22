@@ -156,7 +156,7 @@ public class fastrpcgen
         m_os = System.getProperty("os.name");
 
         m_idlFiles = new Vector<String>();
-		
+
         // Variables with different value depending on the protocol
         if(m_protocol == PROTOCOL.REST) {
             m_ppDisable = true;
@@ -405,7 +405,7 @@ public class fastrpcgen
     private void showVersion()
     {
         String version = getVersion();
-		System.out.println(m_appName + " version " + version);
+        System.out.println(m_appName + " version " + version);
     }
 
     public boolean execute()
@@ -435,17 +435,17 @@ public class fastrpcgen
 
             // In local for all products
             if(m_local) {
-				if(m_protocol == PROTOCOL.FASTCDR) {
-					solution.addInclude("$(FASTRPCHOME)/thirdparty/eprosima-common-code");
-				} else if(m_protocol == PROTOCOL.DDS) {
-					solution.addInclude("$(RPCDDSHOME)/thirdparty/eprosima-common-code");
-				} else if(m_protocol == PROTOCOL.REST) {
-					solution.addInclude("$(RPCRESTHOME)/thirdparty/eprosima-common-code");
-				}				
+                if(m_protocol == PROTOCOL.FASTCDR) {
+                    solution.addInclude("$(FASTRPCHOME)/thirdparty/eprosima-common-code");
+                } else if(m_protocol == PROTOCOL.DDS) {
+                    solution.addInclude("$(RPCDDSHOME)/thirdparty/eprosima-common-code");
+                } else if(m_protocol == PROTOCOL.REST) {
+                    solution.addInclude("$(RPCRESTHOME)/thirdparty/eprosima-common-code");
+                }				
 
                 if(m_exampleOption.contains("Win"))
                     solution.addLibraryPath("$(BOOST_LIBRARYDIR)/" + m_exampleOption);
-			}
+            }
             solution.addInclude("$(" + m_appEnv + ")/include");
             if(m_exampleOption != null)
                 solution.addLibraryPath("$(" + m_appEnv + ")/lib/" + m_exampleOption);
@@ -460,10 +460,10 @@ public class fastrpcgen
                         // First step is to parse the file MessageHeader.idl
                         ddsGen(m_messageHeaderFileLocation, m_lineCommand, m_lineCommandForWorkDirSet, true, false);
 
-			// TODO Remove in future when only on project VS will be generated.
-			Utils.declspec(m_outputDir + "MessageHeader.cxx", m_outputDir);
-			Utils.declspec(m_outputDir + "MessageHeaderPlugin.cxx", m_outputDir);
-			Utils.declspec(m_outputDir + "MessageHeaderSupport.cxx", m_outputDir);
+                        // TODO Remove in future when only on project VS will be generated.
+                        Utils.declspec(m_outputDir + "MessageHeader.cxx", m_outputDir);
+                        Utils.declspec(m_outputDir + "MessageHeaderPlugin.cxx", m_outputDir);
+                        Utils.declspec(m_outputDir + "MessageHeaderSupport.cxx", m_outputDir);
 
                         // Create a project for MessageHeader.idl
                         Project project = new Project("MessageHeader", m_messageHeaderFileLocation, new LinkedHashSet());
@@ -488,24 +488,24 @@ public class fastrpcgen
                 else
                 {
 
-	                if(m_local) {
-						solution.addInclude("$(RPCDDSHOME)/thirdparty/fastcdr/include");
-						
-						if(m_exampleOption != null)
-						{
-							if(!m_exampleOption.contains("Win"))
-							{
-								if(m_exampleOption.startsWith("i86Linux2.6gcc"))
-									solution.addLibraryPath("$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Linux2.6gcc");
-								else if(m_exampleOption.startsWith("x64Linux2.6gcc"))
-									solution.addLibraryPath("$(RPCDDSHOME)/thirdparty/fastcdr/lib/x64Linux2.6gcc");
-							}
-							else
-							{
-								solution.addLibraryPath("$(RPCDDSHOME)/thirdparty/fastcdr/lib/" + m_exampleOption);
-							}
-						}
-					}
+                    if(m_local) {
+                        solution.addInclude("$(RPCDDSHOME)/thirdparty/fastcdr/include");
+
+                        if(m_exampleOption != null)
+                        {
+                            if(!m_exampleOption.contains("Win"))
+                            {
+                                if(m_exampleOption.startsWith("i86Linux2.6gcc"))
+                                    solution.addLibraryPath("$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Linux2.6gcc");
+                                else if(m_exampleOption.startsWith("x64Linux2.6gcc"))
+                                    solution.addLibraryPath("$(RPCDDSHOME)/thirdparty/fastcdr/lib/x64Linux2.6gcc");
+                            }
+                            else
+                            {
+                                solution.addLibraryPath("$(RPCDDSHOME)/thirdparty/fastcdr/lib/" + m_exampleOption);
+                            }
+                        }
+                    }
                     if(m_exampleOption != null && !m_exampleOption.contains("Win"))
                         solution.addLibrary("fastcdr");
                 }
@@ -530,10 +530,10 @@ public class fastrpcgen
                 }
 
                 if(m_exampleOption != null && !m_exampleOption.contains("Win"))
-		{
+                {
                     // Add product library.
                     solution.addLibrary("rpcdds");
-		}
+                }
             }
             else if(m_protocol == PROTOCOL.REST)
             {
@@ -544,10 +544,10 @@ public class fastrpcgen
                 }
 
                 if(m_exampleOption != null && !m_exampleOption.contains("Win"))
-		{
+                {
                     // Add product library.
                     solution.addLibrary("rpcrest");
-		}
+                }
             }
             else if(m_protocol == PROTOCOL.FASTCDR)
             {
@@ -559,29 +559,29 @@ public class fastrpcgen
 
                 if(m_local)
                 {
-	                solution.addInclude("$(FASTRPCHOME)/thirdparty/fastcdr/include");
-					
-					if(m_exampleOption != null)
-					{
-					    if(!m_exampleOption.contains("Win"))
-						{
-							if(m_exampleOption.startsWith("i86Linux2.6gcc"))
-								solution.addLibraryPath("$(FASTRPCHOME)/thirdparty/fastcdr/lib/i86Linux2.6gcc");
-							else if(m_exampleOption.startsWith("x64Linux2.6gcc"))
-								solution.addLibraryPath("$(FASTRPCHOME)/thirdparty/fastcdr/lib/x64Linux2.6gcc");
-						}
-						else
-						{
-							solution.addLibraryPath("$(FASTRPCHOME)/thirdparty/fastcdr/lib/" + m_exampleOption);
-						}
-					}
+                    solution.addInclude("$(FASTRPCHOME)/thirdparty/fastcdr/include");
+
+                    if(m_exampleOption != null)
+                    {
+                        if(!m_exampleOption.contains("Win"))
+                        {
+                            if(m_exampleOption.startsWith("i86Linux2.6gcc"))
+                                solution.addLibraryPath("$(FASTRPCHOME)/thirdparty/fastcdr/lib/i86Linux2.6gcc");
+                            else if(m_exampleOption.startsWith("x64Linux2.6gcc"))
+                                solution.addLibraryPath("$(FASTRPCHOME)/thirdparty/fastcdr/lib/x64Linux2.6gcc");
+                        }
+                        else
+                        {
+                            solution.addLibraryPath("$(FASTRPCHOME)/thirdparty/fastcdr/lib/" + m_exampleOption);
+                        }
+                    }
                 }
                 if(m_exampleOption != null && !m_exampleOption.contains("Win"))
-		{
+                {
                     solution.addLibrary("fastcdr");
                     // Add product library.
                     solution.addLibrary("fastrpc");
-		}
+                }
             }
 
             for(int count = 0; returnedValue && (count < m_idlFiles.size()); ++count)
@@ -695,10 +695,10 @@ public class fastrpcgen
                         ddsGen(m_tempDir + onlyFileName + ".idl", idlLineCommand, idlLineCommandForWorkDirSet,
                                 true, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
 
-			// TODO Remove in future when only on project VS will be generated.
-			Utils.declspec(m_outputDir + onlyFileName + ".cxx", m_outputDir);
-			Utils.declspec(m_outputDir + onlyFileName + "Plugin.cxx", m_outputDir);
-			Utils.declspec(m_outputDir + onlyFileName + "Support.cxx", m_outputDir);
+                        // TODO Remove in future when only on project VS will be generated.
+                        Utils.declspec(m_outputDir + onlyFileName + ".cxx", m_outputDir);
+                        Utils.declspec(m_outputDir + onlyFileName + "Plugin.cxx", m_outputDir);
+                        Utils.declspec(m_outputDir + onlyFileName + "Support.cxx", m_outputDir);
 
                         // Set files generated by rtiddsgen
                         // TODO Set the opendds files.
@@ -715,10 +715,10 @@ public class fastrpcgen
                             ddsGen(m_tempDir + onlyFileName + "RequestReply.idl", idlLineCommand, idlLineCommandForWorkDirSet,
                                     false, (m_outputDir.equals(m_defaultOutputDir) ? false : true));
 
-			    // TODO Remove in future when only on project VS will be generated.
-			    Utils.declspec(m_outputDir + onlyFileName + "RequestReply.cxx", m_outputDir);
-			    Utils.declspec(m_outputDir + onlyFileName + "RequestReplyPlugin.cxx", m_outputDir);
-			    Utils.declspec(m_outputDir + onlyFileName + "RequestReplySupport.cxx", m_outputDir);
+                            // TODO Remove in future when only on project VS will be generated.
+                            Utils.declspec(m_outputDir + onlyFileName + "RequestReply.cxx", m_outputDir);
+                            Utils.declspec(m_outputDir + onlyFileName + "RequestReplyPlugin.cxx", m_outputDir);
+                            Utils.declspec(m_outputDir + onlyFileName + "RequestReplySupport.cxx", m_outputDir);
                             // TODO Remove in future when rtiddsgen2 works successfully.
                             Utils.addPragma(m_outputDir + onlyFileName + "RequestReply.cxx", m_outputDir);
 
@@ -805,14 +805,14 @@ public class fastrpcgen
 
             try
             {
-				ANTLRFileStream input = new ANTLRFileStream(idlParseFileName);
+                ANTLRFileStream input = new ANTLRFileStream(idlParseFileName);
                 IDLLexer lexer = new IDLLexer(input);
                 lexer.setContext(ctx);
-		        CommonTokenStream tokens = new CommonTokenStream(lexer);
+                CommonTokenStream tokens = new CommonTokenStream(lexer);
                 IDLParser parser = new IDLParser(tokens);
                 // Pass the filename without the extension.
-				Specification specification = parser.specification(ctx, tmanager, maintemplates).spec;
-				returnedValue = specification != null;
+                Specification specification = parser.specification(ctx, tmanager, maintemplates).spec;
+                returnedValue = specification != null;
             }
             catch(FileNotFoundException ex)
             {
@@ -974,14 +974,14 @@ public class fastrpcgen
 
             try
             {
-				ANTLRFileStream input = new ANTLRFileStream(idlParseFileName);
+                ANTLRFileStream input = new ANTLRFileStream(idlParseFileName);
                 IDLLexer lexer = new IDLLexer(input);
                 lexer.setContext(ctx);
-		        CommonTokenStream tokens = new CommonTokenStream(lexer);
+                CommonTokenStream tokens = new CommonTokenStream(lexer);
                 IDLParser parser = new IDLParser(tokens);
                 // Pass the filename without the extension.
-				Specification specification = parser.specification(ctx, tmanager, maintemplates).spec;
-				returnedValue = specification != null;
+                Specification specification = parser.specification(ctx, tmanager, maintemplates).spec;
+                returnedValue = specification != null;
             }
             catch(FileNotFoundException ex)
             {
@@ -1169,14 +1169,14 @@ public class fastrpcgen
 
             try
             {
-				ANTLRFileStream input = new ANTLRFileStream(idlParseFileName);
+                ANTLRFileStream input = new ANTLRFileStream(idlParseFileName);
                 IDLLexer lexer = new IDLLexer(input);
                 lexer.setContext(ctx);
-		        CommonTokenStream tokens = new CommonTokenStream(lexer);
+                CommonTokenStream tokens = new CommonTokenStream(lexer);
                 IDLParser parser = new IDLParser(tokens);
                 // Pass the filename without the extension.
-				Specification specification = parser.specification(ctx, tmanager, maintemplates).spec;
-				returnedValue = specification != null;
+                Specification specification = parser.specification(ctx, tmanager, maintemplates).spec;
+                returnedValue = specification != null;
             }
             catch(FileNotFoundException ex)
             {
@@ -1725,7 +1725,7 @@ public class fastrpcgen
             // TODO For windows.
             if(m_exampleOption.substring(3, 6).equals("Win"))
             {
-		String vs = m_exampleOption.substring(8,14);
+                String vs = m_exampleOption.substring(8,14);
                 System.out.println("Generating " + vs + " solution");
 
                 if(m_exampleOption.startsWith("i86"))
@@ -2057,10 +2057,10 @@ public class fastrpcgen
         System.out.println("\twhere the options are:");
         System.out.println("\t\t-help: shows this help");
         System.out.print("\t\t-version: shows the current version of eProsima RPC");
-		if(m_protocol == PROTOCOL.REST) {
-			System.out.print(" over REST");			
-		}
-		System.out.println(".");
+        if(m_protocol == PROTOCOL.REST) {
+            System.out.print(" over REST");			
+        }
+        System.out.println(".");
         //System.out.println("\t\t--server: disables the generation of source code for servers.");
         //System.out.println("\t\t--client: disables the generation of source code for clients.");
         System.out.println("\t\t-example <platform>: Generates a solution for a specific platform (example: x64Win64VS2010)");
@@ -2071,10 +2071,10 @@ public class fastrpcgen
         //        "   -language <C++>: Programming language (default: C++).\n" +
         System.out.println("\t\t-replace: replaces existing generated files.");
         System.out.println("\t\t-d <path>: sets an output directory for generated files.");
-		if(m_protocol != PROTOCOL.REST) {
-			System.out.println("\t\t-ppPath <path\\><program> : C/C++ Preprocessor path.(Default is cl.exe)");
-			System.out.println("\t\t-ppDisable               : Do not use C/C++ preprocessor.");
-		}		
+        if(m_protocol != PROTOCOL.REST) {
+            System.out.println("\t\t-ppPath <path\\><program> : C/C++ Preprocessor path.(Default is cl.exe)");
+            System.out.println("\t\t-ppDisable               : Do not use C/C++ preprocessor.");
+        }		
         System.out.println("\t\t-t <temp dir>: sets a specific directory as a temporary directory.");
         /* Products splitted.
            System.out.println("\t\t-protocol <protocol>: defines the protocol to be implemented by the generated code.");
@@ -2142,7 +2142,7 @@ class ProcessOutput extends Thread
         this.type = type;
         m_check_failures = check_failures;
         this.of = of;
-	m_printLine = printLine;
+        m_printLine = printLine;
     }
 
     public void run()
@@ -2155,10 +2155,10 @@ class ProcessOutput extends Thread
             while ( (line = br.readLine()) != null)
             {
                 if(of == null)
-		{
-		    if(m_printLine)
+                {
+                    if(m_printLine)
                         System.out.println(line);
-		}
+                }
                 else
                 {
                     // Sustituir los \\ que pone cl.exe por \
