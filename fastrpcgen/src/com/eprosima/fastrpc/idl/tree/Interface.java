@@ -2,6 +2,7 @@ package com.eprosima.fastrpc.idl.tree;
 
 import java.util.ArrayList;
 import com.eprosima.idl.parser.tree.Operation;
+import com.eprosima.idl.parser.tree.Annotation;
 
 public class Interface extends com.eprosima.idl.parser.tree.Interface
 {
@@ -53,15 +54,26 @@ public class Interface extends com.eprosima.idl.parser.tree.Interface
     
     public String getAuth()
     {
-        return getAnnotations().get("AUTH_INTERFACE");
+        Annotation annotation = getAnnotations().get("AUTH_INTERFACE");
+
+        if(annotation != null)
+            return annotation.getValue("value");
+
+        return null;
     }
 
     ///////// End Auth Block /////////
     
     ////////// RESTful block //////////
     
-    public String getPath() {
-    	return getAnnotations().get("PATH");
+    public String getPath()
+    {
+        Annotation annotation = getAnnotations().get("PATH");
+
+        if(annotation != null)
+            return annotation.getValue("value");
+
+        return null;
     }
     
     public String getPathWithoutFirstBackslace()

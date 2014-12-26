@@ -1,6 +1,7 @@
 package com.eprosima.fastrpc.idl.tree;
 
 import com.eprosima.idl.parser.typecode.TypeCode;
+import com.eprosima.idl.parser.tree.Annotation;
 
 public class Param extends com.eprosima.idl.parser.tree.Param
 {
@@ -18,11 +19,17 @@ public class Param extends com.eprosima.idl.parser.tree.Param
      */
     public String getRealname()
     {
-        String realname;
-        
-        if((realname = ((Operation)getParent()).getAnnotations().get(getName())) != null)
+        Annotation annotation = ((Operation)getParent()).getAnnotations().get(getName());
+
+        if(annotation != null)
         {
-            return realname.replace(" ", "%20");
+        
+            String realname = annotation.getValue("value");
+
+            if(realname != null)
+            {
+                return realname.replace(" ", "%20");
+            }
         }
         
         return getName();

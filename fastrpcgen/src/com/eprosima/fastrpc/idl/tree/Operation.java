@@ -1,6 +1,7 @@
 package com.eprosima.fastrpc.idl.tree;
 
 import java.security.MessageDigest;
+import com.eprosima.idl.parser.tree.Annotation;
 
 public class Operation extends com.eprosima.idl.parser.tree.Operation
 {
@@ -34,11 +35,21 @@ public class Operation extends com.eprosima.idl.parser.tree.Operation
     ////////// RESTful block //////////
     
     public String getMethod() {
-    	return getAnnotations().get("METHOD");
+        Annotation annotation = getAnnotations().get("METHOD");
+
+        if(annotation != null)
+            return annotation.getValue("value");
+
+        return null;
     }
     
     public String getBody() {
-    	return getAnnotations().get("BODY");
+        Annotation annotation = getAnnotations().get("BODY");
+
+        if(annotation != null)
+            return annotation.getValue("value");
+
+        return null;
     }
 
     /////// End of RESTful block //////

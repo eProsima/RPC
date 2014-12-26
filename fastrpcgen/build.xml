@@ -18,18 +18,6 @@
 
 <project name="fastrpcgen" default="jars" basedir=".">
 
-	<macrodef name="antlr">
-		<attribute name="base" />
-		<attribute name="grammar" />
-		<sequential>
-            <java classname="org.antlr.v4.Tool" classpath="../classes/antlr-4.4.jar">
-				<arg value="-o" />
-				<arg value="@{base}" />
-				<arg value="@{grammar}" />
-			</java>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="antxr">
 		<attribute name="base" />
 		<attribute name="grammar" />
@@ -164,7 +152,6 @@
 	<!-- Compiles the source code                                            -->
 	<!-- =================================================================== -->
 	<target name="compile" depends="init, prepare-sources, compile-idl" description="Compiles the sources. (Default)">
-		<!-- <antlr base="${idl.src.java}${file.separator}com/eprosima/idl/parser/grammar" grammar="${idl.grammar.dir}${file.separator}IDL.g" /> -->
 		<echo>Building WADL ANTXR grammars... Some warnings are expected...</echo>
 		<antxr base="${fastrpc.src.java}${file.separator}com/eprosima/fastrpc/wadl/grammar" grammar="${fastrpc.grammar.dir}${file.separator}wadl.antxr" />
 		<echo>Compiling java code...</echo>
