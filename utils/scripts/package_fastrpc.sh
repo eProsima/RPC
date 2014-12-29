@@ -5,7 +5,7 @@
 # This script needs the next programs to be run.
 # - subversion
 # - libreoffice
-# - ant
+# - gradle
 # - doxygen
 # Also this script needs the eProsima.documentation.changeVersion macro installed in the system.
 #
@@ -71,7 +71,7 @@ function package
     # Compile fastrpcgen application.
     cd fastrpcgen
     rm -rf build
-    ant fastrpcgen_jar
+    gradle build
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     cd ..

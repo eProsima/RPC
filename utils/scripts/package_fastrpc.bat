@@ -4,7 +4,7 @@
 :: - SVN_BIN_DIR: Directory with the subversion binaries.
 :: - LIBREOFFICE_BIN_DIR: Directory with the LibreOffice binaries.
 :: - NSIS_BIN_DIR: Directory with the NSIS installer libraries.
-:: - ANT_BIN_DIR: Directory with the ant binaries.
+:: - GRADLE_BIN_DIR: Directory with the gradle binaries.
 :: - DOXYGEN_BIN_DIR: Directory with the doxygen binaries.
 :: - GRAPHVIZ_BIN_DIR: Directory with the graphviz binaries.
 :: - TEXLIVE_BIN_DIR: Directory with the TexLive binaries.
@@ -64,7 +64,7 @@ if not %errorstatus%==0 goto :exit
 :: Compile FastRPC for target.
 cd fastrpcgen
 rmdir /S /Q build
-call ant jars
+call gradle build
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 cd ".."

@@ -25,6 +25,7 @@ cscope.out
 #### Project files ####
 
 # Generated Java classes
+.gradle
 fastrpcgen/build/
 classes/fastrpcgen.jar
 classes/rpcddsgen.jar
