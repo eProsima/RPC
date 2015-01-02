@@ -8,10 +8,10 @@
 #ifndef _TRANSPORTS_DDS_COMPONENTS_SERVERPROCEDUREENDPOINT_H_
 #define _TRANSPORTS_DDS_COMPONENTS_SERVERPROCEDUREENDPOINT_H_
 
-#include "fastrpc/fastrpc_dll.h"
-#include "fastrpc/transports/dds/ServerTransport.h"
-#include "fastrpc/transports/components/Endpoint.h"
-#include "fastrpc/utils/Messages.h"
+#include "../../../fastrpc_dll.h"
+#include "../ServerTransport.h"
+#include "../../components/Endpoint.h"
+#include "../../../utils/Messages.h"
 
 #include <string>
 
@@ -64,7 +64,8 @@ namespace eprosima
 						 * @param ProcessFunc Pointer to the function invoked when a message is received from the server
 						 * @param dataSize Size of the DataReader data structure
 						 */
-                        FASTRPC_DllAPI int initialize(const char *name, const char *writertypename, const char *readertypename,
+                        FASTRPC_DllAPI int initialize(const char *name, const char *writertypename, const char *writertopicname,
+                                const char *readertypename, const char *readertopicname,
                                 Transport::Create_data create_data, Transport::Destroy_data destroy_data,
                                 Transport::ProcessFunc, int dataSize);
 						
@@ -149,7 +150,11 @@ namespace eprosima
 
                         std::string m_writerTypeName;
 
+                        std::string m_writerTopicName;
+
                         std::string m_readerTypeName;
+
+                        std::string m_readerTopicName;
 
                         //!@brief The topic used to send.
                         DDSTopic *m_writerTopic;

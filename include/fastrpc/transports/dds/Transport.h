@@ -86,6 +86,8 @@ namespace eprosima
                                 return m_subscriber;
                             }
 
+                        virtual const char* getRemoteServiceName() const = 0;
+
                         /*! TODO Actualizar
                          * @brief This function creates a new procedure endpoint.
                          * This proxy procedure endpoint manages the DDS datawriter and the DDS datareader.
@@ -104,7 +106,8 @@ namespace eprosima
                          */
                         virtual eprosima::rpc::transport::Endpoint*
                             createProcedureEndpoint(const char *name, const char *writertypename,
-                                    const char *readertypename, bool eprosima_types,
+                                    const char *writertopicname, const char *readertypename,
+                                    const char *readertopicname, bool eprosima_types,
                                     Create_data create_data, Copy_data copy_data, Destroy_data destroy_data,
                                     ProcessFunc processFunc, int dataSize) = 0;
 

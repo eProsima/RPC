@@ -37,7 +37,7 @@ struct $interface.name$_$operation.name$_In
     $if(operation.inputparam)$
     $operation.inputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
     $else$
-    long dummy;
+    dds::rpc::UnusedMember dummy;
     $endif$
 }; $nolevelIDLdefine()$
 
@@ -48,7 +48,7 @@ struct $interface.name$_$operation.name$_Out
     $if(operation.rettype)$$operation.rettype.idlTypename$ return_;$endif$
     $operation.outputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
     $else$
-    long dummy;
+    dds::rpc::UnusedMember dummy;
     $endif$
 }; $nolevelIDLdefine()$
 
@@ -60,11 +60,9 @@ $preRepIDLDefines(name=[interface.name, "_", operation.name])$
 union $interface.name$_$operation.name$_Result switch (long)
 {
    default:
-      UnknownException unknown_exception;
-   case 0:
-      $interface.name$_$operation.name$_Out out_;
-   case 1:
-      SystemExceptionCode sysx_;
+       dds::rpc::UnknownException unknownEx;
+   case dds::rpc::REMOTE_EX_OK:
+      $interface.name$_$operation.name$_Out result;
    $operation.exceptions : { exception |
    case $exception.md5$:
       $exception.scopedname$_t $exception.formatedScopedname$_ex;
@@ -81,7 +79,7 @@ $endif$
 union $interface.name$_Call switch (long)
 {
     default:
-        UnknownOperation unknown_operation;
+        dds::rpc::UnknownOperation unknownOp;
     $interface.all_operations : { operation |
     case $operation.md5$:
         $interface.name$_$operation.name$_In $operation.name$;
@@ -96,8 +94,8 @@ union $interface.name$_Call switch (long)
  */
 struct $interface.name$_Request
 {
-    RequestHeader header;
-    $interface.name$_Call request;
+    dds::rpc::RequestHeader header;
+    $interface.name$_Call data;
 }; $levelIDLdefine()$
 
 
@@ -108,7 +106,7 @@ struct $interface.name$_Request
 union $interface.name$_Return switch (long)
 {
     default:
-        UnknownOperation unknown_operation;
+        dds::rpc::UnknownOperation unknownOp;
     $interface.all_operations : { operation |
     $if(!operation.oneway)$
     case $operation.md5$:
@@ -125,8 +123,8 @@ union $interface.name$_Return switch (long)
  */
 struct $interface.name$_Reply
 {
-    ReplyHeader header;
-    $interface.name$_Return reply;
+    dds::rpc::ReplyHeader header;
+    $interface.name$_Return data;
 }; $levelIDLdefine()$
 
 >>

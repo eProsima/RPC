@@ -21,7 +21,7 @@ static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::UDPServerT
 
 using namespace eprosima::rpc::transport::dds;
 
-UDPServerTransport::UDPServerTransport(const char* const &serviceName, const char* const &instanceName, int domainId) : ServerTransport(serviceName, instanceName, domainId)
+UDPServerTransport::UDPServerTransport(const char* const serviceName, const char* const instanceName, int domainId) : ServerTransport(serviceName, instanceName, domainId)
 {
 }
 

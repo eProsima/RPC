@@ -34,11 +34,14 @@ namespace eprosima
                          * @brief Default constructor for the proxies.
                          *
                          * @param to_connect Public address and port where the server can be found by the proxy. By example: "218.18.3.133:7600"
-						 * @param remoteServiceName Name of the remote service
+						 * @param remoteServiceName Name of the remote service. If value is not assigned or NULL pointer is used,
+                         * the default service's name will be use.
+						 * @param instanceName Instance's name of the remote service. If value is not assigned or NULL pointer is used,
+                         * the default instance's name will be use.
                          * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
 						 * @param timeout The time in milliseconds to wait for the reply.
                          */
-                        FASTRPC_DllAPI TCPProxyTransport(const char* const &to_connect, const char* const &remoteServiceName, const char* const &instanceName, int domainId = 0, long timeout = 10000L);
+                        FASTRPC_DllAPI TCPProxyTransport(const char* const &to_connect, const char* const remoteServiceName = NULL, const char* const instanceName = NULL, int domainId = 0, long timeout = 10000L);
 
                         //! @brief Default destructor.
                         virtual FASTRPC_DllAPI ~TCPProxyTransport();

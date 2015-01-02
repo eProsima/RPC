@@ -9,7 +9,7 @@
 #ifndef _TRANSPORTS_COMPONENTS_ENDPOINT_H_
 #define _TRANSPORTS_COMPONENTS_ENDPOINT_H_
 
-#include "fastrpc/fastrpc_dll.h"
+#include "../../fastrpc_dll.h"
 
 namespace eprosima
 {

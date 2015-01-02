@@ -35,17 +35,20 @@ namespace eprosima
                          * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
 						 * @param timeout The time in milliseconds to wait for the reply.
                          */
-                        FASTRPC_DllAPI UDPProxyTransport(const char* const &remoteServiceName, const char* const &instanceName, int domainId = 0, long timeout = 10000L);
+                        FASTRPC_DllAPI UDPProxyTransport(const char* const remoteServiceName = NULL, const char* const instanceName = NULL, int domainId = 0, long timeout = 10000L);
 
                         /*!
                          * @brief Constructor for server's proxies.
                          *
                          * @param to_connect IP address where the server can be found by the proxy. For example: "192.168.1.3"
-						 * @param remoteServiceName Name of the service
+						 * @param remoteServiceName Name of the remote service. If value is not assigned or NULL pointer is used,
+                         * the default service's name will be use.
+						 * @param instanceName Instance's name of the remote service. If value is not assigned or NULL pointer is used,
+                         * the default instance's name will be use.
                          * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
 						 * @param timeout The time in milliseconds to wait for the reply.
                          */
-                        FASTRPC_DllAPI UDPProxyTransport(const char* const &to_connect, const char* const &remoteServiceName, const char* const &instanceName, int domainId = 0, long timeout = 10000L);
+                        FASTRPC_DllAPI UDPProxyTransport(const char* const &to_connect, const char* const remoteServiceName = NULL, const char* const instanceName = NULL, int domainId = 0, long timeout = 10000L);
 
                         //! @brief Default destructor.
                         virtual FASTRPC_DllAPI ~UDPProxyTransport();

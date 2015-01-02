@@ -70,31 +70,32 @@ void $interface.name$_$operation.name$Task::execute()
     $varDecl(variable=operation.rettypeparam)$
     ReturnMessage retcode = eprosima::rpc::OK;
     
-    switch ($replyOperationUnionDiscriminatorByInterface(operation=operation, varname="m_reply")$)
+    if($getRemoteException(varname="m_reply")$ == $remoteExceptionOK()$)
     {
-        case 0:
-            $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=replyOperationUnionDataAccessByInterface(operation=operation, varname="m_reply", dataname="out_"), isReply="yes")$};separator="\n"$
-		    getObject().$operation.name$($extractParams(params=[operation.outputparam, operation.rettypeparam])$);
-            break;
-        case 1:
-            retcode = (eprosima::rpc::ReturnMessage)$replyOperationUnionDataAccessByInterface(operation=operation, varname="m_reply", dataname="sysx_")$;
-            if(retcode == eprosima::rpc::SERVER_INTERNAL_ERROR)
-                getObject().on_exception(ServerInternalException(""));
-            break;
-        $operation.exceptions : { exception |
-        case $exception.md5$:
-            {
-            $exception.scopedname$ ex;
-            // TODO No permite arrays
-            $exception.members : { member |$extractExceptionMemberFromTopic(exception=exception, member=member, varname=replyOperationUnionDataByInterface(operation=operation, varname="m_reply"))$}; separator="\n"$
+        switch ($replyOperationUnionDiscriminatorByInterface(operation=operation, varname="m_reply")$)
+        {
+            case 0:
+                $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=replyOperationUnionDataAccessByInterface(operation=operation, varname="m_reply", dataname="out_"), isReply="yes")$};separator="\n"$
+	    	    getObject().$operation.name$($extractParams(params=[operation.outputparam, operation.rettypeparam])$);
+                break;
+            $operation.exceptions : { exception |
+            case $exception.md5$:
+                {
+                $exception.scopedname$ ex;
+                // TODO No permite arrays
+                $exception.members : { member |$extractExceptionMemberFromTopic(exception=exception, member=member, varname=replyOperationUnionDataByInterface(operation=operation, varname="m_reply"))$}; separator="\n"$
 
-            getObject().on_exception(ex);
-            }
-            break;
-        }; separator="\n"$
-        default:
-            getObject().on_exception(ClientInternalException("Error extracting information from server"));
+                getObject().on_exception(ex);
+                }
+                break;
+            }; separator="\n"$
+            default:
+                getObject().on_exception(ClientInternalException("Error extracting information from server"));
+        }
     }
+    else
+        getObject().on_exception(ServerInternalException(""));
+
 }
 
 void $interface.name$_$operation.name$Task::on_exception(const SystemException &ex)

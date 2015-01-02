@@ -338,9 +338,23 @@ $endif$
 >>
 
 copyHeaderInfo(reqvarname, repvarname) ::= <<
-memcpy($repvarname$.header.request_id.guid.value, $reqvarname$.header.request_id.guid.value, sizeof($repvarname$.header.request_id.guid.value));
-$repvarname$.header.request_id.sequence_number = $reqvarname$.header.request_id.sequence_number;
+memcpy($repvarname$.header.relatedRequestId.writer_guid.guidPrefix, $reqvarname$.header.requestId.writer_guid.guidPrefix, 12);
+memcpy($repvarname$.header.relatedRequestId.writer_guid.entityId.entityKey, $reqvarname$.header.requestId.writer_guid.entityId.entityKey, 3);
+$repvarname$.header.relatedRequestId.writer_guid.entityId.entityKind =  $reqvarname$.header.requestId.writer_guid.entityId.entityKind;
+$repvarname$.header.relatedRequestId.sequence_number.high = $reqvarname$.header.requestId.sequence_number.high;
+$repvarname$.header.relatedRequestId.sequence_number.low = $reqvarname$.header.requestId.sequence_number.low;
+$repvarname$.header.remoteEx = ::dds::rpc::REMOTE_EX_OK;
 >>
+
+getRemoteException(varname) ::= <<
+$varname$.header.remoteEx
+>>
+
+setRemoteExceptionAsUnsupported(varname) ::= <<
+$varname$.header.remoteEx = ::dds::rpc::REMOTE_EX_UNSUPPORTED;
+>>
+
+remoteExceptionOK() ::= <<::dds::rpc::REMOTE_EX_OK>>
 
 requestUnionByInterface(varname) ::= <<
 $varname$.request

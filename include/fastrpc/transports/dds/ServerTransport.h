@@ -66,7 +66,9 @@ namespace eprosima
                          *
                          * @param name The name associated with this proxy procedure endpoint. It cannot be NULL.
                          * @param writertypename The type name of the topic that the procedure endpoint uses in the datawriter. It cannot be NULL.
+                         * @param writertopicname The name of the topic that the procedure endpoint uses in the datawriter. It cannot be NULL.
                          * @param readertypename The type name of the topic that the procedure endpoint uses in the datareader. It cannot be NULL.
+                         * @param readertopicname The name of the topic that the procedure endpoint uses in the datareader. It cannot be NULL.
 						 * @param initialize_data Pointer to the function to initialize DataReader received data
                          * @param copy_data Pointer to the function used to copy the data when it is received.
 						 * @param finalize_data Pointer to the function to finalize DataReader received data
@@ -77,7 +79,8 @@ namespace eprosima
                          */
                         FASTRPC_DllAPI eprosima::rpc::transport::Endpoint*
                             createProcedureEndpoint(const char *name, const char *writertypename,
-                                    const char *readertypename, bool eprosima_types,
+                                    const char *writertopicname, const char *readertypename,
+                                    const char *readertopicname, bool eprosima_types,
                                     Transport::Create_data create_data, Transport::Copy_data copy_data,
                                     Transport::Destroy_data destroy_data, Transport::ProcessFunc processFunc, int dataSize);
 								
@@ -112,6 +115,12 @@ namespace eprosima
 						 */
                         FASTRPC_DllAPI int receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint); 
 
+						/*!
+                         * @brief This function returns the DDS service name.
+						 * @return DDS service name.
+                         */
+                        FASTRPC_DllAPI const char* getRemoteServiceName() const;
+
                     protected:
 
 						/*!
@@ -124,9 +133,13 @@ namespace eprosima
 
                         /*!
                          * @brief Default constructor.
+						 * @param serviceName Name of the remote service. If value is not assigned or NULL pointer is used,
+                         * the default service's name will be use.
+						 * @param instanceName Instance's name of the remote service. If value is not assigned or NULL pointer is used,
+                         * the default instance's name will be use.
                          * @param domainId Optional parameter that specifies the domain identifier that will be used in DDS.
                          */
-                        FASTRPC_DllAPI ServerTransport(const char* const &serviceName, const char* const &instanceName, int domainId = 0);
+                        FASTRPC_DllAPI ServerTransport(const char* const serviceName = NULL, const char* const instanceName = NULL, int domainId = 0);
 
                     private:
 

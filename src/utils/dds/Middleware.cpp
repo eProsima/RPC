@@ -7,6 +7,7 @@
  *************************************************************************/
 
 #include "fastrpc/utils/dds/Middleware.h"
+#include "fastrpc/protocols/dds/MessageHeader.h"
 
 #if defined(OPENDDS)
 #include "dds/DCPS/RTPS/RtpsDiscovery.h"
@@ -14,12 +15,27 @@
 
 static const char* const CLASS_NAME = "eprosima::rpc::util::dds::Middleware";
 
-void eprosima::rpc::util::dds::get_guid(uint8_t (&id)[16], DDS::DataWriter *datawriter)
+void eprosima::rpc::util::dds::get_guid(eprosima::rpc::protocol::dds::GUID_t &id, DDS::DataWriter *datawriter)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     DDS::DataWriterQos wQos;
     datawriter->get_qos(wQos);
-    memcpy(id, wQos.protocol.virtual_guid.value, sizeof(id));
+    id.guidPrefix()[0] = wQos.protocol.virtual_guid.value[0];
+    id.guidPrefix()[1] = wQos.protocol.virtual_guid.value[1];
+    id.guidPrefix()[2] = wQos.protocol.virtual_guid.value[2];
+    id.guidPrefix()[3] = wQos.protocol.virtual_guid.value[3];
+    id.guidPrefix()[4] = wQos.protocol.virtual_guid.value[4];
+    id.guidPrefix()[5] = wQos.protocol.virtual_guid.value[5];
+    id.guidPrefix()[6] = wQos.protocol.virtual_guid.value[6];
+    id.guidPrefix()[7] = wQos.protocol.virtual_guid.value[7];
+    id.guidPrefix()[8] = wQos.protocol.virtual_guid.value[8];
+    id.guidPrefix()[9] = wQos.protocol.virtual_guid.value[9];
+    id.guidPrefix()[10] = wQos.protocol.virtual_guid.value[10];
+    id.guidPrefix()[11] = wQos.protocol.virtual_guid.value[11];
+    id.entityId().entityKey()[0] = wQos.protocol.virtual_guid.value[12];
+    id.entityId().entityKey()[1] = wQos.protocol.virtual_guid.value[13];
+    id.entityId().entityKey()[2] = wQos.protocol.virtual_guid.value[14];
+    id.entityId().entityKind() = wQos.protocol.virtual_guid.value[15];
 #elif defined(OPENDDS)
     OpenDDS::DCPS::DataWriterImpl *wimpl = dynamic_cast<OpenDDS::DCPS::DataWriterImpl*>(datawriter);
     OpenDDS::DCPS::RepoId guid = wimpl->get_publication_id();

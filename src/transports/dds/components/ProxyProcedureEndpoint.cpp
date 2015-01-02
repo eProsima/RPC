@@ -6,16 +6,16 @@
  *
  *************************************************************************/
 
-#include "fastrpc/transports/dds/components/ProxyProcedureEndpoint.h"
-#include "fastrpc/transports/dds/DDSAsyncTask.h"
-#include "fastrpc/protocols/dds/MessageHeader.h"
-#include "fastrpc/utils/macros/snprintf.h"
-#include "fastrpc/utils/Typedefs.h"
-#include "fastrpc/utils/dds/Middleware.h"
+#include <fastrpc/transports/dds/components/ProxyProcedureEndpoint.h>
+#include <fastrpc/transports/dds/DDSAsyncTask.h>
+#include <fastrpc/protocols/dds/MessageHeader.h>
+#include <fastrpc/utils/macros/snprintf.h>
+#include <fastrpc/utils/Typedefs.h>
+#include <fastrpc/utils/dds/Middleware.h>
 
-#include "boost/config/user.hpp"
-#include "boost/thread/mutex.hpp"
-#include "boost/date_time/posix_time/posix_time.hpp"
+#include <boost/config/user.hpp>
+#include <boost/thread/mutex.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 #ifdef __linux
 #include <cinttypes>
@@ -44,7 +44,8 @@ ProxyProcedureEndpoint::~ProxyProcedureEndpoint()
 }
 
 int ProxyProcedureEndpoint::initialize(const char *name, const char *writertypename,
-        const char *readertypename, bool eprosima_types,
+        const char *writertopicname, const char *readertypename,
+        const char *readertopicname, bool eprosima_types,
         Transport::Copy_data copy_data, int dataSize)
 {
     const char* const METHOD_NAME = "initialize";
@@ -52,7 +53,8 @@ int ProxyProcedureEndpoint::initialize(const char *name, const char *writertypen
 
     if(m_mutex != NULL)
     {
-        if(createEntities(name, writertypename, readertypename) == 0)
+        if(createEntities(name, writertypename, writertopicname,
+                    readertypename, readertopicname) == 0)
         {
             if(enableEntities() == 0)
             {
@@ -112,7 +114,8 @@ void ProxyProcedureEndpoint::finalize()
     }
 }
 
-int ProxyProcedureEndpoint::createEntities(const char *name, const char *writertypename, const char *readertypename)
+int ProxyProcedureEndpoint::createEntities(const char *name, const char *writertypename, const char *writertopicname,
+        const char *readertypename, const char *readertopicname)
 {
     const char* const METHOD_NAME = "createEntities";
 
@@ -120,7 +123,7 @@ int ProxyProcedureEndpoint::createEntities(const char *name, const char *writert
     {
         if(writertypename != NULL)
         {
-            if((m_writerTopic = m_transport.getParticipant()->create_topic(writertypename, writertypename, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
+            if((m_writerTopic = m_transport.getParticipant()->create_topic(writertopicname, writertypename, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
             {
                 DDS::DataWriterQos wQos = DDS::DataWriterQos();
 
@@ -138,12 +141,14 @@ int ProxyProcedureEndpoint::createEntities(const char *name, const char *writert
                     // Is not oneway operation
                     if(readertypename != NULL)
                     {
-                        if((m_readerTopic = m_transport.getParticipant()->create_topic(readertypename, readertypename, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
+                        if((m_readerTopic = m_transport.getParticipant()->create_topic(readertopicname, readertypename, TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
                         {
                             DDS::StringSeq stringSeq(0);
 
                             if((m_filter = m_transport.getParticipant()->create_contentfilteredtopic(name, m_readerTopic,
-                                            "header.request_id.guid.value = &hex(00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00)",
+                                            "header.relatedRequestId.writer_guid.guidPrefix = &hex(00 00 00 00 00 00 00 00 00 00 00 00) and \
+                                            header.relatedRequestId.writer_guid.entityId.entityKey = &hex(00 00 00) and \
+                                            header.relatedRequestId.writer_guid.entityId.entityKind = 0",
                                             stringSeq)) != NULL)
                             {
                                 DDS::DataReaderQos rQos = DDS::DataReaderQos();
@@ -228,9 +233,13 @@ int ProxyProcedureEndpoint::enableEntities()
                 DDS::StringSeq stringSeq(0);
                 char value[150];
 
-                SNPRINTF(value, 150, "header.request_id.guid.value = &hex(%02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX)",
-                        m_proxyId[0], m_proxyId[1], m_proxyId[2], m_proxyId[3], m_proxyId[4], m_proxyId[5], m_proxyId[6], m_proxyId[7],
-                        m_proxyId[8], m_proxyId[9], m_proxyId[10], m_proxyId[11], m_proxyId[12], m_proxyId[13], m_proxyId[14], m_proxyId[15]);
+                SNPRINTF(value, 150, "header.relatedRequestId.writer_guid.guidPrefix = &hex(%02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX) and \
+                        header.relatedRequestId.writer_guid.entityId.entityKey = &hex(%02hhX %02hhX %02hhX) and \
+                        header.relatedRequestId.writer_guid.entityId.entityKind = 0x%02hhX",
+                        m_proxyId.guidPrefix()[0], m_proxyId.guidPrefix()[1], m_proxyId.guidPrefix()[2], m_proxyId.guidPrefix()[3], m_proxyId.guidPrefix()[4],
+                        m_proxyId.guidPrefix()[5], m_proxyId.guidPrefix()[6], m_proxyId.guidPrefix()[7], m_proxyId.guidPrefix()[8], m_proxyId.guidPrefix()[9],
+                        m_proxyId.guidPrefix()[10], m_proxyId.guidPrefix()[11], m_proxyId.entityId().entityKey()[0], m_proxyId.entityId().entityKey()[1],
+                        m_proxyId.entityId().entityKey()[2], m_proxyId.entityId().entityKind());
 
                 m_filter->set_expression(value, stringSeq);
 
@@ -285,7 +294,8 @@ int ProxyProcedureEndpoint::initQueryPool()
     for(; count < QUERY_POOL_LENGTH; ++count)
     {
         DDS::QueryCondition *query = m_reader->create_querycondition(DDS::NOT_READ_SAMPLE_STATE, DDS::ANY_VIEW_STATE, DDS::ANY_INSTANCE_STATE,
-                "header.request_id.sequence_number = %0", stringSeq);
+                "header.relatedRequestId.sequence_number.high = %0 and \
+                header.relatedRequestId.sequence_number.low = %1", stringSeq);
         m_queryPool[count] = query;
 
         if(m_queryPool[count] == NULL)
@@ -387,32 +397,32 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
     DDS::WaitSet *waitSet = NULL;
     DDS::ReturnCode_t retCode;
     boost::posix_time::time_duration tTimeout = boost::posix_time::milliseconds(m_transport.getTimeout());
-    int64_t numSec = 0;
-    char value[50];
+    char high_value[25], low_value[25];
     char *auxPointerToRequest = NULL, *seqAuxPointer = NULL;
     char **auxPointerToRemoteServiceName = NULL;
-    eprosima::rpc::protocol::dds::RequestHeader *requestHeader = NULL;
+    eprosima::rpc::protocol::dds::rpc::RequestHeader *requestHeader = NULL;
     DDS::QueryCondition *query = NULL;
 
     if(request != NULL)
     {
         if(m_eprosima_types)
         {
-            requestHeader = reinterpret_cast<eprosima::rpc::protocol::dds::RequestHeader*>(request);
-            memcpy(requestHeader->request_id().guid().value(), m_proxyId, sizeof(m_proxyId));
-            requestHeader->remote_service_name(m_transport.getRemoteServiceName());
-            requestHeader->instance_name(m_transport.getInstanceName());
+            requestHeader = reinterpret_cast<eprosima::rpc::protocol::dds::rpc::RequestHeader*>(request);
+            memcpy(requestHeader->requestId().writer_guid().guidPrefix(), m_proxyId.guidPrefix(), 12);
+            memcpy(requestHeader->requestId().writer_guid().entityId().entityKey(), m_proxyId.entityId().entityKey(), 3);
+            requestHeader->requestId().writer_guid().entityId().entityKind() = m_proxyId.entityId().entityKind();
+            requestHeader->instanceName(m_transport.getInstanceName());
         }
         else
         {
             auxPointerToRequest = (char*)request;
-            memcpy(auxPointerToRequest, m_proxyId, sizeof(m_proxyId));
-            auxPointerToRequest += sizeof(m_proxyId);
+            memcpy(auxPointerToRequest, m_proxyId.guidPrefix(), 12);
+            auxPointerToRequest += 12;
+            memcpy(auxPointerToRequest, m_proxyId.entityId().entityKey(), 3);
+            auxPointerToRequest += 3;
+            *auxPointerToRequest++ =m_proxyId.entityId().entityKind();
             seqAuxPointer = auxPointerToRequest;
             auxPointerToRequest += sizeof(m_numSec);
-            *(char**)auxPointerToRequest = (char*)m_transport.getRemoteServiceName();
-            auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
-            auxPointerToRequest = (char*)((char**)auxPointerToRequest + 1);
             *(char**)auxPointerToRequest = (char*)m_transport.getInstanceName();
             auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
             auxPointerToRequest = (char*)((char**)auxPointerToRequest + 1);
@@ -421,11 +431,19 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
 
         m_mutex->lock();
         // Thread safe num_Sec handling
+        int32_t high = (m_numSec >> 32) && 0xFFFFFFFF;
+        uint32_t low = (m_numSec && 0xFFFFFFFF);
         if(m_eprosima_types)
-            requestHeader->request_id().sequence_number(m_numSec);
+        {
+            requestHeader->requestId().sequence_number().high(high);
+            requestHeader->requestId().sequence_number().low(low);
+        }
         else
-            *(int64_t*)seqAuxPointer = m_numSec;
-        numSec = m_numSec;
+        {
+            *(int32_t*)seqAuxPointer = high;
+            seqAuxPointer += sizeof(high);
+            *(uint32_t*)seqAuxPointer = low;
+        }
         ++m_numSec;
 
         // Take a free query condition.
@@ -449,15 +467,18 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
                         // Its not a oneway function.
                         if(m_reader != NULL && reply != NULL)
                         {
-                            DDS::StringSeq stringSeq(1);
+                            DDS::StringSeq stringSeq(2);
 
-                            stringSeq.length(1);
+                            stringSeq.length(2);
 #ifdef _WIN32
-                        SNPRINTF(value, 50, "%I64d", numSec);
+                            SNPRINTF(high_value, 25, "%I32d", high);
+                            SNPRINTF(low_value, 25, "%I32u", low);
 #else
-                        SNPRINTF(value, 50, "%" PRId64"", numSec);
+                            SNPRINTF(high_value, 25, "%" PRId32"", high);
+                            SNPRINTF(low_value, 25, "%" PRIu32"", low);
 #endif
-                            stringSeq[0] = strdup(value);
+                            stringSeq[0] = strdup(high_value);
+                            stringSeq[1] = strdup(low_value);
                             retCode = query->set_query_parameters(stringSeq);
 
                             if(retCode == DDS_RETCODE_OK)
@@ -552,32 +573,32 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
     ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
     DDS::WaitSet *waitSet = NULL;
     DDS::ReturnCode_t retCode;
-    int64_t numSec = 0;
-    char value[50];
+    char high_value[25], low_value[25];
     char *auxPointerToRequest = NULL, *seqAuxPointer = NULL;
     char **auxPointerToRemoteServiceName = NULL;
-    eprosima::rpc::protocol::dds::RequestHeader *requestHeader = NULL;
+    eprosima::rpc::protocol::dds::rpc::RequestHeader *requestHeader = NULL;
     DDS::QueryCondition *query = NULL;
 
     if(request != NULL)
     {
         if(m_eprosima_types)
         {
-            requestHeader = reinterpret_cast<eprosima::rpc::protocol::dds::RequestHeader*>(request);
-            memcpy(requestHeader->request_id().guid().value(), m_proxyId, sizeof(m_proxyId));
-            requestHeader->remote_service_name(m_transport.getRemoteServiceName());
-            requestHeader->instance_name(m_transport.getInstanceName());
+            requestHeader = reinterpret_cast<eprosima::rpc::protocol::dds::rpc::RequestHeader*>(request);
+            memcpy(requestHeader->requestId().writer_guid().guidPrefix(), m_proxyId.guidPrefix(), 12);
+            memcpy(requestHeader->requestId().writer_guid().entityId().entityKey(), m_proxyId.entityId().entityKey(), 3);
+            requestHeader->requestId().writer_guid().entityId().entityKind() = m_proxyId.entityId().entityKind();
+            requestHeader->instanceName(m_transport.getInstanceName());
         }
         else
         {
             auxPointerToRequest = (char*)request;
-            memcpy(auxPointerToRequest, m_proxyId, sizeof(m_proxyId));
-            auxPointerToRequest += sizeof(m_proxyId);
+            memcpy(auxPointerToRequest, m_proxyId.guidPrefix(), 12);
+            auxPointerToRequest += 12;
+            memcpy(auxPointerToRequest, m_proxyId.entityId().entityKey(), 3);
+            auxPointerToRequest += 3;
+            *auxPointerToRequest++ =m_proxyId.entityId().entityKind();
             seqAuxPointer = auxPointerToRequest;
             auxPointerToRequest += sizeof(m_numSec);
-            *(char**)auxPointerToRequest = (char*)m_transport.getRemoteServiceName();
-            auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
-            auxPointerToRequest = (char*)((char**)auxPointerToRequest + 1);
             *(char**)auxPointerToRequest = (char*)m_transport.getInstanceName();
             auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
             auxPointerToRequest = (char*)((char**)auxPointerToRequest + 1);
@@ -585,11 +606,19 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
 
         m_mutex->lock();
         /* Thread safe num_Sec handling */
+        int32_t high = (m_numSec >> 32) && 0xFFFFFFFF;
+        uint32_t low = (m_numSec && 0xFFFFFFFF);
         if(m_eprosima_types)
-            requestHeader->request_id().sequence_number(m_numSec);
+        {
+            requestHeader->requestId().sequence_number().high(high);
+            requestHeader->requestId().sequence_number().low(low);
+        }
         else
-            *(int64_t*)seqAuxPointer = m_numSec;
-        numSec = m_numSec;
+        {
+            *(int32_t*)seqAuxPointer = high;
+            seqAuxPointer += sizeof(high);
+            *(uint32_t*)seqAuxPointer = low;
+        }
         ++m_numSec;
 
         // Take a free query condition.
@@ -608,15 +637,18 @@ ReturnMessage ProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *ta
 
                     if(DDS_DataWriter_write_untypedI(m_writer->get_c_datawriterI(), request, &ih) == DDS_RETCODE_OK)
                     {
-                        DDS::StringSeq stringSeq(1);
+                        DDS::StringSeq stringSeq(2);
 
-                        stringSeq.length(1);
+                        stringSeq.length(2);
 #ifdef _WIN32
-                        SNPRINTF(value, 50, "%I64d", numSec);
+                        SNPRINTF(high_value, 25, "%I32d", high);
+                        SNPRINTF(low_value, 25, "%I32u", low);
 #else
-                        SNPRINTF(value, 50, "%" PRId64"", numSec);
+                        SNPRINTF(high_value, 25, "%" PRId32"", high);
+                        SNPRINTF(low_value, 25, "%" PRIu32"", low);
 #endif
-                        stringSeq[0] = strdup(value);
+                        stringSeq[0] = strdup(high_value);
+                        stringSeq[1] = strdup(low_value);
                         retCode = query->set_query_parameters(stringSeq);
 
                         if(retCode == DDS_RETCODE_OK)

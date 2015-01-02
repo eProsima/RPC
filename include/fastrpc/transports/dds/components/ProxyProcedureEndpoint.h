@@ -8,10 +8,11 @@
 #ifndef _TRANSPORTS_DDS_COMPONENTS_PROXYPROCEDUREENDPOINT_H_
 #define _TRANSPORTS_DDS_COMPONENTS_PROXYPROCEDUREENDPOINT_H_
 
-#include "fastrpc/fastrpc_dll.h"
-#include "fastrpc/transports/dds/ProxyTransport.h"
-#include "fastrpc/transports/components/Endpoint.h"
-#include "fastrpc/utils/Messages.h"
+#include "../../../fastrpc_dll.h"
+#include "../ProxyTransport.h"
+#include "../../components/Endpoint.h"
+#include "../../../utils/Messages.h"
+#include "../../../protocols/dds/MessageHeader.h"
 
 #include <cstdint>
 
@@ -61,13 +62,16 @@ namespace eprosima
 						 *
                          * @param name The name associated with this proxy procedure endpoint. It cannot be NULL.
                          * @param writertypename The type name of the topic that the proxy procedure endpoint uses in the datawriter. It cannot be NULL.
+                         * @param writertopicname The name of the topic that the proxy procedure endpoint uses in the datawriter. It cannot be NULL.
                          * @param readertypename The type name of the topic that the proxy procedure endpoint uses in the datareader. It cannot be NULL.
+                         * @param readerttopicname The name of the topic that the proxy procedure endpoint uses in the datareader. It cannot be NULL.
                          * @param copy_data Pointer to the function used to copy the data when it is received.
                          * @return 0 if the initialization works. -1 in other case.
                          * TODO
                          */
                         int initialize(const char *name, const char *writertypename,
-                                const char *readertypename, bool eprosima_types,
+                                const char *writertopicname, const char *readertypename,
+                                const char *readertopicname, bool eprosima_types,
                                 Transport::Copy_data copy_data, int dataSize);
 
                         /*!
@@ -119,10 +123,13 @@ namespace eprosima
                          * @brief This function creates the DDS entities.
                          * @param name The name associated with this proxy procedure endpoint. It cannot be NULL.
                          * @param writertypename The type name of the topic that the proxy procedure endpoint uses in the datawriter. It cannot be NULL.
+                         * @param writertopicname The name of the topic that the proxy procedure endpoint uses in the datawriter. It cannot be NULL.
                          * @param readertypename The type name of the topic that the proxy procedure endpoint uses in the datareader. It cannot be NULL.
+                         * @param readertopicname The name of the topic that the proxy procedure endpoint uses in the datareader. It cannot be NULL.
                          * @return 0 value is returned if the initialization works successfully. In other case -1 is returned.
                          */
-                        int createEntities(const char *name, const char *writertypename, const char *readertypename);
+                        int createEntities(const char *name, const char *writertypename, const char *writertopicname,
+                                const char *readertypename, const char *readertopicname);
 
                         /*!
                          * @brief This function enables the DDS entities.
@@ -194,7 +201,7 @@ namespace eprosima
                         int m_queriesInUseLimiter;
 
                         //! @brief The identifier used as proxy.
-                        uint8_t m_proxyId[16];
+                        eprosima::rpc::protocol::dds::GUID_t m_proxyId;
 
                         /// \brief The next sequence number for a request.
                         int64_t m_numSec;

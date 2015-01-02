@@ -97,9 +97,19 @@ $endif$
 >>
 
 copyHeaderInfo(reqvarname, repvarname) ::= <<
-memcpy($repvarname$.header().request_id().guid().value(), $reqvarname$.header().request_id().guid().value(), 16);
-$repvarname$.header().request_id().sequence_number() = $reqvarname$.header().request_id().sequence_number();
+$repvarname$.header().relatedRequestId($reqvarname$.header().requestId());
+$repvarname$.header().remoteEx(eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK);
 >>
+
+getRemoteException(varname) ::= <<
+$varname$.header().remoteEx()
+>>
+
+setRemoteExceptionAsUnsupported(varname) ::= <<
+$varname$.header().remoteEx(eprosima::rpc::protocol::dds::rpc::REMOTE_EX_UNSUPPORTED);
+>>
+
+remoteExceptionOK() ::= <<eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK>>
 
 requestUnionByInterface(varname) ::= <<
 $varname$.request()

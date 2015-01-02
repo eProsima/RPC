@@ -17,10 +17,17 @@ using namespace ::transport::dds;
 
 static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::ServerTransport";
 
-ServerTransport::ServerTransport(const char* const &serviceName, const char* const &instanceName, int domainId) :
+ServerTransport::ServerTransport(const char* const serviceName, const char* const instanceName, int domainId) :
     ::transport::ServerTransport(), ::transport::dds::Transport(domainId),
     m_serviceName(serviceName), m_instanceName(instanceName)
 {
+    if(serviceName != NULL)
+        m_serviceName = serviceName;
+    else
+        m_serviceName = "Service";
+
+    if(instanceName != NULL)
+        m_instanceName = instanceName;
 }
 
 ServerTransport::~ServerTransport()
@@ -41,7 +48,8 @@ const char* ServerTransport::getType() const
 }
 
 ::transport::Endpoint* ServerTransport::createProcedureEndpoint(const char *name, const char *writertypename,
-        const char *readertypename, bool eprosima_types,
+        const char *writertopicname, const char *readertypename,
+        const char *readertopicname, bool eprosima_types,
         Transport::Create_data create_data, Transport::Copy_data copy_data,
         Transport::Destroy_data destroy_data, Transport::ProcessFunc processFunc, int dataSize)
 {
@@ -50,7 +58,7 @@ const char* ServerTransport::getType() const
 
     if(pe != NULL)
     {
-        if(pe->initialize(name, writertypename, readertypename, create_data, destroy_data, processFunc, dataSize) == 0)
+        if(pe->initialize(name, writertypename, writertopicname, readertypename, readertopicname, create_data, destroy_data, processFunc, dataSize) == 0)
         {
             std::pair<std::map<const char*, ServerProcedureEndpoint*>::iterator, bool> retmap = m_procedureEndpoints.insert(std::pair<const char*, ServerProcedureEndpoint*>(name, pe));
 
@@ -118,4 +126,9 @@ int ServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataToRe
 {
     // EMPTY. Not used.
     return -1;
+}
+
+const char* ServerTransport::getRemoteServiceName() const
+{
+    return m_serviceName.c_str();
 }

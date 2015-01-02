@@ -52,11 +52,15 @@ namespace eprosima
 {
     namespace rpc
     {
+        namespace protocol { namespace dds {
+            class GUID_t;
+        }}
+
         namespace util
         {
             namespace dds
             {
-                void get_guid(uint8_t (&id)[16], DDS::DataWriter *datawriter);
+                void get_guid(protocol::dds::GUID_t &id, DDS::DataWriter *datawriter);
 
                 void set_redundant_feature(DDS::DataReader *datareader, DDS::DataReaderQos &rQos);
 

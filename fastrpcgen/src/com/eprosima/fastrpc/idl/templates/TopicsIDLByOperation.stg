@@ -32,7 +32,7 @@ struct $interface.name$_$operation.name$_In
     $if(operation.inputparam)$
     $operation.inputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
     $else$
-    long dummy;
+    dds::rpc::UnusedMember dummy;
     $endif$
 }; $nolevelIDLdefine()$
 
@@ -42,7 +42,7 @@ $preRepIDLDefines(name=[interface.name, "_", operation.name])$
  * @ingroup $ctx.trimfilename$
  */
 struct $interface.name$_$operation.name$_Request{
-    RequestHeader header;
+    dds::rpc::RequestHeader header;
     $interface.name$_$operation.name$_In $operation.name$;
 }; $levelIDLdefine()$
 
@@ -57,7 +57,7 @@ struct $interface.name$_$operation.name$_Out
     $if(operation.rettype)$$operation.rettype.idlTypename$ return_;$endif$
     $operation.outputparam : {$it.typecode.idlTypename$ $it.name$;};separator="\n"$
     $else$
-    long dummy;
+    dds::rpc::UnusedMember dummy;
     $endif$
 }; $nolevelIDLdefine()$
 
@@ -68,11 +68,9 @@ struct $interface.name$_$operation.name$_Out
 union $interface.name$_$operation.name$_Result switch (long)
 {
    default:
-      UnknownException unknown_exception;
-   case 0:
-      $interface.name$_$operation.name$_Out out_;
-   case 1:
-      SystemExceptionCode sysx_;
+       dds::rpc::UnknownException unknownEx;
+   case dds::rpc::REMOTE_EX_OK:
+      $interface.name$_$operation.name$_Out result;
    $operation.exceptions : { exception |
    case $exception.md5$:
       $exception.scopedname$_t $exception.formatedScopedname$_ex;
@@ -85,7 +83,7 @@ $preRepIDLDefines(name=[interface.name, "_", operation.name])$
  * @ingroup $ctx.trimfilename$
  */
 struct $interface.name$_$operation.name$_Reply{
-    ReplyHeader header;
+    dds::rpc::ReplyHeader header;
     $interface.name$_$operation.name$_Result $operation.name$;
 }; $levelIDLdefine()$
 $endif$
