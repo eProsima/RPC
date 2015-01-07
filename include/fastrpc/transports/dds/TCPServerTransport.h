@@ -36,13 +36,13 @@ namespace eprosima
                          *        The user has to configure his router for this purpose. For example: "218.18.3.133:7600"
                          * @param server_bind_port Port used by the server in his machine. This port will be used in the router for port forwarding
                          *        between the public port and this port.
-						 * @param serviceName Name of the remote service. If value is not assigned or NULL pointer is used,
+						 * @param serviceName Name of the remote service. If pointer is NULL,
                          * the default service's name will be use.
-						 * @param instanceName Instance's name of the remote service. If value is not assigned or NULL pointer is used,
+						 * @param instanceName Instance's name of the remote service. If pointer is NULL,
                          * the default instance's name will be use.
                          * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
                          */
-                        FASTRPC_DllAPI TCPServerTransport(const char* const &public_address, const char* const &server_bind_port, const char* const serviceName = NULL, const char* const instanceName = NULL, int domainId = 0);
+                        FASTRPC_DllAPI TCPServerTransport(const char* const &public_address, const char* const &server_bind_port, const char* const serviceName, const char* const instanceName, int domainId = 0);
 
 
                         //! @brief Default destructor.

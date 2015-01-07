@@ -31,13 +31,13 @@ namespace eprosima
 
                         /*!
                          * @brief Default constructor for servers.
-						 * @param serviceName Name of the remote service. If value is not assigned or NULL pointer is used,
+						 * @param serviceName Name of the remote service. If pointer is NULL,
                          * the default service's name will be use.
-						 * @param instanceName Instance's name of the remote service. If value is not assigned or NULL pointer is used,
+						 * @param instanceName Instance's name of the remote service. If pointer is NULL,
                          * the default instance's name will be use.
                          * @param domainId Optional parameter that specifies the domain identifier that will be used in DDS.
                          */
-                        FASTRPC_DllAPI UDPServerTransport(const char* const serviceName = NULL, const char* const instanceName = NULL, int domainId = 0);
+                        FASTRPC_DllAPI UDPServerTransport(const char* const serviceName, const char* const instanceName, int domainId = 0);
 
                         //! @brief Default destructor.
                         virtual FASTRPC_DllAPI ~UDPServerTransport();

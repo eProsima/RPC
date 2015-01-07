@@ -10,6 +10,7 @@
 #include <fastrpc/transports/dds/DDSAsyncTask.h>
 #include <fastrpc/protocols/dds/MessageHeader.h>
 #include <fastrpc/utils/macros/snprintf.h>
+#include <fastrpc/utils/macros/strdup.h>
 #include <fastrpc/utils/Typedefs.h>
 #include <fastrpc/utils/dds/Middleware.h>
 
@@ -231,9 +232,9 @@ int ProxyProcedureEndpoint::enableEntities()
 
                 // Set identifier to filter topic.
                 DDS::StringSeq stringSeq(0);
-                char value[150];
+                char value[300];
 
-                SNPRINTF(value, 150, "header.relatedRequestId.writer_guid.guidPrefix = &hex(%02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX) and \
+                SNPRINTF(value, 300, "header.relatedRequestId.writer_guid.guidPrefix = &hex(%02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX %02hhX) and \
                         header.relatedRequestId.writer_guid.entityId.entityKey = &hex(%02hhX %02hhX %02hhX) and \
                         header.relatedRequestId.writer_guid.entityId.entityKind = 0x%02hhX",
                         m_proxyId.guidPrefix()[0], m_proxyId.guidPrefix()[1], m_proxyId.guidPrefix()[2], m_proxyId.guidPrefix()[3], m_proxyId.guidPrefix()[4],
@@ -285,10 +286,11 @@ int ProxyProcedureEndpoint::initQueryPool()
     //Initialize all pool to NULL.
     m_queryPool = (DDS::QueryCondition**)calloc(10, sizeof(DDS::QueryCondition*));
 
-    DDS::StringSeq stringSeq(1);
+    DDS::StringSeq stringSeq(2);
 
-    stringSeq.length(1);
+    stringSeq.length(2);
     stringSeq[0] = strdup("0");
+    stringSeq[1] = strdup("0");
 
     // Create all query conditions.
     for(; count < QUERY_POOL_LENGTH; ++count)
@@ -431,8 +433,8 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
 
         m_mutex->lock();
         // Thread safe num_Sec handling
-        int32_t high = (m_numSec >> 32) && 0xFFFFFFFF;
-        uint32_t low = (m_numSec && 0xFFFFFFFF);
+        int32_t high = (m_numSec >> 32) & 0xFFFFFFFF;
+        uint32_t low = (m_numSec & 0xFFFFFFFF);
         if(m_eprosima_types)
         {
             requestHeader->requestId().sequence_number().high(high);
@@ -477,8 +479,8 @@ ReturnMessage ProxyProcedureEndpoint::send(void *request, void *reply)
                             SNPRINTF(high_value, 25, "%" PRId32"", high);
                             SNPRINTF(low_value, 25, "%" PRIu32"", low);
 #endif
-                            stringSeq[0] = strdup(high_value);
-                            stringSeq[1] = strdup(low_value);
+                            stringSeq[0] = STRDUP(high_value);
+                            stringSeq[1] = STRDUP(low_value);
                             retCode = query->set_query_parameters(stringSeq);
 
                             if(retCode == DDS_RETCODE_OK)

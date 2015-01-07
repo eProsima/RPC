@@ -112,7 +112,7 @@ $varname$.header().remoteEx(eprosima::rpc::protocol::dds::rpc::REMOTE_EX_UNSUPPO
 remoteExceptionOK() ::= <<eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK>>
 
 requestUnionByInterface(varname) ::= <<
-$varname$.request()
+$varname$.data()
 >>
 
 requestUnionDiscriminatorByInterface(varname) ::= <<
@@ -132,7 +132,7 @@ $requestUnionDataByInterface(varname=varname)$.$operation.name$()
 >>
 
 replyUnionByInterface(varname) ::= <<
-$varname$.reply()
+$varname$.data()
 >>
 
 replyUnionDiscriminatorByInterface(varname) ::= <<
@@ -144,7 +144,7 @@ $replyUnionByInterface(varname=varname)$
 >>
 
 replyOperationUnionDiscriminatorByInterface(operation, varname) ::= <<
-$varname$.reply().$operation.name$()._d()
+$varname$.data().$operation.name$()._d()
 >>
 
 replyOperationUnionDiscriminatorByOperation(operation, varname) ::= <<

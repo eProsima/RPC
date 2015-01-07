@@ -21,7 +21,7 @@ namespace eprosima
         {
             namespace dds
             {
-                class FASTRPC_DllAPI UnknownOperationPlugin
+                class FASTRPC_DllAPI GuidPrefix_tPlugin
                 {
                     public:
 
@@ -33,10 +33,10 @@ namespace eprosima
 
                     private:
 
-                            UnknownOperationPlugin(){}
+                        GuidPrefix_tPlugin(){}
                 };
-
-                class FASTRPC_DllAPI UnknownExceptionPlugin
+                
+                class FASTRPC_DllAPI EntityId_tPlugin
                 {
                     public:
 
@@ -48,22 +48,7 @@ namespace eprosima
 
                     private:
 
-                            UnknownExceptionPlugin(){}
-                };
-
-                class FASTRPC_DllAPI SystemExceptionCodePlugin
-                {
-                    public:
-
-                        /*!
-                         * @brief This function returns the TypeCode.
-                         * @return The TypeCode.
-                         */
-                        static DDS_TypeCode* get_typecode();
-
-                    private:
-
-                            SystemExceptionCodePlugin(){}
+                        EntityId_tPlugin(){}
                 };
 
                 class FASTRPC_DllAPI GUID_tPlugin
@@ -78,10 +63,10 @@ namespace eprosima
 
                     private:
 
-                            GUID_tPlugin(){}
+                        GUID_tPlugin(){}
                 };
 
-                class FASTRPC_DllAPI SampleIdentity_tPlugin
+                class FASTRPC_DllAPI SequenceNumber_tPlugin
                 {
                     public:
 
@@ -93,14 +78,10 @@ namespace eprosima
 
                     private:
 
-                            SampleIdentity_tPlugin(){}
+                        SequenceNumber_tPlugin(){}
                 };
 
-                /*!
-                 * @brief This class offers the functions needed by DDS middleware to use the class RequestHeaderPlugin.
-				 * @ingroup PROTOCOLMODULE
-                 */
-                class FASTRPC_DllAPI RequestHeaderPlugin
+                class FASTRPC_DllAPI SampleIdentityPlugin
                 {
                     public:
 
@@ -111,28 +92,110 @@ namespace eprosima
                         static DDS_TypeCode* get_typecode();
 
                     private:
+
+                        SampleIdentityPlugin(){}
+                };
+
+                namespace rpc
+                {
+                    class FASTRPC_DllAPI UnknownOperationPlugin
+                    {
+                        public:
+
+                            /*!
+                             * @brief This function returns the TypeCode.
+                             * @return The TypeCode.
+                             */
+                            static DDS_TypeCode* get_typecode();
+
+                        private:
+
+                            UnknownOperationPlugin(){}
+                    };
+
+                    class FASTRPC_DllAPI UnknownExceptionPlugin
+                    {
+                        public:
+
+                            /*!
+                             * @brief This function returns the TypeCode.
+                             * @return The TypeCode.
+                             */
+                            static DDS_TypeCode* get_typecode();
+
+                        private:
+
+                            UnknownExceptionPlugin(){}
+                    };
+
+                    class FASTRPC_DllAPI UnusedMemberPlugin
+                    {
+                        public:
+
+                            /*!
+                             * @brief This function returns the TypeCode.
+                             * @return The TypeCode.
+                             */
+                            static DDS_TypeCode* get_typecode();
+
+                        private:
+
+                            UnusedMemberPlugin(){}
+                    };
+
+                    class FASTRPC_DllAPI RemoteExceptionCode_tPlugin
+                    {
+                        public:
+
+                            /*!
+                             * @brief This function returns the TypeCode.
+                             * @return The TypeCode.
+                             */
+                            static DDS_TypeCode* get_typecode();
+
+                        private:
+
+                            RemoteExceptionCode_tPlugin(){}
+                    };
+
+                    /*!
+                     * @brief This class offers the functions needed by DDS middleware to use the class RequestHeaderPlugin.
+                     * @ingroup PROTOCOLMODULE
+                     */
+                    class FASTRPC_DllAPI RequestHeaderPlugin
+                    {
+                        public:
+
+                            /*!
+                             * @brief This function returns the TypeCode.
+                             * @return The TypeCode.
+                             */
+                            static DDS_TypeCode* get_typecode();
+
+                        private:
 
                             RequestHeaderPlugin(){}
-                };
+                    };
 
-                /*!
-                 * @brief This class offers the functions needed by DDS middleware to use the class ReplyHeaderPlugin.
-				 * @ingroup PROTOCOLMODULE
-                 */
-                class FASTRPC_DllAPI ReplyHeaderPlugin
-                {
-                    public:
+                    /*!
+                     * @brief This class offers the functions needed by DDS middleware to use the class ReplyHeaderPlugin.
+                     * @ingroup PROTOCOLMODULE
+                     */
+                    class FASTRPC_DllAPI ReplyHeaderPlugin
+                    {
+                        public:
 
-                        /*!
-                         * @brief This function returns the TypeCode.
-                         * @return The TypeCode.
-                         */
-                        static DDS_TypeCode* get_typecode();
+                            /*!
+                             * @brief This function returns the TypeCode.
+                             * @return The TypeCode.
+                             */
+                            static DDS_TypeCode* get_typecode();
 
-                    private:
+                        private:
 
                             ReplyHeaderPlugin(){}
-                };
+                    };
+                } // namespace rpc
             } // namespace dds
         } // namespace protocol
     } // namespace rpc

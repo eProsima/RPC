@@ -94,17 +94,17 @@ public:
     $if(operation.inputparam)$
     $operation.inputparam:{$public_parameters_declaration(it)$}; separator="\n"$
     $else$
-    inline user_cpp_DllExport void dummy(int32_t _dummy)
+    inline user_cpp_DllExport void dummy(eprosima::rpc::protocol::dds::rpc::UnusedMember _dummy)
     {
         m_dummy = _dummy;
     }
 
-    inline user_cpp_DllExport int32_t dummy() const
+    inline user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::UnusedMember dummy() const
     {
         return m_dummy;
     }
 
-    inline user_cpp_DllExport int32_t& dummy()
+    inline user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::UnusedMember& dummy()
     {
         return m_dummy;
     }
@@ -143,7 +143,7 @@ private:
     $if(operation.inputparam)$
     $operation.inputparam:{ param |$param.typecode.cppTypename$ m_$param.name$;}; separator="\n"$
     $else$
-    int32_t m_dummy;
+    eprosima::rpc::protocol::dds::rpc::UnusedMember m_dummy;
     $endif$
 };
 
@@ -194,7 +194,7 @@ public:
      * @brief This method sets the request header information.
      * @param _header Request header.
      */
-    inline user_cpp_DllExport void header(const eprosima::rpc::protocol::dds::RequestHeader &_header)
+    inline user_cpp_DllExport void header(const eprosima::rpc::protocol::dds::rpc::RequestHeader &_header)
     {
         m_header = _header;
     }
@@ -203,7 +203,7 @@ public:
      * @brief This method sets the request header information.
      * @param _header Request header.
      */
-    inline user_cpp_DllExport void header(eprosima::rpc::protocol::dds::RequestHeader &&_header)
+    inline user_cpp_DllExport void header(eprosima::rpc::protocol::dds::rpc::RequestHeader &&_header)
     {
         m_header = std::move(_header);
     }
@@ -212,7 +212,7 @@ public:
      * @brief This method returns the request header information.
      * @return Request header.
      */
-    inline user_cpp_DllExport const eprosima::rpc::protocol::dds::RequestHeader& header() const
+    inline user_cpp_DllExport const eprosima::rpc::protocol::dds::rpc::RequestHeader& header() const
     {
         return m_header;
     }
@@ -221,7 +221,7 @@ public:
      * @brief This method returns the request header information.
      * @return Request header.
      */
-    inline user_cpp_DllExport eprosima::rpc::protocol::dds::RequestHeader& header()
+    inline user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::RequestHeader& header()
     {
         return m_header;
     }
@@ -292,7 +292,7 @@ public:
 
 private:
 
-    eprosima::rpc::protocol::dds::RequestHeader m_header;
+    eprosima::rpc::protocol::dds::rpc::RequestHeader m_header;
 
     $interface.name$_$operation.name$_In m_$operation.name$;
 };
@@ -342,17 +342,17 @@ public:
     $if([operation.outputparam, operation.rettypeparam])$
     $[operation.outputparam, operation.rettypeparam]:{param |$public_parameters_declaration(param=param)$}; separator="\n"$
     $else$
-    inline user_cpp_DllExport void dummy(int32_t _dummy)
+    inline user_cpp_DllExport void dummy(eprosima::rpc::protocol::dds::rpc::UnusedMember _dummy)
     {
         m_dummy = _dummy;
     }
 
-    inline user_cpp_DllExport int32_t dummy() const
+    inline user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::UnusedMember dummy() const
     {
         return m_dummy;
     }
 
-    inline user_cpp_DllExport int32_t& dummy()
+    inline user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::UnusedMember& dummy()
     {
         return m_dummy;
     }
@@ -391,7 +391,7 @@ private:
     $if([operation.outputparam, operation.rettypeparam])$
     $[operation.outputparam, operation.rettypeparam]:{ param |$param.typecode.cppTypename$ m_$param.name$;}; separator="\n"$
     $else$
-    int32_t m_dummy;
+    eprosima::rpc::protocol::dds::rpc::UnusedMember m_dummy;
     $endif$
 };
 
@@ -458,19 +458,13 @@ public:
      */
     user_cpp_DllExport int32_t& _d();
 
-    user_cpp_DllExport void unknown_exception(eprosima::rpc::protocol::dds::UnknownException _unknown_exception);
+    user_cpp_DllExport void unknownEx(eprosima::rpc::protocol::dds::rpc::UnknownException _unknownEx);
 
-    user_cpp_DllExport eprosima::rpc::protocol::dds::UnknownException unknown_exception() const;
+    user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::UnknownException unknownEx() const;
     
-    user_cpp_DllExport eprosima::rpc::protocol::dds::UnknownException& unknown_exception();
+    user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::UnknownException& unknownEx();
 
-    $public_exception_union_member_declaration(typename=[interface.name, "_", operation.name, "_Out"], name="out_")$
-
-    user_cpp_DllExport void sysx_(eprosima::rpc::ReturnMessage _sysx_);
-
-    user_cpp_DllExport eprosima::rpc::ReturnMessage sysx_() const;
-    
-    user_cpp_DllExport eprosima::rpc::ReturnMessage& sysx_();
+    $public_exception_union_member_declaration(typename=[interface.name, "_", operation.name, "_Out"], name="result")$
 
     $operation.exceptions : { exception |$public_exception_union_member_declaration(typename=exception.scopedname, name=[exception.formatedScopedname, "_ex"])$}; separator="\n"$
 
@@ -506,11 +500,9 @@ private:
 
     int32_t m__d;
 
-    eprosima::rpc::protocol::dds::UnknownException m_unknown_exception;
+    eprosima::rpc::protocol::dds::rpc::UnknownException m_unknownEx;
 
-    $interface.name$_$operation.name$_Out m_out_;
-
-    eprosima::rpc::ReturnMessage m_sysx_;
+    $interface.name$_$operation.name$_Out m_result;
 
     $operation.exceptions : { exception |$exception.scopedname$ m_$exception.formatedScopedname$_ex;}; separator="\n"$
 };
@@ -562,7 +554,7 @@ public:
      * @brief This method sets the reply header information.
      * @param _header Reply header.
      */
-    inline user_cpp_DllExport void header(const eprosima::rpc::protocol::dds::ReplyHeader &_header)
+    inline user_cpp_DllExport void header(const eprosima::rpc::protocol::dds::rpc::ReplyHeader &_header)
     {
         m_header = _header;
     }
@@ -571,7 +563,7 @@ public:
      * @brief This method sets the reply header information.
      * @param _header Reply header.
      */
-    inline user_cpp_DllExport void header(eprosima::rpc::protocol::dds::ReplyHeader &&_header)
+    inline user_cpp_DllExport void header(eprosima::rpc::protocol::dds::rpc::ReplyHeader &&_header)
     {
         m_header = std::move(_header);
     }
@@ -580,7 +572,7 @@ public:
      * @brief This method returns the reply header information.
      * @return Reply header.
      */
-    inline user_cpp_DllExport const eprosima::rpc::protocol::dds::ReplyHeader& header() const
+    inline user_cpp_DllExport const eprosima::rpc::protocol::dds::rpc::ReplyHeader& header() const
     {
         return m_header;
     }
@@ -589,7 +581,7 @@ public:
      * @brief This method returns the reply header information.
      * @return Reply header.
      */
-    inline user_cpp_DllExport eprosima::rpc::protocol::dds::ReplyHeader& header()
+    inline user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::ReplyHeader& header()
     {
         return m_header;
     }
@@ -660,7 +652,7 @@ public:
 
 private:
 
-    eprosima::rpc::protocol::dds::ReplyHeader m_header;
+    eprosima::rpc::protocol::dds::rpc::ReplyHeader m_header;
 
     $interface.name$_$operation.name$_Result m_$operation.name$;
 };

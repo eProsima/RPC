@@ -158,7 +158,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 return false;
             }
 
-            requesttopicName = "$first(ctx.scopedInterfaces).scopedname$_$operation.name$";
+            requesttopicName = "$interface.scopedname$_$operation.name$";
             requesttopicName += m_ddsTransport->getRemoteServiceName();
             requesttopicName += "_Request";
             
@@ -170,7 +170,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 return false;
             }
 
-            replytopicName = "$first(ctx.scopedInterfaces).scopedname$_$operation.name$";
+            replytopicName = "$interface.scopedname$_$operation.name$";
             replytopicName += m_ddsTransport->getRemoteServiceName();
             replytopicName += "_Reply";
             $endif$

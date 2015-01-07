@@ -108,7 +108,7 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_InPlugin::get_typec
         $if(operation.inputparam)$
         $operation.inputparam : { param |$interface.name$_$operation.name$_In_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=param.name, typecode=param.typecode)$;}; separator="\n"$
         $else$
-        $interface.name$_$operation.name$_In_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode*)&DDS_g_tc_long;
+        $interface.name$_$operation.name$_In_g_tc_members[0]._representation._typeCode =  (RTICdrTypeCode *)eprosima::rpc::protocol::dds::rpc::UnusedMemberPlugin::get_typecode();
         $endif$
 
         is_initialized = true;
@@ -214,7 +214,7 @@ $interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_serialized_sam
     }
 
 
-    current_alignment += RequestHeaderPlugin::get_serialized_sample_size(
+    current_alignment += rpc::RequestHeaderPlugin::get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
@@ -489,7 +489,7 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_RequestPlugin::get_
     
     if(!is_initialized)
     {
-        $interface.name$_$operation.name$_Request_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::RequestHeaderPlugin::get_typecode();
+        $interface.name$_$operation.name$_Request_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::rpc::RequestHeaderPlugin::get_typecode();
         $interface.name$_$operation.name$_Request_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)$interface.scopedname$Plugin::$operation.name$_InPlugin::get_typecode();
         is_initialized = true;
     }
@@ -729,7 +729,7 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_OutPlugin::get_type
         $if([operation.outputparam, operation.rettypeparam])$
         $[operation.outputparam, operation.rettypeparam] : { param |$interface.name$_$operation.name$_Out_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=param.name, typecode=param.typecode)$;}; separator="\n"$
         $else$
-        $interface.name$_$operation.name$_Out_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode*)&DDS_g_tc_long;
+        $interface.name$_$operation.name$_Out_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::rpc::UnusedMemberPlugin::get_typecode();
         $endif$
 
         is_initialized = true;
@@ -743,10 +743,10 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_ResultPlugin::get_t
     //printf("=> $interface.scopedname$Plugin::$operation.name$_ResultPlugin::get_typecode\n");
     static bool is_initialized = false;
 
-    static DDS_TypeCode_Member $interface.name$_$operation.name$_Result_g_tc_members[$length(operation.exceptions)$ + 3] =
+    static DDS_TypeCode_Member $interface.name$_$operation.name$_Result_g_tc_members[$length(operation.exceptions)$ + 2] =
     {
         {
-            (char *)"unknown_exception",/* Member name */
+            (char *)"unknownEx",/* Member name */
             {
                 1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -764,7 +764,7 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_ResultPlugin::get_t
         }
         ,
         {
-            (char *)"out_",
+            (char *)"result",
             {
                 0,
                 DDS_BOOLEAN_FALSE,
@@ -774,24 +774,6 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_ResultPlugin::get_t
             0,
             1,
             0,
-            NULL,
-            RTI_CDR_NONKEY_MEMBER,
-            DDS_PRIVATE_MEMBER,
-            1,
-            NULL
-        }
-        ,
-        {
-            (char *)"sysx_",
-            {
-                0,
-                DDS_BOOLEAN_FALSE,
-                -1,
-                NULL
-            },
-            0,
-            1,
-            1,
             NULL,
             RTI_CDR_NONKEY_MEMBER,
             DDS_PRIVATE_MEMBER,
@@ -829,17 +811,16 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_ResultPlugin::get_t
          0,
          0,
          NULL,
-         $length(operation.exceptions)$ + 3,
+         $length(operation.exceptions)$ + 2,
          $interface.name$_$operation.name$_Result_g_tc_members,
          DDS_VM_NONE
     }};
     
     if(!is_initialized)
     {
-        $interface.name$_$operation.name$_Result_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::UnknownExceptionPlugin::get_typecode();
+        $interface.name$_$operation.name$_Result_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::rpc::UnknownExceptionPlugin::get_typecode();
         $interface.name$_$operation.name$_Result_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)$interface.scopedname$Plugin::$operation.name$_OutPlugin::get_typecode();
-        $interface.name$_$operation.name$_Result_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::SystemExceptionCodePlugin::get_typecode();
-        $operation.exceptions : { exception |$interface.name$_$operation.name$_Result_g_tc_members[$i$ + 2]._representation._typeCode = (RTICdrTypeCode*)$if(exception.hasScope)$$exception.scope$$if(exception.parent)$$if(exception.parent.isInterface)$Plugin$endif$$endif$::$endif$$exception.name$Plugin::get_typecode();}; separator="\n"$
+        $operation.exceptions : { exception |$interface.name$_$operation.name$_Result_g_tc_members[$i$ + 1]._representation._typeCode = (RTICdrTypeCode*)$if(exception.hasScope)$$exception.scope$$if(exception.parent)$$if(exception.parent.isInterface)$Plugin$endif$$endif$::$endif$$exception.name$Plugin::get_typecode();}; separator="\n"$
 
         $interface.name$_$operation.name$_Result_g_tc._data._typeCode = (RTICdrTypeCode*)&DDS_g_tc_long;
 
@@ -947,7 +928,7 @@ $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_serialized_sampl
     }
 
 
-    current_alignment += RequestHeaderPlugin::get_serialized_sample_size(
+    current_alignment += rpc::ReplyHeaderPlugin::get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
@@ -1219,7 +1200,7 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::get_ty
     
     if(!is_initialized)
     {
-        $interface.name$_$operation.name$_Reply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::ReplyHeaderPlugin::get_typecode();
+        $interface.name$_$operation.name$_Reply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::rpc::ReplyHeaderPlugin::get_typecode();
         $interface.name$_$operation.name$_Reply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)$interface.scopedname$Plugin::$operation.name$_ResultPlugin::get_typecode();
 
         is_initialized = true;

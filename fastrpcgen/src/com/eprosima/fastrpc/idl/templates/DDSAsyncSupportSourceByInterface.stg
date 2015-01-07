@@ -68,14 +68,13 @@ void $interface.name$_$operation.name$Task::execute()
 {  
     $operation.outputparam : {param | $varDecl(variable=param)$}; separator="\n"$
     $varDecl(variable=operation.rettypeparam)$
-    ReturnMessage retcode = eprosima::rpc::OK;
     
     if($getRemoteException(varname="m_reply")$ == $remoteExceptionOK()$)
     {
         switch ($replyOperationUnionDiscriminatorByInterface(operation=operation, varname="m_reply")$)
         {
             case 0:
-                $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=replyOperationUnionDataAccessByInterface(operation=operation, varname="m_reply", dataname="out_"), isReply="yes")$};separator="\n"$
+                $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=replyOperationUnionDataAccessByInterface(operation=operation, varname="m_reply", dataname="result"), isReply="yes")$};separator="\n"$
 	    	    getObject().$operation.name$($extractParams(params=[operation.outputparam, operation.rettypeparam])$);
                 break;
             $operation.exceptions : { exception |
@@ -95,7 +94,6 @@ void $interface.name$_$operation.name$Task::execute()
     }
     else
         getObject().on_exception(ServerInternalException(""));
-
 }
 
 void $interface.name$_$operation.name$Task::on_exception(const SystemException &ex)

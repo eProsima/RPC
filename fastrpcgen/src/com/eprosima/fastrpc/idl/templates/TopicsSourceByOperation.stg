@@ -155,7 +155,7 @@ size_t $interface.scopedname$_$operation.name$_Request::getMaxCdrSerializedSize(
 {
     size_t initial_alignment = current_alignment;
 
-    current_alignment += eprosima::rpc::protocol::dds::RequestHeader::getMaxCdrSerializedSize(current_alignment);
+    current_alignment += eprosima::rpc::protocol::dds::rpc::RequestHeader::getMaxCdrSerializedSize(current_alignment);
     current_alignment += $interface.scopedname$_$operation.name$_In::getMaxCdrSerializedSize(current_alignment);
 
     return current_alignment - initial_alignment;
@@ -284,13 +284,9 @@ $interface.scopedname$_$operation.name$_Result::$interface.name$_$operation.name
     
     switch(m__d)
     {
-        case 0:
-            m_out_ = x.m_out_;
+        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
+            m_result = x.m_result;
             break;
-        case 1:
-            m_sysx_ = x.m_sysx_;
-            break;
-
         $operation.exceptions : { exception |
         case (int32_t)$exception.md5$:
             m_$exception.formatedScopedname$_ex = x.m_$exception.formatedScopedname$_ex;
@@ -305,13 +301,9 @@ $interface.scopedname$_$operation.name$_Result::$interface.name$_$operation.name
     
     switch(m__d)
     {
-        case 0:
-            m_out_ = std::move(x.m_out_);
+        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
+            m_result = std::move(x.m_result);
             break;
-        case 1:
-            m_sysx_ = x.m_sysx_;
-            break;
-
         $operation.exceptions : { exception |
         case (int32_t)$exception.md5$:
             m_$exception.formatedScopedname$_ex = std::move(x.m_$exception.formatedScopedname$_ex);
@@ -326,13 +318,9 @@ $interface.scopedname$_$operation.name$_Result& $interface.scopedname$_$operatio
     
     switch(m__d)
     {
-        case 0:
-            m_out_ = x.m_out_;
+        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
+            m_result = x.m_result;
             break;
-        case 1:
-            m_sysx_ = x.m_sysx_;
-            break;
-
         $operation.exceptions : { exception |
         case (int32_t)$exception.md5$:
             m_$exception.formatedScopedname$_ex = x.m_$exception.formatedScopedname$_ex;
@@ -349,13 +337,9 @@ $interface.scopedname$_$operation.name$_Result& $interface.scopedname$_$operatio
     
     switch(m__d)
     {
-        case 0:
-            m_out_ = std::move(x.m_out_);
+        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
+            m_result = std::move(x.m_result);
             break;
-        case 1:
-            m_sysx_ = x.m_sysx_;
-            break;
-
         $operation.exceptions : { exception |
         case (int32_t)$exception.md5$:
             m_$exception.formatedScopedname$_ex = std::move(x.m_$exception.formatedScopedname$_ex);
@@ -386,76 +370,54 @@ int32_t& $interface.scopedname$_$operation.name$_Result::_d()
     return m__d;
 }
 
-void $interface.scopedname$_$operation.name$_Result::unknown_exception(eprosima::rpc::protocol::dds::UnknownException _unknown_exception)
+void $interface.scopedname$_$operation.name$_Result::unknownEx(eprosima::rpc::protocol::dds::rpc::UnknownException _unknownEx)
 {
-    m_unknown_exception = _unknown_exception;
+    m_unknownEx = _unknownEx;
     m__d = 2;
 }
 
-eprosima::rpc::protocol::dds::UnknownException $interface.scopedname$_$operation.name$_Result::unknown_exception() const
+eprosima::rpc::protocol::dds::rpc::UnknownException $interface.scopedname$_$operation.name$_Result::unknownEx() const
 {
     if(m__d != 2)
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
 
-    return m_unknown_exception;
+    return m_unknownEx;
 }
 
-eprosima::rpc::protocol::dds::UnknownException& $interface.scopedname$_$operation.name$_Result::unknown_exception()
+eprosima::rpc::protocol::dds::rpc::UnknownException& $interface.scopedname$_$operation.name$_Result::unknownEx()
 {
     if(m__d != 2)
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
 
-    return m_unknown_exception;
+    return m_unknownEx;
 }
 
-void $interface.scopedname$_$operation.name$_Result::out_(const $interface.scopedname$_$operation.name$_Out &_out_)
+void $interface.scopedname$_$operation.name$_Result::result(const $interface.scopedname$_$operation.name$_Out &_result)
 {
-    m_out_ = _out_;
+    m_result = _result;
     m__d = 0;
 }
 
-void $interface.scopedname$_$operation.name$_Result::out_($interface.scopedname$_$operation.name$_Out &&_out_)
+void $interface.scopedname$_$operation.name$_Result::result($interface.scopedname$_$operation.name$_Out &&_result)
 {
-    m_out_ = std::move(_out_);
+    m_result = std::move(_result);
     m__d = 0;
 }
 
-const $interface.scopedname$_$operation.name$_Out& $interface.scopedname$_$operation.name$_Result::out_() const
+const $interface.scopedname$_$operation.name$_Out& $interface.scopedname$_$operation.name$_Result::result() const
 {
     if(m__d != 0)
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
-    return m_out_;
+    return m_result;
 }
 
-$interface.scopedname$_$operation.name$_Out& $interface.scopedname$_$operation.name$_Result::out_()
+$interface.scopedname$_$operation.name$_Out& $interface.scopedname$_$operation.name$_Result::result()
 {
     if(m__d != 0)
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
     
-    return m_out_;
-}
-
-void $interface.scopedname$_$operation.name$_Result::sysx_(eprosima::rpc::ReturnMessage _sysx_)
-{
-    m_sysx_ = _sysx_;
-    m__d = 1;
-}
-
-eprosima::rpc::ReturnMessage $interface.scopedname$_$operation.name$_Result::sysx_() const
-{
-    if(m__d != 1)
-        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
-    
-    return m_sysx_;
-}
-
-eprosima::rpc::ReturnMessage& $interface.scopedname$_$operation.name$_Result::sysx_()
-{
-    if(m__d != 1)
-        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
-    
-    return m_sysx_;
+    return m_result;
 }
 
 $operation.exceptions:{ exception |$public_exception_union_member_declaration(class=[interface.scopedname, "_", operation.name, "_Result"], exception=exception)$}; separator="\n"$
@@ -468,9 +430,9 @@ size_t $interface.scopedname$_$operation.name$_Result::getMaxCdrSerializedSize(s
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
-    // sysx_ attribute. The unknown_exception is minor.
+    // UnknownEx
     union_max_size_serialized = current_alignment;
-    union_max_size_serialized += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+    union_max_size_serialized += 1;
 
     reset_alignment = current_alignment;
     reset_alignment += $interface.scopedname$_$operation.name$_Out::getMaxCdrSerializedSize(reset_alignment);
@@ -505,13 +467,9 @@ void $interface.scopedname$_$operation.name$_Result::serialize(eprosima::fastcdr
 
     switch(m__d)
     {
-        case 0:
-            scdr << m_out_;
+        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
+            scdr << m_result;
             break;
-        case 1:
-            scdr << (int32_t)m_sysx_;
-            break;
-
         $operation.exceptions : { exception |
         case (int32_t)$exception.md5$:
             scdr << m_$exception.formatedScopedname$_ex;
@@ -519,7 +477,7 @@ void $interface.scopedname$_$operation.name$_Result::serialize(eprosima::fastcdr
         }; separator="\n"$
 
         default:
-            scdr << m_unknown_exception;
+            scdr << m_unknownEx;
             break;
     }
 }
@@ -530,13 +488,9 @@ void $interface.scopedname$_$operation.name$_Result::deserialize(eprosima::fastc
 
     switch(m__d)
     {
-        case 0:
-            dcdr \>> m_out_;
+        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
+            dcdr \>> m_result;
             break;
-        case 1:
-            dcdr \>> (int32_t&)m_sysx_;
-            break;
-
         $operation.exceptions : { exception |
         case (int32_t)$exception.md5$:
             dcdr \>> m_$exception.formatedScopedname$_ex;
@@ -544,7 +498,7 @@ void $interface.scopedname$_$operation.name$_Result::deserialize(eprosima::fastc
         }; separator="\n"$
 
         default:
-            dcdr \>> m_unknown_exception;
+            dcdr \>> m_unknownEx;
             break;
     }
 }
@@ -587,7 +541,7 @@ size_t $interface.scopedname$_$operation.name$_Reply::getMaxCdrSerializedSize(si
 {
     size_t initial_alignment = current_alignment;
 
-    current_alignment +=  eprosima::rpc::protocol::dds::ReplyHeader::getMaxCdrSerializedSize(current_alignment);
+    current_alignment +=  eprosima::rpc::protocol::dds::rpc::ReplyHeader::getMaxCdrSerializedSize(current_alignment);
     current_alignment += $interface.name$_$operation.name$_Result::getMaxCdrSerializedSize(current_alignment);
             
     return current_alignment - initial_alignment;
