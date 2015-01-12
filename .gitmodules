@@ -13,3 +13,6 @@
 [submodule "thirdparty/boost-threadpool"]
 	path = thirdparty/boost-threadpool
 	url = https://github.com/AlexMarlo/boost-threadpool.git
+[submodule "thirdparty/fastrtps"]
+	path = thirdparty/fastrtps
+	url = git@git.sambaserver.eprosima.com:rtps/rtps.git
