@@ -319,7 +319,7 @@ goto :EOF
 :: Function exit ::
 :exit
 :: Remove output directory
-::rd /S /Q output
+rd /S /Q output
 
 :: Restore environment for FASTRPC
 call ..\..\..\thirdparty\dev-env\scripts\common_dds_functions.bat :restoreRTIversion

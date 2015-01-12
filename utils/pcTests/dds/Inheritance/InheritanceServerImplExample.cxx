@@ -13,10 +13,14 @@
  */
 
 #include "InheritanceServerImplExample.h"
+#include <fastrpc/utils/Utilities.h>
 
 static ModuleA::Interface1::Dato function1_data;
+static bool function1_set_call = false;
 static ModuleA::Interface1::Dato function1_data2;
+static bool function1_set_call2 = false;
 static ModuleA::Interface1::Dato function1_data3;
+static bool function1_set_call3 = false;
 
 ModuleA::Interface1::Dato Interface1ServerImplExample::function1(/*in*/ const ModuleA::Interface1::Dato& data)
 {
@@ -31,10 +35,13 @@ void Interface1ServerImplExample::function1_set(/*in*/ const ModuleA::Interface1
 {
     function1_data = data;
     ++function1_data.count();
+    function1_set_call = true;
 } 
 
 ModuleA::Interface1::Dato Interface1ServerImplExample::function1_get()
 {
+    while(!function1_set_call)
+        eprosima::rpc::sleep(100);
     return function1_data;
 } 
 
@@ -53,10 +60,13 @@ ModuleA::Interface1::Dato Interface2ServerImplExample::function1(/*in*/ const Mo
 void Interface2ServerImplExample::function1_set(/*in*/ const ModuleA::Interface1::Dato& data)
 {
     function1_data2 = data;
+    function1_set_call2 = true;
 } 
 
 ModuleA::Interface1::Dato Interface2ServerImplExample::function1_get()
 {
+    while(!function1_set_call2)
+        eprosima::rpc::sleep(100);
     return function1_data2;
 } 
 
@@ -82,10 +92,13 @@ void Interface3ServerImplExample::function1_set(/*in*/ const ModuleA::Interface1
     function1_data3 = data;
 
     function1_data3.count() += 2;
+    function1_set_call3 = true;
 } 
 
 ModuleA::Interface1::Dato Interface3ServerImplExample::function1_get()
 {
+    while(!function1_set_call3)
+        eprosima::rpc::sleep(100);
     return function1_data3;
 } 
 
