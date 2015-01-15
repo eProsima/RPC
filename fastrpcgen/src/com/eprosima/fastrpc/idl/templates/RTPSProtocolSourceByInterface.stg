@@ -1,0 +1,406 @@
+group DDSProtocolSourceByInterface;
+
+main(ctx, definitions) ::= <<
+$fileHeader(ctx=ctx,  file=[ctx.filename, "DDSProtocol.cxx"], description=["This source file contains the definition of the protocol used to create DDS messages."])$
+
+#include "$ctx.filename$DDSProtocol.h"
+#include "$ctx.product$/transports/Transport.h"
+$if(ctx.client)$
+#include "$ctx.product$/transports/dds/RTPSProxyTransport.h"
+#include "$ctx.product$/transports/dds/components/RTPSProxyProcedureEndpoint.h"
+#include "$ctx.filename$DDSAsyncSupport.h"
+
+$endif$
+$if(ctx.server)$
+#include "$ctx.product$/transports/dds/RTPSServerTransport.h"
+#include "$ctx.product$/transports/dds/components/RTPSServerProcedureEndpoint.h"
+
+$endif$
+#include "$ctx.product$/exceptions/Exceptions.h"
+
+#include <fastrtps/Domain.h>
+
+using namespace eprosima::rpc;
+using namespace ::protocol::dds;
+using namespace ::transport;
+using namespace ::exception;
+
+$ctx.filename$Protocol::$ctx.filename$Protocol() : ::protocol::$ctx.filename$Protocol(), m_ddsTransport(NULL)
+$ctx.scopedInterfaces : { interface |
+, $interface.formatedScopedname$_str("$interface.formatedScopedname$")
+$if(ctx.client)$
+, $interface.formatedScopedname$_pe(NULL)
+$endif$
+$if(ctx.server)$
+, $interface.formatedScopedname$_se(NULL)
+$endif$
+}$
+{
+}
+
+$ctx.filename$Protocol::~$ctx.filename$Protocol()
+{
+}
+
+bool $ctx.filename$Protocol::setTransport(Transport &transport)
+{
+    if(strcmp(transport.getType(), "DDS") == 0)
+    {
+        m_ddsTransport = dynamic_cast<eprosima::rpc::transport::dds::RTPSTransport*>(&transport);
+        
+        m_ddsTransport->initialize();
+        
+        Protocol::_setTransport(transport);
+        
+        return true;  
+    }
+    else
+    {
+        throw IncompatibleException("protocol and transport are incompatibles");
+    }
+    
+    return false;
+}
+
+// TODO Si falla que elimine los creados.
+bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
+{
+    const char *requesttypeName = NULL, *replytypeName = NULL;
+    std::string requesttopicName, replytopicName;
+
+    if(m_ddsTransport != NULL)
+    {
+        TransportBehaviour behaviour = dynamic_cast<Transport*>(m_ddsTransport)->getBehaviour();
+        
+        $if(first(ctx.scopedInterfaces))$
+        if(strcmp(interfaceName, "$first(ctx.scopedInterfaces).scopedname$") == 0)
+        {
+            eprosima::fastrtps::Domain::registerType(m_ddsTransport->getParticipant(), &$first(ctx.scopedInterfaces).formatedScopedname$_requestPlugin);
+
+            requesttopicName = "$first(ctx.scopedInterfaces).scopedname$_";
+            requesttopicName += m_ddsTransport->getRemoteServiceName();
+            requesttopicName += "_Request";
+            
+            eprosima::fastrtps::Domain::registerType(m_ddsTransport->getParticipant(), &$first(ctx.scopedInterfaces).formatedScopedname$_replyPlugin);
+
+            replytopicName = "$first(ctx.scopedInterfaces).scopedname$_";
+            replytopicName += m_ddsTransport->getRemoteServiceName();
+            replytopicName += "_Reply";
+            
+            $if(ctx.client)$
+            if(behaviour == ::transport::PROXY_BEHAVIOUR)
+            {
+                $first(ctx.scopedInterfaces).formatedScopedname$_pe = dynamic_cast<eprosima::rpc::transport::dds::RTPSProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($first(ctx.scopedInterfaces).formatedScopedname$_str,
+                $first(ctx.scopedInterfaces).formatedScopedname$_requestPlugin.getName(),
+                requesttopicName.c_str(),
+                $first(ctx.scopedInterfaces).formatedScopedname$_replyPlugin.getName(),
+                replytopicName.c_str(),
+                (::transport::dds::RTPSTransport::Create_data)$first(ctx.scopedInterfaces).formatedScopedname$_ReplyPlugin::create_data,
+                (::transport::dds::RTPSTransport::Copy_data)$first(ctx.scopedInterfaces).formatedScopedname$_ReplyPlugin::copy_data,
+                (::transport::dds::RTPSTransport::Destroy_data)$first(ctx.scopedInterfaces).formatedScopedname$_ReplyPlugin::delete_data,
+                NULL,
+                sizeof($first(ctx.scopedInterfaces).scopedname$_Reply)
+                ));
+            }
+            $endif$
+            $if(ctx.server)$
+            if(behaviour == ::transport::SERVER_BEHAVIOUR)
+            {
+                $first(ctx.scopedInterfaces).formatedScopedname$_se = dynamic_cast<eprosima::rpc::transport::dds::RTPSServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($first(ctx.scopedInterfaces).formatedScopedname$_str,
+                    $first(ctx.scopedInterfaces).formatedScopedname$_replyPlugin.getName(),
+                    replytopicName.c_str(),
+                    $first(ctx.scopedInterfaces).formatedScopedname$_requestPlugin.getName(),
+                    requesttopicName.c_str(),
+                    (::transport::dds::RTPSTransport::Create_data)$first(ctx.scopedInterfaces).formatedScopedname$_RequestPlugin::create_data,
+                    (::transport::dds::RTPSTransport::Copy_data)$first(ctx.scopedInterfaces).formatedScopedname$_RequestPlugin::copy_data,
+                    (::transport::dds::RTPSTransport::Destroy_data)$first(ctx.scopedInterfaces).formatedScopedname$_RequestPlugin::delete_data,
+                    $ctx.filename$Protocol::$first(ctx.scopedInterfaces).formatedScopedname$_serve,
+                    sizeof($first(ctx.scopedInterfaces).scopedname$_Request)));
+            }
+            $endif$
+        }
+        $rest(ctx.scopedInterfaces) : {interface |
+        else if(strcmp(interfaceName, "$interface.scopedname$") == 0)
+        {
+            eprosima::fastrtps::Domain::registerType(m_ddsTransport->getParticipant(), &$interface.formatedScopedname$_requestPlugin);
+
+            requesttopicName = "$interface.scopedname$_";
+            requesttopicName += m_ddsTransport->getRemoteServiceName();
+            requesttopicName += "_Request";
+            
+            eprosima::fastrtps::Domain::registerType(m_ddsTransport->getParticipant(), &$interface.formatedScopedname$_replyPlugin);
+
+            replytopicName = "$interface.scopedname$_";
+            replytopicName += m_ddsTransport->getRemoteServiceName();
+            replytopicName += "_Reply";
+            
+            $if(ctx.client)$
+            if(behaviour == ::transport::PROXY_BEHAVIOUR)
+            {
+                $interface.formatedScopedname$_pe = dynamic_cast<eprosima::rpc::transport::dds::RTPSProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($interface.formatedScopedname$_str,
+                $interface.formatedScopedname$_requestPlugin.getName(),
+                requesttopicName.c_str(),
+                $interface.formatedScopedname$_replyPlugin.getName(),
+                replytopicName.c_str(),
+                (::transport::dds::RTPSTransport::Create_data)$interface.formatedScopedname$_ReplyPlugin::create_data,
+                (::transport::dds::RTPSTransport::Copy_data)$interface.formatedScopedname$_ReplyPlugin::copy_data,
+                (::transport::dds::RTPSTransport::Destroy_data)$interface.formatedScopedname$_ReplyPlugin::delete_data,
+                NULL,
+                sizeof($interface.scopedname$_Reply)
+                ));
+            }
+            $endif$
+            $if(ctx.server)$
+            if(behaviour == ::transport::SERVER_BEHAVIOUR)
+            {
+                $interface.formatedScopedname$_se = dynamic_cast<eprosima::rpc::transport::dds::RTPSServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($interface.formatedScopedname$_str,
+                    $interface.formatedScopedname$_replyPlugin.getName(),
+                    replytopicName.c_str(),
+                    $interface.formatedScopedname$_requestPlugin.getName(),
+                    requesttopicName.c_str(),
+                    (::transport::dds::RTPSTransport::Create_data)$interface.formatedScopedname$_RequestPlugin::create_data,
+                    (::transport::dds::RTPSTransport::Copy_data)$interface.formatedScopedname$_RequestPlugin::copy_data,
+                    (::transport::dds::RTPSTransport::Destroy_data)$interface.formatedScopedname$_RequestPlugin::delete_data,
+                    $ctx.filename$Protocol::$interface.formatedScopedname$_serve,
+                    sizeof($interface.scopedname$_Request)));
+            }
+            $endif$
+        }}; separator="\n"$
+        
+        return true;
+        $endif$
+    }
+    else
+    {
+      // TODO Trace.
+    }
+    
+    return false;
+}
+
+$definitions; separator="\n"$
+>>
+
+module(ctx, module, definition_list) ::= <<
+$definition_list$
+
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+interface(ctx, interface, export_list) ::= <<
+$if(ctx.server)$
+void $ctx.filename$Protocol::$interface.formatedScopedname$_serve(eprosima::rpc::protocol::Protocol &protocol,
+    void *_data , eprosima::rpc::transport::Endpoint *endpoint)
+{
+    $ctx.filename$Protocol &_protocol = dynamic_cast<$ctx.filename$Protocol&>(protocol);
+    $interface.scopedname$_Request &requestData = *($interface.scopedname$_Request*)_data;
+
+    switch($requestUnionDiscriminatorByInterface(varname="requestData")$)
+    {
+        $interface.all_operations : { operation |
+        case $operation.md5$:
+        {
+        $operation.parameters : {param | $varDecl(variable=param, create=param.onlyOutput)$}; separator="\n"$
+        $varDecl(variable=operation.rettypeparam, create="yes")$   
+        $if(!operation.oneway)$
+        $interface.scopedname$_Reply replyData;
+        $copyHeaderInfo(reqvarname="requestData", repvarname="replyData")$
+
+        $replyUnionDiscriminatorByInterface(varname="replyData")$ = $operation.md5$;
+        $endif$
+
+        $operation.inoutputparam : {param |$if(!param.typecode.primitive)$$varComplexInitialize(variable=param)$$\n$$endif$}$
+
+        $operation.inputparam : {param | $extractParamFromTopic(param=param, varname=requestOperationDataByInterface(operation=operation, varname="requestData"))$};separator="\n"$
+
+        try
+        {
+            if(_protocol._$interface.formatedScopedname$_impl != NULL)
+            {
+                $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$_protocol._$interface.formatedScopedname$_impl->$operation.name$($extractParams(params=operation.parameters)$);
+
+                $if(!operation.oneway)$
+                $replyOperationUnionDiscriminatorByInterface(operation=operation, varname="replyData")$ = 0;
+
+                $[operation.outputparam, operation.rettypeparam] : { param |$addParamToTopic(param=param, varname=replyOperationUnionDataAccessByInterface(operation=operation, varname="replyData", dataname="result"))$};separator="\n"$
+
+                _protocol.$interface.formatedScopedname$_se->sendReply(&replyData);
+                $endif$
+            }
+            // TODO Send exception.
+        }
+        $operation.exceptions : { exception |
+        catch(const $exception.scopedname$ &ex)
+        {
+            $if(!operation.oneway)$
+            $replyOperationUnionDiscriminatorByInterface(operation=operation, varname="replyData")$ = $exception.md5$;
+
+            $if(!ctx.rtiTypes)$
+            $replyOperationUnionDataByInterface(operation=operation, varname="replyData")$.$exception.formatedScopedname$_ex(std::move(ex));
+            $else$
+            $exception.members : { member |$addExceptionMemberToTopic(exception=exception, member=member, varname=replyOperationUnionDataByInterface(operation=operation, varname="replyData"))$}; separator="\n"$
+            $endif$
+
+            _protocol.$interface.formatedScopedname$_se->sendReply(&replyData);
+            $endif$
+        }
+        }; separator="\n"$
+        catch(const ServerInternalException &)
+        {
+            $if(!operation.oneway)$
+            //TODO Quitar el unsetReply
+            //$unsetReply()$
+            $setRemoteExceptionAsUnsupported(varname="replyData")$
+
+            _protocol.$interface.formatedScopedname$_se->sendReply(&replyData);
+            $endif$
+        }
+
+        $reqrepRefFinalize(type=interface.scopedname, reqrep="Request", name="requestData")$
+
+        $[operation.outputparam, operation.rettypeparam] : {param | $varDel(variable=param)$}; separator="\n"$
+
+        }
+        break;
+        }; separator="\n"$
+    };        
+}
+$endif$
+
+$interface.all_operations : { operation |
+$if(ctx.client)$
+$paramRetType(operation.rettype)$ $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$)
+{
+    ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
+    $varDecl(variable=operation.rettypeparam)$
+    $interface.scopedname$_Request instance;
+    $if(!operation.oneway)$
+    $interface.scopedname$_Reply retInstance;
+
+    $varComplexInitializeT(typeName=[interface.scopedname, "_Reply"], name="retInstance")$
+    $endif$
+
+    $requestUnionDiscriminatorByInterface(varname="instance")$ = $operation.md5$;
+    
+    $operation.inputparam : { param |$addParamToTopic(param=param, varname=requestOperationDataByInterface(operation=operation, varname="instance"), isRequest="yes")$};separator="\n"$
+
+    retcode = $interface.formatedScopedname$_pe->send(&instance, $if(!operation.oneway)$&retInstance$else$NULL$endif$);
+    
+    $if(!operation.oneway)$
+    if(retcode == OK)
+    {
+        if($getRemoteException(varname="retInstance")$ == $remoteExceptionOK()$)
+        {
+            switch ($replyOperationUnionDiscriminatorByInterface(operation=operation, varname="retInstance")$)
+            {
+                case 0:
+		            $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=replyOperationUnionDataAccessByInterface(operation=operation, varname="retInstance", dataname="result"), isReply="yes")$};separator="\n"$
+                    break;
+                $operation.exceptions : { exception |
+                case $exception.md5$:
+                    {
+                    $exception.scopedname$ ex;
+                    // TODO No permite arrays.
+                    $if(!ctx.rtiTypes)$
+                    ex = $replyOperationUnionDataByInterface(operation=operation, varname="retInstance")$.$exception.formatedScopedname$_ex();
+                    $else$
+                    $exception.members : { member |$extractExceptionMemberFromTopic(exception=exception, member=member, varname=replyOperationUnionDataByInterface(operation=operation, varname="retInstance"))$}; separator="\n"$
+                    $endif$
+                    
+                    ex.raise();
+                    }
+                    break;
+                }; separator="\n"$
+                default:
+                    throw ClientInternalException("Error extracting information from server");
+            }
+        }
+        else
+            retcode = SERVER_INTERNAL_ERROR;
+    }
+    
+    $endif$  
+    switch (retcode)
+    {
+        case CLIENT_INTERNAL_ERROR:
+            throw ClientInternalException("Error in client side");
+            break;
+        case SERVER_NOT_FOUND:
+            throw ServerNotFoundException("Cannot connect to the server");
+            break;
+        $if(!operation.oneway)$
+        case TIMEOUT:
+            throw ServerTimeoutException("Timeout waiting the server's reply");
+            break;
+        case SERVER_INTERNAL_ERROR:
+            throw ServerInternalException("");
+            break;
+        $endif$
+        default:
+            break;
+    };
+    
+
+    $if(operation.rettypeparam)$
+    return $operation.rettypeparam.name$;
+    $endif$
+}
+$endif$
+
+$if(!operation.oneway)$
+void $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$_async($interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$)
+{
+    ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
+    $interface.scopedname$_Request instance;
+    $interface.scopedname$_$operation.name$Task *task = new $interface.scopedname$_$operation.name$Task(obj);
+
+    $requestUnionDiscriminatorByInterface(varname="instance")$ = $operation.md5$;
+    
+    $operation.inputparam : { param |$addParamToTopic(param=param, varname=requestOperationDataByInterface(operation=operation, varname="instance"), isRequest="yes")$};separator="\n"$
+
+    retcode = $interface.formatedScopedname$_pe->send_async(&instance, task);
+    
+    switch (retcode)
+    {
+        case CLIENT_INTERNAL_ERROR:
+            throw ClientInternalException("Error in client side");
+            break;
+        case SERVER_NOT_FOUND:
+            throw ServerNotFoundException("Cannot connect to the server");
+            break;
+        default:
+            break;
+    }
+}
+
+$endif$
+}; separator="\n"$
+
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+const_decl(ctx, const) ::= <<>>
+
+typedef_decl(ctx, typedefs) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>
+

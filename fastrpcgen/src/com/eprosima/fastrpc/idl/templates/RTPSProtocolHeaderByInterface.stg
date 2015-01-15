@@ -1,0 +1,167 @@
+group DDSProtocolHeaderByInterface;
+
+main(ctx, definitions) ::= <<
+$fileHeader(ctx=ctx,  file=[ctx.filename, "DDSProtocol.h"], description=["This header file contains the declaration of the protocol used to create DDS messages."])$
+
+#ifndef _$ctx.filename;format="toUpper"$_DDS_PROTOCOL_H_
+#define _$ctx.filename;format="toUpper"$_DDS_PROTOCOL_H_
+
+#include "$ctx.filename$Protocol.h"
+#include "$ctx.product$/utils/Messages.h"
+$ctx.includeDependencies : { include |#include "$include$.h"}; separator="\n"$
+
+#include "$ctx.filename$TopicsPlugin.h"
+
+namespace eprosima
+{
+    namespace rpc
+    {
+        namespace transport
+        {
+            namespace dds
+            {
+                $if(ctx.client)$
+                class RTPSProxyProcedureEndpoint;
+                $endif$
+                $if(ctx.server)$
+                class RTPSServerProcedureEndpoint;
+                $endif$
+                class RTPSTransport;
+            }
+        }
+        
+        namespace protocol
+        {
+            namespace dds
+            {
+                /*!
+                 * @brief This class is responsible for serializing and deserializing the requests and responses of this application.
+                 * It uses DDS.
+		         * @ingroup $ctx.trimfilename$
+                 */
+                class FASTRPCUSERDllExport  $ctx.filename$Protocol : public eprosima::rpc::protocol::$ctx.filename$Protocol
+                {
+                    public:
+                    
+                       /*!
+                        * @brief Default constructor
+                        */
+                        $ctx.filename$Protocol();
+                        
+                       /*!
+                        * @brief Destructor
+                        */
+                        virtual ~$ctx.filename$Protocol();
+                    
+                       /*!
+                        * @brief This method sets the transport for the communications.
+                        * @param transport Transport to use
+                        * @return True if the assignment is successful, false otherwise
+                        */
+                        virtual bool setTransport(eprosima::rpc::transport::Transport &transport);
+                        
+                        /*!
+                         * @brief This function activates needed DDS entities to use an interface.
+                         * @param interfaceName Interface name.
+                         * @return Whether the activation works successfully.
+                         */
+                        bool activateInterface(const char* interfaceName);
+                        
+                        $definitions; separator="\n"$
+                        
+                    private:
+                    
+                        eprosima::rpc::transport::dds::RTPSTransport *m_ddsTransport;
+                    
+                        $ctx.scopedInterfaces : { interface |
+                        const char* const $interface.formatedScopedname$_str;
+                        
+                        $if(ctx.client)$
+                        eprosima::rpc::transport::dds::RTPSProxyProcedureEndpoint *$interface.formatedScopedname$_pe;
+                        $endif$
+                        
+                        $if(ctx.server)$
+                        eprosima::rpc::transport::dds::RTPSServerProcedureEndpoint *$interface.formatedScopedname$_se;
+                        $endif$
+
+                        $interface.scopedname$_RequestPlugin $interface.formatedScopedname$_requestPlugin;
+                        $interface.scopedname$_ReplyPlugin $interface.formatedScopedname$_replyPlugin;
+                        
+                        }; separator="\n"$
+                };
+            } // namespace dds
+        } // namespace protocol
+    } // namespace rpc
+} // namespace eprosima
+
+#endif // _$ctx.filename;format="toUpper"$_DDS_PROTOCOL_H_
+>>
+
+module(ctx, module, definition_list) ::= <<
+$definition_list$
+
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+
+>>
+
+interface(ctx, interface, export_list) ::= <<
+$if(ctx.server)$
+/*!
+ * @brief This method implements the server part of the protocol for the interface $interface.name$.
+ * It is called when a request sample is received.
+ * @param protocol DDS protocol object that is in used.
+ * @param data Pointer to the received request sample. Cannot be NULL.
+ * @param endpoint Pointer to the endpoint that sent the request reply. Cannot be NULL.
+ */
+static void $interface.formatedScopedname$_serve(eprosima::rpc::protocol::Protocol &protocol,
+    void *data , eprosima::rpc::transport::Endpoint *endpoint);
+$endif$
+
+$interface.all_operations : { operation |
+$if(ctx.client)$
+/*!
+ * @brief This method implements the proxy part of the protocol for the operation $operation.name$.
+ * It is called from the Proxy interface.
+ */
+$paramRetType(operation.rettype)$ $interface.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$);
+
+$if(!operation.oneway)$
+/*!
+ * @brief This asynchronous method implements the proxy part of the protocol for the operation $operation.name$.
+ * It is called from the Proxy interface.
+ */
+void $interface.formatedScopedname$_$operation.name$_async($interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$);
+
+$endif$
+$endif$
+}; separator="\n"$
+
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+const_decl(ctx, const) ::= <<>>
+
+typedef_decl(ctx, typedefs) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>
+

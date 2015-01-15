@@ -6,20 +6,18 @@
  *
  *************************************************************************/
 
-#include <fastrpc/transports/dds/ProxyTransport.h>
-#include <fastrpc/transports/dds/components/ProxyProcedureEndpoint.h>
+#include <fastrpc/transports/dds/RTPSProxyTransport.h>
+#include <fastrpc/transports/dds/components/RTPSProxyProcedureEndpoint.h>
 #include <fastrpc/transports/dds/AsyncThread.h>
 #include <fastrpc/exceptions/InitializeException.h>
-#include <fastrpc/utils/dds/Middleware.h>
 
 #include <string>
 
 using namespace eprosima::rpc;
 using namespace ::transport::dds;
-using namespace ::util::dds;
 using namespace ::exception;
 
-static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::ProxyTransport";
+static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::RTPSProxyTransport";
 
 typedef struct encapsulation
 {
@@ -27,11 +25,11 @@ typedef struct encapsulation
     void *data;
 } encapsulation;
 
-ProxyTransport::ProxyTransport(const char* const remoteServiceName, const char* const instanceName, int domainId, long milliseconds) :
-    ::transport::ProxyTransport(), ::transport::dds::Transport(domainId),
+RTPSProxyTransport::RTPSProxyTransport(const char* const remoteServiceName, const char* const instanceName, int domainId, long milliseconds) :
+    ::transport::ProxyTransport(), ::transport::dds::RTPSTransport(domainId),
     m_timeout(milliseconds), m_asyncThread(NULL)
 {
-    const char* const METHOD_NAME = "ProxyTransport";
+    const char* const METHOD_NAME = "RTPSProxyTransport";
 
     if(remoteServiceName != NULL)
         m_remoteServiceName = remoteServiceName;
@@ -51,9 +49,9 @@ ProxyTransport::ProxyTransport(const char* const remoteServiceName, const char* 
     }
 }
 
-ProxyTransport::~ProxyTransport()
+RTPSProxyTransport::~RTPSProxyTransport()
 {
-    std::map<const char*, ProxyProcedureEndpoint*>::iterator it = m_procedureEndpoints.begin();
+    std::map<const char*, RTPSProxyProcedureEndpoint*>::iterator it = m_procedureEndpoints.begin();
 
     for(; it != m_procedureEndpoints.end(); ++it)
     {
@@ -66,41 +64,39 @@ ProxyTransport::~ProxyTransport()
     delete m_asyncThread;
 }
 
-const char* ProxyTransport::getType() const
+const char* RTPSProxyTransport::getType() const
 {
     return "DDS";
 }
 
-const char* ProxyTransport::getRemoteServiceName() const
+const char* RTPSProxyTransport::getRemoteServiceName() const
 {
     return m_remoteServiceName.c_str();
 }
 
-const char* ProxyTransport::getInstanceName() const
+const char* RTPSProxyTransport::getInstanceName() const
 {
     return m_instanceName.c_str();
 }
 
-long ProxyTransport::getTimeout()
+long RTPSProxyTransport::getTimeout()
 {
     return m_timeout;
 }
 
-::transport::Endpoint* ProxyTransport::createProcedureEndpoint(const char *name, const char *writertypename,
-        const char *writertopicname, const char *readertypename,
-        const char *readertopicname, bool eprosima_types,
-        Transport::Create_data create_data, Transport::Copy_data copy_data,
-        Transport::Destroy_data destroy_data, Transport::ProcessFunc processFunc, int dataSize)
+::transport::Endpoint* RTPSProxyTransport::createProcedureEndpoint(const char *name, const char *writertypename,
+        const char *writertopicname, const char *readertypename, const char *readertopicname,
+        RTPSTransport::Create_data create_data, RTPSTransport::Copy_data copy_data, RTPSTransport::Destroy_data destroy_data,
+        RTPSTransport::ProcessFunc /*processFunc*/, int /*dataSize*/)
 {
     const char* const METHOD_NAME = "createProcedureEndpoint";
-    ProxyProcedureEndpoint *pe = new ProxyProcedureEndpoint(*this);
+    RTPSProxyProcedureEndpoint *pe = new RTPSProxyProcedureEndpoint(*this);
 
     if(pe != NULL)
     {
-        if(pe->initialize(name, writertypename, writertopicname, readertypename, readertopicname,
-                    eprosima_types, copy_data, dataSize) == 0)
+        if(pe->initialize(name, writertypename, writertopicname, readertypename, readertopicname, create_data, copy_data, destroy_data) == 0)
         {
-            std::pair<std::map<const char*, ProxyProcedureEndpoint*>::iterator, bool> retmap = m_procedureEndpoints.insert(std::pair<const char*, ProxyProcedureEndpoint*>(name, pe));
+            std::pair<std::map<const char*, RTPSProxyProcedureEndpoint*>::iterator, bool> retmap = m_procedureEndpoints.insert(std::pair<const char*, RTPSProxyProcedureEndpoint*>(name, pe));
 
             if(retmap.second == true)
             {
@@ -118,12 +114,12 @@ long ProxyTransport::getTimeout()
     return NULL;
 }
 
-int ProxyTransport::addAsyncTask(DDS::QueryCondition *query, DDSAsyncTask *task, long timeout)
+/*int RTPSProxyTransport::addAsyncTask(DDS::QueryCondition *query, DDSAsyncTask *task, long timeout)
 {
     return m_asyncThread->addTask(query, task, timeout);
-}
+}*/
 
-void ProxyTransport::deleteAssociatedAsyncTasks(ProxyProcedureEndpoint *pe)
+/*void RTPSProxyTransport::deleteAssociatedAsyncTasks(RTPSProxyProcedureEndpoint *pe)
 {
     const char* const METHOD_NAME = "deleteAssociatedAsyncTasks";
 
@@ -135,4 +131,5 @@ void ProxyTransport::deleteAssociatedAsyncTasks(ProxyProcedureEndpoint *pe)
     {
         printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
     }
-}
+}*/
+

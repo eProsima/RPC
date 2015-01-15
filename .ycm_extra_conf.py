@@ -55,6 +55,8 @@ flags = [
 '-I',
 'thirdparty/fastcdr/include',
 '-I',
+'thirdparty/fastrtps/include',
+'-I',
 os.environ['NDDSHOME'] + '/include',
 '-I',
 os.environ['NDDSHOME'] + '/include/ndds',

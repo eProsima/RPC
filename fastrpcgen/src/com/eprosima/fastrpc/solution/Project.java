@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 import com.eprosima.solution.GUIDGenerator;
-import com.eprosima.idl.util.Util;
 
 public class Project extends com.eprosima.solution.Project
 {
-	public Project(String name, String file, LinkedHashSet dependencies)
+	public Project(String name, String file, LinkedHashSet<String> dependencies)
 	{
         super(name, file, dependencies);
 
-		m_clientsrcfiles = new ArrayList();
-		m_clientincludefiles = new ArrayList();
-		m_serversrcfiles = new ArrayList();
-		m_serverincludefiles = new ArrayList();
+		m_clientsrcfiles = new ArrayList<String>();
+		m_clientincludefiles = new ArrayList<String>();
+		m_serversrcfiles = new ArrayList<String>();
+		m_serverincludefiles = new ArrayList<String>();
 	}
 	
 	public void addClientSrcFile(String file)
@@ -23,7 +22,7 @@ public class Project extends com.eprosima.solution.Project
 		m_clientsrcfiles.add(file);
 	}
 	
-	public ArrayList getClientSrcFiles()
+	public ArrayList<String> getClientSrcFiles()
 	{
 		return m_clientsrcfiles;
 	}
@@ -33,7 +32,7 @@ public class Project extends com.eprosima.solution.Project
 		m_clientincludefiles.add(file);
 	}
 	
-	public ArrayList getClientIncludeFiles()
+	public ArrayList<String> getClientIncludeFiles()
 	{
 		return m_clientincludefiles;
 	}
@@ -43,7 +42,7 @@ public class Project extends com.eprosima.solution.Project
 		m_serversrcfiles.add(file);
 	}
 	
-	public ArrayList getServerSrcFiles()
+	public ArrayList<String> getServerSrcFiles()
 	{
 		return m_serversrcfiles;
 	}
@@ -53,7 +52,7 @@ public class Project extends com.eprosima.solution.Project
 		m_serverincludefiles.add(file);
 	}
 	
-	public ArrayList getServerIncludeFiles()
+	public ArrayList<String> getServerIncludeFiles()
 	{
 		return m_serverincludefiles;
 	}
@@ -101,9 +100,9 @@ public class Project extends com.eprosima.solution.Project
 	}
 	
 	private boolean m_containsInterfaces = false;
-	private ArrayList m_clientsrcfiles = null;
-	private ArrayList m_clientincludefiles = null;
-	private ArrayList m_serversrcfiles = null;
-	private ArrayList m_serverincludefiles = null;
+	private ArrayList<String> m_clientsrcfiles = null;
+	private ArrayList<String> m_clientincludefiles = null;
+	private ArrayList<String> m_serversrcfiles = null;
+	private ArrayList<String> m_serverincludefiles = null;
 	String m_guid = null;
 }

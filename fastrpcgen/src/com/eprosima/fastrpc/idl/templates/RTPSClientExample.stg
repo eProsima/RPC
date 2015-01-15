@@ -1,0 +1,103 @@
+group ClientExample;
+
+main(ctx, definitions) ::= <<
+$fileHeader(ctx=ctx,  file=[ctx.filename, "ClientExample.cxx"], description=["This source file shows a simple example of how to create a proxy for an interface."])$
+
+#include "$ctx.filename$Proxy.h"
+#include "$ctx.filename$.h"
+#include "$ctx.filename$DDSProtocol.h"
+#include "$ctx.product$/transports/dds/RTPSProxyTransport.h"
+#include "$ctx.product$/exceptions/Exceptions.h"
+
+#include <iostream>
+
+using namespace eprosima::rpc;
+using namespace ::exception;
+using namespace ::transport::dds;
+using namespace ::protocol::dds;
+
+int main(int argc, char **argv)
+{
+    $ctx.filename$Protocol *protocol = NULL;
+    RTPSProxyTransport *transport = NULL;
+    $first(ctx.scopedInterfaces).scopedname$Proxy *proxy = NULL;
+    
+    // Creation of the proxy for interface "$first(ctx.scopedInterfaces).scopedname$".
+    try
+    {
+        protocol = new $ctx.filename$Protocol();
+        transport = new RTPSProxyTransport("$ctx.filename$Service", "Instance");
+        proxy = new $first(ctx.scopedInterfaces).scopedname$Proxy(*transport, *protocol);
+    }
+    catch(InitializeException &ex)
+    {
+        std::cout << ex.what() << std::endl;
+        return -1;
+    }
+    
+    // Create and initialize parameters.
+    $first(first(ctx.scopedInterfaces).operations).parameters : {param | $varDecl(variable=param)$};separator="\n"$
+    // Create and initialize return value.
+    $varDecl(variable=first(first(ctx.scopedInterfaces).operations).rettypeparam)$
+
+    // Call to remote procedure "$first(first(ctx.scopedInterfaces).operations).name$".
+    try
+    {
+        $if(first(first(ctx.scopedInterfaces).operations).rettypeparam)$        $first(first(ctx.scopedInterfaces).operations).rettypeparam.name$ = $else$        $endif$proxy->$first(first(ctx.scopedInterfaces).operations).name$($extractParams(params=first(first(ctx.scopedInterfaces).operations).parameters)$);
+    }
+    $if(first(first(ctx.scopedInterfaces).operations).exceptions)$
+    catch(UserException &ex)
+    {
+        std::cout << "User exception" << std::endl;
+    }
+    $endif$
+    catch(SystemException &ex)
+    {
+        std::cout << ex.what() << std::endl;
+    }
+    
+    delete proxy ;
+    delete transport ;
+    delete protocol ;
+   
+    return 0;
+}
+
+$definitions; separator="\n"$
+>>
+
+module(ctx, module, definition_list) ::= <<
+$definition_list$
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+interface(ctx, interface, export_list) ::= <<
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<
+$param_list$
+>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+const_decl(ctx, const) ::= <<>>
+
+typedef_decl(ctx, typedefs) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>

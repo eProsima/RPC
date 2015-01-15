@@ -9,10 +9,12 @@ FASTCDR_TARGET=$(shell $(BASEDIR)/thirdparty/dev-env/scripts/common_dds_function
 RPCDDS_SED_OUTPUT_DIR_DEBUG= $(subst /,\\/,$(RPCDDS_OUTDIR_DEBUG))
 RPCDDS_SED_OUTPUT_DIR_RELEASE= $(subst /,\\/,$(RPCDDS_OUTDIR_RELEASE))
 
-RPCDDS_LIBS_DEBUG= $(LIBS_DEBUG) -L$(BASEDIR)/thirdparty/fastcdr/lib/$(FASTCDR_TARGET) -lfastcdrd -lboost_system -lboost_thread \
-				   -L$(NDDSHOME)/lib/$(NDDSTARGET) -lnddscpp -lnddsc -lnddscore -ldl
-RPCDDS_LIBS= $(LIBS) -L$(BASEDIR)/thirdparty/fastcdr/lib/$(FASTCDR_TARGET) -lfastcdr -lboost_system -lboost_thread \
-				   -L$(NDDSHOME)/lib/$(NDDSTARGET) -lnddscpp -lnddsc -lnddscore -ldl
+RPCDDS_LIBS_DEBUG= $(LIBS_DEBUG) -L$(BASEDIR)/thirdparty/fastcdr/lib/$(FASTCDR_TARGET) -lfastcdrd \
+				   -L$(BASEDIR)/thirdparty/fastrtps/lib/$(FASTCDR_TARGET) -lfastrtpsd -lboost_system -lboost_thread -lboost_chrono \
+				   -L$(NDDSHOME)/lib/$(NDDSTARGET) -lnddscppd -lnddscd -lnddscored -ldl
+RPCDDS_LIBS= $(LIBS) -L$(BASEDIR)/thirdparty/fastcdr/lib/$(FASTCDR_TARGET) -lfastcdr \
+			 -L$(BASEDIR)/thirdparty/fastrtps/lib/$(FASTCDR_TARGET) -lfastrtps -lboost_system -lboost_thread -lboost_chrono \
+			 -L$(NDDSHOME)/lib/$(NDDSTARGET) -lnddscpp -lnddsc -lnddscore -ldl
 
 RPCDDS_CFLAGS_DEBUG= $(CFLAGS_DEBUG) -std=c++0x -DRTI_LINUX -DRTI_UNIX
 RPCDDS_CFLAGS= $(CFLAGS) -std=c++0x -DRTI_LINUX -DRTI_UNIX
@@ -58,6 +60,7 @@ RPCDDS_TARGET_Z= $(BASEDIR)/lib/$(TARGET)/$(RPCDDS_TARGET_Z_FILE)
 RPCDDS_INCLUDE_DIRS= $(INCLUDE_DIRS) -I$(BASEDIR)/include \
 		    -I$(BASEDIR)/thirdparty/eprosima-common-code \
 		    -I$(BASEDIR)/thirdparty/fastcdr/include \
+		    -I$(BASEDIR)/thirdparty/fastrtps/include \
 		    -I$(BASEDIR)/thirdparty/boost-threadpool \
 			-I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds \
 		    $(SPECIFIC_INCLUDE_DIR)

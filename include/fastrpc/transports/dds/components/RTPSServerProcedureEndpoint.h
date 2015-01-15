@@ -5,22 +5,18 @@
  * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
-#ifndef _TRANSPORTS_DDS_COMPONENTS_SERVERPROCEDUREENDPOINT_H_
-#define _TRANSPORTS_DDS_COMPONENTS_SERVERPROCEDUREENDPOINT_H_
+#ifndef _TRANSPORTS_DDS_COMPONENTS_RTPSSERVERPROCEDUREENDPOINT_H_
+#define _TRANSPORTS_DDS_COMPONENTS_RTPSSERVERPROCEDUREENDPOINT_H_
 
 #include "../../../fastrpc_dll.h"
-#include "../ServerTransport.h"
+#include "../RTPSServerTransport.h"
 #include "../../components/Endpoint.h"
 #include "../../../utils/Messages.h"
 
+#include <fastrtps/subscriber/SubscriberListener.h>
+#include <fastrtps/rtps/common/MatchingInfo.h>
+
 #include <string>
-
-#if defined(_WIN32) && defined(NDDS_DLL_VARIABLE)
-class __declspec(dllimport) DDSDataReaderListener;
-class __declspec(dllimport) DDSListener;
-#endif
-
-#include "../../../utils/dds/Middleware.h"
 
 namespace boost
 {
@@ -29,6 +25,12 @@ namespace boost
 
 namespace eprosima
 {
+    namespace fastrtps
+    {
+        class Publisher;
+        class Subscriber;
+    }
+
     namespace rpc
     {
         namespace transport
@@ -40,7 +42,7 @@ namespace eprosima
                  * Also this class encapsulate the DDS datawriter and the DDS datareader.
 				 * @ingroup TRANSPORTMODULE
                  */
-                class ServerProcedureEndpoint : public Endpoint, public DDSDataReaderListener
+                class RTPSServerProcedureEndpoint : public Endpoint, public eprosima::fastrtps::SubscriberListener
                 {
                     public:
 
@@ -48,10 +50,10 @@ namespace eprosima
                          * @brief Default constructor.
                          * @param Transport that creates the proxy procedure endpoint. It cannot be NULL.
                          */
-                        FASTRPC_DllAPI ServerProcedureEndpoint(ServerTransport &transport);
+                        FASTRPC_DllAPI RTPSServerProcedureEndpoint(RTPSServerTransport &transport);
 
                         //! @brief Default destructor.
-                        virtual FASTRPC_DllAPI ~ServerProcedureEndpoint();
+                        virtual FASTRPC_DllAPI ~RTPSServerProcedureEndpoint();
 
 						/*! TODO Actualizar
 						 * @brief Initializes the endpoint.
@@ -66,8 +68,8 @@ namespace eprosima
 						 */
                         FASTRPC_DllAPI int initialize(const char *name, const char *writertypename, const char *writertopicname,
                                 const char *readertypename, const char *readertopicname,
-                                Transport::Create_data create_data, Transport::Destroy_data destroy_data,
-                                Transport::ProcessFunc, int dataSize);
+                                RTPSTransport::Create_data create_data, RTPSTransport::Destroy_data destroy_data,
+                                RTPSTransport::ProcessFunc, int dataSize);
 						
 						/*!
                          * @brief This method creates the DDS entities needed to run this DDS Endpoint.
@@ -86,7 +88,7 @@ namespace eprosima
 						 * @return Function callback used to processes a request.
                          */
                         inline FASTRPC_DllAPI
-                            Transport::ProcessFunc getProcessFunc(){return m_process_func;}
+                            RTPSTransport::ProcessFunc getProcessFunc(){return m_process_func;}
 
 						/*!
                          * @brief Sends the reply.
@@ -95,37 +97,11 @@ namespace eprosima
                         FASTRPC_DllAPI int sendReply(void *data);
 
                         /// @brief DDS callback.
-                        virtual FASTRPC_DllAPI void on_data_available(DDSDataReader* reader);
+                        virtual FASTRPC_DllAPI void onNewDataMessage(eprosima::fastrtps::Subscriber *sub);
 
-                        /// @brief DDS callback.
-                        virtual FASTRPC_DllAPI void on_requested_deadline_missed(
-                                DDSDataReader* reader,
-                                const DDS_RequestedDeadlineMissedStatus& status) {}
+                        virtual void onSubscriptionMatched(eprosima::fastrtps::Subscriber* /*sub*/, eprosima::fastrtps::rtps::MatchingInfo /*info*/){}
 
-                        /// @brief DDS callback.
-                        virtual FASTRPC_DllAPI void on_requested_incompatible_qos(
-                                DDSDataReader* reader,
-                                const DDS_RequestedIncompatibleQosStatus& status) {}
 
-                        /// @brief DDS callback.
-                        virtual FASTRPC_DllAPI void on_sample_rejected(
-                                DDSDataReader* reader,
-                                const DDS_SampleRejectedStatus& status) {}
-
-                        /// @brief DDS callback.
-                        virtual FASTRPC_DllAPI void on_liveliness_changed(
-                                DDSDataReader* reader,
-                                const DDS_LivelinessChangedStatus& status) {}
-
-                        /// @brief DDS callback.
-                        virtual FASTRPC_DllAPI void on_sample_lost(
-                                DDSDataReader* reader,
-                                const DDS_SampleLostStatus& status) {}
-
-                        /// @brief DDS callback.
-                        virtual FASTRPC_DllAPI void on_subscription_matched(
-                                DDSDataReader* reader,
-                                const DDS_SubscriptionMatchedStatus& status) {}
 
                     private:
 
@@ -135,16 +111,8 @@ namespace eprosima
                          */
                         int createEntities(const std::string &serviceName, const std::string &instanceName);
 
-                        /*!
-                         * @brief This function enables the DDS entities.
-                         *
-                         * @return A 0 value is returned if all entities were enabled successfully. -1 in other case.
-                         */
-                        int enableEntities();
-
-
                         //! @brief Transport that has created the proxy procedure endpoint.
-                        ServerTransport &m_transport;
+                        RTPSServerTransport &m_transport;
 
                         const char *m_name;
 
@@ -156,25 +124,17 @@ namespace eprosima
 
                         std::string m_readerTopicName;
 
-                        //!@brief The topic used to send.
-                        DDSTopic *m_writerTopic;
-
-                        //! @brief The topic used to receive.
-                        DDSTopic *m_readerTopic;
-
-                        DDSContentFilteredTopic *m_filter;
-
                         //! @brief The data writer used to send.
-                        DDSDataWriter *m_writer;
+                        eprosima::fastrtps::Publisher *m_writer;
 
                         //! @brief The data reader used to receive.
-                        DDSDataReader *m_reader;
+                        eprosima::fastrtps::Subscriber *m_reader;
 
-                        Transport::Create_data m_create_data;
+                        RTPSTransport::Create_data m_create_data;
 
-                        Transport::Destroy_data m_destroy_data;
+                        RTPSTransport::Destroy_data m_destroy_data;
 
-                        Transport::ProcessFunc m_process_func;
+                        RTPSTransport::ProcessFunc m_process_func;
 
                         int m_dataSize;
 
@@ -186,4 +146,4 @@ namespace eprosima
         } // namespace transport
     } // namespace rpc
 } // namespace eprosima
-#endif // _TRANSPORTS_DDS_COMPONENTS_SERVERPROCEDUREENDPOINT_H_
+#endif // _TRANSPORTS_DDS_COMPONENTS_RTPSSERVERPROCEDUREENDPOINT_H_

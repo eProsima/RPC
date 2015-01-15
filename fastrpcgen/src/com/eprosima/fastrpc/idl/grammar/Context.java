@@ -7,7 +7,7 @@ import com.eprosima.idl.parser.typecode.TypeCode;
 
 public abstract class Context extends com.eprosima.idl.context.Context implements com.eprosima.fastcdr.idl.context.Context
 {
-    public Context(String filename, String file, ArrayList includePaths, boolean clientcode, boolean servercode,
+    public Context(String filename, String file, ArrayList<String> includePaths, boolean clientcode, boolean servercode,
             String appProduct)
     {
         super(filename, file, includePaths);
@@ -45,13 +45,11 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
 
     /*** Functions inherated from FastCDR Context ***/
 
-    @Override
     public boolean isPrintexception()
     {
         return true;
     }
 
-    @Override
     public boolean isPrintoperation()
     {
         return true;

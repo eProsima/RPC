@@ -5,18 +5,16 @@
  * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
-#ifndef _TRANSPORTS_DDS_SERVERTRANSPORT_H_
-#define _TRANSPORTS_DDS_SERVERTRANSPORT_H_
+
+#ifndef _TRANSPORTS_DDS_RTPSSERVERTRANSPORT_H_
+#define _TRANSPORTS_DDS_RTPSSERVERTRANSPORT_H_
 
 #include "fastrpc/fastrpc_dll.h"
-#include "fastrpc/transports/dds/Transport.h"
+#include "fastrpc/transports/dds/RTPSTransport.h"
 #include "fastrpc/transports/ServerTransport.h"
 
 #include <string>
 #include <map>
-
-class DDSDomainParticipant;
-struct DDS_DomainParticipantQos;
 
 namespace eprosima
 {
@@ -26,21 +24,31 @@ namespace eprosima
         {
             namespace dds
             {
-                class ServerProcedureEndpoint;
+                class RTPSServerProcedureEndpoint;
 
-				/*!
-                 * @brief This class is the base of all classes that implement a transport
-                 * using DDS. This transport can be used by the servers.
+                /*
+                 * @brief This class implements a DDS transport using only the RTPS level provided by FastRTPS library.
+                 * This transport can be used by the servers.
                  * @ingroup TRANSPORTMODULE
                  */
-                class ServerTransport : public eprosima::rpc::transport::ServerTransport, public Transport
+                class RTPSServerTransport : public ServerTransport, public RTPSTransport
                 {
                     public:
 
                         /*!
+                         * @brief Default constructor.
+						 * @param serviceName Name of the remote service. If value is not assigned or NULL pointer is used,
+                         * the default service's name will be use.
+						 * @param instanceName Instance's name of the remote service. If value is not assigned or NULL pointer is used,
+                         * the default instance's name will be use.
+                         * @param domainId Optional parameter that specifies the domain identifier that will be used in DDS.
+                         */
+                        FASTRPC_DllAPI RTPSServerTransport(const char* const serviceName = NULL, const char* const instanceName = NULL, int domainId = 0);
+
+                        /*!
                          * @brief Default destructor.
                          */
-                        virtual FASTRPC_DllAPI ~ServerTransport();
+                        virtual FASTRPC_DllAPI ~RTPSServerTransport();
 
                         /*!
                          * @brief This function returns the type of the transport.
@@ -58,7 +66,6 @@ namespace eprosima
                          * @param readertypename The type name of the topic that the procedure endpoint uses in the datareader. It cannot be NULL.
                          * @param readertopicname The name of the topic that the procedure endpoint uses in the datareader. It cannot be NULL.
 						 * @param initialize_data Pointer to the function to initialize DataReader received data
-                         * @param copy_data Pointer to the function used to copy the data when it is received.
 						 * @param finalize_data Pointer to the function to finalize DataReader received data
 						 * @param ProcessFunc Pointer to the function invoked when a message is received from the server
 						 * @param dataSize Size of the DataReader data structure
@@ -67,10 +74,9 @@ namespace eprosima
                          */
                         FASTRPC_DllAPI eprosima::rpc::transport::Endpoint*
                             createProcedureEndpoint(const char *name, const char *writertypename,
-                                    const char *writertopicname, const char *readertypename,
-                                    const char *readertopicname, bool eprosima_types,
-                                    Transport::Create_data create_data, Transport::Copy_data copy_data,
-                                    Transport::Destroy_data destroy_data, Transport::ProcessFunc processFunc, int dataSize);
+                                    const char *writertopicname, const char *readertypename, const char *readertopicname,
+                                    RTPSTransport::Create_data create_data, RTPSTransport::Copy_data copy_data, RTPSTransport::Destroy_data destroy_data,
+                                    RTPSTransport::ProcessFunc processFunc, int dataSize);
 								
 						/*!
 						 * @brief This method is invoked once for each incoming request.
@@ -78,7 +84,7 @@ namespace eprosima
 						 * @param data The request data.
 						 * @param endpoint The request endpoint.
 						 */
-                        FASTRPC_DllAPI void process(ServerProcedureEndpoint *endpoint, void *data);
+                        FASTRPC_DllAPI void process(RTPSServerProcedureEndpoint *endpoint, void *data);
 
 						/*!
 						 * @brief This method starts all the DDS Datawriters and Datareaders.
@@ -109,26 +115,6 @@ namespace eprosima
                          */
                         FASTRPC_DllAPI const char* getRemoteServiceName() const;
 
-                    protected:
-
-						/*!
-                         * @brief This abstract function sets the QoS of DDS to use a specific transport.
-                         *
-                         * @param participantQos Reference to the DDS domain participant QoS.
-                         * @param participant The domain participant that will be set to use a specific transport.
-                         */
-                        virtual FASTRPC_DllAPI int setTransport(DDS_DomainParticipantQos &participantQos, DDSDomainParticipant *participant) = 0;
-
-                        /*!
-                         * @brief Default constructor.
-						 * @param serviceName Name of the remote service. If value is not assigned or NULL pointer is used,
-                         * the default service's name will be use.
-						 * @param instanceName Instance's name of the remote service. If value is not assigned or NULL pointer is used,
-                         * the default instance's name will be use.
-                         * @param domainId Optional parameter that specifies the domain identifier that will be used in DDS.
-                         */
-                        FASTRPC_DllAPI ServerTransport(const char* const serviceName = NULL, const char* const instanceName = NULL, int domainId = 0);
-
                     private:
 
                         /*!
@@ -136,15 +122,16 @@ namespace eprosima
                          * The map key is the pointer where the name is allocated, not the name itself.
                          * Then always the same string in memory has to be used and not a copy.
                          */
-                        std::map<const char*, ServerProcedureEndpoint*> m_procedureEndpoints;
+                        std::map<const char*, RTPSServerProcedureEndpoint*> m_procedureEndpoints;
 
                         std::string m_serviceName;
 
                         std::string m_instanceName;
                 };
-            } // namespace dds
+            } // namepsace dds
         } // namespace transport
-    } // namespace rpc
+    } // namepsace fastrpc
 } // namespace eprosima
 
-#endif // _TRANSPORTS_DDS_SERVERTRANSPORT_H_
+#endif // _TRANSPORTS_DDS_RTPSSERVERTRANSPORT_H_
+

@@ -3,8 +3,11 @@ src/transports/AsyncTask.cpp
 src/protocols/dds/MessageHeader.cpp
 src/protocols/dds/MessageHeaderPlugin.cpp
 src/transports/dds/Transport.cpp
+src/transports/dds/RTPSTransport.cpp
 src/transports/dds/ProxyTransport.cpp
+src/transports/dds/RTPSProxyTransport.cpp
 src/transports/dds/ServerTransport.cpp
+src/transports/dds/RTPSServerTransport.cpp
 src/transports/dds/DDSUDPProxyTransport.cpp
 src/transports/dds/DDSUDPServerTransport.cpp
 src/transports/dds/DDSTCPProxyTransport.cpp
@@ -12,4 +15,6 @@ src/transports/dds/DDSTCPServerTransport.cpp
 src/transports/dds/DDSAsyncTask.cpp
 src/transports/dds/AsyncThread.cpp
 src/transports/dds/components/ProxyProcedureEndpoint.cpp
+src/transports/dds/components/RTPSProxyProcedureEndpoint.cpp
 src/transports/dds/components/ServerProcedureEndpoint.cpp
+src/transports/dds/components/RTPSServerProcedureEndpoint.cpp

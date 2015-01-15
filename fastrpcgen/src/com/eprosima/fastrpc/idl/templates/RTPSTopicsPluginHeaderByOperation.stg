@@ -1,0 +1,147 @@
+/*************************************************************************
+ * Copyright (c) 2013 eProsima. All rights reserved.
+ *
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
+group TopicsPluginHeaderByOperation;
+
+main(ctx, definitions) ::= <<
+$fileHeader(ctx=ctx,  file=[ctx.filename, "TopicsPlugin.h"], description=["This header file contains the declaration of used by DDS middleware."])$
+
+#ifndef _$ctx.filename;format="toUpper"$_TOPICS_PLUGIN_H_
+#define _$ctx.filename;format="toUpper"$_TOPICS_PLUGIN_H_
+
+$if(first(ctx.scopedInterfaces))$
+#include "$ctx.filename$Topics.h"
+$endif$
+
+#include <fastrtps/TopicDataType.h>
+
+$ctx.directIncludeDependencies : {include | #include "$include$TopicsPlugin.h"}; separator="\n"$
+
+#if defined(_WIN32)
+#if defined(EPROSIMA_USER_DLL_EXPORT)
+#define user_cpp_DllExport __declspec( dllexport )
+#else
+#define user_cpp_DllExport
+#endif
+#else
+#define user_cpp_DllExport
+#endif
+
+$definitions; separator="\n"$
+
+#endif // _$ctx.filename;format="toUpper"$_TOPICS_PLUGIN_H_
+>>
+
+module(ctx, module, definition_list) ::= <<
+namespace $module.name$
+{
+    $definition_list$
+}
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+interface(ctx, interface, export_list) ::= <<
+/*!
+ * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+ */
+class user_cpp_DllExport $interface.name$Plugin
+{
+    public:
+
+        $export_list$
+ 
+        $interface.all_operations : { operation |
+        /*!
+         * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+         */
+        class user_cpp_DllExport $operation.name$_RequestPlugin : public eprosima::fastrtps::TopicDataType
+        {
+            public:
+
+                $operation.name$_RequestPlugin();
+
+                virtual ~$operation.name$_RequestPlugin();
+
+                bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
+
+                bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
+
+                void* createData();
+                
+                static void* create_data();
+
+                void deleteData(void *data);
+
+                static void delete_data(void *data);
+
+                static void copy_data($interface.name$_$operation.name$_Request *dst,
+                        const $interface.name$_$operation.name$_Request *src);
+        };
+        
+        // Reply operations 
+        $if(!operation.oneway)$
+        /*!
+         * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
+         */
+        class user_cpp_DllExport $operation.name$_ReplyPlugin : public eprosima::fastrtps::TopicDataType
+        {
+            public:
+
+                $operation.name$_ReplyPlugin();
+
+                virtual ~$operation.name$_ReplyPlugin();
+
+                bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
+
+                bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
+
+                void* createData();
+
+                static void* create_data();
+
+                void deleteData(void *data);
+
+                static void delete_data(void *data);
+
+                static void copy_data($interface.name$_$operation.name$_Reply *dst,
+                        const $interface.name$_$operation.name$_Reply *src);
+        };
+        $endif$
+        }; separator="\n"$
+
+    private:
+
+        $interface.name$Plugin(){}
+};
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, exception) ::= <<>>
+
+operation(ctx, operation, param_list) ::= <<>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+const_decl(ctx, const) ::= <<>>
+
+typedef_decl(ctx, typedefs) ::= <<>>
+
+struct_type(ctx, struct) ::= <<>>
+
+union_type(ctx, union) ::= <<>>
+
+enum_type(ctx, enum) ::= <<>>
+
