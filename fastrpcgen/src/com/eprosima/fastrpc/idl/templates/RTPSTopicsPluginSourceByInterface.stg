@@ -32,14 +32,14 @@ $definitions; separator="\n"$
 interface(ctx, interface, export_list) ::= <<
 $export_list$
 
-$interface.scopedname$_RequestPlugin::$interface.scopedname$_RequestPlugin() 
+$interface.scopedname$_RequestPlugin::$interface.name$_RequestPlugin() 
 {
 	setName("$interface.scopedname$_Request");
 	m_typeSize = (uint32_t)$interface.scopedname$_Request::getMaxCdrSerializedSize();
 	m_isGetKeyDefined = false;
 }
 
-$interface.scopedname$_RequestPlugin::~$interface.scopedname$_RequestPlugin() 
+$interface.scopedname$_RequestPlugin::~$interface.name$_RequestPlugin() 
 {
 }
 
@@ -105,14 +105,14 @@ void $interface.scopedname$_RequestPlugin::copy_data(
 }
  
 // Reply interfaces
-$interface.scopedname$_ReplyPlugin::$interface.scopedname$_ReplyPlugin() 
+$interface.scopedname$_ReplyPlugin::$interface.name$_ReplyPlugin() 
 {
 	setName("$interface.scopedname$_Reply");
 	m_typeSize = (uint32_t)$interface.scopedname$_Reply::getMaxCdrSerializedSize();
 	m_isGetKeyDefined = false;
 }
 
-$interface.scopedname$_ReplyPlugin::~$interface.scopedname$_ReplyPlugin() 
+$interface.scopedname$_ReplyPlugin::~$interface.name$_ReplyPlugin() 
 {
 }
 

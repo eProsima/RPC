@@ -27,7 +27,7 @@ typedef struct encapsulation
 
 RTPSProxyTransport::RTPSProxyTransport(const char* const remoteServiceName, const char* const instanceName, int domainId, long milliseconds) :
     ::transport::ProxyTransport(), ::transport::dds::RTPSTransport(domainId),
-    m_timeout(milliseconds), m_asyncThread(NULL)
+    m_timeout(milliseconds)
 {
     const char* const METHOD_NAME = "RTPSProxyTransport";
 
@@ -38,15 +38,6 @@ RTPSProxyTransport::RTPSProxyTransport(const char* const remoteServiceName, cons
 
     if(instanceName != NULL)
         m_instanceName = instanceName;
-
-    m_asyncThread = new AsyncThread();
-
-    if(m_asyncThread != NULL)
-    {
-    // TODO Send exception
-        if(m_asyncThread->init() != 0)
-            printf("ERROR<%s::%s>: Cannot initialize the asynchronous thread\n", CLASS_NAME, METHOD_NAME);
-    }
 }
 
 RTPSProxyTransport::~RTPSProxyTransport()
@@ -59,9 +50,6 @@ RTPSProxyTransport::~RTPSProxyTransport()
     }
 
     m_procedureEndpoints.erase(m_procedureEndpoints.begin(), m_procedureEndpoints.end());
-
-    m_asyncThread->exit();
-    delete m_asyncThread;
 }
 
 const char* RTPSProxyTransport::getType() const
@@ -113,23 +101,3 @@ long RTPSProxyTransport::getTimeout()
 
     return NULL;
 }
-
-/*int RTPSProxyTransport::addAsyncTask(DDS::QueryCondition *query, DDSAsyncTask *task, long timeout)
-{
-    return m_asyncThread->addTask(query, task, timeout);
-}*/
-
-/*void RTPSProxyTransport::deleteAssociatedAsyncTasks(RTPSProxyProcedureEndpoint *pe)
-{
-    const char* const METHOD_NAME = "deleteAssociatedAsyncTasks";
-
-    if(pe != NULL)
-    {
-        m_asyncThread->deleteAssociatedAsyncTasks(pe);
-    }
-    else
-    {
-        printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
-    }
-}*/
-

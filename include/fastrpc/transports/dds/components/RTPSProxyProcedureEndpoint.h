@@ -42,7 +42,7 @@ namespace eprosima
         {
             namespace dds
             {
-                class DDSAsyncTask;
+                class RTPSAsyncTask;
                 class RecvPoint;
 
                 /*!
@@ -103,19 +103,14 @@ namespace eprosima
 						/*!
 						 * @brief This function sends an asynchronous RPC call.
                          * It sends the request to the server and does not wait for the reply.
-						 * Instead, the corresponding callback inside the DDSAsyncTask object
+						 * Instead, the corresponding callback inside the RTPSAsyncTask object
 						 * will be invoked when the response arrives.
 						 *
 						 * @param request Pointer to the allocated request. It cannot be NULL.
 						 * @param task Object containing information of the asynchronous task.
 						 * @return Operation status. It can be CLIENT_INTERNAL_ERROR or NO_SERVER
 						 */
-                        eprosima::rpc::ReturnMessage send_async(void *request, DDSAsyncTask *task);
-
-                        /*!
-                         * @brief This function takes a sample from the datareader.
-                         */
-                        eprosima::rpc::ReturnMessage takeReply(void *reply, int64_t numSec);
+                        eprosima::rpc::ReturnMessage send_async(void *request, RTPSAsyncTask *task);
 
                         /// @brief DDS callback.
                         virtual FASTRPC_DllAPI void onNewDataMessage(eprosima::fastrtps::Subscriber *sub);
@@ -139,11 +134,9 @@ namespace eprosima
                                 const char *readertypename, const char *readertopicname);
 
                         /*!
-                         * @brief This function enables the DDS entities.
-                         *
-                         * @return 0 value is returned if all entities was enabled successfully. -1 in other case.
+                         * @brief This function takes a sample from the datareader.
                          */
-                        int enableEntities();
+                        eprosima::rpc::ReturnMessage takeReply(void *reply, int64_t numSec);
 
                         /*!
                          * @brief This function checks if the server was discovered.
@@ -151,6 +144,8 @@ namespace eprosima
                          * @return FASTRPC return message.
                          */
                         ReturnMessage checkServerConnection(long timeout);
+
+                        void addAsyncTask(RTPSAsyncTask *task, int64_t numSec);
 
                         //! @brief Mutex used to ensure that sequence number and query pool is safe-thread.
                         boost::mutex *m_mutex;

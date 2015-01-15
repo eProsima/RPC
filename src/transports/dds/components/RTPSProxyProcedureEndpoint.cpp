@@ -7,7 +7,7 @@
  *************************************************************************/
 
 #include <fastrpc/transports/dds/components/RTPSProxyProcedureEndpoint.h>
-#include <fastrpc/transports/dds/DDSAsyncTask.h>
+#include <fastrpc/transports/dds/RTPSAsyncTask.h>
 #include <fastrpc/protocols/dds/MessageHeader.h>
 #include <fastrpc/utils/macros/snprintf.h>
 #include <fastrpc/utils/macros/strdup.h>
@@ -39,15 +39,24 @@ namespace eprosima { namespace rpc {
         {
             public:
 
-                RecvPoint(void *reply) : reply_(reply){}
+                RecvPoint(void *reply) : reply_(reply), task_(NULL) {}
+
+                explicit RecvPoint(RTPSAsyncTask *task) : reply_(NULL), task_(task)
+                {
+                    if(task_ != NULL) reply_ = task_->getReplyInstance();
+                }
 
                 void* getReply() { return reply_;}
+
+                RTPSAsyncTask* getTask() { return task_;}
 
                 boost::condition_variable cond_;
 
             private:
 
                 void *reply_;
+
+                RTPSAsyncTask *task_;
         };
     }}
 }}
@@ -92,12 +101,18 @@ int RTPSProxyProcedureEndpoint::initialize(const char *name, const char *writert
         if(createEntities(name, writertypename, writertopicname,
                     readertypename, readertopicname) == 0)
         {
-            data_ = m_create_data();
+            // Not oneway
+            if(m_reader != NULL)
+            {
+                data_ = m_create_data();
 
-            if(data_ != NULL)
-                return 0;
+                if(data_ != NULL)
+                    return 0;
+                else
+                    printf("ERROR<%s::%s>: Cannot create data\n", CLASS_NAME, METHOD_NAME);
+            }
             else
-                printf("ERROR<%s::%s>: Cannot create data\n", CLASS_NAME, METHOD_NAME);
+                return 0;
         }
         else
         {
@@ -305,148 +320,56 @@ ReturnMessage RTPSProxyProcedureEndpoint::send(void *request, void *reply)
     return returnedValue;
 }
 
-ReturnMessage RTPSProxyProcedureEndpoint::send_async(void *request, DDSAsyncTask *task)
+ReturnMessage RTPSProxyProcedureEndpoint::send_async(void *request, RTPSAsyncTask *task)
 {
-    ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
-    //TODO
-    /*
     const char* const METHOD_NAME = "send_async";
     ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
-    DDS::WaitSet *waitSet = NULL;
-    DDS::ReturnCode_t retCode;
-    char high_value[25], low_value[25];
-    char *auxPointerToRequest = NULL, *seqAuxPointer = NULL;
-    char **auxPointerToRemoteServiceName = NULL;
     eprosima::rpc::protocol::dds::rpc::RequestHeader *requestHeader = NULL;
-    DDS::QueryCondition *query = NULL;
+    int64_t numSec = 0;
 
     if(request != NULL)
     {
-        if(m_eprosima_types)
-        {
-            requestHeader = reinterpret_cast<eprosima::rpc::protocol::dds::rpc::RequestHeader*>(request);
-            memcpy(requestHeader->requestId().writer_guid().guidPrefix(), m_proxyId.guidPrefix(), 12);
-            memcpy(requestHeader->requestId().writer_guid().entityId().entityKey(), m_proxyId.entityId().entityKey(), 3);
-            requestHeader->requestId().writer_guid().entityId().entityKind() = m_proxyId.entityId().entityKind();
-            requestHeader->instanceName(m_transport.getInstanceName());
-        }
-        else
-        {
-            auxPointerToRequest = (char*)request;
-            memcpy(auxPointerToRequest, m_proxyId.guidPrefix(), 12);
-            auxPointerToRequest += 12;
-            memcpy(auxPointerToRequest, m_proxyId.entityId().entityKey(), 3);
-            auxPointerToRequest += 3;
-            *auxPointerToRequest++ =m_proxyId.entityId().entityKind();
-            seqAuxPointer = auxPointerToRequest;
-            auxPointerToRequest += sizeof(m_numSec);
-            *(char**)auxPointerToRequest = (char*)m_transport.getInstanceName();
-            auxPointerToRemoteServiceName = (char**)auxPointerToRequest;
-            auxPointerToRequest = (char*)((char**)auxPointerToRequest + 1);
-        }
+        requestHeader = reinterpret_cast<eprosima::rpc::protocol::dds::rpc::RequestHeader*>(request);
+        memcpy(requestHeader->requestId().writer_guid().guidPrefix(), m_proxyId.guidPrefix(), 12);
+        memcpy(requestHeader->requestId().writer_guid().entityId().entityKey(), m_proxyId.entityId().entityKey(), 3);
+        requestHeader->requestId().writer_guid().entityId().entityKind() = m_proxyId.entityId().entityKind();
+        requestHeader->instanceName(m_transport.getInstanceName());
+
 
         m_mutex->lock();
-        // Thread safe num_Sec handling 
-        int32_t high = (m_numSec >> 32) && 0xFFFFFFFF;
-        uint32_t low = (m_numSec && 0xFFFFFFFF);
-        if(m_eprosima_types)
-        {
-            requestHeader->requestId().sequence_number().high(high);
-            requestHeader->requestId().sequence_number().low(low);
-        }
-        else
-        {
-            *(int32_t*)seqAuxPointer = high;
-            seqAuxPointer += sizeof(high);
-            *(uint32_t*)seqAuxPointer = low;
-        }
+        numSec = m_numSec;
+        // Thread safe num_Sec handling
+        int32_t high = (numSec >> 32) & 0xFFFFFFFF;
+        uint32_t low = (numSec & 0xFFFFFFFF);
+        requestHeader->requestId().sequence_number().high(high);
+        requestHeader->requestId().sequence_number().low(low);
         ++m_numSec;
-
-        // Take a free query condition.
-        query = getFreeQueryFromPool();
         m_mutex->unlock();
 
-        if(query != NULL)
+            // TODO Chech for server connection.
+            
+        if(checkServerConnection(m_transport.getTimeout()) == OK)
         {
-            waitSet = new DDS::WaitSet();
-
-            if(waitSet != NULL)
+            if(m_writer->write(request))
             {
-                if(checkServerConnection(waitSet, m_transport.getTimeout()) == OK)
-                {
-                    DDS_InstanceHandle_t ih = DDS_HANDLE_NIL;
-
-                    if(DDS_DataWriter_write_untypedI(m_writer->get_c_datawriterI(), request, &ih) == DDS_RETCODE_OK)
-                    {
-                        DDS::StringSeq stringSeq(2);
-
-                        stringSeq.length(2);
-#ifdef _WIN32
-                        SNPRINTF(high_value, 25, "%I32d", high);
-                        SNPRINTF(low_value, 25, "%I32u", low);
-#else
-                        SNPRINTF(high_value, 25, "%" PRId32"", high);
-                        SNPRINTF(low_value, 25, "%" PRIu32"", low);
-#endif
-                        stringSeq[0] = strdup(high_value);
-                        stringSeq[1] = strdup(low_value);
-                        retCode = query->set_query_parameters(stringSeq);
-
-                        if(retCode == DDS_RETCODE_OK)
-                        {
-                            task->setProcedureEndpoint(this);
-                            if(m_transport.addAsyncTask(query, task, m_transport.getTimeout()) == 0)
-                                returnedValue = OK;
-                            else
-                                printf("ERROR <%s::%s>: Cannot add asynchronous task\n", CLASS_NAME, METHOD_NAME);
-                        }
-                        else
-                        {
-                            printf("ERROR <%s::%s>: Cannot set the sequence number to the query condition\n", CLASS_NAME, METHOD_NAME);
-                        }
-                    }
-                    else
-                    {
-                        printf("ERROR <%s::%s>: Some error occurs\n", CLASS_NAME, METHOD_NAME);
-                    }
-                }
-                else
-                {
-                    printf("WARNING<%s::%s>: No server discovered.\n", CLASS_NAME, METHOD_NAME);
-                    returnedValue = SERVER_NOT_FOUND;
-                }
-
-                delete waitSet;
+                addAsyncTask(task, numSec);
+                returnedValue = OK;
             }
             else
             {
-                printf("ERROR <%s::%s>: Cannot create waitset\n", CLASS_NAME, METHOD_NAME);
-            }
-
-            // If something was wrong.
-            if(returnedValue != OK)
-            {
-                m_mutex->lock();
-                returnUsedQueryToPool(query);
-                m_mutex->unlock();
+                printf("ERROR <%s::%s>: Some error occurs\n", CLASS_NAME, METHOD_NAME);
             }
         }
         else
         {
-            printf("ERROR <%s::%s>: Cannot get a free query condition\n", CLASS_NAME, METHOD_NAME);
-        }
-
-        if(!m_eprosima_types)
-        {
-            // Set the remoteServiceName to NULL.
-            *auxPointerToRemoteServiceName = NULL;
+            printf("WARNING<%s::%s>: No server discovered.\n", CLASS_NAME, METHOD_NAME);
+            returnedValue = SERVER_NOT_FOUND;
         }
     }
     else
     {
         printf("ERROR<%s::%s>: Bad parameter(data)\n", CLASS_NAME, METHOD_NAME);
     }
-    */
 
     return returnedValue;
 }
@@ -479,6 +402,13 @@ ReturnMessage RTPSProxyProcedureEndpoint::takeReply(void *reply, int64_t numSec)
     }
 
     return returnedValue;
+}
+
+void RTPSProxyProcedureEndpoint::addAsyncTask(RTPSAsyncTask *task, int64_t numSec)
+{
+        boost::unique_lock<boost::mutex> lock(*recv_mutex_);
+        RecvPoint *recvpoint = new RecvPoint(task);
+        recv_threads.insert(std::pair<int64_t, RecvPoint&>(numSec, *recvpoint));
 }
 
 void RTPSProxyProcedureEndpoint::onNewDataMessage(eprosima::fastrtps::Subscriber *sub)
@@ -519,7 +449,20 @@ void RTPSProxyProcedureEndpoint::onNewDataMessage(eprosima::fastrtps::Subscriber
                 if(it != recv_threads.end())
                 {
                     m_copy_data(it->second.getReply(), data_);
-                    it->second.cond_.notify_one();
+
+                    if(it->second.getTask() == NULL)
+                    {
+                        it->second.cond_.notify_one();
+                    }
+                    else
+                    {
+                        RecvPoint *rp = &it->second;
+                        recv_threads.erase(it);
+                        RTPSAsyncTask *task = rp->getTask();
+                        delete rp;
+                        lock.unlock();
+                        task->execute();
+                    }
                 }
             }
         }

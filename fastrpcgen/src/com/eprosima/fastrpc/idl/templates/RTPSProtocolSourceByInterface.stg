@@ -65,7 +65,6 @@ bool $ctx.filename$Protocol::setTransport(Transport &transport)
 // TODO Si falla que elimine los creados.
 bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
 {
-    const char *requesttypeName = NULL, *replytypeName = NULL;
     std::string requesttopicName, replytopicName;
 
     if(m_ddsTransport != NULL)
@@ -95,9 +94,9 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 requesttopicName.c_str(),
                 $first(ctx.scopedInterfaces).formatedScopedname$_replyPlugin.getName(),
                 replytopicName.c_str(),
-                (::transport::dds::RTPSTransport::Create_data)$first(ctx.scopedInterfaces).formatedScopedname$_ReplyPlugin::create_data,
-                (::transport::dds::RTPSTransport::Copy_data)$first(ctx.scopedInterfaces).formatedScopedname$_ReplyPlugin::copy_data,
-                (::transport::dds::RTPSTransport::Destroy_data)$first(ctx.scopedInterfaces).formatedScopedname$_ReplyPlugin::delete_data,
+                (::transport::dds::RTPSTransport::Create_data)$first(ctx.scopedInterfaces).scopedname$_ReplyPlugin::create_data,
+                (::transport::dds::RTPSTransport::Copy_data)$first(ctx.scopedInterfaces).scopedname$_ReplyPlugin::copy_data,
+                (::transport::dds::RTPSTransport::Destroy_data)$first(ctx.scopedInterfaces).scopedname$_ReplyPlugin::delete_data,
                 NULL,
                 sizeof($first(ctx.scopedInterfaces).scopedname$_Reply)
                 ));
@@ -111,9 +110,9 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                     replytopicName.c_str(),
                     $first(ctx.scopedInterfaces).formatedScopedname$_requestPlugin.getName(),
                     requesttopicName.c_str(),
-                    (::transport::dds::RTPSTransport::Create_data)$first(ctx.scopedInterfaces).formatedScopedname$_RequestPlugin::create_data,
-                    (::transport::dds::RTPSTransport::Copy_data)$first(ctx.scopedInterfaces).formatedScopedname$_RequestPlugin::copy_data,
-                    (::transport::dds::RTPSTransport::Destroy_data)$first(ctx.scopedInterfaces).formatedScopedname$_RequestPlugin::delete_data,
+                    (::transport::dds::RTPSTransport::Create_data)$first(ctx.scopedInterfaces).scopedname$_RequestPlugin::create_data,
+                    (::transport::dds::RTPSTransport::Copy_data)$first(ctx.scopedInterfaces).scopedname$_RequestPlugin::copy_data,
+                    (::transport::dds::RTPSTransport::Destroy_data)$first(ctx.scopedInterfaces).scopedname$_RequestPlugin::delete_data,
                     $ctx.filename$Protocol::$first(ctx.scopedInterfaces).formatedScopedname$_serve,
                     sizeof($first(ctx.scopedInterfaces).scopedname$_Request)));
             }
@@ -142,9 +141,9 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 requesttopicName.c_str(),
                 $interface.formatedScopedname$_replyPlugin.getName(),
                 replytopicName.c_str(),
-                (::transport::dds::RTPSTransport::Create_data)$interface.formatedScopedname$_ReplyPlugin::create_data,
-                (::transport::dds::RTPSTransport::Copy_data)$interface.formatedScopedname$_ReplyPlugin::copy_data,
-                (::transport::dds::RTPSTransport::Destroy_data)$interface.formatedScopedname$_ReplyPlugin::delete_data,
+                (::transport::dds::RTPSTransport::Create_data)$interface.scopedname$_ReplyPlugin::create_data,
+                (::transport::dds::RTPSTransport::Copy_data)$interface.scopedname$_ReplyPlugin::copy_data,
+                (::transport::dds::RTPSTransport::Destroy_data)$interface.scopedname$_ReplyPlugin::delete_data,
                 NULL,
                 sizeof($interface.scopedname$_Reply)
                 ));
@@ -158,9 +157,9 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                     replytopicName.c_str(),
                     $interface.formatedScopedname$_requestPlugin.getName(),
                     requesttopicName.c_str(),
-                    (::transport::dds::RTPSTransport::Create_data)$interface.formatedScopedname$_RequestPlugin::create_data,
-                    (::transport::dds::RTPSTransport::Copy_data)$interface.formatedScopedname$_RequestPlugin::copy_data,
-                    (::transport::dds::RTPSTransport::Destroy_data)$interface.formatedScopedname$_RequestPlugin::delete_data,
+                    (::transport::dds::RTPSTransport::Create_data)$interface.scopedname$_RequestPlugin::create_data,
+                    (::transport::dds::RTPSTransport::Copy_data)$interface.scopedname$_RequestPlugin::copy_data,
+                    (::transport::dds::RTPSTransport::Destroy_data)$interface.scopedname$_RequestPlugin::delete_data,
                     $ctx.filename$Protocol::$interface.formatedScopedname$_serve,
                     sizeof($interface.scopedname$_Request)));
             }

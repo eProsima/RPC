@@ -1,0 +1,48 @@
+exception Level1
+{
+    long count;
+    string msg;
+};
+
+module Alfa
+{
+    struct Annabeth
+    {
+        long count;
+	string comment;
+    };
+
+    exception Level2
+    {
+        long count;
+	Annabeth ana;
+    };
+};
+
+module Beta
+{
+   exception Excep
+   {
+       long count;
+       string msg;
+   };
+
+   interface Ifc
+   {
+       exception ExcepIntern
+       {
+	  long count;
+          string msg;
+       };
+
+       void sendLevel1(in long l1, inout long l2,  out long l3) raises(Level1, Alfa::Level2);
+
+       long sendLevel2() raises( Alfa::Level2, Excep);
+
+       long sendExcep(in long l1) raises( Excep, ExcepIntern);
+
+       long sendExcepIntern(in long l1) raises(ExcepIntern, Level1);
+   
+       void sendOnlyExcep() raises(Excep);
+   };
+};

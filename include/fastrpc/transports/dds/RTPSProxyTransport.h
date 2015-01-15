@@ -94,24 +94,6 @@ namespace eprosima
                                     RTPSTransport::Create_data create_data, RTPSTransport::Copy_data copy_data, RTPSTransport::Destroy_data destroy_data,
                                     RTPSTransport::ProcessFunc processFunc, int dataSize);
 
-                        /*!
-                         * @brief This function adds a asynchronous task to the asynchronous thread.
-                         *
-                         * @param query The DDS query condition that is used to take the request. Cannot be NULL.
-                         * @param task The asynchronos task created and associated with a request. Cannot be NULL.
-                         * @param timeout The timeout used for this request.
-                         * @return A 0 value is returned if function works successfully. In any other case, -1 is returned.
-                         */
-                        //TODO
-                        //FASTRPC_DllAPI int addAsyncTask(DDSQueryCondition *query, DDSAsyncTask *task, long timeout);
-
-                        /**
-                         * @brief This function deletes all the asynchronous tasks associated with the ProxyProcedureEndpoint endpoint.
-                         *
-                         * @param pe Pointer to the ProxyProcedureEndpoint. It cannot be NULL.
-                         */
-                        //FASTRPC_DllAPI void deleteAssociatedAsyncTasks(RTPSProxyProcedureEndpoint *pe);
-
                     private:
 
                         //TODO TEMPORAL
@@ -131,8 +113,6 @@ namespace eprosima
                         std::string m_instanceName;
 
                         long m_timeout;
-
-                        AsyncThread *m_asyncThread;
                 };
             } // namespace dds
         } // namespace transport

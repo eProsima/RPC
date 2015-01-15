@@ -130,22 +130,29 @@ int RTPSServerProcedureEndpoint::createEntities(const std::string &/*serviceName
 
     if(m_reader != nullptr)
     {
-        eprosima::fastrtps::PublisherAttributes wQos;
-
-        wQos.topic.topicName = m_writerTopicName;
-        wQos.topic.topicDataType = m_writerTypeName;
-        wQos.qos.m_reliability.kind = eprosima::fastrtps::RELIABLE_RELIABILITY_QOS;
-        wQos.topic.historyQos.depth = 100;
-
-        m_writer = eprosima::fastrtps::Domain::createPublisher(m_transport.getParticipant(), wQos, nullptr);
-
-        if(m_writer != nullptr)
+        if(!m_writerTypeName.empty())
         {
-            return 0;
+            eprosima::fastrtps::PublisherAttributes wQos;
+
+            wQos.topic.topicName = m_writerTopicName;
+            wQos.topic.topicDataType = m_writerTypeName;
+            wQos.qos.m_reliability.kind = eprosima::fastrtps::RELIABLE_RELIABILITY_QOS;
+            wQos.topic.historyQos.depth = 100;
+
+            m_writer = eprosima::fastrtps::Domain::createPublisher(m_transport.getParticipant(), wQos, nullptr);
+
+            if(m_writer != nullptr)
+            {
+                return 0;
+            }
+            else
+            {
+                printf("ERROR<%s::%s: Cannot create the reply data writer\n", CLASS_NAME, METHOD_NAME);
+            }
         }
         else
         {
-            printf("ERROR<%s::%s: Cannot create the reply data writer\n", CLASS_NAME, METHOD_NAME);
+            return 0;
         }
 
         eprosima::fastrtps::Domain::removeSubscriber(m_reader);

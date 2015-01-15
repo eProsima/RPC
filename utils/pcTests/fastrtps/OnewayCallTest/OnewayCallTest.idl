@@ -1,0 +1,18 @@
+struct Structure
+{
+	long dato;
+	string message;
+}; //@top-level false
+
+interface OnewayCallTest
+{
+	oneway void setLong(in long lo1);
+	long getLong();
+	oneway void setBoolean(in boolean bo1);
+	boolean getBoolean();
+	oneway void setString(in string s1);
+	string getString();
+	oneway void setStruct(in Structure ev);
+	Structure getStruct();
+};
+

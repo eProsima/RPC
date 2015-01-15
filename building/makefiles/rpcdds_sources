@@ -13,6 +13,7 @@ src/transports/dds/DDSUDPServerTransport.cpp
 src/transports/dds/DDSTCPProxyTransport.cpp
 src/transports/dds/DDSTCPServerTransport.cpp
 src/transports/dds/DDSAsyncTask.cpp
+src/transports/dds/RTPSAsyncTask.cpp
 src/transports/dds/AsyncThread.cpp
 src/transports/dds/components/ProxyProcedureEndpoint.cpp
 src/transports/dds/components/RTPSProxyProcedureEndpoint.cpp

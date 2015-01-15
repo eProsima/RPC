@@ -1188,8 +1188,8 @@ public class fastrpcgen
             tmanager.addGroup((m_ddstransport == DDS_TRANSPORT.RTI ? "DDS" : "RTPS") + "ClientExample");
             // Load template to generate proxy async support files.
             tmanager.addGroup("AsyncCallbackHandlers");
-            tmanager.addGroup("DDSAsyncSupportHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface"));
-            tmanager.addGroup("DDSAsyncSupportSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface"));
+            tmanager.addGroup((m_ddstransport == DDS_TRANSPORT.RTI ? "DDS" : "RTPS") + "AsyncSupportHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface"));
+            tmanager.addGroup((m_ddstransport == DDS_TRANSPORT.RTI ? "DDS" : "RTPS") + "AsyncSupportSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface"));
             // Load template to generate Server for topics.
             tmanager.addGroup("ServerHeader");
             tmanager.addGroup("ServerSource");
@@ -1320,9 +1320,9 @@ public class fastrpcgen
 
                     if(returnedValue && (returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "AsyncCallbackHandlers.h", maintemplates.getTemplate("AsyncCallbackHandlers"), m_replace)))
                     {
-                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.h", maintemplates.getTemplate("DDSAsyncSupportHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface")), m_replace))
+                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.h", maintemplates.getTemplate((m_ddstransport == DDS_TRANSPORT.RTI ? "DDS" : "RTPS") + "AsyncSupportHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface")), m_replace))
                         {
-                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.cxx", maintemplates.getTemplate("DDSAsyncSupportSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface")), m_replace))
+                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "DDSAsyncSupport.cxx", maintemplates.getTemplate((m_ddstransport == DDS_TRANSPORT.RTI ? "DDS" : "RTPS") + "AsyncSupportSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface")), m_replace))
                             {
                                 if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Protocol.h", maintemplates.getTemplate("ProtocolHeader"), m_replace))
                                 {

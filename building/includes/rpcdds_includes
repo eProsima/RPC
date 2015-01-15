@@ -31,6 +31,7 @@ transports/AsyncTask.h
 transports/ProxyTransport.h
 transports/Transport.h
 transports/dds/DDSAsyncTask.h
+transports/dds/RTPSAsyncTask.h
 transports/dds/UDPServerTransport.h
 transports/dds/RTPSServerTransport.h
 transports/dds/ProxyTransport.h
