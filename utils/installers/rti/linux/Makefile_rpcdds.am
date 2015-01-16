@@ -5,7 +5,7 @@ ACLOCAL_AMFLAGS = -I m4 --install
 lib_LTLIBRARIES = librpcdds.la
 librpcdds_la_SOURCES = RPCDDS_SOURCES
 
-librpcdds_la_LDFLAGS = -version-number VERSION_MAJOR:VERSION_MINOR:VERSION_RELEASE -lfastcdr -lboost_thread -lboost_system -lpthread -lrt
+librpcdds_la_LDFLAGS = -version-number VERSION_MAJOR:VERSION_MINOR:VERSION_RELEASE -lfastcdr -lfastrtps -lboost_thread -lboost_system -lboost_chrono -lpthread -lrt
 
 AM_CPPFLAGS = -std=c++0x -DRTI_LINUX -DRTI_UNIX -Iinclude -Iinclude/rpcdds -Iextra/boost-threadpool -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds
 
