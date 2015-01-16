@@ -159,7 +159,7 @@ function package
 
     # Create installers
     cd utils/installers/rti/linux
-    ./setup_linux_rpcdds.sh $fastrpcversion $cdrversion
+    ./setup_linux_rpcdds.sh $fastrpcversion $cdrversion $rtpsversion
     errorstatus=$?
     cd ../../../..
     if [ $errorstatus != 0 ]; then return; fi

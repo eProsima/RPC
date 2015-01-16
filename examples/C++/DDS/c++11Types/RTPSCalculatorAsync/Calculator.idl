@@ -1,0 +1,5 @@
+interface Calculator
+{
+    long addition(in long value1, in long value2);
+    long subtraction(in long value1, in long value2);
+};

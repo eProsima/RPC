@@ -245,6 +245,7 @@ fi
 
 version=$1
 cdrversion=$2
+rtpsversion=$3
 
 # Get distro version
 . ../../../../thirdparty/dev-env/scripts/common_pack_functions.sh getDistroVersion
