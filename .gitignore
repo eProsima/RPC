@@ -31,12 +31,6 @@ classes/fastrpcgen.jar
 classes/rpcddsgen.jar
 classes/rpcrestgen.jar
 
-# Generated Java source
-fastrpcgen/src/com/eprosima/fastrpc/wadl/grammar/WADLParser.java
-fastrpcgen/src/com/eprosima/fastrpc/wadl/grammar/WADLParser.smap
-fastrpcgen/src/com/eprosima/fastrpc/wadl/grammar/WADLParserTokenTypes.java
-fastrpcgen/src/com/eprosima/fastrpc/wadl/grammar/WADLParserTokenTypes.txt
-
 # Foo examples
 utils/doxygen/examples/dds/*.h
 utils/doxygen/examples/dds/*.cxx
