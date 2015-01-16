@@ -85,6 +85,7 @@ function installer
     if [ $errorstatus != 0 ]; then return; fi
     cd utils/installers/rti/linux
     find tmp/$project/src -type f -exec sed -i -e 's/#include "fastrpc/#include "rpcdds/' {} \;
+    find tmp/$project/src -type f -exec sed -i -e 's/#include <fastrpc/#include <rpcdds/' {} \;
 
     # Copy autoconf configuration files.
     cp configure_rpcdds.ac tmp/$project/configure.ac
@@ -254,11 +255,11 @@ mkdir tmp/$project
 
 installer
 
-if [ $errorstatus == 0 ]; then
-    if [[ "${distroversion}" == "CentOS6"* ]] || [[ "${distroversion}" == "Fedora"* ]]; then
-        rpminstaller
-    fi
-fi
+#if [ $errorstatus == 0 ]; then
+#    if [[ "${distroversion}" == "CentOS6"* ]] || [[ "${distroversion}" == "Fedora"* ]]; then
+#        rpminstaller
+#    fi
+#fi
 
 # Remove temporaly directory
 rm -rf tmp

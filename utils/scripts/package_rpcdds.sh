@@ -38,6 +38,17 @@ function package
     if [ $errorstatus != 0 ]; then return; fi
     cd ../../../..
 
+    cd thirdparty/fastrtps
+    # Get the current version of CDR
+    . ../dev-env/scripts/common_pack_functions.sh getVersionFromCPP rtpsversion include/fastrtps/fastrtps_version.h
+
+    # Compile and packaging FastCDR library for all archictectures
+    cd utils/scripts
+    #./package_fastrtps.sh
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    cd ../../../..
+
     # Get the current version of RPCDDS
     . thirdparty/dev-env/scripts/common_pack_functions.sh getVersionFromCPP fastrpcversion include/fastrpc/fastrpc_version.h
     errorstatus=$?
@@ -118,6 +129,9 @@ function package
     if [ $errorstatus != 0 ]; then return; fi
     cd ../..
     find includetmp/rpcdds -type f -exec sed -i -e 's/#include "fastrpc/#include "rpcdds/' {} \;
+    errorstatus=$?
+    if [ $errorstatus != 0 ]; then return; fi
+    find includetmp/rpcdds -type f -exec sed -i -e 's/#include <fastrpc/#include <rpcdds/' {} \;
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
 
