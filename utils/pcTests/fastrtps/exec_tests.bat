@@ -74,7 +74,7 @@ for /D %%D in ("*") do (
                 :: i86 target
                 :: Set environtment
                 call ..\..\..\thirdparty\dev-env\scripts\common_dds_functions.bat :setRTItarget i86Win32VS2013
-                call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\i86Win32VS2013;..\..\..\thirdparty\fastcdr\lib\i86Win32VS2013;%BOOST_LIBRARYDIR%\i86Win32VS2013"
+                call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\i86Win32VS2013;..\..\..\thirdparty\fastcdr\lib\i86Win32VS2013;..\..\..\thirdparty\fastrtps\lib\i86Win32VS2013;%BOOST_LIBRARYDIR%\i86Win32VS2013"
                 call "%%D\exec_test.bat" Win32
                 :: Restore environtment
                 call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :restoreTargetPath
@@ -87,7 +87,7 @@ for /D %%D in ("*") do (
             if "%test_targets%"=="x64" set exec_target_bool=2
             if !exec_target_bool!==2 (
                 call ..\..\..\thirdparty\dev-env\scripts\common_dds_functions.bat :setRTItarget x64Win64VS2013
-                call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\x64Win64VS2013;..\..\..\thirdparty\fastcdr\lib\x64Win64VS2013;%BOOST_LIBRARYDIR%\x64Win64VS2013"
+                call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\x64Win64VS2013;..\..\..\thirdparty\fastcdr\lib\x64Win64VS2013;..\..\..\thirdparty\fastrtps\lib\x64Win64VS2013;%BOOST_LIBRARYDIR%\x64Win64VS2013"
                 call "%%D\exec_test.bat" x64
                 :: Restore environtment
                 call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :restoreTargetPath
@@ -102,7 +102,7 @@ for /D %%D in ("*") do (
             if !exec_target_bool!==3 (
                 :: Set environtment
                 call ..\..\..\thirdparty\dev-env\scripts\common_dds_functions.bat :setRTItarget i86Win32VS2013
-                call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\i86Win32VS2013;..\..\..\thirdparty\fastcdr\lib\i86Win32VS2013;%BOOST_LIBRARYDIR%\i86Win32VS2013"
+                call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\i86Win32VS2013;..\..\..\thirdparty\fastcdr\lib\i86Win32VS2013;..\..\..\thirdparty\fastrtps\lib\i86Win32VS2013;%BOOST_LIBRARYDIR%\i86Win32VS2013"
                 call :execTest i86Win32VS2013 Win32 %%D
                 :: Restore environtment
                 call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :restoreTargetPath
@@ -116,7 +116,7 @@ for /D %%D in ("*") do (
             if !exec_target_bool!==4 (
                 :: Set environtment
                 call ..\..\..\thirdparty\dev-env\scripts\common_dds_functions.bat :setRTItarget x64Win64VS2013
-                call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\x64Win64VS2013;..\..\..\thirdparty\fastcdr\lib\x64Win64VS2013;%BOOST_LIBRARYDIR%\x64Win64VS2013"
+                call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :setTargetPath "..\..\..\lib\x64Win64VS2013;..\..\..\thirdparty\fastcdr\lib\x64Win64VS2013;..\..\..\thirdparty\fastrtps\lib\x64Win64VS2013;%BOOST_LIBRARYDIR%\x64Win64VS2013"
                 call :execTest x64Win64VS2013 x64 %%D
                 :: Restore environtment
                 call ..\..\..\thirdparty\dev-env\scripts\common_exectest_functions.bat :restoreTargetPath
@@ -142,7 +142,7 @@ echo "EXECUTING %3 for %1 using operations as topics"
 if exist output rd /S /Q output
 mkdir output
 :: Generates the file with FASTRPC script
-call ..\..\..\scripts\rpcddsgen.bat -local -topicGeneration byOperation -d output -example %1 "%3\%3.idl"
+call ..\..\..\scripts\rpcddsgen.bat -local -transport rtps -topicGeneration byOperation -d output -example %1 "%3\%3.idl"
 set errorstatus=%ERRORLEVEL%
 :: Copy backup to original files.
 :: Copy static test files into output directory
@@ -231,7 +231,7 @@ echo "EXECUTING %3 for %1 using interfaces as topics"
 if exist output rd /S /Q output
 mkdir output
 :: Generates the file with FASTRPC script
-call ..\..\..\scripts\rpcddsgen.bat -local -topicGeneration byInterface -d output -example %1 "%3\%3.idl"
+call ..\..\..\scripts\rpcddsgen.bat -local -transport rtps -topicGeneration byInterface -d output -example %1 "%3\%3.idl"
 set errorstatus=%ERRORLEVEL%
 :: Copy backup to original files.
 :: Copy static test files into output directory

@@ -319,6 +319,7 @@ projectClientExample(solution, project, example, configurations, local) ::= <<
                               $else$
                               $if(it.debug)$$solution.librariesStaticDebug : {library |$library$.lib;}$
                               $else$$solution.librariesStatic : {library |$library$.lib;}$
+                              iphlpapi.lib;Shlwapi.lib;
                               $endif$
                               $endif$
                               $project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;$if(!it.dll)$lib$endif$$project.name$Client$if(it.debug)$d$endif$.lib;$if(!it.dll)$WS2_32.lib;$endif$%(AdditionalDependencies)</AdditionalDependencies>
