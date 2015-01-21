@@ -23,6 +23,9 @@ function execTest
     ../../../scripts/rpcddsgen.sh -local -transport rtps -topicGeneration byOperation -d output -example $NDDSTARGET "$1/$1.idl" $test_args
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
+
+	#read -p "Press [Enter] key to start again..."
+
     # Compile client and server example application
     make -C output -f makefile_$NDDSTARGET all
     errorstatus=$?

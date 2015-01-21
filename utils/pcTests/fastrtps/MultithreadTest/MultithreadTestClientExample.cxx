@@ -18,6 +18,8 @@
 #include "fastrpc/transports/dds/RTPSProxyTransport.h"
 #include "fastrpc/exceptions/Exceptions.h"
 
+#include "fastrtps/utils/RTPSLog.h"
+
 #include "boost/config/user.hpp"
 #include "boost/thread.hpp"
 #ifdef __linux
@@ -148,7 +150,8 @@ int createThreads()
 int main(int argc, char **argv)
 {
     const char* const METHOD_NAME = "main";
-
+	eprosima::Log::setVerbosity(eprosima::VERB_INFO);
+	eprosima::Log::logFileName("Client.txt",true);
     proto = new MultithreadTestProtocol();
     transp = new RTPSProxyTransport("MultithreadTestService", "Instance");
     prox = new MultithreadTestProxy(*transp, *proto);

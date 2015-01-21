@@ -2,13 +2,13 @@ CPP= g++
 CPPFLAGS = -c -Wall -fpic -m64 -std=c++0x
 LN= g++
 AR=ar
-LDFLAGS= -m64
+LDFLAGS= -m64 -Wl,--no-as-needed
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
 DEFINES=  -DRTI_LINUX -DRTI_UNIX
 
 INCLUDES= -I. -I../../../../thirdparty/fastcdr/include -I../../../../thirdparty/fastrtps/include -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I../../../../thirdparty/eprosima-common-code -I$(RPCDDSHOME)/include
 
-LIBS = -L../../../../thirdparty/fastcdr/lib/$(EPROSIMA_TARGET) -L../../../../thirdparty/fastrtps/lib/$(EPROSIMA_TARGET) -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/x64Linux2.6gcc4.4.5 -lfastcdr -lfastrtps -lnddscore -lnddsc -lnddscpp -lrpcdds $(SYSLIBS)
+LIBS = -L../../../../thirdparty/fastcdr/lib/$(EPROSIMA_TARGET) -L../../../../thirdparty/fastrtps/lib/$(EPROSIMA_TARGET) -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/x64Linux2.6gcc4.4.5 -lfastcdr -lfastrtpsd -lnddscore -lnddsc -lnddscpp -lrpcdds $(SYSLIBS) 
 
 DIRECTORIES= output.dir output/x64Linux2.6gcc4.4.5.dir lib.dir lib/x64Linux2.6gcc4.4.5.dir bin.dir bin/x64Linux2.6gcc4.4.5.dir
 

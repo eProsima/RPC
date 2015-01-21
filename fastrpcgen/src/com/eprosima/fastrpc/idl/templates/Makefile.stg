@@ -5,7 +5,7 @@ CPP= g++
 CPPFLAGS = -c -Wall -fpic -m$arch$ -std=c++0x
 LN= g++
 AR=ar
-LDFLAGS= -m$arch$
+LDFLAGS= -m$arch$ -Wl,--no-as-needed
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
 DEFINES= $solution.defines : {define | -D$define$};separator=" "$
 

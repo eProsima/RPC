@@ -47,6 +47,7 @@ sourceSets {
         java {
             srcDir 'src'
             srcDir '../thirdparty/fastcdr/src/java'
+            srcDir 'build/generated-src'
         }
 
         resources {
