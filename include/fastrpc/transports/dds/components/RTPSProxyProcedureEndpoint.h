@@ -50,7 +50,7 @@ namespace eprosima
                  * It also encapsulates the DDS datawriter and the DDS datareader.
 				 * @ingroup TRANSPORTMODULE
                  */
-                class FASTRPC_DllAPI RTPSProxyProcedureEndpoint : public Endpoint, public eprosima::fastrtps::SubscriberListener,
+                class RTPSProxyProcedureEndpoint : public Endpoint, public eprosima::fastrtps::SubscriberListener,
                 public eprosima::fastrtps::PublisherListener
                 {
                     public:
@@ -59,10 +59,10 @@ namespace eprosima
                          * @brief Default constructor.
                          * @param Transport that is creating the proxy procedure endpoint. It cannot be NULL.
                          */
-                        RTPSProxyProcedureEndpoint(RTPSProxyTransport &transport);
+                        FASTRPC_DllAPI RTPSProxyProcedureEndpoint(RTPSProxyTransport &transport);
 
                         //! @brief Default destructor.
-                        virtual ~RTPSProxyProcedureEndpoint();
+                        virtual FASTRPC_DllAPI ~RTPSProxyProcedureEndpoint();
 
                         /*!
                          * @brief This function initializes the proxy procedure endpoint.
@@ -76,7 +76,7 @@ namespace eprosima
                          * @return 0 if the initialization works. -1 in other case.
                          * TODO
                          */
-                        int initialize(const char *name, const char *writertypename,
+                        FASTRPC_DllAPI int initialize(const char *name, const char *writertypename,
                                 const char *writertopicname, const char *readertypename, const char *readertopicname,
                                 RTPSTransport::Create_data create_data, RTPSTransport::Copy_data copy_data,
                                 RTPSTransport::Destroy_data destroy_data);
@@ -85,7 +85,7 @@ namespace eprosima
                          * @brief This function finalizes the proxy procedure endpoint.
                          * All entities and objects created by this procedure endpoint are deleted.
                          */
-                        void finalize();
+                        FASTRPC_DllAPI void finalize();
 
                         /*!
                          * @brief This function sends a synchronous RPC call.
@@ -98,7 +98,7 @@ namespace eprosima
 						 * @return Operation status
                          * @throw eprosima::rpc::exception::ServerTimeoutException.
                          */
-                        eprosima::rpc::ReturnMessage send(void *request, void* reply);
+                        FASTRPC_DllAPI eprosima::rpc::ReturnMessage send(void *request, void* reply);
 
 						/*!
 						 * @brief This function sends an asynchronous RPC call.
@@ -110,7 +110,7 @@ namespace eprosima
 						 * @param task Object containing information of the asynchronous task.
 						 * @return Operation status. It can be CLIENT_INTERNAL_ERROR or NO_SERVER
 						 */
-                        eprosima::rpc::ReturnMessage send_async(void *request, RTPSAsyncTask *task);
+                        FASTRPC_DllAPI eprosima::rpc::ReturnMessage send_async(void *request, RTPSAsyncTask *task);
 
                         /// @brief DDS callback.
                         virtual FASTRPC_DllAPI void onNewDataMessage(eprosima::fastrtps::Subscriber *sub);

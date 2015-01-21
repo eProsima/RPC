@@ -47,8 +47,6 @@ int main(int argc, char **argv)
         return -1;
     }
 
-    sleep(5);
-
     uint8_t  oc1 = oc1_value;    
     uint8_t  oc2 = BasicTypeTest::oc2_value;    
     uint8_t  oc3 = 0;    

@@ -183,16 +183,31 @@
     <ClCompile Include="..\..\src\transports\dds\ProxyTransport.cpp">
       <Filter>Archivos de código fuente\transports\dds</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\transports\dds\RTPSProxyTransport.cpp">
+      <Filter>Archivos de código fuente\transports\dds</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\transports\dds\ServerTransport.cpp">
+      <Filter>Archivos de código fuente\transports\dds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\transports\dds\RTPSServerTransport.cpp">
       <Filter>Archivos de código fuente\transports\dds</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\transports\dds\Transport.cpp">
       <Filter>Archivos de código fuente\transports\dds</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\transports\dds\RTPSTransport.cpp">
+      <Filter>Archivos de código fuente\transports\dds</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\transports\dds\components\ProxyProcedureEndpoint.cpp">
       <Filter>Archivos de código fuente\transports\dds\components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\transports\dds\components\RTPSProxyProcedureEndpoint.cpp">
+      <Filter>Archivos de código fuente\transports\dds\components</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\transports\dds\components\ServerProcedureEndpoint.cpp">
+      <Filter>Archivos de código fuente\transports\dds\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\transports\dds\components\RTPSServerProcedureEndpoint.cpp">
       <Filter>Archivos de código fuente\transports\dds\components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\transports\components\TCPEndpoint.cpp">
@@ -329,7 +344,13 @@
     <ClInclude Include="..\..\include\fastrpc\transports\dds\ProxyTransport.h">
       <Filter>Archivos de encabezado\transports\dds</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\RTPSProxyTransport.h">
+      <Filter>Archivos de encabezado\transports\dds</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\include\fastrpc\transports\dds\ServerTransport.h">
+      <Filter>Archivos de encabezado\transports\dds</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\RTPSServerTransport.h">
       <Filter>Archivos de encabezado\transports\dds</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\fastrpc\transports\dds\TCPProxyTransport.h">
@@ -339,6 +360,9 @@
       <Filter>Archivos de encabezado\transports\dds</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\fastrpc\transports\dds\Transport.h">
+      <Filter>Archivos de encabezado\transports\dds</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\RTPSTransport.h">
       <Filter>Archivos de encabezado\transports\dds</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\fastrpc\transports\dds\UDPProxyTransport.h">
@@ -356,7 +380,13 @@
     <ClInclude Include="..\..\include\fastrpc\transports\dds\components\ProxyProcedureEndpoint.h">
       <Filter>Archivos de encabezado\transports\dds\components</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\components\RTPSProxyProcedureEndpoint.h">
+      <Filter>Archivos de encabezado\transports\dds\components</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\include\fastrpc\transports\dds\components\ServerProcedureEndpoint.h">
+      <Filter>Archivos de encabezado\transports\dds\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\components\RTPSServerProcedureEndpoint.h">
       <Filter>Archivos de encabezado\transports\dds\components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\fastrpc\transports\messages\HttpMessage.h">

@@ -140,6 +140,8 @@ Section -post SEC0006
     # Copy eProsima header files.
     SetOutPath $INSTDIR\include\fastrpc\eProsima_cpp\config
     File "..\..\..\..\thirdparty\eprosima-common-code\eProsima_cpp\config\eProsima_auto_link.h"
+    SetOutPath $INSTDIR\include\rpcdds\eProsima_cpp\macros
+    File "..\..\..\..\thirdparty\eprosima-common-code\eProsima_cpp\macros\snprintf.h"
 
     # Copy fastcdr header files.
     SetOutPath $INSTDIR\include

@@ -146,6 +146,8 @@ Section -post SEC0006
     # Copy eProsima header files.
     SetOutPath $INSTDIR\include\rpcdds\eProsima_cpp\config
     File "..\..\..\..\thirdparty\eprosima-common-code\eProsima_cpp\config\eProsima_auto_link.h"
+    SetOutPath $INSTDIR\include\rpcdds\eProsima_cpp\macros
+    File "..\..\..\..\thirdparty\eprosima-common-code\eProsima_cpp\macros\snprintf.h"
 
     # Copy fastcdr header files.
     SetOutPath $INSTDIR\include
@@ -153,6 +155,13 @@ Section -post SEC0006
     File /r ..\..\..\..\thirdparty\fastcdr\include\*
     SetOutPath $INSTDIR\include\fastcdr\eProsima_cpp\config
     File "..\..\..\..\thirdparty\fastcdr\thirdparty\eprosima-common-code\eProsima_cpp\config\eProsima_auto_link.h"
+    
+    # Copy fastrtps header files.
+    SetOutPath $INSTDIR\include
+    SetOverwrite on
+    File /r ..\..\..\..\thirdparty\fastrtps\include\*
+    SetOutPath $INSTDIR\include\fastrtps\eProsima_cpp
+    File /r ..\..\..\..\thirdparty\fastrtps\thirdparty\eprosima-common-code\eProsima_cpp\*
     
     # Copy licensies
     SetOutPath $INSTDIR

@@ -41,6 +41,26 @@ if not %errorstatus%==0 goto :exit
 :: Back to FastBuffers directory
 cd "..\..\..\.." 
 
+:: Compile FastRTPS library.
+cd "thirdparty\fastrtps"
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+:: Get the current vesion of FastRTPS
+call ..\..\thirdparty\dev-env\scripts\common_pack_functions.bat :getVersionFromCPP VERSIONFASTRTPS ..\..\thirdparty\fastrtps\include\fastrtps\fastrtps_version.h
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+:: Compile CDR library.
+::rmdir /S /Q lib\i86Win32VS2010
+::mdir /S /Q lib\i86Win32VS2013
+::mdir /S /Q lib\x64Win64VS2010
+::mdir /S /Q lib\x64Win64VS2013
+cd "utils\scripts"
+::call build_fastrtps.bat
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+:: Back to FastBuffers directory
+cd "..\..\..\.." 
+
 rd /S /Q "utils\doxygen\output"
 
 :: Compile FastRPC library.
@@ -271,6 +291,81 @@ copy thirdparty\fastcdr\lib\x64Win64VS2013\libfastcdrd-%VERSIONFASTCDR%.pdb lib\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 
+:: Copy fastrtps libraries needed in
+copy thirdparty\fastrtps\lib\i86Win32VS2013\fastrtps-%VERSIONFASTCDR%.dll lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2013\fastrtps-%VERSIONFASTCDR%.lib lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2013\fastrtps-%VERSIONFASTCDR%.pdb lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2013\fastrtps-%VERSIONFASTCDR%.exp lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2013\fastrtpsd-%VERSIONFASTCDR%.dll lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2013\fastrtpsd-%VERSIONFASTCDR%.lib lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2013\fastrtpsd-%VERSIONFASTCDR%.pdb lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2013\fastrtpsd-%VERSIONFASTCDR%.exp lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2013\libfastrtps-%VERSIONFASTCDR%.lib lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2013\libfastrtps-%VERSIONFASTCDR%.pdb lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2013\libfastrtpsd-%VERSIONFASTCDR%.lib lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2013\libfastrtpsd-%VERSIONFASTCDR%.pdb lib\i86Win32VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+
+copy thirdparty\fastrtps\lib\x64Win64VS2013\fastrtps-%VERSIONFASTCDR%.dll lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2013\fastrtps-%VERSIONFASTCDR%.lib lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2013\fastrtps-%VERSIONFASTCDR%.pdb lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2013\fastrtps-%VERSIONFASTCDR%.exp lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2013\fastrtpsd-%VERSIONFASTCDR%.dll lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2013\fastrtpsd-%VERSIONFASTCDR%.lib lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2013\fastrtpsd-%VERSIONFASTCDR%.pdb lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2013\fastrtpsd-%VERSIONFASTCDR%.exp lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2013\libfastrtps-%VERSIONFASTCDR%.lib lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2013\libfastrtps-%VERSIONFASTCDR%.pdb lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2013\libfastrtpsd-%VERSIONFASTCDR%.lib lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2013\libfastrtpsd-%VERSIONFASTCDR%.pdb lib\x64Win64VS2013
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+
 :: Copy VS2010 libraries
 
 :: Copy BOOST libraries needed in 
@@ -473,6 +568,81 @@ copy thirdparty\fastcdr\lib\x64Win64VS2010\libfastcdrd-%VERSIONFASTCDR%.pdb lib\
 set errorstatus=%ERRORLEVEL%
 if not %errorstatus%==0 goto :exit
 
+:: Copy fastrtps libraries needed in
+copy thirdparty\fastrtps\lib\i86Win32VS2010\fastrtps-%VERSIONFASTCDR%.dll lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2010\fastrtps-%VERSIONFASTCDR%.lib lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2010\fastrtps-%VERSIONFASTCDR%.pdb lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2010\fastrtps-%VERSIONFASTCDR%.exp lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2010\fastrtpsd-%VERSIONFASTCDR%.dll lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2010\fastrtpsd-%VERSIONFASTCDR%.lib lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2010\fastrtpsd-%VERSIONFASTCDR%.pdb lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2010\fastrtpsd-%VERSIONFASTCDR%.exp lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2010\libfastrtps-%VERSIONFASTCDR%.lib lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2010\libfastrtps-%VERSIONFASTCDR%.pdb lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2010\libfastrtpsd-%VERSIONFASTCDR%.lib lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\i86Win32VS2010\libfastrtpsd-%VERSIONFASTCDR%.pdb lib\i86Win32VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+
+copy thirdparty\fastrtps\lib\x64Win64VS2010\fastrtps-%VERSIONFASTCDR%.dll lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2010\fastrtps-%VERSIONFASTCDR%.lib lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2010\fastrtps-%VERSIONFASTCDR%.pdb lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2010\fastrtps-%VERSIONFASTCDR%.exp lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2010\fastrtpsd-%VERSIONFASTCDR%.dll lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2010\fastrtpsd-%VERSIONFASTCDR%.lib lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2010\fastrtpsd-%VERSIONFASTCDR%.pdb lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2010\fastrtpsd-%VERSIONFASTCDR%.exp lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2010\libfastrtps-%VERSIONFASTCDR%.lib lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2010\libfastrtps-%VERSIONFASTCDR%.pdb lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2010\libfastrtpsd-%VERSIONFASTCDR%.lib lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+copy thirdparty\fastrtps\lib\x64Win64VS2010\libfastrtpsd-%VERSIONFASTCDR%.pdb lib\x64Win64VS2010
+set errorstatus=%ERRORLEVEL%
+if not %errorstatus%==0 goto :exit
+
 :: :: Execute DDS tests
 :: set RPCDDSHOME_OLD=%RPCDDSHOME%
 :: set RPCDDSHOME=%CD%
@@ -527,6 +697,7 @@ for /f "delims=" %%a in ('cat ../../building/includes/rpcdds_includes') do (
 cd ..\..
 cd includetmp\rpcdds
 for /r %%F in ("*.h") do sed -i -e 's/#include "fastrpc/#include "rpcdds/' %%F
+for /r %%F in ("*.h") do sed -i -e 's/#include <fastrpc/#include <rpcdds/' %%F
 sed -i -e 's/EPROSIMA_LIB_NAME fastrpc/EPROSIMA_LIB_NAME rpcdds/' fastrpc_dll.h
 cd ..\..
 
