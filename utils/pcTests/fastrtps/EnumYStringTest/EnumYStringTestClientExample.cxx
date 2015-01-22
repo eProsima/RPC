@@ -46,7 +46,7 @@ int main(int argc, char **argv)
         std::cout << ex.what() << std::endl;
         return -1;
     }
-
+	sleep(1);
     Valores  v1 = VALOR1;    
     Valores  v2 = VALOR2;    
     Valores  v3 = VALOR1;       

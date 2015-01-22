@@ -46,7 +46,7 @@ int main(int argc, char **argv)
         std::cout << ex.what() << std::endl;
         _exit(-1);
     }
-    
+    sleep(1);
     // Create and initialize parameters.
     int32_t  l1 = 10;
     int32_t  l2 = 2;

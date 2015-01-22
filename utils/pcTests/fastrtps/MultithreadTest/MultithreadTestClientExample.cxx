@@ -37,8 +37,8 @@ static RTPSProxyTransport *transp = NULL;
 static MultithreadTestProxy *prox = NULL;
 static int run = 0;
 
-static int NCOUNT = 10;
-static int NTHREADS = 3;
+static int NCOUNT = 200;
+static int NTHREADS = 4;
 
 
 void* executeThread(int threadNum)
@@ -141,12 +141,14 @@ int checkFiles()
 int createThreads()
 {
     int returnedValue = -1;
-
+	NCOUNT = 20;
+	NTHREADS = 2;
     thread1 = boost::thread(executeThread, 1);
     thread2 = boost::thread(executeThread, 2);
-    thread3 = boost::thread(executeThread, 3);
-    thread4 = boost::thread(executeThread, 4);
-	NTHREADS = 4;
+   // thread3 = boost::thread(executeThread, 3);
+    //thread4 = boost::thread(executeThread, 4);
+	
+
     returnedValue = 0;
 
     return returnedValue;
@@ -156,7 +158,7 @@ int main(int argc, char **argv)
 {
     const char* const METHOD_NAME = "main";
 
-	eprosima::Log::setVerbosity(eprosima::VERB_WARNING);
+	eprosima::Log::setVerbosity(eprosima::VERB_INFO);
 	//eprosima::Log::logFileName("Client.txt",true);	
     proto = new MultithreadTestProtocol();
     transp = new RTPSProxyTransport("MultithreadTestService", "Instance");

@@ -48,7 +48,6 @@ RTPSProxyTransport::~RTPSProxyTransport()
     {
         delete(it->second);
     }
-
     m_procedureEndpoints.erase(m_procedureEndpoints.begin(), m_procedureEndpoints.end());
 }
 

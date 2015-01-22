@@ -45,7 +45,7 @@ int main(int argc, char **argv)
         std::cout << ex.what() << std::endl;
         return -1;
     }
-
+	sleep(1);
     largo  l1 = 1;    
     largo  l2 = 0;       
     largo  getLargo_ret = 0;    

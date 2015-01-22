@@ -46,7 +46,7 @@ int main(int argc, char **argv)
         std::cout << ex.what() << std::endl;
         return -1;
     }
-    
+	sleep(1);    
     // Create and initialize parameters.
     Envio ev;
     // Create and initialize return value.

@@ -46,7 +46,7 @@ int main(int argc, char **argv)
         std::cout << ex.what() << std::endl;
         return -1;
     }
-
+    sleep(1);
     uint8_t  oc1 = oc1_value;    
     uint8_t  oc2 = BasicTypeTest::oc2_value;    
     uint8_t  oc3 = 0;    

@@ -397,8 +397,10 @@ int main(int argc, char **argv)
     std::cout << "TEST SUCCESFULLY" << std::endl;
 
 	delete structproxy;
+	delete transport;
     delete protocol;
-    delete transport;
+
+
    
     return 0;
 }

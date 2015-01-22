@@ -50,7 +50,7 @@ int main(int argc, char **argv)
         std::cout << ex.what() << std::endl;
         return -1;
     }
-    
+    sleep(1);
     // Create and initialize parameters.
     ModuleA::Interface1::Dato  data;
     data.count(2);

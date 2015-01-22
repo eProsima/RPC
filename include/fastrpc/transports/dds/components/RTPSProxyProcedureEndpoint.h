@@ -115,9 +115,9 @@ namespace eprosima
                         /// @brief DDS callback.
                         virtual FASTRPC_DllAPI void onNewDataMessage(eprosima::fastrtps::Subscriber *sub);
 
-                        virtual FASTRPC_DllAPI void onSubscriptionMatched(eprosima::fastrtps::Subscriber *sub, eprosima::fastrtps::rtps::MatchingInfo info);
+                        virtual FASTRPC_DllAPI void onSubscriptionMatched(eprosima::fastrtps::Subscriber *sub, eprosima::fastrtps::rtps::MatchingInfo& info);
 
-                        virtual FASTRPC_DllAPI void onPublicationMatched(eprosima::fastrtps::Publisher *pub, eprosima::fastrtps::rtps::MatchingInfo info);
+                        virtual FASTRPC_DllAPI void onPublicationMatched(eprosima::fastrtps::Publisher *pub, eprosima::fastrtps::rtps::MatchingInfo& info);
 
                     private:
 
