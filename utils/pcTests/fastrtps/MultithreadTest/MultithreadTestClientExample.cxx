@@ -37,6 +37,10 @@ static RTPSProxyTransport *transp = NULL;
 static MultithreadTestProxy *prox = NULL;
 static int run = 0;
 
+static int NCOUNT = 10;
+static int NTHREADS = 3;
+
+
 void* executeThread(int threadNum)
 {
     const char* const METHOD_NAME = "executeThread";
@@ -58,15 +62,15 @@ void* executeThread(int threadNum)
         {
             boost::this_thread::sleep(boost::posix_time::seconds(1));
         }
-
-        for(; count < 200; ++count)
+		//std::cout << "Thread " << threadNum << " RUNNING " << std::endl;
+        for(; count < NCOUNT; ++count)
         {
             Dato dato1;
             Dato dato2;
             int32_t test_ret = 0;       
 
             dato1.count(count);
-
+			//std::cout << "COUNT " << count << " in thread " << threadNum << std::endl;
             try
             {
                 test_ret =  prox->test(dato1 ,dato2);
@@ -104,7 +108,7 @@ int checkFiles()
     FILE *file = NULL;
     int returnedValue = 0, number = 0;
 
-    for(int i = 1; i <= 4; ++i)
+    for(int i = 1; i <= NTHREADS; ++i)
     {
 #if defined(RTI_WIN32)
         _snprintf(filename, 50, "Thread%d.txt", i);
@@ -115,7 +119,7 @@ int checkFiles()
 
         if(file != NULL)
         {
-            for(int count = 0; count < 200; ++count)
+            for(int count = 0; count < NCOUNT; ++count)
             {
                 fscanf(file, "Received (%d)\n", &number);
 
@@ -142,6 +146,7 @@ int createThreads()
     thread2 = boost::thread(executeThread, 2);
     thread3 = boost::thread(executeThread, 3);
     thread4 = boost::thread(executeThread, 4);
+	NTHREADS = 4;
     returnedValue = 0;
 
     return returnedValue;
@@ -150,12 +155,13 @@ int createThreads()
 int main(int argc, char **argv)
 {
     const char* const METHOD_NAME = "main";
-	eprosima::Log::setVerbosity(eprosima::VERB_INFO);
-	eprosima::Log::logFileName("Client.txt",true);
+
+	eprosima::Log::setVerbosity(eprosima::VERB_WARNING);
+	//eprosima::Log::logFileName("Client.txt",true);	
     proto = new MultithreadTestProtocol();
     transp = new RTPSProxyTransport("MultithreadTestService", "Instance");
     prox = new MultithreadTestProxy(*transp, *proto);
-
+	boost::this_thread::sleep(boost::posix_time::seconds(1));
     if(prox != NULL)
     {
         // Create threads
