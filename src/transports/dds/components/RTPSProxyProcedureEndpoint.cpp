@@ -274,7 +274,7 @@ ReturnMessage RTPSProxyProcedureEndpoint::send(void *request, void *reply)
 		requestHeader->requestId().writer_guid().entityId().entityKind() = m_proxyId.entityId().entityKind();
 		requestHeader->instanceName(m_transport.getInstanceName());
 
-		std::cout << "Blocking before sending"<<std::endl;
+		//std::cout << "Blocking before sending"<<std::endl;
 		m_mutex->lock();
 		numSec = m_numSec;
 		// Thread safe num_Sec handling
@@ -282,19 +282,19 @@ ReturnMessage RTPSProxyProcedureEndpoint::send(void *request, void *reply)
 		uint32_t low = (numSec & 0xFFFFFFFF);
 		requestHeader->requestId().sequence_number().high(high);
 		requestHeader->requestId().sequence_number().low(low);
-		std::cout << "Sending: "<< numSec << std::endl;
+		//std::cout << "Sending: "<< numSec << std::endl;
 		++m_numSec;
 		m_mutex->unlock();
-		std::cout << "Unlocking: "<< numSec << std::endl;
+		//std::cout << "Unlocking: "<< numSec << std::endl;
 		// TODO Chech for server connection.
 
 		if(checkServerConnection(m_transport.getTimeout()) == OK)
 		{
-			std::cout << "Checking connection for "<<numSec<<std::endl;
+			//std::cout << "Checking connection for "<<numSec<<std::endl;
 			if(m_writer->write(request))
 			{
 				// Its not a oneway function.
-				std::cout << "Write numSec" <<numSec << " sended"<<std::endl;
+				//std::cout << "Write numSec" <<numSec << " sended"<<std::endl;
 				if(m_reader != nullptr && reply != NULL)
 				{
 					returnedValue = takeReply(reply, numSec);
@@ -384,11 +384,11 @@ ReturnMessage RTPSProxyProcedureEndpoint::takeReply(void *reply, int64_t numSec)
 
 	if(reply != NULL)
 	{
-		cout << "Blocking to take reply "<<numSec << std::endl;
+		//cout << "Blocking to take reply "<<numSec << std::endl;
 		boost::unique_lock<boost::mutex> lock(*recv_mutex_);
 		RecvPoint recvpoint(reply);
 		recv_threads.insert(std::pair<int64_t, RecvPoint&>(numSec, recvpoint));
-		std::cout << "WAITING for sample: "<<numSec<<std::endl;
+		//std::cout << "WAITING for sample: "<<numSec<<std::endl;
 		if(recvpoint.cond_.wait_for(lock, boost::chrono::milliseconds(m_transport.getTimeout())) != boost::cv_status::timeout)
 		{
 			returnedValue = OK;
@@ -453,16 +453,16 @@ void RTPSProxyProcedureEndpoint::onNewDataMessage(eprosima::fastrtps::Subscriber
 				numSec <<= 32;
 				numSec &= 0xFFFFFFFF00000000;
 				numSec += replyHeader->relatedRequestId().sequence_number().low();
-				std::cout << "Received: "<< numSec << std::endl;
+				//std::cout << "Received: "<< numSec << std::endl;
 
 				std::map<int64_t, RecvPoint&>::iterator it = recv_threads.find(numSec);
 				bool aux = false;
 				while(it == recv_threads.end())
 				{
-					std::cout << "Unlocking for sample"<<numSec << std::endl;
+					//std::cout << "Unlocking for sample"<<numSec << std::endl;
 					if(!aux)
 						recv_mutex_->unlock();
-					std::cout << "Sleeping "<<numSec <<std::endl;
+					//std::cout << "Sleeping "<<numSec <<std::endl;
 					boost::this_thread::sleep(boost::posix_time::milliseconds(1));
 					it= recv_threads.find(numSec);
 					aux = true;
