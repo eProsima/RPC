@@ -197,7 +197,7 @@ rm -r output
 . ../../../thirdparty/dev-env/scripts/common_dds_functions.sh restoreRTIversion
 
 if [ $errorstatus == 0 ]; then
-    echo "TEST SUCCESSFULLY"
+    echo "TEST SUCCESSFULL"
 else
     echo "TEST FAILED"
 fi

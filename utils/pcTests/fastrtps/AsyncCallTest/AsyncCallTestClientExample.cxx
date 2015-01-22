@@ -188,6 +188,8 @@ int main(int argc, char **argv)
         return -1;
     }
 
+	usleep(1000000);
+
     int32_t  lo1 = 1;       
     int32_t  lo2 = 2;       
     GetLongHandler getLong_handler;

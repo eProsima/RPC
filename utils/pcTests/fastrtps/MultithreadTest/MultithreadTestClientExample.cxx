@@ -141,12 +141,12 @@ int checkFiles()
 int createThreads()
 {
     int returnedValue = -1;
-	NCOUNT = 20;
-	NTHREADS = 2;
+	NCOUNT = 200;
+	NTHREADS = 4;
     thread1 = boost::thread(executeThread, 1);
     thread2 = boost::thread(executeThread, 2);
-   // thread3 = boost::thread(executeThread, 3);
-    //thread4 = boost::thread(executeThread, 4);
+    thread3 = boost::thread(executeThread, 3);
+    thread4 = boost::thread(executeThread, 4);
 	
 
     returnedValue = 0;

@@ -47,8 +47,8 @@ int main(int argc, char **argv)
         std::cout << ex.what() << std::endl;
         return -1;
     }
-
-    try
+	sleep(1);
+    try	
     {
         proxy->sendException();
         std::cout << "TEST FAILED<sendException>: No exception" << std::endl;

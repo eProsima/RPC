@@ -47,6 +47,8 @@ int main(int argc, char **argv)
         return -1;
     }
 
+	sleep(1);
+
     int32_t lo1 = 10;       
 
     try
