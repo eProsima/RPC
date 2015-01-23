@@ -18,6 +18,8 @@
 #include "fastrpc/transports/dds/RTPSProxyTransport.h"
 #include "fastrpc/exceptions/Exceptions.h"
 
+#include "fastrtps/utils/eClock.h"
+
 #include <iostream>
 #ifdef __linux
 #include <unistd.h>
@@ -46,7 +48,7 @@ int main(int argc, char **argv)
         std::cout << ex.what() << std::endl;
         return -1;
     }
-    sleep(1);
+    eprosima::fastrtps::eClock::my_sleep(1000);
     uint8_t  oc1 = oc1_value;    
     uint8_t  oc2 = BasicTypeTest::oc2_value;    
     uint8_t  oc3 = 0;    
