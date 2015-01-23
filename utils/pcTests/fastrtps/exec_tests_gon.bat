@@ -332,6 +332,6 @@ rd /S /Q output
 :: Restore environment for FASTRPC
 call ..\..\..\thirdparty\dev-env\scripts\common_dds_functions.bat :restoreRTIversion
 
-if %errorstatus%==0 (echo "TEST SUCCESFULLY") else (echo "TEST FAILED")
+if %errorstatus%==0 (echo "TEST SUCCESFULL") else (echo "TEST FAILED")
 exit /b %errorstatus%
 goto :EOF

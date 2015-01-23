@@ -19,6 +19,8 @@
 #include "fastrpc/exceptions/Exceptions.h"
 #include "fastrpc/utils/Utilities.h"
 
+#include "fastrtps/utils/eClock.h"
+
 #include <iostream>
 #ifdef __linux
 #include <unistd.h>
@@ -188,7 +190,7 @@ int main(int argc, char **argv)
         return -1;
     }
 
-	usleep(1000000);
+	eprosima::fastrtps::eClock::my_sleep(1000);
 
     int32_t  lo1 = 1;       
     int32_t  lo2 = 2;       
