@@ -17,7 +17,7 @@
 #include "OnewayCallTestDDSProtocol.h"
 #include "fastrpc/transports/dds/RTPSProxyTransport.h"
 #include "fastrpc/exceptions/Exceptions.h"
-
+#include "fastrtps/utils/eClock.h"
 #include <iostream>
 #ifdef __linux
 #include <unistd.h>
@@ -47,7 +47,7 @@ int main(int argc, char **argv)
         return -1;
     }
 
-	sleep(1);
+	eprosima::fastrtps::eClock::my_sleep(1000);
 
     int32_t lo1 = 10;       
 
