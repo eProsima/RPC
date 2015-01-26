@@ -15,10 +15,9 @@
 #include "MultithreadTestProxy.h"
 #include "MultithreadTest.h"
 #include "MultithreadTestDDSProtocol.h"
-#include "fastrpc/transports/dds/RTPSProxyTransport.h"
-#include "fastrpc/exceptions/Exceptions.h"
-
-#include "fastrtps/utils/RTPSLog.h"
+#include <fastrpc/transports/dds/RTPSProxyTransport.h>
+#include <fastrpc/exceptions/Exceptions.h>
+#include <fastrpc/utils/Utilities.h>
 
 #include "boost/config/user.hpp"
 #include "boost/thread.hpp"
@@ -62,7 +61,7 @@ void* executeThread(int threadNum)
         {
             boost::this_thread::sleep(boost::posix_time::seconds(1));
         }
-		//std::cout << "Thread " << threadNum << " RUNNING " << std::endl;
+
         for(; count < NCOUNT; ++count)
         {
             Dato dato1;
@@ -70,7 +69,7 @@ void* executeThread(int threadNum)
             int32_t test_ret = 0;       
 
             dato1.count(count);
-			//std::cout << "COUNT " << count << " in thread " << threadNum << std::endl;
+
             try
             {
                 test_ret =  prox->test(dato1 ,dato2);
@@ -147,7 +146,6 @@ int createThreads()
     thread2 = boost::thread(executeThread, 2);
     thread3 = boost::thread(executeThread, 3);
     thread4 = boost::thread(executeThread, 4);
-	
 
     returnedValue = 0;
 
@@ -158,12 +156,12 @@ int main(int argc, char **argv)
 {
     const char* const METHOD_NAME = "main";
 
-	eprosima::Log::setVerbosity(eprosima::VERB_INFO);
-	//eprosima::Log::logFileName("Client.txt",true);	
     proto = new MultithreadTestProtocol();
     transp = new RTPSProxyTransport("MultithreadTestService", "Instance");
     prox = new MultithreadTestProxy(*transp, *proto);
-	boost::this_thread::sleep(boost::posix_time::seconds(1));
+
+    eprosima::rpc::sleep(1000);
+
     if(prox != NULL)
     {
         // Create threads

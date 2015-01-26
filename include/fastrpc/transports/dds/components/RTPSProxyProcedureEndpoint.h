@@ -134,11 +134,6 @@ namespace eprosima
                                 const char *readertypename, const char *readertopicname);
 
                         /*!
-                         * @brief This function takes a sample from the datareader.
-                         */
-                        eprosima::rpc::ReturnMessage takeReply(void *reply, int64_t numSec);
-
-                        /*!
                          * @brief This function checks if the server was discovered.
                          * @param timeout Timeout used to do the checking. Its value is in milliseconds.
                          * @return FASTRPC return message.

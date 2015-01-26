@@ -15,8 +15,8 @@
 #include "MultithreadTestProxy.h"
 #include "MultithreadTest.h"
 #include "MultithreadTestDDSProtocol.h"
-#include "fastrpc/transports/dds/UDPProxyTransport.h"
-#include "fastrpc/exceptions/Exceptions.h"
+#include <fastrpc/transports/dds/UDPProxyTransport.h>
+#include <fastrpc/exceptions/Exceptions.h>
 
 #include "boost/config/user.hpp"
 #include "boost/thread.hpp"
@@ -34,6 +34,10 @@ static MultithreadTestProtocol *proto = NULL;
 static UDPProxyTransport *transp = NULL;
 static MultithreadTestProxy *prox = NULL;
 static int run = 0;
+
+static int NCOUNT = 200;
+static int NTHREADS = 4;
+
 
 void* executeThread(int threadNum)
 {
@@ -102,7 +106,7 @@ int checkFiles()
     FILE *file = NULL;
     int returnedValue = 0, number = 0;
 
-    for(int i = 1; i <= 4; ++i)
+    for(int i = 1; i <= NTHREADS; ++i)
     {
 #if defined(RTI_WIN32)
         _snprintf(filename, 50, "Thread%d.txt", i);
@@ -113,7 +117,7 @@ int checkFiles()
 
         if(file != NULL)
         {
-            for(int count = 0; count < 200; ++count)
+            for(int count = 0; count < NCOUNT; ++count)
             {
                 fscanf(file, "Received (%d)\n", &number);
 
@@ -135,11 +139,13 @@ int checkFiles()
 int createThreads()
 {
     int returnedValue = -1;
-
+	NCOUNT = 200;
+	NTHREADS = 4;
     thread1 = boost::thread(executeThread, 1);
     thread2 = boost::thread(executeThread, 2);
     thread3 = boost::thread(executeThread, 3);
     thread4 = boost::thread(executeThread, 4);
+
     returnedValue = 0;
 
     return returnedValue;
