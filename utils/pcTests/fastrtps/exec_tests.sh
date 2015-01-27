@@ -1,3 +1,4 @@
+M
 #!/bin/bash
 # This scripts run the unit tests. Supports two optional parameters.
 # @param The unit test to be run. If it isn't set, then all unit tests are run.
@@ -191,7 +192,7 @@ for dir in $(find . -mindepth 1 -maxdepth 1 -path ./output -prune -o -path ./.sv
 done
 
 # Remove output directory
-#rm -r output
+rm -r output
 
 # Restore environment for RPCDDS
 . ../../../thirdparty/dev-env/scripts/common_dds_functions.sh restoreRTIversion

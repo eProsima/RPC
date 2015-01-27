@@ -38,9 +38,9 @@ namespace eprosima { namespace rpc { namespace transport { namespace dds {
         {
             public:
 
-                RecvPoint(void *reply) : reply_(reply), task_(NULL) {}
+                RecvPoint(void *reply) : received_(false), reply_(reply), task_(NULL) {}
 
-                explicit RecvPoint(RTPSAsyncTask *task) : reply_(NULL), task_(task)
+                explicit RecvPoint(RTPSAsyncTask *task) : received_(false), reply_(NULL), task_(task)
             {
                 if(task_ != NULL) reply_ = task_->getReplyInstance();
             }
@@ -49,6 +49,8 @@ namespace eprosima { namespace rpc { namespace transport { namespace dds {
 
                 RTPSAsyncTask* getTask() { return task_;}
 
+                bool received_;
+                boost::mutex mutex_;
                 boost::condition_variable cond_;
 
             private:
@@ -289,9 +291,9 @@ ReturnMessage RTPSProxyProcedureEndpoint::send(void *request, void *reply)
             // Its not a oneway function.
             if(m_reader != nullptr && reply != NULL)
             {
+                recvpoint = new RecvPoint(reply);
                 // Insert reply in map before sending the data.
                 boost::unique_lock<boost::mutex> lock(*recv_mutex_);
-                recvpoint = new RecvPoint(reply);
                 recv_threads.insert(std::pair<int64_t, RecvPoint&>(numSec, *recvpoint));
             }
 
@@ -300,21 +302,28 @@ ReturnMessage RTPSProxyProcedureEndpoint::send(void *request, void *reply)
             // Its not a oneway function.
             if(recvpoint != nullptr)
             {
-                boost::unique_lock<boost::mutex> lock(*recv_mutex_);
-
                 if(retWrite)
                 {
-                    if(recvpoint->cond_.wait_for(lock, boost::chrono::milliseconds(m_transport.getTimeout())) != boost::cv_status::timeout)
+                    boost::unique_lock<boost::mutex> lock(recvpoint->mutex_);
+
+                    if(!recvpoint->received_)
                     {
-                        returnedValue = OK;
+                        if(recvpoint->cond_.wait_for(lock, boost::chrono::milliseconds(m_transport.getTimeout())) != boost::cv_status::timeout)
+                        {
+                            returnedValue = OK;
+                        }
+                        else
+                        {
+                            returnedValue = TIMEOUT;
+                        }
                     }
                     else
-                    {
-                        returnedValue = TIMEOUT;
-                    }
+                        returnedValue = OK;
                 }
                 else
                     printf("ERROR <%s::%s>: Some error occurs\n", CLASS_NAME, METHOD_NAME);
+
+                boost::unique_lock<boost::mutex> lock(*recv_mutex_);
 
                 std::map<int64_t, RecvPoint&>::iterator it = recv_threads.find(numSec);
 
@@ -377,8 +386,8 @@ ReturnMessage RTPSProxyProcedureEndpoint::send_async(void *request, RTPSAsyncTas
             RecvPoint *recvpoint = nullptr;
 
             {
-                boost::unique_lock<boost::mutex> lock(*recv_mutex_);
                 recvpoint = new RecvPoint(task);
+                boost::unique_lock<boost::mutex> lock(*recv_mutex_);
                 recv_threads.insert(std::pair<int64_t, RecvPoint&>(numSec, *recvpoint));
             }
             
@@ -454,16 +463,19 @@ void RTPSProxyProcedureEndpoint::onNewDataMessage(eprosima::fastrtps::Subscriber
 
                 if(it != recv_threads.end())
                 {
-                    m_copy_data(it->second.getReply(), data_);
+                    RecvPoint *rp = &it->second;
+                    m_copy_data(rp->getReply(), data_);
 
-                    if(it->second.getTask() == NULL)
+                    if(rp->getTask() == NULL)
                     {
-                        it->second.cond_.notify_one();
+                        boost::unique_lock<boost::mutex> lockC(rp->mutex_);
+                        rp->received_ = true;
+                        lockC.unlock();
+                        rp->cond_.notify_one();
                     }
                     // Async task
                     else
                     {
-                        RecvPoint *rp = &it->second;
                         recv_threads.erase(it);
                         RTPSAsyncTask *task = rp->getTask();
                         delete rp;
