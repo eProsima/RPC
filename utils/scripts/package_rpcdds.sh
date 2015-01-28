@@ -43,6 +43,24 @@ function package
     . ../dev-env/scripts/common_pack_functions.sh getVersionFromCPP rtpsversion include/fastrtps/fastrtps_version.h
 
     # Compile and packaging FastCDR library for all archictectures
+    if [ -z $package_targets ] || [ "$package_targets" == "i86" ]; then
+        # Compile FastRTPS library for i86.
+        rm -rf output
+        EPROSIMA_TARGET="i86Linux2.6gcc"
+        rm -r lib/$EPROSIMA_TARGET
+        EPROSIMA_TARGET=${EPROSIMA_TARGET} make
+        errorstatus=$?
+        if [ $errorstatus != 0 ]; then return; fi
+    fi
+    if [ -z $package_targets ] || [ "$package_targets" == "x64" ]; then
+        # Compile FastRTPS library for x64.
+        rm -rf output
+        EPROSIMA_TARGET="x64Linux2.6gcc"
+        rm -r lib/$EPROSIMA_TARGET
+        EPROSIMA_TARGET=${EPROSIMA_TARGET} make
+        errorstatus=$?
+        if [ $errorstatus != 0 ]; then return; fi
+    fi
     cd utils/scripts
     ./package_fastrtps.sh
     errorstatus=$?
