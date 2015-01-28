@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef MessageHeader_953112912_h
-#define MessageHeader_953112912_h
+#ifndef MessageHeader_953113280_h
+#define MessageHeader_953113280_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -26,9 +26,11 @@
 #endif
 
 
+namespace dds{
 
-#define UnknownOperation_LAST_MEMBER_ID octet_LAST_MEMBER_ID
-typedef DDS_Octet  UnknownOperation;
+
+#define dds_GuidPrefix_t_LAST_MEMBER_ID octet_LAST_MEMBER_ID
+typedef DDS_Octet  GuidPrefix_t[12];
         
     
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
@@ -38,45 +40,45 @@ typedef DDS_Octet  UnknownOperation;
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* UnknownOperation_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* GuidPrefix_t_get_typecode(void); /* Type code */
     
-DDS_SEQUENCE(UnknownOperationSeq, UnknownOperation);                                        
+DDS_SEQUENCE_NO_GET(GuidPrefix_tSeq, GuidPrefix_t);                
             
 NDDSUSERDllExport
-RTIBool UnknownOperation_initialize(
-        UnknownOperation* self);
+RTIBool GuidPrefix_t_initialize(
+        GuidPrefix_t* self);
             
 NDDSUSERDllExport
-RTIBool UnknownOperation_initialize_ex(
-        UnknownOperation* self,
+RTIBool GuidPrefix_t_initialize_ex(
+        GuidPrefix_t* self,
         RTIBool allocatePointers,RTIBool allocateMemory);
 
 NDDSUSERDllExport
-RTIBool UnknownOperation_initialize_w_params(
-        UnknownOperation* self,
+RTIBool GuidPrefix_t_initialize_w_params(
+        GuidPrefix_t* self,
         const struct DDS_TypeAllocationParams_t * allocParams);
                     
 NDDSUSERDllExport
-void UnknownOperation_finalize(
-        UnknownOperation* self);
+void GuidPrefix_t_finalize(
+        GuidPrefix_t* self);
             
 NDDSUSERDllExport
-void UnknownOperation_finalize_ex(
-        UnknownOperation* self,RTIBool deletePointers);
+void GuidPrefix_t_finalize_ex(
+        GuidPrefix_t* self,RTIBool deletePointers);
 
 NDDSUSERDllExport
-void UnknownOperation_finalize_w_params(
-        UnknownOperation* self,
+void GuidPrefix_t_finalize_w_params(
+        GuidPrefix_t* self,
         const struct DDS_TypeDeallocationParams_t * deallocParams);
 
 NDDSUSERDllExport
-void UnknownOperation_finalize_optional_members(
-        UnknownOperation* self, RTIBool deletePointers);
+void GuidPrefix_t_finalize_optional_members(
+        GuidPrefix_t* self, RTIBool deletePointers);
                     
 NDDSUSERDllExport
-RTIBool UnknownOperation_copy(
-        UnknownOperation* dst,
-        const UnknownOperation* src);
+RTIBool GuidPrefix_t_copy(
+        GuidPrefix_t* dst,
+        const GuidPrefix_t* src);
 
     
 
@@ -87,86 +89,47 @@ RTIBool UnknownOperation_copy(
 #endif
 
 
-
-#define UnknownException_LAST_MEMBER_ID octet_LAST_MEMBER_ID
-typedef DDS_Octet  UnknownException;
+#define dds_EntityId_t_LAST_MEMBER_ID 1
         
-    
-#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
-  /* If the code is building on Windows, start exporting symbols. */
-  #undef NDDSUSERDllExport
-  #define NDDSUSERDllExport __declspec(dllexport)
+extern const char *EntityId_tTYPENAME;
+        
+
+
+#ifdef __cplusplus
+    struct EntityId_tSeq;
+
+#ifndef NDDS_STANDALONE_TYPE
+    class EntityId_tTypeSupport;
+    class EntityId_tDataWriter;
+    class EntityId_tDataReader;
 #endif
 
-    
-NDDSUSERDllExport DDS_TypeCode* UnknownException_get_typecode(void); /* Type code */
-    
-DDS_SEQUENCE(UnknownExceptionSeq, UnknownException);                                        
-            
-NDDSUSERDllExport
-RTIBool UnknownException_initialize(
-        UnknownException* self);
-            
-NDDSUSERDllExport
-RTIBool UnknownException_initialize_ex(
-        UnknownException* self,
-        RTIBool allocatePointers,RTIBool allocateMemory);
-
-NDDSUSERDllExport
-RTIBool UnknownException_initialize_w_params(
-        UnknownException* self,
-        const struct DDS_TypeAllocationParams_t * allocParams);
-                    
-NDDSUSERDllExport
-void UnknownException_finalize(
-        UnknownException* self);
-            
-NDDSUSERDllExport
-void UnknownException_finalize_ex(
-        UnknownException* self,RTIBool deletePointers);
-
-NDDSUSERDllExport
-void UnknownException_finalize_w_params(
-        UnknownException* self,
-        const struct DDS_TypeDeallocationParams_t * deallocParams);
-
-NDDSUSERDllExport
-void UnknownException_finalize_optional_members(
-        UnknownException* self, RTIBool deletePointers);
-                    
-NDDSUSERDllExport
-RTIBool UnknownException_copy(
-        UnknownException* dst,
-        const UnknownException* src);
-
-    
-
-#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
-  /* If the code is building on Windows, stop exporting symbols. */
-  #undef NDDSUSERDllExport
-  #define NDDSUSERDllExport
 #endif
 
- 
-typedef enum SystemExceptionCode
+            
+    
+class EntityId_t                                        
 {
-    OK,
-    UNIMPLEMENTED,
-    BAD_PARAMETER,
-    PRECONDITION_NOT_MET,
-    OUT_OF_RESOURCES,
-    NOT_ENABLED,
-    ALREADY_DELETED,
-    ILLEGAL_OPERATION,
-    TIMEOUT,
-    INITIALIZE_ERROR,
-    CLIENT_INTERNAL_ERROR,
-    SERVER_INTERNAL_ERROR,
-    SERVER_NOT_FOUND,
-    UNKNOWN
-} SystemExceptionCode;
-    
+public:            
+#ifdef __cplusplus
+    typedef struct EntityId_tSeq Seq;
 
+#ifndef NDDS_STANDALONE_TYPE
+    typedef EntityId_tTypeSupport TypeSupport;
+    typedef EntityId_tDataWriter DataWriter;
+    typedef EntityId_tDataReader DataReader;
+#endif
+
+#endif
+    
+    DDS_Octet  entityKey[3];
+
+    DDS_Octet  entityKind;
+
+            
+};                        
+    
+                            
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, start exporting symbols.
    */
@@ -175,51 +138,46 @@ typedef enum SystemExceptionCode
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* SystemExceptionCode_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* EntityId_t_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(SystemExceptionCodeSeq, SystemExceptionCode);
+DDS_SEQUENCE(EntityId_tSeq, EntityId_t);
         
 NDDSUSERDllExport
-RTIBool SystemExceptionCode_initialize(
-        SystemExceptionCode* self);
+RTIBool EntityId_t_initialize(
+        EntityId_t* self);
         
 NDDSUSERDllExport
-RTIBool SystemExceptionCode_initialize_ex(
-        SystemExceptionCode* self,
+RTIBool EntityId_t_initialize_ex(
+        EntityId_t* self,
         RTIBool allocatePointers,RTIBool allocateMemory);
         
 NDDSUSERDllExport
-RTIBool SystemExceptionCode_initialize_w_params(
-        SystemExceptionCode* self,
+RTIBool EntityId_t_initialize_w_params(
+        EntityId_t* self,
         const struct DDS_TypeAllocationParams_t * allocParams);
 
 NDDSUSERDllExport
-void SystemExceptionCode_finalize(
-        SystemExceptionCode* self);
+void EntityId_t_finalize(
+        EntityId_t* self);
                         
 NDDSUSERDllExport
-void SystemExceptionCode_finalize_ex(
-        SystemExceptionCode* self,RTIBool deletePointers);
+void EntityId_t_finalize_ex(
+        EntityId_t* self,RTIBool deletePointers);
+       
+NDDSUSERDllExport
+void EntityId_t_finalize_w_params(
+        EntityId_t* self,
+        const struct DDS_TypeDeallocationParams_t * deallocParams);
         
 NDDSUSERDllExport
-void SystemExceptionCode_finalize_w_params(
-        SystemExceptionCode* self,
-        const struct DDS_TypeDeallocationParams_t * deallocParams);
-
+void EntityId_t_finalize_optional_members(
+        EntityId_t* self, RTIBool deletePointers);        
+        
 NDDSUSERDllExport
-void SystemExceptionCode_finalize_optional_members(
-        SystemExceptionCode* self, RTIBool deletePointers);
-                
-NDDSUSERDllExport
-RTIBool SystemExceptionCode_copy(
-        SystemExceptionCode* dst,
-        const SystemExceptionCode* src);
-
-
-NDDSUSERDllExport
-RTIBool SystemExceptionCode_getValues(SystemExceptionCodeSeq * values);
-    
+RTIBool EntityId_t_copy(
+        EntityId_t* dst,
+        const EntityId_t* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -229,7 +187,7 @@ RTIBool SystemExceptionCode_getValues(SystemExceptionCodeSeq * values);
 #endif
 
 
-#define GUID_t_LAST_MEMBER_ID 0
+#define dds_GUID_t_LAST_MEMBER_ID 1
         
 extern const char *GUID_tTYPENAME;
         
@@ -237,6 +195,12 @@ extern const char *GUID_tTYPENAME;
 
 #ifdef __cplusplus
     struct GUID_tSeq;
+
+#ifndef NDDS_STANDALONE_TYPE
+    class GUID_tTypeSupport;
+    class GUID_tDataWriter;
+    class GUID_tDataReader;
+#endif
 
 #endif
 
@@ -248,9 +212,17 @@ public:
 #ifdef __cplusplus
     typedef struct GUID_tSeq Seq;
 
+#ifndef NDDS_STANDALONE_TYPE
+    typedef GUID_tTypeSupport TypeSupport;
+    typedef GUID_tDataWriter DataWriter;
+    typedef GUID_tDataReader DataReader;
+#endif
+
 #endif
     
-    DDS_Octet  value[16];
+    dds::GuidPrefix_t  guidPrefix;
+
+    dds::EntityId_t  entityId;
 
             
 };                        
@@ -313,42 +285,42 @@ RTIBool GUID_t_copy(
 #endif
 
 
-#define SampleIdentity_t_LAST_MEMBER_ID 1
+#define dds_SequenceNumber_t_LAST_MEMBER_ID 1
         
-extern const char *SampleIdentity_tTYPENAME;
+extern const char *SequenceNumber_tTYPENAME;
         
 
 
 #ifdef __cplusplus
-    struct SampleIdentity_tSeq;
+    struct SequenceNumber_tSeq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    class SampleIdentity_tTypeSupport;
-    class SampleIdentity_tDataWriter;
-    class SampleIdentity_tDataReader;
+    class SequenceNumber_tTypeSupport;
+    class SequenceNumber_tDataWriter;
+    class SequenceNumber_tDataReader;
 #endif
 
 #endif
 
             
     
-class SampleIdentity_t                                        
+class SequenceNumber_t                                        
 {
 public:            
 #ifdef __cplusplus
-    typedef struct SampleIdentity_tSeq Seq;
+    typedef struct SequenceNumber_tSeq Seq;
 
 #ifndef NDDS_STANDALONE_TYPE
-    typedef SampleIdentity_tTypeSupport TypeSupport;
-    typedef SampleIdentity_tDataWriter DataWriter;
-    typedef SampleIdentity_tDataReader DataReader;
+    typedef SequenceNumber_tTypeSupport TypeSupport;
+    typedef SequenceNumber_tDataWriter DataWriter;
+    typedef SequenceNumber_tDataReader DataReader;
 #endif
 
 #endif
     
-    GUID_t  guid;
+    DDS_Long  high;
 
-    DDS_LongLong  sequence_number;
+    DDS_UnsignedLong  low;
 
             
 };                        
@@ -362,46 +334,46 @@ public:
 #endif
 
     
-NDDSUSERDllExport DDS_TypeCode* SampleIdentity_t_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* SequenceNumber_t_get_typecode(void); /* Type code */
     
 
-DDS_SEQUENCE(SampleIdentity_tSeq, SampleIdentity_t);
+DDS_SEQUENCE(SequenceNumber_tSeq, SequenceNumber_t);
         
 NDDSUSERDllExport
-RTIBool SampleIdentity_t_initialize(
-        SampleIdentity_t* self);
+RTIBool SequenceNumber_t_initialize(
+        SequenceNumber_t* self);
         
 NDDSUSERDllExport
-RTIBool SampleIdentity_t_initialize_ex(
-        SampleIdentity_t* self,
+RTIBool SequenceNumber_t_initialize_ex(
+        SequenceNumber_t* self,
         RTIBool allocatePointers,RTIBool allocateMemory);
         
 NDDSUSERDllExport
-RTIBool SampleIdentity_t_initialize_w_params(
-        SampleIdentity_t* self,
+RTIBool SequenceNumber_t_initialize_w_params(
+        SequenceNumber_t* self,
         const struct DDS_TypeAllocationParams_t * allocParams);
 
 NDDSUSERDllExport
-void SampleIdentity_t_finalize(
-        SampleIdentity_t* self);
+void SequenceNumber_t_finalize(
+        SequenceNumber_t* self);
                         
 NDDSUSERDllExport
-void SampleIdentity_t_finalize_ex(
-        SampleIdentity_t* self,RTIBool deletePointers);
+void SequenceNumber_t_finalize_ex(
+        SequenceNumber_t* self,RTIBool deletePointers);
        
 NDDSUSERDllExport
-void SampleIdentity_t_finalize_w_params(
-        SampleIdentity_t* self,
+void SequenceNumber_t_finalize_w_params(
+        SequenceNumber_t* self,
         const struct DDS_TypeDeallocationParams_t * deallocParams);
         
 NDDSUSERDllExport
-void SampleIdentity_t_finalize_optional_members(
-        SampleIdentity_t* self, RTIBool deletePointers);        
+void SequenceNumber_t_finalize_optional_members(
+        SequenceNumber_t* self, RTIBool deletePointers);        
         
 NDDSUSERDllExport
-RTIBool SampleIdentity_t_copy(
-        SampleIdentity_t* dst,
-        const SampleIdentity_t* src);
+RTIBool SequenceNumber_t_copy(
+        SequenceNumber_t* dst,
+        const SequenceNumber_t* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
   /* If the code is building on Windows, stop exporting symbols.
@@ -411,7 +383,363 @@ RTIBool SampleIdentity_t_copy(
 #endif
 
 
-#define RequestHeader_LAST_MEMBER_ID 2
+#define dds_SampleIdentity_LAST_MEMBER_ID 1
+        
+extern const char *SampleIdentityTYPENAME;
+        
+
+
+#ifdef __cplusplus
+    struct SampleIdentitySeq;
+
+#ifndef NDDS_STANDALONE_TYPE
+    class SampleIdentityTypeSupport;
+    class SampleIdentityDataWriter;
+    class SampleIdentityDataReader;
+#endif
+
+#endif
+
+            
+    
+class SampleIdentity                                        
+{
+public:            
+#ifdef __cplusplus
+    typedef struct SampleIdentitySeq Seq;
+
+#ifndef NDDS_STANDALONE_TYPE
+    typedef SampleIdentityTypeSupport TypeSupport;
+    typedef SampleIdentityDataWriter DataWriter;
+    typedef SampleIdentityDataReader DataReader;
+#endif
+
+#endif
+    
+    dds::GUID_t  writer_guid;
+
+    dds::SequenceNumber_t  sequence_number;
+
+            
+};                        
+    
+                            
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, start exporting symbols.
+   */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport __declspec(dllexport)
+#endif
+
+    
+NDDSUSERDllExport DDS_TypeCode* SampleIdentity_get_typecode(void); /* Type code */
+    
+
+DDS_SEQUENCE(SampleIdentitySeq, SampleIdentity);
+        
+NDDSUSERDllExport
+RTIBool SampleIdentity_initialize(
+        SampleIdentity* self);
+        
+NDDSUSERDllExport
+RTIBool SampleIdentity_initialize_ex(
+        SampleIdentity* self,
+        RTIBool allocatePointers,RTIBool allocateMemory);
+        
+NDDSUSERDllExport
+RTIBool SampleIdentity_initialize_w_params(
+        SampleIdentity* self,
+        const struct DDS_TypeAllocationParams_t * allocParams);
+
+NDDSUSERDllExport
+void SampleIdentity_finalize(
+        SampleIdentity* self);
+                        
+NDDSUSERDllExport
+void SampleIdentity_finalize_ex(
+        SampleIdentity* self,RTIBool deletePointers);
+       
+NDDSUSERDllExport
+void SampleIdentity_finalize_w_params(
+        SampleIdentity* self,
+        const struct DDS_TypeDeallocationParams_t * deallocParams);
+        
+NDDSUSERDllExport
+void SampleIdentity_finalize_optional_members(
+        SampleIdentity* self, RTIBool deletePointers);        
+        
+NDDSUSERDllExport
+RTIBool SampleIdentity_copy(
+        SampleIdentity* dst,
+        const SampleIdentity* src);
+
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, stop exporting symbols.
+   */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport
+#endif
+
+
+namespace rpc{
+
+
+#define dds_rpc_UnknownOperation_LAST_MEMBER_ID octet_LAST_MEMBER_ID
+typedef DDS_Octet  UnknownOperation;
+        
+    
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, start exporting symbols. */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport __declspec(dllexport)
+#endif
+
+    
+NDDSUSERDllExport DDS_TypeCode* UnknownOperation_get_typecode(void); /* Type code */
+    
+DDS_SEQUENCE(UnknownOperationSeq, UnknownOperation);                                        
+            
+NDDSUSERDllExport
+RTIBool UnknownOperation_initialize(
+        UnknownOperation* self);
+            
+NDDSUSERDllExport
+RTIBool UnknownOperation_initialize_ex(
+        UnknownOperation* self,
+        RTIBool allocatePointers,RTIBool allocateMemory);
+
+NDDSUSERDllExport
+RTIBool UnknownOperation_initialize_w_params(
+        UnknownOperation* self,
+        const struct DDS_TypeAllocationParams_t * allocParams);
+                    
+NDDSUSERDllExport
+void UnknownOperation_finalize(
+        UnknownOperation* self);
+            
+NDDSUSERDllExport
+void UnknownOperation_finalize_ex(
+        UnknownOperation* self,RTIBool deletePointers);
+
+NDDSUSERDllExport
+void UnknownOperation_finalize_w_params(
+        UnknownOperation* self,
+        const struct DDS_TypeDeallocationParams_t * deallocParams);
+
+NDDSUSERDllExport
+void UnknownOperation_finalize_optional_members(
+        UnknownOperation* self, RTIBool deletePointers);
+                    
+NDDSUSERDllExport
+RTIBool UnknownOperation_copy(
+        UnknownOperation* dst,
+        const UnknownOperation* src);
+
+    
+
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, stop exporting symbols. */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport
+#endif
+
+
+
+#define dds_rpc_UnknownException_LAST_MEMBER_ID octet_LAST_MEMBER_ID
+typedef DDS_Octet  UnknownException;
+        
+    
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, start exporting symbols. */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport __declspec(dllexport)
+#endif
+
+    
+NDDSUSERDllExport DDS_TypeCode* UnknownException_get_typecode(void); /* Type code */
+    
+DDS_SEQUENCE(UnknownExceptionSeq, UnknownException);                                        
+            
+NDDSUSERDllExport
+RTIBool UnknownException_initialize(
+        UnknownException* self);
+            
+NDDSUSERDllExport
+RTIBool UnknownException_initialize_ex(
+        UnknownException* self,
+        RTIBool allocatePointers,RTIBool allocateMemory);
+
+NDDSUSERDllExport
+RTIBool UnknownException_initialize_w_params(
+        UnknownException* self,
+        const struct DDS_TypeAllocationParams_t * allocParams);
+                    
+NDDSUSERDllExport
+void UnknownException_finalize(
+        UnknownException* self);
+            
+NDDSUSERDllExport
+void UnknownException_finalize_ex(
+        UnknownException* self,RTIBool deletePointers);
+
+NDDSUSERDllExport
+void UnknownException_finalize_w_params(
+        UnknownException* self,
+        const struct DDS_TypeDeallocationParams_t * deallocParams);
+
+NDDSUSERDllExport
+void UnknownException_finalize_optional_members(
+        UnknownException* self, RTIBool deletePointers);
+                    
+NDDSUSERDllExport
+RTIBool UnknownException_copy(
+        UnknownException* dst,
+        const UnknownException* src);
+
+    
+
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, stop exporting symbols. */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport
+#endif
+
+
+
+#define dds_rpc_UnusedMember_LAST_MEMBER_ID octet_LAST_MEMBER_ID
+typedef DDS_Octet  UnusedMember;
+        
+    
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, start exporting symbols. */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport __declspec(dllexport)
+#endif
+
+    
+NDDSUSERDllExport DDS_TypeCode* UnusedMember_get_typecode(void); /* Type code */
+    
+DDS_SEQUENCE(UnusedMemberSeq, UnusedMember);                                        
+            
+NDDSUSERDllExport
+RTIBool UnusedMember_initialize(
+        UnusedMember* self);
+            
+NDDSUSERDllExport
+RTIBool UnusedMember_initialize_ex(
+        UnusedMember* self,
+        RTIBool allocatePointers,RTIBool allocateMemory);
+
+NDDSUSERDllExport
+RTIBool UnusedMember_initialize_w_params(
+        UnusedMember* self,
+        const struct DDS_TypeAllocationParams_t * allocParams);
+                    
+NDDSUSERDllExport
+void UnusedMember_finalize(
+        UnusedMember* self);
+            
+NDDSUSERDllExport
+void UnusedMember_finalize_ex(
+        UnusedMember* self,RTIBool deletePointers);
+
+NDDSUSERDllExport
+void UnusedMember_finalize_w_params(
+        UnusedMember* self,
+        const struct DDS_TypeDeallocationParams_t * deallocParams);
+
+NDDSUSERDllExport
+void UnusedMember_finalize_optional_members(
+        UnusedMember* self, RTIBool deletePointers);
+                    
+NDDSUSERDllExport
+RTIBool UnusedMember_copy(
+        UnusedMember* dst,
+        const UnusedMember* src);
+
+    
+
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, stop exporting symbols. */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport
+#endif
+
+ 
+typedef enum RemoteExceptionCode_t
+{
+    REMOTE_EX_OK,
+    REMOTE_EX_UNSUPPORTED,
+    REMOTE_EX_INVALID_ARGUMENT,
+    REMOTE_EX_OUT_OF_RESOURCES,
+    REMOTE_EX_UNKNOWN_OPERATION,
+    REMOTE_EX_UNKNOWN_EXCEPTION
+} RemoteExceptionCode_t;
+    
+
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, start exporting symbols.
+   */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport __declspec(dllexport)
+#endif
+
+    
+NDDSUSERDllExport DDS_TypeCode* RemoteExceptionCode_t_get_typecode(void); /* Type code */
+    
+
+DDS_SEQUENCE(RemoteExceptionCode_tSeq, RemoteExceptionCode_t);
+        
+NDDSUSERDllExport
+RTIBool RemoteExceptionCode_t_initialize(
+        RemoteExceptionCode_t* self);
+        
+NDDSUSERDllExport
+RTIBool RemoteExceptionCode_t_initialize_ex(
+        RemoteExceptionCode_t* self,
+        RTIBool allocatePointers,RTIBool allocateMemory);
+        
+NDDSUSERDllExport
+RTIBool RemoteExceptionCode_t_initialize_w_params(
+        RemoteExceptionCode_t* self,
+        const struct DDS_TypeAllocationParams_t * allocParams);
+
+NDDSUSERDllExport
+void RemoteExceptionCode_t_finalize(
+        RemoteExceptionCode_t* self);
+                        
+NDDSUSERDllExport
+void RemoteExceptionCode_t_finalize_ex(
+        RemoteExceptionCode_t* self,RTIBool deletePointers);
+        
+NDDSUSERDllExport
+void RemoteExceptionCode_t_finalize_w_params(
+        RemoteExceptionCode_t* self,
+        const struct DDS_TypeDeallocationParams_t * deallocParams);
+
+NDDSUSERDllExport
+void RemoteExceptionCode_t_finalize_optional_members(
+        RemoteExceptionCode_t* self, RTIBool deletePointers);
+                
+NDDSUSERDllExport
+RTIBool RemoteExceptionCode_t_copy(
+        RemoteExceptionCode_t* dst,
+        const RemoteExceptionCode_t* src);
+
+
+NDDSUSERDllExport
+RTIBool RemoteExceptionCode_t_getValues(RemoteExceptionCode_tSeq * values);
+    
+
+#if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
+  /* If the code is building on Windows, stop exporting symbols.
+   */
+  #undef NDDSUSERDllExport
+  #define NDDSUSERDllExport
+#endif
+
+
+#define dds_rpc_RequestHeader_LAST_MEMBER_ID 1
         
 extern const char *RequestHeaderTYPENAME;
         
@@ -432,11 +760,9 @@ public:
 
 #endif
     
-    SampleIdentity_t  request_id;
+    dds::SampleIdentity  requestId;
 
-    char*  remote_service_name; /* maximum length = (255) */
-
-    char*  instance_name; /* maximum length = (255) */
+    char*  instanceName; /* maximum length = (255) */
 
             
 };                        
@@ -499,7 +825,7 @@ RTIBool RequestHeader_copy(
 #endif
 
 
-#define ReplyHeader_LAST_MEMBER_ID 0
+#define dds_rpc_ReplyHeader_LAST_MEMBER_ID 1
         
 extern const char *ReplyHeaderTYPENAME;
         
@@ -520,7 +846,9 @@ public:
 
 #endif
     
-    SampleIdentity_t  request_id;
+    dds::SampleIdentity  relatedRequestId;
+
+    dds::rpc::RemoteExceptionCode_t  remoteEx;
 
             
 };                        
@@ -583,5 +911,9 @@ RTIBool ReplyHeader_copy(
 #endif
 
 
+} /* namespace rpc */
 
-#endif /* MessageHeader_953112912_h */
+} /* namespace dds */
+
+
+#endif /* MessageHeader_953113280_h */

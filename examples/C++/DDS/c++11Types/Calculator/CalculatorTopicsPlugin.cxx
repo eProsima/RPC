@@ -13,12 +13,12 @@
  */
 
 #include "CalculatorTopicsPlugin.h"
-#include "rpcdds/protocols/dds/MessageHeaderPlugin.h"
-#include "rpcdds/exceptions/BadParamException.h"
+#include <rpcdds/protocols/dds/MessageHeaderPlugin.h>
+#include <rpcdds/exceptions/BadParamException.h>
 
-#include "fastcdr/Cdr.h"
-#include "fastcdr/exceptions/BadParamException.h"
-#include "fastcdr/exceptions/NotEnoughMemoryException.h"
+#include <fastcdr/Cdr.h>
+#include <fastcdr/exceptions/BadParamException.h>
+#include <fastcdr/exceptions/NotEnoughMemoryException.h>
 
 
 
@@ -28,6 +28,7 @@ DDS_TypeCode* CalculatorPlugin::addition_InPlugin::get_typecode()
 {
     //printf("=> Calculator_addition_InPlugin::get_typecode\n");
     static bool is_initialized = false;
+
 
 
 
@@ -154,10 +155,10 @@ DDS_TypeCode* CalculatorPlugin::addition_ResultPlugin::get_typecode()
     //printf("=> CalculatorPlugin::addition_ResultPlugin::get_typecode\n");
     static bool is_initialized = false;
 
-    static DDS_TypeCode_Member Calculator_addition_Result_g_tc_members[0 + 3] =
+    static DDS_TypeCode_Member Calculator_addition_Result_g_tc_members[0 + 2] =
     {
         {
-            (char *)"unknown_exception",/* Member name */
+            (char *)"unknownEx",/* Member name */
             {
                 1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -175,7 +176,7 @@ DDS_TypeCode* CalculatorPlugin::addition_ResultPlugin::get_typecode()
         }
         ,
         {
-            (char *)"out_",
+            (char *)"result",
             {
                 0,
                 DDS_BOOLEAN_FALSE,
@@ -185,24 +186,6 @@ DDS_TypeCode* CalculatorPlugin::addition_ResultPlugin::get_typecode()
             0,
             1,
             0,
-            NULL,
-            RTI_CDR_NONKEY_MEMBER,
-            DDS_PRIVATE_MEMBER,
-            1,
-            NULL
-        }
-        ,
-        {
-            (char *)"sysx_",
-            {
-                0,
-                DDS_BOOLEAN_FALSE,
-                -1,
-                NULL
-            },
-            0,
-            1,
-            1,
             NULL,
             RTI_CDR_NONKEY_MEMBER,
             DDS_PRIVATE_MEMBER,
@@ -221,16 +204,15 @@ DDS_TypeCode* CalculatorPlugin::addition_ResultPlugin::get_typecode()
          0,
          0,
          NULL,
-         0 + 3,
+         0 + 2,
          Calculator_addition_Result_g_tc_members,
          DDS_VM_NONE
     }};
     
     if(!is_initialized)
     {
-        Calculator_addition_Result_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::UnknownExceptionPlugin::get_typecode();
+        Calculator_addition_Result_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::rpc::UnknownExceptionPlugin::get_typecode();
         Calculator_addition_Result_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)CalculatorPlugin::addition_OutPlugin::get_typecode();
-        Calculator_addition_Result_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::SystemExceptionCodePlugin::get_typecode();
 
         Calculator_addition_Result_g_tc._data._typeCode = (RTICdrTypeCode*)&DDS_g_tc_long;
 
@@ -245,6 +227,7 @@ DDS_TypeCode* CalculatorPlugin::subtraction_InPlugin::get_typecode()
 {
     //printf("=> Calculator_subtraction_InPlugin::get_typecode\n");
     static bool is_initialized = false;
+
 
 
 
@@ -371,10 +354,10 @@ DDS_TypeCode* CalculatorPlugin::subtraction_ResultPlugin::get_typecode()
     //printf("=> CalculatorPlugin::subtraction_ResultPlugin::get_typecode\n");
     static bool is_initialized = false;
 
-    static DDS_TypeCode_Member Calculator_subtraction_Result_g_tc_members[0 + 3] =
+    static DDS_TypeCode_Member Calculator_subtraction_Result_g_tc_members[0 + 2] =
     {
         {
-            (char *)"unknown_exception",/* Member name */
+            (char *)"unknownEx",/* Member name */
             {
                 1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -392,7 +375,7 @@ DDS_TypeCode* CalculatorPlugin::subtraction_ResultPlugin::get_typecode()
         }
         ,
         {
-            (char *)"out_",
+            (char *)"result",
             {
                 0,
                 DDS_BOOLEAN_FALSE,
@@ -402,24 +385,6 @@ DDS_TypeCode* CalculatorPlugin::subtraction_ResultPlugin::get_typecode()
             0,
             1,
             0,
-            NULL,
-            RTI_CDR_NONKEY_MEMBER,
-            DDS_PRIVATE_MEMBER,
-            1,
-            NULL
-        }
-        ,
-        {
-            (char *)"sysx_",
-            {
-                0,
-                DDS_BOOLEAN_FALSE,
-                -1,
-                NULL
-            },
-            0,
-            1,
-            1,
             NULL,
             RTI_CDR_NONKEY_MEMBER,
             DDS_PRIVATE_MEMBER,
@@ -438,16 +403,15 @@ DDS_TypeCode* CalculatorPlugin::subtraction_ResultPlugin::get_typecode()
          0,
          0,
          NULL,
-         0 + 3,
+         0 + 2,
          Calculator_subtraction_Result_g_tc_members,
          DDS_VM_NONE
     }};
     
     if(!is_initialized)
     {
-        Calculator_subtraction_Result_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::UnknownExceptionPlugin::get_typecode();
+        Calculator_subtraction_Result_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::rpc::UnknownExceptionPlugin::get_typecode();
         Calculator_subtraction_Result_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)CalculatorPlugin::subtraction_OutPlugin::get_typecode();
-        Calculator_subtraction_Result_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::SystemExceptionCodePlugin::get_typecode();
 
         Calculator_subtraction_Result_g_tc._data._typeCode = (RTICdrTypeCode*)&DDS_g_tc_long;
 
@@ -556,7 +520,7 @@ Calculator_RequestPlugin::get_serialized_sample_size(
     }
 
 
-    current_alignment += RequestHeaderPlugin::get_serialized_sample_size(
+    current_alignment += rpc::RequestHeaderPlugin::get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
@@ -674,8 +638,7 @@ Calculator_RequestPlugin::copy_sample(
 {
     //printf("=> Calculator_RequestPlugin::copy_sample\n");
     // TODO exception?
-    *dst = *src;
-    Calculator_RequestPlugin::copy_data(dst, src);
+    *dst = std::move(*src);
     return RTI_TRUE;
 }
 
@@ -777,7 +740,7 @@ DDS_TypeCode* Calculator_CallPlugin::get_typecode()
     static DDS_TypeCode_Member Calculator_Call_g_tc_members[2 + 1] =
     {
         {
-            (char *)"unknown_operation",/* Member name */
+            (char *)"unknownOp",/* Member name */
             {
                 1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -849,7 +812,7 @@ DDS_TypeCode* Calculator_CallPlugin::get_typecode()
     if(!is_initialized)
     {
 
-        Calculator_Call_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::UnknownOperationPlugin::get_typecode();
+        Calculator_Call_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::rpc::UnknownOperationPlugin::get_typecode();
         Calculator_Call_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode*)CalculatorPlugin::addition_InPlugin::get_typecode();
         Calculator_Call_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode*)CalculatorPlugin::subtraction_InPlugin::get_typecode();
 
@@ -887,7 +850,7 @@ DDS_TypeCode* Calculator_RequestPlugin::get_typecode()
             NULL
         },
         {
-            (char *)"request",
+            (char *)"data",
             {
                 0,
                 DDS_BOOLEAN_FALSE,
@@ -922,7 +885,7 @@ DDS_TypeCode* Calculator_RequestPlugin::get_typecode()
     
     if(!is_initialized)
     {
-        Calculator_Request_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::RequestHeaderPlugin::get_typecode();
+        Calculator_Request_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::rpc::RequestHeaderPlugin::get_typecode();
         Calculator_Request_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Calculator_CallPlugin::get_typecode();
         is_initialized = true;
     }
@@ -1188,7 +1151,7 @@ Calculator_ReplyPlugin::get_serialized_sample_size(
     }
 
 
-    current_alignment += RequestHeaderPlugin::get_serialized_sample_size(
+    current_alignment += rpc::ReplyHeaderPlugin::get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
             
@@ -1305,7 +1268,7 @@ Calculator_ReplyPlugin::copy_sample(
     const Calculator_Reply *src)
 {
     //printf("=> Calculator_ReplyPlugin::copy_sample\n");
-    Calculator_ReplyPlugin::copy_data(dst, src);
+    *dst = std::move(*src);
     return RTI_TRUE;
 }
 
@@ -1405,7 +1368,7 @@ DDS_TypeCode* Calculator_ReturnPlugin::get_typecode()
     static DDS_TypeCode_Member Calculator_Return_g_tc_members[2 + 1] =
     {
         {
-            (char *)"unknown_operation",/* Member name */
+            (char *)"unknownOp",/* Member name */
             {
                 1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -1476,7 +1439,7 @@ DDS_TypeCode* Calculator_ReturnPlugin::get_typecode()
     
     if(!is_initialized)
     {
-        Calculator_Return_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::UnknownOperationPlugin::get_typecode();
+        Calculator_Return_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::rpc::UnknownOperationPlugin::get_typecode();
         Calculator_Return_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode*)CalculatorPlugin::addition_ResultPlugin::get_typecode();
         Calculator_Return_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode*)CalculatorPlugin::subtraction_ResultPlugin::get_typecode();
 
@@ -1514,7 +1477,7 @@ DDS_TypeCode* Calculator_ReplyPlugin::get_typecode()
             NULL
         },
         {
-            (char *)"reply",
+            (char *)"data",
             {
                 0,
                 DDS_BOOLEAN_FALSE,
@@ -1549,7 +1512,7 @@ DDS_TypeCode* Calculator_ReplyPlugin::get_typecode()
     
     if(!is_initialized)
     {
-        Calculator_Reply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::ReplyHeaderPlugin::get_typecode();
+        Calculator_Reply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::rpc::ReplyHeaderPlugin::get_typecode();
         Calculator_Reply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Calculator_ReturnPlugin::get_typecode();
 
         is_initialized = true;

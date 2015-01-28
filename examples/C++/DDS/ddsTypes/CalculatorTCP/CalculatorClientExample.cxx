@@ -15,8 +15,8 @@
 #include "CalculatorProxy.h"
 #include "Calculator.h"
 #include "CalculatorDDSProtocol.h"
-#include "rpcdds/transports/dds/TCPProxyTransport.h"
-#include "rpcdds/exceptions/Exceptions.h"
+#include <rpcdds/transports/dds/TCPProxyTransport.h>
+#include <rpcdds/exceptions/Exceptions.h>
 
 #include <iostream>
 

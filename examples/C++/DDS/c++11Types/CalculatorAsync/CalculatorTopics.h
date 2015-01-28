@@ -16,8 +16,8 @@
 #define _Calculator_TOPICS_H_
 
 #include "Calculator.h"
-#include "rpcdds/protocols/dds/MessageHeader.h"
-#include "rpcdds/utils/Messages.h"
+#include <rpcdds/protocols/dds/MessageHeader.h>
+#include <rpcdds/utils/Messages.h>
 
 #include <cstddef>
 
@@ -328,43 +328,37 @@ public:
      */
     user_cpp_DllExport int32_t& _d();
 
-    user_cpp_DllExport void unknown_exception(eprosima::rpc::protocol::dds::UnknownException _unknown_exception);
+    user_cpp_DllExport void unknownEx(eprosima::rpc::protocol::dds::rpc::UnknownException _unknownEx);
 
-    user_cpp_DllExport eprosima::rpc::protocol::dds::UnknownException unknown_exception() const;
+    user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::UnknownException unknownEx() const;
     
-    user_cpp_DllExport eprosima::rpc::protocol::dds::UnknownException& unknown_exception();
+    user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::UnknownException& unknownEx();
 
     /*!
-     * @brief This function copies the value in member out_
-     * @param _out_ New value to be copied in member out_
+     * @brief This function copies the value in member result
+     * @param _result New value to be copied in member result
      */
-    user_cpp_DllExport void out_(const Calculator_addition_Out &_out_);
+    user_cpp_DllExport void result(const Calculator_addition_Out &_result);
 
     /*!
-     * @brief This function moves the value in member out_
-     * @param _out_ New value to be moved in member out_
+     * @brief This function moves the value in member result
+     * @param _result New value to be moved in member result
      */
-    user_cpp_DllExport void out_(Calculator_addition_Out &&_out_);
+    user_cpp_DllExport void result(Calculator_addition_Out &&_result);
 
     /*!
-     * @brief This function returns a constant reference to member out_
-     * @return Constant reference to member out_
+     * @brief This function returns a constant reference to member result
+     * @return Constant reference to member result
      * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the requested union member is not the current selection.
      */
-    user_cpp_DllExport const Calculator_addition_Out& out_() const;
+    user_cpp_DllExport const Calculator_addition_Out& result() const;
 
     /*!
-     * @brief This function returns a reference to member out_
-     * @return Reference to member out_
+     * @brief This function returns a reference to member result
+     * @return Reference to member result
      * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the requested union member is not the current selection.
      */
-    user_cpp_DllExport Calculator_addition_Out& out_();
-
-    user_cpp_DllExport void sysx_(eprosima::rpc::ReturnMessage _sysx_);
-
-    user_cpp_DllExport eprosima::rpc::ReturnMessage sysx_() const;
-    
-    user_cpp_DllExport eprosima::rpc::ReturnMessage& sysx_();
+    user_cpp_DllExport Calculator_addition_Out& result();
 
 
     /*!
@@ -399,11 +393,9 @@ private:
 
     int32_t m__d;
 
-    eprosima::rpc::protocol::dds::UnknownException m_unknown_exception;
+    eprosima::rpc::protocol::dds::rpc::UnknownException m_unknownEx;
 
-    Calculator_addition_Out m_out_;
-
-    eprosima::rpc::ReturnMessage m_sysx_;
+    Calculator_addition_Out m_result;
 
 };
 
@@ -701,43 +693,37 @@ public:
      */
     user_cpp_DllExport int32_t& _d();
 
-    user_cpp_DllExport void unknown_exception(eprosima::rpc::protocol::dds::UnknownException _unknown_exception);
+    user_cpp_DllExport void unknownEx(eprosima::rpc::protocol::dds::rpc::UnknownException _unknownEx);
 
-    user_cpp_DllExport eprosima::rpc::protocol::dds::UnknownException unknown_exception() const;
+    user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::UnknownException unknownEx() const;
     
-    user_cpp_DllExport eprosima::rpc::protocol::dds::UnknownException& unknown_exception();
+    user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::UnknownException& unknownEx();
 
     /*!
-     * @brief This function copies the value in member out_
-     * @param _out_ New value to be copied in member out_
+     * @brief This function copies the value in member result
+     * @param _result New value to be copied in member result
      */
-    user_cpp_DllExport void out_(const Calculator_subtraction_Out &_out_);
+    user_cpp_DllExport void result(const Calculator_subtraction_Out &_result);
 
     /*!
-     * @brief This function moves the value in member out_
-     * @param _out_ New value to be moved in member out_
+     * @brief This function moves the value in member result
+     * @param _result New value to be moved in member result
      */
-    user_cpp_DllExport void out_(Calculator_subtraction_Out &&_out_);
+    user_cpp_DllExport void result(Calculator_subtraction_Out &&_result);
 
     /*!
-     * @brief This function returns a constant reference to member out_
-     * @return Constant reference to member out_
+     * @brief This function returns a constant reference to member result
+     * @return Constant reference to member result
      * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the requested union member is not the current selection.
      */
-    user_cpp_DllExport const Calculator_subtraction_Out& out_() const;
+    user_cpp_DllExport const Calculator_subtraction_Out& result() const;
 
     /*!
-     * @brief This function returns a reference to member out_
-     * @return Reference to member out_
+     * @brief This function returns a reference to member result
+     * @return Reference to member result
      * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the requested union member is not the current selection.
      */
-    user_cpp_DllExport Calculator_subtraction_Out& out_();
-
-    user_cpp_DllExport void sysx_(eprosima::rpc::ReturnMessage _sysx_);
-
-    user_cpp_DllExport eprosima::rpc::ReturnMessage sysx_() const;
-    
-    user_cpp_DllExport eprosima::rpc::ReturnMessage& sysx_();
+    user_cpp_DllExport Calculator_subtraction_Out& result();
 
 
     /*!
@@ -772,11 +758,9 @@ private:
 
     int32_t m__d;
 
-    eprosima::rpc::protocol::dds::UnknownException m_unknown_exception;
+    eprosima::rpc::protocol::dds::rpc::UnknownException m_unknownEx;
 
-    Calculator_subtraction_Out m_out_;
-
-    eprosima::rpc::ReturnMessage m_sysx_;
+    Calculator_subtraction_Out m_result;
 
 };
 
@@ -842,11 +826,11 @@ public:
      */
     user_cpp_DllExport int32_t& _d();
 
-    user_cpp_DllExport void unknown_operation(eprosima::rpc::protocol::dds::UnknownOperation _unknown_operation);
+    user_cpp_DllExport void unknownOp(eprosima::rpc::protocol::dds::rpc::UnknownOperation _unknownOp);
 
-    user_cpp_DllExport eprosima::rpc::protocol::dds::UnknownOperation unknown_operation() const;
+    user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::UnknownOperation unknownOp() const;
 
-    user_cpp_DllExport eprosima::rpc::protocol::dds::UnknownOperation& unknown_operation();
+    user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::UnknownOperation& unknownOp();
 
     /*!
      * @brief This function copies the value in member addition
@@ -926,7 +910,7 @@ public:
 private:
     int32_t m__d;
 
-    eprosima::rpc::protocol::dds::UnknownOperation m_unknown_operation;
+    eprosima::rpc::protocol::dds::rpc::UnknownOperation m_unknownOp;
     Calculator_addition_In m_addition;
     Calculator_subtraction_In m_subtraction;
 };
@@ -978,7 +962,7 @@ public:
      * @brief This method sets the request header information.
      * @param _header Request header.
      */
-    inline user_cpp_DllExport void header(const eprosima::rpc::protocol::dds::RequestHeader &_header)
+    inline user_cpp_DllExport void header(const eprosima::rpc::protocol::dds::rpc::RequestHeader &_header)
     {
         m_header = _header;
     }
@@ -987,7 +971,7 @@ public:
      * @brief This method sets the request header information.
      * @param _header Request header.
      */
-    inline user_cpp_DllExport void header(eprosima::rpc::protocol::dds::RequestHeader &&_header)
+    inline user_cpp_DllExport void header(eprosima::rpc::protocol::dds::rpc::RequestHeader &&_header)
     {
         m_header = std::move(_header);
     }
@@ -996,7 +980,7 @@ public:
      * @brief This method returns the request header information.
      * @return Request header.
      */
-    inline user_cpp_DllExport const eprosima::rpc::protocol::dds::RequestHeader& header() const
+    inline user_cpp_DllExport const eprosima::rpc::protocol::dds::rpc::RequestHeader& header() const
     {
         return m_header;
     }
@@ -1005,7 +989,7 @@ public:
      * @brief This method returns the request header information.
      * @return Request header.
      */
-    inline user_cpp_DllExport eprosima::rpc::protocol::dds::RequestHeader& header()
+    inline user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::RequestHeader& header()
     {
         return m_header;
     }
@@ -1014,36 +998,36 @@ public:
      * @brief This method sets the union that encapsulates the interface operations.
      * @param _request Union.
      */
-    inline user_cpp_DllExport void request(const Calculator_Call &_request)
+    inline user_cpp_DllExport void data(const Calculator_Call &_data)
     {
-        m_request = _request;
+        m_data = _data;
     }
 
     /*!
      * @brief This method sets the union that encapsulates the interface operations.
      * @param _request Union.
      */
-    inline user_cpp_DllExport void request(Calculator_Call &&_request)
+    inline user_cpp_DllExport void data(Calculator_Call &&_data)
     {
-        m_request = std::move(_request);
+        m_data = std::move(_data);
     }
 
     /*!
      * @brief This method returns the union that encapsulates the interface operations.
      * @return Union.
      */
-    inline user_cpp_DllExport const Calculator_Call& request() const
+    inline user_cpp_DllExport const Calculator_Call& data() const
     {
-        return m_request;
+        return m_data;
     }
 
     /*!
      * @brief This method returns the union that encapsulates the interface operations.
      * @return Union.
      */
-    inline user_cpp_DllExport Calculator_Call& request()
+    inline user_cpp_DllExport Calculator_Call& data()
     {
-        return m_request;
+        return m_data;
     }
 
     /*!
@@ -1076,9 +1060,9 @@ public:
 
 private:
 
-    eprosima::rpc::protocol::dds::RequestHeader m_header;
+    eprosima::rpc::protocol::dds::rpc::RequestHeader m_header;
 
-    Calculator_Call m_request;
+    Calculator_Call m_data;
 };
 
 /*!
@@ -1142,11 +1126,11 @@ public:
      */
     user_cpp_DllExport int32_t& _d();
 
-    user_cpp_DllExport void unknown_operation(eprosima::rpc::protocol::dds::UnknownOperation _unknown_operation);
+    user_cpp_DllExport void unknownOp(eprosima::rpc::protocol::dds::rpc::UnknownOperation _unknownOp);
 
-    user_cpp_DllExport eprosima::rpc::protocol::dds::UnknownOperation unknown_operation() const;
+    user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::UnknownOperation unknownOp() const;
 
-    user_cpp_DllExport eprosima::rpc::protocol::dds::UnknownOperation& unknown_operation();
+    user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::UnknownOperation& unknownOp();
 
     /*!
      * @brief This function copies the value in member addition
@@ -1226,7 +1210,7 @@ public:
 private:
     int32_t m__d;
 
-    eprosima::rpc::protocol::dds::UnknownOperation m_unknown_operation;
+    eprosima::rpc::protocol::dds::rpc::UnknownOperation m_unknownOp;
 
     Calculator_addition_Result m_addition;
     Calculator_subtraction_Result m_subtraction;
@@ -1279,7 +1263,7 @@ public:
      * @brief This method sets the reply header information.
      * @param _header Reply header.
      */
-    inline user_cpp_DllExport void header(const eprosima::rpc::protocol::dds::ReplyHeader &_header)
+    inline user_cpp_DllExport void header(const eprosima::rpc::protocol::dds::rpc::ReplyHeader &_header)
     {
         m_header = _header;
     }
@@ -1288,7 +1272,7 @@ public:
      * @brief This method sets the reply header information.
      * @param _header Reply header.
      */
-    inline user_cpp_DllExport void header(eprosima::rpc::protocol::dds::ReplyHeader &&_header)
+    inline user_cpp_DllExport void header(eprosima::rpc::protocol::dds::rpc::ReplyHeader &&_header)
     {
         m_header = std::move(_header);
     }
@@ -1297,7 +1281,7 @@ public:
      * @brief This method returns the reply header information.
      * @return Reply header.
      */
-    inline user_cpp_DllExport const eprosima::rpc::protocol::dds::ReplyHeader& header() const
+    inline user_cpp_DllExport const eprosima::rpc::protocol::dds::rpc::ReplyHeader& header() const
     {
         return m_header;
     }
@@ -1306,7 +1290,7 @@ public:
      * @brief This method returns the reply header information.
      * @return Reply header.
      */
-    inline user_cpp_DllExport eprosima::rpc::protocol::dds::ReplyHeader& header()
+    inline user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::ReplyHeader& header()
     {
         return m_header;
     }
@@ -1315,36 +1299,36 @@ public:
      * @brief This method sets the union that encapsulates the interface operations.
      * @param _reply Union.
      */
-    inline user_cpp_DllExport void reply(const Calculator_Return &_reply)
+    inline user_cpp_DllExport void data(const Calculator_Return &_data)
     {
-        m_reply = _reply;
+        m_data = _data;
     }
 
     /*!
      * @brief This method sets the union that encapsulates the interface operations.
      * @param _reply Union.
      */
-    inline user_cpp_DllExport void reply(Calculator_Return &&_reply)
+    inline user_cpp_DllExport void data(Calculator_Return &&_data)
     {
-        m_reply = std::move(_reply);
+        m_data = std::move(_data);
     }
 
     /*!
      * @brief This method sets the union that encapsulates the interface operations.
      * @return Union.
      */
-    inline user_cpp_DllExport const Calculator_Return& reply() const
+    inline user_cpp_DllExport const Calculator_Return& data() const
     {
-        return m_reply;
+        return m_data;
     }
 
     /*!
      * @brief This method sets the union that encapsulates the interface operations.
      * @return Union.
      */
-    inline user_cpp_DllExport Calculator_Return& reply()
+    inline user_cpp_DllExport Calculator_Return& data()
     {
-        return m_reply;
+        return m_data;
     }
 
     /*!
@@ -1377,9 +1361,9 @@ public:
 
 private:
 
-    eprosima::rpc::protocol::dds::ReplyHeader m_header;
+    eprosima::rpc::protocol::dds::rpc::ReplyHeader m_header;
 
-    Calculator_Return m_reply;
+    Calculator_Return m_data;
 };
 
 #endif // _Calculator_TOPICS_H_

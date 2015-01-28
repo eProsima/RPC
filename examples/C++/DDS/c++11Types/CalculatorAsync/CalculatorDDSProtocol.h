@@ -16,7 +16,7 @@
 #define _Calculator_DDS_PROTOCOL_H_
 
 #include "CalculatorProtocol.h"
-#include "rpcdds/utils/Messages.h"
+#include <rpcdds/utils/Messages.h>
 
 namespace eprosima
 {

@@ -15,7 +15,7 @@
 #ifndef _CalculatorEXTENSION_H_
 #define _CalculatorEXTENSION_H_
 
-#include "rpcdds/exceptions/UserException.h"
+#include <rpcdds/exceptions/UserException.h>
 #include "CalculatorSupport.h"
 
 

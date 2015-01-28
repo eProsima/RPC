@@ -8,8 +8,8 @@
   or consult the RTI Connext manual.
 */
 
-#ifndef CalculatorRequestReply_540432763_h
-#define CalculatorRequestReply_540432763_h
+#ifndef CalculatorRequestReply_540432743_h
+#define CalculatorRequestReply_540432743_h
 
 #ifndef NDDS_STANDALONE_TYPE
     #ifdef __cplusplus
@@ -223,11 +223,9 @@ typedef struct Calculator_addition_Result {
     struct Calculator_addition_Result_u
 
     {
-    UnknownException  unknown_exception;
+    dds::rpc::UnknownException  unknownEx;
 
-    Calculator_addition_Out  out_;
-
-    SystemExceptionCode  sysx_;
+    Calculator_addition_Out  result;
 
 
     } _u;
@@ -486,11 +484,9 @@ typedef struct Calculator_subtraction_Result {
     struct Calculator_subtraction_Result_u
 
     {
-    UnknownException  unknown_exception;
+    dds::rpc::UnknownException  unknownEx;
 
-    Calculator_subtraction_Out  out_;
-
-    SystemExceptionCode  sysx_;
+    Calculator_subtraction_Out  result;
 
 
     } _u;
@@ -579,7 +575,7 @@ typedef struct Calculator_Call {
     struct Calculator_Call_u
 
     {
-    UnknownOperation  unknown_operation;
+    dds::rpc::UnknownOperation  unknownOp;
 
     Calculator_addition_In  addition;
 
@@ -684,9 +680,9 @@ public:
 
 #endif
     
-    RequestHeader  header;
+    dds::rpc::RequestHeader  header;
 
-    Calculator_Call  request;
+    Calculator_Call  data;
 
             
 };                        
@@ -770,7 +766,7 @@ typedef struct Calculator_Return {
     struct Calculator_Return_u
 
     {
-    UnknownOperation  unknown_operation;
+    dds::rpc::UnknownOperation  unknownOp;
 
     Calculator_addition_Result  addition;
 
@@ -875,9 +871,9 @@ public:
 
 #endif
     
-    ReplyHeader  header;
+    dds::rpc::ReplyHeader  header;
 
-    Calculator_Return  reply;
+    Calculator_Return  data;
 
             
 };                        
@@ -941,4 +937,4 @@ RTIBool Calculator_Reply_copy(
 
 
 
-#endif /* CalculatorRequestReply_540432763_h */
+#endif /* CalculatorRequestReply_540432743_h */

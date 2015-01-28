@@ -18,9 +18,9 @@ class __declspec(dllimport) DDSDomainEntity;
 class __declspec(dllimport) DDSEntity;
 #endif
 #include "CalculatorDDSAsyncSupport.h"
-#include "rpcdds/exceptions/ServerInternalException.h"
-#include "rpcdds/exceptions/ClientInternalException.h"
-#include "rpcdds/utils/Messages.h"
+#include <rpcdds/exceptions/ServerInternalException.h>
+#include <rpcdds/exceptions/ClientInternalException.h>
+#include <rpcdds/utils/Messages.h>
 #include "CalculatorRequestReplyPlugin.h"
 
 #include "CalculatorExtension.h"
@@ -52,22 +52,21 @@ void* Calculator_additionTask::getReplyInstance()
 void Calculator_additionTask::execute()
 {  
     DDS_Long  return_ = 0;
-    ReturnMessage retcode = eprosima::rpc::OK;
     
-    switch (m_reply.reply._u.addition._d)
+    if(m_reply.header.remoteEx == ::dds::rpc::REMOTE_EX_OK)
     {
-        case 0:
-            return_ = m_reply.reply._u.addition._u.out_.return_;
-		    getObject().addition(return_);
-            break;
-        case 1:
-            retcode = (eprosima::rpc::ReturnMessage)m_reply.reply._u.addition._u.sysx_;
-            if(retcode == eprosima::rpc::SERVER_INTERNAL_ERROR)
-                getObject().on_exception(ServerInternalException(""));
-            break;
-        default:
-            getObject().on_exception(ClientInternalException("Error extracting information from server"));
+        switch (m_reply.data._u.addition._d)
+        {
+            case 0:
+                return_ = m_reply.data._u.addition._u.result.return_;
+	    	    getObject().addition(return_);
+                break;
+            default:
+                getObject().on_exception(ClientInternalException("Error extracting information from server"));
+        }
     }
+    else
+        getObject().on_exception(ServerInternalException(""));
 }
 
 void Calculator_additionTask::on_exception(const SystemException &ex)
@@ -100,22 +99,21 @@ void* Calculator_subtractionTask::getReplyInstance()
 void Calculator_subtractionTask::execute()
 {  
     DDS_Long  return_ = 0;
-    ReturnMessage retcode = eprosima::rpc::OK;
     
-    switch (m_reply.reply._u.subtraction._d)
+    if(m_reply.header.remoteEx == ::dds::rpc::REMOTE_EX_OK)
     {
-        case 0:
-            return_ = m_reply.reply._u.subtraction._u.out_.return_;
-		    getObject().subtraction(return_);
-            break;
-        case 1:
-            retcode = (eprosima::rpc::ReturnMessage)m_reply.reply._u.subtraction._u.sysx_;
-            if(retcode == eprosima::rpc::SERVER_INTERNAL_ERROR)
-                getObject().on_exception(ServerInternalException(""));
-            break;
-        default:
-            getObject().on_exception(ClientInternalException("Error extracting information from server"));
+        switch (m_reply.data._u.subtraction._d)
+        {
+            case 0:
+                return_ = m_reply.data._u.subtraction._u.result.return_;
+	    	    getObject().subtraction(return_);
+                break;
+            default:
+                getObject().on_exception(ClientInternalException("Error extracting information from server"));
+        }
     }
+    else
+        getObject().on_exception(ServerInternalException(""));
 }
 
 void Calculator_subtractionTask::on_exception(const SystemException &ex)

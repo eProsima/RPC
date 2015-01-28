@@ -15,7 +15,7 @@
 #ifndef _Calculator_PROXY_H_
 #define _Calculator_PROXY_H_
 
-#include "rpcdds/client/Proxy.h"
+#include <rpcdds/client/Proxy.h>
 #include "Calculator.h"
 #include "CalculatorAsyncCallbackHandlers.h"
 

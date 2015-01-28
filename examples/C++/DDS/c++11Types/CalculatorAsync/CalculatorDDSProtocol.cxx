@@ -13,13 +13,13 @@
  */
 
 #include "CalculatorDDSProtocol.h"
-#include "rpcdds/transports/Transport.h"
-#include "rpcdds/transports/dds/ProxyTransport.h"
-#include "rpcdds/transports/dds/components/ProxyProcedureEndpoint.h"
+#include <rpcdds/transports/Transport.h>
+#include <rpcdds/transports/dds/ProxyTransport.h>
+#include <rpcdds/transports/dds/components/ProxyProcedureEndpoint.h>
 #include "CalculatorDDSAsyncSupport.h"
-#include "rpcdds/transports/dds/ServerTransport.h"
-#include "rpcdds/transports/dds/components/ServerProcedureEndpoint.h"
-#include "rpcdds/exceptions/Exceptions.h"
+#include <rpcdds/transports/dds/ServerTransport.h>
+#include <rpcdds/transports/dds/components/ServerProcedureEndpoint.h>
+#include <rpcdds/exceptions/Exceptions.h>
 #include "CalculatorTopicsPlugin.h"
 using namespace eprosima::rpc;
 using namespace ::protocol::dds;
@@ -60,6 +60,7 @@ bool CalculatorProtocol::setTransport(Transport &transport)
 bool CalculatorProtocol::activateInterface(const char* interfaceName)
 {
     const char *requesttypeName = NULL, *replytypeName = NULL;
+    std::string requesttopicName, replytopicName;
 
     if(m_ddsTransport != NULL)
     {
@@ -73,6 +74,10 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
             {
                 return false;
             }
+
+            requesttopicName = "Calculator_";
+            requesttopicName += m_ddsTransport->getRemoteServiceName();
+            requesttopicName += "_Request";
             
             replytypeName = Calculator_ReplyPlugin::get_typename();
     
@@ -80,12 +85,18 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
             {
                 return false;
             }
+
+            replytopicName = "Calculator_";
+            replytopicName += m_ddsTransport->getRemoteServiceName();
+            replytopicName += "_Reply";
             
             if(behaviour == ::transport::PROXY_BEHAVIOUR)
             {
                 Calculator_pe = dynamic_cast<eprosima::rpc::transport::dds::ProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint(Calculator_str,
                 requesttypeName,
+                requesttopicName.c_str(),
                 replytypeName,
+                replytopicName.c_str(),
                 true,
                 (::transport::dds::Transport::Create_data)Calculator_ReplyPlugin::create_data,
                 (::transport::dds::Transport::Copy_data)Calculator_ReplyPlugin::copy_data,
@@ -98,7 +109,9 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
             {
                 Calculator_se = dynamic_cast<eprosima::rpc::transport::dds::ServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint(Calculator_str,
                     replytypeName,
+                    replytopicName.c_str(),
                     requesttypeName,
+                    requesttopicName.c_str(),
 		            true,
                     (::transport::dds::Transport::Create_data)Calculator_RequestPlugin::create_data,
                     (::transport::dds::Transport::Copy_data)Calculator_RequestPlugin::copy_data,
@@ -124,7 +137,7 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
     CalculatorProtocol &_protocol = dynamic_cast<CalculatorProtocol&>(protocol);
     Calculator_Request &requestData = *(Calculator_Request*)_data;
 
-    switch(requestData.request()._d())
+    switch(requestData.data()._d())
     {
                 case 0xCBC6CEAA:
                 {
@@ -132,14 +145,14 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
                 int32_t  value2 = 0;
                 int32_t  return_ = 0;   
                 Calculator_Reply replyData;
-                memcpy(replyData.header().request_id().guid().value(), requestData.header().request_id().guid().value(), 16);
-                replyData.header().request_id().sequence_number() = requestData.header().request_id().sequence_number();
+                replyData.header().relatedRequestId(requestData.header().requestId());
+                replyData.header().remoteEx(eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK);
 
-                replyData.reply()._d() = 0xCBC6CEAA;
+                replyData.data()._d() = 0xCBC6CEAA;
 
 
-                value1 = requestData.request().addition().value1(); 
-                value2 = requestData.request().addition().value2(); 
+                value1 = requestData.data().addition().value1(); 
+                value2 = requestData.data().addition().value2(); 
 
                 try
                 {
@@ -147,9 +160,9 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
                     {
                         return_ = _protocol._Calculator_impl->addition(value1, value2);
 
-                        replyData.reply().addition()._d() = 0;
+                        replyData.data().addition()._d() = 0;
 
-                        replyData.reply().addition().out_().return_(return_);
+                        replyData.data().addition().result().return_(return_);
 
                         _protocol.Calculator_se->sendReply(&replyData);
                     }
@@ -159,8 +172,7 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
                 {
                     //TODO Quitar el unsetReply
                     //
-                    replyData.reply().addition()._d() = 1;
-                    replyData.reply().addition().sysx_() = SERVER_INTERNAL_ERROR;
+                    replyData.header().remoteEx(eprosima::rpc::protocol::dds::rpc::REMOTE_EX_UNSUPPORTED);
 
                     _protocol.Calculator_se->sendReply(&replyData);
                 }
@@ -176,14 +188,14 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
                 int32_t  value2 = 0;
                 int32_t  return_ = 0;   
                 Calculator_Reply replyData;
-                memcpy(replyData.header().request_id().guid().value(), requestData.header().request_id().guid().value(), 16);
-                replyData.header().request_id().sequence_number() = requestData.header().request_id().sequence_number();
+                replyData.header().relatedRequestId(requestData.header().requestId());
+                replyData.header().remoteEx(eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK);
 
-                replyData.reply()._d() = 0xCA019A14;
+                replyData.data()._d() = 0xCA019A14;
 
 
-                value1 = requestData.request().subtraction().value1(); 
-                value2 = requestData.request().subtraction().value2(); 
+                value1 = requestData.data().subtraction().value1(); 
+                value2 = requestData.data().subtraction().value2(); 
 
                 try
                 {
@@ -191,9 +203,9 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
                     {
                         return_ = _protocol._Calculator_impl->subtraction(value1, value2);
 
-                        replyData.reply().subtraction()._d() = 0;
+                        replyData.data().subtraction()._d() = 0;
 
-                        replyData.reply().subtraction().out_().return_(return_);
+                        replyData.data().subtraction().result().return_(return_);
 
                         _protocol.Calculator_se->sendReply(&replyData);
                     }
@@ -203,8 +215,7 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
                 {
                     //TODO Quitar el unsetReply
                     //
-                    replyData.reply().subtraction()._d() = 1;
-                    replyData.reply().subtraction().sysx_() = SERVER_INTERNAL_ERROR;
+                    replyData.header().remoteEx(eprosima::rpc::protocol::dds::rpc::REMOTE_EX_UNSUPPORTED);
 
                     _protocol.Calculator_se->sendReply(&replyData);
                 }
@@ -225,26 +236,28 @@ int32_t CalculatorProtocol::Calculator_addition(/*in*/ int32_t value1, /*in*/ in
 
 
 
-    instance.request()._d() = 0xCBC6CEAA;
+    instance.data()._d() = 0xCBC6CEAA;
     
-    instance.request().addition().value1(value1);
-    instance.request().addition().value2(value2);
+    instance.data().addition().value1(value1);
+    instance.data().addition().value2(value2);
 
     retcode = Calculator_pe->send(&instance, &retInstance);
     
     if(retcode == OK)
     {
-        switch (retInstance.reply().addition()._d())
+        if(retInstance.header().remoteEx() == eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK)
         {
-            case 0:
-		        return_ = retInstance.reply().addition().out_().return_(); 
-                break;
-            case 1:
-                retcode = (eprosima::rpc::ReturnMessage)retInstance.reply().addition().sysx_();
-                break;
-            default:
-                throw ClientInternalException("Error extracting information from server");
+            switch (retInstance.data().addition()._d())
+            {
+                case 0:
+		            return_ = retInstance.data().addition().result().return_(); 
+                    break;
+                default:
+                    throw ClientInternalException("Error extracting information from server");
+            }
         }
+        else
+            retcode = SERVER_INTERNAL_ERROR;
     }
       
     switch (retcode)
@@ -274,10 +287,10 @@ void CalculatorProtocol::Calculator_addition_async(Calculator_additionCallbackHa
     Calculator_Request instance;
     Calculator_additionTask *task = new Calculator_additionTask(obj);
 
-    instance.request()._d() = 0xCBC6CEAA;
+    instance.data()._d() = 0xCBC6CEAA;
     
-    instance.request().addition().value1(value1);
-    instance.request().addition().value2(value2);
+    instance.data().addition().value1(value1);
+    instance.data().addition().value2(value2);
 
     retcode = Calculator_pe->send_async(&instance, task);
     
@@ -303,26 +316,28 @@ int32_t CalculatorProtocol::Calculator_subtraction(/*in*/ int32_t value1, /*in*/
 
 
 
-    instance.request()._d() = 0xCA019A14;
+    instance.data()._d() = 0xCA019A14;
     
-    instance.request().subtraction().value1(value1);
-    instance.request().subtraction().value2(value2);
+    instance.data().subtraction().value1(value1);
+    instance.data().subtraction().value2(value2);
 
     retcode = Calculator_pe->send(&instance, &retInstance);
     
     if(retcode == OK)
     {
-        switch (retInstance.reply().subtraction()._d())
+        if(retInstance.header().remoteEx() == eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK)
         {
-            case 0:
-		        return_ = retInstance.reply().subtraction().out_().return_(); 
-                break;
-            case 1:
-                retcode = (eprosima::rpc::ReturnMessage)retInstance.reply().subtraction().sysx_();
-                break;
-            default:
-                throw ClientInternalException("Error extracting information from server");
+            switch (retInstance.data().subtraction()._d())
+            {
+                case 0:
+		            return_ = retInstance.data().subtraction().result().return_(); 
+                    break;
+                default:
+                    throw ClientInternalException("Error extracting information from server");
+            }
         }
+        else
+            retcode = SERVER_INTERNAL_ERROR;
     }
       
     switch (retcode)
@@ -352,10 +367,10 @@ void CalculatorProtocol::Calculator_subtraction_async(Calculator_subtractionCall
     Calculator_Request instance;
     Calculator_subtractionTask *task = new Calculator_subtractionTask(obj);
 
-    instance.request()._d() = 0xCA019A14;
+    instance.data()._d() = 0xCA019A14;
     
-    instance.request().subtraction().value1(value1);
-    instance.request().subtraction().value2(value2);
+    instance.data().subtraction().value1(value1);
+    instance.data().subtraction().value2(value2);
 
     retcode = Calculator_pe->send_async(&instance, task);
     

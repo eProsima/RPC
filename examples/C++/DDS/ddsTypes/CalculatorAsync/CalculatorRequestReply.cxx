@@ -468,10 +468,10 @@ DDS_TypeCode* Calculator_addition_Result_get_typecode()
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member Calculator_addition_Result_g_tc_members[3]=
+    static DDS_TypeCode_Member Calculator_addition_Result_g_tc_members[2]=
     {
         {
-            (char *)"unknown_exception",/* Member name */
+            (char *)"unknownEx",/* Member name */
             {
                 1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -488,7 +488,7 @@ DDS_TypeCode* Calculator_addition_Result_get_typecode()
             NULL/* Ignored */
         },
         {
-            (char *)"out_",/* Member name */
+            (char *)"result",/* Member name */
             {
                 2,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -497,24 +497,7 @@ DDS_TypeCode* Calculator_addition_Result_get_typecode()
             },
             0, /* Ignored */
             1, /* Number of labels */
-            0, /* First label */
-            NULL, /* Labels (it is NULL when there is only one label)*/
-            RTI_CDR_NONKEY_MEMBER, /* Member flags */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            1,
-            NULL/* Ignored */
-        },
-        {
-            (char *)"sysx_",/* Member name */
-            {
-                3,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            1, /* Number of labels */
-            1, /* First label */
+            (dds::rpc::REMOTE_EX_OK), /* First label */
             NULL, /* Labels (it is NULL when there is only one label)*/
             RTI_CDR_NONKEY_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
@@ -533,7 +516,7 @@ DDS_TypeCode* Calculator_addition_Result_get_typecode()
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        3, /* Number of members */
+        2, /* Number of members */
         Calculator_addition_Result_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
     }}; /* Type code for Calculator_addition_Result*/
@@ -543,9 +526,8 @@ DDS_TypeCode* Calculator_addition_Result_get_typecode()
     }
 
 
-    Calculator_addition_Result_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)UnknownException_get_typecode();
+    Calculator_addition_Result_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)dds::rpc::UnknownException_get_typecode();
     Calculator_addition_Result_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Calculator_addition_Out_get_typecode();
-    Calculator_addition_Result_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)SystemExceptionCode_get_typecode();
 
     Calculator_addition_Result_g_tc._data._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long; /* Discriminator type code */
 
@@ -560,9 +542,7 @@ DDS_Long Calculator_addition_Result_getDefaultDiscriminator()
     DDS_UnsignedLong i = 0;
     for (i = 0; i < maxValue; ++i) {
     
-        if (i == 0) continue;
-     
-        if (i == 1) continue;
+        if (i == (dds::rpc::REMOTE_EX_OK)) continue;
      
         break;
     }
@@ -600,17 +580,12 @@ RTIBool Calculator_addition_Result_initialize_w_params(
 
     sample->_d = Calculator_addition_Result_getDefaultDiscriminator();
 
-    if (!UnknownException_initialize_w_params(&sample->_u.unknown_exception,allocParams)) {
+    if (!dds::rpc::UnknownException_initialize_w_params(&sample->_u.unknownEx,allocParams)) {
         return RTI_FALSE;
     }
             
 
-    if (!Calculator_addition_Out_initialize_w_params(&sample->_u.out_,allocParams)) {
-        return RTI_FALSE;
-    }
-            
-
-    if (!SystemExceptionCode_initialize_w_params(&sample->_u.sysx_,allocParams)) {
+    if (!Calculator_addition_Out_initialize_w_params(&sample->_u.result,allocParams)) {
         return RTI_FALSE;
     }
             
@@ -647,13 +622,10 @@ void Calculator_addition_Result_finalize_w_params(
     if (deallocParams) {} /* To avoid warnings */
 
 
-    UnknownException_finalize_w_params(&sample->_u.unknown_exception, deallocParams);
+    dds::rpc::UnknownException_finalize_w_params(&sample->_u.unknownEx, deallocParams);
             
 
-    Calculator_addition_Out_finalize_w_params(&sample->_u.out_, deallocParams);
-            
-
-    SystemExceptionCode_finalize_w_params(&sample->_u.sysx_, deallocParams);
+    Calculator_addition_Out_finalize_w_params(&sample->_u.result, deallocParams);
             
 
 }
@@ -678,21 +650,14 @@ void Calculator_addition_Result_finalize_optional_members(
           default:
         {                                    
         
-    UnknownException_finalize_optional_members(&sample->_u.unknown_exception, deallocParams->delete_pointers);
+    dds::rpc::UnknownException_finalize_optional_members(&sample->_u.unknownEx, deallocParams->delete_pointers);
             
 
         };
-      case 0:
+      case (dds::rpc::REMOTE_EX_OK):
         {                                    
         
-    Calculator_addition_Out_finalize_optional_members(&sample->_u.out_, deallocParams->delete_pointers);
-            
-
-        } break;
-      case 1:
-        {                                    
-        
-    SystemExceptionCode_finalize_w_params(&sample->_u.sysx_, deallocParams);
+    Calculator_addition_Out_finalize_optional_members(&sample->_u.result, deallocParams->delete_pointers);
             
 
         } break;
@@ -716,28 +681,18 @@ RTIBool Calculator_addition_Result_copy(
           default:
         {                                    
         
-    if (!UnknownException_copy(
-        &dst->_u.unknown_exception, &src->_u.unknown_exception)) {
+    if (!dds::rpc::UnknownException_copy(
+        &dst->_u.unknownEx, &src->_u.unknownEx)) {
         return RTI_FALSE;
     }
             
 
         };
-      case 0:
+      case (dds::rpc::REMOTE_EX_OK):
         {                                    
         
     if (!Calculator_addition_Out_copy(
-        &dst->_u.out_, &src->_u.out_)) {
-        return RTI_FALSE;
-    }
-            
-
-        } break;
-      case 1:
-        {                                    
-        
-    if (!SystemExceptionCode_copy(
-        &dst->_u.sysx_, &src->_u.sysx_)) {
+        &dst->_u.result, &src->_u.result)) {
         return RTI_FALSE;
     }
             
@@ -1201,10 +1156,10 @@ DDS_TypeCode* Calculator_subtraction_Result_get_typecode()
     static RTIBool is_initialized = RTI_FALSE;
 
 
-    static DDS_TypeCode_Member Calculator_subtraction_Result_g_tc_members[3]=
+    static DDS_TypeCode_Member Calculator_subtraction_Result_g_tc_members[2]=
     {
         {
-            (char *)"unknown_exception",/* Member name */
+            (char *)"unknownEx",/* Member name */
             {
                 1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -1221,7 +1176,7 @@ DDS_TypeCode* Calculator_subtraction_Result_get_typecode()
             NULL/* Ignored */
         },
         {
-            (char *)"out_",/* Member name */
+            (char *)"result",/* Member name */
             {
                 2,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -1230,24 +1185,7 @@ DDS_TypeCode* Calculator_subtraction_Result_get_typecode()
             },
             0, /* Ignored */
             1, /* Number of labels */
-            0, /* First label */
-            NULL, /* Labels (it is NULL when there is only one label)*/
-            RTI_CDR_NONKEY_MEMBER, /* Member flags */
-            DDS_PRIVATE_MEMBER,/* Ignored */
-            1,
-            NULL/* Ignored */
-        },
-        {
-            (char *)"sysx_",/* Member name */
-            {
-                3,/* Representation ID */
-                DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
-            },
-            0, /* Ignored */
-            1, /* Number of labels */
-            1, /* First label */
+            (dds::rpc::REMOTE_EX_OK), /* First label */
             NULL, /* Labels (it is NULL when there is only one label)*/
             RTI_CDR_NONKEY_MEMBER, /* Member flags */
             DDS_PRIVATE_MEMBER,/* Ignored */
@@ -1266,7 +1204,7 @@ DDS_TypeCode* Calculator_subtraction_Result_get_typecode()
         0, /* Ignored */
         0, /* Ignored */
         NULL, /* Ignored */
-        3, /* Number of members */
+        2, /* Number of members */
         Calculator_subtraction_Result_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
     }}; /* Type code for Calculator_subtraction_Result*/
@@ -1276,9 +1214,8 @@ DDS_TypeCode* Calculator_subtraction_Result_get_typecode()
     }
 
 
-    Calculator_subtraction_Result_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)UnknownException_get_typecode();
+    Calculator_subtraction_Result_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)dds::rpc::UnknownException_get_typecode();
     Calculator_subtraction_Result_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Calculator_subtraction_Out_get_typecode();
-    Calculator_subtraction_Result_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)SystemExceptionCode_get_typecode();
 
     Calculator_subtraction_Result_g_tc._data._typeCode = (RTICdrTypeCode *)&DDS_g_tc_long; /* Discriminator type code */
 
@@ -1293,9 +1230,7 @@ DDS_Long Calculator_subtraction_Result_getDefaultDiscriminator()
     DDS_UnsignedLong i = 0;
     for (i = 0; i < maxValue; ++i) {
     
-        if (i == 0) continue;
-     
-        if (i == 1) continue;
+        if (i == (dds::rpc::REMOTE_EX_OK)) continue;
      
         break;
     }
@@ -1333,17 +1268,12 @@ RTIBool Calculator_subtraction_Result_initialize_w_params(
 
     sample->_d = Calculator_subtraction_Result_getDefaultDiscriminator();
 
-    if (!UnknownException_initialize_w_params(&sample->_u.unknown_exception,allocParams)) {
+    if (!dds::rpc::UnknownException_initialize_w_params(&sample->_u.unknownEx,allocParams)) {
         return RTI_FALSE;
     }
             
 
-    if (!Calculator_subtraction_Out_initialize_w_params(&sample->_u.out_,allocParams)) {
-        return RTI_FALSE;
-    }
-            
-
-    if (!SystemExceptionCode_initialize_w_params(&sample->_u.sysx_,allocParams)) {
+    if (!Calculator_subtraction_Out_initialize_w_params(&sample->_u.result,allocParams)) {
         return RTI_FALSE;
     }
             
@@ -1380,13 +1310,10 @@ void Calculator_subtraction_Result_finalize_w_params(
     if (deallocParams) {} /* To avoid warnings */
 
 
-    UnknownException_finalize_w_params(&sample->_u.unknown_exception, deallocParams);
+    dds::rpc::UnknownException_finalize_w_params(&sample->_u.unknownEx, deallocParams);
             
 
-    Calculator_subtraction_Out_finalize_w_params(&sample->_u.out_, deallocParams);
-            
-
-    SystemExceptionCode_finalize_w_params(&sample->_u.sysx_, deallocParams);
+    Calculator_subtraction_Out_finalize_w_params(&sample->_u.result, deallocParams);
             
 
 }
@@ -1411,21 +1338,14 @@ void Calculator_subtraction_Result_finalize_optional_members(
           default:
         {                                    
         
-    UnknownException_finalize_optional_members(&sample->_u.unknown_exception, deallocParams->delete_pointers);
+    dds::rpc::UnknownException_finalize_optional_members(&sample->_u.unknownEx, deallocParams->delete_pointers);
             
 
         };
-      case 0:
+      case (dds::rpc::REMOTE_EX_OK):
         {                                    
         
-    Calculator_subtraction_Out_finalize_optional_members(&sample->_u.out_, deallocParams->delete_pointers);
-            
-
-        } break;
-      case 1:
-        {                                    
-        
-    SystemExceptionCode_finalize_w_params(&sample->_u.sysx_, deallocParams);
+    Calculator_subtraction_Out_finalize_optional_members(&sample->_u.result, deallocParams->delete_pointers);
             
 
         } break;
@@ -1449,28 +1369,18 @@ RTIBool Calculator_subtraction_Result_copy(
           default:
         {                                    
         
-    if (!UnknownException_copy(
-        &dst->_u.unknown_exception, &src->_u.unknown_exception)) {
+    if (!dds::rpc::UnknownException_copy(
+        &dst->_u.unknownEx, &src->_u.unknownEx)) {
         return RTI_FALSE;
     }
             
 
         };
-      case 0:
+      case (dds::rpc::REMOTE_EX_OK):
         {                                    
         
     if (!Calculator_subtraction_Out_copy(
-        &dst->_u.out_, &src->_u.out_)) {
-        return RTI_FALSE;
-    }
-            
-
-        } break;
-      case 1:
-        {                                    
-        
-    if (!SystemExceptionCode_copy(
-        &dst->_u.sysx_, &src->_u.sysx_)) {
+        &dst->_u.result, &src->_u.result)) {
         return RTI_FALSE;
     }
             
@@ -1526,7 +1436,7 @@ DDS_TypeCode* Calculator_Call_get_typecode()
     static DDS_TypeCode_Member Calculator_Call_g_tc_members[3]=
     {
         {
-            (char *)"unknown_operation",/* Member name */
+            (char *)"unknownOp",/* Member name */
             {
                 1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -1598,7 +1508,7 @@ DDS_TypeCode* Calculator_Call_get_typecode()
     }
 
 
-    Calculator_Call_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)UnknownOperation_get_typecode();
+    Calculator_Call_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)dds::rpc::UnknownOperation_get_typecode();
     Calculator_Call_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Calculator_addition_In_get_typecode();
     Calculator_Call_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)Calculator_subtraction_In_get_typecode();
 
@@ -1655,7 +1565,7 @@ RTIBool Calculator_Call_initialize_w_params(
 
     sample->_d = Calculator_Call_getDefaultDiscriminator();
 
-    if (!UnknownOperation_initialize_w_params(&sample->_u.unknown_operation,allocParams)) {
+    if (!dds::rpc::UnknownOperation_initialize_w_params(&sample->_u.unknownOp,allocParams)) {
         return RTI_FALSE;
     }
             
@@ -1702,7 +1612,7 @@ void Calculator_Call_finalize_w_params(
     if (deallocParams) {} /* To avoid warnings */
 
 
-    UnknownOperation_finalize_w_params(&sample->_u.unknown_operation, deallocParams);
+    dds::rpc::UnknownOperation_finalize_w_params(&sample->_u.unknownOp, deallocParams);
             
 
     Calculator_addition_In_finalize_w_params(&sample->_u.addition, deallocParams);
@@ -1733,7 +1643,7 @@ void Calculator_Call_finalize_optional_members(
           default:
         {                                    
         
-    UnknownOperation_finalize_optional_members(&sample->_u.unknown_operation, deallocParams->delete_pointers);
+    dds::rpc::UnknownOperation_finalize_optional_members(&sample->_u.unknownOp, deallocParams->delete_pointers);
             
 
         };
@@ -1771,8 +1681,8 @@ RTIBool Calculator_Call_copy(
           default:
         {                                    
         
-    if (!UnknownOperation_copy(
-        &dst->_u.unknown_operation, &src->_u.unknown_operation)) {
+    if (!dds::rpc::UnknownOperation_copy(
+        &dst->_u.unknownOp, &src->_u.unknownOp)) {
         return RTI_FALSE;
     }
             
@@ -1865,7 +1775,7 @@ DDS_TypeCode* Calculator_Request_get_typecode()
             NULL/* Ignored */
         },
         {
-            (char *)"request",/* Member name */
+            (char *)"data",/* Member name */
             {
                 1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -1903,7 +1813,7 @@ DDS_TypeCode* Calculator_Request_get_typecode()
     }
 
 
-    Calculator_Request_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)RequestHeader_get_typecode();
+    Calculator_Request_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)dds::rpc::RequestHeader_get_typecode();
     Calculator_Request_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Calculator_Call_get_typecode();
 
     is_initialized = RTI_TRUE;
@@ -1939,12 +1849,12 @@ RTIBool Calculator_Request_initialize_w_params(
     if (allocParams) {} /* To avoid warnings */
         
 
-    if (!RequestHeader_initialize_w_params(&sample->header,allocParams)) {
+    if (!dds::rpc::RequestHeader_initialize_w_params(&sample->header,allocParams)) {
         return RTI_FALSE;
     }
             
 
-    if (!Calculator_Call_initialize_w_params(&sample->request,allocParams)) {
+    if (!Calculator_Call_initialize_w_params(&sample->data,allocParams)) {
         return RTI_FALSE;
     }
             
@@ -1981,10 +1891,10 @@ void Calculator_Request_finalize_w_params(
     if (deallocParams) {} /* To avoid warnings */
 
 
-    RequestHeader_finalize_w_params(&sample->header, deallocParams);
+    dds::rpc::RequestHeader_finalize_w_params(&sample->header, deallocParams);
             
 
-    Calculator_Call_finalize_w_params(&sample->request, deallocParams);
+    Calculator_Call_finalize_w_params(&sample->data, deallocParams);
             
 
 }
@@ -2005,10 +1915,10 @@ void Calculator_Request_finalize_optional_members(
     deallocParamsTmp.delete_optional_members = DDS_BOOLEAN_TRUE;    
              
 
-    RequestHeader_finalize_optional_members(&sample->header, deallocParams->delete_pointers);
+    dds::rpc::RequestHeader_finalize_optional_members(&sample->header, deallocParams->delete_pointers);
             
 
-    Calculator_Call_finalize_optional_members(&sample->request, deallocParams->delete_pointers);
+    Calculator_Call_finalize_optional_members(&sample->data, deallocParams->delete_pointers);
             
 
 }
@@ -2018,14 +1928,14 @@ RTIBool Calculator_Request_copy(
     const Calculator_Request* src)
 {
 
-    if (!RequestHeader_copy(
+    if (!dds::rpc::RequestHeader_copy(
         &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
 
     if (!Calculator_Call_copy(
-        &dst->request, &src->request)) {
+        &dst->data, &src->data)) {
         return RTI_FALSE;
     }
             
@@ -2077,7 +1987,7 @@ DDS_TypeCode* Calculator_Return_get_typecode()
     static DDS_TypeCode_Member Calculator_Return_g_tc_members[3]=
     {
         {
-            (char *)"unknown_operation",/* Member name */
+            (char *)"unknownOp",/* Member name */
             {
                 1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -2149,7 +2059,7 @@ DDS_TypeCode* Calculator_Return_get_typecode()
     }
 
 
-    Calculator_Return_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)UnknownOperation_get_typecode();
+    Calculator_Return_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)dds::rpc::UnknownOperation_get_typecode();
     Calculator_Return_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Calculator_addition_Result_get_typecode();
     Calculator_Return_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)Calculator_subtraction_Result_get_typecode();
 
@@ -2206,7 +2116,7 @@ RTIBool Calculator_Return_initialize_w_params(
 
     sample->_d = Calculator_Return_getDefaultDiscriminator();
 
-    if (!UnknownOperation_initialize_w_params(&sample->_u.unknown_operation,allocParams)) {
+    if (!dds::rpc::UnknownOperation_initialize_w_params(&sample->_u.unknownOp,allocParams)) {
         return RTI_FALSE;
     }
             
@@ -2253,7 +2163,7 @@ void Calculator_Return_finalize_w_params(
     if (deallocParams) {} /* To avoid warnings */
 
 
-    UnknownOperation_finalize_w_params(&sample->_u.unknown_operation, deallocParams);
+    dds::rpc::UnknownOperation_finalize_w_params(&sample->_u.unknownOp, deallocParams);
             
 
     Calculator_addition_Result_finalize_w_params(&sample->_u.addition, deallocParams);
@@ -2284,7 +2194,7 @@ void Calculator_Return_finalize_optional_members(
           default:
         {                                    
         
-    UnknownOperation_finalize_optional_members(&sample->_u.unknown_operation, deallocParams->delete_pointers);
+    dds::rpc::UnknownOperation_finalize_optional_members(&sample->_u.unknownOp, deallocParams->delete_pointers);
             
 
         };
@@ -2322,8 +2232,8 @@ RTIBool Calculator_Return_copy(
           default:
         {                                    
         
-    if (!UnknownOperation_copy(
-        &dst->_u.unknown_operation, &src->_u.unknown_operation)) {
+    if (!dds::rpc::UnknownOperation_copy(
+        &dst->_u.unknownOp, &src->_u.unknownOp)) {
         return RTI_FALSE;
     }
             
@@ -2416,7 +2326,7 @@ DDS_TypeCode* Calculator_Reply_get_typecode()
             NULL/* Ignored */
         },
         {
-            (char *)"reply",/* Member name */
+            (char *)"data",/* Member name */
             {
                 1,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -2454,7 +2364,7 @@ DDS_TypeCode* Calculator_Reply_get_typecode()
     }
 
 
-    Calculator_Reply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)ReplyHeader_get_typecode();
+    Calculator_Reply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)dds::rpc::ReplyHeader_get_typecode();
     Calculator_Reply_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Calculator_Return_get_typecode();
 
     is_initialized = RTI_TRUE;
@@ -2490,12 +2400,12 @@ RTIBool Calculator_Reply_initialize_w_params(
     if (allocParams) {} /* To avoid warnings */
         
 
-    if (!ReplyHeader_initialize_w_params(&sample->header,allocParams)) {
+    if (!dds::rpc::ReplyHeader_initialize_w_params(&sample->header,allocParams)) {
         return RTI_FALSE;
     }
             
 
-    if (!Calculator_Return_initialize_w_params(&sample->reply,allocParams)) {
+    if (!Calculator_Return_initialize_w_params(&sample->data,allocParams)) {
         return RTI_FALSE;
     }
             
@@ -2532,10 +2442,10 @@ void Calculator_Reply_finalize_w_params(
     if (deallocParams) {} /* To avoid warnings */
 
 
-    ReplyHeader_finalize_w_params(&sample->header, deallocParams);
+    dds::rpc::ReplyHeader_finalize_w_params(&sample->header, deallocParams);
             
 
-    Calculator_Return_finalize_w_params(&sample->reply, deallocParams);
+    Calculator_Return_finalize_w_params(&sample->data, deallocParams);
             
 
 }
@@ -2556,10 +2466,10 @@ void Calculator_Reply_finalize_optional_members(
     deallocParamsTmp.delete_optional_members = DDS_BOOLEAN_TRUE;    
              
 
-    ReplyHeader_finalize_optional_members(&sample->header, deallocParams->delete_pointers);
+    dds::rpc::ReplyHeader_finalize_optional_members(&sample->header, deallocParams->delete_pointers);
             
 
-    Calculator_Return_finalize_optional_members(&sample->reply, deallocParams->delete_pointers);
+    Calculator_Return_finalize_optional_members(&sample->data, deallocParams->delete_pointers);
             
 
 }
@@ -2569,14 +2479,14 @@ RTIBool Calculator_Reply_copy(
     const Calculator_Reply* src)
 {
 
-    if (!ReplyHeader_copy(
+    if (!dds::rpc::ReplyHeader_copy(
         &dst->header, &src->header)) {
         return RTI_FALSE;
     }
             
 
     if (!Calculator_Return_copy(
-        &dst->reply, &src->reply)) {
+        &dst->data, &src->data)) {
         return RTI_FALSE;
     }
             

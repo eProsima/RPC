@@ -148,6 +148,7 @@
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
         <AdditionalDependencies>nddscorezd.lib;nddsczd.lib;nddscppzd.lib;
+                                iphlpapi.lib;Shlwapi.lib;
                                 libMessageHeaderd.lib;libCalculatord.lib;libCalculatorServerd.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2010;$(NDDSHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -168,6 +169,7 @@
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
         <AdditionalDependencies>nddscorez.lib;nddscz.lib;nddscppz.lib;
+                                iphlpapi.lib;Shlwapi.lib;
                                 libMessageHeader.lib;libCalculator.lib;libCalculatorServer.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2010;$(NDDSHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
