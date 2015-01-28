@@ -86,9 +86,6 @@ int main(int argc, char **argv)
                     return -1;
                 }
 
-                // Create and initialize return value.
-                DDS_Long  addition_ret = 0;
-
                 // Call to remote procedure "addition".
                 try
                 {

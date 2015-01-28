@@ -17,10 +17,10 @@ your system. eProsima FastRTPS library is provided under the folder
 "eProsima_FastRTPS_1.0.0-Linux.tar.gz" and execute:
 
     For 32-bit machines
-    $ cd fastrtps; ./configure --libdir=/usr/lib; make; make install
+    $ cd FastRTPS; ./configure --libdir=/usr/lib; make; make install
 
     For 64-bit machines
-    $ cd fastrtps; ./configure --libdir=/usr/lib64; make; make install
+    $ cd FastRTPS; ./configure --libdir=/usr/lib64; make; make install
 
 3. eProsima RPC over DDS also requires Boost libraries. Install them using your
 Linux distribution package manager.
