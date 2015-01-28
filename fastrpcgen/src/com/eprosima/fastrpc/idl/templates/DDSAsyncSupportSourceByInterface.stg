@@ -12,9 +12,9 @@ class __declspec(dllimport) DDSEntity;
 $endif$
 
 #include "$ctx.filename$DDSAsyncSupport.h"
-#include "$ctx.product$/exceptions/ServerInternalException.h"
-#include "$ctx.product$/exceptions/ClientInternalException.h"
-#include "$ctx.product$/utils/Messages.h"
+#include <$ctx.product$/exceptions/ServerInternalException.h>
+#include <$ctx.product$/exceptions/ClientInternalException.h>
+#include <$ctx.product$/utils/Messages.h>
 $if(ctx.rtiTypes)$
 $ReqRepIncludes(filename=ctx.filename)$
 

@@ -6,7 +6,7 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "Protocol.h"], description=["This head
 #ifndef _$ctx.filename;format="toUpper"$_PROTOCOL_H_
 #define _$ctx.filename;format="toUpper"$_PROTOCOL_H_
 
-#include "$ctx.product$/protocols/Protocol.h"
+#include <$ctx.product$/protocols/Protocol.h>
 #include "$ctx.filename$.h"
 $if(ctx.dds)$
 #include "$ctx.filename$AsyncCallbackHandlers.h"

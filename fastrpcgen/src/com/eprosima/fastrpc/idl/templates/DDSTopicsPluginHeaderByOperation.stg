@@ -20,7 +20,7 @@ $endif$
 
 $ctx.directIncludeDependencies : {include | #include "$include$TopicsPlugin.h"}; separator="\n"$
 
-#include "$ctx.product$/utils/dds/Middleware.h"
+#include <$ctx.product$/utils/dds/Middleware.h>
 
 #if defined(_WIN32)
 #if defined(EPROSIMA_USER_DLL_EXPORT)

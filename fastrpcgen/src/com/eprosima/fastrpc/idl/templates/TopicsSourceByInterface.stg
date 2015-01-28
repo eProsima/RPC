@@ -13,8 +13,8 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "Topics.cpp"], description=["This sour
 
 #include "$ctx.filename$Topics.h"
 
-#include "fastcdr/Cdr.h"
-#include "$ctx.product$/exceptions/BadParamException.h"
+#include <fastcdr/Cdr.h>
+#include <$ctx.product$/exceptions/BadParamException.h>
 
 $definitions; separator="\n"$
 

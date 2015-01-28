@@ -6,8 +6,8 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "ClientExample.cxx"], description=["Th
 #include "$ctx.filename$Proxy.h"
 #include "$ctx.filename$.h"
 #include "$ctx.filename$DDSProtocol.h"
-#include "$ctx.product$/transports/dds/RTPSProxyTransport.h"
-#include "$ctx.product$/exceptions/Exceptions.h"
+#include <$ctx.product$/transports/dds/RTPSProxyTransport.h>
+#include <$ctx.product$/exceptions/Exceptions.h>
 
 #include <iostream>
 

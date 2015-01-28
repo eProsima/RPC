@@ -4,19 +4,19 @@ main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "DDSProtocol.cxx"], description=["This source file contains the definition of the protocol used to create DDS messages."])$
 
 #include "$ctx.filename$DDSProtocol.h"
-#include "$ctx.product$/transports/Transport.h"
+#include <$ctx.product$/transports/Transport.h>
 $if(ctx.client)$
-#include "$ctx.product$/transports/dds/RTPSProxyTransport.h"
-#include "$ctx.product$/transports/dds/components/RTPSProxyProcedureEndpoint.h"
+#include <$ctx.product$/transports/dds/RTPSProxyTransport.h>
+#include <$ctx.product$/transports/dds/components/RTPSProxyProcedureEndpoint.h>
 #include "$ctx.filename$DDSAsyncSupport.h"
 
 $endif$
 $if(ctx.server)$
-#include "$ctx.product$/transports/dds/RTPSServerTransport.h"
-#include "$ctx.product$/transports/dds/components/RTPSServerProcedureEndpoint.h"
+#include <$ctx.product$/transports/dds/RTPSServerTransport.h>
+#include <$ctx.product$/transports/dds/components/RTPSServerProcedureEndpoint.h>
 
 $endif$
-#include "$ctx.product$/exceptions/Exceptions.h"
+#include <$ctx.product$/exceptions/Exceptions.h>
 
 #include <fastrtps/Domain.h>
 

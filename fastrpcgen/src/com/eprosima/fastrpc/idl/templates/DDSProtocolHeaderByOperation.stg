@@ -7,7 +7,7 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "DDSProtocol.h"], description=["This h
 #define _$ctx.filename;format="toUpper"$_DDS_PROTOCOL_H_
 
 #include "$ctx.filename$Protocol.h"
-#include "$ctx.product$/utils/Messages.h"
+#include <$ctx.product$/utils/Messages.h>
 $ctx.includeDependencies : { include |#include "$include$.h"}; separator="\n"$
 
 $if(ctx.rtiTypes)$

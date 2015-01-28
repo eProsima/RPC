@@ -6,7 +6,7 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "Extension.h"], description=["This hea
 #ifndef _$ctx.filename;format="toUpper"$EXTENSION_H_
 #define _$ctx.filename;format="toUpper"$EXTENSION_H_
 
-#include "$ctx.product$/exceptions/UserException.h"
+#include <$ctx.product$/exceptions/UserException.h>
 #include "$ctx.filename$Support.h"
 
 $ctx.directIncludeDependencies : {include | #include "$include$Extension.h"}; separator="\n"$

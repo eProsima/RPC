@@ -6,7 +6,7 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "ServerImpl.h"], description=["This he
 #ifndef _$ctx.filename;format="toUpper"$SERVER_IMPL_H_
 #define _$ctx.filename;format="toUpper"$SERVER_IMPL_H_
 
-#include "$ctx.product$/utils/Messages.h"
+#include <$ctx.product$/utils/Messages.h>
 #include "$ctx.filename$.h"
 
 $if(ctx.rtiTypes)$

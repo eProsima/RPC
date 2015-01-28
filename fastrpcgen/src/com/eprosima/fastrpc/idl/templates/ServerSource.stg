@@ -4,10 +4,10 @@ main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "Server.cxx"], description=["This source file contains the definition of the server for all interfaces."])$
 
 #include "$ctx.filename$Server.h"
-#include "$ctx.product$/strategies/ServerStrategy.h"
-#include "$ctx.product$/transports/ServerTransport.h"
+#include <$ctx.product$/strategies/ServerStrategy.h>
+#include <$ctx.product$/transports/ServerTransport.h>
 #include "$ctx.filename$Protocol.h"
-#include "$ctx.product$/exceptions/ServerInternalException.h"
+#include <$ctx.product$/exceptions/ServerInternalException.h>
 
 $definitions; separator="\n"$
 >>

@@ -4,7 +4,7 @@ main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "Proxy.cxx"], description=["This source file contains the definition of the proxy for all interfaces."])$
 
 #include "$ctx.filename$Proxy.h"
-#include "$ctx.product$/transports/ProxyTransport.h"
+#include <$ctx.product$/transports/ProxyTransport.h>
 #include "$ctx.filename$Protocol.h"
 
 $definitions; separator="\n"$

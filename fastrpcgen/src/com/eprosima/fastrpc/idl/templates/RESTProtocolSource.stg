@@ -4,10 +4,10 @@ main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "RESTProtocol.cxx"], description=["This source file contains the definition of the protocol used to create REST messages."])$
 
 #include "$ctx.filename$RESTProtocol.h"
-#include "$ctx.product$/exceptions/Exceptions.h"
-#include "$ctx.product$/transports/ProxyTransport.h"
-#include "$ctx.product$/transports/ServerTransport.h"
-#include "$ctx.product$/protocols/rest/RESTSerializer.h"
+#include <$ctx.product$/exceptions/Exceptions.h>
+#include <$ctx.product$/transports/ProxyTransport.h>
+#include <$ctx.product$/transports/ServerTransport.h>
+#include <$ctx.product$/protocols/rest/RESTSerializer.h>
 
 using namespace eprosima::rpc;
 using namespace ::protocol::rest;
