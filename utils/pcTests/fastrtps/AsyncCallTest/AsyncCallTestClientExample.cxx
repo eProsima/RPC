@@ -15,11 +15,9 @@
 #include "AsyncCallTestProxy.h"
 #include "AsyncCallTest.h"
 #include "AsyncCallTestDDSProtocol.h"
-#include "fastrpc/transports/dds/RTPSProxyTransport.h"
-#include "fastrpc/exceptions/Exceptions.h"
-#include "fastrpc/utils/Utilities.h"
-
-#include "fastrtps/utils/eClock.h"
+#include <fastrpc/transports/dds/RTPSProxyTransport.h>
+#include <fastrpc/exceptions/Exceptions.h>
+#include <fastrpc/utils/Utilities.h>
 
 #include <iostream>
 #ifdef __linux
@@ -190,8 +188,6 @@ int main(int argc, char **argv)
         return -1;
     }
 
-	eprosima::fastrtps::eClock::my_sleep(1000);
-
     int32_t  lo1 = 1;       
     int32_t  lo2 = 2;       
     GetLongHandler getLong_handler;
@@ -202,7 +198,7 @@ int main(int argc, char **argv)
 
         while(getLong_handler.getState() == 0)
         {
-	    eprosima::rpc::sleep(1000);
+            eprosima::rpc::sleep(1000);
         }
 
         if(getLong_handler.getState() == 2)
@@ -224,7 +220,7 @@ int main(int argc, char **argv)
 
         while(getBoolean_handler.getState() == 0)
         {
-	    eprosima::rpc::sleep(1000);
+            eprosima::rpc::sleep(1000);
         }
 
         if(getBoolean_handler.getState() == 2)
@@ -246,7 +242,7 @@ int main(int argc, char **argv)
 
         while(getString_handler.getState() == 0)
         {
-	    eprosima::rpc::sleep(1000);
+            eprosima::rpc::sleep(1000);
         }
 
         if(getString_handler.getState() == 2)
@@ -270,7 +266,7 @@ int main(int argc, char **argv)
 
         while(duplicate_handler.getState() == 0)
         {
-	    eprosima::rpc::sleep(1000);
+            eprosima::rpc::sleep(1000);
         }
 
         if(duplicate_handler.getState() == 2)

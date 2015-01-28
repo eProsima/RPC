@@ -17,7 +17,6 @@
 #include "MultithreadTestDDSProtocol.h"
 #include <fastrpc/transports/dds/RTPSProxyTransport.h>
 #include <fastrpc/exceptions/Exceptions.h>
-#include <fastrpc/utils/Utilities.h>
 
 #include "boost/config/user.hpp"
 #include "boost/thread.hpp"
@@ -159,8 +158,6 @@ int main(int argc, char **argv)
     proto = new MultithreadTestProtocol();
     transp = new RTPSProxyTransport("MultithreadTestService", "Instance");
     prox = new MultithreadTestProxy(*transp, *proto);
-
-    eprosima::rpc::sleep(1000);
 
     if(prox != NULL)
     {

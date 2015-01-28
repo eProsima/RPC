@@ -62,27 +62,27 @@ class user_cpp_DllExport $interface.name$Plugin
         /*!
          * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
          */
-        class user_cpp_DllExport $operation.name$_RequestPlugin : public eprosima::fastrtps::TopicDataType
+        class $operation.name$_RequestPlugin : public eprosima::fastrtps::TopicDataType
         {
             public:
 
-                $operation.name$_RequestPlugin();
+                user_cpp_DllExport $operation.name$_RequestPlugin();
 
-                virtual ~$operation.name$_RequestPlugin();
+                virtual user_cpp_DllExport ~$operation.name$_RequestPlugin();
 
-                bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
+                user_cpp_DllExport bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
 
-                bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
+                user_cpp_DllExport bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
 
-                void* createData();
+                user_cpp_DllExport void* createData();
                 
-                static void* create_data();
+                user_cpp_DllExport static void* create_data();
 
-                void deleteData(void *data);
+                user_cpp_DllExport void deleteData(void *data);
 
-                static void delete_data(void *data);
+                user_cpp_DllExport static void delete_data(void *data);
 
-                static void copy_data($interface.name$_$operation.name$_Request *dst,
+                user_cpp_DllExport static void copy_data($interface.name$_$operation.name$_Request *dst,
                         const $interface.name$_$operation.name$_Request *src);
         };
         
@@ -91,27 +91,27 @@ class user_cpp_DllExport $interface.name$Plugin
         /*!
          * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
          */
-        class user_cpp_DllExport $operation.name$_ReplyPlugin : public eprosima::fastrtps::TopicDataType
+        class $operation.name$_ReplyPlugin : public eprosima::fastrtps::TopicDataType
         {
             public:
 
-                $operation.name$_ReplyPlugin();
+                user_cpp_DllExport $operation.name$_ReplyPlugin();
 
-                virtual ~$operation.name$_ReplyPlugin();
+                virtual user_cpp_DllExport ~$operation.name$_ReplyPlugin();
 
-                bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
+                user_cpp_DllExport bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
 
-                bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
+                user_cpp_DllExport bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
 
-                void* createData();
+                user_cpp_DllExport void* createData();
 
-                static void* create_data();
+                user_cpp_DllExport static void* create_data();
 
-                void deleteData(void *data);
+                user_cpp_DllExport void deleteData(void *data);
 
-                static void delete_data(void *data);
+                user_cpp_DllExport static void delete_data(void *data);
 
-                static void copy_data($interface.name$_$operation.name$_Reply *dst,
+                user_cpp_DllExport static void copy_data($interface.name$_$operation.name$_Reply *dst,
                         const $interface.name$_$operation.name$_Reply *src);
         };
         $endif$

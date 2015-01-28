@@ -15,8 +15,8 @@
 #include "InheritanceProxy.h"
 #include "Inheritance.h"
 #include "InheritanceDDSProtocol.h"
-#include "fastrpc/transports/dds/RTPSProxyTransport.h"
-#include "fastrpc/exceptions/Exceptions.h"
+#include <fastrpc/transports/dds/RTPSProxyTransport.h>
+#include <fastrpc/exceptions/Exceptions.h>
 
 #include <iostream>
 #ifdef __linux
@@ -50,7 +50,7 @@ int main(int argc, char **argv)
         std::cout << ex.what() << std::endl;
         return -1;
     }
-    sleep(1);
+
     // Create and initialize parameters.
     ModuleA::Interface1::Dato  data;
     data.count(2);

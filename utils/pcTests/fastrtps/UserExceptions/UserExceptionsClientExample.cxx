@@ -15,9 +15,9 @@
 #include "UserExceptionsProxy.h"
 #include "UserExceptions.h"
 #include "UserExceptionsDDSProtocol.h"
-#include "fastrpc/transports/dds/RTPSProxyTransport.h"
-#include "fastrpc/exceptions/Exceptions.h"
-#include "fastrtps/utils/eClock.h"
+#include <fastrpc/transports/dds/RTPSProxyTransport.h>
+#include <fastrpc/exceptions/Exceptions.h>
+
 #include <iostream>
 #ifdef __linux
 #include <unistd.h>
@@ -46,7 +46,7 @@ int main(int argc, char **argv)
         std::cout << ex.what() << std::endl;
         _exit(-1);
     }
-    eprosima::fastrtps::eClock::my_sleep(1000);
+
     // Create and initialize parameters.
     int32_t  l1 = 10;
     int32_t  l2 = 2;

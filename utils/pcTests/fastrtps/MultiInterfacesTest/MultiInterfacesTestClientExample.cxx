@@ -15,8 +15,8 @@
 #include "MultiInterfacesTestProxy.h"
 #include "MultiInterfacesTest.h"
 #include "MultiInterfacesTestDDSProtocol.h"
-#include "fastrpc/transports/dds/RTPSProxyTransport.h"
-#include "fastrpc/exceptions/Exceptions.h"
+#include <fastrpc/transports/dds/RTPSProxyTransport.h>
+#include <fastrpc/exceptions/Exceptions.h>
 
 #include <iostream>
 #ifdef __linux

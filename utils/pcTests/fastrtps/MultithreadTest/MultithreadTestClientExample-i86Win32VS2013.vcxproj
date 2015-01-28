@@ -92,8 +92,8 @@
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>Disabled</Optimization>
-        <AdditionalIncludeDirectories>$(BOOST_ROOT);$(RPCDDSHOME)/thirdparty/eprosima-common-code;$(RPCDDSHOME)/include;$(RPCDDSHOME)/thirdparty/fastcdr/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;_DEBUG;EPROSIMA_ALL_DYN_LINK;EPROSIMA_LIB_NAME=rpcdds;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <AdditionalIncludeDirectories>$(BOOST_ROOT);$(RPCDDSHOME)/thirdparty/eprosima-common-code;$(RPCDDSHOME)/include;$(RPCDDSHOME)/thirdparty/fastcdr/include;$(RPCDDSHOME)/thirdparty/fastrtps/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;_DEBUG;BOOST_ALL_DYN_LINK;EPROSIMA_ALL_DYN_LINK;EPROSIMA_LIB_NAME=rpcdds;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
@@ -103,15 +103,15 @@
         <AdditionalDependencies>nddscored.lib;nddscd.lib;nddscppd.lib;
   ;MultithreadTestd.lib;MultithreadTestClientd.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-	<AdditionalLibraryDirectories>$(BOOST_LIBRARYDIR)/i86Win32VS2013;$(RPCDDSHOME)/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+	    <AdditionalLibraryDirectories>$(BOOST_LIBRARYDIR)/i86Win32VS2013;$(RPCDDSHOME)/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastrtps/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>MaxSpeed</Optimization>
-        <AdditionalIncludeDirectories>$(BOOST_ROOT);$(RPCDDSHOME)/thirdparty/eprosima-common-code;$(RPCDDSHOME)/include;$(RPCDDSHOME)/thirdparty/fastcdr/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;NDEBUG;EPROSIMA_ALL_DYN_LINK;EPROSIMA_LIB_NAME=rpcdds;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <AdditionalIncludeDirectories>$(BOOST_ROOT);$(RPCDDSHOME)/thirdparty/eprosima-common-code;$(RPCDDSHOME)/include;$(RPCDDSHOME)/thirdparty/fastcdr/include;$(RPCDDSHOME)/thirdparty/fastrtps/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;NDEBUG;BOOST_ALL_DYN_LINK;EPROSIMA_ALL_DYN_LINK;EPROSIMA_LIB_NAME=rpcdds;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
@@ -121,15 +121,15 @@
         <AdditionalDependencies>nddscore.lib;nddsc.lib;nddscpp.lib;
   ;MultithreadTest.lib;MultithreadTestClient.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(BOOST_LIBRARYDIR)/i86Win32VS2013;$(RPCDDSHOME)/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(BOOST_LIBRARYDIR)/i86Win32VS2013;$(RPCDDSHOME)/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastrtps/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>Disabled</Optimization>
-        <AdditionalIncludeDirectories>$(BOOST_ROOT);$(RPCDDSHOME)/thirdparty/eprosima-common-code;$(RPCDDSHOME)/include;$(RPCDDSHOME)/thirdparty/fastcdr/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_DEBUG;EPROSIMA_LIB_NAME=rpcdds;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <AdditionalIncludeDirectories>$(BOOST_ROOT);$(RPCDDSHOME)/thirdparty/eprosima-common-code;$(RPCDDSHOME)/include;$(RPCDDSHOME)/thirdparty/fastcdr/include;$(RPCDDSHOME)/thirdparty/fastrtps/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_DEBUG;BOOST_ALL_DYN_LINK;EPROSIMA_LIB_NAME=rpcdds;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
@@ -137,17 +137,18 @@
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
         <AdditionalDependencies>nddscorezd.lib;nddsczd.lib;nddscppzd.lib;
+                                iphlpapi.lib;Shlwapi.lib;
   ;libMultithreadTestd.lib;libMultithreadTestClientd.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(BOOST_LIBRARYDIR)/i86Win32VS2013;$(RPCDDSHOME)/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(BOOST_LIBRARYDIR)/i86Win32VS2013;$(RPCDDSHOME)/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastrtps/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>MaxSpeed</Optimization>
-        <AdditionalIncludeDirectories>$(BOOST_ROOT);$(RPCDDSHOME)/thirdparty/eprosima-common-code;$(RPCDDSHOME)/include;$(RPCDDSHOME)/thirdparty/fastcdr/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDEBUG;EPROSIMA_LIB_NAME=rpcdds;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <AdditionalIncludeDirectories>$(BOOST_ROOT);$(RPCDDSHOME)/thirdparty/eprosima-common-code;$(RPCDDSHOME)/include;$(RPCDDSHOME)/thirdparty/fastcdr/include;$(RPCDDSHOME)/thirdparty/fastrtps/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDEBUG;BOOST_ALL_DYN_LINK;EPROSIMA_LIB_NAME=rpcdds;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
@@ -155,9 +156,11 @@
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
         <AdditionalDependencies>nddscorez.lib;nddscz.lib;nddscppz.lib;
+                                iphlpapi.lib;Shlwapi.lib;
   ;libMultithreadTest.lib;libMultithreadTestClient.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(BOOST_LIBRARYDIR)/i86Win32VS2013;$(RPCDDSHOME)/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(BOOST_LIBRARYDIR)/i86Win32VS2013;$(RPCDDSHOME)/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Win32VS2013;$(RPCDDSHOME)/thirdparty/fastrtps/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+  <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
       </Link>
     </ItemDefinitionGroup>
   <ItemGroup>

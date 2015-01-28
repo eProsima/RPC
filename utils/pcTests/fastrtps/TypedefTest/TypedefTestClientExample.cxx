@@ -15,9 +15,9 @@
 #include "TypedefTestProxy.h"
 #include "TypedefTest.h"
 #include "TypedefTestDDSProtocol.h"
-#include "fastrpc/transports/dds/RTPSProxyTransport.h"
-#include "fastrpc/exceptions/Exceptions.h"
-#include "fastrtps/utils/eClock.h"
+#include <fastrpc/transports/dds/RTPSProxyTransport.h>
+#include <fastrpc/exceptions/Exceptions.h>
+
 #include <iostream>
 #ifdef __linux
 #include <unistd.h>
@@ -45,7 +45,7 @@ int main(int argc, char **argv)
         std::cout << ex.what() << std::endl;
         return -1;
     }
-	eprosima::fastrtps::eClock::my_sleep(1000);
+
     largo  l1 = 1;    
     largo  l2 = 0;       
     largo  getLargo_ret = 0;    

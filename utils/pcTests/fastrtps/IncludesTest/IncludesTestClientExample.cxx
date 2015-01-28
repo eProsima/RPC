@@ -15,10 +15,8 @@
 #include "IncludesTestProxy.h"
 #include "IncludesTest.h"
 #include "IncludesTestDDSProtocol.h"
-#include "fastrpc/transports/dds/RTPSProxyTransport.h"
-#include "fastrpc/exceptions/Exceptions.h"
-
-#include "fastrtps/utils/eClock.h"
+#include <fastrpc/transports/dds/RTPSProxyTransport.h>
+#include <fastrpc/exceptions/Exceptions.h>
 
 #include <iostream>
 #ifdef __linux
@@ -48,7 +46,7 @@ int main(int argc, char **argv)
         std::cout << ex.what() << std::endl;
         _exit(-1);
     }
-    eprosima::fastrtps::eClock::my_sleep(1000);
+
     // Create and initialize parameters.
     SameDirectoryNS::SameDirectory sd;
     Level2NS::Level2 lvl;
