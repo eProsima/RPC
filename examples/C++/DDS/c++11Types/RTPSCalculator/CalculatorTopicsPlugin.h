@@ -32,54 +32,54 @@
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class user_cpp_DllExport Calculator_RequestPlugin : public eprosima::fastrtps::TopicDataType
+class Calculator_RequestPlugin : public eprosima::fastrtps::TopicDataType
 {
     public:
 
-        Calculator_RequestPlugin();
+        user_cpp_DllExport Calculator_RequestPlugin();
 
-        virtual ~Calculator_RequestPlugin();
+        virtual user_cpp_DllExport ~Calculator_RequestPlugin();
 
-        bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
+        user_cpp_DllExport bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
 
-        bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
+        user_cpp_DllExport bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
 
-        void* createData();
+        user_cpp_DllExport void* createData();
 
-        static void* create_data();
+        user_cpp_DllExport static void* create_data();
 
-        void deleteData(void *data);
+        user_cpp_DllExport void deleteData(void *data);
 
-        static void delete_data(void *data);
+        user_cpp_DllExport static void delete_data(void *data);
 
-        static void copy_data(Calculator_Request *dst,
+        user_cpp_DllExport static void copy_data(Calculator_Request *dst,
                 const Calculator_Request *src);
 };
 
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class user_cpp_DllExport Calculator_ReplyPlugin : public eprosima::fastrtps::TopicDataType
+class Calculator_ReplyPlugin : public eprosima::fastrtps::TopicDataType
 {
     public:
 
-        Calculator_ReplyPlugin();
+        user_cpp_DllExport Calculator_ReplyPlugin();
 
-        virtual ~Calculator_ReplyPlugin();
+        virtual user_cpp_DllExport ~Calculator_ReplyPlugin();
 
-        bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
+        user_cpp_DllExport bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
 
-        bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
+        user_cpp_DllExport bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
 
-        void* createData();
+        user_cpp_DllExport void* createData();
 
-        static void* create_data();
+        user_cpp_DllExport static void* create_data();
 
-        void deleteData(void *data);
+        user_cpp_DllExport void deleteData(void *data);
 
-        static void delete_data(void *data);
+        user_cpp_DllExport static void delete_data(void *data);
 
-        static void copy_data(Calculator_Reply *dst,
+        user_cpp_DllExport static void copy_data(Calculator_Reply *dst,
                 const Calculator_Reply *src);
 };
 

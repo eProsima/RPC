@@ -16,8 +16,8 @@
 #define _Calculator_TOPICS_H_
 
 #include "Calculator.h"
-#include "rpcdds/protocols/dds/MessageHeader.h"
-#include "rpcdds/utils/Messages.h"
+#include <rpcdds/protocols/dds/MessageHeader.h>
+#include <rpcdds/utils/Messages.h>
 
 #include <cstddef>
 

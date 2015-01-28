@@ -145,6 +145,7 @@
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
         <AdditionalDependencies>nddscorezd.lib;nddsczd.lib;nddscppzd.lib;
+                                iphlpapi.lib;Shlwapi.lib;
   ;libCalculatord.lib;libCalculatorClientd.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2010;$(NDDSHOME)/lib/x64Win64VS2010;.\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
