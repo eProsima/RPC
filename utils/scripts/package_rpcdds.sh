@@ -44,7 +44,7 @@ function package
 
     # Compile and packaging FastCDR library for all archictectures
     cd utils/scripts
-    #./package_fastrtps.sh
+    ./package_fastrtps.sh
     errorstatus=$?
     if [ $errorstatus != 0 ]; then return; fi
     cd ../../../..
