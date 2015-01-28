@@ -18,7 +18,7 @@ class __declspec(dllimport) DDSDomainEntity;
 class __declspec(dllimport) DDSEntity;
 #endif
 #include "CalculatorExtension.h"
-#include <fastrpc/utils/macros/strdup.h>
+#include <rpcdds/utils/macros/strdup.h>
 #include <string.h>
 #include <utility>
 
