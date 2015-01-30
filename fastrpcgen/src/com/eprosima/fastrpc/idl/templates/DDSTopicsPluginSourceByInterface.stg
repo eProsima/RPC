@@ -23,7 +23,7 @@ $definitions; separator="\n"$
 
 >>
 
-module(ctx, module, definition_list) ::= <<
+module(ctx, parent, module, definition_list) ::= <<
 $definition_list$
 >>
 
@@ -31,7 +31,7 @@ definition_list(definitions) ::= <<
 $definitions; separator="\n"$
 >>
 
-interface(ctx, interface, export_list) ::= <<
+interface(ctx, parent, interface, export_list) ::= <<
 $export_list$
  
 $interface.all_operations : { operation |
@@ -1525,7 +1525,7 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
-exception(ctx, exception) ::= <<
+exception(ctx, parent, exception) ::= <<
 DDS_TypeCode* $if(exception.hasScope)$$exception.scope$$if(exception.parent)$$if(exception.parent.isInterface)$Plugin$endif$$endif$::$endif$$exception.name$Plugin::get_typecode()
 {
     static bool is_initialized = false;
@@ -1579,15 +1579,15 @@ DDS_TypeCode* $if(exception.hasScope)$$exception.scope$$if(exception.parent)$$if
 }
 >>
 
-operation(ctx, operation, param_list) ::= <<>>
+operation(ctx, parent, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 
 param(parameter) ::= <<>>
 
-const_decl(ctx, const) ::= <<>>
+const_decl(ctx, parent, const) ::= <<>>
 
-typedef_decl(ctx, typedefs) ::= <<
+typedef_decl(ctx, parent, typedefs) ::= <<
 $typedefs : { typedef |
 DDS_TypeCode* $if(typedef.hasScope)$$typedef.scope$$if(typedef.parent.parent)$$if(typedef.parent.parent.isInterface)$Plugin$endif$$endif$::$endif$$typedef.name$Plugin::get_typecode()
 {
@@ -1621,7 +1621,7 @@ DDS_TypeCode* $if(typedef.hasScope)$$typedef.scope$$if(typedef.parent.parent)$$i
 }; separator="\n"$
 >>
 
-struct_type(ctx, struct) ::= <<
+struct_type(ctx, parent, struct) ::= <<
 DDS_TypeCode* $if(struct.hasScope)$$struct.scope$$if(struct.parent.parent)$$if(struct.parent.parent.isInterface)$Plugin$endif$$endif$::$endif$$struct.name$Plugin::get_typecode()
 {
     static bool is_initialized = false;
@@ -1675,7 +1675,7 @@ DDS_TypeCode* $if(struct.hasScope)$$struct.scope$$if(struct.parent.parent)$$if(s
 }
 >>
 
-union_type(ctx, union) ::= <<
+union_type(ctx, parent, union) ::= <<
 DDS_TypeCode* $if(union.hasScope)$$union.scope$$if(union.parent.parent)$$if(union.parent.parent.isInterface)$Plugin$endif$$endif$::$endif$$union.name$Plugin::get_typecode()
 {
     static bool is_initialized = false;
@@ -1734,7 +1734,7 @@ DDS_TypeCode* $if(union.hasScope)$$union.scope$$if(union.parent.parent)$$if(unio
 }
 >>
 
-enum_type(ctx, enum) ::= <<
+enum_type(ctx, parent, enum) ::= <<
 DDS_TypeCode* $if(enum.hasScope)$$enum.scope$$if(enum.parent.parent)$$if(enum.parent.parent.isInterface)$Plugin$endif$$endif$::$endif$$enum.name$Plugin::get_typecode()
 {
     static DDS_TypeCode_Member $enum.name$_g_tc_members[$length(enum.members)$] =

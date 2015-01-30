@@ -22,7 +22,7 @@ $definitions; separator="\n"$
 
 >>
 
-module(ctx, module, definition_list) ::= <<
+module(ctx, parent, module, definition_list) ::= <<
 $ctx.filename$Protocol::$ctx.filename$Protocol() {}
 
 $ctx.filename$Protocol::~$ctx.filename$Protocol() {}
@@ -112,7 +112,7 @@ definition_list(definitions) ::= <<
 $definitions; separator="\n"$
 >>
 
-interface(ctx, interface, export_list) ::= <<
+interface(ctx, parent, interface, export_list) ::= <<
 $export_list$
 >>
 
@@ -120,7 +120,7 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
-exception(ctx, exception) ::= <<
+exception(ctx, parent, exception) ::= <<
 void $exception.name$Utils::setTypeData(const $exception.name$ &ex, $exception.name$_t &instance)
 {
     $exception.members : { member |instance.$member.name$ = ex.$member.name$;}; separator="\n"$
@@ -133,7 +133,7 @@ void $exception.name$Utils::extractTypeData($exception.name$ &ex, $exception.nam
 
 >>
 
-operation(ctx, operation, param_list) ::= <<
+operation(ctx, parent, operation, param_list) ::= <<
 $if(operation.parent.pathHasBrackets)$
 string $ctx.filename$Protocol::expandPath_$operation.name$(string &&path, $paramRetType(typecode=first(operation.parameters).typecode)$ $first(operation.parameters).name$)
 {
@@ -392,15 +392,15 @@ param_list(parameters) ::= <<>>
 
 param(parameter) ::= <<>>
 
-const_decl(ctx, const) ::= <<>>
+const_decl(ctx, parent, const) ::= <<>>
 
-typedef_decl(ctx, typedefs) ::= <<>>
+typedef_decl(ctx, parent, typedefs) ::= <<>>
 
-struct_type(ctx, struct) ::= <<>>
+struct_type(ctx, parent, struct) ::= <<>>
 
-union_type(ctx, union) ::= <<>>
+union_type(ctx, parent, union) ::= <<>>
 
-enum_type(ctx, enum) ::= <<>>
+enum_type(ctx, parent, enum) ::= <<>>
 
 
 /*!

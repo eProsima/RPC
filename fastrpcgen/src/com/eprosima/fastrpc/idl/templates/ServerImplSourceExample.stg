@@ -8,7 +8,7 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "ServerImplExample.cxx"], description=
 $definitions; separator="\n"$
 >>
 
-module(ctx, module, definition_list) ::= <<
+module(ctx, parent, module, definition_list) ::= <<
 $definition_list$
 
 >>
@@ -20,7 +20,7 @@ $definitions; separator="\n"$
 /*!
  * The export_list will be the definition of synchronize functions.
  */
-interface(ctx, interface, export_list) ::= <<
+interface(ctx, parent, interface, export_list) ::= <<
 $interface.all_operations : { operation |
 $paramRetType(operation.rettype)$ $interface.name$ServerImplExample::$operation.name$($paramDeclarations(params=operation.parameters)$)
 {
@@ -39,20 +39,20 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
-exception(ctx, exception) ::= <<>>
+exception(ctx, parent, exception) ::= <<>>
 
-operation(ctx, operation, param_list) ::= <<>>
+operation(ctx, parent, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 
 param(parameter) ::= <<>>
 
-const_decl(ctx, const) ::= <<>>
+const_decl(ctx, parent, const) ::= <<>>
 
-typedef_decl(ctx, typedefs) ::= <<>>
+typedef_decl(ctx, parent, typedefs) ::= <<>>
 
-struct_type(ctx, struct) ::= <<>>
+struct_type(ctx, parent, struct) ::= <<>>
 
-union_type(ctx, union) ::= <<>>
+union_type(ctx, parent, union) ::= <<>>
 
-enum_type(ctx, enum) ::= <<>>
+enum_type(ctx, parent, enum) ::= <<>>
