@@ -295,6 +295,30 @@ SectionEnd
 
 # Installer functions
 Function .onInit
+    ReadRegStr $R0 HKLM \
+        "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" \
+        "UninstallString"
+    Strcmp $R0 "" done
+
+    MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
+        "$(^Name) is already installed. $\n$\nClick 'OK' to remove the \
+        previous version or 'Cancel' to cancel this upgrade." \
+        IDOK uninst
+        Abort
+
+# Run the uninstaller.
+uninst:
+    ClearErrors
+    ExecWait '$R0 _?=$INSTDIR'
+
+    IfErrors no_remove_uninstaller done
+    # You can either use Delete /REBOOTOK in the uninstaller or add some code
+    #here to remove the uninstaller. Use a registry key to check
+    #whether the user has chosen to uninstall. IF you are using an uninstaller
+    #components page, make sure all sections are uninstalled.
+    no_remove_uninstaller:
+
+done:
 	# La variable PROGRAMFILES depende de si estamos en x64 o i86
     ${If} ${RunningX64}
        StrCpy '$INSTDIR' '$PROGRAMFILES64\eProsima\rpcdds'
