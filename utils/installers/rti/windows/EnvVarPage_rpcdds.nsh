@@ -168,6 +168,7 @@ FunctionEnd
 ### Sirve para deshabilitar el i86, pues no pueden aparecer a la vez
 ### Tambien guardamos el estado en la variable _state
 Function ClickX64_VS2010
+    Call ResetStates
     Pop $RadioButtonX64_VS2010
     ${NSD_GetState} $RadioButtonX64_VS2010 $RadioButtonX64_VS2010_State
 FunctionEnd
@@ -176,6 +177,7 @@ FunctionEnd
 ### Sirve para deshabilitar el x64, pues no pueden aparecer a la vez
 ### Tambien guardamos el estado en la variable _state
 Function ClickI86_VS2010
+    Call ResetStates
     Pop $RadioButtonI86_VS2010
     ${NSD_GetState} $RadioButtonI86_VS2010 $RadioButtonI86_VS2010_State
 FunctionEnd
@@ -184,6 +186,7 @@ FunctionEnd
 ### Sirve para deshabilitar el i86 2013, pues no pueden aparecer a la vez
 ### Tambien guardamos el estado en la variable _state
 Function ClickX64_VS2013
+    Call ResetStates
     Pop $RadioButtonX64_VS2013
     ${NSD_GetState} $RadioButtonX64_VS2013 $RadioButtonX64_VS2013_State
 FunctionEnd
@@ -192,8 +195,20 @@ FunctionEnd
 ### Sirve para deshabilitar el x64, pues no pueden aparecer a la vez
 ### Tambien guardamos el estado en la variable _state
 Function ClickI86_VS2013
+    Call ResetStates
     Pop $RadioButtonI86_VS2013
     ${NSD_GetState} $RadioButtonI86_VS2013 $RadioButtonI86_VS2013_State
+FunctionEnd
+
+Function ResetStates
+    Push  0
+    Pop $RadioButtonX64_VS2010_State
+    Push  0
+    Pop $RadioButtonI86_VS2010_State
+    Push  0
+    Pop $RadioButtonX64_VS2013_State
+    Push  0
+    Pop $RadioButtonI86_VS2013_State
 FunctionEnd
 
 Function SelectDefaultBestConfiguration
