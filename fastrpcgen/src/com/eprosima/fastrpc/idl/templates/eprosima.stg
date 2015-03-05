@@ -109,6 +109,10 @@ setRemoteExceptionAsUnsupported(varname) ::= <<
 $varname$.header().remoteEx(eprosima::rpc::protocol::dds::rpc::REMOTE_EX_UNSUPPORTED);
 >>
 
+setRemoteExceptionDefaultDiscriminatorByInterface(varname, interface, operation) ::= <<>>
+
+setRemoteExceptionDefaultDiscriminatorByOperation(varname, interface, operation) ::= <<>>
+
 remoteExceptionOK() ::= <<eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK>>
 
 requestUnionByInterface(varname) ::= <<

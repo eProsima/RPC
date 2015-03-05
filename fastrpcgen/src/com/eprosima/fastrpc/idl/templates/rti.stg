@@ -354,6 +354,14 @@ setRemoteExceptionAsUnsupported(varname) ::= <<
 $varname$.header.remoteEx = ::dds::rpc::REMOTE_EX_UNSUPPORTED;
 >>
 
+setRemoteExceptionDefaultDiscriminatorByInterface(varname, interface, operation) ::= <<
+$replyOperationUnionDiscriminatorByInterface(operation=operation, varname=varname)$ = $interface.scopedname$_$operation.name$_Result_getDefaultDiscriminator();
+>>
+
+setRemoteExceptionDefaultDiscriminatorByOperation(varname, interface, operation) ::= <<
+$replyOperationUnionDiscriminatorByOperation(operation=operation, varname=varname)$ = $interface.scopedname$_$operation.name$_Result_getDefaultDiscriminator();
+>>
+
 remoteExceptionOK() ::= <<::dds::rpc::REMOTE_EX_OK>>
 
 requestUnionByInterface(varname) ::= <<

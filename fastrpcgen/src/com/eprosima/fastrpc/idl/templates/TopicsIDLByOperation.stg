@@ -67,14 +67,14 @@ struct $interface.name$_$operation.name$_Out
  */
 union $interface.name$_$operation.name$_Result switch (long)
 {
-   default:
-       dds::rpc::UnknownException unknownEx;
    case dds::rpc::REMOTE_EX_OK:
       $interface.name$_$operation.name$_Out result;
    $operation.exceptions : { exception |
    case $exception.md5$:
       $exception.scopedname$_t $exception.formatedScopedname$_ex;
    }; separator="\n"$
+   default:
+       dds::rpc::UnknownException unknownEx;
 }; $nolevelIDLdefine()$
 
 $preRepIDLDefines(name=[interface.name, "_", operation.name])$

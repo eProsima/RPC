@@ -59,14 +59,14 @@ $preRepIDLDefines(name=[interface.name, "_", operation.name])$
  */
 union $interface.name$_$operation.name$_Result switch (long)
 {
-   default:
-       dds::rpc::UnknownException unknownEx;
    case dds::rpc::REMOTE_EX_OK:
       $interface.name$_$operation.name$_Out result;
    $operation.exceptions : { exception |
    case $exception.md5$:
       $exception.scopedname$_t $exception.formatedScopedname$_ex;
    }; separator="\n"$
+   default:
+       dds::rpc::UnknownException unknownEx;
 }; $nolevelIDLdefine()$
 $endif$
 }; separator="\n"$
@@ -78,12 +78,12 @@ $endif$
  */
 union $interface.name$_Call switch (long)
 {
-    default:
-        dds::rpc::UnknownOperation unknownOp;
     $interface.all_operations : { operation |
     case $operation.md5$:
         $interface.name$_$operation.name$_In $operation.name$;
     }; separator="\n"$
+    default:
+        dds::rpc::UnknownOperation unknownOp;
 }; $nolevelIDLdefine()$
 
 
@@ -105,14 +105,14 @@ struct $interface.name$_Request
  */
 union $interface.name$_Return switch (long)
 {
-    default:
-        dds::rpc::UnknownOperation unknownOp;
     $interface.all_operations : { operation |
     $if(!operation.oneway)$
     case $operation.md5$:
         $interface.name$_$operation.name$_Result $operation.name$;
     $endif$
     }; separator="\n"$
+    default:
+        dds::rpc::UnknownOperation unknownOp;
 }; $nolevelIDLdefine()$
 
 

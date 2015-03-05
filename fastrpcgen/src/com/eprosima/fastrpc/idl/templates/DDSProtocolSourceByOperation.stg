@@ -393,6 +393,7 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$_ser
         //TODO Quitar el unsetReply
         //$unsetReply()$
         $setRemoteExceptionAsUnsupported(varname="replyData")$
+        $setRemoteExceptionDefaultDiscriminatorByOperation(varname="replyData", interface=interface, operation=operation)$
         
         _protocol.$interface.formatedScopedname$_$operation.name$_se->sendReply(&replyData);
         $endif$
