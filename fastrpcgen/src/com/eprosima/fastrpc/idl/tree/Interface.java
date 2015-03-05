@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import com.eprosima.idl.parser.tree.Operation;
 import com.eprosima.idl.parser.tree.Annotation;
 
+import org.antlr.v4.runtime.Token;
+
 public class Interface extends com.eprosima.idl.parser.tree.Interface
 {
-    public Interface(String scopeFile, boolean isInScope, String scope, String name)
+    public Interface(String scopeFile, boolean isInScope, String scope, String name, Token tk)
     {
-        super(scopeFile, isInScope, scope, name);
+        super(scopeFile, isInScope, scope, name, tk);
     }
 
     ////////// DDS block ////////////

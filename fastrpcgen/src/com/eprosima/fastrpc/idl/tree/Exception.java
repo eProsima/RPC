@@ -1,12 +1,13 @@
 package com.eprosima.fastrpc.idl.tree;
 
 import java.security.MessageDigest;
+import org.antlr.v4.runtime.Token;
 
 public class Exception extends com.eprosima.idl.parser.tree.Exception
 {
-	public Exception(String scopeFile, boolean isInScope, String scope, String name)
+	public Exception(String scopeFile, boolean isInScope, String scope, String name, Token tk)
     {
-        super(scopeFile, isInScope, scope, name);
+        super(scopeFile, isInScope, scope, name, tk);
     }
 
     public String getMd5()
