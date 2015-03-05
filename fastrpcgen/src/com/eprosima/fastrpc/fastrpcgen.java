@@ -2049,7 +2049,7 @@ public class fastrpcgen
         try
         {
             Process preprocessor = Runtime.getRuntime().exec(lineCommandArray);
-            ProcessOutput errorOutput = new ProcessOutput(preprocessor.getErrorStream(), "ERROR", false, null, false);
+            ProcessOutput errorOutput = new ProcessOutput(preprocessor.getErrorStream(), "ERROR", false, null, true);
             ProcessOutput normalOutput = new ProcessOutput(preprocessor.getInputStream(), "OUTPUT", false, of, true);
             errorOutput.start();
             normalOutput.start();
