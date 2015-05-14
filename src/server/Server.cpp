@@ -59,5 +59,6 @@ void Server::serve()
 void Server::stop()
 {
     const char* const METHOD_NAME = "stop";
+    m_transport.stop();
     printf("INFO<%s::%s>: Server is stopped\n", CLASS_NAME, METHOD_NAME);
 }

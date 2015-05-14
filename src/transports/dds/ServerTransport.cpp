@@ -110,7 +110,13 @@ void ServerTransport::run()
 
 void ServerTransport::stop()
 {
-    //TODO
+    const char* const METHOD_NAME = "run";
+    std::map<const char*, ServerProcedureEndpoint*>::iterator it;
+
+    for(it = m_procedureEndpoints.begin(); it != m_procedureEndpoints.end(); ++it)
+    {
+        (*it).second->stop();
+    }
 }
 
 int ServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataToRead, ::transport::Endpoint *endpoint)
