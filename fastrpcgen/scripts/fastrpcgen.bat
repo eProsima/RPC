@@ -26,6 +26,4 @@ if not %ERRORLEVEL%==0 (
    )
 )
 
-%java_exec% -jar "%dir%\..\classes\rpcrestgen.jar" %args%
-
-
+%java_exec% -jar "%dir%\..\share\fastrpc\fastrpcgen.jar" %args%

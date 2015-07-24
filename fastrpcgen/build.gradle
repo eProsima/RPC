@@ -37,9 +37,15 @@ task copyResources {
     outputDir.exists() || outputDir.mkdirs()
     project.copy {
         from(file(new File(projectDir, '../src/platforms')))
-        from(file(new File(projectDir, '../include/fastrpc/fastrpc_version.h')))
         into(outputDir)
     }
+
+    // Create version file
+    Properties pversion = new Properties()
+    pversion.setProperty('version', project.customversion.toString())
+    File versionFile = new File("${project.buildDir}/resources/main/version")
+    versionFile.createNewFile();
+    pversion.store(versionFile.newWriter(), null)
 }
 
 sourceSets {
@@ -63,7 +69,7 @@ task fastrpcgenJar(type: Jar) {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
     baseName = 'fastrpcgen'
-    destinationDir = file(new File(projectDir, '../classes'))
+    destinationDir = file(new File(projectDir, 'share/fastrpc'))
     manifest {
         attributes("Created-By": "eProsima", "Main-Class": "com.eprosima.fastrpc.fastrpcgen")
     }
@@ -73,7 +79,7 @@ task rpcddsgenJar(type: Jar) {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
     baseName = 'rpcddsgen'
-    destinationDir = file(new File(projectDir, '../classes'))
+    destinationDir = file(new File(projectDir, 'share/rpcdds'))
     manifest {
         attributes("Created-By": "eProsima", "Main-Class": "com.eprosima.fastrpc.rpcddsgen")
     }
@@ -83,7 +89,7 @@ task rpcrestgenJar(type: Jar) {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
     baseName = 'rpcrestgen'
-    destinationDir = file(new File(projectDir, '../classes'))
+    destinationDir = file(new File(projectDir, 'share/rpcrest'))
     manifest {
         attributes("Created-By": "eProsima", "Main-Class": "com.eprosima.fastrpc.rpcrestgen")
     }

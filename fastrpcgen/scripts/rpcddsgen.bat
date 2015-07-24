@@ -26,6 +26,4 @@ if not %ERRORLEVEL%==0 (
    )
 )
 
-%java_exec% -jar "%dir%\..\classes\fastrpcgen.jar" %args%
-
-
+%java_exec% -jar "%dir%\..\share\rpcdds\rpcddsgen.jar" %args%
