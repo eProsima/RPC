@@ -9,8 +9,8 @@
 #ifndef _SERVER_SERVER_H_
 #define _SERVER_SERVER_H_
 
-#include "fastrpc/fastrpc_dll.h"
-#include "fastrpc/utils/Messages.h"
+#include "../rpc_dll.h"
+#include "../utils/Messages.h"
 
 #define FASTRPC_DEFAULT_PERIOD_MILLISEC 5000
 
@@ -40,7 +40,7 @@ namespace eprosima
              * @brief This class implements the common functionalities that any server has.
              * @ingroup SERVERMODULE
              */
-            class FASTRPC_DllAPI Server
+            class RPC_DllAPI Server
             {
 
                 public:

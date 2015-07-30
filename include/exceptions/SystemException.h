@@ -9,7 +9,7 @@
 #ifndef _EXCEPTIONS_SYSTEMEXCEPTION_H_
 #define _EXCEPTIONS_SYSTEMEXCEPTION_H_
 
-#include "fastrpc/exceptions/Exception.h"
+#include "Exception.h"
 
 #include <cstdint>
 #include <string>
@@ -29,31 +29,31 @@ namespace eprosima
                 public:
 
                     /// \brief Default destructor.
-                    virtual FASTRPC_DllAPI ~SystemException() throw();
+                    virtual RPC_DllAPI ~SystemException() throw();
 
                     /**
                      * \brief This function returns the number associated with the system exception.
                      *
                      * \return The number associated with the system exception.
                      */
-                    FASTRPC_DllAPI const int32_t& minor() const;
+                    RPC_DllAPI const int32_t& minor() const;
 
                     /**
                      * \brief This function sets the number that will be associated with the system exception.
                      *
                      * \param minor The number that will be associated with the system exception.
                      */
-                    FASTRPC_DllAPI void minor(const int32_t &minor);
+                    RPC_DllAPI void minor(const int32_t &minor);
 
                     /// \brief This function throws the object as an exception.
-                    virtual FASTRPC_DllAPI void raise() const = 0;
+                    virtual RPC_DllAPI void raise() const = 0;
                     
 					/**
                      * \brief This function returns the error message.
                      *
                      * \return The error message.
                      */
-                    virtual FASTRPC_DllAPI const char* what() const throw();
+                    virtual RPC_DllAPI const char* what() const throw();
 
                 protected:
 
@@ -62,21 +62,21 @@ namespace eprosima
                      *
                      * \param message An error message. This message is copied.
                      */
-                    FASTRPC_DllAPI explicit SystemException(const char* const &message);
+                    RPC_DllAPI explicit SystemException(const char* const &message);
 
                     /**
                      * \brief Default copy constructor.
                      *
                      * \param ex SystemException that will be copied.
                      */
-                    FASTRPC_DllAPI SystemException(const SystemException &ex);
+                    RPC_DllAPI SystemException(const SystemException &ex);
 
                     /**
                      * \brief Default move constructor.
                      *
                      * \param ex SystemException that will be moved.
                      */
-                    FASTRPC_DllAPI SystemException(SystemException&& ex);
+                    RPC_DllAPI SystemException(SystemException&& ex);
 
                     /**
                      * \brief Constructor.
@@ -84,21 +84,21 @@ namespace eprosima
                      * \param message An error message. This message is copied.
                      * \param minor The number that will be associated with the system exception.
                      */
-                    FASTRPC_DllAPI explicit SystemException(const char* const &message, int32_t minor);
+                    RPC_DllAPI explicit SystemException(const char* const &message, int32_t minor);
 
                     /**
                      * \brief Assigment operation.
                      *
                      * \param ex SystemException that will be copied.
                      */
-                    FASTRPC_DllAPI SystemException& operator=(const SystemException &ex);
+                    RPC_DllAPI SystemException& operator=(const SystemException &ex);
 
                     /**
                      * \brief Assigment operation.
                      *
                      * \param ex SystemException that will be moved.
                      */
-                    FASTRPC_DllAPI SystemException& operator=(SystemException&& ex);
+                    RPC_DllAPI SystemException& operator=(SystemException&& ex);
 
                 private:
 

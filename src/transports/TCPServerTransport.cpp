@@ -6,11 +6,11 @@
  *
  *************************************************************************/
 
-#include "fastrpc/transports/TCPServerTransport.h"
-#include "fastrpc/transports/TCPServerTransportImpl.h"
-#include "fastrpc/transports/components/TCPEndpoint.h"
-#include "fastrpc/strategies/ServerStrategy.h"
-#include "fastrpc/strategies/ServerStrategyImpl.h"
+#include <transports/TCPServerTransport.h>
+#include "TCPServerTransportImpl.h"
+#include "components/TCPEndpoint.h"
+#include <strategies/ServerStrategy.h>
+#include "../strategies/ServerStrategyImpl.h"
 
 #include <iostream>
 #include <string.h>

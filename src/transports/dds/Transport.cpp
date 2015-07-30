@@ -5,10 +5,13 @@
  * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
+#include <config.h>
 
-#include "fastrpc/transports/dds/Transport.h"
-#include "fastrpc/exceptions/InitializeException.h"
-#include "fastrpc/utils/dds/Middleware.h"
+#if RPC_WITH_RTIDDS
+
+#include <transports/dds/Transport.h>
+#include <exceptions/InitializeException.h>
+#include <utils/dds/Middleware.h>
 
 #include <string>
 
@@ -158,3 +161,5 @@ Transport::~Transport()
         m_participant = NULL;
     }
 }
+
+#endif // RPC_WITH_RTIDDS

@@ -9,7 +9,7 @@
 #ifndef _EXCEPTIONS_EXCEPTION_H_
 #define _EXCEPTIONS_EXCEPTION_H_
 
-#include "fastrpc/fastrpc_dll.h"
+#include "../rpc_dll.h"
 #include <exception>
 
 namespace eprosima
@@ -22,7 +22,7 @@ namespace eprosima
              * @brief This abstract class is used to create exceptions.
              * @ingroup EXCEPTIONMODULE
              */
-            class FASTRPC_DllAPI Exception : public std::exception
+            class RPC_DllAPI Exception : public std::exception
             {
                 public:
 

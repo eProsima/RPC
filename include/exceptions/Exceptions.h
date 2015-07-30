@@ -9,12 +9,12 @@
 #ifndef _EXCEPTIONS_EXCEPTIONS_H_
 #define _EXCEPTIONS_EXCEPTIONS_H_
 
-#include "fastrpc/exceptions/ClientInternalException.h"
-#include "fastrpc/exceptions/InitializeException.h"
-#include "fastrpc/exceptions/IncompatibleException.h"
-#include "fastrpc/exceptions/ServerInternalException.h"
-#include "fastrpc/exceptions/ServerTimeoutException.h"
-#include "fastrpc/exceptions/ServerNotFoundException.h"
-#include "fastrpc/exceptions/BadParamException.h"
+#include "ClientInternalException.h"
+#include "InitializeException.h"
+#include "IncompatibleException.h"
+#include "ServerInternalException.h"
+#include "ServerTimeoutException.h"
+#include "ServerNotFoundException.h"
+#include "BadParamException.h"
 
 #endif // _EXCEPTIONS_EXCEPTIONS_H_

@@ -1,8 +1,12 @@
-#include "fastrpc/protocols/dds/MessageHeaderPlugin.h"
-#include "fastrpc/protocols/dds/MessageHeader.h"
-#include "fastrpc/utils/Messages.h"
+#include <config.h>
 
-#include "fastrpc/utils/dds/Middleware.h"
+#if RPC_WITH_RTIDDS
+
+#include <protocols/dds/MessageHeaderPlugin.h>
+#include <protocols/dds/MessageHeader.h>
+#include <utils/Messages.h>
+
+#include <utils/dds/Middleware.h>
 
 using namespace eprosima::rpc;
 using namespace ::protocol::dds;
@@ -671,3 +675,5 @@ DDS_TypeCode* rpc::ReplyHeaderPlugin::get_typecode()
     return &ReplyHeader_g_tc;
     
 }
+
+#endif // RPC_WITH_RTIDDS

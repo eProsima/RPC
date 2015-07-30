@@ -9,7 +9,7 @@
 #ifndef _SERVER_SERVERSTRATEGY_H_
 #define _SERVER_SERVERSTRATEGY_H_
 
-#include "fastrpc/fastrpc_dll.h"
+#include "../rpc_dll.h"
 
 namespace eprosima
 {
@@ -24,7 +24,7 @@ namespace eprosima
              *        that could be used by the server.
              * @ingroup SERVERMODULE
              */
-            class FASTRPC_DllAPI ServerStrategy
+            class RPC_DllAPI ServerStrategy
             {
                 public:
 

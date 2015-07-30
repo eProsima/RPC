@@ -8,7 +8,10 @@
 #ifndef _TRANSPORTS_DDS_COMPONENTS_SERVERPROCEDUREENDPOINT_H_
 #define _TRANSPORTS_DDS_COMPONENTS_SERVERPROCEDUREENDPOINT_H_
 
-#include "../../../fastrpc_dll.h"
+#include "../../../rpc_dll.h"
+
+#if RPC_WITH_RTIDDS
+
 #include "../ServerTransport.h"
 #include "../../components/Endpoint.h"
 #include "../../../utils/Messages.h"
@@ -48,10 +51,10 @@ namespace eprosima
                          * @brief Default constructor.
                          * @param Transport that creates the proxy procedure endpoint. It cannot be NULL.
                          */
-                        FASTRPC_DllAPI ServerProcedureEndpoint(ServerTransport &transport);
+                        RPC_DllAPI ServerProcedureEndpoint(ServerTransport &transport);
 
                         //! @brief Default destructor.
-                        virtual FASTRPC_DllAPI ~ServerProcedureEndpoint();
+                        virtual RPC_DllAPI ~ServerProcedureEndpoint();
 
 						/*! TODO Actualizar
 						 * @brief Initializes the endpoint.
@@ -64,7 +67,7 @@ namespace eprosima
 						 * @param ProcessFunc Pointer to the function invoked when a message is received from the server
 						 * @param dataSize Size of the DataReader data structure
 						 */
-                        FASTRPC_DllAPI int initialize(const char *name, const char *writertypename, const char *writertopicname,
+                        RPC_DllAPI int initialize(const char *name, const char *writertypename, const char *writertopicname,
                                 const char *readertypename, const char *readertopicname,
                                 Transport::Create_data create_data, Transport::Destroy_data destroy_data,
                                 Transport::ProcessFunc, int dataSize);
@@ -73,57 +76,57 @@ namespace eprosima
                          * @brief This method creates the DDS entities needed to run this DDS Endpoint.
                          * @param serviceName Name of the service.
                          */
-                        FASTRPC_DllAPI int start(const char* const &serviceName, const char* const &instanceName);
+                        RPC_DllAPI int start(const char* const &serviceName, const char* const &instanceName);
 
 						/*!
                          * @brief This method deletes the DDS entities needed to run this DDS Endpoint.
                          * @param serviceName Name of the service.
                          */
-                        FASTRPC_DllAPI void stop();
+                        RPC_DllAPI void stop();
 
 						/*!
                          * @brief Gets the callback used to processes a request.
 						 * @return Function callback used to processes a request.
                          */
-                        inline FASTRPC_DllAPI
+                        inline RPC_DllAPI
                             Transport::ProcessFunc getProcessFunc(){return m_process_func;}
 
 						/*!
                          * @brief Sends the reply.
                          * @param serviceName Name of the service.
                          */
-                        FASTRPC_DllAPI int sendReply(void *data);
+                        RPC_DllAPI int sendReply(void *data);
 
                         /// @brief DDS callback.
-                        virtual FASTRPC_DllAPI void on_data_available(DDSDataReader* reader);
+                        virtual RPC_DllAPI void on_data_available(DDSDataReader* reader);
 
                         /// @brief DDS callback.
-                        virtual FASTRPC_DllAPI void on_requested_deadline_missed(
+                        virtual RPC_DllAPI void on_requested_deadline_missed(
                                 DDSDataReader* reader,
                                 const DDS_RequestedDeadlineMissedStatus& status) {}
 
                         /// @brief DDS callback.
-                        virtual FASTRPC_DllAPI void on_requested_incompatible_qos(
+                        virtual RPC_DllAPI void on_requested_incompatible_qos(
                                 DDSDataReader* reader,
                                 const DDS_RequestedIncompatibleQosStatus& status) {}
 
                         /// @brief DDS callback.
-                        virtual FASTRPC_DllAPI void on_sample_rejected(
+                        virtual RPC_DllAPI void on_sample_rejected(
                                 DDSDataReader* reader,
                                 const DDS_SampleRejectedStatus& status) {}
 
                         /// @brief DDS callback.
-                        virtual FASTRPC_DllAPI void on_liveliness_changed(
+                        virtual RPC_DllAPI void on_liveliness_changed(
                                 DDSDataReader* reader,
                                 const DDS_LivelinessChangedStatus& status) {}
 
                         /// @brief DDS callback.
-                        virtual FASTRPC_DllAPI void on_sample_lost(
+                        virtual RPC_DllAPI void on_sample_lost(
                                 DDSDataReader* reader,
                                 const DDS_SampleLostStatus& status) {}
 
                         /// @brief DDS callback.
-                        virtual FASTRPC_DllAPI void on_subscription_matched(
+                        virtual RPC_DllAPI void on_subscription_matched(
                                 DDSDataReader* reader,
                                 const DDS_SubscriptionMatchedStatus& status) {}
 
@@ -186,4 +189,7 @@ namespace eprosima
         } // namespace transport
     } // namespace rpc
 } // namespace eprosima
+
+#endif // RPC_WITH_RTIDDS
+
 #endif // _TRANSPORTS_DDS_COMPONENTS_SERVERPROCEDUREENDPOINT_H_

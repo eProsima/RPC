@@ -9,7 +9,7 @@
 #ifndef _TRANSPORTS_TRANSPORT_H_
 #define _TRANSPORTS_TRANSPORT_H_
 
-#include "fastrpc/fastrpc_dll.h"
+#include "../rpc_dll.h"
 
 namespace eprosima
 {
@@ -33,7 +33,7 @@ namespace eprosima
              *        that could be used by the proxy or the server.
              * @ingroup TRANSPORTMODULE
              */
-            class FASTRPC_DllAPI Transport
+            class RPC_DllAPI Transport
             {
                 public:
 

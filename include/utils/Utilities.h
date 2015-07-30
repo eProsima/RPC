@@ -9,7 +9,7 @@
 #ifndef _UTILS_UTILITIES_H_
 #define _UTILS_UTILITIES_H_
 
-#include "fastrpc/fastrpc_dll.h"
+#include "../rpc_dll.h"
 
 namespace eprosima
 {
@@ -20,7 +20,7 @@ namespace eprosima
 		 *
 		 * \param milliseconds Time in milliseconds that the thread will be sleeping.
 		 */
-		FASTRPC_DllAPI void sleep(unsigned int milliseconds);
+		RPC_DllAPI void sleep(unsigned int milliseconds);
     }; // namespace rpc
 }; // namespace eprosima
 

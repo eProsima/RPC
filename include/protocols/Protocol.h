@@ -9,7 +9,7 @@
 #ifndef _PROTOCOLS_PROTOCOL_H_
 #define _PROTOCOLS_PROTOCOL_H_
 
-#include "fastrpc/fastrpc_dll.h"
+#include "../rpc_dll.h"
 #include <stdio.h>
 
 namespace eprosima
@@ -28,7 +28,7 @@ namespace eprosima
 			 * @brief This abstract class represents the protocol used by the RPCs. It serializes and deserializes the information and uses a eprosima::rpc::transport::Transport to send it and receive it.
 			 * @ingroup PROTOCOLMODULE
 			 */
-            class FASTRPC_DllAPI Protocol
+            class RPC_DllAPI Protocol
             {
                 public:
 

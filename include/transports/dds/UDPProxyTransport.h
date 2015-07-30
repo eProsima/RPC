@@ -9,8 +9,11 @@
 #ifndef _TRANSPORT_DDS_UDPPROXYTRANSPORT_H_
 #define _TRANSPORT_DDS_UDPPROXYTRANSPORT_H_
 
-#include "fastrpc/fastrpc_dll.h"
-#include "fastrpc/transports/dds/ProxyTransport.h"
+#include "../../rpc_dll.h"
+
+#if RPC_WITH_RTIDDS
+
+#include "ProxyTransport.h"
 
 namespace eprosima
 {
@@ -38,7 +41,7 @@ namespace eprosima
                          * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
 						 * @param timeout The time in milliseconds to wait for the reply.
                          */
-                        FASTRPC_DllAPI UDPProxyTransport(const char* const remoteServiceName, const char* const instanceName, int domainId = 0, long timeout = 10000L);
+                        RPC_DllAPI UDPProxyTransport(const char* const remoteServiceName, const char* const instanceName, int domainId = 0, long timeout = 10000L);
 
                         /*!
                          * @brief Constructor for server's proxies.
@@ -51,10 +54,10 @@ namespace eprosima
                          * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
 						 * @param timeout The time in milliseconds to wait for the reply.
                          */
-                        FASTRPC_DllAPI UDPProxyTransport(const char* const &to_connect, const char* const remoteServiceName, const char* const instanceName, int domainId = 0, long timeout = 10000L);
+                        RPC_DllAPI UDPProxyTransport(const char* const &to_connect, const char* const remoteServiceName, const char* const instanceName, int domainId = 0, long timeout = 10000L);
 
                         //! @brief Default destructor.
-                        virtual FASTRPC_DllAPI ~UDPProxyTransport();
+                        virtual RPC_DllAPI ~UDPProxyTransport();
 
                         /*!
                          * @brief This function sets the QoS of DDS to use the UDPv4 transport.
@@ -62,7 +65,7 @@ namespace eprosima
                          * @param participantQos Reference to the DDS domain participant QoS.
                          * @param participant The domain participant that will be set to use UDPv4 transport. 
                          */
-                        virtual FASTRPC_DllAPI int setTransport(DDS_DomainParticipantQos &participantQos, DDSDomainParticipant *participant);
+                        virtual RPC_DllAPI int setTransport(DDS_DomainParticipantQos &participantQos, DDSDomainParticipant *participant);
 
                     private:
 
@@ -73,4 +76,7 @@ namespace eprosima
         } // namespace transport
     } // namespace rpc
 } // namespace eprosima
+
+#endif // RPC_WITH_RTIDDS
+
 #endif // _TRANSPORT_DDS_UDPPROXYTRANSPORT_H_

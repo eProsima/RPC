@@ -9,9 +9,12 @@
 #ifndef _TRANSPORTS_DDS_TCPPROXYTRANSPORT_H_
 #define _TRANSPORTS_TCPPROXYTRANSPORT_H_
 
-#include "fastrpc/fastrpc_dll.h"
-#include "fastrpc/transports/dds/ProxyTransport.h"
-#include "fastrpc/utils/dds/Middleware.h"
+#include "../../rpc_dll.h"
+
+#if RPC_WITH_RTIDDS
+
+#include "ProxyTransport.h"
+#include "../../utils/dds/Middleware.h"
 
 namespace eprosima
 {
@@ -41,10 +44,10 @@ namespace eprosima
                          * @param domainId Optional parameter that specifies the domain identifier to be used in DDS.
 						 * @param timeout The time in milliseconds to wait for the reply.
                          */
-                        FASTRPC_DllAPI TCPProxyTransport(const char* const &to_connect, const char* const remoteServiceName, const char* const instanceName, int domainId = 0, long timeout = 10000L);
+                        RPC_DllAPI TCPProxyTransport(const char* const &to_connect, const char* const remoteServiceName, const char* const instanceName, int domainId = 0, long timeout = 10000L);
 
                         //! @brief Default destructor.
-                        virtual FASTRPC_DllAPI ~TCPProxyTransport();
+                        virtual RPC_DllAPI ~TCPProxyTransport();
 
                         /*!
                          * @brief This function sets the DDS' QoS to use the TCPv4 transport.
@@ -52,7 +55,7 @@ namespace eprosima
                          * @param participantQos Reference to the DDS domain participant QoS.
                          * @param participant The domain participant that will be set to use TCPv4 transport.
                          */
-                        virtual FASTRPC_DllAPI int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant);
+                        virtual RPC_DllAPI int setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant);
 
                     private:
 
@@ -63,5 +66,7 @@ namespace eprosima
         } // namespace transport
     } // namepsace fastrpc
 } // namespace eprosima
+
+#endif // RPC_WITH_RTIDDS
 
 #endif // _TRANSPORTS_TCPPROXYTRANSPORT_H_

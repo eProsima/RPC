@@ -8,7 +8,9 @@
 #ifndef _TRANSPORTS_DDS_TRANSPORT_H_
 #define _TRANSPORTS_DDS_TRANSPORT_H_
 
-#include "fastrpc/fastrpc_dll.h"
+#include "../../rpc_dll.h"
+
+#if RPC_WITH_RTIDDS
 
 
 class DDSDomainParticipant;
@@ -36,7 +38,7 @@ namespace eprosima
                  * using DDS. This transport could be used by both proxies and servers.
                  * @ingroup TRANSPORTMODULE
                  */
-                class FASTRPC_DllAPI Transport
+                class RPC_DllAPI Transport
                 {
                     public:
 
@@ -157,5 +159,7 @@ namespace eprosima
         } // namespace transport
     } // namespace rpc
 } // namespace eprosima
+
+#endif // RPC_WITH_RTIDDS
 
 #endif // _TRANSPORTS_DDS_TRANSPORT_H_

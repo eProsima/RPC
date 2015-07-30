@@ -9,8 +9,8 @@
 #ifndef _PROXY_PROXY_H_
 #define _PROXY_PROXY_H_
 
-#include "fastrpc/fastrpc_dll.h"
-#include "fastrpc/utils/Messages.h"
+#include "../rpc_dll.h"
+#include "../utils/Messages.h"
 
 namespace eprosima
 {
@@ -32,7 +32,7 @@ namespace eprosima
              * @brief This class implements the common functionalities that all server's proxies have.
              * @ingroup PROXYMODULE
              */
-            class FASTRPC_DllAPI Proxy
+            class RPC_DllAPI Proxy
             {
                 protected:
 

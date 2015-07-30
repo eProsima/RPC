@@ -9,9 +9,12 @@
 #ifndef _TRANSPORTS_DDS_RTPSSERVERTRANSPORT_H_
 #define _TRANSPORTS_DDS_RTPSSERVERTRANSPORT_H_
 
-#include "fastrpc/fastrpc_dll.h"
-#include "fastrpc/transports/dds/RTPSTransport.h"
-#include "fastrpc/transports/ServerTransport.h"
+#include "../../rpc_dll.h"
+
+#if RPC_WITH_FASTRTPS
+
+#include "RTPSTransport.h"
+#include "../ServerTransport.h"
 
 #include <string>
 #include <map>
@@ -43,18 +46,18 @@ namespace eprosima
                          * the default instance's name will be use.
                          * @param domainId Optional parameter that specifies the domain identifier that will be used in DDS.
                          */
-                        FASTRPC_DllAPI RTPSServerTransport(const char* const serviceName = NULL, const char* const instanceName = NULL, int domainId = 0);
+                        RPC_DllAPI RTPSServerTransport(const char* const serviceName = NULL, const char* const instanceName = NULL, int domainId = 0);
 
                         /*!
                          * @brief Default destructor.
                          */
-                        virtual FASTRPC_DllAPI ~RTPSServerTransport();
+                        virtual RPC_DllAPI ~RTPSServerTransport();
 
                         /*!
                          * @brief This function returns the type of the transport.
                          *        This function has to be implemented by the child classes.
                          */
-                        virtual FASTRPC_DllAPI const char* getType() const;
+                        virtual RPC_DllAPI const char* getType() const;
 
                         /*! TODO Actualizar
                          * @brief This function creates a new proxy procedure endpoint.
@@ -72,7 +75,7 @@ namespace eprosima
                          * @return 0 if the function successfully works, -1 in other case
                          * TODO
                          */
-                        FASTRPC_DllAPI eprosima::rpc::transport::Endpoint*
+                        RPC_DllAPI eprosima::rpc::transport::Endpoint*
                             createProcedureEndpoint(const char *name, const char *writertypename,
                                     const char *writertopicname, const char *readertypename, const char *readertopicname,
                                     RTPSTransport::Create_data create_data, RTPSTransport::Copy_data copy_data, RTPSTransport::Destroy_data destroy_data,
@@ -84,17 +87,17 @@ namespace eprosima
 						 * @param data The request data.
 						 * @param endpoint The request endpoint.
 						 */
-                        FASTRPC_DllAPI void process(RTPSServerProcedureEndpoint *endpoint, void *data);
+                        RPC_DllAPI void process(RTPSServerProcedureEndpoint *endpoint, void *data);
 
 						/*!
 						 * @brief This method starts all the DDS Datawriters and Datareaders.
 						 */
-                        FASTRPC_DllAPI void run();
+                        RPC_DllAPI void run();
 
 						/*!
 						 * @brief This function does not apply to DDS transport.
 						 */
-                        FASTRPC_DllAPI void stop();
+                        RPC_DllAPI void stop();
 
 						/*!
 						 * @brief This function is used to send a reply to a proxy.
@@ -107,13 +110,13 @@ namespace eprosima
 						/*!
 						 * @brief This function does not apply to DDS transport.
 						 */
-                        FASTRPC_DllAPI int receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint); 
+                        RPC_DllAPI int receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint); 
 
 						/*!
                          * @brief This function returns the DDS service name.
 						 * @return DDS service name.
                          */
-                        FASTRPC_DllAPI const char* getRemoteServiceName() const;
+                        RPC_DllAPI const char* getRemoteServiceName() const;
 
                     private:
 
@@ -133,5 +136,6 @@ namespace eprosima
     } // namepsace fastrpc
 } // namespace eprosima
 
-#endif // _TRANSPORTS_DDS_RTPSSERVERTRANSPORT_H_
+#endif // RPC_WITH_FASTRTPS
 
+#endif // _TRANSPORTS_DDS_RTPSSERVERTRANSPORT_H_

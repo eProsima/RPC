@@ -9,8 +9,8 @@
 #ifndef _TRANSPORTS_HTTPSERVERTRANSPORT_H_
 #define _TRANSPORTS_HTTPSERVERTRANSPORT_H_
 
-#include "fastrpc/fastrpc_dll.h"
-#include "fastrpc/transports/TCPServerTransport.h"
+#include "../rpc_dll.h"
+#include "TCPServerTransport.h"
 
 namespace eprosima
 {
@@ -26,7 +26,7 @@ namespace eprosima
              *        that could be used by a proxy.
              * @ingroup TRANSPORTMODULE
              */
-            class FASTRPC_DllAPI HttpServerTransport : public ServerTransport
+            class RPC_DllAPI HttpServerTransport : public ServerTransport
             {
                 public:
 

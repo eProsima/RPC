@@ -9,8 +9,7 @@
 #ifndef _STRATEGIES_SINGLETHREADSTRATEGY_H_
 #define _STRATEGIES_SINGLETHREADSTRATEGY_H_
 
-#include "fastrpc/strategies/ServerStrategy.h"
-#include "fastrpc/fastrpc_dll.h"
+#include "ServerStrategy.h"
 
 namespace eprosima
 {
@@ -25,7 +24,7 @@ namespace eprosima
              *        The server uses a reception thread to execute all the requests.
              * @ingroup STRATEGIESMODULE 
              */
-            class FASTRPC_DllAPI SingleThreadStrategy : public ServerStrategy
+            class RPC_DllAPI SingleThreadStrategy : public ServerStrategy
             {
                 public:
 

@@ -9,8 +9,7 @@
 #ifndef _STRATEGIES_THREADPOOLSTRATEGY_H_
 #define _STRATEGIES_THREADPOOLSTRATEGY_H_
 
-#include "fastrpc/strategies/ServerStrategy.h"
-#include "fastrpc/fastrpc_dll.h"
+#include "ServerStrategy.h"
 
 #define FASTRPC_MIN_THREADS_DEFAULT 5
 
@@ -27,7 +26,7 @@ namespace eprosima
              *        The server schedules the incoming requests in a free thread of the thread pool.
              * @ingroup STRATEGIESMODULE 
              */
-            class FASTRPC_DllAPI ThreadPoolStrategy : public ServerStrategy
+            class RPC_DllAPI ThreadPoolStrategy : public ServerStrategy
             {
                 public:
 

@@ -9,10 +9,14 @@
 #ifndef _TRANSPORTS_DDS_ASYNCTHREAD_H_
 #define _TRANSPORTS_DDS_ASYNCTHREAD_H_
 
+#include <config.h>
+
+#if RPC_WITH_RTIDDS
+
 #include <vector>
 #include <boost/thread.hpp>
 
-#include "fastrpc/utils/dds/Middleware.h"
+#include "utils/dds/Middleware.h"
 
 namespace eprosima
 {
@@ -99,5 +103,7 @@ namespace eprosima
         } // namespace transport
     } // namespace rpc
 } // namespace eprosima
+
+#endif // RPC_WITH_RTIDDS
 
 #endif // _TRANSPORTS_DDS_ASYNCTHREAD_H_

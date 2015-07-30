@@ -8,7 +8,10 @@
 #ifndef _TRANSPORTS_DDS_COMPONENTS_RTPSSERVERPROCEDUREENDPOINT_H_
 #define _TRANSPORTS_DDS_COMPONENTS_RTPSSERVERPROCEDUREENDPOINT_H_
 
-#include "../../../fastrpc_dll.h"
+#include "../../../rpc_dll.h"
+
+#if RPC_WITH_FASTRTPS
+
 #include "../RTPSServerTransport.h"
 #include "../../components/Endpoint.h"
 #include "../../../utils/Messages.h"
@@ -50,10 +53,10 @@ namespace eprosima
                          * @brief Default constructor.
                          * @param Transport that creates the proxy procedure endpoint. It cannot be NULL.
                          */
-                        FASTRPC_DllAPI RTPSServerProcedureEndpoint(RTPSServerTransport &transport);
+                        RPC_DllAPI RTPSServerProcedureEndpoint(RTPSServerTransport &transport);
 
                         //! @brief Default destructor.
-                        virtual FASTRPC_DllAPI ~RTPSServerProcedureEndpoint();
+                        virtual RPC_DllAPI ~RTPSServerProcedureEndpoint();
 
 						/*! TODO Actualizar
 						 * @brief Initializes the endpoint.
@@ -66,7 +69,7 @@ namespace eprosima
 						 * @param ProcessFunc Pointer to the function invoked when a message is received from the server
 						 * @param dataSize Size of the DataReader data structure
 						 */
-                        FASTRPC_DllAPI int initialize(const char *name, const char *writertypename, const char *writertopicname,
+                        RPC_DllAPI int initialize(const char *name, const char *writertypename, const char *writertopicname,
                                 const char *readertypename, const char *readertopicname,
                                 RTPSTransport::Create_data create_data, RTPSTransport::Destroy_data destroy_data,
                                 RTPSTransport::ProcessFunc, int dataSize);
@@ -75,29 +78,29 @@ namespace eprosima
                          * @brief This method creates the DDS entities needed to run this DDS Endpoint.
                          * @param serviceName Name of the service.
                          */
-                        FASTRPC_DllAPI int start(const char* const &serviceName, const char* const &instanceName);
+                        RPC_DllAPI int start(const char* const &serviceName, const char* const &instanceName);
 
 						/*!
                          * @brief This method deletes the DDS entities needed to run this DDS Endpoint.
                          * @param serviceName Name of the service.
                          */
-                        FASTRPC_DllAPI void stop();
+                        RPC_DllAPI void stop();
 
 						/*!
                          * @brief Gets the callback used to processes a request.
 						 * @return Function callback used to processes a request.
                          */
-                        inline FASTRPC_DllAPI
+                        inline RPC_DllAPI
                             RTPSTransport::ProcessFunc getProcessFunc(){return m_process_func;}
 
 						/*!
                          * @brief Sends the reply.
                          * @param serviceName Name of the service.
                          */
-                        FASTRPC_DllAPI int sendReply(void *data);
+                        RPC_DllAPI int sendReply(void *data);
 
                         /// @brief DDS callback.
-                        virtual FASTRPC_DllAPI void onNewDataMessage(eprosima::fastrtps::Subscriber *sub);
+                        virtual RPC_DllAPI void onNewDataMessage(eprosima::fastrtps::Subscriber *sub);
 
                         virtual void onSubscriptionMatched(eprosima::fastrtps::Subscriber* /*sub*/, eprosima::fastrtps::rtps::MatchingInfo /*info*/){}
 
@@ -146,4 +149,7 @@ namespace eprosima
         } // namespace transport
     } // namespace rpc
 } // namespace eprosima
+
+#endif // RPC_WITH_FASTRTPS
+
 #endif // _TRANSPORTS_DDS_COMPONENTS_RTPSSERVERPROCEDUREENDPOINT_H_

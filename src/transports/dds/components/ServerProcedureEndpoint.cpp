@@ -5,11 +5,14 @@
  * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
+#include <config.h>
 
-#include <fastrpc/transports/dds/components/ServerProcedureEndpoint.h>
-#include <fastrpc/strategies/ServerStrategy.h>
-#include <fastrpc/strategies/ServerStrategyImpl.h>
-#include <fastrpc/utils/macros/snprintf.h>
+#if RPC_WITH_RTIDDS
+
+#include <transports/dds/components/ServerProcedureEndpoint.h>
+#include <strategies/ServerStrategy.h>
+#include "../../../strategies/ServerStrategyImpl.h"
+#include <utils/macros/snprintf.h>
 
 #include <boost/config/user.hpp>
 #include <boost/thread/mutex.hpp>
@@ -318,3 +321,5 @@ void ServerProcedureEndpoint::on_data_available(DDS::DataReader* reader)
         m_destroy_data(data);
 	}
 }
+
+#endif // RPC_WITH_RTIDDS

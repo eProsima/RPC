@@ -5,12 +5,15 @@
  * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
+#include <config.h>
 
-#include "fastrpc/transports/dds/ServerTransport.h"
-#include "fastrpc/transports/dds/components/ServerProcedureEndpoint.h"
-#include "fastrpc/protocols/Protocol.h"
-#include "fastrpc/exceptions/InitializeException.h"
-#include "fastrpc/utils/dds/Middleware.h"
+#if RPC_WITH_RTIDDS
+
+#include <transports/dds/ServerTransport.h>
+#include <transports/dds/components/ServerProcedureEndpoint.h>
+#include <protocols/Protocol.h>
+#include <exceptions/InitializeException.h>
+#include <utils/dds/Middleware.h>
 
 using namespace eprosima::rpc;
 using namespace ::transport::dds;
@@ -132,3 +135,5 @@ const char* ServerTransport::getRemoteServiceName() const
 {
     return m_serviceName.c_str();
 }
+
+#endif // RPC_WITH_RTIDDS

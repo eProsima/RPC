@@ -9,7 +9,7 @@
 #ifndef _EXCEPTIONS_BADPARAMEXCEPTION_H_
 #define _EXCEPTIONS_BADPARAMEXCEPTION_H_
 
-#include "fastrpc/exceptions/SystemException.h"
+#include "SystemException.h"
 
 namespace eprosima
 {
@@ -31,41 +31,41 @@ namespace eprosima
                      *
                      * \param message An error message. This message is copied.
                      */
-					FASTRPC_DllAPI BadParamException(const std::string &message) : SystemException(message.c_str(), 6) {}
+					RPC_DllAPI BadParamException(const std::string &message) : SystemException(message.c_str(), 6) {}
 
                     /**
                      * \brief Default copy constructor.
                      *
                      * \param ex BadParamException that will be copied.
                      */
-                    FASTRPC_DllAPI BadParamException(const BadParamException &ex);
+                    RPC_DllAPI BadParamException(const BadParamException &ex);
 
                     /**
                      * \brief Default move constructor.
                      *
                      * \param ex BadParamException that will be moved.
                      */
-                    FASTRPC_DllAPI BadParamException(BadParamException&& ex);
+                    RPC_DllAPI BadParamException(BadParamException&& ex);
 
                     /**
                      * \brief Assigment operation.
                      *
                      * \param ex BadParamException that will be copied.
                      */
-                    FASTRPC_DllAPI BadParamException& operator=(const BadParamException &ex);
+                    RPC_DllAPI BadParamException& operator=(const BadParamException &ex);
 
                     /**
                      * \brief Assigment operation.
                      *
                      * \param ex BadParamException that will be moved.
                      */
-                    FASTRPC_DllAPI BadParamException& operator=(BadParamException&& ex);
+                    RPC_DllAPI BadParamException& operator=(BadParamException&& ex);
 
                     /// \brief Default constructor
-                    virtual FASTRPC_DllAPI ~BadParamException() throw();
+                    virtual RPC_DllAPI ~BadParamException() throw();
 
                     /// \brief This function throws the object as an exception.
-                    virtual FASTRPC_DllAPI void raise() const;
+                    virtual RPC_DllAPI void raise() const;
             };
         } // namespace exception
     } // namespace rpc

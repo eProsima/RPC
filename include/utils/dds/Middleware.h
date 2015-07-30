@@ -9,6 +9,10 @@
 #ifndef _UTILS_DDS_MIDDLEWARE_H_
 #define _UTILS_DDS_MIDDLEWARE_H_
 
+#include "config.h"
+
+#if RPC_WITH_RTIDDS
+
 #include <cstdint>
 
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
@@ -77,5 +81,7 @@ namespace eprosima
         } // namespace util
     } // namespace rpc
 } // namespace eprosima
+
+#endif // RPC_WITH_RTIDDS
 
 #endif // _UTILS_DDS_MIDDLEWARE_H_

@@ -1,7 +1,7 @@
 #ifndef _TRANSPORTS_COMPONENTS_TCPENDPOINT_H_
 #define _TRANSPORTS_COMPONENTS_TCPENDPOINT_H_
 
-#include "fastrpc/transports/components/Endpoint.h"
+#include "transports/components/Endpoint.h"
 #include <boost/asio.hpp>
 #include <boost/array.hpp>
 #include <boost/noncopyable.hpp>

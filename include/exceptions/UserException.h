@@ -9,7 +9,7 @@
 #ifndef _EXCEPTIONS_USEREXCEPTION_H_
 #define _EXCEPTIONS_USEREXCEPTION_H_
 
-#include "fastrpc/exceptions/Exception.h"
+#include "Exception.h"
 
 #include <cstdint>
 
@@ -23,7 +23,7 @@ namespace eprosima
              * @brief This abstract class is used to create user exceptions.
              * @ingroup EXCEPTIONMODULE
              */
-            class FASTRPC_DllAPI UserException : public Exception
+            class RPC_DllAPI UserException : public Exception
             {
                 public:
 

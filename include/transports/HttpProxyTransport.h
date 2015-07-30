@@ -9,8 +9,8 @@
 #ifndef _TRANSPORTS_HTTPPROXYTRANSPORT_H_
 #define _TRANSPORTS_HTTPPROXYTRANSPORT_H_
 
-#include "fastrpc/fastrpc_dll.h"
-#include "fastrpc/transports/TCPProxyTransport.h"
+#include "../rpc_dll.h"
+#include "TCPProxyTransport.h"
 
 #include <cstdint>
 
@@ -25,7 +25,7 @@ namespace eprosima
              * @brief This interface is the base of all proxy classes that implement an HTTP transport.
              * @ingroup TRANSPORTMODULE
              */
-            class FASTRPC_DllAPI HttpProxyTransport : public ProxyTransport
+            class RPC_DllAPI HttpProxyTransport : public ProxyTransport
             {
                 public:
 

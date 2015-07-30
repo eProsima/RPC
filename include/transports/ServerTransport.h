@@ -9,9 +9,9 @@
 #ifndef _TRANSPORTS_SERVERTRANSPORT_H_
 #define _TRANSPORTS_SERVERTRANSPORT_H_
 
-#include "fastrpc/fastrpc_dll.h"
-#include "fastrpc/transports/Transport.h"
-#include "fastrpc/transports/components/Endpoint.h"
+#include "../rpc_dll.h"
+#include "Transport.h"
+#include "components/Endpoint.h"
 
 #include <stdio.h>
 
@@ -37,7 +37,7 @@ namespace eprosima
              *        that can be used by the server.
              * @ingroup TRANSPORTMODULE
              */
-            class FASTRPC_DllAPI ServerTransport : public Transport
+            class RPC_DllAPI ServerTransport : public Transport
             {
                 typedef size_t (*ServerTransport_Callback)(eprosima::rpc::protocol::Protocol&, void*&, size_t&, size_t&, Endpoint*);
 

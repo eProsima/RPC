@@ -9,7 +9,7 @@
 #ifndef _EXCEPTIONS_CLIENTINTERNALEXCEPTION_H_
 #define _EXCEPTIONS_CLIENTINTERNALEXCEPTION_H_
 
-#include "fastrpc/exceptions/SystemException.h"
+#include "SystemException.h"
 
 namespace eprosima
 {
@@ -30,41 +30,41 @@ namespace eprosima
 			 *
 			 * \param message An error message. This message is copied.
 			 */
-			FASTRPC_DllAPI ClientInternalException(const std::string &message) : SystemException(message.c_str(), 2) {}
+			RPC_DllAPI ClientInternalException(const std::string &message) : SystemException(message.c_str(), 2) {}
 
 			/**
 			 * \brief Default copy constructor.
 			 *
 			 * \param ex ClientInternalException that will be copied.
 			 */
-			FASTRPC_DllAPI ClientInternalException(const ClientInternalException &ex);
+			RPC_DllAPI ClientInternalException(const ClientInternalException &ex);
 
 			/**
 			 * \brief Default move constructor.
 			 *
 			 * \param ex ClientInternalException that will be moved.
 			 */
-			FASTRPC_DllAPI ClientInternalException(ClientInternalException&& ex);
+			RPC_DllAPI ClientInternalException(ClientInternalException&& ex);
 
 			/**
 			 * \brief Assigment operation.
 			 *
 			 * \param ex ClientInternalException that will be copied.
 			 */
-			FASTRPC_DllAPI ClientInternalException& operator=(const ClientInternalException &ex);
+			RPC_DllAPI ClientInternalException& operator=(const ClientInternalException &ex);
 
 			/**
 			 * \brief Assigment operation.
 			 *
 			 * \param ex ClientInternalException that will be moved.
 			 */
-			FASTRPC_DllAPI ClientInternalException& operator=(ClientInternalException&& ex);
+			RPC_DllAPI ClientInternalException& operator=(ClientInternalException&& ex);
 
 			/// \brief Default constructor
-			virtual FASTRPC_DllAPI ~ClientInternalException() throw();
+			virtual RPC_DllAPI ~ClientInternalException() throw();
 
 			/// \brief This function throws the object as an exception.
-			virtual FASTRPC_DllAPI void raise() const;
+			virtual RPC_DllAPI void raise() const;
         };
         } // namespace exception
     } // namespace rpc

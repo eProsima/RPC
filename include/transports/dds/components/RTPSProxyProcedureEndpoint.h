@@ -8,7 +8,10 @@
 #ifndef _TRANSPORTS_DDS_COMPONENTS_RTPSPROXYPROCEDUREENDPOINT_H_
 #define _TRANSPORTS_DDS_COMPONENTS_RTPSPROXYPROCEDUREENDPOINT_H_
 
-#include "../../../fastrpc_dll.h"
+#include "../../../rpc_dll.h"
+
+#if RPC_WITH_FASTRTPS
+
 #include "../RTPSProxyTransport.h"
 #include "../../components/Endpoint.h"
 #include "../../../utils/Messages.h"
@@ -59,10 +62,10 @@ namespace eprosima
                          * @brief Default constructor.
                          * @param Transport that is creating the proxy procedure endpoint. It cannot be NULL.
                          */
-                        FASTRPC_DllAPI RTPSProxyProcedureEndpoint(RTPSProxyTransport &transport);
+                        RPC_DllAPI RTPSProxyProcedureEndpoint(RTPSProxyTransport &transport);
 
                         //! @brief Default destructor.
-                        virtual FASTRPC_DllAPI ~RTPSProxyProcedureEndpoint();
+                        virtual RPC_DllAPI ~RTPSProxyProcedureEndpoint();
 
                         /*!
                          * @brief This function initializes the proxy procedure endpoint.
@@ -76,7 +79,7 @@ namespace eprosima
                          * @return 0 if the initialization works. -1 in other case.
                          * TODO
                          */
-                        FASTRPC_DllAPI int initialize(const char *name, const char *writertypename,
+                        RPC_DllAPI int initialize(const char *name, const char *writertypename,
                                 const char *writertopicname, const char *readertypename, const char *readertopicname,
                                 RTPSTransport::Create_data create_data, RTPSTransport::Copy_data copy_data,
                                 RTPSTransport::Destroy_data destroy_data);
@@ -85,7 +88,7 @@ namespace eprosima
                          * @brief This function finalizes the proxy procedure endpoint.
                          * All entities and objects created by this procedure endpoint are deleted.
                          */
-                        FASTRPC_DllAPI void finalize();
+                        RPC_DllAPI void finalize();
 
                         /*!
                          * @brief This function sends a synchronous RPC call.
@@ -98,7 +101,7 @@ namespace eprosima
 						 * @return Operation status
                          * @throw eprosima::rpc::exception::ServerTimeoutException.
                          */
-                        FASTRPC_DllAPI eprosima::rpc::ReturnMessage send(void *request, void* reply);
+                        RPC_DllAPI eprosima::rpc::ReturnMessage send(void *request, void* reply);
 
 						/*!
 						 * @brief This function sends an asynchronous RPC call.
@@ -110,14 +113,14 @@ namespace eprosima
 						 * @param task Object containing information of the asynchronous task.
 						 * @return Operation status. It can be CLIENT_INTERNAL_ERROR or NO_SERVER
 						 */
-                        FASTRPC_DllAPI eprosima::rpc::ReturnMessage send_async(void *request, RTPSAsyncTask *task);
+                        RPC_DllAPI eprosima::rpc::ReturnMessage send_async(void *request, RTPSAsyncTask *task);
 
                         /// @brief DDS callback.
-                        virtual FASTRPC_DllAPI void onNewDataMessage(eprosima::fastrtps::Subscriber *sub);
+                        virtual RPC_DllAPI void onNewDataMessage(eprosima::fastrtps::Subscriber *sub);
 
-                        virtual FASTRPC_DllAPI void onSubscriptionMatched(eprosima::fastrtps::Subscriber *sub, eprosima::fastrtps::rtps::MatchingInfo& info);
+                        virtual RPC_DllAPI void onSubscriptionMatched(eprosima::fastrtps::Subscriber *sub, eprosima::fastrtps::rtps::MatchingInfo& info);
 
-                        virtual FASTRPC_DllAPI void onPublicationMatched(eprosima::fastrtps::Publisher *pub, eprosima::fastrtps::rtps::MatchingInfo& info);
+                        virtual RPC_DllAPI void onPublicationMatched(eprosima::fastrtps::Publisher *pub, eprosima::fastrtps::rtps::MatchingInfo& info);
 
                     private:
 
@@ -186,4 +189,7 @@ namespace eprosima
         } // namespace transport
     } // namespace rpc
 } // namespace eprosima
+
+#endif // RPC_WITH_FASTRTPS
+
 #endif // _TRANSPORTS_DDS_COMPONENTS_RTPSPROXYPROCEDUREENDPOINT_H_

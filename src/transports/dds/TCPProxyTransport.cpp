@@ -5,42 +5,40 @@
  * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
+#include <config.h>
 
-#include "fastrpc/transports/dds/TCPServerTransport.h"
-#include "fastrpc/utils/macros/snprintf.h"
-#include "fastrpc/utils/dds/Middleware.h"
+#if RPC_WITH_RTIDDS
 
-static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::TCPServerTransport";
+#include <transports/dds/TCPProxyTransport.h>
+#include <utils/macros/snprintf.h>
+
+static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::TCPProxyTransport";
 
 using namespace eprosima::rpc::transport::dds;
 
-TCPServerTransport::TCPServerTransport(const char* const &public_address, const char* const &server_bind_port, const char* const serviceName, const char* const instanceName, int domainId) :
-    ServerTransport(serviceName, instanceName, domainId), m_public_address(NULL), m_server_bind_port(NULL) 
+TCPProxyTransport::TCPProxyTransport(const char* const &to_connect, const char* const remoteServiceName, const char* const instanceName, int domainId, long milliseconds) :
+    ProxyTransport(remoteServiceName, instanceName, domainId, milliseconds), m_to_connect(NULL) 
 {
-    m_public_address = strdup(public_address);
-    m_server_bind_port = strdup(server_bind_port);
+    m_to_connect = strdup(to_connect);
 }
 
-TCPServerTransport::~TCPServerTransport()
+TCPProxyTransport::~TCPProxyTransport()
 {
-    if(m_public_address != NULL)
-        free(m_public_address);
-    if(m_server_bind_port != NULL)
-        free(m_server_bind_port);
+    if(m_to_connect != NULL)
+        free(m_to_connect);
 }
 
-int TCPServerTransport::setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant)
+int TCPProxyTransport::setTransport(DDS::DomainParticipantQos &participantQos, DDS::DomainParticipant *participant)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     int returnedValue = -1;
 
-    if(m_public_address != NULL &&
-            m_server_bind_port != NULL)
+    if(m_to_connect != NULL)
     {
         int length = participantQos.property.value.length();
 
-        participantQos.property.value.ensure_length(length + 5 + 1,
-                length + 5 + 1);
+        participantQos.property.value.ensure_length(length + 5,
+                length + 5);
 
         participantQos.property.value[length].name  = strdup("dds.transport.load_plugins");
         participantQos.property.value[length++].value  = strdup("dds.transport.TCPv4.tcp1");
@@ -54,14 +52,22 @@ int TCPServerTransport::setTransport(DDS::DomainParticipantQos &participantQos, 
         participantQos.property.value[length].name  = strdup("dds.transport.TCPv4.tcp1.parent.classid");
         participantQos.property.value[length++].value  = strdup("NDDS_TRANSPORT_CLASSID_TCPV4_WAN");
 
-        participantQos.property.value[length].name  = strdup("dds.transport.TCPv4.tcp1.public_address");
-        participantQos.property.value[length++].value  = strdup(m_public_address);
-
         participantQos.property.value[length].name  = strdup("dds.transport.TCPv4.tcp1.server_bind_port");
-        participantQos.property.value[length++].value  = strdup(m_server_bind_port);
+        participantQos.property.value[length++].value  = strdup("0");
 
         // Quitar los builtin transports.
         participantQos.transport_builtin.mask = DDS_TRANSPORTBUILTIN_MASK_NONE;
+
+        // Set initial peers
+        char buf[50];
+
+        length = participantQos.discovery.initial_peers.length();
+        participantQos.discovery.initial_peers.ensure_length(length + 1, length + 1);
+
+        SNPRINTF(buf, 50, "tcpv4_wan://%s", m_to_connect);
+
+        participantQos.discovery.initial_peers[length] = strdup(buf);
+
 
         returnedValue = 0;
     }
@@ -71,3 +77,5 @@ int TCPServerTransport::setTransport(DDS::DomainParticipantQos &participantQos, 
     return 0;
 #endif
 }
+
+#endif // RPC_WITH_RTIDDS

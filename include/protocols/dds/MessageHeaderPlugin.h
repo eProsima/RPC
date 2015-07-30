@@ -9,7 +9,9 @@
 #ifndef _PROTOCOLS_DDS_MESSAGEHEADERPLUGIN_H_
 #define _PROTOCOLS_DDS_MESSAGEHEADERPLUGIN_H_
 
-#include "fastrpc/fastrpc_dll.h"
+#include "../../rpc_dll.h"
+
+#if RPC_WITH_RTIDDS
 
 struct DDS_TypeCode;
 
@@ -21,7 +23,7 @@ namespace eprosima
         {
             namespace dds
             {
-                class FASTRPC_DllAPI GuidPrefix_tPlugin
+                class RPC_DllAPI GuidPrefix_tPlugin
                 {
                     public:
 
@@ -36,7 +38,7 @@ namespace eprosima
                         GuidPrefix_tPlugin(){}
                 };
                 
-                class FASTRPC_DllAPI EntityId_tPlugin
+                class RPC_DllAPI EntityId_tPlugin
                 {
                     public:
 
@@ -51,7 +53,7 @@ namespace eprosima
                         EntityId_tPlugin(){}
                 };
 
-                class FASTRPC_DllAPI GUID_tPlugin
+                class RPC_DllAPI GUID_tPlugin
                 {
                     public:
 
@@ -66,7 +68,7 @@ namespace eprosima
                         GUID_tPlugin(){}
                 };
 
-                class FASTRPC_DllAPI SequenceNumber_tPlugin
+                class RPC_DllAPI SequenceNumber_tPlugin
                 {
                     public:
 
@@ -81,7 +83,7 @@ namespace eprosima
                         SequenceNumber_tPlugin(){}
                 };
 
-                class FASTRPC_DllAPI SampleIdentityPlugin
+                class RPC_DllAPI SampleIdentityPlugin
                 {
                     public:
 
@@ -98,7 +100,7 @@ namespace eprosima
 
                 namespace rpc
                 {
-                    class FASTRPC_DllAPI UnknownOperationPlugin
+                    class RPC_DllAPI UnknownOperationPlugin
                     {
                         public:
 
@@ -113,7 +115,7 @@ namespace eprosima
                             UnknownOperationPlugin(){}
                     };
 
-                    class FASTRPC_DllAPI UnknownExceptionPlugin
+                    class RPC_DllAPI UnknownExceptionPlugin
                     {
                         public:
 
@@ -128,7 +130,7 @@ namespace eprosima
                             UnknownExceptionPlugin(){}
                     };
 
-                    class FASTRPC_DllAPI UnusedMemberPlugin
+                    class RPC_DllAPI UnusedMemberPlugin
                     {
                         public:
 
@@ -143,7 +145,7 @@ namespace eprosima
                             UnusedMemberPlugin(){}
                     };
 
-                    class FASTRPC_DllAPI RemoteExceptionCode_tPlugin
+                    class RPC_DllAPI RemoteExceptionCode_tPlugin
                     {
                         public:
 
@@ -162,7 +164,7 @@ namespace eprosima
                      * @brief This class offers the functions needed by DDS middleware to use the class RequestHeaderPlugin.
                      * @ingroup PROTOCOLMODULE
                      */
-                    class FASTRPC_DllAPI RequestHeaderPlugin
+                    class RPC_DllAPI RequestHeaderPlugin
                     {
                         public:
 
@@ -181,7 +183,7 @@ namespace eprosima
                      * @brief This class offers the functions needed by DDS middleware to use the class ReplyHeaderPlugin.
                      * @ingroup PROTOCOLMODULE
                      */
-                    class FASTRPC_DllAPI ReplyHeaderPlugin
+                    class RPC_DllAPI ReplyHeaderPlugin
                     {
                         public:
 
@@ -200,5 +202,7 @@ namespace eprosima
         } // namespace protocol
     } // namespace rpc
 } // namespace eprosima
+
+#endif // RPC_WITH_RTIDDS
 
 #endif // _PROTOCOLS_DDS_MESSAGEHEADERPLUGIN_H_

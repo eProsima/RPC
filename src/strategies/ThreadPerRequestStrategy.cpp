@@ -6,9 +6,9 @@
  *
  *************************************************************************/
 
-#include "fastrpc/strategies/ThreadPerRequestStrategy.h"
-#include "fastrpc/strategies/ServerStrategyImpl.h"
-#include "fastrpc/transports/ServerTransport.h"
+#include <strategies/ThreadPerRequestStrategy.h>
+#include "ServerStrategyImpl.h"
+#include <transports/ServerTransport.h>
 
 #include "boost/thread.hpp"
 

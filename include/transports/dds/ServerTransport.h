@@ -8,9 +8,12 @@
 #ifndef _TRANSPORTS_DDS_SERVERTRANSPORT_H_
 #define _TRANSPORTS_DDS_SERVERTRANSPORT_H_
 
-#include "fastrpc/fastrpc_dll.h"
-#include "fastrpc/transports/dds/Transport.h"
-#include "fastrpc/transports/ServerTransport.h"
+#include "../../rpc_dll.h"
+
+#if RPC_WITH_RTIDDS
+
+#include "Transport.h"
+#include "../ServerTransport.h"
 
 #include <string>
 #include <map>
@@ -40,13 +43,13 @@ namespace eprosima
                         /*!
                          * @brief Default destructor.
                          */
-                        virtual FASTRPC_DllAPI ~ServerTransport();
+                        virtual RPC_DllAPI ~ServerTransport();
 
                         /*!
                          * @brief This function returns the type of the transport.
                          *        This function has to be implemented by the child classes.
                          */
-                        virtual FASTRPC_DllAPI const char* getType() const;
+                        virtual RPC_DllAPI const char* getType() const;
 
                         /*! TODO Actualizar
                          * @brief This function creates a new proxy procedure endpoint.
@@ -65,7 +68,7 @@ namespace eprosima
                          * @return 0 if the function successfully works, -1 in other case
                          * TODO
                          */
-                        FASTRPC_DllAPI eprosima::rpc::transport::Endpoint*
+                        RPC_DllAPI eprosima::rpc::transport::Endpoint*
                             createProcedureEndpoint(const char *name, const char *writertypename,
                                     const char *writertopicname, const char *readertypename,
                                     const char *readertopicname, bool eprosima_types,
@@ -78,17 +81,17 @@ namespace eprosima
 						 * @param data The request data.
 						 * @param endpoint The request endpoint.
 						 */
-                        FASTRPC_DllAPI void process(ServerProcedureEndpoint *endpoint, void *data);
+                        RPC_DllAPI void process(ServerProcedureEndpoint *endpoint, void *data);
 
 						/*!
 						 * @brief This method starts all the DDS Datawriters and Datareaders.
 						 */
-                        FASTRPC_DllAPI void run();
+                        RPC_DllAPI void run();
 
 						/*!
 						 * @brief This function does not apply to DDS transport.
 						 */
-                        FASTRPC_DllAPI void stop();
+                        RPC_DllAPI void stop();
 
 						/*!
 						 * @brief This function is used to send a reply to a proxy.
@@ -101,13 +104,13 @@ namespace eprosima
 						/*!
 						 * @brief This function does not apply to DDS transport.
 						 */
-                        FASTRPC_DllAPI int receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint); 
+                        RPC_DllAPI int receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint); 
 
 						/*!
                          * @brief This function returns the DDS service name.
 						 * @return DDS service name.
                          */
-                        FASTRPC_DllAPI const char* getRemoteServiceName() const;
+                        RPC_DllAPI const char* getRemoteServiceName() const;
 
                     protected:
 
@@ -117,7 +120,7 @@ namespace eprosima
                          * @param participantQos Reference to the DDS domain participant QoS.
                          * @param participant The domain participant that will be set to use a specific transport.
                          */
-                        virtual FASTRPC_DllAPI int setTransport(DDS_DomainParticipantQos &participantQos, DDSDomainParticipant *participant) = 0;
+                        virtual RPC_DllAPI int setTransport(DDS_DomainParticipantQos &participantQos, DDSDomainParticipant *participant) = 0;
 
                         /*!
                          * @brief Default constructor.
@@ -127,7 +130,7 @@ namespace eprosima
                          * the default instance's name will be use.
                          * @param domainId Optional parameter that specifies the domain identifier that will be used in DDS.
                          */
-                        FASTRPC_DllAPI ServerTransport(const char* const serviceName = NULL, const char* const instanceName = NULL, int domainId = 0);
+                        RPC_DllAPI ServerTransport(const char* const serviceName = NULL, const char* const instanceName = NULL, int domainId = 0);
 
                     private:
 
@@ -146,5 +149,7 @@ namespace eprosima
         } // namespace transport
     } // namespace rpc
 } // namespace eprosima
+
+#endif // RPC_WITH_RTIDDS
 
 #endif // _TRANSPORTS_DDS_SERVERTRANSPORT_H_

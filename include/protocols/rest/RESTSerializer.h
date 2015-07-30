@@ -9,7 +9,7 @@
 #ifndef TCP_SERIALIZER_HTTPSERIALIZER
 #define TCP_SERIALIZER_HTTPSERIALIZER
 
-#include "fastrpc/fastrpc_dll.h"
+#include "../../rpc_dll.h"
 
 #include <iostream>
 #include <cstdint>
@@ -17,8 +17,8 @@
 #include <vector>
 #include <map>
 
-#include "fastrpc/protocols/rest/FastBuffer.h"
-#include "fastrpc/protocols/rest/HTTPEntities.h"
+#include "FastBuffer.h"
+#include "HTTPEntities.h"
 
 namespace eprosima
 {
@@ -81,9 +81,9 @@ namespace eprosima
 
                         inline void makeAlign(size_t align){m_currentPosition_ += align;}
 
-                        FASTRPC_DllAPI RESTSerializer& serialize(const char* const &string_t);
+                        RPC_DllAPI RESTSerializer& serialize(const char* const &string_t);
 
-                        FASTRPC_DllAPI const char* readString(uint32_t &length);
+                        RPC_DllAPI const char* readString(uint32_t &length);
 
                         std::string substituteBadCharacters(const std::string &str);
 
@@ -94,17 +94,17 @@ namespace eprosima
 						/*!
 						 * @brief Default constructor
 						 */
-                        FASTRPC_DllAPI RESTSerializer();
+                        RPC_DllAPI RESTSerializer();
 
 						/*!
 						 * @brief Default destructor
 						 */
-                        FASTRPC_DllAPI ~RESTSerializer();
+                        RPC_DllAPI ~RESTSerializer();
 						
 						/*!
 						 * @brief This function resets the buffer's current position to the beginning. 
 						 */
-                        FASTRPC_DllAPI void reset();
+                        RPC_DllAPI void reset();
 
                         //RESTSerializer& serialize(uint32_t &integer);
 
@@ -116,7 +116,7 @@ namespace eprosima
 						 * @return Reference to the RESTSerializer object
 						 */
                         inline
-                        FASTRPC_DllAPI RESTSerializer& serialize(const std::string &string_t) {return serialize(string_t.c_str());}
+                        RPC_DllAPI RESTSerializer& serialize(const std::string &string_t) {return serialize(string_t.c_str());}
 						
 						/*!
 						 * @brief This function deserializes a string
@@ -124,7 +124,7 @@ namespace eprosima
 						 * @return Reference to the RESTSerializer object
 						 */
                         inline
-                        FASTRPC_DllAPI RESTSerializer& deserialize(std::string &string_t)
+                        RPC_DllAPI RESTSerializer& deserialize(std::string &string_t)
                         {
                             uint32_t length = 0;
                             const char *str = readString(length);
@@ -137,98 +137,98 @@ namespace eprosima
 						 * @param method reference to the method that will do the serialization.
 						 * @return Reference to the RESTSerializer object
 						 */
-                        FASTRPC_DllAPI RESTSerializer& serialize(HTTPMethod &method);
+                        RPC_DllAPI RESTSerializer& serialize(HTTPMethod &method);
 						
 						/*!
 						 * @brief This function deserializes an HTTP method
 						 * @param method Variable that will store the character read from the buffer.
 						 * @return Reference to the RESTSerializer object
 						 */
-                        FASTRPC_DllAPI RESTSerializer& deserialize(HTTPMethod &method);
+                        RPC_DllAPI RESTSerializer& deserialize(HTTPMethod &method);
 						
 						/*!
 						 * @brief This function serializes an HTTP URI.
 						 * @param uri Reference to the URI to be serialized.
 						 * @return Reference to the RESTSerializer object.
 						 */
-                        FASTRPC_DllAPI RESTSerializer& serialize(HTTPUri &uri);
+                        RPC_DllAPI RESTSerializer& serialize(HTTPUri &uri);
 						
 						/*!
 						 * @brief This function deserializes an HTTP URI.
 						 * @param uri Variable that will store the URI read from the buffer.
 						 * @return Reference to the RESTSerializer object.
 						 */
-                        FASTRPC_DllAPI RESTSerializer& deserialize(HTTPUri &uri);
+                        RPC_DllAPI RESTSerializer& deserialize(HTTPUri &uri);
 						
 						/*!
 						 * @brief This function serializes an HTTP Version
 						 * @param version Reference to the HTTPVersion to serialize
 						 * @return Reference to the RESTSerializer object
 						 */
-                        FASTRPC_DllAPI RESTSerializer& serialize(HTTPVersion &version);
+                        RPC_DllAPI RESTSerializer& serialize(HTTPVersion &version);
 						
 						/*!
 						 * @brief This function deserializes an HTTP Version.
 						 * @param version Variable that will store the HTTPVersion read from the buffer.
 						 * @return Reference to the RESTSerializer object.
 						 */
-                        FASTRPC_DllAPI RESTSerializer& deserialize(HTTPVersion &version);
+                        RPC_DllAPI RESTSerializer& deserialize(HTTPVersion &version);
 						
 						/*!
 						 * @brief This function serializes an HTTP Body.
 						 * @param data Reference to the HTTPData to serialize.
 						 * @return Reference to the RESTSerializer object.
 						 */
-                        FASTRPC_DllAPI RESTSerializer& serialize(HTTPData &data);
+                        RPC_DllAPI RESTSerializer& serialize(HTTPData &data);
 						
 						/*!
 						 * @brief This function deserializes an HTTP Body.
 						 * @param data Variable that will store the HTTPData read from the buffer.
 						 * @return Reference to the RESTSerializer object.
 						 */
-                        FASTRPC_DllAPI RESTSerializer& deserialize(HTTPData &data);
+                        RPC_DllAPI RESTSerializer& deserialize(HTTPData &data);
 						
 						/*!
 						 * @brief This function serializes an HTTP Response code.
 						 * @param responseCode Reference to the response code (HTTPResponseCode) to serialize.
 						 * @return Reference to the RESTSerializer object.
 						 */
-                        FASTRPC_DllAPI RESTSerializer& serialize(HTTPResponseCode &responseCode);
+                        RPC_DllAPI RESTSerializer& serialize(HTTPResponseCode &responseCode);
 						
 						/*!
 						 * @brief This function deserializes an HTTP Response code.
 						 * @param responseCode The variable that will store the response code (HTTPResponseCode) read from the buffer.
 						 * @return Reference to the RESTSerializer object.
 						 */
-                        FASTRPC_DllAPI RESTSerializer& deserialize(HTTPResponseCode &responseCode);
+                        RPC_DllAPI RESTSerializer& deserialize(HTTPResponseCode &responseCode);
 						
 						/*!
 						 * @brief This function serializes an HTTP Parameter
 						 * @param param Reference to the parameter to serialize
 						 * @return Reference to the RESTSerializer object
 						 */
-                        FASTRPC_DllAPI RESTSerializer& serialize(HTTPParam &param);
+                        RPC_DllAPI RESTSerializer& serialize(HTTPParam &param);
 						
 						/*!
 						 * @brief This function deserializes an HTTP Parameter.
 						 * @param param The variable that will store the HTTPParam read from the buffer.
 						 * @return Reference to the RESTSerializer object.
 						 */
-                        FASTRPC_DllAPI RESTSerializer& deserialize(HTTPParam &param);
+                        RPC_DllAPI RESTSerializer& deserialize(HTTPParam &param);
 						
 						/*!
 						 * @brief This function serializes a set of HTTP Parameters.
 						 * @param params Reference to the parameter set to serialize.
 						 * @return Reference to the RESTSerializer object.
 						 */
-                        FASTRPC_DllAPI RESTSerializer& serialize(HTTPParameters &params);
+                        RPC_DllAPI RESTSerializer& serialize(HTTPParameters &params);
 						
 						/*!
 						 * @brief This function deserializes an HTTP Parameters set.
 						 * @param params The variable that will store the HTTPParameters object read from the buffer.
 						 * @return Reference to the RESTSerializer object.
 						 */
-                        FASTRPC_DllAPI RESTSerializer& deserialize(HTTPParameters &params);
+                        RPC_DllAPI RESTSerializer& deserialize(HTTPParameters &params);
 						
 						/*!
 						 * @brief This function serializes a set of HTTP Parameters.
@@ -236,14 +236,14 @@ namespace eprosima
 						 * @param numElements number of parameters to serialize.
 						 * @return Reference to the RESTSerializer object.
 						 */
-                        FASTRPC_DllAPI RESTSerializer& serialize(HTTPParameters &params, size_t numElements); 
+                        RPC_DllAPI RESTSerializer& serialize(HTTPParameters &params, size_t numElements); 
 						/*!
 						 * @brief This function deserializes a set of HTTP Parameters.
 						 * @param params The variable that will store the character read from the buffer.
 						 * @param numElements Nomber of parameters to deserialize.
 						 * @return Reference to the RESTSerializer object.
 						 */
-                        FASTRPC_DllAPI RESTSerializer& deserialize(HTTPParameters &params, size_t numElements);
+                        RPC_DllAPI RESTSerializer& deserialize(HTTPParameters &params, size_t numElements);
 						
 						/*!
 						 * @brief This function serializes an HTTP query parameter.
@@ -252,7 +252,7 @@ namespace eprosima
 						 * @param paramValue Parameter value.
 						 * @return Reference to the RESTSerializer object.
 						 */
-                        FASTRPC_DllAPI RESTSerializer& serializeQueryParameter(std::string &uri, const std::string &paramName,
+                        RPC_DllAPI RESTSerializer& serializeQueryParameter(std::string &uri, const std::string &paramName,
                                 const std::string &paramValue);
 						
 						/*!
@@ -260,21 +260,21 @@ namespace eprosima
 						 * @param uri URI to serialize the template parameters in.
 						 * @return Reference to the RESTSerializer object.
 						 */
-                        FASTRPC_DllAPI RESTSerializer& beginSerializeTemplateParameters(std::string &&uri);
+                        RPC_DllAPI RESTSerializer& beginSerializeTemplateParameters(std::string &&uri);
 						
 						/*!
 						 * @brief This function serializes an HTTP template parameter in the URI.
 						 * @param paramValue Reference to the parameter value to serialize.
 						 * @return Reference to the RESTSerializer object.
 						 */
-                        FASTRPC_DllAPI RESTSerializer& serializeTemplateParameter(const std::string &paramValue);
+                        RPC_DllAPI RESTSerializer& serializeTemplateParameter(const std::string &paramValue);
 						
 						/*!
 						 * @brief This function end the proccess to serialize the template parameters inside the URI.
 						 * @param uri Variable that will store the expanded URI with the template parameters.
 						 * @return Reference to the RESTSerializer object.
 						 */
-                        FASTRPC_DllAPI RESTSerializer& endSerializeTemplateParameters(std::string &uri);
+                        RPC_DllAPI RESTSerializer& endSerializeTemplateParameters(std::string &uri);
 						
 						/*!
 						 * @brief This function deserializes an HTTP URI.
@@ -282,14 +282,14 @@ namespace eprosima
 						 * @param baseUri Base URI for the RESTful application.
 						 * @return Reference to the RESTSerializer object.
 						 */
-                        FASTRPC_DllAPI RESTSerializer& deserializeUri(const std::string &uri, const std::string baseUri);
+                        RPC_DllAPI RESTSerializer& deserializeUri(const std::string &uri, const std::string baseUri);
                         
 						/*!
 						 * @brief Checks the existence of a path segment in a certain level in the URI.
 						 * @param level Level of the path segment.
 						 * @return true if it exists, false if it does not.
 						 */
-                        inline FASTRPC_DllAPI 
+                        inline RPC_DllAPI 
                             bool existsTagLevel(const int level) const
                             {
                                 return level < m_tags.size();
@@ -300,7 +300,7 @@ namespace eprosima
 						 * @param level Level of the path segment.
 						 * @return The tag for the given level.
 						 */
-                        inline FASTRPC_DllAPI 
+                        inline RPC_DllAPI 
                             std::string getTag(const int level)
                             {
                                 return m_tags[level];
@@ -311,7 +311,7 @@ namespace eprosima
 						 * @param name HTTP query parameter name.
 						 * @return true if it exists, false if it does not.
 						 */
-                        inline FASTRPC_DllAPI 
+                        inline RPC_DllAPI 
                             bool existsQueryParameter(const std::string &name) { return m_queryParameters.find(name) != m_queryParameters.end();}
 
 							
@@ -320,7 +320,7 @@ namespace eprosima
 						 * @param name HTTP query parameter name.
 						 * @return HTTP query parameter value.
 						 */
-                        inline FASTRPC_DllAPI 
+                        inline RPC_DllAPI 
                             std::string getQueryParameter(const std::string &name) {return m_queryParameters.at(name);}
                 };
 

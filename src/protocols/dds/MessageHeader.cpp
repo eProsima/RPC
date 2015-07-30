@@ -1,7 +1,7 @@
-#include "fastrpc/protocols/dds/MessageHeader.h"
-#include "fastrpc/utils/macros/strdup.h"
+#include <protocols/dds/MessageHeader.h>
+#include <utils/macros/strdup.h>
 
-#include "fastcdr/Cdr.h"
+#include <fastcdr/Cdr.h>
 
 using namespace eprosima::rpc;
 using namespace ::protocol::dds;

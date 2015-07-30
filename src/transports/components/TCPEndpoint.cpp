@@ -1,5 +1,5 @@
-#include "fastrpc/transports/components/TCPEndpoint.h"
-#include "fastrpc/utils/macros/snprintf.h"
+#include "TCPEndpoint.h"
+#include <utils/macros/snprintf.h>
 
 #include <iostream>
 #include <vector>

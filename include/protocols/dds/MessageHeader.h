@@ -9,8 +9,8 @@
 #ifndef _PROTOCOLS_DDS_MESSAGEHEADER_H_
 #define _PROTOCOLS_DDS_MESSAGEHEADER_H_
 
-#include "fastrpc/fastrpc_dll.h"
-#include "fastrpc/utils/macros/strdup.h"
+#include "../../rpc_dll.h"
+#include "../../utils/macros/strdup.h"
 
 #include <cstdint>
 #include <string.h>
@@ -31,7 +31,7 @@ namespace eprosima
             {
                 typedef uint8_t GuidPrefix_t[12];
 
-                class FASTRPC_DllAPI EntityId_t
+                class RPC_DllAPI EntityId_t
                 {
                     public:
 
@@ -84,7 +84,7 @@ namespace eprosima
                         uint8_t entityKind_;
                 };
 
-                class FASTRPC_DllAPI GUID_t
+                class RPC_DllAPI GUID_t
                 {
                     public:
 
@@ -141,7 +141,7 @@ namespace eprosima
                  * @ingroup PROTOCOLMODULE
                  */
 
-                class FASTRPC_DllAPI SequenceNumber_t
+                class RPC_DllAPI SequenceNumber_t
                 {
                     public:
 
@@ -262,7 +262,7 @@ namespace eprosima
                  * @brief This class is used to identify clients.
                  * @ingroup PROTOCOLMODULE
                  */
-                class FASTRPC_DllAPI SampleIdentity
+                class RPC_DllAPI SampleIdentity
                 {
                     public:
 
@@ -410,7 +410,7 @@ namespace eprosima
                      * @brief Header information used in all generated request topics.
                      * @ingroup PROTOCOLMODULE
                      */
-                    class FASTRPC_DllAPI RequestHeader
+                    class RPC_DllAPI RequestHeader
                     {
                         public:
 
@@ -531,7 +531,7 @@ namespace eprosima
                      * @brief Header information used in all generated reply topics.
                      * @ingroup PROTOCOLMODULE
                      */
-                    class FASTRPC_DllAPI ReplyHeader
+                    class RPC_DllAPI ReplyHeader
                     {
                         public:
 

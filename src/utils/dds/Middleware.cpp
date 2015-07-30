@@ -5,12 +5,15 @@
  * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
+#include <config.h>
 
-#include "fastrpc/utils/dds/Middleware.h"
-#include "fastrpc/protocols/dds/MessageHeader.h"
+#if RPC_WITH_RTIDDS
+
+#include <utils/dds/Middleware.h>
+#include <protocols/dds/MessageHeader.h>
 
 #if defined(OPENDDS)
-#include "dds/DCPS/RTPS/RtpsDiscovery.h"
+#include <dds/DCPS/RTPS/RtpsDiscovery.h>
 #endif
 
 static const char* const CLASS_NAME = "eprosima::rpc::util::dds::Middleware";
@@ -166,3 +169,5 @@ DDS::DomainParticipantFactory* eprosima::rpc::util::dds::getFactory(int domainId
 #error There not set OS.
 #endif
 }
+
+#endif // RPC_WITH_RTIDDS

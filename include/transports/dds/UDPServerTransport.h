@@ -9,8 +9,11 @@
 #ifndef _TRANSPORTS_DDS_UDPSERVERTRANSPORT_H_
 #define _TRANSPORTS_DDS_UDPSERVERTRANSPORT_H_
 
-#include "fastrpc/fastrpc_dll.h"
-#include "fastrpc/transports/dds/ServerTransport.h"
+#include "../../rpc_dll.h"
+
+#if RPC_WITH_RTIDDS
+
+#include "ServerTransport.h"
 
 namespace eprosima
 {
@@ -37,10 +40,10 @@ namespace eprosima
                          * the default instance's name will be use.
                          * @param domainId Optional parameter that specifies the domain identifier that will be used in DDS.
                          */
-                        FASTRPC_DllAPI UDPServerTransport(const char* const serviceName, const char* const instanceName, int domainId = 0);
+                        RPC_DllAPI UDPServerTransport(const char* const serviceName, const char* const instanceName, int domainId = 0);
 
                         //! @brief Default destructor.
-                        virtual FASTRPC_DllAPI ~UDPServerTransport();
+                        virtual RPC_DllAPI ~UDPServerTransport();
 
                         /*!
                          * @brief This function sets the DDS' QoS to use the UDPv4 transport.
@@ -48,11 +51,13 @@ namespace eprosima
                          * @param participantQos Reference to the DDS domain participant QoS.
                          * @param participant The domain participant that will be set to use UDPv4 transport.
                          */
-                        virtual FASTRPC_DllAPI int setTransport(DDS_DomainParticipantQos &participantQos, DDSDomainParticipant *participant);
+                        virtual RPC_DllAPI int setTransport(DDS_DomainParticipantQos &participantQos, DDSDomainParticipant *participant);
                 };
             } // namepsace dds
         } // namespace transport
     } // namepsace fastrpc
 } // namespace eprosima
+
+#endif // RPC_WITH_RTIDDS
 
 #endif // _TRANSPORTS_DDS_UDPSERVERTRANSPORT_H_

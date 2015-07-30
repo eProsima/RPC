@@ -5,12 +5,15 @@
  * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
+#include <config.h>
 
-#include "fastrpc/transports/dds/DDSAsyncTask.h"
-#include "fastrpc/transports/dds/components/ProxyProcedureEndpoint.h"
-#include "fastrpc/exceptions/ClientInternalException.h"
-#include "fastrpc/exceptions/ServerTimeoutException.h"
-#include "fastrpc/utils/dds/Middleware.h"
+#if RPC_WITH_RTIDDS
+
+#include <transports/dds/DDSAsyncTask.h>
+#include <transports/dds/components/ProxyProcedureEndpoint.h>
+#include <exceptions/ClientInternalException.h>
+#include <exceptions/ServerTimeoutException.h>
+#include <utils/dds/Middleware.h>
 
 using namespace eprosima::rpc;
 using namespace ::transport::dds;
@@ -58,3 +61,5 @@ void DDSAsyncTask::execute(DDSQueryCondition *query)
         printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
     }
 }
+
+#endif // RPC_WITH_RTIDDS

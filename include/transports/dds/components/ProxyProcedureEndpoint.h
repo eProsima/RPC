@@ -8,7 +8,10 @@
 #ifndef _TRANSPORTS_DDS_COMPONENTS_PROXYPROCEDUREENDPOINT_H_
 #define _TRANSPORTS_DDS_COMPONENTS_PROXYPROCEDUREENDPOINT_H_
 
-#include "../../../fastrpc_dll.h"
+#include "../../../rpc_dll.h"
+
+#if RPC_WITH_RTIDDS
+
 #include "../ProxyTransport.h"
 #include "../../components/Endpoint.h"
 #include "../../../utils/Messages.h"
@@ -44,7 +47,7 @@ namespace eprosima
                  * It also encapsulates the DDS datawriter and the DDS datareader.
 				 * @ingroup TRANSPORTMODULE
                  */
-                class FASTRPC_DllAPI ProxyProcedureEndpoint : public Endpoint
+                class RPC_DllAPI ProxyProcedureEndpoint : public Endpoint
                 {
                     public:
 
@@ -210,4 +213,7 @@ namespace eprosima
         } // namespace transport
     } // namespace rpc
 } // namespace eprosima
+
+#endif // RPC_WITH_RTIDDS
+
 #endif // _TRANSPORTS_DDS_COMPONENTS_PROXYPROCEDUREENDPOINT_H_

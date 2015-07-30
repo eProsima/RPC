@@ -9,7 +9,7 @@
 #ifndef _UTILS_TYPEDEFS_H_
 #define _UTILS_TYPEDEFS_H_
 
-#include "fastrpc/utils/dds/Middleware.h"
+#include "dds/Middleware.h"
 
 namespace eprosima
 {

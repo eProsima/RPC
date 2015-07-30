@@ -9,9 +9,12 @@
 #ifndef _TRANSPORTS_DDS_DDSASYNCTASK_H_
 #define _TRANSPORTS_DDS_DDSASYNCTASK_H_
 
-#include "fastrpc/fastrpc_dll.h"
-#include "fastrpc/transports/AsyncTask.h"
-#include "fastrpc/exceptions/SystemException.h"
+#include "../../rpc_dll.h"
+
+#if RPC_WITH_FASTRTPS
+
+#include "../AsyncTask.h"
+#include "../../exceptions/SystemException.h"
 
 namespace eprosima
 {
@@ -25,7 +28,7 @@ namespace eprosima
                  * @brief This class represents a asynchronous task created to wait the reply from the server in an asynchronous call.
                  * @ingroup TRANSPORTMODULE
                  */
-                class FASTRPC_DllAPI RTPSAsyncTask : public eprosima::rpc::transport::AsyncTask
+                class RPC_DllAPI RTPSAsyncTask : public eprosima::rpc::transport::AsyncTask
                 {
                     public:
 
@@ -64,5 +67,7 @@ namespace eprosima
         } // namespace transport
     } // namespace rpc
 } // namespace eprosima
+
+#endif // RPC_WITH_FASTRTPS
 
 #endif // _TRANSPORTS_DDS_RTPSASYNCTASK_H_

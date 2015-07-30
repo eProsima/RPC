@@ -5,16 +5,19 @@
  * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
+#include <config.h>
 
-#include "fastrpc/transports/dds/UDPServerTransport.h"
-#include "fastrpc/utils/macros/snprintf.h"
-#include "fastrpc/utils/dds/Middleware.h"
+#if RPC_WITH_RTIDDS
+
+#include <transports/dds/UDPServerTransport.h>
+#include <utils/macros/snprintf.h>
+#include <utils/dds/Middleware.h>
 
 #if defined(OPENDDS)
-#include "dds/DCPS/transport/framework/TransportRegistry.h"
-#include "dds/DCPS/transport/framework/TransportInst_rch.h"
-#include "dds/DCPS/transport/rtps_udp/RtpsUdpInst.h"
-#include "dds/DCPS/DomainParticipantImpl.h"
+#include <dds/DCPS/transport/framework/TransportRegistry.h>
+#include <dds/DCPS/transport/framework/TransportInst_rch.h>
+#include <dds/DCPS/transport/rtps_udp/RtpsUdpInst.h>
+#include <dds/DCPS/DomainParticipantImpl.h>
 #endif
 
 static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::UDPServerTransport";
@@ -75,3 +78,5 @@ int UDPServerTransport::setTransport(DDS::DomainParticipantQos &participantQos, 
     return returnedValue;
 #endif
 }
+
+#endif // RPC_WITH_RTIDDS

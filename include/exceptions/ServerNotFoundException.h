@@ -9,7 +9,7 @@
 #ifndef _EXCEPTIONS_SERVERNOTFOUNDEXCEPTION_H_
 #define _EXCEPTIONS_SERVERNOTFOUNDEXCEPTION_H_
 
-#include "fastrpc/exceptions/SystemException.h"
+#include "SystemException.h"
 
 namespace eprosima
 {
@@ -30,41 +30,41 @@ namespace eprosima
                      *
                      * \param message An error message. This message is copied.
                      */
-					FASTRPC_DllAPI ServerNotFoundException(const std::string &message) : SystemException(message.c_str(), 4) {}
+					RPC_DllAPI ServerNotFoundException(const std::string &message) : SystemException(message.c_str(), 4) {}
 
                     /**
                      * \brief Default copy constructor.
                      *
                      * \param ex ServerNotFoundException that will be copied.
                      */
-                    FASTRPC_DllAPI ServerNotFoundException(const ServerNotFoundException &ex);
+                    RPC_DllAPI ServerNotFoundException(const ServerNotFoundException &ex);
 
                     /**
                      * \brief Default move constructor.
                      *
                      * \param ex ServerNotFoundException that will be moved.
                      */
-                    FASTRPC_DllAPI ServerNotFoundException(ServerNotFoundException&& ex);
+                    RPC_DllAPI ServerNotFoundException(ServerNotFoundException&& ex);
 
                     /**
                      * \brief Assigment operation.
                      *
                      * \param ex ServerNotFoundException that will be copied.
                      */
-                    FASTRPC_DllAPI ServerNotFoundException& operator=(const ServerNotFoundException &ex);
+                    RPC_DllAPI ServerNotFoundException& operator=(const ServerNotFoundException &ex);
 
                     /**
                      * \brief Assigment operation.
                      *
                      * \param ex ServerNotFoundException that will be moved.
                      */
-                    FASTRPC_DllAPI ServerNotFoundException& operator=(ServerNotFoundException&& ex);
+                    RPC_DllAPI ServerNotFoundException& operator=(ServerNotFoundException&& ex);
 
                     /// \brief Default constructor
-                    virtual FASTRPC_DllAPI ~ServerNotFoundException() throw();
+                    virtual RPC_DllAPI ~ServerNotFoundException() throw();
 
                     /// \brief This function throws the object as an exception.
-                    virtual FASTRPC_DllAPI void raise() const;
+                    virtual RPC_DllAPI void raise() const;
             };
         } // namespace exception
     } // namespace rpc

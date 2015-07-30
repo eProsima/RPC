@@ -8,6 +8,7 @@
 *.opensdf
 *.suo
 # Visual Studio build directories.
+build/
 Debug*/
 Release*/
 ipch/
@@ -27,9 +28,9 @@ cscope.out
 # Generated Java classes
 .gradle
 fastrpcgen/build/
-classes/fastrpcgen.jar
-classes/rpcddsgen.jar
-classes/rpcrestgen.jar
+fastrpcgen/share/fastrpc/fastrpcgen.jar
+fastrpcgen/share/rpcdds/rpcddsgen.jar
+fastrpcgen/share/rpcrest/rpcrestgen.jar
 
 # Foo examples
 utils/doxygen/examples/dds/*.h

@@ -5,12 +5,15 @@
  * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
+#include <config.h>
 
-#include <fastrpc/transports/dds/ProxyTransport.h>
-#include <fastrpc/transports/dds/components/ProxyProcedureEndpoint.h>
-#include <fastrpc/transports/dds/AsyncThread.h>
-#include <fastrpc/exceptions/InitializeException.h>
-#include <fastrpc/utils/dds/Middleware.h>
+#if RPC_WITH_RTIDDS
+
+#include <transports/dds/ProxyTransport.h>
+#include <transports/dds/components/ProxyProcedureEndpoint.h>
+#include "AsyncThread.h"
+#include <exceptions/InitializeException.h>
+#include <utils/dds/Middleware.h>
 
 #include <string>
 
@@ -136,3 +139,5 @@ void ProxyTransport::deleteAssociatedAsyncTasks(ProxyProcedureEndpoint *pe)
         printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
     }
 }
+
+#endif // RPC_WITH_RTIDDS

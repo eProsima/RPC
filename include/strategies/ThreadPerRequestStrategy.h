@@ -9,8 +9,7 @@
 #ifndef _STRATEGIES_THREADPERREQUESTSTRATEGY_H_
 #define _STRATEGIES_THREADPERREQUESTSTRATEGY_H_
 
-#include "fastrpc/strategies/ServerStrategy.h"
-#include "fastrpc/fastrpc_dll.h"
+#include "ServerStrategy.h"
 
 namespace eprosima
 {
@@ -25,7 +24,7 @@ namespace eprosima
              *        The server creates a new thread for every new incoming request.
              * @ingroup STRATEGIESMODULE 
              */
-            class FASTRPC_DllAPI ThreadPerRequestStrategy : public ServerStrategy
+            class RPC_DllAPI ThreadPerRequestStrategy : public ServerStrategy
             {
                 public:
 

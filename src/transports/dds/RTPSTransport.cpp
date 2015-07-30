@@ -5,9 +5,12 @@
  * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
+#include <config.h>
 
-#include "fastrpc/transports/dds/RTPSTransport.h"
-#include "fastrpc/exceptions/InitializeException.h"
+#if RPC_WITH_FASTRTPS
+
+#include <transports/dds/RTPSTransport.h>
+#include <exceptions/InitializeException.h>
 
 #include <fastrtps/Domain.h>
 #include <fastrtps/participant/Participant.h>
@@ -61,3 +64,4 @@ RTPSTransport::~RTPSTransport()
     }
 }
 
+#endif // RPC_WITH_FASTRTPS

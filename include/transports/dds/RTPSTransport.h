@@ -8,7 +8,9 @@
 #ifndef _TRANSPORTS_DDS_RTPSTRANSPORT_H_
 #define _TRANSPORTS_DDS_RTPSTRANSPORT_H_
 
-#include "fastrpc/fastrpc_dll.h"
+#include "../../rpc_dll.h"
+
+#if RPC_WITH_FASTRTPS
 
 namespace eprosima
 {
@@ -35,7 +37,7 @@ namespace eprosima
                  * using RTPS. This transport could be used by both proxies and servers.
                  * @ingroup TRANSPORTMODULE
                  */
-                class FASTRPC_DllAPI RTPSTransport
+                class RPC_DllAPI RTPSTransport
                 {
                     public:
 
@@ -114,5 +116,6 @@ namespace eprosima
     } // namespace rpc
 } // namespace eprosima
 
-#endif // _TRANSPORTS_DDS_RTPSTRANSPORT_H_
+#endif // RPC_WITH_FASTRTPS
 
+#endif // _TRANSPORTS_DDS_RTPSTRANSPORT_H_

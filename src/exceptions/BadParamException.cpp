@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-#include "fastrpc/exceptions/BadParamException.h"
+#include <exceptions/BadParamException.h>
 
 using namespace eprosima::rpc::exception;
 
