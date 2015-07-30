@@ -158,6 +158,11 @@ if(MSVC OR MSVC_IDE)
                 ${RTIDDS_LIBRARIES}
                 )
         endif()
+
+        # Link library to external win32 libraries.
+        target_link_libraries(${PROJECT_NAME}
+            ${Boost_LIBRARIES}
+            )
     endif()
 else()
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
