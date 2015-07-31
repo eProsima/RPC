@@ -87,7 +87,7 @@ configure_file(${PROJECT_SOURCE_DIR}/include/config.h.in
 # If Windows, set define for export dll functions
 add_definitions(-DRPC_SOURCE)
 if(WIN32)
-    add_definitions(-DBOOST_ALL_DYN_LINK -DFASTCDR_NO_LIB)
+    add_definitions(-DBOOST_ALL_DYN_LINK -D_WIN32_WINNT=0x0501 -DFASTCDR_NO_LIB)
 endif()
 
 # Include Boost header files.
