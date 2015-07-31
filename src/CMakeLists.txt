@@ -207,3 +207,98 @@ else()
         ${Boost_LIBRARIES}
         )
 endif()
+
+###############################################################################
+# Packaging
+###############################################################################
+
+# Install public headers
+set_public_headers_directory(${PROJECT_SOURCE_DIR}/include ""
+    DESTINATION ${INCLUDE_INSTALL_DIR}/${PROJECT_NAME}
+    COMPONENT headers
+    )
+
+# Install config.h header
+set_public_header(${PROJECT_BINARY_DIR}/include ${PROJECT_NAME} config.h
+    DESTINATION ${INCLUDE_INSTALL_DIR}/${PROJECT_NAME}
+    COMPONENT headers
+    )
+
+set(CPACK_COMPONENT_HEADERS_DISPLAY_NAME "C++ Headers" PARENT_SCOPE)
+set(CPACK_COMPONENT_HEADERS_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} C++ Headers" PARENT_SCOPE)
+
+# Install sources
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/src/
+    DESTINATION src
+    COMPONENT sources
+    FILES_MATCHING
+    PATTERN "*.c"
+    PATTERN "*.cpp"
+    PATTERN "*.h"
+    PATTERN "*.hpp"
+    )
+if(UNIX)
+    install(DIRECTORY ${PROJECT_BINARY_DIR}/autotools/
+        DESTINATION .
+        USE_SOURCE_PERMISSIONS
+        OPTIONAL
+        COMPONENT sources
+        )
+endif()
+
+# Install libraries
+if(MSVC OR MSVC_IDE)
+    if(EPROSIMA_INSTALLER)
+        install_msvc_libraries(i86Win32VS2010)
+        install_msvc_libraries(x64Win64VS2010)
+        install_msvc_libraries(i86Win32VS2013)
+        install_msvc_libraries(x64Win64VS2013)
+    else()
+        install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_static
+            EXPORT ${PROJECT_NAME}Targets
+            RUNTIME DESTINATION ${LIB_INSTALL_DIR}
+            LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+            ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
+            COMPONENT libraries_${MSVC_ARCH}
+            )
+
+        export(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_static FILE ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Targets.cmake)
+        install(EXPORT ${PROJECT_NAME}Targets
+            DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake
+            COMPONENT cmake
+            )
+
+
+        # Install pdb files
+        install(DIRECTORY ${PROJECT_BINARY_DIR}/lib/
+            DESTINATION ${LIB_INSTALL_DIR}
+            COMPONENT libraries_${MSVC_ARCH}
+            FILES_MATCHING
+            PATTERN "*.pdb"
+            )
+
+        string(TOUPPER "${MSVC_ARCH}" MSVC_ARCH_UPPER)
+        set(CPACK_COMPONENT_LIBRARIES_${MSVC_ARCH_UPPER}_DISPLAY_NAME "${MSVC_ARCH}" PARENT_SCOPE)
+        set(CPACK_COMPONENT_LIBRARIES_${MSVC_ARCH_UPPER}_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} libraries for platform ${MSVC_ARCH}" PARENT_SCOPE)
+        set(CPACK_COMPONENT_LIBRARIES_${MSVC_ARCH_UPPER}_GROUP "Libraries" PARENT_SCOPE)
+    endif()
+
+    set(CPACK_COMPONENT_GROUP_LIBRARIES_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} libraries" PARENT_SCOPE)
+else()
+    install(TARGETS ${PROJECT_NAME}
+        EXPORT ${PROJECT_NAME}Targets
+        RUNTIME DESTINATION ${LIB_INSTALL_DIR}
+        LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+        ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
+        COMPONENT libraries
+        )
+
+    export(TARGETS ${PROJECT_NAME} FILE ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Targets.cmake)
+    install(EXPORT ${PROJECT_NAME}Targets
+        DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake
+        COMPONENT cmake
+        )
+
+    set(CPACK_COMPONENT_LIBRARIES_DISPLAY_NAME "Libraries" PARENT_SCOPE)
+    set(CPACK_COMPONENT_LIBRARIES_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} libraries" PARENT_SCOPE)
+endif()
