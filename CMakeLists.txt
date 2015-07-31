@@ -119,15 +119,23 @@ if(MSVC OR MSVC_IDE)
 endif()
 
 ###############################################################################
-# Load external eProsima projects.
+# eProsima build options
 ###############################################################################
-
 option(EPROSIMA_BUILD "Activate internal building" OFF)
 
 if(EPROSIMA_INSTALLER)
     set(EPROSIMA_BUILD ON)
 endif()
 
+###############################################################################
+# Check libraries
+###############################################################################
+include(${PROJECT_SOURCE_DIR}/cmake/dev/boost_libraries.cmake)
+check_boost(thread system date_time chrono regex)
+
+###############################################################################
+# Load external eProsima projects.
+###############################################################################
 option(THIRDPARTY "Activate the use of internal thirdparties" OFF)
 
 if(EPROSIMA_BUILD)
@@ -150,12 +158,6 @@ if(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS)
     set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/modules)
     find_package(RTIDDS 5.1)
 endif()
-
-###############################################################################
-# Check libraries
-###############################################################################
-include(${PROJECT_SOURCE_DIR}/cmake/dev/boost_libraries.cmake)
-check_boost(thread system date_time chrono regex)
 
 ###############################################################################
 # Installation paths
