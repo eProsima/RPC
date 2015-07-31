@@ -151,7 +151,7 @@ if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
 endif()
 
 if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
-    find_eprosima_package(fastrtps)
+    find_eprosima_package(fastrtps USE_BOOST)
 endif()
 
 if(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS)
