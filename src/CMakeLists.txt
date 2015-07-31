@@ -87,7 +87,7 @@ configure_file(${PROJECT_SOURCE_DIR}/include/config.h.in
 # If Windows, set define for export dll functions
 add_definitions(-DRPC_SOURCE)
 if(WIN32)
-    add_definitions(-DBOOST_ALL_DYN_LINK -D_WIN32_WINNT=0x0501 -DFASTCDR_NO_LIB)
+    add_definitions(-DBOOST_ALL_DYN_LINK -D_WIN32_WINNT=0x0501)
 endif()
 
 # Include Boost header files.
@@ -138,20 +138,24 @@ if(MSVC OR MSVC_IDE)
             )
 
         if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
+            target_compile_definitions(${PROJECT_NAME} PUBLIC FASTCDR_DYN_LINK)
             target_link_libraries(${PROJECT_NAME}
                 fastcdr
                 )
+            target_include_directories(${PROJECT_NAME}_static PRIVATE ${fastcdr_INCLUDE_DIR})
         endif()
 
         if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
+            target_compile_definitions(${PROJECT_NAME} PUBLIC FASTRTPS_DYN_LINK)
             target_link_libraries(${PROJECT_NAME}
                 fastrtps
                 )
+            target_include_directories(${PROJECT_NAME}_static PRIVATE ${fastrtps_INCLUDE_DIR})
         endif()
 
         if(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS)
             target_compile_definitions(${PROJECT_NAME} PUBLIC ${RTIDDS_DEFINITIONS})
-            target_compile_definitions(${PROJECT_NAME}_STATIC PUBLIC ${RTIDDS_DEFINITIONS})
+            target_compile_definitions(${PROJECT_NAME}_static PUBLIC ${RTIDDS_DEFINITIONS})
             target_include_directories(${PROJECT_NAME} PUBLIC ${RTIDDS_INCLUDE_DIRS})
             target_include_directories(${PROJECT_NAME}_static PUBLIC ${RTIDDS_INCLUDE_DIRS})
             target_link_libraries(${PROJECT_NAME}
