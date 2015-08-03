@@ -1,9 +1,12 @@
 package com.eprosima.fastrpc.idl.grammar;
 
-import java.util.ArrayList;
-import java.util.Stack;
 import com.eprosima.fastrpc.idl.tree.*;
 import com.eprosima.idl.parser.typecode.TypeCode;
+
+import java.util.ArrayList;
+import java.util.Stack;
+
+import org.antlr.v4.runtime.Token;
 
 public abstract class Context extends com.eprosima.idl.context.Context implements com.eprosima.fastcdr.idl.context.Context
 {
@@ -77,26 +80,30 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
 
     /*** End ***/
 
-    public Interface createInterface(String name)
+    @Override
+    public Interface createInterface(String name, Token token)
     {
-        Interface interfaceObject = new Interface(getScopeFile(), isInScopedFile(), getScope(), name);
+        Interface interfaceObject = new Interface(getScopeFile(), isInScopedFile(), getScope(), name, token);
         addInterface(interfaceObject);
         return interfaceObject;
     }
 
-    public com.eprosima.fastrpc.idl.tree.Exception createException(String name)
+    @Override
+    public com.eprosima.fastrpc.idl.tree.Exception createException(String name, Token token)
     {
-        com.eprosima.fastrpc.idl.tree.Exception exceptionObject = new com.eprosima.fastrpc.idl.tree.Exception(getScopeFile(), isInScopedFile(), getScope(), name);
+        com.eprosima.fastrpc.idl.tree.Exception exceptionObject = new com.eprosima.fastrpc.idl.tree.Exception(getScopeFile(), isInScopedFile(), getScope(), name, token);
         addException(exceptionObject);
         return exceptionObject;
     }
 
-    public Operation createOperation(String name)
+    @Override
+    public Operation createOperation(String name, Token token)
     {
-        Operation operationObject = new Operation(getScopeFile(), isInScopedFile(), null, name);
+        Operation operationObject = new Operation(getScopeFile(), isInScopedFile(), null, name, token);
         return operationObject;
     }
 
+    @Override
     public Param createParam(String name, TypeCode typecode, com.eprosima.idl.parser.tree.Param.Kind kind)
     {
         Param paramObject = new Param(name, typecode, kind);

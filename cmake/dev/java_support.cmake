@@ -1,4 +1,4 @@
-macro(gradle_build directory)
+macro(gradle_build directory jar)
     find_program(GRADLE_EXE gradle)
     if(GRADLE_EXE)
         message(STATUS "Found Gradle: ${GRADLE_EXE}")
@@ -7,13 +7,13 @@ macro(gradle_build directory)
     endif()
 
     add_custom_target(java ALL
-        COMMAND "${GRADLE_EXE}" -Pcustomversion=${PROJECT_VERSION} build
+        COMMAND "${GRADLE_EXE}" -Pcustomversion=${PROJECT_VERSION} ${jar}
         WORKING_DIRECTORY ${directory}
         COMMENT "Generating Java application" VERBATIM)
 
     set(THIRDPARTY_FOUND false)
     foreach(arg ${ARGN})
-        if(${arg} STREQUAL "THIRDPARTY")
+        if("${arg}" STREQUAL "THIRDPARTY_DEPENDENCY")
             set(THIRDPARTY_FOUND true)
         else()
             if(THIRDPARTY_FOUND)

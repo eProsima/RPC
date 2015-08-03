@@ -2,12 +2,13 @@ package com.eprosima.fastrpc.idl.tree;
 
 import java.security.MessageDigest;
 import com.eprosima.idl.parser.tree.Annotation;
+import org.antlr.v4.runtime.Token;
 
 public class Operation extends com.eprosima.idl.parser.tree.Operation
 {
-    public Operation(String scopeFile, boolean isInScope, String scope, String name)
+    public Operation(String scopeFile, boolean isInScope, String scope, String name, Token tk)
     {
-        super(scopeFile, isInScope, scope, name);
+        super(scopeFile, isInScope, scope, name, tk);
     }
 
     public String getMd5()

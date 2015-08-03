@@ -18,9 +18,9 @@ namespace eprosima
         namespace transport
         {
 			/*!
-			* @brief This class represents an endpoint.
-            * @ingroup TRANSPORTMODULE
-			*/
+             * @brief This class represents an endpoint.
+             * @ingroup TRANSPORTMODULE
+             */
             class RPC_DllAPI Endpoint
             {
                 protected:
