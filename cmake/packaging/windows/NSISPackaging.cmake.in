@@ -13,5 +13,5 @@ file(COPY @PROJECT_SOURCE_DIR@/cmake/packaging/windows/InstallRedistributables.n
     DESTINATION ${CPACK_TOPLEVEL_DIRECTORY})
 
 # Copy images
-file(COPY @PROJECT_SOURCE_DIR@/utils/images/logo/eProsimaLogo.jpg
+file(COPY @PROJECT_SOURCE_DIR@/utils/images/logo/eProsimaLogo.png
     DESTINATION ${CPACK_TOPLEVEL_DIRECTORY})
