@@ -19,31 +19,33 @@ AC_PREREQ([2.59])
 AM_INIT_AUTOMAKE([1.10 no-define foreign subdir-objects])
 
 AC_CHECK_HEADER([fastcdr/config.h],
-	[AC_MSG_NOTICE([Found eProsima Fast CDR])],
+	[AC_MSG_NOTICE([Found eProsima Fast CDR]); LDFLAGS="$LDFLAGS -lfastcdr"],
 	[AC_MSG_ERROR([Could not find eProsima Fast CDR])],
 	[])
 
-AC_ARG_WITH([fastrtps],
-        AS_HELP_STRING([--without-fastrtps], [Disables the compilation against eProsima Fast RTPS]))
+AC_DEFINE(EPROSIMA_RPC_LIB_NAME , rpcdds, [Define the name of the library])
 
-AS_IF([test "x$with_fastrtps" = xno],
+AC_ARG_WITH([fastrtps],
+        AS_HELP_STRING(["--without-fastrtps"], ["Disables the compilation against eProsima Fast RTPS"]))
+
+AS_IF([test "x$with_fastrtps" = "xno"],
+    [AC_DEFINE([RPC_WITH_FASTRTPS], [0], [Defined if building agaist eProsima Fast RTPS])],
     [AC_CHECK_HEADER([fastrtps/config.h],
 	    [AC_MSG_NOTICE([Found eProsima Fast RTPS])
          AC_DEFINE([RPC_WITH_FASTRTPS], [1], [Defined if building agaist eProsima Fast RTPS])],
 	    [AC_MSG_ERROR([Could not find eProsima Fast RTPS])],
-	    [])],
-    [AC_DEFINE([RPC_WITH_FASTRTPS], [0], [Defined if building agaist eProsima Fast RTPS])])
+	    []) LDFLAGS="$LDFLAGS -lfastrtps"])
 
 AC_ARG_WITH([rtidds],
-        AS_HELP_STRING([--with-rtidds], [Enables the compilation against RTI DDS]))
+        AS_HELP_STRING(["--with-rtidds=[ARG]"], ["Enables the compilation against RTI DDS. The argument is the RTI DDS platform [ARG=x64Linux2.6gcc4.4.5]"]))
 
-AS_IF([test "x$with_rtidds" = xyes],
+AS_IF([test "x$with_rtidds" = "x"],
+    [AC_DEFINE([RPC_WITH_RTIDDS], [0], [Defined if building agaist RTI DDS])],
     [AC_CHECK_HEADER([$NDDSHOME/include/ndds/ndds_version.h],
 	    [AC_MSG_NOTICE([Found RTI DDS])
          AC_DEFINE([RPC_WITH_RTIDDS], [1], [Defined if building agaist RTI DDS])],
 	    [AC_MSG_ERROR([Could not find RTI DDS. Set NDDSHOME environment variable])],
-	    [])],
-    [AC_DEFINE([RPC_WITH_RTIDDS], [0], [Defined if building agaist RTI DDS])])
+	    []) LDFLAGS="$LDFLAGS -L$NDDSHOME/lib/$with_rtidds -lnddscore -lnddsc -lnddscpp -lpthread -ldl" CPPFLAGS="$CPPFLAGS -DRTI_UNIX -DRTI_LINUX -I$NDDSHOME/include -I$NDDSHOME/include/ndds"])
 
 # Makes version available in config.h
 AC_DEFINE(RPC_VERSION_MAJOR, version_major, [rpcdds version major])
@@ -79,7 +81,7 @@ LT_INIT
 AC_CONFIG_HEADERS(include/rpcdds/config.h:include/rpcdds/config.h.in)
 AC_CONFIG_FILES([Makefile
                  include/Makefile
-                 src/cpp/Makefile
+                 src/Makefile
                  .bin/rpcddsgen])
 
 AC_OUTPUT

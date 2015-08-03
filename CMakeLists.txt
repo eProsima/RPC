@@ -316,95 +316,95 @@ if(BUILD_DOCUMENTATION)
     add_dependencies(doc doxygen libreoffice)
 endif()
 
-################################################################################
-## Packaging
-################################################################################
-## Install external eprosima libraries
-#install_eprosima_fastcdr()
-#install_boost(thread system date_time chrono regex)
-#
-## Install licenses
-#install(FILES ${PROJECT_SOURCE_DIR}/${PROJECT_NAME_UPPER}_LIBRARY_LICENSE.txt
-#    ${PROJECT_SOURCE_DIR}/LGPLv3_LICENSE.txt
-#    DESTINATION .
-#    COMPONENT licenses
-#    )
-#set(CPACK_COMPONENT_LICENSES_HIDDEN 1)
-#
-## Install examples
-#install(DIRECTORY ${PROJECT_SOURCE_DIR}/examples
-#    DESTINATION .
-#    COMPONENT examples
-#    )
-#
-#set(CPACK_COMPONENT_EXAMPLES_DISPLAY_NAME "Examples")
-#set(CPACK_COMPONENT_EXAMPLES_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} examples")
-#
-#set(CPACK_COMPONENTS_ALL headers licenses examples)
-#
-#if(BUILD_JAVA)
-#    install(FILES ${PROJECT_SOURCE_DIR}/${PROJECT_NAME}gen/share/fastrtps/${PROJECT_NAME}gen.jar
-#        DESTINATION ${DATA_INSTALL_DIR}/${PROJECT_NAME}
-#        COMPONENT java
-#        )
-#
-#    if(WIN32)
-#        install(PROGRAMS
-#            ${PROJECT_SOURCE_DIR}/${PROJECT_NAME}gen/scripts/${PROJECT_NAME}gen.bat
-#            DESTINATION ${BIN_INSTALL_DIR}
-#            COMPONENT java
-#            )
-#    else()
-#        install(PROGRAMS
-#            ${PROJECT_SOURCE_DIR}/${PROJECT_NAME}gen/scripts/${PROJECT_NAME}gen
-#            DESTINATION ${BIN_INSTALL_DIR}
-#            COMPONENT java
-#            )
-#    endif()
-#
-#    ### Java component
-#    set(CPACK_COMPONENT_JAVA_DISPLAY_NAME "Java application")
-#    set(CPACK_COMPONENT_JAVA_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} generator")
-#
-#    set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} java)
-#endif()
-#
-#if(BUILD_DOCUMENTATION)
-#    # Instalation of pdf files
-#    install(FILES 
-#        "${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual.pdf"
-#        "${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual.pdf"
-#        "${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_UPPER}GEN - User Manual.pdf"
-#        DESTINATION ${DOC_INSTALL_DIR}/pdf
-#        COMPONENT documentation
-#        )
-#
-#    install(FILES 
-#        "${README_LOCATION}/README.html"
-#        DESTINATION ${README_INSTALL_LOCATION}
-#        COMPONENT documentation
-#        )
-#
-#    ### Documentation component
-#    set(CPACK_COMPONENT_DOCUMENTATION_DISPLAY_NAME "Documentation")
-#    set(CPACK_COMPONENT_DOCUMENTATION_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} documentation")
-#
-#    set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} documentation)
-#endif()
-#
-#if(MSVC OR MSVC_IDE)
-#    if(EPROSIMA_INSTALLER)
-#        set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL}
-#            libraries_i86Win32VS2010
-#            libraries_x64Win64VS2010
-#            libraries_i86Win32VS2013
-#            libraries_x64Win64VS2013
-#            )
-#    else()
-#        set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} libraries_${MSVC_ARCH})
-#    endif()
-#else()
-#    set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} libraries)
-#endif()
-#
-#include(${PROJECT_SOURCE_DIR}/cmake/packaging/eProsimaPackaging.cmake)
+###############################################################################
+# Packaging
+###############################################################################
+# Install external eprosima libraries
+install_eprosima_fastcdr()
+install_eprosima_fastrtps()
+install_boost(thread system date_time chrono regex)
+
+# Install licenses
+install(FILES ${PROJECT_SOURCE_DIR}/${PROJECT_NAME_UPPER}_LICENSE.txt
+    ${PROJECT_SOURCE_DIR}/LGPLv3_LICENSE.txt
+    DESTINATION .
+    COMPONENT licenses
+    )
+set(CPACK_COMPONENT_LICENSES_HIDDEN 1)
+
+# Install examples
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/examples/C++/${PROJECT_NAME}/
+    DESTINATION examples/C++
+    COMPONENT examples
+    )
+
+set(CPACK_COMPONENT_EXAMPLES_DISPLAY_NAME "Examples")
+set(CPACK_COMPONENT_EXAMPLES_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} examples")
+
+set(CPACK_COMPONENTS_ALL headers licenses examples)
+
+if(BUILD_JAVA)
+    install(FILES ${PROJECT_SOURCE_DIR}/fastrpcgen/share/${PROJECT_NAME}/${PROJECT_NAME}gen.jar
+        DESTINATION ${DATA_INSTALL_DIR}/${PROJECT_NAME}
+        COMPONENT java
+        )
+
+    if(WIN32)
+        install(PROGRAMS
+            ${PROJECT_SOURCE_DIR}/fastrpcgen/scripts/${PROJECT_NAME}gen.bat
+            DESTINATION ${BIN_INSTALL_DIR}
+            COMPONENT java
+            )
+    else()
+        install(PROGRAMS
+            ${PROJECT_SOURCE_DIR}/fastrpcgen/scripts/${PROJECT_NAME}gen
+            DESTINATION ${BIN_INSTALL_DIR}
+            COMPONENT java
+            )
+    endif()
+
+    ### Java component
+    set(CPACK_COMPONENT_JAVA_DISPLAY_NAME "Java application")
+    set(CPACK_COMPONENT_JAVA_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} generator")
+
+    set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} java)
+endif()
+
+if(BUILD_DOCUMENTATION)
+    # Instalation of pdf files
+    install(FILES 
+        "${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual.pdf"
+        "${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual.pdf"
+        DESTINATION ${DOC_INSTALL_DIR}/pdf
+        COMPONENT documentation
+        )
+
+    install(FILES 
+        "${README_LOCATION}/README.html"
+        DESTINATION ${README_INSTALL_LOCATION}
+        COMPONENT documentation
+        )
+
+    ### Documentation component
+    set(CPACK_COMPONENT_DOCUMENTATION_DISPLAY_NAME "Documentation")
+    set(CPACK_COMPONENT_DOCUMENTATION_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} documentation")
+
+    set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} documentation)
+endif()
+
+if(MSVC OR MSVC_IDE)
+    if(EPROSIMA_INSTALLER)
+        set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL}
+            libraries_i86Win32VS2010
+            libraries_x64Win64VS2010
+            libraries_i86Win32VS2013
+            libraries_x64Win64VS2013
+            )
+    else()
+        set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} libraries_${MSVC_ARCH})
+    endif()
+else()
+    set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} libraries)
+endif()
+
+include(${PROJECT_SOURCE_DIR}/cmake/packaging/eProsimaPackaging.cmake)

@@ -121,6 +121,49 @@ macro(install_eprosima_fastcdr)
     endif()
 endmacro()
 
+macro(install_eprosima_fastrtps)
+    if(MSVC OR MSVC_IDE)
+        # Install includes
+        install(DIRECTORY ${fastrtps_INCLUDE_DIR}/fastrtps
+            DESTINATION ${INCLUDE_INSTALL_DIR}
+            COMPONENT headers
+            )
+
+        if(EPROSIMA_INSTALLER)
+            install(DIRECTORY ${PROJECT_BINARY_DIR}/../i86Win32VS2010/external/fastrtps/install/lib/i86Win32VS2010
+                DESTINATION lib
+                COMPONENT libraries_i86Win32VS2010
+                )
+            install(DIRECTORY ${PROJECT_BINARY_DIR}/../x64Win64VS2010/external/fastrtps/install/lib/x64Win64VS2010
+                DESTINATION lib
+                COMPONENT libraries_x64Win64VS2010
+                )
+            install(DIRECTORY ${PROJECT_BINARY_DIR}/../i86Win32VS2013/external/fastrtps/install/lib/i86Win32VS2013
+                DESTINATION lib
+                COMPONENT libraries_i86Win32VS2013
+                )
+            install(DIRECTORY ${PROJECT_BINARY_DIR}/../x64Win64VS2013/external/fastrtps/install/lib/x64Win64VS2013
+                DESTINATION lib
+                COMPONENT libraries_x64Win64VS2013
+                )
+        else()
+            install(DIRECTORY ${fastrtps_LIB_DIR}
+                DESTINATION lib
+                COMPONENT libraries_${MSVC_ARCH}
+                )
+        endif()
+
+        # Install license
+        if(THIRDPARTY)
+            install(FILES ${PROJECT_BINARY_DIR}/external/fastrtps/install/FASTRTPS_LIBRARY_LICENSE.txt
+                DESTINATION .
+                )
+        else()
+            # TODO Ver si puedo usar un LICENSE_INSTALL_DIR y que lo piye la configuración CMake.
+        endif()
+    endif()
+endmacro()
+
 macro(check_threadpool)
     # Verify thirdparty
     message(STATUS "Checking boost-threadpool thirdparty...")
