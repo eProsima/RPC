@@ -35,7 +35,7 @@ namespace HelloWorld
      * @brief This class implements a specific server for the defined interface HelloWorldResource by user.
      * @ingroup HELLOWORLD
      */
-    class FASTRPCUSERDllExport HelloWorldResourceServer : public eprosima::rpc::server::Server
+    class RPCUSERDllExport HelloWorldResourceServer : public eprosima::rpc::server::Server
     {
         public:
 

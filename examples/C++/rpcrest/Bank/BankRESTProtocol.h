@@ -38,7 +38,7 @@ namespace eprosima
                  *  It uses a RESTful protocol.
 		 * @ingroup BANK
                  */
-                class FASTRPCUSERDllExport BankProtocol : public eprosima::rpc::protocol::BankProtocol
+                class RPCUSERDllExport BankProtocol : public eprosima::rpc::protocol::BankProtocol
                 {
                     public:
                     

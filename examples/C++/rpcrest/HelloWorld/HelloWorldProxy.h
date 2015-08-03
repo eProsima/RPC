@@ -34,7 +34,7 @@ namespace HelloWorld
      * @brief This class implements a specific server's proxy for the defined interface HelloWorldResource.
      * @ingroup HELLOWORLD
      */
-    class FASTRPCUSERDllExport HelloWorldResourceProxy : public eprosima::rpc::proxy::Proxy
+    class RPCUSERDllExport HelloWorldResourceProxy : public eprosima::rpc::proxy::Proxy
     {
         public:
        

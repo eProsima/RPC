@@ -54,7 +54,7 @@ interface(ctx, parent, interface, export_list) ::= <<
  * @brief This class implements a specific server's proxy for the defined interface $interface.name$.
  * @ingroup $ctx.trimfilename$
  */
-class FASTRPCUSERDllExport $interface.name$Proxy : public eprosima::rpc::proxy::Proxy, public $interface.name$$if(ctx.rtiTypes)$Ext$endif$
+class RPCUSERDllExport $interface.name$Proxy : public eprosima::rpc::proxy::Proxy, public $interface.name$$if(ctx.rtiTypes)$Ext$endif$
 {
     public:
    

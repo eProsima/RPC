@@ -38,7 +38,7 @@ namespace eprosima
                  *  It uses a RESTful protocol.
 		 * @ingroup CALCULATOR
                  */
-                class FASTRPCUSERDllExport CalculatorProtocol : public eprosima::rpc::protocol::CalculatorProtocol
+                class RPCUSERDllExport CalculatorProtocol : public eprosima::rpc::protocol::CalculatorProtocol
                 {
                     public:
                     

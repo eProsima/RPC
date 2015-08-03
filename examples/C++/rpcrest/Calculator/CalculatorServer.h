@@ -35,7 +35,7 @@ namespace Calculator
      * @brief This class implements a specific server for the defined interface addResource by user.
      * @ingroup CALCULATOR
      */
-    class FASTRPCUSERDllExport addResourceServer : public eprosima::rpc::server::Server
+    class RPCUSERDllExport addResourceServer : public eprosima::rpc::server::Server
     {
         public:
 
@@ -72,7 +72,7 @@ namespace Calculator
      * @brief This class implements a specific server for the defined interface substractResource by user.
      * @ingroup CALCULATOR
      */
-    class FASTRPCUSERDllExport substractResourceServer : public eprosima::rpc::server::Server
+    class RPCUSERDllExport substractResourceServer : public eprosima::rpc::server::Server
     {
         public:
 
@@ -109,7 +109,7 @@ namespace Calculator
      * @brief This class implements a specific server for the defined interface multiplyResource by user.
      * @ingroup CALCULATOR
      */
-    class FASTRPCUSERDllExport multiplyResourceServer : public eprosima::rpc::server::Server
+    class RPCUSERDllExport multiplyResourceServer : public eprosima::rpc::server::Server
     {
         public:
 
@@ -146,7 +146,7 @@ namespace Calculator
      * @brief This class implements a specific server for the defined interface divideResource by user.
      * @ingroup CALCULATOR
      */
-    class FASTRPCUSERDllExport divideResourceServer : public eprosima::rpc::server::Server
+    class RPCUSERDllExport divideResourceServer : public eprosima::rpc::server::Server
     {
         public:
 

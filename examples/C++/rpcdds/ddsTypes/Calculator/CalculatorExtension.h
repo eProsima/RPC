@@ -35,7 +35,7 @@ namespace Calculator
 
 }
 
-class FASTRPCUSERDllExport CalculatorExt 
+class RPCUSERDllExport CalculatorExt 
 {
     public:
         

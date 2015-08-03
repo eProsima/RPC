@@ -27,7 +27,7 @@ namespace eprosima
              * @brief Protocol base class for the specific application
              * @ingroup $ctx.trimfilename$
              */
-            class FASTRPCUSERDllExport $ctx.filename$Protocol : public Protocol
+            class RPCUSERDllExport $ctx.filename$Protocol : public Protocol
             {
                 public:
                 

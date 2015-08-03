@@ -34,7 +34,7 @@ namespace Bank
      * @brief This class implements a specific server's proxy for the defined interface account_accountNumberResource.
      * @ingroup BANK
      */
-    class FASTRPCUSERDllExport account_accountNumberResourceProxy : public eprosima::rpc::proxy::Proxy
+    class RPCUSERDllExport account_accountNumberResourceProxy : public eprosima::rpc::proxy::Proxy
     {
         public:
        

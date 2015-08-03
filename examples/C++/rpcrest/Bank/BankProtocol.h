@@ -29,7 +29,7 @@ namespace eprosima
              * @brief Protocol base class for the specific application
              * @ingroup BANK
              */
-            class FASTRPCUSERDllExport BankProtocol : public Protocol
+            class RPCUSERDllExport BankProtocol : public Protocol
             {
                 public:
                 

@@ -38,7 +38,7 @@ namespace eprosima
                  *  It uses a RESTful protocol.
 		 * @ingroup HELLOWORLD
                  */
-                class FASTRPCUSERDllExport HelloWorldProtocol : public eprosima::rpc::protocol::HelloWorldProtocol
+                class RPCUSERDllExport HelloWorldProtocol : public eprosima::rpc::protocol::HelloWorldProtocol
                 {
                     public:
                     

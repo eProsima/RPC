@@ -46,26 +46,26 @@ namespace eprosima
                        /*!
                         * @brief Default constructor
                         */
-                        FASTRPCUSERDllExport $ctx.filename$Protocol();
+                        RPCUSERDllExport $ctx.filename$Protocol();
                         
                        /*!
                         * @brief Destructor
                         */
-                        virtual FASTRPCUSERDllExport ~$ctx.filename$Protocol();
+                        virtual RPCUSERDllExport ~$ctx.filename$Protocol();
                     
                        /*!
                         * @brief This method sets the transport for the communications.
                         * @param transport Transport to use
                         * @return True if the assignment is successful, false otherwise
                         */
-                        virtual FASTRPCUSERDllExport bool setTransport(eprosima::rpc::transport::Transport &transport);
+                        virtual RPCUSERDllExport bool setTransport(eprosima::rpc::transport::Transport &transport);
                         
                         /*!
                          * @brief This function activates needed DDS entities to use an interface.
                          * @param interfaceName Interface name.
                          * @return Whether the activation works successfully.
                          */
-                        FASTRPCUSERDllExport bool activateInterface(const char* interfaceName);
+                        RPCUSERDllExport bool activateInterface(const char* interfaceName);
                         
                         $definitions; separator="\n"$
                         
@@ -116,7 +116,7 @@ $if(ctx.server)$
  * @param data Pointer to the received request sample. Cannot be NULL.
  * @param endpoint Pointer to the endpoint that sent the request reply. Cannot be NULL.
  */
-FASTRPCUSERDllExport static void $interface.formatedScopedname$_serve(eprosima::rpc::protocol::Protocol &protocol,
+RPCUSERDllExport static void $interface.formatedScopedname$_serve(eprosima::rpc::protocol::Protocol &protocol,
     void *data , eprosima::rpc::transport::Endpoint *endpoint);
 $endif$
 
@@ -126,14 +126,14 @@ $if(ctx.client)$
  * @brief This method implements the proxy part of the protocol for the operation $operation.name$.
  * It is called from the Proxy interface.
  */
-FASTRPCUSERDllExport $paramRetType(operation.rettype)$ $interface.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$);
+RPCUSERDllExport $paramRetType(operation.rettype)$ $interface.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$);
 
 $if(!operation.oneway)$
 /*!
  * @brief This asynchronous method implements the proxy part of the protocol for the operation $operation.name$.
  * It is called from the Proxy interface.
  */
-FASTRPCUSERDllExport void $interface.formatedScopedname$_$operation.name$_async($interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$);
+RPCUSERDllExport void $interface.formatedScopedname$_$operation.name$_async($interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$);
 
 $endif$
 $endif$

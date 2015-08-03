@@ -33,7 +33,7 @@ namespace eprosima
  * @brief This class implements a specific server for the defined interface Calculator by user.
  * @ingroup CALCULATOR
  */
-class FASTRPCUSERDllExport CalculatorServer : public eprosima::rpc::server::Server
+class RPCUSERDllExport CalculatorServer : public eprosima::rpc::server::Server
 {
     public:
 

@@ -35,7 +35,7 @@ namespace Bank
      * @brief This class implements a specific server for the defined interface account_accountNumberResource by user.
      * @ingroup BANK
      */
-    class FASTRPCUSERDllExport account_accountNumberResourceServer : public eprosima::rpc::server::Server
+    class RPCUSERDllExport account_accountNumberResourceServer : public eprosima::rpc::server::Server
     {
         public:
 

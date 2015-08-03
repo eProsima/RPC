@@ -42,7 +42,7 @@ namespace eprosima
                  *  It uses DDS.
 		         * @ingroup $ctx.trimfilename$
                  */
-                class FASTRPCUSERDllExport  $ctx.filename$Protocol : public eprosima::rpc::protocol::$ctx.filename$Protocol
+                class RPCUSERDllExport  $ctx.filename$Protocol : public eprosima::rpc::protocol::$ctx.filename$Protocol
                 {
                     public:
                     

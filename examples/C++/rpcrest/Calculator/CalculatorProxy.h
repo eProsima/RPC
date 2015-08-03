@@ -34,7 +34,7 @@ namespace Calculator
      * @brief This class implements a specific server's proxy for the defined interface addResource.
      * @ingroup CALCULATOR
      */
-    class FASTRPCUSERDllExport addResourceProxy : public eprosima::rpc::proxy::Proxy
+    class RPCUSERDllExport addResourceProxy : public eprosima::rpc::proxy::Proxy
     {
         public:
        
@@ -66,7 +66,7 @@ namespace Calculator
      * @brief This class implements a specific server's proxy for the defined interface substractResource.
      * @ingroup CALCULATOR
      */
-    class FASTRPCUSERDllExport substractResourceProxy : public eprosima::rpc::proxy::Proxy
+    class RPCUSERDllExport substractResourceProxy : public eprosima::rpc::proxy::Proxy
     {
         public:
        
@@ -98,7 +98,7 @@ namespace Calculator
      * @brief This class implements a specific server's proxy for the defined interface multiplyResource.
      * @ingroup CALCULATOR
      */
-    class FASTRPCUSERDllExport multiplyResourceProxy : public eprosima::rpc::proxy::Proxy
+    class RPCUSERDllExport multiplyResourceProxy : public eprosima::rpc::proxy::Proxy
     {
         public:
        
@@ -130,7 +130,7 @@ namespace Calculator
      * @brief This class implements a specific server's proxy for the defined interface divideResource.
      * @ingroup CALCULATOR
      */
-    class FASTRPCUSERDllExport divideResourceProxy : public eprosima::rpc::proxy::Proxy
+    class RPCUSERDllExport divideResourceProxy : public eprosima::rpc::proxy::Proxy
     {
         public:
        

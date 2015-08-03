@@ -50,26 +50,26 @@ namespace eprosima
                        /*!
                         * @brief Default constructor
                         */
-                        FASTRPCUSERDllExport CalculatorProtocol();
+                        RPCUSERDllExport CalculatorProtocol();
                         
                        /*!
                         * @brief Destructor
                         */
-                        virtual FASTRPCUSERDllExport ~CalculatorProtocol();
+                        virtual RPCUSERDllExport ~CalculatorProtocol();
                     
                        /*!
                         * @brief This method sets the transport for the communications.
                         * @param transport Transport to use
                         * @return True if the assignment is successful, false otherwise
                         */
-                        virtual FASTRPCUSERDllExport bool setTransport(eprosima::rpc::transport::Transport &transport);
+                        virtual RPCUSERDllExport bool setTransport(eprosima::rpc::transport::Transport &transport);
                         
                         /*!
                          * @brief This function activates needed DDS entities to use an interface.
                          * @param interfaceName Interface name.
                          * @return Whether the activation works successfully.
                          */
-                        FASTRPCUSERDllExport bool activateInterface(const char* interfaceName);
+                        RPCUSERDllExport bool activateInterface(const char* interfaceName);
                         
                         /*!
                          * @brief This method implements the server part of the protocol for the interface Calculator.
@@ -78,31 +78,31 @@ namespace eprosima
                          * @param data Pointer to the received request sample. Cannot be NULL.
                          * @param endpoint Pointer to the endpoint that sent the request reply. Cannot be NULL.
                          */
-                        FASTRPCUSERDllExport static void Calculator_serve(eprosima::rpc::protocol::Protocol &protocol,
+                        RPCUSERDllExport static void Calculator_serve(eprosima::rpc::protocol::Protocol &protocol,
                             void *data , eprosima::rpc::transport::Endpoint *endpoint);
                         /*!
                          * @brief This method implements the proxy part of the protocol for the operation addition.
                          * It is called from the Proxy interface.
                          */
-                        FASTRPCUSERDllExport int32_t Calculator_addition(/*in*/ int32_t value1, /*in*/ int32_t value2);
+                        RPCUSERDllExport int32_t Calculator_addition(/*in*/ int32_t value1, /*in*/ int32_t value2);
 
                         /*!
                          * @brief This asynchronous method implements the proxy part of the protocol for the operation addition.
                          * It is called from the Proxy interface.
                          */
-                        FASTRPCUSERDllExport void Calculator_addition_async(Calculator_additionCallbackHandler &obj, /*in*/ int32_t value1, /*in*/ int32_t value2);
+                        RPCUSERDllExport void Calculator_addition_async(Calculator_additionCallbackHandler &obj, /*in*/ int32_t value1, /*in*/ int32_t value2);
 
                         /*!
                          * @brief This method implements the proxy part of the protocol for the operation subtraction.
                          * It is called from the Proxy interface.
                          */
-                        FASTRPCUSERDllExport int32_t Calculator_subtraction(/*in*/ int32_t value1, /*in*/ int32_t value2);
+                        RPCUSERDllExport int32_t Calculator_subtraction(/*in*/ int32_t value1, /*in*/ int32_t value2);
 
                         /*!
                          * @brief This asynchronous method implements the proxy part of the protocol for the operation subtraction.
                          * It is called from the Proxy interface.
                          */
-                        FASTRPCUSERDllExport void Calculator_subtraction_async(Calculator_subtractionCallbackHandler &obj, /*in*/ int32_t value1, /*in*/ int32_t value2);
+                        RPCUSERDllExport void Calculator_subtraction_async(Calculator_subtractionCallbackHandler &obj, /*in*/ int32_t value1, /*in*/ int32_t value2);
 
 
 

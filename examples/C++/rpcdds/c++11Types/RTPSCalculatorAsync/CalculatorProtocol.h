@@ -30,7 +30,7 @@ namespace eprosima
              * @brief Protocol base class for the specific application
              * @ingroup CALCULATOR
              */
-            class FASTRPCUSERDllExport CalculatorProtocol : public Protocol
+            class RPCUSERDllExport CalculatorProtocol : public Protocol
             {
                 public:
                 

@@ -29,7 +29,7 @@ namespace eprosima
              * @brief Protocol base class for the specific application
              * @ingroup HELLOWORLD
              */
-            class FASTRPCUSERDllExport HelloWorldProtocol : public Protocol
+            class RPCUSERDllExport HelloWorldProtocol : public Protocol
             {
                 public:
                 

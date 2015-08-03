@@ -43,7 +43,7 @@ namespace eprosima
                  * It uses DDS.
 		         * @ingroup CALCULATOR
                  */
-                class FASTRPCUSERDllExport  CalculatorProtocol : public eprosima::rpc::protocol::CalculatorProtocol
+                class RPCUSERDllExport  CalculatorProtocol : public eprosima::rpc::protocol::CalculatorProtocol
                 {
                     public:
                     

@@ -35,7 +35,7 @@ namespace eprosima
  * @brief This class implements a specific server's proxy for the defined interface Calculator.
  * @ingroup CALCULATOR
  */
-class FASTRPCUSERDllExport CalculatorProxy : public eprosima::rpc::proxy::Proxy, public Calculator
+class RPCUSERDllExport CalculatorProxy : public eprosima::rpc::proxy::Proxy, public Calculator
 {
     public:
    
