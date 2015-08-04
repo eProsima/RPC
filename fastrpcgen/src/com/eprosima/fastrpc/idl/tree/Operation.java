@@ -2,7 +2,6 @@ package com.eprosima.fastrpc.idl.tree;
 
 import java.security.MessageDigest;
 import com.eprosima.idl.parser.tree.Annotation;
-
 import org.antlr.v4.runtime.Token;
 
 public class Operation extends com.eprosima.idl.parser.tree.Operation

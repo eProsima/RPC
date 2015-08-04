@@ -1,4 +1,4 @@
-#include "fastrpc/protocols/rest/RESTSerializer.h"
+#include <protocols/rest/RESTSerializer.h>
 
 using namespace eprosima::rpc;
 using namespace ::protocol::rest;

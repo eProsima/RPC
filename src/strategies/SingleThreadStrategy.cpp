@@ -6,9 +6,9 @@
  *
  *************************************************************************/
 
-#include "fastrpc/strategies/SingleThreadStrategy.h"
-#include "fastrpc/strategies/ServerStrategyImpl.h"
-#include "fastrpc/transports/ServerTransport.h"
+#include <strategies/SingleThreadStrategy.h>
+#include "ServerStrategyImpl.h"
+#include <transports/ServerTransport.h>
 
 static const char* const CLASS_NAME = "SingleThreadStrategy";
 

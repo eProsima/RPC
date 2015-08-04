@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-#include "fastrpc/exceptions/IncompatibleException.h"
+#include <exceptions/IncompatibleException.h>
 
 using namespace eprosima::rpc::exception;
 

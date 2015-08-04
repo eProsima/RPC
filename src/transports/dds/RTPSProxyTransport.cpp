@@ -5,11 +5,14 @@
  * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
+#include <config.h>
 
-#include <fastrpc/transports/dds/RTPSProxyTransport.h>
-#include <fastrpc/transports/dds/components/RTPSProxyProcedureEndpoint.h>
-#include <fastrpc/transports/dds/AsyncThread.h>
-#include <fastrpc/exceptions/InitializeException.h>
+#if RPC_WITH_FASTRTPS
+
+#include <transports/dds/RTPSProxyTransport.h>
+#include <transports/dds/components/RTPSProxyProcedureEndpoint.h>
+#include "AsyncThread.h"
+#include <exceptions/InitializeException.h>
 
 #include <string>
 
@@ -100,3 +103,5 @@ long RTPSProxyTransport::getTimeout()
 
     return NULL;
 }
+
+#endif // RPC_WITH_FASTRTPS

@@ -44,7 +44,7 @@ namespace $interface.name$
     $export_list$
 }
 
-class FASTRPCUSERDllExport $interface.name$Ext $if(interface.bases)$: $interface.bases : {base |public $base.scopedname$Ext}; separator=", "$$endif$
+class RPCUSERDllExport $interface.name$Ext $if(interface.bases)$: $interface.bases : {base |public $base.scopedname$Ext}; separator=", "$$endif$
 {
     public:
         
@@ -63,7 +63,7 @@ exception(ctx, parent, exception) ::= <<
  * @brief This class implementes the user exception $exception.scopedname$
  * @ingroup $ctx.trimfilename$
  */
-class FASTRPCUSERDllExport $exception.name$ : public eprosima::rpc::exception::UserException
+class RPCUSERDllExport $exception.name$ : public eprosima::rpc::exception::UserException
 {
 public:
     

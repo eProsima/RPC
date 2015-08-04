@@ -405,13 +405,12 @@ public class fastrpcgen
     {
         try
         {
-            InputStream input = this.getClass().getResourceAsStream("/fastrpc_version.h");
+            InputStream input = this.getClass().getResourceAsStream("/version");
             byte[] b = new byte[input.available()];
             input.read(b);
             String text = new String(b);
-            int beginindex = text.indexOf("\"");
-            int endindex = text.indexOf("\"", beginindex + 1);
-            return text.substring(beginindex + 1, endindex);
+			int beginindex = text.indexOf("=");
+			return text.substring(beginindex + 1);
         }
         catch(Exception ex)
         {

@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-#include "fastrpc/exceptions/UserException.h"
+#include <exceptions/UserException.h>
 
 #include <utility>
 

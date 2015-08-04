@@ -45,7 +45,7 @@ interface(ctx, parent, interface, export_list) ::= <<
  * @brief This class implements a specific server for the defined interface $interface.name$ by user.
  * @ingroup $ctx.trimfilename$
  */
-class FASTRPCUSERDllExport $interface.name$Server : public eprosima::rpc::server::Server
+class RPCUSERDllExport $interface.name$Server : public eprosima::rpc::server::Server
 {
     public:
 

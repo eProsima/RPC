@@ -5,11 +5,14 @@
  * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
+#include <config.h>
 
-#include <fastrpc/transports/dds/components/RTPSServerProcedureEndpoint.h>
-#include <fastrpc/strategies/ServerStrategy.h>
-#include <fastrpc/strategies/ServerStrategyImpl.h>
-#include <fastrpc/utils/macros/snprintf.h>
+#if RPC_WITH_FASTRTPS
+
+#include <transports/dds/components/RTPSServerProcedureEndpoint.h>
+#include <strategies/ServerStrategy.h>
+#include "../../../strategies/ServerStrategyImpl.h"
+#include <utils/macros/snprintf.h>
 
 #include <fastrtps/Domain.h>
 #include <fastrtps/publisher/Publisher.h>
@@ -216,3 +219,5 @@ void RTPSServerProcedureEndpoint::onNewDataMessage(eprosima::fastrtps::Subscribe
         m_destroy_data(data);
     }
 }
+
+#endif // RPC_WITH_FASTRTPS

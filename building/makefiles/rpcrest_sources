@@ -1,8 +1,0 @@
-src/protocols/rest/FastBuffer.cpp
-src/protocols/rest/HTTPEntities.cpp
-src/protocols/rest/RESTSerializer.cpp
-src/transports/components/TCPEndpoint.cpp
-src/transports/TCPProxyTransport.cpp
-src/transports/TCPServerTransport.cpp
-src/transports/HttpProxyTransport.cpp
-src/transports/HttpServerTransport.cpp

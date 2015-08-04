@@ -1,4 +1,4 @@
-#include "fastrpc/protocols/rest/HTTPEntities.h"
+#include <protocols/rest/HTTPEntities.h>
 #include <sstream>
 
 using namespace eprosima::rpc;

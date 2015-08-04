@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-#include "fastrpc/exceptions/InitializeException.h"
+#include <exceptions/InitializeException.h>
 
 using namespace eprosima::rpc::exception;
 

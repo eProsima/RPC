@@ -1,0 +1,41 @@
+#ifndef _RPC_CONFIG_H_
+#define _RPC_CONFIG_H_
+
+#ifndef RPC_VERSION_MAJOR
+#define RPC_VERSION_MAJOR @RPC_VERSION_MAJOR@
+#endif
+#ifndef RPC_VERSION_MINOR
+#define RPC_VERSION_MINOR @RPC_VERSION_MINOR@
+#endif
+#ifndef RPC_VERSION_MICRO
+#define RPC_VERSION_MICRO @RPC_VERSION_MICRO@
+#endif
+
+#ifndef EPROSIMA_RPC_LIB_NAME
+#define EPROSIMA_RPC_LIB_NAME @EPROSIMA_RPC_LIB_NAME@
+#endif
+
+// C++11 support defines
+#ifndef HAVE_CXX11
+#define HAVE_CXX11 @HAVE_CXX11@
+#endif
+
+// C++0x support defines
+#ifndef HAVE_CXX0X
+#define HAVE_CXX0X @HAVE_CXX0X@
+#endif
+
+// Endianness defines
+#ifndef __BIG_ENDIAN__
+#define __BIG_ENDIAN__ @__BIG_ENDIAN__@
+#endif
+
+#ifndef RPC_WITH_FASTRTPS
+#define RPC_WITH_FASTRTPS @RPC_WITH_FASTRTPS@
+#endif
+
+#ifndef RPC_WITH_RTIDDS
+#define RPC_WITH_RTIDDS @RPC_WITH_RTIDDS@
+#endif
+
+#endif // _RPC_CONFIG_H_

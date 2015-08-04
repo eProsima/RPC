@@ -5,13 +5,16 @@
  * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
+#include <config.h>
 
-#include <fastrpc/transports/dds/components/RTPSProxyProcedureEndpoint.h>
-#include <fastrpc/transports/dds/RTPSAsyncTask.h>
-#include <fastrpc/protocols/dds/MessageHeader.h>
-#include <fastrpc/utils/macros/snprintf.h>
-#include <fastrpc/utils/macros/strdup.h>
-#include <fastrpc/utils/Typedefs.h>
+#if RPC_WITH_FASTRTPS
+
+#include <transports/dds/components/RTPSProxyProcedureEndpoint.h>
+#include <transports/dds/RTPSAsyncTask.h>
+#include <protocols/dds/MessageHeader.h>
+#include <utils/macros/snprintf.h>
+#include <utils/macros/strdup.h>
+#include <utils/Typedefs.h>
 
 #include <fastrtps/Domain.h>
 #include <fastrtps/publisher/Publisher.h>
@@ -523,3 +526,5 @@ void RTPSProxyProcedureEndpoint::onPublicationMatched(eprosima::fastrtps::Publis
         --num_matched_pub_;
     }
 }
+
+#endif // RPC_WITH_FASTRTPS

@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-#include "fastrpc/exceptions/ServerTimeoutException.h"
+#include <exceptions/ServerTimeoutException.h>
 
 using namespace eprosima::rpc::exception;
 

@@ -1,9 +1,9 @@
 package com.eprosima.fastrpc.idl.tree;
 
-import java.util.ArrayList;
 import com.eprosima.idl.parser.tree.Operation;
 import com.eprosima.idl.parser.tree.Annotation;
 
+import java.util.ArrayList;
 import org.antlr.v4.runtime.Token;
 
 public class Interface extends com.eprosima.idl.parser.tree.Interface

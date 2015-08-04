@@ -1,4 +1,4 @@
-#include "fastrpc/protocols/rest/FastBuffer.h"
+#include <protocols/rest/FastBuffer.h>
 
 #include <malloc.h>
 
