@@ -1,0 +1,127 @@
+group AsyncSupportHeaderByInterface;
+
+main(ctx, definitions) ::= <<
+$fileHeader(ctx=ctx,  file=[ctx.filename, "AsyncSupport.h"], description=["This header file contains functionality to use asynchronous calls for all interfaces."])$
+
+#ifndef _$ctx.filename;format="toUpper"$_DDS_ASYNC_SUPPORT_H_
+#define _$ctx.filename;format="toUpper"$_DDS_ASYNC_SUPPORT_H_
+
+#include <$ctx.product$/transports/dds/RTPSAsyncTask.h>
+#include <$ctx.product$/exceptions/UserException.h>
+#include "$ctx.filename$AsyncCallbackHandlers.h"
+$if(!ctx.rtiTypes)$
+#include "$ctx.filename$Topics.h"
+$else$
+$ReqRepSIncludes(filename=ctx.filename)$
+$endif$
+
+$definitions; separator="\n"$
+
+#endif // _$ctx.filename;format="toUpper"$_DDS_ASYNC_SUPPORT_H_
+>>
+
+module(ctx, parent, module, definition_list) ::= <<
+namespace $module.name$
+{
+    $definition_list$
+};
+
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+interface(ctx, parent, interface, export_list) ::= <<
+$interface.all_operations : { operation |
+$if(!operation.oneway)$
+/*!
+ * @brief This class represents a asynchronous task created to wait the reply of the procedure $interface.name$::$operation.name$ from the server in an asynchronous call.
+ * @ingroup $ctx.trimfilename$
+ */
+class $interface.name$_$operation.name$Task : public eprosima::rpc::transport::dds::RTPSAsyncTask
+{
+    public:
+
+        /*!
+         * @brief The default constructor.
+         *
+         * @param obj Object that implements the callbacks that FastRPC will call when
+         *            the reply will be received or and exception will be launched.
+         * @param client Pointer to the server's proxy. Cannot be NULL.
+         */
+        $interface.name$_$operation.name$Task($interface.name$_$operation.name$CallbackHandler &obj);
+
+        //! @brief Destructor.
+        virtual ~$interface.name$_$operation.name$Task();
+        
+        /*!
+         * @brief This funcion is called when the reply sample is received.
+         */
+        virtual void execute();
+        
+        /*!
+         * @brief This function is called when an exception occurs.
+         *        This exception can be launched in the server's side or in the client's side.
+         *
+         * @param ex The exception that will be launched.
+         */
+        virtual void on_exception(const eprosima::rpc::exception::SystemException &ex);        
+
+        $if(operation.exceptions)$
+        /*!
+         * @brief This function is called when a user exception occurs.
+         *        This user exception is launched in the server's side.
+         *
+         * @param ex The exception that will be launched.
+         */
+        virtual void on_exception(const eprosima::rpc::exception::UserException &ex);
+        $endif$
+        
+        /*!
+         * @brief This function returns the object used by the task.
+         *
+         * @return The object that implements the callbacks.
+         */
+        $interface.name$_$operation.name$CallbackHandler& getObject();
+
+        /*!
+         * @brief This function returns the allocated reply sample.
+         * @return Pointer to the allocated reply sample.
+         */
+        virtual void* getReplyInstance();
+        
+        private:
+        
+        $interface.name$_$operation.name$CallbackHandler &m_obj;
+
+        $interface.name$_Reply m_reply;
+};
+
+$endif$
+}; separator="\n"$
+
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, parent, exception) ::= <<>>
+
+operation(ctx, parent, operation, param_list) ::= <<>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+const_decl(ctx, parent, const) ::= <<>>
+
+typedef_decl(ctx, parent, typedefs) ::= <<>>
+
+struct_type(ctx, parent, struct) ::= <<>>
+
+union_type(ctx, parent, union) ::= <<>>
+
+enum_type(ctx, parent, enum) ::= <<>>

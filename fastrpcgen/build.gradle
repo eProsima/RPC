@@ -1,0 +1,103 @@
+// internal plugins
+apply plugin: 'java'
+apply plugin: 'eclipse' // Eclipse integration
+
+description = """"""
+
+repositories {
+    mavenCentral()
+}
+
+configurations { antxr }
+
+dependencies {
+    compile group: 'com.javadude', name: 'antxr', version:'0.9.0'
+    compile files('../thirdparty/idl/build/libs/idlparser-1.0.0.jar')
+}
+
+task buildIDLParser(type: GradleBuild) {
+    buildFile = '../thirdparty/idl/idl.gradle'
+    tasks = ['clean', 'build']
+}
+
+task generateWADLParser {
+    File outputDir = file(new File(buildDir, "generated-src/com/eprosima/fastrpc/wadl/grammar"))
+    outputs.dir outputDir
+    outputDir.exists() || outputDir.mkdirs()
+    project.javaexec {
+        classpath configurations.compile
+        main = 'com.javadude.antxr.Tool'
+        args = [ "-o", "build/generated-src/com/eprosima/fastrpc/wadl/grammar", "grammars/wadl.antxr"]
+        workingDir = projectDir
+    }
+}
+
+task copyResources {
+    File outputDir = file(new File(buildDir, "resources/main"))
+    outputDir.exists() || outputDir.mkdirs()
+    project.copy {
+        from(file(new File(projectDir, '../src/platforms')))
+        into(outputDir)
+    }
+
+    // Create version file
+    Properties pversion = new Properties()
+    project.hasProperty('customversion') ? pversion.setProperty('version', project.customversion.toString()) : pversion.setProperty('version', '0.0.0')
+    File versionFile = new File("${project.buildDir}/resources/main/version")
+    versionFile.createNewFile();
+    pversion.store(versionFile.newWriter(), null)
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+            srcDir '../thirdparty/fastcdr/src/java'
+            srcDir 'build/generated-src'
+        }
+
+        resources {
+            srcDir 'src'
+            include '**/*.stg'
+            srcDir '../thirdparty/fastcdr/src/java'
+            include '**/*.stg'
+        }
+    }
+}
+
+task fastrpcgenJar(type: Jar) {
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+    baseName = 'fastrpcgen'
+    destinationDir = file(new File(projectDir, 'share/fastrpc'))
+    manifest {
+        attributes("Created-By": "eProsima", "Main-Class": "com.eprosima.fastrpc.fastrpcgen")
+    }
+}
+
+task rpcddsgenJar(type: Jar) {
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+    baseName = 'rpcddsgen'
+    destinationDir = file(new File(projectDir, 'share/rpcdds'))
+    manifest {
+        attributes("Created-By": "eProsima", "Main-Class": "com.eprosima.fastrpc.rpcddsgen")
+    }
+}
+
+task rpcrestgenJar(type: Jar) {
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+    baseName = 'rpcrestgen'
+    destinationDir = file(new File(projectDir, 'share/rpcrest'))
+    manifest {
+        attributes("Created-By": "eProsima", "Main-Class": "com.eprosima.fastrpc.rpcrestgen")
+    }
+}
+
+compileJava.dependsOn buildIDLParser
+compileJava {
+    sourceCompatibility = 1.6
+    targetCompatibility = 1.6
+}
+build.dependsOn fastrpcgenJar, rpcddsgenJar, rpcrestgenJar

@@ -176,7 +176,7 @@ int main(int argc, char **argv)
     try
     {
         protocol = new AsyncCallTestProtocol();
-        transport = new UDPProxyTransport("AsyncCallTestService");
+        transport = new UDPProxyTransport("AsyncCallTestService", "Instance");
         proxy = new AsyncCallTestProxy(*transport, *protocol);
     }
     catch(InitializeException &ex)

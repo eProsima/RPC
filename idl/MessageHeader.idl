@@ -6,41 +6,68 @@
  *
  *************************************************************************/
 
-/*!
- * @brief This structure is used to identify clients.
- */
-struct Identification
+module dds
 {
-    unsigned long value_1;
-    unsigned long value_2;
-    unsigned long value_3;
-    unsigned long value_4;
-}; //@top-level false 
+    typedef octet GuidPrefix_t[12];
 
-/*!
- * @brief Header information used in all generated request topics.
- */
-struct RequestHeader
-{
-    //! @brief Identification of the client that sends the request.
-    Identification clientId;
-    //! @brief The service's name of the server that has to take this request.
-    string remoteServiceName;
-    //! @brief Sequence number of the request.
-    unsigned long requestSequenceNumber;
-}; //@top-level false 
+    struct EntityId_t
+    {
+        octet entityKey[3];
+        octet entityKind;
+    };
 
-/*!
- * @brief Header information used in all generated reply topics.
- */
-struct ReplyHeader
-{
-    //! @brief Identification of the client that sends the associated request to this reply.
-    Identification clientId;
-    //! @brief Sequence number of the associated request to this reply.
-    unsigned long requestSequenceNumber;
-    //! @brief Return message code. Informs of the successful in the operation.
-    long retCode;
-    //! @brief In case of exception this attribute has an error message.
-    string retMsg;
-}; //@top-level false 
+    struct GUID_t
+    {
+        GuidPrefix_t guidPrefix;
+        EntityId_t entityId;
+    };
+
+    struct SequenceNumber_t
+    {
+        long high;
+        unsigned long low;
+    };
+
+    struct SampleIdentity
+    {
+        GUID_t writer_guid;
+        SequenceNumber_t sequence_number;
+    };
+
+    module rpc
+    {
+        typedef octet UnknownOperation;
+        typedef octet UnknownException;
+        typedef octet UnusedMember;
+
+        enum RemoteExceptionCode_t
+        {
+            REMOTE_EX_OK,
+            REMOTE_EX_UNSUPPORTED,
+            REMOTE_EX_INVALID_ARGUMENT,
+            REMOTE_EX_OUT_OF_RESOURCES,
+            REMOTE_EX_UNKNOWN_OPERATION,
+            REMOTE_EX_UNKNOWN_EXCEPTION
+        };
+
+        /*!
+         * @brief Header information used in all generated request topics.
+         */
+        struct RequestHeader
+        {
+            //! @brief Identification of the client that sends the request.
+            dds::SampleIdentity requestId;
+            string<255> instanceName;
+        }; //@top-level false 
+
+        /*!
+         * @brief Header information used in all generated reply topics.
+         */
+        struct ReplyHeader
+        {
+            //! @brief Identification of the client that sends the associated request to this reply.
+            dds::SampleIdentity relatedRequestId;
+            RemoteExceptionCode_t remoteEx;
+        }; //@top-level false 
+    };
+};

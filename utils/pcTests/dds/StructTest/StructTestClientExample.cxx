@@ -38,7 +38,7 @@ int main(int argc, char **argv)
     try
     {
         protocol = new StructTestProtocol();
-        transport = new UDPProxyTransport("StructTestService");
+        transport = new UDPProxyTransport("StructTestService", "Instance");
         proxy = new StructTestProxy(*transport, *protocol);
     }
     catch(InitializeException &ex)

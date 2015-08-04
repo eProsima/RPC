@@ -4,22 +4,15 @@ main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "Server.cxx"], description=["This source file contains the definition of the server for all interfaces."])$
 
 #include "$ctx.filename$Server.h"
-#include "$ctx.product$/strategies/ServerStrategy.h"
-#include "$ctx.product$/transports/ServerTransport.h"
+#include <$ctx.product$/strategies/ServerStrategy.h>
+#include <$ctx.product$/transports/ServerTransport.h>
 #include "$ctx.filename$Protocol.h"
-#include "$ctx.product$/exceptions/ServerInternalException.h"
-
-$if(ctx.rtiTypes)$
-$ctx.includeDependencies : { include |#include "$include$Exceptions.h"}; separator="\n"$
-
-#include "$ctx.filename$Exceptions.h"
-
-$endif$
+#include <$ctx.product$/exceptions/ServerInternalException.h>
 
 $definitions; separator="\n"$
 >>
 
-module(ctx, module, definition_list) ::= <<
+module(ctx, parent, module, definition_list) ::= <<
 namespace $module.name$
 {
     $definition_list$
@@ -34,7 +27,7 @@ $definitions; separator="\n"$
 /*!
  * The export_list will be the definition of synchronize functions.
  */
-interface(ctx, interface, export_list) ::= <<
+interface(ctx, parent, interface, export_list) ::= <<
 $interface.name$Server::$interface.name$Server(eprosima::rpc::strategy::ServerStrategy &strategy, eprosima::rpc::transport::ServerTransport &transport,
             eprosima::rpc::protocol::$ctx.filename$Protocol &protocol, $interface.name$ServerImpl &servant) :
     Server(strategy, transport, protocol), _impl(servant)
@@ -56,20 +49,20 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
-exception(ctx, exception) ::= <<>>
+exception(ctx, parent, exception) ::= <<>>
 
-operation(ctx, operation, param_list) ::= <<>>
+operation(ctx, parent, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 
 param(parameter) ::= <<>>
 
-const_decl(ctx, const) ::= <<>>
+const_decl(ctx, parent, const) ::= <<>>
 
-typedef_decl(ctx, typedefs) ::= <<>>
+typedef_decl(ctx, parent, typedefs) ::= <<>>
 
-struct_type(ctx, struct) ::= <<>>
+struct_type(ctx, parent, struct) ::= <<>>
 
-union_type(ctx, union) ::= <<>>
+union_type(ctx, parent, union) ::= <<>>
 
-enum_type(ctx, enum) ::= <<>>
+enum_type(ctx, parent, enum) ::= <<>>

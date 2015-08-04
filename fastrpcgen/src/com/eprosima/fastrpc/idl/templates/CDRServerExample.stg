@@ -4,11 +4,11 @@ main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "ServerExample.cxx"], description=["This source file shows a simple example of how to create a server for an interface."])$
 
 #include "$ctx.filename$Server.h"
-#include "$ctx.product$/strategies/ThreadPoolStrategy.h"
+#include <$ctx.product$/strategies/ThreadPoolStrategy.h>
 #include "$ctx.filename$CDRProtocol.h"
-#include "$ctx.product$/transports/TCPServerTransport.h"
-#include "$ctx.product$/exceptions/Exceptions.h"
-#include "$ctx.product$/utils/Utilities.h"
+#include <$ctx.product$/transports/TCPServerTransport.h>
+#include <$ctx.product$/exceptions/Exceptions.h>
+#include <$ctx.product$/utils/Utilities.h>
 #include "$ctx.filename$ServerImplExample.h"
 
 #include <iostream>
@@ -25,16 +25,16 @@ int main(int argc, char **argv)
     ThreadPoolStrategy *pool = NULL;
     $ctx.filename$Protocol *protocol = NULL;
     TCPServerTransport *transport = NULL;
-    $ctx.firstInterface.scopedname$Server *server = NULL;
-    $ctx.firstInterface.name$ServerImplExample servant;
+    $first(ctx.scopedInterfaces).scopedname$Server *server = NULL;
+    $first(ctx.scopedInterfaces).name$ServerImplExample servant;
     
-    // Create and initialize the server for interface "$ctx.firstInterface.scopedname$".
+    // Create and initialize the server for interface "$first(ctx.scopedInterfaces).scopedname$".
     try
     {
         pool = new ThreadPoolStrategy(threadPoolSize);
         protocol = new $ctx.filename$Protocol();
         transport = new TCPServerTransport("127.0.0.1:8080");
-        server = new $ctx.firstInterface.scopedname$Server(*pool, *transport, *protocol, servant);
+        server = new $first(ctx.scopedInterfaces).scopedname$Server(*pool, *transport, *protocol, servant);
         server->serve();
     }
     catch(InitializeException &ex)
@@ -61,7 +61,7 @@ int main(int argc, char **argv)
 $definitions; separator="\n"$
 >>
 
-module(ctx, module, definition_list) ::= <<
+module(ctx, parent, module, definition_list) ::= <<
 $definition_list$
 >>
 
@@ -69,7 +69,7 @@ definition_list(definitions) ::= <<
 $definitions; separator="\n"$
 >>
 
-interface(ctx, interface, export_list) ::= <<
+interface(ctx, parent, interface, export_list) ::= <<
 $export_list$
 >>
 
@@ -77,9 +77,9 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
-exception(ctx, exception) ::= <<>>
+exception(ctx, parent, exception) ::= <<>>
 
-operation(ctx, operation, param_list) ::= <<
+operation(ctx, parent, operation, param_list) ::= <<
 $param_list$
 >>
 
@@ -87,12 +87,12 @@ param_list(parameters) ::= <<>>
 
 param(parameter) ::= <<>>
 
-const_decl(ctx, const) ::= <<>>
+const_decl(ctx, parent, const) ::= <<>>
 
-typedef_decl(ctx, typedefs) ::= <<>>
+typedef_decl(ctx, parent, typedefs) ::= <<>>
 
-struct_type(ctx, struct) ::= <<>>
+struct_type(ctx, parent, struct) ::= <<>>
 
-union_type(ctx, union) ::= <<>>
+union_type(ctx, parent, union) ::= <<>>
 
-enum_type(ctx, enum) ::= <<>>
+enum_type(ctx, parent, enum) ::= <<>>

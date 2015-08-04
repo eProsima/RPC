@@ -1,0 +1,89 @@
+CPP= g++
+CPPFLAGS = -c -Wall -fpic -m64 -std=c++0x
+LN= g++
+AR=ar
+LDFLAGS= -m64 -Wl,--no-as-needed
+SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
+DEFINES=  -DRTI_LINUX -DRTI_UNIX
+
+INCLUDES= -I. -I../../../../thirdparty/fastcdr/include -I../../../../thirdparty/fastrtps/include -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds -I../../../../thirdparty/eprosima-common-code -I$(RPCDDSHOME)/include
+
+LIBS = -L../../../../thirdparty/fastcdr/lib/$(EPROSIMA_TARGET) -L../../../../thirdparty/fastrtps/lib/$(EPROSIMA_TARGET) -L$(NDDSHOME)/lib/x64Linux2.6gcc4.4.5 -L$(RPCDDSHOME)/lib/x64Linux2.6gcc4.4.5 -lfastcdr -lfastrtps -lnddscore -lnddsc -lnddscpp -lrpcdds $(SYSLIBS) 
+
+DIRECTORIES= output.dir output/x64Linux2.6gcc4.4.5.dir lib.dir lib/x64Linux2.6gcc4.4.5.dir bin.dir bin/x64Linux2.6gcc4.4.5.dir
+
+all: $(DIRECTORIES) MultithreadTest  MultithreadTestClient MultithreadTestClientExample MultithreadTestServer MultithreadTestServerExample
+
+
+MultithreadTest_TARGET= lib/x64Linux2.6gcc4.4.5/libMultithreadTest.so
+MultithreadTest_TARGET_Z= lib/x64Linux2.6gcc4.4.5/libMultithreadTest.a
+MultithreadTest_CLIENT_TARGET= lib/x64Linux2.6gcc4.4.5/libMultithreadTestClient.so
+MultithreadTest_CLIENT_TARGET_Z= lib/x64Linux2.6gcc4.4.5/libMultithreadTestClient.a
+MultithreadTest_CLIENT_EXAMPLE_TARGET= bin/x64Linux2.6gcc4.4.5/MultithreadTestClientExample
+MultithreadTest_SERVER_TARGET= lib/x64Linux2.6gcc4.4.5/libMultithreadTestServer.so
+MultithreadTest_SERVER_TARGET_Z= lib/x64Linux2.6gcc4.4.5/libMultithreadTestServer.a
+MultithreadTest_SERVER_EXAMPLE_TARGET= bin/x64Linux2.6gcc4.4.5/MultithreadTestServerExample
+MultithreadTest_COMMON_SRC_CXXFILES = MultithreadTest.cxx \
+	MultithreadTestTopicsPlugin.cxx \
+	MultithreadTestTopics.cxx \
+	MultithreadTestDDSProtocol.cxx \
+	MultithreadTestDDSAsyncSupport.cxx
+
+MultithreadTest_COMMON_SRC_CPPFILES=
+
+MultithreadTest_CLIENTSOURCES = MultithreadTestProxy.cxx
+MultithreadTest_SERVERSOURCES = MultithreadTestServer.cxx
+MultithreadTest_COMMONOBJS    = $(MultithreadTest_COMMON_SRC_CXXFILES:%.cxx=output/x64Linux2.6gcc4.4.5/%.o) $(MultithreadTest_COMMON_SRC_CPPFILES:%.cpp=output/x64Linux2.6gcc4.4.5/%.o)
+MultithreadTest_CLIENTOBJS    = $(MultithreadTest_CLIENTSOURCES:%.cxx=output/x64Linux2.6gcc4.4.5/%.o)
+MultithreadTest_SERVEROBJS    = $(MultithreadTest_SERVERSOURCES:%.cxx=output/x64Linux2.6gcc4.4.5/%.o)
+OBJS+= $(MultithreadTest_COMMONOBJS) $(MultithreadTest_CLIENTOBJS) $(MultithreadTest_SERVEROBJS)
+
+$(MultithreadTest_TARGET): $(MultithreadTest_COMMONOBJS)
+	$(LN) $(LDFLAGS) -shared -o $(MultithreadTest_TARGET) $(MultithreadTest_COMMONOBJS) $(LIBS) -Llib/x64Linux2.6gcc4.4.5 
+
+$(MultithreadTest_TARGET_Z): $(MultithreadTest_COMMONOBJS)
+	$(AR) -cru $(MultithreadTest_TARGET_Z) $(MultithreadTest_COMMONOBJS)
+$(MultithreadTest_CLIENT_TARGET): $(MultithreadTest_CLIENTOBJS)
+	$(LN) $(LDFLAGS) -shared -o $(MultithreadTest_CLIENT_TARGET) $(LIBS) -Llib/x64Linux2.6gcc4.4.5 -lMultithreadTest $(MultithreadTest_CLIENTOBJS)
+
+$(MultithreadTest_CLIENT_TARGET_Z): $(MultithreadTest_CLIENTOBJS)
+	$(AR) -cru $(MultithreadTest_CLIENT_TARGET_Z) $(MultithreadTest_CLIENTOBJS)
+	
+$(MultithreadTest_SERVER_TARGET): $(MultithreadTest_SERVEROBJS)
+	$(LN) $(LDFLAGS) -shared -o $(MultithreadTest_SERVER_TARGET) $(LIBS) -Llib/x64Linux2.6gcc4.4.5 -lMultithreadTest $(MultithreadTest_SERVEROBJS)
+
+$(MultithreadTest_SERVER_TARGET_Z): $(MultithreadTest_COMMONOBJS) $(MultithreadTest_SERVEROBJS)
+	$(AR) -cru $(MultithreadTest_SERVER_TARGET_Z) $(MultithreadTest_SERVEROBJS)
+MultithreadTestClient : $(MultithreadTest_CLIENT_TARGET) $(MultithreadTest_CLIENT_TARGET_Z)
+	
+MultithreadTestServer : $(MultithreadTest_SERVER_TARGET) $(MultithreadTest_SERVER_TARGET_Z)
+	
+$(MultithreadTest_CLIENT_EXAMPLE_TARGET): output/x64Linux2.6gcc4.4.5/MultithreadTestClientExample.o lib/x64Linux2.6gcc4.4.5/libMultithreadTestClient.a lib/x64Linux2.6gcc4.4.5/libMultithreadTest.a
+	$(LN) $(LDFLAGS) -o $@ output/x64Linux2.6gcc4.4.5/MultithreadTestClientExample.o -Wl,-Bstatic -Llib/x64Linux2.6gcc4.4.5 -lMultithreadTestClient -lMultithreadTest -Wl,-Bdynamic $(LIBS) -lboost_thread -lboost_system
+	
+$(MultithreadTest_SERVER_EXAMPLE_TARGET): output/x64Linux2.6gcc4.4.5/MultithreadTestServerExample.o output/x64Linux2.6gcc4.4.5/MultithreadTestServerImplExample.o lib/x64Linux2.6gcc4.4.5/libMultithreadTestServer.a lib/x64Linux2.6gcc4.4.5/libMultithreadTest.a
+	$(LN) $(LDFLAGS) -o $@ output/x64Linux2.6gcc4.4.5/MultithreadTestServerImplExample.o output/x64Linux2.6gcc4.4.5/MultithreadTestServerExample.o -Wl,-Bstatic -Llib/x64Linux2.6gcc4.4.5 -lMultithreadTestServer -lMultithreadTest -Wl,-Bdynamic $(LIBS) -lboost_thread -lboost_system
+	
+MultithreadTestClientExample : $(MultithreadTest_CLIENT_EXAMPLE_TARGET)
+	
+MultithreadTestServerExample : $(MultithreadTest_SERVER_EXAMPLE_TARGET)
+MultithreadTest: $(MultithreadTest_TARGET) $(MultithreadTest_TARGET_Z) MultithreadTestClient MultithreadTestClientExample MultithreadTestServer MultithreadTestServerExample
+
+
+output/x64Linux2.6gcc4.4.5/%.o:%.cxx
+	$(CPP) $(CPPFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+
+output/x64Linux2.6gcc4.4.5/%.o:%.cpp
+	$(CPP) $(CPPFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+
+.PHONY: MultithreadTest  MultithreadTestClient MultithreadTestClientExample MultithreadTestServer MultithreadTestServerExample
+
+clean:
+	@rm -f $(OBJS)
+
+%.dir : 
+	@echo "Checking directory $*"
+	@if [ ! -d $* ]; then \
+		echo "Making directory $*"; \
+		mkdir -p $* ; \
+	fi;

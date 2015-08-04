@@ -5,36 +5,40 @@
  * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
+#include <config.h>
 
-#include "fastrpc/utils/dds/Middleware.h"
+#if RPC_WITH_RTIDDS
+
+#include <utils/dds/Middleware.h>
+#include <protocols/dds/MessageHeader.h>
 
 #if defined(OPENDDS)
-#include "dds/DCPS/RTPS/RtpsDiscovery.h"
+#include <dds/DCPS/RTPS/RtpsDiscovery.h>
 #endif
 
 static const char* const CLASS_NAME = "eprosima::rpc::util::dds::Middleware";
 
-void eprosima::rpc::util::dds::get_guid(unsigned int *id, DDS::DataWriter *datawriter)
+void eprosima::rpc::util::dds::get_guid(eprosima::rpc::protocol::dds::GUID_t &id, DDS::DataWriter *datawriter)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
     DDS::DataWriterQos wQos;
     datawriter->get_qos(wQos);
-    id[0] = ((wQos.protocol.virtual_guid.value[0] << 24) & 0xFF000000) +
-        ((wQos.protocol.virtual_guid.value[1] << 16) & 0xFF0000) +
-        ((wQos.protocol.virtual_guid.value[2] << 8) & 0xFF00) +
-        (wQos.protocol.virtual_guid.value[3] & 0xFF);
-    id[1] = ((wQos.protocol.virtual_guid.value[4] << 24) & 0xFF000000) +
-        ((wQos.protocol.virtual_guid.value[5] << 16) & 0xFF0000) +
-        ((wQos.protocol.virtual_guid.value[6] << 8) & 0xFF00) +
-        (wQos.protocol.virtual_guid.value[7] & 0xFF);
-    id[2] = ((wQos.protocol.virtual_guid.value[8] << 24) & 0xFF000000) +
-        ((wQos.protocol.virtual_guid.value[9] << 16) & 0xFF0000) +
-        ((wQos.protocol.virtual_guid.value[10] << 8) & 0xFF00) +
-        (wQos.protocol.virtual_guid.value[11] & 0xFF);
-    id[3] = ((wQos.protocol.virtual_guid.value[12] << 24) & 0xFF000000) +
-        ((wQos.protocol.virtual_guid.value[13] << 16) & 0xFF0000) +
-        ((wQos.protocol.virtual_guid.value[14] << 8) & 0xFF00) +
-        (wQos.protocol.virtual_guid.value[15] & 0xFF);
+    id.guidPrefix()[0] = wQos.protocol.virtual_guid.value[0];
+    id.guidPrefix()[1] = wQos.protocol.virtual_guid.value[1];
+    id.guidPrefix()[2] = wQos.protocol.virtual_guid.value[2];
+    id.guidPrefix()[3] = wQos.protocol.virtual_guid.value[3];
+    id.guidPrefix()[4] = wQos.protocol.virtual_guid.value[4];
+    id.guidPrefix()[5] = wQos.protocol.virtual_guid.value[5];
+    id.guidPrefix()[6] = wQos.protocol.virtual_guid.value[6];
+    id.guidPrefix()[7] = wQos.protocol.virtual_guid.value[7];
+    id.guidPrefix()[8] = wQos.protocol.virtual_guid.value[8];
+    id.guidPrefix()[9] = wQos.protocol.virtual_guid.value[9];
+    id.guidPrefix()[10] = wQos.protocol.virtual_guid.value[10];
+    id.guidPrefix()[11] = wQos.protocol.virtual_guid.value[11];
+    id.entityId().entityKey()[0] = wQos.protocol.virtual_guid.value[12];
+    id.entityId().entityKey()[1] = wQos.protocol.virtual_guid.value[13];
+    id.entityId().entityKey()[2] = wQos.protocol.virtual_guid.value[14];
+    id.entityId().entityKind() = wQos.protocol.virtual_guid.value[15];
 #elif defined(OPENDDS)
     OpenDDS::DCPS::DataWriterImpl *wimpl = dynamic_cast<OpenDDS::DCPS::DataWriterImpl*>(datawriter);
     OpenDDS::DCPS::RepoId guid = wimpl->get_publication_id();
@@ -165,3 +169,5 @@ DDS::DomainParticipantFactory* eprosima::rpc::util::dds::getFactory(int domainId
 #error There not set OS.
 #endif
 }
+
+#endif // RPC_WITH_RTIDDS

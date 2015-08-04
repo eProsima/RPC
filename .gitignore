@@ -8,6 +8,7 @@
 *.opensdf
 *.suo
 # Visual Studio build directories.
+build/
 Debug*/
 Release*/
 ipch/
@@ -25,16 +26,11 @@ cscope.out
 #### Project files ####
 
 # Generated Java classes
+.gradle
 fastrpcgen/build/
-classes/fastrpcgen.jar
-classes/rpcddsgen.jar
-classes/rpcrestgen.jar
-
-# Generated Java source
-fastrpcgen/src/com/eprosima/fastrpc/wadl/grammar/WADLParser.java
-fastrpcgen/src/com/eprosima/fastrpc/wadl/grammar/WADLParser.smap
-fastrpcgen/src/com/eprosima/fastrpc/wadl/grammar/WADLParserTokenTypes.java
-fastrpcgen/src/com/eprosima/fastrpc/wadl/grammar/WADLParserTokenTypes.txt
+fastrpcgen/share/fastrpc/fastrpcgen.jar
+fastrpcgen/share/rpcdds/rpcddsgen.jar
+fastrpcgen/share/rpcrest/rpcrestgen.jar
 
 # Foo examples
 utils/doxygen/examples/dds/*.h

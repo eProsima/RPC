@@ -6,11 +6,11 @@
  *
  *************************************************************************/
 
-#include "fastrpc/transports/TCPProxyTransport.h"
-#include "fastrpc/exceptions/ServerNotFoundException.h"
+#include <transports/TCPProxyTransport.h>
+#include <exceptions/ServerNotFoundException.h>
 
-#include "boost/asio.hpp"
-#include "boost/array.hpp"
+#include <boost/asio.hpp>
+#include <boost/array.hpp>
 #include <iostream>
 
 using namespace std;

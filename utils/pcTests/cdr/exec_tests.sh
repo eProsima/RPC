@@ -71,7 +71,7 @@ done
 #fi
 
 if [ "$FASTRPCHOME" == "" ]; then
-    echo "RPCDDSHOME environment variables is not set."
+    echo "FASTRPCHOME environment variables is not set."
     exit -1
 fi
 

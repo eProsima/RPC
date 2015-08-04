@@ -6,14 +6,14 @@
  *
  *************************************************************************/
 
-#include "fastrpc/server/Server.h"
-#include "fastrpc/exceptions/InitializeException.h"
-#include "fastrpc/strategies/ServerStrategy.h"
-#include "fastrpc/transports/ServerTransport.h"
-#include "fastrpc/protocols/Protocol.h"
+#include <server/Server.h>
+#include <exceptions/InitializeException.h>
+#include <strategies/ServerStrategy.h>
+#include <transports/ServerTransport.h>
+#include <protocols/Protocol.h>
 
-#include "boost/config/user.hpp"
-#include "boost/thread.hpp"
+#include <boost/config/user.hpp>
+#include <boost/thread.hpp>
 
 static const char* const CLASS_NAME ="eprosima::rpc::server::Server";
 

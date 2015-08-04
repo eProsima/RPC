@@ -6,8 +6,8 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "AsyncSupport.h"], description=["This 
 #ifndef _$ctx.filename;format="toUpper"$_DDS_ASYNC_SUPPORT_H_
 #define _$ctx.filename;format="toUpper"$_DDS_ASYNC_SUPPORT_H_
 
-#include "$ctx.product$/transports/dds/DDSAsyncTask.h"
-#include "$ctx.product$/exceptions/UserException.h"
+#include <$ctx.product$/transports/dds/DDSAsyncTask.h>
+#include <$ctx.product$/exceptions/UserException.h>
 #include "$ctx.filename$AsyncCallbackHandlers.h"
 $if(!ctx.rtiTypes)$
 #include "$ctx.filename$Topics.h"
@@ -20,7 +20,7 @@ $definitions; separator="\n"$
 #endif // _$ctx.filename;format="toUpper"$_DDS_ASYNC_SUPPORT_H_
 >>
 
-module(ctx, module, definition_list) ::= <<
+module(ctx, parent, module, definition_list) ::= <<
 namespace $module.name$
 {
     $definition_list$
@@ -32,23 +32,14 @@ definition_list(definitions) ::= <<
 $definitions; separator="\n"$
 >>
 
-interface(ctx, interface, export_list) ::= <<
-$export_list$
->>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
-exception(ctx, exception) ::= <<>>
-
-operation(ctx, operation, param_list) ::= <<
+interface(ctx, parent, interface, export_list) ::= <<
+$interface.all_operations : { operation |
 $if(!operation.oneway)$
 /*!
- * @brief This class represents a asynchronous task created to wait the reply of the procedure $operation.parent.name$::$operation.name$ from the server in an asynchronous call.
+ * @brief This class represents a asynchronous task created to wait the reply of the procedure $interface.name$::$operation.name$ from the server in an asynchronous call.
  * @ingroup $ctx.trimfilename$
  */
-class $operation.parent.name$_$operation.name$Task : public eprosima::rpc::transport::dds::DDSAsyncTask
+class $interface.name$_$operation.name$Task : public eprosima::rpc::transport::dds::DDSAsyncTask
 {
     public:
 
@@ -59,10 +50,10 @@ class $operation.parent.name$_$operation.name$Task : public eprosima::rpc::trans
          *            the reply will be received or and exception will be launched.
          * \param client Pointer to the server's proxy. Cannot be NULL.
          */
-        $operation.parent.name$_$operation.name$Task($operation.parent.name$_$operation.name$CallbackHandler &obj);
+        $interface.name$_$operation.name$Task($interface.name$_$operation.name$CallbackHandler &obj);
 
         //! @brief Destructor.
-        virtual ~$operation.parent.name$_$operation.name$Task();
+        virtual ~$interface.name$_$operation.name$Task();
         
         /*!
          * @brief This funcion is called when the reply sample is received.
@@ -92,7 +83,7 @@ class $operation.parent.name$_$operation.name$Task : public eprosima::rpc::trans
          *
          * @return The object that implements the callbacks.
          */
-        $operation.parent.name$_$operation.name$CallbackHandler& getObject();
+        $interface.name$_$operation.name$CallbackHandler& getObject();
 
         /*!
          * @brief This function returns the allocated reply sample.
@@ -102,24 +93,34 @@ class $operation.parent.name$_$operation.name$Task : public eprosima::rpc::trans
         
         private:
         
-        $operation.parent.name$_$operation.name$CallbackHandler &m_obj;
+        $interface.name$_$operation.name$CallbackHandler &m_obj;
 
-        $operation.parent.name$_$operation.name$Reply m_reply;
+        $interface.name$_$operation.name$_Reply m_reply;
 };
-
 $endif$
+}; separator="\n"$
+
+$export_list$
 >>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, parent, exception) ::= <<>>
+
+operation(ctx, parent, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 
 param(parameter) ::= <<>>
 
-const_decl(ctx, const) ::= <<>>
+const_decl(ctx, parent, const) ::= <<>>
 
-typedef_decl(ctx, typedefs) ::= <<>>
+typedef_decl(ctx, parent, typedefs) ::= <<>>
 
-struct_type(ctx, struct) ::= <<>>
+struct_type(ctx, parent, struct) ::= <<>>
 
-union_type(ctx, union) ::= <<>>
+union_type(ctx, parent, union) ::= <<>>
 
-enum_type(ctx, enum) ::= <<>>
+enum_type(ctx, parent, enum) ::= <<>>

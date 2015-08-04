@@ -17,6 +17,7 @@
 #include "OnewayCallTestDDSProtocol.h"
 #include "fastrpc/transports/dds/UDPProxyTransport.h"
 #include "fastrpc/exceptions/Exceptions.h"
+#include <fastrpc/utils/macros/strdup.h>
 
 #include <iostream>
 
@@ -35,7 +36,7 @@ int main(int argc, char **argv)
     try
     {
         protocol = new OnewayCallTestProtocol();
-        transport = new UDPProxyTransport("OnewayCallTestService");
+        transport = new UDPProxyTransport("OnewayCallTestService", "Instance");
         proxy = new OnewayCallTestProxy(*transport, *protocol);
     }
     catch(InitializeException &ex)
@@ -104,7 +105,7 @@ int main(int argc, char **argv)
         _exit(-1);
     }
 
-    char *s1 = strdup("Ricardo");       
+    char *s1 = STRDUP("Ricardo");       
 
     try
     {
@@ -141,7 +142,7 @@ int main(int argc, char **argv)
     Structure st1;
     Structure_initialize(&st1);
     st1.dato = 10;
-    st1.message = strdup("Jaime");
+    st1.message = STRDUP("Jaime");
 
     try
     {

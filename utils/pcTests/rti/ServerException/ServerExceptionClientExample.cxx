@@ -35,7 +35,7 @@ int main(int argc, char **argv)
     try
     {
         protocol = new ServerExceptionProtocol();
-        transport = new UDPProxyTransport("ServerExceptionService");
+        transport = new UDPProxyTransport("ServerExceptionService", "Instance");
         proxy = new ServerExceptionProxy(*transport, *protocol);
     }
     catch(InitializeException &ex)
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
     }
     catch(ServerInternalException &ex)
     {
-        if(strcmp(ex.what(), "Testing exception") != 0)
+        if(strcmp(ex.what(), "") != 0)
         {
             std::cout << "TEST FAILED<sendException>: Bad exception message" << std::endl;
             _exit(-1);
@@ -77,7 +77,7 @@ int main(int argc, char **argv)
     }
     catch(ServerInternalException &ex)
     {
-        if(strcmp(ex.what(), "Testing exception") != 0)
+        if(strcmp(ex.what(), "") != 0)
         {
             std::cout << "TEST FAILED<sendExceptionTwo>: Bad exception message" << std::endl;
             _exit(-1);
@@ -105,7 +105,7 @@ int main(int argc, char **argv)
     }
     catch(ServerInternalException &ex)
     {
-        if(strcmp(ex.what(), "Testing exception") != 0)
+        if(strcmp(ex.what(), "") != 0)
         {
             std::cout << "TEST FAILED<sendExceptionThree>: Bad exception message" << std::endl;
             _exit(-1);

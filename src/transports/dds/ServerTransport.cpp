@@ -5,22 +5,32 @@
  * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
+#include <config.h>
 
-#include "fastrpc/transports/dds/ServerTransport.h"
-#include "fastrpc/transports/dds/components/ServerProcedureEndpoint.h"
-#include "fastrpc/protocols/Protocol.h"
-#include "fastrpc/exceptions/InitializeException.h"
-#include "fastrpc/utils/dds/Middleware.h"
+#if RPC_WITH_RTIDDS
+
+#include <transports/dds/ServerTransport.h>
+#include <transports/dds/components/ServerProcedureEndpoint.h>
+#include <protocols/Protocol.h>
+#include <exceptions/InitializeException.h>
+#include <utils/dds/Middleware.h>
 
 using namespace eprosima::rpc;
 using namespace ::transport::dds;
 
 static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::ServerTransport";
 
-ServerTransport::ServerTransport(const char* const &serviceName, int domainId) :
+ServerTransport::ServerTransport(const char* const serviceName, const char* const instanceName, int domainId) :
     ::transport::ServerTransport(), ::transport::dds::Transport(domainId),
-    m_serviceName(serviceName)
+    m_serviceName(serviceName), m_instanceName(instanceName)
 {
+    if(serviceName != NULL)
+        m_serviceName = serviceName;
+    else
+        m_serviceName = "Service";
+
+    if(instanceName != NULL)
+        m_instanceName = instanceName;
 }
 
 ServerTransport::~ServerTransport()
@@ -41,7 +51,8 @@ const char* ServerTransport::getType() const
 }
 
 ::transport::Endpoint* ServerTransport::createProcedureEndpoint(const char *name, const char *writertypename,
-        const char *readertypename, bool eprosima_types,
+        const char *writertopicname, const char *readertypename,
+        const char *readertopicname, bool eprosima_types,
         Transport::Create_data create_data, Transport::Copy_data copy_data,
         Transport::Destroy_data destroy_data, Transport::ProcessFunc processFunc, int dataSize)
 {
@@ -50,7 +61,7 @@ const char* ServerTransport::getType() const
 
     if(pe != NULL)
     {
-        if(pe->initialize(name, writertypename, readertypename, create_data, destroy_data, processFunc, dataSize) == 0)
+        if(pe->initialize(name, writertypename, writertopicname, readertypename, readertopicname, create_data, destroy_data, processFunc, dataSize) == 0)
         {
             std::pair<std::map<const char*, ServerProcedureEndpoint*>::iterator, bool> retmap = m_procedureEndpoints.insert(std::pair<const char*, ServerProcedureEndpoint*>(name, pe));
 
@@ -104,7 +115,7 @@ void ServerTransport::run()
     for(it = m_procedureEndpoints.begin(); it != m_procedureEndpoints.end(); ++it)
     {
         // TODO Launch exception
-        if((*it).second->start(m_serviceName.c_str()) != 0)
+        if((*it).second->start(m_serviceName.c_str(), m_instanceName.c_str()) != 0)
             printf("ERROR<%s::%s>: The procedure endpoint %s cannot be started\n", CLASS_NAME, METHOD_NAME, (*it).first);
     }
 }
@@ -119,3 +130,10 @@ int ServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataToRe
     // EMPTY. Not used.
     return -1;
 }
+
+const char* ServerTransport::getRemoteServiceName() const
+{
+    return m_serviceName.c_str();
+}
+
+#endif // RPC_WITH_RTIDDS

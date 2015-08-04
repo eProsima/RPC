@@ -6,10 +6,10 @@
  *
  *************************************************************************/
 
-#include "fastrpc/client/Proxy.h"
-#include "fastrpc/exceptions/InitializeException.h"
-#include "fastrpc/transports/ProxyTransport.h"
-#include "fastrpc/protocols/Protocol.h"
+#include <client/Proxy.h>
+#include <exceptions/InitializeException.h>
+#include <transports/ProxyTransport.h>
+#include <protocols/Protocol.h>
 
 static const char* const CLASS_NAME ="eprosima::rpc::proxy::Proxy";
 

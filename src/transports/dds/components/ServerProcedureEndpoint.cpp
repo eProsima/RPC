@@ -5,14 +5,17 @@
  * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
+#include <config.h>
 
-#include "fastrpc/transports/dds/components/ServerProcedureEndpoint.h"
-#include "fastrpc/strategies/ServerStrategy.h"
-#include "fastrpc/strategies/ServerStrategyImpl.h"
-#include "fastrpc/utils/macros/snprintf.h"
+#if RPC_WITH_RTIDDS
 
-#include "boost/config/user.hpp"
-#include "boost/thread/mutex.hpp"
+#include <transports/dds/components/ServerProcedureEndpoint.h>
+#include <strategies/ServerStrategy.h>
+#include "../../../strategies/ServerStrategyImpl.h"
+#include <utils/macros/snprintf.h>
+
+#include <boost/config/user.hpp>
+#include <boost/thread/mutex.hpp>
 #include <boost/bind.hpp>
 
 using namespace eprosima::rpc;
@@ -35,7 +38,8 @@ ServerProcedureEndpoint::~ServerProcedureEndpoint()
     }
 }
 
-int ServerProcedureEndpoint::initialize(const char *name, const char *writertypename, const char *readertypename,
+int ServerProcedureEndpoint::initialize(const char *name, const char *writertypename, const char *writertopicname,
+        const char *readertypename, const char *readertopicname,
         Transport::Create_data create_data, Transport::Destroy_data destroy_data,
         Transport::ProcessFunc processFunc, int dataSize)
 {
@@ -48,8 +52,12 @@ int ServerProcedureEndpoint::initialize(const char *name, const char *writertype
         {
             m_name = name;
             if(writertypename != NULL)
+            {
                 m_writerTypeName = writertypename;
+                m_writerTopicName = writertopicname;
+            }
             m_readerTypeName = readertypename;
+            m_readerTopicName = readertopicname;
             m_create_data = create_data;
             m_destroy_data = destroy_data;
             m_process_func = processFunc;
@@ -61,7 +69,7 @@ int ServerProcedureEndpoint::initialize(const char *name, const char *writertype
     return -1;
 }
 
-int ServerProcedureEndpoint::start(const char* const &serviceName)
+int ServerProcedureEndpoint::start(const char* const &serviceName, const char* const &instanceName)
 {
     const char* const METHOD_NAME = "start";
     int returnedValue = -1;
@@ -69,7 +77,7 @@ int ServerProcedureEndpoint::start(const char* const &serviceName)
     m_mutex->lock();
     if(m_started++ == 0)
     {
-        if(createEntities(std::string(serviceName)) == 0)
+        if(createEntities(std::string(serviceName), std::string(instanceName)) == 0)
         {
             if((returnedValue = enableEntities()) != 0)
             {
@@ -127,17 +135,17 @@ void ServerProcedureEndpoint::stop()
     m_mutex->unlock();
 }
 
-int ServerProcedureEndpoint::createEntities(const std::string &serviceName)
+int ServerProcedureEndpoint::createEntities(const std::string &serviceName, const std::string &instanceName)
 {
     const char* const METHOD_NAME = "createEntities";
 
-    if((m_readerTopic = m_transport.getParticipant()->create_topic(m_readerTypeName.c_str(), m_readerTypeName.c_str(), TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
+    if((m_readerTopic = m_transport.getParticipant()->create_topic(m_readerTopicName.c_str(), m_readerTypeName.c_str(), TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
     {
         DDS::StringSeq stringSeq(0);
         stringSeq.length(0);
-        char value[285];
+        char value[300];
 
-        SNPRINTF(value, 285, "_header.remoteServiceName = '%s'", serviceName.c_str());
+        SNPRINTF(value, 300, "header.instanceName = '%s'", instanceName.c_str());
 
         if((m_filter = m_transport.getParticipant()->create_contentfilteredtopic(m_name, m_readerTopic,
                         value, stringSeq)) != NULL)
@@ -157,7 +165,7 @@ int ServerProcedureEndpoint::createEntities(const std::string &serviceName)
 
                 if(!m_writerTypeName.empty())
                 {
-                    if((m_writerTopic = m_transport.getParticipant()->create_topic(m_writerTypeName.c_str(), m_writerTypeName.c_str(), TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
+                    if((m_writerTopic = m_transport.getParticipant()->create_topic(m_writerTopicName.c_str(), m_writerTypeName.c_str(), TOPIC_QOS_DEFAULT, NULL, STATUS_MASK_NONE)) != NULL)
                     {
                         DDS::DataWriterQos wQos = DDS:: DataWriterQos();
 
@@ -313,3 +321,5 @@ void ServerProcedureEndpoint::on_data_available(DDS::DataReader* reader)
         m_destroy_data(data);
 	}
 }
+
+#endif // RPC_WITH_RTIDDS

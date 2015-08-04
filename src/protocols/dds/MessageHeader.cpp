@@ -1,210 +1,352 @@
-#include "fastrpc/protocols/dds/MessageHeader.h"
-#include "fastrpc/utils/macros/strdup.h"
+#include <protocols/dds/MessageHeader.h>
+#include <utils/macros/strdup.h>
 
-#include "fastcdr/Cdr.h"
+#include <fastcdr/Cdr.h>
 
 using namespace eprosima::rpc;
 using namespace ::protocol::dds;
 
-Identification::Identification() :
-    m_value_1(0), m_value_2(0), m_value_3(0), m_value_4(0)
+EntityId_t::EntityId_t() : entityKind_(0)
+{
+    entityKey_[0] = 0;
+    entityKey_[1] = 0;
+    entityKey_[2] = 0;
+}
+
+EntityId_t::~EntityId_t()
 {
 }
 
-Identification::~Identification()
+EntityId_t::EntityId_t(const EntityId_t &x)
 {
+    entityKey_[0] = x.entityKey_[0];
+    entityKey_[1] = x.entityKey_[1];
+    entityKey_[2] = x.entityKey_[2];
+    entityKind_ = x.entityKind_;
 }
 
-Identification::Identification(const Identification &id) :
-    m_value_1(id.m_value_1), m_value_2(id.m_value_2),
-    m_value_3(id.m_value_3), m_value_4(id.m_value_4)
+EntityId_t& EntityId_t::operator=(const EntityId_t &x)
 {
-}
-
-Identification::Identification(Identification &&id) :
-    m_value_1(id.m_value_1), m_value_2(id.m_value_2),
-    m_value_3(id.m_value_3), m_value_4(id.m_value_4)
-{
-}
-
-Identification& Identification::operator=(const Identification &id)
-{
-    m_value_1 = id.m_value_1;
-    m_value_2 = id.m_value_2;
-    m_value_3 = id.m_value_3;
-    m_value_4 = id.m_value_4;
-
+    entityKey_[0] = x.entityKey_[0];
+    entityKey_[1] = x.entityKey_[1];
+    entityKey_[2] = x.entityKey_[2];
+    entityKind_ = x.entityKind_;
+    
     return *this;
 }
 
-Identification& Identification::operator=(Identification &&id)
+size_t EntityId_t::getMaxCdrSerializedSize(size_t /*current_alignment*/)
 {
-    m_value_1 = id.m_value_1;
-    m_value_2 = id.m_value_2;
-    m_value_3 = id.m_value_3;
-    m_value_4 = id.m_value_4;
+    return 4;
+}
 
+void EntityId_t::serialize(eprosima::fastcdr::Cdr &cdr) const
+{
+    cdr.serializeArray(entityKey_, 3);
+    cdr << entityKind_;
+}
+
+void EntityId_t::deserialize(eprosima::fastcdr::Cdr &cdr)
+{
+    cdr.deserializeArray(entityKey_, 3);
+    cdr >> entityKind_;
+}
+
+GUID_t::GUID_t()
+{
+    guidPrefix_[0] = 0;
+    guidPrefix_[1] = 0;
+    guidPrefix_[2] = 0;
+    guidPrefix_[3] = 0;
+    guidPrefix_[4] = 0;
+    guidPrefix_[5] = 0;
+    guidPrefix_[6] = 0;
+    guidPrefix_[7] = 0;
+    guidPrefix_[8] = 0;
+    guidPrefix_[9] = 0;
+    guidPrefix_[10] = 0;
+    guidPrefix_[11] = 0;
+}
+
+GUID_t::GUID_t(const GUID_t &guid) : entityId_(guid.entityId_)
+{
+    guidPrefix_[0] = guid.guidPrefix_[0];
+    guidPrefix_[1] = guid.guidPrefix_[1];
+    guidPrefix_[2] = guid.guidPrefix_[2];
+    guidPrefix_[3] = guid.guidPrefix_[3];
+    guidPrefix_[4] = guid.guidPrefix_[4];
+    guidPrefix_[5] = guid.guidPrefix_[5];
+    guidPrefix_[6] = guid.guidPrefix_[6];
+    guidPrefix_[7] = guid.guidPrefix_[7];
+    guidPrefix_[8] = guid.guidPrefix_[8];
+    guidPrefix_[9] = guid.guidPrefix_[9];
+    guidPrefix_[10] = guid.guidPrefix_[10];
+    guidPrefix_[11] = guid.guidPrefix_[11];
+}
+
+GUID_t::~GUID_t()
+{
+}
+
+GUID_t& GUID_t::operator=(const GUID_t &guid)
+{
+    guidPrefix_[0] = guid.guidPrefix_[0];
+    guidPrefix_[1] = guid.guidPrefix_[1];
+    guidPrefix_[2] = guid.guidPrefix_[2];
+    guidPrefix_[3] = guid.guidPrefix_[3];
+    guidPrefix_[4] = guid.guidPrefix_[4];
+    guidPrefix_[5] = guid.guidPrefix_[5];
+    guidPrefix_[6] = guid.guidPrefix_[6];
+    guidPrefix_[7] = guid.guidPrefix_[7];
+    guidPrefix_[8] = guid.guidPrefix_[8];
+    guidPrefix_[9] = guid.guidPrefix_[9];
+    guidPrefix_[10] = guid.guidPrefix_[10];
+    guidPrefix_[11] = guid.guidPrefix_[11];
+    entityId_ = guid.entityId_;
+    
     return *this;
 }
 
-size_t Identification::getMaxCdrSerializedSize(size_t current_alignment)
+size_t GUID_t::getMaxCdrSerializedSize(size_t /*current_alignment*/)
+{
+    return 16;
+}
+
+void GUID_t::serialize(eprosima::fastcdr::Cdr &cdr) const
+{
+    cdr.serializeArray(guidPrefix_, 12);
+    cdr << entityId_;
+}
+
+void GUID_t::deserialize(eprosima::fastcdr::Cdr &cdr)
+{
+    cdr.deserializeArray(guidPrefix_, 12);
+    cdr >> entityId_;
+}
+
+SequenceNumber_t::SequenceNumber_t() : high_(0), low_(0)
+{
+}
+
+SequenceNumber_t::~SequenceNumber_t()
+{
+}
+
+SequenceNumber_t::SequenceNumber_t(const SequenceNumber_t &x)
+{
+    high_ = x.high_;
+    low_ = x.low_;
+}
+
+SequenceNumber_t::SequenceNumber_t(SequenceNumber_t &&x)
+{
+    high_ = x.high_;
+    low_ = x.low_;
+}
+
+SequenceNumber_t& SequenceNumber_t::operator=(const SequenceNumber_t &x)
+{
+    high_ = x.high_;
+    low_ = x.low_;
+    
+    return *this;
+}
+
+SequenceNumber_t& SequenceNumber_t::operator=(SequenceNumber_t &&x)
+{
+    high_ = x.high_;
+    low_ = x.low_;
+    
+    return *this;
+}
+
+size_t SequenceNumber_t::getMaxCdrSerializedSize(size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
-    // Optimization. First unsigned long has to be aligned. The rest is not necessary.
-    current_alignment += 16 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
     return current_alignment - initial_alignment;
 }
 
-void Identification::serialize(eprosima::fastcdr::Cdr &cdr) const
+void SequenceNumber_t::serialize(eprosima::fastcdr::Cdr &cdr) const
 {
-    cdr << m_value_1 << m_value_2 << m_value_3 << m_value_4;
+    cdr << high_;
+    cdr << low_;
+
 }
 
-void Identification::deserialize(eprosima::fastcdr::Cdr &cdr)
+void SequenceNumber_t::deserialize(eprosima::fastcdr::Cdr &cdr)
 {
-    cdr >> m_value_1 >> m_value_2 >> m_value_3 >> m_value_4;
+    cdr >> high_;
+    cdr >> low_;
 }
 
-RequestHeader::RequestHeader() : m_remoteServiceName(NULL), m_requestSequenceNumber(0)
-{
-}
-
-RequestHeader::RequestHeader(const RequestHeader &header) :
-    m_clientId(header.m_clientId), m_remoteServiceName(STRDUP(header.m_remoteServiceName)),
-    m_requestSequenceNumber(header.m_requestSequenceNumber)
+SampleIdentity::SampleIdentity()
 {
 }
 
-RequestHeader::RequestHeader(RequestHeader &&header) :
-    m_clientId(std::move(header.m_clientId)), m_remoteServiceName(STRDUP(header.m_remoteServiceName)),
-    m_requestSequenceNumber(header.m_requestSequenceNumber)
+SampleIdentity::~SampleIdentity()
 {
 }
 
-RequestHeader::~RequestHeader()
+SampleIdentity::SampleIdentity(const SampleIdentity &id) :
+    writer_guid_(id.writer_guid_), sequence_number_(id.sequence_number_)
 {
-	if(m_remoteServiceName != NULL)
-		free(m_remoteServiceName);
 }
 
-RequestHeader& RequestHeader::operator=(const RequestHeader &header)
+SampleIdentity::SampleIdentity(SampleIdentity &&id) :
+    writer_guid_(id.writer_guid_), sequence_number_(id.sequence_number_)
 {
-    m_clientId = header.m_clientId;
-	if(m_remoteServiceName != NULL)
-		free(m_remoteServiceName);
-    m_remoteServiceName = STRDUP(header.m_remoteServiceName);
-    m_requestSequenceNumber = header.m_requestSequenceNumber;
+}
+
+SampleIdentity& SampleIdentity::operator=(const SampleIdentity &id)
+{
+    writer_guid_ = id.writer_guid_;
+    sequence_number_ = id.sequence_number_;
 
     return *this;
 }
 
-RequestHeader& RequestHeader::operator=(RequestHeader &&header)
+SampleIdentity& SampleIdentity::operator=(SampleIdentity &&id)
 {
-    m_clientId = std::move(header.m_clientId);
-    if(m_remoteServiceName != NULL)
-		free(m_remoteServiceName);
-    m_remoteServiceName = STRDUP(header.m_remoteServiceName);
-    m_requestSequenceNumber = header.m_requestSequenceNumber;
+    writer_guid_ = id.writer_guid_;
+    sequence_number_ = id.sequence_number_;
 
     return *this;
 }
 
-size_t RequestHeader::getMaxCdrSerializedSize(size_t current_alignment)
+size_t SampleIdentity::getMaxCdrSerializedSize(size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
-    current_alignment = Identification::getMaxCdrSerializedSize(current_alignment);
+    // Optimization. First unsigned long has to be aligned. The rest is not necessary.
+    current_alignment += GUID_t::getMaxCdrSerializedSize(current_alignment);
+    current_alignment += SequenceNumber_t::getMaxCdrSerializedSize(current_alignment);
+
+    return current_alignment - initial_alignment;
+}
+
+void SampleIdentity::serialize(eprosima::fastcdr::Cdr &cdr) const
+{
+    cdr << writer_guid_ << sequence_number_;
+}
+
+void SampleIdentity::deserialize(eprosima::fastcdr::Cdr &cdr)
+{
+    cdr >> writer_guid_ >> sequence_number_;
+}
+
+rpc::RequestHeader::RequestHeader() : instanceName_(NULL)
+{
+}
+
+rpc::RequestHeader::RequestHeader(const rpc::RequestHeader &header) :
+    requestId_(header.requestId_), instanceName_(STRDUP(header.instanceName_))
+{
+}
+
+rpc::RequestHeader::RequestHeader(rpc::RequestHeader &&header) :
+    requestId_(std::move(header.requestId_)), instanceName_(STRDUP(header.instanceName_))
+{
+}
+
+rpc::RequestHeader::~RequestHeader()
+{
+	if(instanceName_ != NULL)
+		free(instanceName_);
+}
+
+rpc::RequestHeader& rpc::RequestHeader::operator=(const rpc::RequestHeader &header)
+{
+    requestId_ = header.requestId_;
+	if(instanceName_ != NULL)
+		free(instanceName_);
+    instanceName_ = STRDUP(header.instanceName_);
+
+    return *this;
+}
+
+rpc::RequestHeader& rpc::RequestHeader::operator=(rpc::RequestHeader &&header)
+{
+    requestId_ = std::move(header.requestId_);
+    if(instanceName_ != NULL)
+		free(instanceName_);
+    instanceName_ = STRDUP(header.instanceName_);
+
+    return *this;
+}
+
+size_t rpc::RequestHeader::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+    current_alignment += SampleIdentity::getMaxCdrSerializedSize(current_alignment);
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + 256; // Max string length + 1.
+
+    return current_alignment - initial_alignment;
+}
+
+void rpc::RequestHeader::serialize(eprosima::fastcdr::Cdr &cdr) const
+{
+    cdr << requestId_ << instanceName_;
+}
+
+void rpc::RequestHeader::deserialize(eprosima::fastcdr::Cdr &cdr)
+{
+    cdr >> requestId_ >> instanceName_;
+}
+
+rpc::ReplyHeader::ReplyHeader()
+{
+}
+
+rpc::ReplyHeader::ReplyHeader(const rpc::ReplyHeader &header) :
+    relatedRequestId_(header.relatedRequestId_), remoteEx_(header.remoteEx_)
+{
+}
+
+rpc::ReplyHeader::ReplyHeader(rpc::ReplyHeader &&header) :
+    relatedRequestId_(std::move(header.relatedRequestId_)), remoteEx_(header.remoteEx_)
+{
+}
+
+rpc::ReplyHeader::~ReplyHeader()
+{
+}
+
+rpc::ReplyHeader& rpc::ReplyHeader::operator=(const rpc::ReplyHeader &header)
+{
+    relatedRequestId_ = header.relatedRequestId_;
+    remoteEx_ = header.remoteEx_;
+
+    return *this;
+}
+
+rpc::ReplyHeader& rpc::ReplyHeader::operator=(rpc::ReplyHeader &&header)
+{
+    relatedRequestId_ = std::move(header.relatedRequestId_);
+    remoteEx_ = header.remoteEx_;
+
+    return *this;
+}
+
+size_t rpc::ReplyHeader::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+    current_alignment += SampleIdentity::getMaxCdrSerializedSize(current_alignment);
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
     return current_alignment - initial_alignment;
 }
 
-void RequestHeader::serialize(eprosima::fastcdr::Cdr &cdr) const
+void rpc::ReplyHeader::serialize(eprosima::fastcdr::Cdr &cdr) const
 {
-    cdr << m_clientId << m_remoteServiceName << m_requestSequenceNumber;
+    cdr << relatedRequestId_ << (uint32_t)remoteEx_;
 }
 
-void RequestHeader::deserialize(eprosima::fastcdr::Cdr &cdr)
+void rpc::ReplyHeader::deserialize(eprosima::fastcdr::Cdr &cdr)
 {
-    cdr >> m_clientId >> m_remoteServiceName >> m_requestSequenceNumber;
-}
-
-ReplyHeader::ReplyHeader() : m_requestSequenceNumber(0),
-    m_retCode(0)
-{
-}
-
-ReplyHeader::ReplyHeader(const ReplyHeader &header) :
-    m_clientId(header.m_clientId), m_requestSequenceNumber(header.m_requestSequenceNumber),
-    m_retCode(header.m_retCode), m_retMsg(header.m_retMsg)
-{
-}
-
-ReplyHeader::ReplyHeader(ReplyHeader &&header) :
-    m_clientId(std::move(header.m_clientId)), m_requestSequenceNumber(header.m_requestSequenceNumber),
-    m_retCode(header.m_retCode), m_retMsg(std::move(header.m_retMsg))
-{
-}
-
-ReplyHeader::~ReplyHeader()
-{
-}
-
-ReplyHeader& ReplyHeader::operator=(const ReplyHeader &header)
-{
-    m_clientId = header.m_clientId;
-    m_requestSequenceNumber = header.m_requestSequenceNumber;
-    m_retCode = header.m_retCode;
-    m_retMsg = header.m_retMsg;
-
-    return *this;
-}
-
-ReplyHeader& ReplyHeader::operator=(ReplyHeader &&header)
-{
-    m_clientId = std::move(header.m_clientId);
-    m_requestSequenceNumber = header.m_requestSequenceNumber;
-    m_retCode = header.m_retCode;
-    m_retMsg = std::move(header.m_retMsg);
-
-    return *this;
-}
-
-void ReplyHeader::retMsg(const char* const &_retMsg)
-{
-    m_retMsg = _retMsg;
-}
-
-/*!
-    * @brief This function returns the server return message.
-    * @return Server return message
-    */
-const char* ReplyHeader::retMsg() const
-{
-    return m_retMsg.c_str();
-}
-
-size_t ReplyHeader::getMaxCdrSerializedSize(size_t current_alignment)
-{
-    size_t initial_alignment = current_alignment;
-
-    current_alignment = Identification::getMaxCdrSerializedSize(current_alignment);
-    // Optimization. First unsigned long has to be aligment but the other not.
-    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
-    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + 256; // Max string length + 1.
-
-    return current_alignment - initial_alignment;
-}
-
-void ReplyHeader::serialize(eprosima::fastcdr::Cdr &cdr) const
-{
-    cdr << m_clientId << m_requestSequenceNumber << m_retCode << m_retMsg;
-}
-
-void ReplyHeader::deserialize(eprosima::fastcdr::Cdr &cdr)
-{
-    cdr >> m_clientId >> m_requestSequenceNumber >> m_retCode >> m_retMsg;
+    cdr >> relatedRequestId_ >> (uint32_t&)remoteEx_;
 }

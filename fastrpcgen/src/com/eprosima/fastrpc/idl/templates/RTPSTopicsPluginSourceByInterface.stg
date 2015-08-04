@@ -1,0 +1,202 @@
+/*************************************************************************
+ * Copyright (c) 2012 eProsima. All rights reserved.
+ *
+ * This copy of FASTRPC is licensed to you under the terms described in the
+ * FASTRPC_LICENSE file included in this distribution.
+ *
+ *************************************************************************/
+
+group TopicsPluginSourceByInterface;
+
+main(ctx, definitions) ::= <<
+$fileHeader(ctx=ctx,  file=[ctx.filename, "TopicsPlugin.cpp"], description=["TODO This header file contains the declaration of topics generated using operations in the IDL file."])$
+
+#include "$ctx.filename$TopicsPlugin.h"
+
+#include <fastcdr/Cdr.h>
+
+using namespace eprosima::fastrtps;
+
+$definitions; separator="\n"$
+
+>>
+
+module(ctx, parent, module, definition_list) ::= <<
+$definition_list$
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+interface(ctx, parent, interface, export_list) ::= <<
+$export_list$
+
+$interface.scopedname$_RequestPlugin::$interface.name$_RequestPlugin() 
+{
+	setName("$interface.scopedname$_Request");
+	m_typeSize = (uint32_t)$interface.scopedname$_Request::getMaxCdrSerializedSize();
+	m_isGetKeyDefined = false;
+}
+
+$interface.scopedname$_RequestPlugin::~$interface.name$_RequestPlugin() 
+{
+}
+
+bool $interface.scopedname$_RequestPlugin::serialize(void *data, SerializedPayload_t *payload) 
+{
+	$interface.scopedname$_Request *p_type = ($interface.scopedname$_Request*) data;
+	
+	// Object that manages the raw buffer.
+	eprosima::fastcdr::FastBuffer fastbuffer((char*) payload->data, payload->max_size);
+	// Object that serializes the data.
+	eprosima::fastcdr::Cdr ser(fastbuffer,eprosima::fastcdr::Cdr::LITTLE_ENDIANNESS);
+	//Select the correct endianess
+	payload->encapsulation = CDR_LE; 
+	// Serialize the object:
+	p_type->serialize(ser);
+	//Get the serialized length
+    payload->length = (uint16_t)ser.getSerializedDataLength();
+    	
+	return true;
+}
+
+bool $interface.scopedname$_RequestPlugin::deserialize(SerializedPayload_t* payload, void* data)
+{
+	//CONVERT DATA to pointer of your type
+	$interface.scopedname$_Request* p_type = ($interface.scopedname$_Request*) data;
+
+	// Object that manages the raw buffer.
+	eprosima::fastcdr::FastBuffer fastbuffer((char*)payload->data, payload->length);
+	//select the correct endianess
+	eprosima::fastcdr::Cdr::Endianness endian = payload->encapsulation == CDR_LE ? eprosima::fastcdr::Cdr::LITTLE_ENDIANNESS : eprosima::fastcdr::Cdr::BIG_ENDIANNESS;
+	// Object that deserializes the data.
+	eprosima::fastcdr::Cdr deser(fastbuffer,endian);
+	//deserialize the object:
+	p_type->deserialize(deser);
+	return true;
+}
+
+void* $interface.scopedname$_RequestPlugin::createData()
+{
+	return (void*)new $interface.scopedname$_Request();
+}
+
+void* $interface.scopedname$_RequestPlugin::create_data()
+{
+	return (void*)new $interface.scopedname$_Request();
+}
+
+void $interface.scopedname$_RequestPlugin::deleteData(void* data)
+{
+	delete(($interface.scopedname$_Request*)data);
+}
+
+void $interface.scopedname$_RequestPlugin::delete_data(void* data)
+{
+	delete(($interface.scopedname$_Request*)data);
+}
+
+void $interface.scopedname$_RequestPlugin::copy_data(
+    $interface.name$_Request *dst,
+    const $interface.name$_Request *src)
+{
+    *dst = *src;
+}
+ 
+// Reply interfaces
+$interface.scopedname$_ReplyPlugin::$interface.name$_ReplyPlugin() 
+{
+	setName("$interface.scopedname$_Reply");
+	m_typeSize = (uint32_t)$interface.scopedname$_Reply::getMaxCdrSerializedSize();
+	m_isGetKeyDefined = false;
+}
+
+$interface.scopedname$_ReplyPlugin::~$interface.name$_ReplyPlugin() 
+{
+}
+
+bool $interface.scopedname$_ReplyPlugin::serialize(void *data, SerializedPayload_t *payload) 
+{
+	$interface.scopedname$_Reply *p_type = ($interface.scopedname$_Reply*) data;
+	
+	// Object that manages the raw buffer.
+	eprosima::fastcdr::FastBuffer fastbuffer((char*) payload->data, payload->max_size);
+	// Object that serializes the data.
+	eprosima::fastcdr::Cdr ser(fastbuffer,eprosima::fastcdr::Cdr::LITTLE_ENDIANNESS);
+	//Select the correct endianess
+	payload->encapsulation = CDR_LE; 
+	// Serialize the object:
+	p_type->serialize(ser);
+	//Get the serialized length
+    payload->length = (uint16_t)ser.getSerializedDataLength();
+    	
+	return true;
+}
+
+bool $interface.scopedname$_ReplyPlugin::deserialize(SerializedPayload_t* payload, void* data)
+{
+	//CONVERT DATA to pointer of your type
+	$interface.scopedname$_Reply* p_type = ($interface.scopedname$_Reply*) data;
+
+	// Object that manages the raw buffer.
+	eprosima::fastcdr::FastBuffer fastbuffer((char*)payload->data, payload->length);
+	//select the correct endianess
+	eprosima::fastcdr::Cdr::Endianness endian = payload->encapsulation == CDR_LE ? eprosima::fastcdr::Cdr::LITTLE_ENDIANNESS : eprosima::fastcdr::Cdr::BIG_ENDIANNESS;
+	// Object that deserializes the data.
+	eprosima::fastcdr::Cdr deser(fastbuffer,endian);
+	//deserialize the object:
+	p_type->deserialize(deser);
+	return true;
+}
+
+void* $interface.scopedname$_ReplyPlugin::createData()
+{
+	return (void*)new $interface.scopedname$_Reply();
+}
+
+void* $interface.scopedname$_ReplyPlugin::create_data()
+{
+	return (void*)new $interface.scopedname$_Reply();
+}
+
+void $interface.scopedname$_ReplyPlugin::deleteData(void* data)
+{
+	delete(($interface.scopedname$_Reply*)data);
+}
+
+void $interface.scopedname$_ReplyPlugin::delete_data(void* data)
+{
+	delete(($interface.scopedname$_Reply*)data);
+}
+
+void $interface.scopedname$_ReplyPlugin::copy_data(
+    $interface.name$_Reply *dst,
+    const $interface.name$_Reply *src)
+{
+    *dst = *src;
+}
+
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, parent, exception) ::= <<>>
+
+operation(ctx, parent, operation, param_list) ::= <<>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+const_decl(ctx, parent, const) ::= <<>>
+
+typedef_decl(ctx, parent, typedefs) ::= <<>>
+
+struct_type(ctx, parent, struct) ::= <<>>
+
+union_type(ctx, parent, union) ::= <<>>
+
+enum_type(ctx, parent, enum) ::= <<>>

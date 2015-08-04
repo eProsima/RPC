@@ -6,12 +6,12 @@
  *
  *************************************************************************/
 
-#include "fastrpc/strategies/ThreadPoolStrategy.h"
-#include "fastrpc/strategies/ServerStrategyImpl.h"
-#include "fastrpc/transports/ServerTransport.h"
+#include <strategies/ThreadPoolStrategy.h>
+#include "ServerStrategyImpl.h"
+#include <transports/ServerTransport.h>
 
-#include "boost/config/user.hpp"
-#include "boost/threadpool.hpp"
+#include <boost/config/user.hpp>
+#include <boost/threadpool.hpp>
 
 static const char* const CLASS_NAME = "ThreadPoolStrategy";
 

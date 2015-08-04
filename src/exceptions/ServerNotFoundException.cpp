@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-#include "fastrpc/exceptions/ServerNotFoundException.h"
+#include <exceptions/ServerNotFoundException.h>
 
 using namespace eprosima::rpc::exception;
 

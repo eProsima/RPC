@@ -6,14 +6,8 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "ClientExample.cxx"], description=["Th
 #include "$ctx.filename$Proxy.h"
 #include "$ctx.filename$.h"
 #include "$ctx.filename$DDSProtocol.h"
-#include "$ctx.product$/transports/dds/UDPProxyTransport.h"
-#include "$ctx.product$/exceptions/Exceptions.h"
-
-$if(ctx.rtiTypes)$
-$ctx.includeDependencies : { include |#include "$include$Exceptions.h"}; separator="\n"$
-#include "$ctx.filename$Exceptions.h"
-
-$endif$
+#include <$ctx.product$/transports/dds/UDPProxyTransport.h>
+#include <$ctx.product$/exceptions/Exceptions.h>
 
 #include <iostream>
 
@@ -26,14 +20,14 @@ int main(int argc, char **argv)
 {
     $ctx.filename$Protocol *protocol = NULL;
     UDPProxyTransport *transport = NULL;
-    $ctx.firstInterface.scopedname$Proxy *proxy = NULL;
+    $first(ctx.scopedInterfaces).scopedname$Proxy *proxy = NULL;
     
-    // Creation of the proxy for interface "$ctx.firstInterface.scopedname$".
+    // Creation of the proxy for interface "$first(ctx.scopedInterfaces).scopedname$".
     try
     {
         protocol = new $ctx.filename$Protocol();
-        transport = new UDPProxyTransport("$ctx.filename$Service");
-        proxy = new $ctx.firstInterface.scopedname$Proxy(*transport, *protocol);
+        transport = new UDPProxyTransport("$ctx.filename$Service", "Instance");
+        proxy = new $first(ctx.scopedInterfaces).scopedname$Proxy(*transport, *protocol);
     }
     catch(InitializeException &ex)
     {
@@ -42,16 +36,16 @@ int main(int argc, char **argv)
     }
     
     // Create and initialize parameters.
-    $ctx.firstInterface.firstOperation.parameters : {param | $varDecl(variable=param)$};separator="\n"$
+    $first(first(ctx.scopedInterfaces).operations).parameters : {param | $varDecl(variable=param)$};separator="\n"$
     // Create and initialize return value.
-    $varDecl(variable=ctx.firstInterface.firstOperation.rettypeparam)$
+    $varDecl(variable=first(first(ctx.scopedInterfaces).operations).rettypeparam)$
 
-    // Call to remote procedure "$ctx.firstInterface.firstOperation.name$".
+    // Call to remote procedure "$first(first(ctx.scopedInterfaces).operations).name$".
     try
     {
-        $if(ctx.firstInterface.firstOperation.rettypeparam)$        $ctx.firstInterface.firstOperation.rettypeparam.name$ = $else$        $endif$proxy->$ctx.firstInterface.firstOperation.name$($extractParams(params=ctx.firstInterface.firstOperation.parameters)$);
+        $if(first(first(ctx.scopedInterfaces).operations).rettypeparam)$        $first(first(ctx.scopedInterfaces).operations).rettypeparam.name$ = $else$        $endif$proxy->$first(first(ctx.scopedInterfaces).operations).name$($extractParams(params=first(first(ctx.scopedInterfaces).operations).parameters)$);
     }
-    $if(ctx.firstInterface.firstOperation.exceptions)$
+    $if(first(first(ctx.scopedInterfaces).operations).exceptions)$
     catch(UserException &ex)
     {
         std::cout << "User exception" << std::endl;
@@ -72,7 +66,7 @@ int main(int argc, char **argv)
 $definitions; separator="\n"$
 >>
 
-module(ctx, module, definition_list) ::= <<
+module(ctx, parent, module, definition_list) ::= <<
 $definition_list$
 >>
 
@@ -80,7 +74,7 @@ definition_list(definitions) ::= <<
 $definitions; separator="\n"$
 >>
 
-interface(ctx, interface, export_list) ::= <<
+interface(ctx, parent, interface, export_list) ::= <<
 $export_list$
 >>
 
@@ -88,9 +82,9 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
-exception(ctx, exception) ::= <<>>
+exception(ctx, parent, exception) ::= <<>>
 
-operation(ctx, operation, param_list) ::= <<
+operation(ctx, parent, operation, param_list) ::= <<
 $param_list$
 >>
 
@@ -98,12 +92,12 @@ param_list(parameters) ::= <<>>
 
 param(parameter) ::= <<>>
 
-const_decl(ctx, const) ::= <<>>
+const_decl(ctx, parent, const) ::= <<>>
 
-typedef_decl(ctx, typedefs) ::= <<>>
+typedef_decl(ctx, parent, typedefs) ::= <<>>
 
-struct_type(ctx, struct) ::= <<>>
+struct_type(ctx, parent, struct) ::= <<>>
 
-union_type(ctx, union) ::= <<>>
+union_type(ctx, parent, union) ::= <<>>
 
-enum_type(ctx, enum) ::= <<>>
+enum_type(ctx, parent, enum) ::= <<>>

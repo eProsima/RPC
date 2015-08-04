@@ -7,7 +7,7 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "CDRProtocol.h"], description=["This h
 #define _$ctx.filename;format="toUpper"$_CDR_PROTOCOL_H_
 
 #include "$ctx.filename$Protocol.h"
-#include "fastcdr/FastCdr.h"
+#include <fastcdr/FastCdr.h>
 $ctx.includeDependencies : { include |#include "$include$.h"}; separator="\n"$
 
 namespace eprosima
@@ -29,7 +29,7 @@ namespace eprosima
                  * @brief
                  * @ingroup $ctx.trimfilename$
                  */
-                class FASTRPCUSERDllExport $ctx.filename$Protocol : public eprosima::rpc::protocol::$ctx.filename$Protocol
+                class RPCUSERDllExport $ctx.filename$Protocol : public eprosima::rpc::protocol::$ctx.filename$Protocol
                 {
                     public:
                     
@@ -43,10 +43,10 @@ namespace eprosima
                         
                         static size_t worker(Protocol& protocol, void *&buffer, size_t &bufferLength, size_t &bufferSize, eprosima::rpc::transport::Endpoint *endpoint);
                         
-                        $ctx.interfaces : { interface |
-                        $interface.operations : { operation |
+                        $ctx.scopedInterfaces : { interface |
+                        $interface.all_operations : { operation |
                         $if(ctx.client)$
-                        $paramRetType(operation.rettype)$ $operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
+                        $paramRetType(operation.rettype)$ $interface.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$);
                         $endif$
                         
                         }; separator="\n"$
@@ -65,7 +65,7 @@ namespace eprosima
 #endif // _$ctx.filename;format="toUpper"$_CDR_PROTOCOL_H_
 >>
 
-module(ctx, module, definition_list) ::= <<
+module(ctx, parent, module, definition_list) ::= <<
 $definition_list$
 
 >>
@@ -75,7 +75,7 @@ $definitions; separator="\n"$
 
 >>
 
-interface(ctx, interface, export_list) ::= <<
+interface(ctx, parent, interface, export_list) ::= <<
 $export_list$
 >>
 
@@ -84,7 +84,7 @@ $exports; separator="\n"$
 
 >>
 
-exception(ctx, exception) ::= <<
+exception(ctx, parent, exception) ::= <<
 /*!
  * @brief This function serialize an exception $exception.scopedname$.
  * @param cdr eprosima::fastcdr::FastCdr object used to serialize.
@@ -105,25 +105,25 @@ void deserialize(eprosima::fastcdr::FastCdr &cdr, $exception.scopedname$ &x);
 
 >>
 
-operation(ctx, operation, param_list) ::= <<>>
+operation(ctx, parent, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 
 param(parameter) ::= <<>>
 
-const_decl(ctx, const) ::= <<>>
+const_decl(ctx, parent, const) ::= <<>>
 
-typedef_decl(ctx, typedefs) ::= <<>>
+typedef_decl(ctx, parent, typedefs) ::= <<>>
 
-struct_type(ctx, struct) ::= <<
+struct_type(ctx, parent, struct) ::= <<
 $membered_type(ctx=ctx, mtype=struct)$
 >>
 
-union_type(ctx, union) ::= <<
+union_type(ctx, parent, union) ::= <<
 $membered_type(ctx=ctx, mtype=union)$
 >>
 
-enum_type(ctx, enum) ::= <<>>
+enum_type(ctx, parent, enum) ::= <<>>
 
 /******* Utils **********/
 

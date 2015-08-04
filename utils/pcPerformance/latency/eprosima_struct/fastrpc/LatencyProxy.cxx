@@ -27,12 +27,13 @@ LatencyProxy::LatencyProxy(eprosima::rpc::transport::ProxyTransport &transport,
 LatencyProxy::~LatencyProxy()
 {
 }
-
+ 
 st LatencyProxy::latency(/*in*/ const st& param)
 {
-    st latency_ret =
+    st return_ =
     dynamic_cast<eprosima::rpc::protocol::LatencyProtocol&>(getProtocol()).Latency_latency(param);
-    return latency_ret;
+    return return_;
 }
+
 
 

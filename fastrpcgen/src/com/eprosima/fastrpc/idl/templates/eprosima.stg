@@ -1,17 +1,5 @@
 group eprosima;
 
-paramTypeByValue(typecode) ::= <<
-$if(typecode.primitive)$
-$if(typecode.isType_d)$
-const $typecode.cppTypename$&
-$else$
-$typecode.cppTypename$
-$endif$
-$else$
-const $typecode.cppTypename$&
-$endif$
->>
-
 varDecl(variable, create) ::= <<
 $if(variable)$
 $if(variable.typecode.primitive)$
@@ -30,40 +18,40 @@ m_$member.name$ = $member.typecode.initialValue$;
 $endif$
 >>
 
-getTypenameOperation(operation, suffix, varname) ::= <<
-$varname$ = $operation.parent.scopedname$Plugin::$operation.name$$suffix$Plugin::get_typename();
+getTypenameOperation(interface, operation, suffix, varname) ::= <<
+$varname$ = $interface.scopedname$Plugin::$operation.name$$suffix$Plugin::get_typename();
 >>
 
 getTypenameInterface(interface, suffix, varname) ::= <<
 $varname$ = $interface.scopedname$$suffix$Plugin::get_typename();
 >>
 
-registerTypenameOperationAndCheck(operation, suffix, varname) ::= <<
-!$operation.parent.scopedname$Plugin::$operation.name$$suffix$Plugin::register_type(m_ddsTransport->getParticipant(), $varname$)
+registerTypenameOperationAndCheck(interface, operation, suffix, varname) ::= <<
+!$interface.scopedname$Plugin::$operation.name$$suffix$Plugin::register_type(m_ddsTransport->getParticipant(), $varname$)
 >>
 
 registerTypenameInterfaceAndCheck(interface, suffix, varname) ::= <<
 !$interface.scopedname$$suffix$Plugin::register_type(m_ddsTransport->getParticipant(), $varname$)
 >>
 
-createDataCallback(operation, suffix) ::= <<
-(::transport::dds::Transport::Create_data)$operation.parent.scopedname$Plugin::$operation.name$$suffix$Plugin::create_data
+createDataCallback(interface, operation, suffix) ::= <<
+(::transport::dds::Transport::Create_data)$interface.scopedname$Plugin::$operation.name$$suffix$Plugin::create_data
 >>
 
 createDataCallbackInterface(interface, suffix) ::= <<
 (::transport::dds::Transport::Create_data)$interface.scopedname$$suffix$Plugin::create_data
 >>
 
-copyDataCallback(operation, suffix) ::= <<
-(::transport::dds::Transport::Copy_data)$operation.parent.scopedname$Plugin::$operation.name$$suffix$Plugin::copy_data
+copyDataCallback(interface, operation, suffix) ::= <<
+(::transport::dds::Transport::Copy_data)$interface.scopedname$Plugin::$operation.name$$suffix$Plugin::copy_data
 >>
 
 copyDataCallbackInterface(interface, suffix) ::= <<
 (::transport::dds::Transport::Copy_data)$interface.scopedname$$suffix$Plugin::copy_data
 >>
 
-destroyDataCallback(operation, suffix) ::= <<
-(::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$Plugin::$operation.name$$suffix$Plugin::destroy_data
+destroyDataCallback(interface, operation, suffix) ::= <<
+(::transport::dds::Transport::Destroy_data)$interface.scopedname$Plugin::$operation.name$$suffix$Plugin::destroy_data
 >>
 
 destroyDataCallbackInterface(interface, suffix) ::= <<
@@ -86,9 +74,9 @@ $endif$
 
 addExceptionMemberToTopic(exception, member, varname) ::= <<
 $if(member.typecode.primitive)$
-$varname$.unio().$exception.formatedScopedname$_ex().$member.name$(ex.$member.name$());
+$varname$.$exception.formatedScopedname$_ex().$member.name$(ex.$member.name$());
 $else$
-$varname$.unio().$exception.formatedScopedname$_ex().$member.name$(std::move(ex.$member.name$()));
+$varname$.$exception.formatedScopedname$_ex().$member.name$(std::move(ex.$member.name$()));
 $endif$
 >>
 
@@ -102,14 +90,6 @@ $endif$
 
 extractExceptionMemberFromTopic(exception, member, varname) ::= <<
 $if(member.typecode.primitive)$
-ex.$member.name$($varname$.unio().$exception.formatedScopedname$_ex().$member.name$());
-$else$
-ex.$member.name$(std::move($varname$.unio().$exception.formatedScopedname$_ex().$member.name$()));
-$endif$
->>
-
-extractExceptionMemberFromTopicByInterface(exception, member, varname) ::= <<
-$if(member.typecode.primitive)$
 ex.$member.name$($varname$.$exception.formatedScopedname$_ex().$member.name$());
 $else$
 ex.$member.name$(std::move($varname$.$exception.formatedScopedname$_ex().$member.name$()));
@@ -117,176 +97,81 @@ $endif$
 >>
 
 copyHeaderInfo(reqvarname, repvarname) ::= <<
-$repvarname$._header().clientId().value_1() = $reqvarname$._header().clientId().value_1();
-$repvarname$._header().clientId().value_2() = $reqvarname$._header().clientId().value_2();
-$repvarname$._header().clientId().value_3() = $reqvarname$._header().clientId().value_3();
-$repvarname$._header().clientId().value_4() = $reqvarname$._header().clientId().value_4();
-$repvarname$._header().requestSequenceNumber() = $reqvarname$._header().requestSequenceNumber();
+$repvarname$.header().relatedRequestId($reqvarname$.header().requestId());
+$repvarname$.header().remoteEx(eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK);
 >>
 
-setHeaderSuccess(varname) ::= <<
-$varname$._header().retCode(OPERATION_SUCCESSFUL);
+getRemoteException(varname) ::= <<
+$varname$.header().remoteEx()
 >>
 
-setHeaderServerInternalException(varname) ::= <<
-$varname$._header().retCode(SERVER_INTERNAL_ERROR);
-$varname$._header().retMsg(std::move(ex.what()));
+setRemoteExceptionAsUnsupported(varname) ::= <<
+$varname$.header().remoteEx(eprosima::rpc::protocol::dds::rpc::REMOTE_EX_UNSUPPORTED);
 >>
 
-getHeaderRetCode(varname) ::= <<
-$varname$._header().retCode()
+setRemoteExceptionDefaultDiscriminatorByInterface(varname, interface, operation) ::= <<>>
+
+setRemoteExceptionDefaultDiscriminatorByOperation(varname, interface, operation) ::= <<>>
+
+remoteExceptionOK() ::= <<eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK>>
+
+requestUnionByInterface(varname) ::= <<
+$varname$.data()
 >>
 
-getHeaderRetMsg(varname) ::= <<
-$varname$._header().retMsg()
+requestUnionDiscriminatorByInterface(varname) ::= <<
+$requestUnionByInterface(varname=varname)$._d()
 >>
 
-interfaceUnionDiscriminator(varname) ::= <<
-$varname$.unio()._d()
+requestUnionDataByInterface(varname) ::= <<
+$requestUnionByInterface(varname=varname)$
 >>
 
-interfaceUnionOperation(operation, varname) ::= <<
-$varname$.unio().$operation.name$()
+requestOperationDataByOperation(operation, varname) ::= <<
+$varname$.$operation.name$()
 >>
 
-replyUnionDiscriminator(varname) ::= <<
-$varname$.unio()._d()
+requestOperationDataByInterface(operation, varname) ::= <<
+$requestUnionDataByInterface(varname=varname)$.$operation.name$()
 >>
 
-replyUnionDiscriminatorByInterface(operation, varname) ::= <<
-$varname$.unio().$operation.name$()._d()
+replyUnionByInterface(varname) ::= <<
+$varname$.data()
 >>
 
-replyUnionData(varname, dataname) ::= <<
-$varname$.unio().$dataname$()
+replyUnionDiscriminatorByInterface(varname) ::= <<
+$replyUnionByInterface(varname=varname)$._d()
 >>
 
-replyUnionDataByInterface(operation, varname, dataname) ::= <<
-$varname$.unio().$operation.name$().$dataname$()
+replyUnionDataByInterface(varname) ::= <<
+$replyUnionByInterface(varname=varname)$
 >>
 
-// TODO Todos los tipos. MEJORAR. size of 1 no deberia generar alignment.
-max_serialized_size(ctx, typecode, var) ::= <<
-$if(typecode.primitive)$
-$if(typecode.isType_d)$
-$var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$ + $typecode.maxsize$ + 1;
-$else$
-$var$ += $typecode.size$$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, $typecode.size$)$endif$;
-$endif$
-$else$
-$if(typecode.isType_e)$
-$var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
-$sequence_max_serialized_size(ctx=ctx, typecodeSeq=typecode, var=var, loopvar=ctx.newLoopVarName)$
-$elseif(typecode.isType_f)$
-$array_max_serialized_size(ctx=ctx, typecodeArr=typecode, var=var, loopvar=ctx.newLoopVarName)$
-$else$
-$var$ = $typecode.scopedname$::getMaxCdrSerializedSize($var$);
-$endif$
-$endif$
+replyOperationUnionDiscriminatorByInterface(operation, varname) ::= <<
+$varname$.data().$operation.name$()._d()
 >>
 
-sequence_max_serialized_size(ctx, typecodeSeq, var, loopvar) ::= <<
-$if(typecodeSeq.contentTypeCode.primitive)$
-$if(typecodeSeq.contentTypeCode.isType_d)$
-for(size_t $loopvar$ = 0; $loopvar$ < $typecodeSeq.maxsize$; ++$loopvar$)
-{
-    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$ + $typecodeSeq.contentTypeCode.maxsize$ + 1;
-}
-$else$
-$var$ += ($typecodeSeq.maxsize$ * $typecodeSeq.contentTypeCode.size$)$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, $typecodeSeq.contentTypeCode.size$)$endif$;
-$endif$
-$else$
-for(size_t $loopvar$ = 0; $loopvar$ < $typecodeSeq.maxsize$; ++$loopvar$)
-{
-$if(typecodeSeq.contentTypeCode.isType_e)$
-    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
-    $sequence_max_serialized_size(ctx=ctx, typecodeSeq=typecodeSeq.contentTypeCode, var=var, loopvar=ctx.nextLoopVarName)$
-$elseif(typecodeSeq.contentTypeCode.isType_f)$
-$array_max_serialized_size(ctx=ctx, typecodeArr=typecodeSeq.contentTypeCode, var=var, loopvar=ctx.nextLoopVarName)$
-$else$
-    $var$ = $typecodeSeq.contentTypeCode.scopedname$::getMaxCdrSerializedSize($var$);
-$endif$
-}
-$endif$
+replyOperationUnionDiscriminatorByOperation(operation, varname) ::= <<
+$varname$.$operation.name$()._d()
 >>
 
-array_max_serialized_size(ctx, typecodeArr, var, loopvar) ::= <<
-$if(typecodeArr.contentTypeCode.primitive)$
-$if(typecodeArr.contentTypeCode.isType_d)$
-for(size_t $loopvar$ = 0; $loopvar$ < $typecodeArr.size$; ++$loopvar$)
-{
-    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$ + $typecodeArr.contentTypeCode.maxsize$ + 1;
-}
-$else$
-$var$ += ($typecodeArr.size$ * $typecodeArr.contentTypeCode.size$)$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, $typecodeArr.contentTypeCode.size$)$endif$;
-$endif$
-$else$
-for(size_t $loopvar$ = 0; $loopvar$ < $typecodeArr.size$; ++$loopvar$)
-{
-$if(typecodeArr.contentTypeCode.isType_e)$
-    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
-    $sequence_max_serialized_size(ctx=ctx, typecodeArr=typecodeArr.contentTypeCode, var=var, loopvar=ctx.nextLoopVarName)$
-$elseif(typecodeArr.contentTypeCode.isType_f)$
-$array_max_serialized_size(ctx=ctx, typecodeArr=typecodeArr.contentTypeCode, var=var, loopvar=ctx.nextLoopVarName)$
-$else$
-    $var$ = $typecodeArr.contentTypeCode.scopedname$::getMaxCdrSerializedSize($var$);
-$endif$
-}
-$endif$
+replyOperationUnionDataByInterface(operation, varname) ::= <<
+$replyUnionDataByInterface(varname=varname)$.$operation.name$()
 >>
 
-object_serialization(ctx, object, preffix) ::= <<
-$if(object.typecode.maxsize)$
-if($preffix$$object.name$.$sizeFunction.(object.typecode.stType)$ <= $object.typecode.maxsize$)
-
-$endif$scdr << $serializeCasting(typecode=object.typecode)$$preffix$$object.name$;
-$if(object.typecode.maxsize)$
-else
-$if(ctx.fastrpcProduct)$
-    throw eprosima::rpc::exception::BadParamException(std::string("$object.name$ field exceeds the maximum length"));
-$else$
-    throw eprosima::fastcdr::exception::BadParamException(std::string("$object.name$ field exceeds the maximum length"));
-$endif$
-$endif$
+replyOperationUnionDataByOperation(operation, varname) ::= <<
+$varname$.$operation.name$()
 >>
 
-object_deserialization(ctx, object, preffix) ::= <<
-dcdr \>> $deserializeCasting(typecode=object.typecode)$$preffix$$object.name$;
+replyOperationUnionDataAccessByInterface(operation, varname, dataname) ::= <<
+$replyOperationUnionDataByInterface(operation=operation, varname=varname)$.$dataname$()
 >>
 
-// TODO Todos los tipos. MEJORAR. size of 1 no deberia generar alignment.
-serialized_size(param, var) ::= <<
-$if(param.typecode.primitive)$
-$if(param.typecode.isType_d)$
-// TODO $var$ += $param.name$.length();
-$else$
-$var$ += $param.typecode.size$ + eprosima::fastcdr::Cdr::alignment($var$, $param.typecode.size$);
-$endif$
-$else$
-// TODO
-$endif$
->>
-
-serializeCasting(typecode) ::= <<
-$if(typecode.isType_c)$
-(uint32_t)
-$endif$
->>
-
-deserializeCasting(typecode) ::= <<
-$if(typecode.isType_c)$
-(uint32_t&)
-$endif$
+replyOperationUnionDataAccessByOperation(operation, varname, dataname) ::= <<
+$replyOperationUnionDataByOperation(operation=operation, varname=varname)$.$dataname$()
 >>
 
 eprosimaTypesBool() ::= <<true>>
-
-sizeFunction ::= [
-        "type_e":"size()",
-        "type_d":"length()",
-        "type_15":"length()",
-        default: // not basic type.
-]
 
 /** NEEDED BY RTI TYPES **/
 charCasting() ::= <<>>

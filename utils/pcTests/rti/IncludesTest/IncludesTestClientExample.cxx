@@ -18,9 +18,6 @@
 #include "fastrpc/transports/dds/UDPProxyTransport.h"
 #include "fastrpc/exceptions/Exceptions.h"
 
-#include "SameDirectoryExceptions.h"
-#include "util/UtilExceptions.h"
-
 #include <iostream>
 
 using namespace eprosima::rpc;
@@ -38,7 +35,7 @@ int main(int argc, char **argv)
     try
     {
         protocol = new IncludesTestProtocol();
-        transport = new UDPProxyTransport("IncludesTestService");
+        transport = new UDPProxyTransport("IncludesTestService", "Instance");
         proxy = new IncludesTestNS::IncludesTestIfcProxy(*transport, *protocol);
     }
     catch(InitializeException &ex)

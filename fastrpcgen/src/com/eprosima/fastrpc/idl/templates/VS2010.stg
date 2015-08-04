@@ -70,7 +70,7 @@ project(solution, project, example, configurations, local) ::= <<
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
       <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$;$preprocessorTypesLibDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$$if(local)$$solution.productDefine$$endif$%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$;$preprocessorTypesLibDefs(conf=it)$;$project.name;format="toUpper"$_SOURCE$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$$if(local)$$solution.productDefine$$endif$%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -304,7 +304,7 @@ projectClientExample(solution, project, example, configurations, local) ::= <<
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
       <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK$endif$;$solution.defines : {define |$define$;}$$if(local)$$solution.productDefine$$endif$%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$$if(local)$$solution.productDefine$$endif$%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -320,6 +320,7 @@ projectClientExample(solution, project, example, configurations, local) ::= <<
                               $if(it.debug)$$solution.librariesStaticDebug : {library |$library$.lib;}$
                               $else$$solution.librariesStatic : {library |$library$.lib;}$
                               $endif$
+                              iphlpapi.lib;Shlwapi.lib;
                               $endif$
                               $project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;$if(!it.dll)$lib$endif$$project.name$Client$if(it.debug)$d$endif$.lib;$if(!it.dll)$WS2_32.lib;$endif$%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>
@@ -519,7 +520,7 @@ projectServerExample(solution, project, example, configurations, local) ::= <<
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
       <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK$endif$;$solution.defines : {define |$define$;}$$if(local)$$solution.productDefine$$endif$%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$$if(local)$$solution.productDefine$$endif$%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
@@ -536,6 +537,7 @@ projectServerExample(solution, project, example, configurations, local) ::= <<
                               $if(it.debug)$$solution.librariesStaticDebug : {library |$library$.lib;}$
                               $else$$solution.librariesStatic : {library |$library$.lib;}$
                               $endif$
+                              iphlpapi.lib;Shlwapi.lib;
                               $endif$
                               $project.dependencies : {dep |$if(!it.dll)$lib$endif$$dep$$if(it.debug)$d$endif$.lib}; separator=";"$;$if(!it.dll)$lib$endif$$project.name$$if(it.debug)$d$endif$.lib;$if(!it.dll)$lib$endif$$project.name$Server$if(it.debug)$d$endif$.lib;$if(!it.dll)$WS2_32.lib;$endif$%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>\$(TargetDir)\$(TargetName)\$(TargetExt)</OutputFile>

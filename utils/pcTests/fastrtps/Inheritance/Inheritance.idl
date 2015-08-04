@@ -1,0 +1,34 @@
+module ModuleA
+{
+    interface Interface1
+    {
+        struct Dato
+        {
+            long count;
+        };
+
+        Dato function1(in Dato data);
+
+        oneway void function1_set(in Dato data);
+
+        Dato function1_get();
+    };
+
+    interface Interface2 : Interface1
+    {
+        long function2(in long count);
+    };
+};
+
+module ModuleB
+{
+    interface Interface3 : ModuleA::Interface1
+    {
+        struct Dato
+        {
+            string str;
+        };
+
+        Dato function3(in Dato data);
+    };
+};

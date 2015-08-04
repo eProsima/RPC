@@ -85,51 +85,51 @@ ddsIncludes() ::= <<
 >>
 
 reqrepCreation(type, reqrep, name, void, create) ::= <<
-$if(create)$$type$$reqrep$* $endif$$name$ = $if(void)$(void*)$endif$$type$$reqrep$PluginSupport_create_data();
+$if(create)$$type$_$reqrep$* $endif$$name$ = $if(void)$(void*)$endif$$type$_$reqrep$PluginSupport_create_data();
 >>
 
 reqrepDestruction(type, reqrep, name, void) ::= <<
-$type$$reqrep$PluginSupport_destroy_data($if(void)$($type$$reqrep$*)$endif$$name$);
+$type$_$reqrep$PluginSupport_destroy_data($if(void)$($type$_$reqrep$*)$endif$$name$);
 >>
 
 reqrepRefFinalize(type, reqrep, name) ::= <<
-$type$$reqrep$_finalize(&$name$);
+$type$_$reqrep$_finalize(&$name$);
 >>
 
-getTypenameOperation(operation, suffix, varname) ::= <<
-$varname$ = $operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::get_type_name();
+getTypenameOperation(interface, operation, suffix, varname) ::= <<
+$varname$ = $interface.scopedname$_$operation.name$$suffix$TypeSupport::get_type_name();
 >>
 
 getTypenameInterface(interface, suffix, varname) ::= <<
 $varname$ = $interface.scopedname$$suffix$TypeSupport::get_type_name();
 >>
 
-registerTypenameOperationAndCheck(operation, suffix, varname) ::= <<
-$operation.parent.scopedname$_$operation.name$$suffix$TypeSupport::register_type(m_ddsTransport->getParticipant(), $varname$) != DDS::RETCODE_OK
+registerTypenameOperationAndCheck(interface, operation, suffix, varname) ::= <<
+$interface.scopedname$_$operation.name$$suffix$TypeSupport::register_type(m_ddsTransport->getParticipant(), $varname$) != DDS::RETCODE_OK
 >>
 
 registerTypenameInterfaceAndCheck(interface, suffix, varname) ::= <<
 $interface.scopedname$$suffix$TypeSupport::register_type(m_ddsTransport->getParticipant(), $varname$) != DDS::RETCODE_OK
 >>
 
-createDataCallback(operation, suffix) ::= <<
-(::transport::dds::Transport::Create_data)$operation.parent.scopedname$_$operation.name$$suffix$PluginSupport_create_data
+createDataCallback(interface, operation, suffix) ::= <<
+(::transport::dds::Transport::Create_data)$interface.scopedname$_$operation.name$$suffix$PluginSupport_create_data
 >>
 
 createDataCallbackInterface(interface, suffix) ::= <<
 (::transport::dds::Transport::Create_data)$interface.scopedname$$suffix$PluginSupport_create_data
 >>
 
-copyDataCallback(operation, suffix) ::= <<
-(::transport::dds::Transport::Copy_data)$operation.parent.scopedname$_$operation.name$$suffix$PluginSupport_copy_data
+copyDataCallback(interface, operation, suffix) ::= <<
+(::transport::dds::Transport::Copy_data)$interface.scopedname$_$operation.name$$suffix$PluginSupport_copy_data
 >>
 
 copyDataCallbackInterface(interface, suffix) ::= <<
 (::transport::dds::Transport::Copy_data)$interface.scopedname$$suffix$PluginSupport_copy_data
 >>
 
-destroyDataCallback(operation, suffix) ::= <<
-(::transport::dds::Transport::Destroy_data)$operation.parent.scopedname$_$operation.name$$suffix$PluginSupport_destroy_data
+destroyDataCallback(interface, operation, suffix) ::= <<
+(::transport::dds::Transport::Destroy_data)$interface.scopedname$_$operation.name$$suffix$PluginSupport_destroy_data
 >>
 
 destroyDataCallbackInterface(interface, suffix) ::= <<
@@ -148,18 +148,9 @@ $endif$
 
 addExceptionMemberToTopic(exception, member, varname) ::= <<
 $if(member.typecode.isType_f)$
-memcpy($varname$.unio._u.$exception.formatedScopedname$_ex.$member.name$, ex.$member.name$, sizeof($member.typecode.stTypename$));
+memcpy($varname$.$exception.formatedScopedname$_ex.$member.name$, ex.$member.name$, sizeof($member.typecode.stTypename$));
 $else$
-$varname$.unio._u.$exception.formatedScopedname$_ex.$member.name$ = ex.$member.name$;
-$endif$
-$endif$
->>
-
-addExceptionMemberToTopicByInterface(operation, exception, member, varname) ::= <<
-$if(member.typecode.isType_f)$
-memcpy($varname$.unio._u.$operation.name$._u.$exception.formatedScopedname$_ex.$member.name$, ex.$member.name$, sizeof($member.typecode.stTypename$));
-$else$
-$varname$.unio._u.$operation.name$._u.$exception.formatedScopedname$_ex.$member.name$ = ex.$member.name$;
+$varname$.$exception.formatedScopedname$_ex.$member.name$ = ex.$member.name$;
 $endif$
 $endif$
 >>
@@ -204,17 +195,9 @@ $endif$
 
 extractExceptionMemberFromTopic(exception, member, varname) ::= <<
 $if(member.typecode.isType_f)$
-memcpy(ex.$member.name$, $varname$.unio._u.$exception.formatedScopedname$_ex.$member.name$, sizeof($member.typecode.stTypename$));
+memcpy(ex.$member.name$, $varname$.$exception.formatedScopedname$_ex.$member.name$, sizeof($member.typecode.stTypename$));
 $else$
-ex.$member.name$ = $varname$.unio._u.$exception.formatedScopedname$_ex.$member.name$$if(member.typecode.isType_d)$$stringPointer()$$endif$;
-$endif$
->>
-
-extractExceptionMemberFromTopicByInterface(exception, member, varname) ::= <<
-$if(member.typecode.isType_f)$
-memcpy(ex.$member.name$, $varname$._u.$exception.formatedScopedname$_ex.$member.name$, sizeof($member.typecode.stTypename$));
-$else$
-ex.$member.name$ = $varname$._u.$exception.formatedScopedname$_ex.$member.name$$if(member.typecode.isType_d)$$stringPointer()$$endif$;
+ex.$member.name$ = $varname$.$exception.formatedScopedname$_ex.$member.name$$if(member.typecode.isType_d)$$stringPointer()$$endif$;
 $endif$
 >>
 
@@ -283,10 +266,18 @@ bigObjOption() ::= <<
 /*** END Inherate from OpenDDS ***/
 
 unsetReply() ::= <<
-memset((char*)&replyData + sizeof(replyData._header), 0, sizeof(replyData) - sizeof(replyData._header));
+memset((char*)&replyData + sizeof(replyData.header), 0, sizeof(replyData) - sizeof(replyData.header));
 >>
 
 /***** NEW OUR_TYPES *****/
+
+paramRetType(typecode) ::= <<
+$if(typecode)$
+$typecode.cppTypename$
+$else$
+void
+$endif$
+>>
 
 paramTypeByValue(typecode) ::= <<
 $if(typecode.primitive)$
@@ -298,6 +289,18 @@ $endif$
 $else$
 const $typecode.cppTypename$&
 $endif$
+>>
+
+paramTypeByRef(typecode) ::= <<
+$typecode.cppTypename$&
+>>
+
+paramDeclarations(params, separatorInicial) ::= <<
+$if(params)$$separatorInicial$$endif$$params : {param | /*$param.comment$*/ $if(param.output)$$paramTypeByRef(typecode=param.typecode)$$else$$paramTypeByValue(typecode=param.typecode)$$endif$ $param.name$}; separator=", "$
+>>
+
+paramDeclarationsByValue(params, separatorInicial) ::= <<
+$if(params)$$separatorInicial$$endif$$params : {param | /*$param.comment$*/ $paramTypeByValue(typecode=param.typecode)$ $param.name$}; separator=", "$
 >>
 
 varDecl(variable, create) ::= <<
@@ -335,53 +338,86 @@ $endif$
 >>
 
 copyHeaderInfo(reqvarname, repvarname) ::= <<
-$repvarname$._header.clientId.value_1 = $reqvarname$._header.clientId.value_1;
-$repvarname$._header.clientId.value_2 = $reqvarname$._header.clientId.value_2;
-$repvarname$._header.clientId.value_3 = $reqvarname$._header.clientId.value_3;
-$repvarname$._header.clientId.value_4 = $reqvarname$._header.clientId.value_4;
-$repvarname$._header.requestSequenceNumber = $reqvarname$._header.requestSequenceNumber;
+memcpy($repvarname$.header.relatedRequestId.writer_guid.guidPrefix, $reqvarname$.header.requestId.writer_guid.guidPrefix, 12);
+memcpy($repvarname$.header.relatedRequestId.writer_guid.entityId.entityKey, $reqvarname$.header.requestId.writer_guid.entityId.entityKey, 3);
+$repvarname$.header.relatedRequestId.writer_guid.entityId.entityKind =  $reqvarname$.header.requestId.writer_guid.entityId.entityKind;
+$repvarname$.header.relatedRequestId.sequence_number.high = $reqvarname$.header.requestId.sequence_number.high;
+$repvarname$.header.relatedRequestId.sequence_number.low = $reqvarname$.header.requestId.sequence_number.low;
+$repvarname$.header.remoteEx = ::dds::rpc::REMOTE_EX_OK;
 >>
 
-setHeaderSuccess(varname) ::= <<
-$varname$._header.retCode = OPERATION_SUCCESSFUL;
-$varname$._header.retMsg = $charCasting()$"";
+getRemoteException(varname) ::= <<
+$varname$.header.remoteEx
 >>
 
-setHeaderServerInternalException(varname) ::= <<
-$varname$._header.retCode = SERVER_INTERNAL_ERROR;
-$varname$._header.retMsg = $charCasting()$ex.what();
+setRemoteExceptionAsUnsupported(varname) ::= <<
+$varname$.header.remoteEx = ::dds::rpc::REMOTE_EX_UNSUPPORTED;
 >>
 
-getHeaderRetCode(varname) ::= <<
-$varname$._header.retCode
+setRemoteExceptionDefaultDiscriminatorByInterface(varname, interface, operation) ::= <<
+$replyOperationUnionDiscriminatorByInterface(operation=operation, varname=varname)$ = $interface.scopedname$_$operation.name$_Result_getDefaultDiscriminator();
 >>
 
-getHeaderRetMsg(varname) ::= <<
-$varname$._header.retMsg
+setRemoteExceptionDefaultDiscriminatorByOperation(varname, interface, operation) ::= <<
+$replyOperationUnionDiscriminatorByOperation(operation=operation, varname=varname)$ = $interface.scopedname$_$operation.name$_Result_getDefaultDiscriminator();
 >>
 
-interfaceUnionDiscriminator(varname) ::= <<
-$varname$.unio._d
+remoteExceptionOK() ::= <<::dds::rpc::REMOTE_EX_OK>>
+
+requestUnionByInterface(varname) ::= <<
+$varname$.data
 >>
 
-interfaceUnionOperation(operation, varname) ::= <<
-$varname$.unio._u.$operation.name$
+requestUnionDiscriminatorByInterface(varname) ::= <<
+$requestUnionByInterface(varname=varname)$._d
 >>
 
-replyUnionDiscriminator(varname) ::= <<
-$varname$.unio._d
+requestUnionDataByInterface(varname) ::= <<
+$requestUnionByInterface(varname=varname)$._u
 >>
 
-replyUnionDiscriminatorByInterface(operation, varname) ::= <<
-$varname$.unio._u.$operation.name$._d
+requestOperationDataByOperation(operation, varname) ::= <<
+$varname$.$operation.name$
 >>
 
-replyUnionData(varname, dataname) ::= <<
-$varname$.unio._u.$dataname$
+requestOperationDataByInterface(operation, varname) ::= <<
+$requestUnionDataByInterface(varname=varname)$.$operation.name$
 >>
 
-replyUnionDataByInterface(operation, varname, dataname) ::= <<
-$varname$.unio._u.$operation.name$._u.$dataname$
+replyUnionByInterface(varname) ::= <<
+$varname$.data
+>>
+
+replyUnionDiscriminatorByInterface(varname) ::= <<
+$replyUnionByInterface(varname=varname)$._d
+>>
+
+replyUnionDataByInterface(varname) ::= <<
+$replyUnionByInterface(varname=varname)$._u
+>>
+
+replyOperationUnionDiscriminatorByInterface(operation, varname) ::= <<
+$varname$.data._u.$operation.name$._d
+>>
+
+replyOperationUnionDiscriminatorByOperation(operation, varname) ::= <<
+$varname$.$operation.name$._d
+>>
+
+replyOperationUnionDataByInterface(operation, varname) ::= <<
+$replyUnionDataByInterface(varname=varname)$.$operation.name$._u
+>>
+
+replyOperationUnionDataByOperation(operation, varname) ::= <<
+$varname$.$operation.name$._u
+>>
+
+replyOperationUnionDataAccessByInterface(operation, varname, dataname) ::= <<
+$replyOperationUnionDataByInterface(operation=operation, varname=varname)$.$dataname$
+>>
+
+replyOperationUnionDataAccessByOperation(operation, varname, dataname) ::= <<
+$replyOperationUnionDataByOperation(operation=operation, varname=varname)$.$dataname$
 >>
 
 eprosimaTypesBool() ::= <<false>>

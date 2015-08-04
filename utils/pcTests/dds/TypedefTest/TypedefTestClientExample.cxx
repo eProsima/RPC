@@ -37,7 +37,7 @@ int main(int argc, char **argv)
     try
     {
         protocol = new TypedefTestProtocol();
-        transport = new UDPProxyTransport("TypedefTestService");
+        transport = new UDPProxyTransport("TypedefTestService", "Instance");
         proxy = new TypedefTestProxy(*transport, *protocol);
     }
     catch(InitializeException &ex)

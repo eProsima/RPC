@@ -58,7 +58,11 @@ int main(int argc, char **argv)
 	{
 
 		if(argc > 1) {
-			std::istringstream iss1( argv[1] );
+			ip = argv[1];
+		}
+
+		if(argc > 2) {
+			std::istringstream iss1( argv[2] );
 			if (!(iss1 >> samples))
 			{
 				cout << "Problem reading samples number, using default (10000) "<< endl;
@@ -66,22 +70,18 @@ int main(int argc, char **argv)
 			}
 		}
 
-		if(argc > 2) {
-			std::istringstream iss2( argv[2] );
+		if(argc > 3) {
+			std::istringstream iss2( argv[3] );
 			if (!(iss2 >> bytes))
 			{
 				cout << "Problem reading bytes number, using default (1024) "<< endl;
 				bytes = 0;
 			}
 		}
-
-		if(argc > 3) {
-			ip = argv[3];
-		}
 	}
 	else
 	{
-		cout << "usage: " << argv[0] << " [samples] [bytes] [server IP]"<<endl;
+		cout << "usage: " << argv[0] << " [server IP] [samples] [bytes] "<<endl;
 		return 0;
 	}
 
@@ -96,7 +96,7 @@ int main(int argc, char **argv)
 	double m_overhead = (m_t2 - m_t1).total_microseconds() / 1001;
 #else
 	// Para calcular el tiempo
-	typedef std::chrono::high_resolution_clock Clock;
+	typedef std::chrono::steady_clock Clock;
 	typedef std::chrono::microseconds microseconds;
 
 	Clock::time_point m_t1;
@@ -113,7 +113,8 @@ int main(int argc, char **argv)
     try
     {
         protocol = new LatencyProtocol();
-        transport = new TCPProxyTransport(ip + ":8080");
+		std::string ip_dir(ip + ":8080");
+		transport = new TCPProxyTransport(ip_dir.c_str());
         proxy = new LatencyProxy(*transport, *protocol);
     }
     catch(InitializeException &ex)

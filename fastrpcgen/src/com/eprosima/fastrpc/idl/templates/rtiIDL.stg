@@ -7,7 +7,7 @@ $definitions; separator="\n"$
 
 >>
 
-module(ctx, module, definition_list) ::= <<
+module(ctx, parent, module, definition_list) ::= <<
 $if(module.thereAreDeclarations)$
 module $module.name$
 {
@@ -22,7 +22,7 @@ $definitions; separator="\n"$
 
 >>
 
-interface(ctx, interface, export_list) ::= <<
+interface(ctx, parent, interface, export_list) ::= <<
 $if(interface.thereAreDeclarations)$
 module $interface.name$
 {
@@ -37,7 +37,7 @@ $exports; separator="\n"$
 
 >>
 
-exception(ctx, exception) ::= <<
+exception(ctx, parent, exception) ::= <<
 /*!
  * @brief Structure that encapsulates the exception $exception.scopedname$.
  * @ingroup $ctx.trimfilename$
@@ -47,22 +47,22 @@ struct $exception.name$_t{
 }; $nolevelIDLdefine()$
 >>
 
-operation(ctx, operation, param_list) ::= <<>>
+operation(ctx, parent, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 
 param(parameter) ::= <<>>
 
-const_decl(ctx, const) ::= <<
+const_decl(ctx, parent, const) ::= <<
 const $const.typeCode.idlTypename$ $const.name$ = $const.value$;
 >>
 
-typedef_decl(ctx, typedefs) ::= <<
+typedef_decl(ctx, parent, typedefs) ::= <<
 $typedefs : { typedef |typedef $typedef.typedefContentTypeCode.idlTypename$ $typedef.idlTypename$$if(typedef.typedefContentTypeCode.isType_f)$$typedef.typedefContentTypeCode.arrayExtension$$endif$;}; separator="\n"$
 
 >>
 
-struct_type(ctx, struct) ::= <<
+struct_type(ctx, parent, struct) ::= <<
 struct $struct.name$
 {
 $struct.members : { member |    $member.typecode.idlTypename$ $member.name$$if(member.typecode.isType_f)$$member.typecode.arrayExtension$$endif$;}; separator="\n"$
@@ -70,7 +70,7 @@ $struct.members : { member |    $member.typecode.idlTypename$ $member.name$$if(m
 
 >>
 
-union_type(ctx, union) ::= <<
+union_type(ctx, parent, union) ::= <<
 union $union.name$ switch ($union.discriminator.idlTypename$)
 {
 $union.members : { member | $if(member.default)$    default:$else$$member.labels : { label |    case $label$:}; separator="\n"$$endif$$\n$        $member.typecode.idlTypename$ $member.name$$if(member.typecode.isType_f)$$member.typecode.arrayExtension$$endif$;}; separator="\n"$
@@ -78,7 +78,7 @@ $union.members : { member | $if(member.default)$    default:$else$$member.labels
 
 >>
 
-enum_type(ctx, enum) ::= <<
+enum_type(ctx, parent, enum) ::= <<
 enum $enum.name$
 {
 $enum.members : {member |    $member.name$}; separator=",\n"$

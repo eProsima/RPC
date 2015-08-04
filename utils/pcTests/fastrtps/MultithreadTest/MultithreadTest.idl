@@ -1,0 +1,10 @@
+struct Dato
+{
+   long count;
+   string message;
+}; //@top-level false
+
+interface MultithreadTest
+{
+   long test(in Dato dato1, out Dato dato2);
+};

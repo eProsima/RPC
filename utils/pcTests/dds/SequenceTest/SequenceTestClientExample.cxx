@@ -38,7 +38,7 @@ int main(int argc, char **argv)
     try
     {
         protocol = new SequenceTestProtocol();
-        transport = new UDPProxyTransport("SequenceTestService");
+        transport = new UDPProxyTransport("SequenceTestService", "Instance");
         proxy = new SequenceTestProxy(*transport, *protocol);
     }
     catch(InitializeException &ex)

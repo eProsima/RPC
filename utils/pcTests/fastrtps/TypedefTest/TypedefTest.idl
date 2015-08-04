@@ -1,0 +1,23 @@
+struct Datos
+{
+   long count;
+   string message;
+}; //@top-level false
+
+typedef long largo;
+typedef Datos DatosDef, DatosDef2;
+typedef string cadena;
+typedef largo larguisimo;
+typedef DatosDef DatosDefondo;
+typedef cadena correa;
+
+interface TypedefTest
+{
+	largo getLargo(in largo l1, out largo l2);
+	larguisimo getLarguisimo(in larguisimo ll1, out larguisimo ll2);
+	DatosDef getDatosDef(in DatosDef d1, out DatosDef d2);
+	DatosDef2 getDatosDef2(in DatosDef2 d21, out DatosDef2 d22);
+	DatosDefondo getDatosDefondo(in DatosDefondo dd1, out DatosDefondo dd2);
+	cadena getCadena(in cadena c1, out cadena c2);
+	correa getCorrea(in correa cc1, out correa cc2);
+};

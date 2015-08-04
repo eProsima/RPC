@@ -5,12 +5,15 @@
  * FASTRPC_LICENSE file included in this distribution.
  *
  *************************************************************************/
+#include <config.h>
 
-#include "fastrpc/transports/dds/ProxyTransport.h"
-#include "fastrpc/transports/dds/components/ProxyProcedureEndpoint.h"
-#include "fastrpc/transports/dds/AsyncThread.h"
-#include "fastrpc/exceptions/InitializeException.h"
-#include "fastrpc/utils/dds/Middleware.h"
+#if RPC_WITH_RTIDDS
+
+#include <transports/dds/ProxyTransport.h>
+#include <transports/dds/components/ProxyProcedureEndpoint.h>
+#include "AsyncThread.h"
+#include <exceptions/InitializeException.h>
+#include <utils/dds/Middleware.h>
 
 #include <string>
 
@@ -27,11 +30,19 @@ typedef struct encapsulation
     void *data;
 } encapsulation;
 
-ProxyTransport::ProxyTransport(const char* const &remoteServiceName, int domainId, long milliseconds) :
+ProxyTransport::ProxyTransport(const char* const remoteServiceName, const char* const instanceName, int domainId, long milliseconds) :
     ::transport::ProxyTransport(), ::transport::dds::Transport(domainId),
-    m_remoteServiceName(remoteServiceName), m_timeout(milliseconds), m_asyncThread(NULL)
+    m_timeout(milliseconds), m_asyncThread(NULL)
 {
     const char* const METHOD_NAME = "ProxyTransport";
+
+    if(remoteServiceName != NULL)
+        m_remoteServiceName = remoteServiceName;
+    else
+        m_remoteServiceName = "Service";
+
+    if(instanceName != NULL)
+        m_instanceName = instanceName;
 
     m_asyncThread = new AsyncThread();
 
@@ -68,13 +79,19 @@ const char* ProxyTransport::getRemoteServiceName() const
     return m_remoteServiceName.c_str();
 }
 
+const char* ProxyTransport::getInstanceName() const
+{
+    return m_instanceName.c_str();
+}
+
 long ProxyTransport::getTimeout()
 {
     return m_timeout;
 }
 
 ::transport::Endpoint* ProxyTransport::createProcedureEndpoint(const char *name, const char *writertypename,
-        const char *readertypename, bool eprosima_types,
+        const char *writertopicname, const char *readertypename,
+        const char *readertopicname, bool eprosima_types,
         Transport::Create_data create_data, Transport::Copy_data copy_data,
         Transport::Destroy_data destroy_data, Transport::ProcessFunc processFunc, int dataSize)
 {
@@ -83,7 +100,8 @@ long ProxyTransport::getTimeout()
 
     if(pe != NULL)
     {
-        if(pe->initialize(name, writertypename, readertypename, eprosima_types, copy_data, dataSize) == 0)
+        if(pe->initialize(name, writertypename, writertopicname, readertypename, readertopicname,
+                    eprosima_types, copy_data, dataSize) == 0)
         {
             std::pair<std::map<const char*, ProxyProcedureEndpoint*>::iterator, bool> retmap = m_procedureEndpoints.insert(std::pair<const char*, ProxyProcedureEndpoint*>(name, pe));
 
@@ -121,3 +139,5 @@ void ProxyTransport::deleteAssociatedAsyncTasks(ProxyProcedureEndpoint *pe)
         printf("ERROR<%s::%s>: Bad parameters\n", CLASS_NAME, METHOD_NAME);
     }
 }
+
+#endif // RPC_WITH_RTIDDS

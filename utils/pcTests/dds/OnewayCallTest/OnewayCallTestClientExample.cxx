@@ -38,7 +38,7 @@ int main(int argc, char **argv)
     try
     {
         protocol = new OnewayCallTestProtocol();
-        transport = new UDPProxyTransport("OnewayCallTestService");
+        transport = new UDPProxyTransport("OnewayCallTestService", "Instance");
         proxy = new OnewayCallTestProxy(*transport, *protocol);
     }
     catch(InitializeException &ex)

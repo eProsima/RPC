@@ -6,11 +6,17 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "Proxy.h"], description=["This header 
 #ifndef _$ctx.filename;format="toUpper"$_PROXY_H_
 #define _$ctx.filename;format="toUpper"$_PROXY_H_
 
-#include "$ctx.product$/client/Proxy.h"
+#include <$ctx.product$/client/Proxy.h>
 #include "$ctx.filename$.h"
 $if(ctx.dds)$
 #include "$ctx.filename$AsyncCallbackHandlers.h"
+
 $endif$
+$if(ctx.rtiTypes)$
+#include "$ctx.filename$Extension.h"
+
+$endif$
+
 
 namespace eprosima
 {
@@ -28,7 +34,7 @@ $definitions; separator="\n"$
 #endif // _$ctx.filename;format="toUpper"$_PROXY_H_
 >>
 
-module(ctx, module, definition_list) ::= <<
+module(ctx, parent, module, definition_list) ::= <<
 namespace $module.name$
 {
     $definition_list$
@@ -43,12 +49,12 @@ $definitions; separator="\n"$
 /*!
  * The export_list will be the definition of synchronize functions.
  */
-interface(ctx, interface, export_list) ::= <<
+interface(ctx, parent, interface, export_list) ::= <<
 /*!
  * @brief This class implements a specific server's proxy for the defined interface $interface.name$.
  * @ingroup $ctx.trimfilename$
  */
-class FASTRPCUSERDllExport $interface.name$Proxy : public eprosima::rpc::proxy::Proxy
+class RPCUSERDllExport $interface.name$Proxy : public eprosima::rpc::proxy::Proxy, public $interface.name$$if(ctx.rtiTypes)$Ext$endif$
 {
     public:
    
@@ -66,6 +72,19 @@ class FASTRPCUSERDllExport $interface.name$Proxy : public eprosima::rpc::proxy::
 
         //! @brief Destructor.
         virtual ~$interface.name$Proxy();
+
+        $interface.all_operations : { operation |
+        //! @brief Proxy method for the operation $operation.name$.
+        $paramRetType(operation.rettype)$ $operation.name$($paramDeclarations(params=operation.parameters)$);
+
+        $if(ctx.dds)$
+        $if(!operation.oneway)$
+        //! @brief Proxy asynchronous method for the operation $operation.name$.
+        void $operation.name$_async($interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$);
+
+        $endif$
+        $endif$
+        }; separator="\n"$
         
         $export_list$
 };
@@ -76,31 +95,20 @@ export_list(exports) ::= <<
 $exports; separator="\n"$
 >>
 
-exception(ctx, exception) ::= <<>>
+exception(ctx, parent, exception) ::= <<>>
 
-operation(ctx, operation, param_list) ::= <<
-//! @brief Proxy method for the operation $operation.name$.
-$paramRetType(operation.rettype)$ $operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$);
-
-$if(ctx.dds)$
-$if(!operation.oneway)$
-//! @brief Proxy asynchronous method for the operation $operation.name$.
-void $operation.name$_async($operation.parent.name$_$operation.name$CallbackHandler &obj$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$);
-
-$endif$
-$endif$
->>
+operation(ctx, parent, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 
 param(parameter) ::= <<>>
 
-const_decl(ctx, const) ::= <<>>
+const_decl(ctx, parent, const) ::= <<>>
 
-typedef_decl(ctx, typedefs) ::= <<>>
+typedef_decl(ctx, parent, typedefs) ::= <<>>
 
-struct_type(ctx, struct) ::= <<>>
+struct_type(ctx, parent, struct) ::= <<>>
 
-union_type(ctx, union) ::= <<>>
+union_type(ctx, parent, union) ::= <<>>
 
-enum_type(ctx, enum) ::= <<>>
+enum_type(ctx, parent, enum) ::= <<>>

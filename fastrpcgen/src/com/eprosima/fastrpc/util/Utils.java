@@ -96,4 +96,92 @@ public class Utils
 		
 		return fileName.substring(lastDot+1);
 	}
+
+    // TODO In a future this function has to be removed, when rtiddsgen2 works successfully.
+    public static void addPragma(String file, String tempDir)
+    {
+        try
+        {
+            File inFile = new File(file);
+            File outFile = new File(tempDir + Utils.getFileNameOnly(file) + "." + getFileExtension(file) + ".tmp");
+
+            FileInputStream fis = new FileInputStream(inFile);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+
+            FileOutputStream fos = new FileOutputStream(outFile);
+            PrintWriter out = new PrintWriter(fos);
+
+            // Incluir pragma inicial
+            out.println("#ifdef _WIN32");
+            out.println("#pragma warning( push )");
+            out.println("#pragma warning( disable : 4018 )");
+            out.println("#elif defined(__linux)");
+            out.println("#pragma GCC diagnostic push");
+            out.println("#pragma GCC diagnostic ignored \"-Wnarrowing\"");
+            out.println("#endif");
+
+            String thisLine = "";
+            while((thisLine = in.readLine()) != null)
+            {
+                out.println(thisLine);
+            }
+
+            // Incluir pragma final
+            out.println("#ifdef _WIN32");
+            out.println("#pragma warning( pop )");
+            out.println("#elif defined(__linux)");
+            out.println("#pragma GCC diagnostic pop");
+            out.println("#endif");
+
+            out.flush();
+            out.close();
+            in.close();
+
+            inFile.delete();
+            outFile.renameTo(inFile);
+        }
+        catch(IOException ex)
+        {
+            System.out.println("WARNING: Cannot add pragma warning to file " + file);
+        }
+    }
+
+    // TODO In a future this function has to be removed, when we create one executable instead different VS projects.
+    public static void declspec(String file, String tempDir)
+    {
+        try
+        {
+            File inFile = new File(file);
+            File outFile = new File(tempDir + Utils.getFileNameOnly(file) + "." + getFileExtension(file) + ".tmp");
+
+            FileInputStream fis = new FileInputStream(inFile);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+
+            FileOutputStream fos = new FileOutputStream(outFile);
+            PrintWriter out = new PrintWriter(fos);
+
+            // Incluir pragma inicial
+            out.println("#if defined(_WIN32) && defined(NDDS_USER_DLL_EXPORT)");
+            out.println("class __declspec(dllimport) DDSDomainEntity;");
+            out.println("class __declspec(dllimport) DDSEntity;");
+            out.println("#endif");
+
+            String thisLine = "";
+            while((thisLine = in.readLine()) != null)
+            {
+                out.println(thisLine);
+            }
+
+            out.flush();
+            out.close();
+            in.close();
+
+            inFile.delete();
+            outFile.renameTo(inFile);
+        }
+        catch(IOException ex)
+        {
+            System.out.println("WARNING: Cannot add pragma warning to file " + file);
+        }
+    }
 }

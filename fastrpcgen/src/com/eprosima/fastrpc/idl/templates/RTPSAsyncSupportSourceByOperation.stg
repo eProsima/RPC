@@ -1,0 +1,137 @@
+group AsyncSupportSourceByOperation;
+
+main(ctx, definitions) ::= <<
+$fileHeader(ctx=ctx,  file=[ctx.filename, "AsyncSupport.cxx"], description=["This source file contains functionality to use asynchronous calls for all interfaces."])$
+
+$if(ctx.rtiTypes)$
+//TODO Remove when only one VS project will be generated
+#if defined(_WIN32) && defined(NDDS_USER_DLL_EXPORT)
+class __declspec(dllimport) DDSDomainEntity;
+class __declspec(dllimport) DDSEntity;
+#endif
+$endif$
+
+#include "$ctx.filename$DDSAsyncSupport.h"
+#include <$ctx.product$/exceptions/ServerInternalException.h>
+#include <$ctx.product$/exceptions/ClientInternalException.h>
+#include <$ctx.product$/utils/Messages.h>
+$if(ctx.rtiTypes)$
+$ReqRepIncludes(filename=ctx.filename)$
+
+#include "$ctx.filename$Extension.h"
+$endif$
+
+
+using namespace eprosima::rpc;
+using namespace ::exception;
+
+$definitions; separator="\n"$
+>>
+
+module(ctx, parent, module, definition_list) ::= <<
+namespace $module.name$
+{
+    $definition_list$
+};
+
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+interface(ctx, parent, interface, export_list) ::= <<
+$interface.all_operations : { operation |
+$if(!operation.oneway)$
+$interface.name$_$operation.name$Task::$interface.name$_$operation.name$Task($interface.name$_$operation.name$CallbackHandler &obj) :
+    RTPSAsyncTask(), m_obj(obj)
+{
+    $varComplexInitializeT(typeName=[interface.name, "_", operation.name, "_Reply"], name="m_reply")$
+}
+
+$interface.name$_$operation.name$Task::~$interface.name$_$operation.name$Task()
+{
+    $varComplexDelT(typeName=[interface.name, "_", operation.name, "_Reply"], name="m_reply")$
+}
+
+$interface.name$_$operation.name$CallbackHandler& $interface.name$_$operation.name$Task::getObject()
+{
+    return m_obj;
+}
+
+void* $interface.name$_$operation.name$Task::getReplyInstance()
+{
+    return &m_reply;
+}
+
+void $interface.name$_$operation.name$Task::execute()
+{  
+    $operation.outputparam : {param | $varDecl(variable=param)$}; separator="\n"$
+    $varDecl(variable=operation.rettypeparam)$
+    
+    if($getRemoteException(varname="m_reply")$ == $remoteExceptionOK()$)
+    {
+        switch ($replyOperationUnionDiscriminatorByOperation(operation=operation, varname="m_reply")$)
+        {
+            case 0:
+                $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=replyOperationUnionDataAccessByOperation(operation=operation, varname="m_reply", dataname="result"), isReply="yes")$};separator="\n"$
+                getObject().$operation.name$($extractParams(params=[operation.outputparam, operation.rettypeparam])$);
+                break;
+            $operation.exceptions : { exception |
+            case $exception.md5$:
+                {
+                $exception.scopedname$ ex;
+                // TODO No permite arrays
+                $exception.members : { member |$extractExceptionMemberFromTopic(exception=exception, member=member, varname=replyOperationUnionDataByOperation(operation=operation, varname="m_reply"))$}; separator="\n"$
+
+                getObject().on_exception(ex);
+                }
+                break;
+            }; separator="\n"$
+            default:
+                getObject().on_exception(ClientInternalException("Error extracting information from server"));
+        }
+    }
+    else
+        getObject().on_exception(ServerInternalException(""));
+}
+
+void $interface.name$_$operation.name$Task::on_exception(const SystemException &ex)
+{
+    getObject().on_exception(ex);
+}
+
+$if(operation.exceptions)$
+void $interface.name$_$operation.name$Task::on_exception(const UserException &ex)
+{
+    getObject().on_exception(ex);
+}
+$endif$
+
+$endif$
+}; separator="\n"$
+
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, parent, exception) ::= <<>>
+
+operation(ctx, parent, operation, param_list) ::= <<>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+const_decl(ctx, parent, const) ::= <<>>
+
+typedef_decl(ctx, parent, typedefs) ::= <<>>
+
+struct_type(ctx, parent, struct) ::= <<>>
+
+union_type(ctx, parent, union) ::= <<>>
+
+enum_type(ctx, parent, enum) ::= <<>>

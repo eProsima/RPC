@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>rpcddsgen</name>
-	<comment>JavaCC Nature</comment>
-	<projects>
-	</projects>
-	<buildSpec>
-	</buildSpec>
+	<name>fastrpcgen</name>
+	<comment/>
+	<projects/>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
-		<nature>sf.eclipse.javacc.javaccnature</nature>
 	</natures>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments/>
+		</buildCommand>
+	</buildSpec>
+	<linkedResources>
+		<link>
+			<name>java</name>
+			<type>2</type>
+			<location>/home/ricardo/workspace/desarrollo/proyectos/fastrpc/thirdparty/fastcdr/src/java</location>
+		</link>
+	</linkedResources>
 </projectDescription>

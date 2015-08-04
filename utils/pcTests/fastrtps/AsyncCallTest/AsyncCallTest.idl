@@ -1,0 +1,14 @@
+struct Structure
+{
+	long dato;
+	string message;
+}; //@top-level false
+
+interface AsyncCallTest
+{
+	long getLong(in long lo1, inout long lo2, out long lo3);
+	boolean getBoolean(in boolean bo1, inout boolean bo2, out boolean bo3);
+	string getString(in string s1, inout string s2, out string s3);
+	Structure duplicate(in Structure ev);
+};
+

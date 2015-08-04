@@ -24,7 +24,7 @@
  * @brief This class is the skeleton of the servant and its remote procedures has to be implemented.
  * @ingroup LATENCY
  */
-class LatencyServerImpl
+class LatencyServerImpl : public Latency
 {
     public:
 
@@ -34,8 +34,6 @@ class LatencyServerImpl
         //! @brief Destructor.
         virtual ~LatencyServerImpl(){}
 
-        //! @brief Skeleton of the operation latency.
-        virtual st latency(/*in*/ const st& param) = 0;
 ;
 };
 

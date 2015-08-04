@@ -1,0 +1,145 @@
+group RTIExtensionSource;
+
+main(ctx, definitions) ::= <<
+$fileHeader(ctx=ctx,  file=[ctx.filename, "Extension.cxx"], description=["TODO This source file contains the declaration of common types in ", ctx.filename, ".idl"])$
+
+$if(ctx.rtiTypes)$
+//TODO Remove when only one VS project will be generated
+#if defined(_WIN32) && defined(NDDS_USER_DLL_EXPORT)
+class __declspec(dllimport) DDSDomainEntity;
+class __declspec(dllimport) DDSEntity;
+#endif
+$endif$
+
+#include "$ctx.filename$Extension.h"
+#include <$ctx.product$/utils/macros/strdup.h>
+#include <string.h>
+#include <utility>
+
+using namespace eprosima::rpc;
+using namespace ::exception;
+
+#ifdef _WIN32
+// Remove linker warning LNK4221 on Visual Studio
+namespace { char dummy; }
+#endif
+
+$definitions; separator="\n"$
+>>
+
+module(ctx, parent, module, definition_list) ::= <<
+$definition_list$
+
+>>
+
+definition_list(definitions) ::= <<
+$definitions; separator="\n"$
+>>
+
+interface(ctx, parent, interface, export_list) ::= <<
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
+>>
+
+exception(ctx, parent, exception) ::= <<
+$exception.scopedname$::$exception.name$() : UserException()
+{
+    $exception.members : { member |$member_default_init(member=member)$}; separator="\n"$
+}
+
+$exception.scopedname$::$exception.name$(const $exception.name$ &ex) : UserException(ex)
+{
+    $exception.members : { member |$copy(member=member, dataname="ex", constructor="yes")$}; separator="\n"$
+}
+
+$exception.scopedname$::$exception.name$($exception.name$&& ex) : UserException(std::move(ex))
+{
+    $exception.members : { member |$move(member=member, dataname="ex", constructor="yes")$}; separator="\n"$
+}
+
+$exception.scopedname$& $exception.scopedname$::operator=(const $exception.name$ &ex)
+{
+	UserException::operator=(ex);
+	$exception.members : { member |$copy(member=member, dataname="ex")$}; separator="\n"$
+	return *this;
+}
+
+$exception.scopedname$& $exception.scopedname$::operator=($exception.name$&& ex)
+{
+	UserException::operator=(std::move(ex));
+	$exception.members : { member |$move(member=member, dataname="ex")$}; separator="\n"$
+	return *this;
+}
+
+$exception.scopedname$::~$exception.name$() throw()
+{
+    $exception.members : { member |$varDel(variable=member)$}; separator="\n"$
+}
+
+void $exception.scopedname$::raise() const
+{
+	throw *this;
+}
+
+>>
+
+operation(ctx, parent, operation, param_list) ::= <<>>
+
+param_list(parameters) ::= <<>>
+
+param(parameter) ::= <<>>
+
+const_decl(ctx, parent, const) ::= <<>>
+
+typedef_decl(ctx, parent, typedefs) ::= <<>>
+
+struct_type(ctx, parent, struct) ::= <<>>
+
+union_type(ctx, parent, union) ::= <<>>
+
+enum_type(ctx, parent, enum) ::= <<>>
+
+copy(member, dataname, constructor) ::= <<
+$if(member.typecode.primitive)$
+$if(member.typecode.isType_d)$
+$if(!constructor)$
+if($member.name$ != NULL)
+    free($member.name$);
+$endif$
+$member.name$ = STRDUP($dataname$.$member.name$);
+$else$
+$member.name$ = $dataname$.$member.name$;
+$endif$
+$else$
+$if(member.typecode.isType_f)$
+memcpy($member.name$, $dataname$.$member.name$, $member.typecode.size$ * sizeof($member.typecode.stTypename$));
+$else$
+$memberComplexInitCopy(...)$
+$endif$
+$endif$
+>>
+
+move(member, dataname, constructor) ::= <<
+$if(member.typecode.primitive)$
+$if(member.typecode.isType_d)$
+$if(!constructor)$
+if($member.name$ != NULL)
+    free($member.name$);
+$endif$
+$member.name$ = $dataname$.$member.name$;
+$dataname$.$member.name$ = NULL;
+$else$
+$member.name$ = $dataname$.$member.name$;
+$endif$
+$else$
+$if(member.typecode.isType_f)$
+memcpy($member.name$, $dataname$.$member.name$, $member.typecode.size$ * sizeof($member.typecode.stTypename$));
+$else$
+// TODO Memory leak. igualar y poner la otra todo a cero.
+$memberComplexInitCopy(...)$
+$endif$
+$endif$
+>>

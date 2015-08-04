@@ -42,7 +42,7 @@ int main(int argc, char **argv)
     {
         pool = new ThreadPoolStrategy(threadPoolSize);
         protocol = new WANTestProtocol();
-        transport = new TCPServerTransport("127.0.0.1:7600", "7600", "WANTestService");
+        transport = new TCPServerTransport("127.0.0.1:7600", "7600", "WANTestService", "Instance");
         server = new WANTestServer(*pool, *transport, *protocol, servant);
         server->serve();
     }

@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-#include "fastrpc/utils/Utilities.h"
+#include <utils/Utilities.h>
 
 #if defined(_WIN32)
 #include <Windows.h>

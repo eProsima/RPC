@@ -103,7 +103,7 @@
         <AdditionalDependencies>nddscored.lib;nddscd.lib;nddscppd.lib;
                                 MessageHeaderd.lib;MultithreadTestd.lib;MultithreadTestClientd.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2013;$(NDDSHOME)/lib/x64Win64VS2013;.\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(BOOST_LIBRARYDIR)/x64Win64VS2013;$(RPCDDSHOME)/lib/x64Win64VS2013;$(NDDSHOME)/lib/x64Win64VS2013;.\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">
@@ -121,7 +121,7 @@
         <AdditionalDependencies>nddscore.lib;nddsc.lib;nddscpp.lib;
                                 MessageHeader.lib;MultithreadTest.lib;MultithreadTestClient.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2013;$(NDDSHOME)/lib/x64Win64VS2013;.\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(BOOST_LIBRARYDIR)/x64Win64VS2013;$(RPCDDSHOME)/lib/x64Win64VS2013;$(NDDSHOME)/lib/x64Win64VS2013;.\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -139,7 +139,7 @@
         <AdditionalDependencies>nddscorezd.lib;nddsczd.lib;nddscppzd.lib;
                                 libMessageHeaderd.lib;libMultithreadTestd.lib;libMultithreadTestClientd.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2013;$(NDDSHOME)/lib/x64Win64VS2013;.\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(BOOST_LIBRARYDIR)/x64Win64VS2013;$(RPCDDSHOME)/lib/x64Win64VS2013;$(NDDSHOME)/lib/x64Win64VS2013;.\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -157,7 +157,7 @@
         <AdditionalDependencies>nddscorez.lib;nddscz.lib;nddscppz.lib;
                                 libMessageHeader.lib;libMultithreadTest.lib;libMultithreadTestClient.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2013;$(NDDSHOME)/lib/x64Win64VS2013;.\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(BOOST_LIBRARYDIR)/x64Win64VS2013;$(RPCDDSHOME)/lib/x64Win64VS2013;$(NDDSHOME)/lib/x64Win64VS2013;.\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
     </ItemDefinitionGroup>
   <ItemGroup>

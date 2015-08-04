@@ -6,9 +6,9 @@
  *
  *************************************************************************/
 
-#include "fastrpc/transports/HttpProxyTransport.h"
-#include "fastrpc/transports/messages/HttpMessage.h"
-#include "fastrpc/utils/Utilities.h"
+#include <transports/HttpProxyTransport.h>
+#include <transports/messages/HttpMessage.h>
+#include <utils/Utilities.h>
 
 #include <string.h>
 #include <stdexcept>

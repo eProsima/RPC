@@ -1,0 +1,7 @@
+module Level2NS
+{
+    struct Level2
+    {
+        long count;
+    };
+};

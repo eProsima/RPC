@@ -953,8 +953,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -971,7 +971,7 @@
     <Link>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\i86Win32VS2013;$(SolutionDir)..\..\thirdparty\fastcdr\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\i86Win32VS2013;$(SolutionDir)..\..\thirdparty\fastcdr\lib\i86Win32VS2013;$(SolutionDir)..\..\thirdparty\fastrtps\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
@@ -994,8 +994,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2013
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLLVS2010|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -1012,7 +1012,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2013
     <Link>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\i86Win32VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\i86Win32VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\i86Win32VS2010;$(SolutionDir)..\..\thirdparty\fastrtps\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
@@ -1035,8 +1035,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLL|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -1076,8 +1076,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2013
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLLVS2010|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -1117,8 +1117,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCDDSDebugDLL|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -1135,7 +1135,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010
     <Link>
       <AdditionalDependencies>nddscppd.lib;nddscd.lib;nddscored.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2013;$(BOOST_ROOT)\lib\i86Win32VS2013;$(SolutionDir)..\..\thirdparty\fastcdr\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2013;$(BOOST_ROOT)\lib\i86Win32VS2013;$(SolutionDir)..\..\thirdparty\fastcdr\lib\i86Win32VS2013;$(SolutionDir)..\..\thirdparty\fastrtps\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
@@ -1158,8 +1158,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32V
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCDDSDebugDLLVS2010|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -1176,7 +1176,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32V
     <Link>
       <AdditionalDependencies>nddscppd.lib;nddscd.lib;nddscored.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2010;$(BOOST_ROOT)\lib\i86Win32VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2010;$(BOOST_ROOT)\lib\i86Win32VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\i86Win32VS2010;$(SolutionDir)..\..\thirdparty\fastrtps\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
@@ -1199,8 +1199,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32V
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -1217,7 +1217,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32V
     <Link>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\x64Win64VS2013;$(SolutionDir)..\..\thirdparty\fastcdr\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\x64Win64VS2013;$(SolutionDir)..\..\thirdparty\fastcdr\lib\x64Win64VS2013;$(SolutionDir)..\..\thirdparty\fastrtps\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
@@ -1240,8 +1240,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2013
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLLVS2010|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -1258,7 +1258,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2013
     <Link>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\x64Win64VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\x64Win64VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\x64Win64VS2010;$(SolutionDir)..\..\thirdparty\fastrtps\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
@@ -1281,8 +1281,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLL|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -1322,8 +1322,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2013
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLLVS2010|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -1363,8 +1363,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCDDSDebugDLL|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -1381,7 +1381,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010
     <Link>
       <AdditionalDependencies>nddscppd.lib;nddscd.lib;nddscored.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2013;$(BOOST_ROOT)\lib\x64Win64VS2013;$(SolutionDir)..\..\thirdparty\fastcdr\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2013;$(BOOST_ROOT)\lib\x64Win64VS2013;$(SolutionDir)..\..\thirdparty\fastcdr\lib\x64Win64VS2013;$(SolutionDir)..\..\thirdparty\fastrtps\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
@@ -1404,8 +1404,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64V
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCDDSDebugDLLVS2010|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -1422,7 +1422,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64V
     <Link>
       <AdditionalDependencies>nddscppd.lib;nddscd.lib;nddscored.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(BOOST_ROOT)\lib\x64Win64VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(BOOST_ROOT)\lib\x64Win64VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\x64Win64VS2010;$(SolutionDir)..\..\thirdparty\fastrtps\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
@@ -1446,8 +1446,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64V
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1463,7 +1463,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64V
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\i86Win32VS2013;$(SolutionDir)..\..\thirdparty\fastcdr\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\i86Win32VS2013;$(SolutionDir)..\..\thirdparty\fastcdr\lib\i86Win32VS2013;$(SolutionDir)..\..\thirdparty\fastrtps\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -1486,8 +1486,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2013
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1503,7 +1503,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2013
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\i86Win32VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\i86Win32VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\i86Win32VS2010;$(SolutionDir)..\..\thirdparty\fastrtps\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -1526,8 +1526,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1566,8 +1566,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2013
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1606,8 +1606,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1623,7 +1623,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010
       <AdditionalDependencies>nddscpp.lib;nddsc.lib;nddscore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2013;$(BOOST_ROOT)\lib\i86Win32VS2013;$(SolutionDir)..\..\thirdparty\fastcdr\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2013;$(BOOST_ROOT)\lib\i86Win32VS2013;$(SolutionDir)..\..\thirdparty\fastcdr\lib\i86Win32VS2013;$(SolutionDir)..\..\thirdparty\fastrtps\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -1646,8 +1646,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32V
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1663,7 +1663,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32V
       <AdditionalDependencies>nddscpp.lib;nddsc.lib;nddscore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2010;$(BOOST_ROOT)\lib\i86Win32VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\i86Win32VS2010;$(BOOST_ROOT)\lib\i86Win32VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\i86Win32VS2010;$(SolutionDir)..\..\thirdparty\fastrtps\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -1686,8 +1686,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32V
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1703,7 +1703,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32V
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\x64Win64VS2013;$(SolutionDir)..\..\thirdparty\fastcdr\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\x64Win64VS2013;$(SolutionDir)..\..\thirdparty\fastcdr\lib\x64Win64VS2013;$(SolutionDir)..\..\thirdparty\fastrtps\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -1726,8 +1726,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2013
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1743,7 +1743,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2013
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\x64Win64VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(BOOST_ROOT)\lib\x64Win64VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\x64Win64VS2010;$(SolutionDir)..\..\thirdparty\fastrtps\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -1766,8 +1766,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1806,8 +1806,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2013
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1846,8 +1846,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1863,7 +1863,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010
       <AdditionalDependencies>nddscpp.lib;nddsc.lib;nddscore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2013;$(BOOST_ROOT)\lib\x64Win64VS2013;$(SolutionDir)..\..\thirdparty\fastcdr\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2013;$(BOOST_ROOT)\lib\x64Win64VS2013;$(SolutionDir)..\..\thirdparty\fastcdr\lib\x64Win64VS2013;$(SolutionDir)..\..\thirdparty\fastrtps\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -1886,8 +1886,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64V
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;NDDS_DLL_VARIABLE;NDDS_USER_DLL_EXPORT;FASTRPC_SOURCE;FASTRPC_DYN_LINK;BOOST_ALL_DYN_LINK;FASTCDR_DYN_LINK;FASTRTPS_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1903,7 +1903,7 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64V
       <AdditionalDependencies>nddscpp.lib;nddsc.lib;nddscore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(BOOST_ROOT)\lib\x64Win64VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NDDSHOME)\lib\x64Win64VS2010;$(BOOST_ROOT)\lib\x64Win64VS2010;$(SolutionDir)..\..\thirdparty\fastcdr\lib\x64Win64VS2010;$(SolutionDir)..\..\thirdparty\fastrtps\lib\x64Win64VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <FixedBaseAddress>false</FixedBaseAddress>
@@ -1925,8 +1925,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64V
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -1959,8 +1959,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2013
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugVS2010|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -1993,8 +1993,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -2027,8 +2027,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2013
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugVS2010|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -2061,8 +2061,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCDDSDebug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -2095,8 +2095,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32V
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCDDSDebugVS2010|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -2129,8 +2129,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32V
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
@@ -2162,8 +2162,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2013
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugVS2010|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
@@ -2195,8 +2195,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
@@ -2228,8 +2228,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2013
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugVS2010|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
@@ -2261,8 +2261,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCDDSDebug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
@@ -2294,8 +2294,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64V
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RPCDDSDebugVS2010|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
@@ -2328,8 +2328,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64V
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -2362,8 +2362,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2013
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -2396,8 +2396,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -2430,8 +2430,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2013
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -2464,8 +2464,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\i86Win32VS2010
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -2498,8 +2498,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32V
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -2532,8 +2532,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\i86Win32V
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -2566,8 +2566,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2013
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -2600,8 +2600,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -2634,8 +2634,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2013
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -2668,8 +2668,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\x64Win64VS2010
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -2702,8 +2702,8 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64V
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(NDDSHOME)\include;$(NDDSHOME)\include\ndds;$(SolutionDir)..\..\include;..\..\thirdparty\eprosima-common-code;$(BOOST_ROOT);..\..\thirdparty\boost-threadpool;$(SolutionDir)..\..\thirdparty\fastcdr\include;$(SolutionDir)..\..\thirdparty\fastrtps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;__LITTLE_ENDIAN__;RTI_WIN32;FASTRPC_SOURCE;BOOST_ALL_DYN_LINK;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -2970,6 +2970,40 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64V
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLL|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLLVS2010|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\src\transports\dds\components\RTPSProxyProcedureEndpoint.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTRelease|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLLVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLLVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLLVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLLVS2010|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\src\transports\dds\components\ServerProcedureEndpoint.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLLVS2010|Win32'">true</ExcludedFromBuild>
@@ -3004,7 +3038,75 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64V
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLL|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLLVS2010|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\src\transports\dds\components\RTPSServerProcedureEndpoint.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTRelease|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLLVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLLVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLLVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLLVS2010|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\src\transports\dds\DDSAsyncTask.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTRelease|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLLVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLLVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLLVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLLVS2010|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\transports\dds\RTPSAsyncTask.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLLVS2010|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -3242,6 +3344,40 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64V
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLL|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLLVS2010|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\src\transports\dds\RTPSProxyTransport.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTRelease|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLLVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLLVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLLVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLLVS2010|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\src\transports\dds\ServerTransport.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLLVS2010|Win32'">true</ExcludedFromBuild>
@@ -3276,7 +3412,75 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64V
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLL|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLLVS2010|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\src\transports\dds\RTPSServerTransport.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTRelease|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLLVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLLVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLLVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLLVS2010|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\src\transports\dds\Transport.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTRelease|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLLVS2010|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLLVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLLVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTDebugDLLVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseVS2010|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLL|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='RPCRESTReleaseDLLVS2010|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\transports\dds\RTPSTransport.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLLVS2010|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -3514,15 +3718,21 @@ copy "$(TargetPath)" $(EPROSIMA_LIBRARY_PATH)\proyectos\$(NDDSVERSION)\x64Win64V
     <ClInclude Include="..\..\include\fastrpc\transports\components\Endpoint.h" />
     <ClInclude Include="..\..\include\fastrpc\transports\components\TCPEndpoint.h" />
     <ClInclude Include="..\..\include\fastrpc\transports\dds\components\ProxyProcedureEndpoint.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\components\RTPSProxyProcedureEndpoint.h" />
     <ClInclude Include="..\..\include\fastrpc\transports\dds\components\ServerProcedureEndpoint.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\components\RTPSServerProcedureEndpoint.h" />
     <ClInclude Include="..\..\include\fastrpc\transports\dds\ProxyTransport.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\RTPSProxyTransport.h" />
     <ClInclude Include="..\..\include\fastrpc\transports\dds\ServerTransport.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\RTPSServerTransport.h" />
     <ClInclude Include="..\..\include\fastrpc\transports\dds\TCPProxyTransport.h" />
     <ClInclude Include="..\..\include\fastrpc\transports\dds\TCPServerTransport.h" />
     <ClInclude Include="..\..\include\fastrpc\transports\dds\Transport.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\RTPSTransport.h" />
     <ClInclude Include="..\..\include\fastrpc\transports\dds\UDPProxyTransport.h" />
     <ClInclude Include="..\..\include\fastrpc\transports\dds\UDPServerTransport.h" />
     <ClInclude Include="..\..\include\fastrpc\transports\dds\DDSAsyncTask.h" />
+    <ClInclude Include="..\..\include\fastrpc\transports\dds\RTPSAsyncTask.h" />
     <ClInclude Include="..\..\include\fastrpc\transports\dds\AsyncThread.h" />
     <ClInclude Include="..\..\include\fastrpc\transports\AsyncTask.h" />
     <ClInclude Include="..\..\include\fastrpc\transports\HttpProxyTransport.h" />

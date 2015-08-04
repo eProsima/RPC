@@ -16,28 +16,8 @@ fileHeader(ctx, file, description) ::= <<
  */
 >>
 
-paramRetType(typecode) ::= <<
-$if(typecode)$
-$typecode.cppTypename$
-$else$
-void
-$endif$
->>
-
-paramTypeByRef(typecode) ::= <<
-$typecode.cppTypename$&
->>
-
-paramDeclsByValue(params, separatorInicial) ::= <<
-$if(params)$$separatorInicial$$endif$$params : {param |/*$param.comment$*/ $paramTypeByValue(typecode=param.typecode)$ $param.name$}; separator=", "$
->>
-
 paramDeclsByRef(params, separatorInicial) ::= <<
 $if(params)$$separatorInicial$$endif$$params : {param |/*$param.comment$*/ $paramTypeByRef(typecode=param.typecode)$ $param.name$}; separator=", "$
->>
-
-paramDeclsOnlyOutByRef(params, separatorInicial) ::= <<
-$if(params)$$separatorInicial$$endif$$params : {param | /*$param.comment$*/ $if(param.output)$$paramTypeByRef(typecode=param.typecode)$$else$$paramTypeByValue(typecode=param.typecode)$$endif$ $param.name$}; separator=", "$
 >>
 
 extractParams(params, separatorInicial) ::= <<

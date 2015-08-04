@@ -5,7 +5,7 @@ CPP= g++
 CPPFLAGS = -c -Wall -fpic -m$arch$ -std=c++0x
 LN= g++
 AR=ar
-LDFLAGS= -m$arch$
+LDFLAGS= -m$arch$ -Wl,--no-as-needed
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
 DEFINES= $solution.defines : {define | -D$define$};separator=" "$
 
@@ -62,14 +62,14 @@ $endif$
 OBJS+= \$($it.name$_COMMONOBJS)$if(it.containsInterfaces)$$if(solution.clientside)$ \$($it.name$_CLIENTOBJS)$endif$$if(solution.serverside)$ \$($it.name$_SERVEROBJS)$endif$$endif$
 
 \$($it.name$_TARGET): \$($it.name$_COMMONOBJS)
-	\$(LN) \$(LDFLAGS) -shared -o \$($it.name$_TARGET) \$($it.name$_COMMONOBJS) \$(LIBS) -Llib/$example$ $it.dependencies : {dep | -l$dep$}; separator=" "$
+	\$(LN) \$(LDFLAGS) -shared -o \$($it.name$_TARGET) \$($it.name$_COMMONOBJS) -Llib/$example$ $it.dependencies : {dep | -l$dep$}; separator=" "$ \$(LIBS)
 
 \$($it.name$_TARGET_Z): \$($it.name$_COMMONOBJS)
 	\$(AR) -cru \$($it.name$_TARGET_Z) \$($it.name$_COMMONOBJS)
 $if(it.containsInterfaces)$
 $if(solution.clientside)$
 \$($it.name$_CLIENT_TARGET): \$($it.name$_CLIENTOBJS)
-	\$(LN) \$(LDFLAGS) -shared -o \$($it.name$_CLIENT_TARGET) \$(LIBS) -Llib/$example$ -l$it.name$ \$($it.name$_CLIENTOBJS)
+	\$(LN) \$(LDFLAGS) -shared -o \$($it.name$_CLIENT_TARGET) \$($it.name$_CLIENTOBJS) -Llib/$example$ -l$it.name$ \$(LIBS)
 
 \$($it.name$_CLIENT_TARGET_Z): \$($it.name$_CLIENTOBJS)
 	\$(AR) -cru \$($it.name$_CLIENT_TARGET_Z) \$($it.name$_CLIENTOBJS)
@@ -77,7 +77,7 @@ $endif$
 
 $if(solution.serverside)$	
 \$($it.name$_SERVER_TARGET): \$($it.name$_SERVEROBJS)
-	\$(LN) \$(LDFLAGS) -shared -o \$($it.name$_SERVER_TARGET) \$(LIBS) -Llib/$example$ -l$it.name$ \$($it.name$_SERVEROBJS)
+	\$(LN) \$(LDFLAGS) -shared -o \$($it.name$_SERVER_TARGET) \$($it.name$_SERVEROBJS) -Llib/$example$ -l$it.name$ \$(LIBS)
 
 \$($it.name$_SERVER_TARGET_Z): \$($it.name$_COMMONOBJS) \$($it.name$_SERVEROBJS)
 	\$(AR) -cru \$($it.name$_SERVER_TARGET_Z) \$($it.name$_SERVEROBJS)

@@ -1,0 +1,35 @@
+union Empleado switch (char)
+{
+	case 1:
+    case 3:
+		long id;
+	case 2:
+    case 4:
+    case 5:
+		string name;
+}; //@top-level false
+
+interface UnionTest
+{
+    enum TIPO_JEFE
+    {
+        BUENO,
+        MALO,
+        MALVADO,
+        SATAN
+    };
+
+    union Jefe switch(TIPO_JEFE)
+    {
+        case BUENO:
+            long id;
+        case MALO:
+            string name;
+        case MALVADO:
+        case SATAN:
+            sequence<long, 2> seq;
+    };
+
+	Empleado getEmpleado(in Empleado em1, inout Empleado em2, out Empleado em3);
+	Jefe getJefe(in Jefe je1, inout Jefe je2, out Jefe je3);
+};

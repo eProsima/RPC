@@ -6,7 +6,7 @@
  *
  *************************************************************************/
 
-#include "fastrpc/exceptions/ClientInternalException.h"
+#include <exceptions/ClientInternalException.h>
 
 using namespace eprosima::rpc::exception;
 

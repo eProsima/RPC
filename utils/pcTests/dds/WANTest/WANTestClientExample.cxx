@@ -38,7 +38,7 @@ int main(int argc, char **argv)
     try
     {
         protocol = new WANTestProtocol();
-        transport = new TCPProxyTransport("127.0.0.1:7600", "WANTestService");
+        transport = new TCPProxyTransport("127.0.0.1:7600", "WANTestService", "Instance");
         proxy = new WANTestProxy(*transport, *protocol);
     }
     catch(InitializeException &ex)

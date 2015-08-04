@@ -6,7 +6,7 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "Protocol.h"], description=["This head
 #ifndef _$ctx.filename;format="toUpper"$_PROTOCOL_H_
 #define _$ctx.filename;format="toUpper"$_PROTOCOL_H_
 
-#include "$ctx.product$/protocols/Protocol.h"
+#include <$ctx.product$/protocols/Protocol.h>
 #include "$ctx.filename$.h"
 $if(ctx.dds)$
 #include "$ctx.filename$AsyncCallbackHandlers.h"
@@ -27,7 +27,7 @@ namespace eprosima
              * @brief Protocol base class for the specific application
              * @ingroup $ctx.trimfilename$
              */
-            class FASTRPCUSERDllExport $ctx.filename$Protocol : public Protocol
+            class RPCUSERDllExport $ctx.filename$Protocol : public Protocol
             {
                 public:
                 
@@ -46,7 +46,7 @@ namespace eprosima
                     virtual bool activateInterface(const char* interfaceName) = 0;
                     
                     $if(ctx.server)$
-                    $ctx.interfaces : { interface |
+                    $ctx.scopedInterfaces : { interface |
                    /*!
                     * @brief This method links a specific servant with the protocol.
                     * @param impl Servant implementation.
@@ -64,7 +64,7 @@ namespace eprosima
                 
                     $ctx.filename$Protocol() : Protocol()
                     $if(ctx.server)$
-                    $ctx.interfaces : { interface |                      
+                    $ctx.scopedInterfaces : { interface |                      
                     , _$interface.formatedScopedname$_impl(NULL)
                     }; separator="\n"$
                     $endif$
@@ -73,7 +73,7 @@ namespace eprosima
                     virtual ~$ctx.filename$Protocol(){}
                 
                     $if(ctx.server)$
-                	$ctx.interfaces : { interface |                      
+                	$ctx.scopedInterfaces : { interface |                      
                     $interface.scopedname$ServerImpl *_$interface.formatedScopedname$_impl;
                     }; separator="\n"$
                     $endif$
@@ -86,7 +86,7 @@ namespace eprosima
 #endif // _$ctx.filename;format="toUpper"$_PROTOCOL_H_
 >>
 
-module(ctx, module, definition_list) ::= <<
+module(ctx, parent, module, definition_list) ::= <<
 $definition_list$
 >>
 
@@ -95,24 +95,14 @@ $definitions; separator="\n"$
 
 >>
 
-interface(ctx, interface, export_list) ::= <<
-$export_list$
->>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
-
->>
-
-exception(ctx, exception) ::= <<>>
-
-operation(ctx, operation, param_list) ::= <<
+interface(ctx, parent, interface, export_list) ::= <<
+$interface.all_operations : {operation|
 $if(ctx.client)$
 /*!
  * @brief This method implements the proxy part of the protocol for the operation $operation.name$.
  *        It has to be implemented by the child classes.
  */
-virtual $paramRetType(operation.rettype)$ $operation.parent.formatedScopedname$_$operation.name$($paramDeclsOnlyOutByRef(params=operation.parameters)$) = 0;
+virtual $paramRetType(operation.rettype)$ $interface.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$) = 0;
 $endif$
 
 $if(ctx.dds)$
@@ -121,23 +111,34 @@ $if(!operation.oneway)$
  * @brief This asynchronous method implements the proxy part of the protocol for the operation $operation.name$.
  *        It has to be implemented by the child classes.
  */
-virtual void $operation.parent.formatedScopedname$_$operation.name$_async($operation.parent.scopedname$_$operation.name$CallbackHandler &obj$paramDeclsByValue(params=operation.inputparam, separatorInicial=", ")$) = 0;
+virtual void $interface.formatedScopedname$_$operation.name$_async($interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$) = 0;
 
 $endif$
 $endif$
+}; separator="\n"$
+
+$export_list$
+>>
+
+export_list(exports) ::= <<
+$exports; separator="\n"$
 
 >>
+
+exception(ctx, parent, exception) ::= <<>>
+
+operation(ctx, parent, operation, param_list) ::= <<>>
 
 param_list(parameters) ::= <<>>
 
 param(parameter) ::= <<>>
 
-const_decl(ctx, const) ::= <<>>
+const_decl(ctx, parent, const) ::= <<>>
 
-typedef_decl(ctx, typedefs) ::= <<>>
+typedef_decl(ctx, parent, typedefs) ::= <<>>
 
-struct_type(ctx, struct) ::= <<>>
+struct_type(ctx, parent, struct) ::= <<>>
 
-union_type(ctx, union) ::= <<>>
+union_type(ctx, parent, union) ::= <<>>
 
-enum_type(ctx, enum) ::= <<>>
+enum_type(ctx, parent, enum) ::= <<>>
