@@ -19,7 +19,6 @@ if(@BUILD_JAVA@)
         )
 endif()
 
-
 # Run autoreconf
 execute_process(COMMAND autoreconf -fi @PROJECT_BINARY_DIR@/autotools
     RESULT_VARIABLE EXECUTE_RESULT)
@@ -36,4 +35,10 @@ file(INSTALL @PROJECT_SOURCE_DIR@/include/config.h.in
 # Copy boost-threadpool headers
 file(INSTALL @PROJECT_SOURCE_DIR@/thirdparty/boost-threadpool/boost
     DESTINATION @PROJECT_BINARY_DIR@/autotools/extra/boost-threadpool
+    )
+
+# Copy licenses
+file(INSTALL @PROJECT_SOURCE_DIR@/@PROJECT_NAME_UPPER@_LICENSE.txt
+    @PROJECT_SOURCE_DIR@/LGPLv3_LICENSE.txt
+    DESTINATION @PROJECT_BINARY_DIR@/autotools
     )
