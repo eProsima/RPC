@@ -21,8 +21,15 @@ macro(generate_msvc_libraries platform)
         COMMAND ${CMAKE_COMMAND} -E make_directory "${PROJECT_BINARY_DIR}/../${platform}"
         )
 
+    set(_USE_FASTRTPS "")
+    set(_USE_RTIDDS "")
+    if(RPCPROTO STREQUAL "rpcdds")
+        set(_USE_FASTRTPS "-DWITH_FASTRTPS=${WITH_FASTRTPS}")
+        set(_USE_RTIDDS "-DWITH_RTIDDS=${WITH_RTIDDS}")
+    endif()
+
     add_custom_target(${PROJECT_NAME}_${platform} ALL
-        COMMAND ${CMAKE_COMMAND} -G "${GENERATOR}" -DEPROSIMA_BUILD=${EPROSIMA_BUILD} ../..
+        COMMAND ${CMAKE_COMMAND} -G "${GENERATOR}" -DEPROSIMA_BUILD=${EPROSIMA_BUILD} -DRPCPROTO=${RPCPROTO} ${_USE_FASTRTPS} ${_USE_RTIDDS} ../..
         COMMAND ${CMAKE_COMMAND} --build . --config Release
         COMMAND ${CMAKE_COMMAND} --build . --config Debug
         WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/../${platform}
