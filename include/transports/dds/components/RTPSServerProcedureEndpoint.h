@@ -72,7 +72,7 @@ namespace eprosima
                         RPC_DllAPI int initialize(const char *name, const char *writertypename, const char *writertopicname,
                                 const char *readertypename, const char *readertopicname,
                                 RTPSTransport::Create_data create_data, RTPSTransport::Destroy_data destroy_data,
-                                RTPSTransport::ProcessFunc, int dataSize);
+                                RTPSTransport::ProcessFunc, size_t dataSize);
 						
 						/*!
                          * @brief This method creates the DDS entities needed to run this DDS Endpoint.

@@ -82,7 +82,7 @@ namespace eprosima
                         RPC_DllAPI int initialize(const char *name, const char *writertypename,
                                 const char *writertopicname, const char *readertypename, const char *readertopicname,
                                 RTPSTransport::Create_data create_data, RTPSTransport::Copy_data copy_data,
-                                RTPSTransport::Destroy_data destroy_data);
+                                RTPSTransport::Destroy_data destroy_data, size_t dataSize);
 
                         /*!
                          * @brief This function finalizes the proxy procedure endpoint.
@@ -182,6 +182,8 @@ namespace eprosima
                         RTPSTransport::Copy_data m_copy_data;
 
                         RTPSTransport::Destroy_data m_destroy_data;
+
+                        size_t m_dataSize;
 
                         void *data_;
                 };

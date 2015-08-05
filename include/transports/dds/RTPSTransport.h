@@ -9,6 +9,7 @@
 #define _TRANSPORTS_DDS_RTPSTRANSPORT_H_
 
 #include "../../rpc_dll.h"
+#include <cstddef>
 
 #if RPC_WITH_FASTRTPS
 
@@ -41,7 +42,7 @@ namespace eprosima
                 {
                     public:
 
-                        typedef void* (*Create_data)(void);
+                        typedef void* (*Create_data)(size_t dataSize);
                         typedef void (*Copy_data)(void *dst, void *src);
                         typedef void (*Destroy_data)(void *data);
                         typedef void (*ProcessFunc)(eprosima::rpc::protocol::Protocol&, void*,
@@ -89,7 +90,7 @@ namespace eprosima
                                     const char *writertopicname, const char *readertypename,
                                     const char *readertopicname,
                                     Create_data create_data, Copy_data copy_data, Destroy_data destroy_data,
-                                    ProcessFunc processFunc, int dataSize) = 0;
+                                    ProcessFunc processFunc, size_t dataSize) = 0;
 
                     protected:
 
@@ -98,6 +99,8 @@ namespace eprosima
                          * @param domainId Optional parameter that specifies the domain identifier that will be used in DDS.
                          */
                         RTPSTransport(int domainId = 0);
+
+                        RTPSTransport(eprosima::fastrtps::Participant *participant);
 
                     private:
 
@@ -110,6 +113,8 @@ namespace eprosima
                          * This pointer should never be NULL.
                          */
                         eprosima::fastrtps::Participant *m_participant;
+
+                        bool m_ownership;
                 };
             } // namespace dds
         } // namespace transport

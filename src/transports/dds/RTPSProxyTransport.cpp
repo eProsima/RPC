@@ -32,8 +32,20 @@ RTPSProxyTransport::RTPSProxyTransport(const char* const remoteServiceName, cons
     ::transport::ProxyTransport(), ::transport::dds::RTPSTransport(domainId),
     m_timeout(milliseconds)
 {
-    const char* const METHOD_NAME = "RTPSProxyTransport";
+    if(remoteServiceName != NULL)
+        m_remoteServiceName = remoteServiceName;
+    else
+        m_remoteServiceName = "Service";
 
+    if(instanceName != NULL)
+        m_instanceName = instanceName;
+}
+
+RTPSProxyTransport::RTPSProxyTransport(eprosima::fastrtps::Participant *participant, const char* const remoteServiceName,
+        const char* const instanceName, long milliseconds) :
+    ::transport::ProxyTransport(), ::transport::dds::RTPSTransport(participant),
+    m_timeout(milliseconds)
+{
     if(remoteServiceName != NULL)
         m_remoteServiceName = remoteServiceName;
     else
@@ -77,14 +89,14 @@ long RTPSProxyTransport::getTimeout()
 ::transport::Endpoint* RTPSProxyTransport::createProcedureEndpoint(const char *name, const char *writertypename,
         const char *writertopicname, const char *readertypename, const char *readertopicname,
         RTPSTransport::Create_data create_data, RTPSTransport::Copy_data copy_data, RTPSTransport::Destroy_data destroy_data,
-        RTPSTransport::ProcessFunc /*processFunc*/, int /*dataSize*/)
+        RTPSTransport::ProcessFunc /*processFunc*/, size_t dataSize)
 {
     const char* const METHOD_NAME = "createProcedureEndpoint";
     RTPSProxyProcedureEndpoint *pe = new RTPSProxyProcedureEndpoint(*this);
 
     if(pe != NULL)
     {
-        if(pe->initialize(name, writertypename, writertopicname, readertypename, readertopicname, create_data, copy_data, destroy_data) == 0)
+        if(pe->initialize(name, writertypename, writertopicname, readertypename, readertopicname, create_data, copy_data, destroy_data, dataSize) == 0)
         {
             std::pair<std::map<const char*, RTPSProxyProcedureEndpoint*>::iterator, bool> retmap = m_procedureEndpoints.insert(std::pair<const char*, RTPSProxyProcedureEndpoint*>(name, pe));
 

@@ -49,6 +49,16 @@ namespace eprosima
                         RPC_DllAPI RTPSServerTransport(const char* const serviceName = NULL, const char* const instanceName = NULL, int domainId = 0);
 
                         /*!
+                         * @brief Default constructor.
+                         * @param participant User's participant that will be use for communications.
+                         * @param serviceName Name of the remote service. If value is not assigned or NULL pointer is used,
+                         * the default service's name will be use.
+                         * @param instanceName Instance's name of the remote service. If value is not assigned or NULL pointer is used,
+                         * the default instance's name will be use.
+                         */
+                        RPC_DllAPI RTPSServerTransport(eprosima::fastrtps::Participant *participant, const char* const serviceName = NULL, const char* const instanceName = NULL);
+
+                        /*!
                          * @brief Default destructor.
                          */
                         virtual RPC_DllAPI ~RTPSServerTransport();
@@ -79,7 +89,7 @@ namespace eprosima
                             createProcedureEndpoint(const char *name, const char *writertypename,
                                     const char *writertopicname, const char *readertypename, const char *readertopicname,
                                     RTPSTransport::Create_data create_data, RTPSTransport::Copy_data copy_data, RTPSTransport::Destroy_data destroy_data,
-                                    RTPSTransport::ProcessFunc processFunc, int dataSize);
+                                    RTPSTransport::ProcessFunc processFunc, size_t dataSize);
 								
 						/*!
 						 * @brief This method is invoked once for each incoming request.

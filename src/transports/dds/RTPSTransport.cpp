@@ -24,7 +24,13 @@ using namespace ::exception;
 
 static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::RTPSTransport";
 
-RTPSTransport::RTPSTransport(int domainId) : m_domainId(domainId) , m_participant(NULL)
+RTPSTransport::RTPSTransport(int domainId) : m_domainId(domainId) , m_participant(NULL),
+    m_ownership(true)
+{
+}
+
+RTPSTransport::RTPSTransport(eprosima::fastrtps::Participant *participant) : m_domainId(0) , m_participant(participant),
+    m_ownership(false)
 {
 }
 
@@ -32,7 +38,7 @@ void RTPSTransport::initialize()
 {
     const char* const METHOD_NAME = "initialize";
 
-    if(m_participant == nullptr)
+    if(m_ownership && m_participant == nullptr)
     {
         std::string errorMessage;
         eprosima::fastrtps::ParticipantAttributes pQos;
@@ -57,7 +63,7 @@ void RTPSTransport::initialize()
 
 RTPSTransport::~RTPSTransport()
 {
-    if(m_participant != nullptr)
+    if(m_ownership && m_participant != nullptr)
     {
         eprosima::fastrtps::Domain::removeParticipant(m_participant);
         m_participant = nullptr;
