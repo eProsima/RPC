@@ -70,7 +70,7 @@ using namespace ::transport::dds;
 RTPSProxyProcedureEndpoint::RTPSProxyProcedureEndpoint(RTPSProxyTransport &transport) : m_mutex(NULL), recv_mutex_(NULL),
     matched_mutex_(NULL), matched_sub_cond_(NULL), matched_pub_cond_(NULL), num_matched_sub_(0), num_matched_pub_(0),
     m_transport(transport), m_writer(NULL), m_reader(NULL), m_numSec(0),
-    m_create_data(NULL), m_copy_data(NULL), m_destroy_data(NULL), data_(NULL)
+    m_create_data(NULL), m_copy_data(NULL), m_destroy_data(NULL), m_dataSize(0), data_(NULL)
 {
 }
 
@@ -86,12 +86,13 @@ RTPSProxyProcedureEndpoint::~RTPSProxyProcedureEndpoint()
 int RTPSProxyProcedureEndpoint::initialize(const char *name, const char *writertypename,
         const char *writertopicname, const char *readertypename, const char *readertopicname,
         RTPSTransport::Create_data create_data, RTPSTransport::Copy_data copy_data,
-        RTPSTransport::Destroy_data destroy_data)
+        RTPSTransport::Destroy_data destroy_data, size_t dataSize)
 {
     const char* const METHOD_NAME = "initialize";
     m_create_data = create_data;
     m_copy_data = copy_data;
     m_destroy_data = destroy_data;
+    m_dataSize = dataSize;
     m_mutex =  new boost::mutex();
     recv_mutex_ = new boost::mutex();
     matched_mutex_ = new boost::shared_mutex();
@@ -107,7 +108,7 @@ int RTPSProxyProcedureEndpoint::initialize(const char *name, const char *writert
             // Not oneway
             if(m_reader != NULL)
             {
-                data_ = m_create_data();
+                data_ = m_create_data(dataSize);
 
                 if(data_ != NULL)
                     return 0;
@@ -243,20 +244,18 @@ ReturnMessage RTPSProxyProcedureEndpoint::checkServerConnection(long timeout)
 
     if(num_matched_sub_ == 0)
     {
-        if(matched_sub_cond_->wait_for(lock, boost::chrono::milliseconds(timeout)) != boost::cv_status::timeout)
-        {
-            if(num_matched_sub_ == 0)
-                return SERVER_NOT_FOUND;
-        }
+        matched_sub_cond_->wait_for(lock, boost::chrono::milliseconds(timeout));
+
+        if(num_matched_sub_ == 0)
+            return SERVER_NOT_FOUND;
     }
 
     if(num_matched_pub_ == 0)
     {
-        if(matched_pub_cond_->wait_for(lock, boost::chrono::milliseconds(timeout)) != boost::cv_status::timeout)
-        {
-            if(num_matched_pub_ == 0)
-                return SERVER_NOT_FOUND;
-        }
+        matched_pub_cond_->wait_for(lock, boost::chrono::milliseconds(timeout));
+
+        if(num_matched_pub_ == 0)
+            return SERVER_NOT_FOUND;
     }
 
     return OK;

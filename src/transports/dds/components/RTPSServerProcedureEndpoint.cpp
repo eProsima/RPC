@@ -48,7 +48,7 @@ RTPSServerProcedureEndpoint::~RTPSServerProcedureEndpoint()
 int RTPSServerProcedureEndpoint::initialize(const char *name, const char *writertypename, const char *writertopicname,
         const char *readertypename, const char *readertopicname,
         RTPSTransport::Create_data create_data, RTPSTransport::Destroy_data destroy_data,
-        RTPSTransport::ProcessFunc processFunc, int dataSize)
+        RTPSTransport::ProcessFunc processFunc, size_t dataSize)
 {
     if(name != NULL && readertypename != NULL && create_data != NULL && destroy_data != NULL &&
             processFunc != NULL && dataSize > 0)
@@ -202,7 +202,7 @@ int RTPSServerProcedureEndpoint::sendReply(void *data)
 void RTPSServerProcedureEndpoint::onNewDataMessage(eprosima::fastrtps::Subscriber *sub)
 {
     eprosima::fastrtps::SampleInfo_t info;
-    void *data = m_create_data();
+    void *data = m_create_data(m_dataSize);
 
     while(data != NULL && sub->takeNextData(data, &info))
     {
@@ -210,7 +210,7 @@ void RTPSServerProcedureEndpoint::onNewDataMessage(eprosima::fastrtps::Subscribe
         {
             m_transport.getStrategy().getImpl()->schedule(boost::bind(&RTPSServerTransport::process, &m_transport, this, data));
 
-            data = m_create_data();
+            data = m_create_data(m_dataSize);
         }
     }
 

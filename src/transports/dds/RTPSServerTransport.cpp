@@ -32,6 +32,19 @@ RTPSServerTransport::RTPSServerTransport(const char* const serviceName, const ch
         m_instanceName = instanceName;
 }
 
+RTPSServerTransport::RTPSServerTransport(eprosima::fastrtps::Participant *participant, const char* const serviceName, const char* const instanceName) :
+    ::transport::dds::RTPSTransport(participant),
+    m_serviceName(serviceName), m_instanceName(instanceName)
+{
+    if(serviceName != NULL)
+        m_serviceName = serviceName;
+    else
+        m_serviceName = "Service";
+
+    if(instanceName != NULL)
+        m_instanceName = instanceName;
+}
+
 RTPSServerTransport::~RTPSServerTransport()
 {
     std::map<const char*, RTPSServerProcedureEndpoint*>::iterator it = m_procedureEndpoints.begin();
@@ -52,7 +65,7 @@ const char* RTPSServerTransport::getType() const
 ::transport::Endpoint* RTPSServerTransport::createProcedureEndpoint(const char *name, const char *writertypename,
         const char *writertopicname, const char *readertypename, const char *readertopicname,
         RTPSTransport::Create_data create_data, RTPSTransport::Copy_data /*copy_data*/, RTPSTransport::Destroy_data destroy_data,
-        RTPSTransport::ProcessFunc processFunc, int dataSize)
+        RTPSTransport::ProcessFunc processFunc, size_t dataSize)
 {
     const char* const METHOD_NAME = "createProcedureEndpoint";
     RTPSServerProcedureEndpoint *pe = new RTPSServerProcedureEndpoint(*this);
