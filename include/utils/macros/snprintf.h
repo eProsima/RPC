@@ -4,7 +4,7 @@
 #ifndef SNPRINTF
 #if defined(_WIN32)
 #define SNPRINTF _snprintf
-#elif defined(__linux)
+#elif defined(__linux) || defined(__APPLE__)
 #define SNPRINTF snprintf
 #endif
 #endif // SNPRINTF
