@@ -38,11 +38,7 @@ RTPSServerProcedureEndpoint::RTPSServerProcedureEndpoint(RTPSServerTransport &tr
 
 RTPSServerProcedureEndpoint::~RTPSServerProcedureEndpoint()
 {
-    if(m_mutex != NULL)
-    {
-        delete m_mutex;
-        m_mutex = NULL;
-    }
+    finalize();
 }
 
 int RTPSServerProcedureEndpoint::initialize(const char *name, const char *writertypename, const char *writertopicname,
@@ -74,6 +70,23 @@ int RTPSServerProcedureEndpoint::initialize(const char *name, const char *writer
     }
 
     return -1;
+}
+
+void RTPSServerProcedureEndpoint::finalize()
+{
+    if(m_reader != nullptr)
+    {
+        eprosima::fastrtps::Domain::removeSubscriber(m_reader);
+    }
+
+    if(m_writer != nullptr)
+        eprosima::fastrtps::Domain::removePublisher(m_writer);
+
+    if(m_mutex != NULL)
+    {
+        delete m_mutex;
+        m_mutex = NULL;
+    }
 }
 
 int RTPSServerProcedureEndpoint::start(const char* const &serviceName, const char* const &instanceName)

@@ -73,6 +73,12 @@ namespace eprosima
                                 const char *readertypename, const char *readertopicname,
                                 RTPSTransport::Create_data create_data, RTPSTransport::Destroy_data destroy_data,
                                 RTPSTransport::ProcessFunc, size_t dataSize);
+
+                        /*!
+                         * @brief This function finalizes the proxy procedure endpoint.
+                         * All entities and objects created by this procedure endpoint are deleted.
+                         */
+                        RPC_DllAPI void finalize();
 						
 						/*!
                          * @brief This method creates the DDS entities needed to run this DDS Endpoint.

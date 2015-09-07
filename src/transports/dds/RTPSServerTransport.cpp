@@ -133,7 +133,12 @@ void RTPSServerTransport::run()
 
 void RTPSServerTransport::stop()
 {
-    //TODO
+    std::map<const char*, RTPSServerProcedureEndpoint*>::iterator it;
+
+    for(it = m_procedureEndpoints.begin(); it != m_procedureEndpoints.end(); ++it)
+    {
+        (*it).second->stop();
+    }
 }
 
 int RTPSServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataToRead, ::transport::Endpoint *endpoint)
