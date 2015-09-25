@@ -23,6 +23,17 @@ set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/${PROJECT_NAME_UPPER}_LIC
 ###############################################################################
 if(NOT((MSVC OR MSVC_IDE) AND EPROSIMA_INSTALLER))
     include(CMakePackageConfigHelpers)
+
+    if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
+        set(EPROSIMA_FIND_DEPENDENCIES
+            "if(NOT fastcdr_FOUND)\n    find_package(fastcdr REQUIRED)\nendif\n")
+    endif()
+
+    if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
+        set(EPROSIMA_FIND_DEPENDENCIES
+            "if(NOT fastrtps_FOUND)\n    find_package(fastcdr REQUIRED)\nendif\n")
+    endif()
+
     configure_package_config_file(${PROJECT_SOURCE_DIR}/cmake/packaging/Config.cmake.in
         ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Config.cmake
         INSTALL_DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake

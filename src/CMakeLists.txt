@@ -123,7 +123,7 @@ if(MSVC OR MSVC_IDE)
             ${PROJECT_BINARY_DIR}/lib)
 
         # Export symbols in DLL library
-        target_compile_definitions(${PROJECT_NAME} PRIVATE RPC_DYN_LINK)
+        target_compile_definitions(${PROJECT_NAME} PUBLIC RPC_DYN_LINK)
 
         # Define public headers
         target_include_directories(${PROJECT_NAME} PUBLIC
@@ -138,7 +138,6 @@ if(MSVC OR MSVC_IDE)
             )
 
         if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
-            target_compile_definitions(${PROJECT_NAME} PUBLIC FASTCDR_DYN_LINK)
             target_link_libraries(${PROJECT_NAME}
                 fastcdr
                 )
@@ -146,7 +145,6 @@ if(MSVC OR MSVC_IDE)
         endif()
 
         if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
-            target_compile_definitions(${PROJECT_NAME} PUBLIC FASTRTPS_DYN_LINK)
             target_link_libraries(${PROJECT_NAME}
                 fastrtps
                 )
