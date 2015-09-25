@@ -26,12 +26,12 @@ if(NOT((MSVC OR MSVC_IDE) AND EPROSIMA_INSTALLER))
 
     if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
         set(EPROSIMA_FIND_DEPENDENCIES
-            "if(NOT fastcdr_FOUND)\n    find_package(fastcdr REQUIRED)\nendif\n")
+            "if(NOT fastcdr_FOUND)\n    find_package(fastcdr REQUIRED)\nendif()\n")
     endif()
 
     if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
         set(EPROSIMA_FIND_DEPENDENCIES
-            "if(NOT fastrtps_FOUND)\n    find_package(fastcdr REQUIRED)\nendif\n")
+            "if(NOT fastrtps_FOUND)\n    find_package(fastcdr REQUIRED)\nendif()\n")
     endif()
 
     configure_package_config_file(${PROJECT_SOURCE_DIR}/cmake/packaging/Config.cmake.in
