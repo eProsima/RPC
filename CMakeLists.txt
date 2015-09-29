@@ -325,13 +325,15 @@ endif()
 # Packaging
 ###############################################################################
 # Install external eprosima libraries
-if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
-    install_eprosima_fastcdr()
+if(EPROSIMA_BUILD)
+    if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
+        install_eprosima_fastcdr()
+    endif()
+    if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
+        install_eprosima_fastrtps()
+    endif()
+    install_boost(thread system date_time chrono regex)
 endif()
-if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
-install_eprosima_fastrtps()
-endif()
-install_boost(thread system date_time chrono regex)
 
 # Install licenses
 install(FILES ${PROJECT_SOURCE_DIR}/${PROJECT_NAME_UPPER}_LICENSE.txt
