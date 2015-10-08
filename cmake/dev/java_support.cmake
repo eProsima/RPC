@@ -1,6 +1,11 @@
 macro(gradle_build directory jar)
     find_package(Java 1.6 COMPONENTS Runtime REQUIRED)
-    find_program(GRADLE_EXE gradle)
+    if(WIN32)
+        find_program(GRADLE_EXE gradle.bat)
+    else()
+        find_program(GRADLE_EXE gradle)
+    endif()
+
     if(GRADLE_EXE)
         message(STATUS "Found Gradle: ${GRADLE_EXE}")
     else()
@@ -18,7 +23,7 @@ macro(gradle_build directory jar)
 
     add_custom_target(java ALL
         COMMAND ${CMAKE_COMMAND} -E env
-        "JAVA_HOME="
+        --unset=JAVA_HOME
         "PATH=${Java_JAVA_EXECUTABLE_DIR}"
         "${GRADLE_EXE}" -Pcustomversion=${PROJECT_VERSION} ${RPCDDS_CUSTOM_VENDOR} ${jar}
         WORKING_DIRECTORY ${directory}
