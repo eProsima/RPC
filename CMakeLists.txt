@@ -289,7 +289,7 @@ if(BUILD_DOCUMENTATION)
     ### Libreoffice ########################3
 
     if(WIN32)
-        set(LIBREOFFICE_CONVERT_README_MACRO "macro:///eProsima.documentation.changeHyperlinksAndVersionToHTML(${PROJECT_SOURCE_DIR}/doc/README_${PROJECT_NAME}.odt,${PROJECT_VERSION},./,./doc/)")
+        set(LIBREOFFICE_CONVERT_README_MACRO "macro:///eProsima.documentation.changeHyperlinksAndVersionToHTML(${PROJECT_SOURCE_DIR}/doc/README_${PROJECT_NAME}.odt,${PROJECT_VERSION},./,/doc/)")
         set(README_LOCATION "${PROJECT_BINARY_DIR}/")
         set(README_INSTALL_LOCATION ".")
     else()
@@ -298,13 +298,22 @@ if(BUILD_DOCUMENTATION)
         set(README_INSTALL_LOCATION "${DOC_INSTALL_DIR}")
     endif()
 
+    # User manuals and installation manuals
+    if(NOT (RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS))
+        set(LIBREOFFICE_CONVERT_INSTALLATION_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual")
+        set(LIBREOFFICE_CONVERT_USER_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual")
+    else()
+        set(LIBREOFFICE_CONVERT_INSTALLATION_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual For RTIDDS")
+        set(LIBREOFFICE_CONVERT_USER_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual For RTIDDS")
+    endif()
+
     add_custom_target(libreoffice
         COMMAND "${LIBREOFFICE_EXE}" --headless
-        "macro:///eProsima.documentation.changeVersion(${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual.odt,${PROJECT_VERSION})"
-        COMMAND ${CMAKE_COMMAND} -E rename "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual.pdf" "${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual.pdf"
+        "macro:///eProsima.documentation.changeVersion(${LIBREOFFICE_CONVERT_INSTALLATION_MANUAL_DOC}.odt,${PROJECT_VERSION})"
+        COMMAND ${CMAKE_COMMAND} -E rename "${LIBREOFFICE_CONVERT_INSTALLATION_MANUAL_DOC}.pdf" "${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual.pdf"
         COMMAND "${LIBREOFFICE_EXE}" --headless
-        "macro:///eProsima.documentation.changeVersion(${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual.odt,${PROJECT_VERSION})"
-        COMMAND ${CMAKE_COMMAND} -E rename "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual.pdf" "${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual.pdf"
+        "macro:///eProsima.documentation.changeVersion(${LIBREOFFICE_CONVERT_USER_MANUAL_DOC}.odt,${PROJECT_VERSION})"
+        COMMAND ${CMAKE_COMMAND} -E rename "${LIBREOFFICE_CONVERT_USER_MANUAL_DOC}.pdf" "${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual.pdf"
         COMMAND "${LIBREOFFICE_EXE}" --headless ${LIBREOFFICE_CONVERT_README_MACRO} 
         COMMAND ${CMAKE_COMMAND} -E rename "${PROJECT_SOURCE_DIR}/doc/README_${PROJECT_NAME}.html" "${README_LOCATION}/README.html"
         DEPENDS
@@ -344,10 +353,30 @@ install(FILES ${PROJECT_SOURCE_DIR}/${PROJECT_NAME_UPPER}_LICENSE.txt
 set(CPACK_COMPONENT_LICENSES_HIDDEN 1)
 
 # Install examples
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/examples/C++/${PROJECT_NAME}/
-    DESTINATION examples/C++
-    COMPONENT examples
-    )
+if(RPCPROTO STREQUAL "rpcdds")
+    if(WITH_RTIDDS)
+        install(DIRECTORY ${PROJECT_SOURCE_DIR}/examples/C++/${PROJECT_NAME}/ddsTypes/
+            DESTINATION examples/C++
+            COMPONENT examples
+            )
+    endif()
+
+    if(WITH_FASTRTPS)
+        install(DIRECTORY ${PROJECT_SOURCE_DIR}/examples/C++/${PROJECT_NAME}/c++11Types/RTPSCalculator/
+            DESTINATION examples/C++/RTPSCalculator
+            COMPONENT examples
+            )
+        install(DIRECTORY ${PROJECT_SOURCE_DIR}/examples/C++/${PROJECT_NAME}/c++11Types/RTPSCalculatorAsync/
+            DESTINATION examples/C++/RTPSCalculatorAsync
+            COMPONENT examples
+            )
+    endif()
+else()
+    install(DIRECTORY ${PROJECT_SOURCE_DIR}/examples/C++/${PROJECT_NAME}/
+        DESTINATION examples/C++
+        COMPONENT examples
+        )
+endif()
 
 set(CPACK_COMPONENT_EXAMPLES_DISPLAY_NAME "Examples")
 set(CPACK_COMPONENT_EXAMPLES_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} examples")
@@ -370,6 +399,13 @@ if(BUILD_JAVA)
         install(PROGRAMS
             ${PROJECT_SOURCE_DIR}/fastrpcgen/scripts/${PROJECT_NAME}gen
             DESTINATION ${BIN_INSTALL_DIR}
+            COMPONENT java
+            )
+    endif()
+
+    if(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS)
+        install(FILES ${PROJECT_SOURCE_DIR}/fastrpcgen/share/${PROJECT_NAME}/idl/MessageHeader.idl
+            DESTINATION ${DATA_INSTALL_DIR}/${PROJECT_NAME}/idl
             COMPONENT java
             )
     endif()

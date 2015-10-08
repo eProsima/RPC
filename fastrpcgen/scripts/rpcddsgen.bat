@@ -26,4 +26,4 @@ if not %ERRORLEVEL%==0 (
    )
 )
 
-%java_exec% -jar "%dir%\..\share\rpcdds\rpcddsgen.jar" %args%
+%java_exec% -jar "%dir%\..\share\rpcdds\rpcddsgen.jar" -datadir "%dir%..\share\rpcdds" %args%

@@ -6,8 +6,15 @@ macro(gradle_build directory jar)
         message(FATAL_ERROR "gradle is needed to build the java application. Please install it correctly")
     endif()
 
+    set(RPCDDS_CUSTOM_VENDOR "")
+    if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
+        set(RPCDDS_CUSTOM_VENDOR "-Pcustomvendor=eProsima")
+    elseif(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS)
+        set(RPCDDS_CUSTOM_VENDOR "-Pcustomvendor=RTI")
+    endif()
+
     add_custom_target(java ALL
-        COMMAND "${GRADLE_EXE}" -Pcustomversion=${PROJECT_VERSION} ${jar}
+        COMMAND "${GRADLE_EXE}" -Pcustomversion=${PROJECT_VERSION} ${RPCDDS_CUSTOM_VENDOR} ${jar}
         WORKING_DIRECTORY ${directory}
         COMMENT "Generating Java application" VERBATIM)
 
