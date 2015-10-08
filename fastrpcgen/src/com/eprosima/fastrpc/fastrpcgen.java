@@ -87,6 +87,7 @@ public class fastrpcgen
     private ArrayList<String> m_includePaths = new ArrayList<String>();
     private Vector<String> m_idlFiles;
     //! Add information to use fastrpcgen internally. 
+    private static boolean m_vendorSelected = false;
     private boolean m_local = false;
     private boolean m_rpm = false;
 
@@ -188,6 +189,8 @@ public class fastrpcgen
                     m_ddstransport = DDS_TRANSPORT.RTPS;
                     m_types = DDS_TYPES.EPROSIMA;
                 }
+
+                m_vendorSelected = true;
             }
             catch(Exception ex)
             {
@@ -1501,24 +1504,6 @@ public class fastrpcgen
                 tao_root = System.getenv("TAO_ROOT");
             }
 
-            if(!m_rpm)
-            {
-                fastrpc_root = System.getenv(m_appEnv);
-
-                if(fastrpc_root == null || fastrpc_root.equals(""))
-                {
-                    System.out.println(ColorMessage.error() + "Cannot find the environment variable " + m_appEnv + ".");
-                    System.out.println("Note: " + m_appEnv + " environment variable is not set in your system.");
-                    System.out.println("      " + m_appName + " uses this environment variable to find its own resources.");
-                    System.out.println("      See the User Manual document.");
-                    return false;
-                }
-            }
-            else
-            {
-                fastrpc_root = "/usr/share/" + m_appProduct;
-            }
-
             if(m_middleware.equals("rti"))
             {
                 // Directory $NDDSHOME/scripts/rtiddsgen.bat
@@ -2146,6 +2131,9 @@ public class fastrpcgen
         if(m_protocol == PROTOCOL.REST) {
             System.out.print(" over REST");			
         }
+        else if(m_protocol == PROTOCOL.DDS) {
+            System.out.print(" over DDS");
+        }
         System.out.println(".");
         //System.out.println("\t\t--server: disables the generation of source code for servers.");
         //System.out.println("\t\t--client: disables the generation of source code for clients.");
@@ -2171,15 +2159,18 @@ public class fastrpcgen
            */
         if(m_protocol == PROTOCOL.DDS)
         {
-            //System.out.println("\t\t-transport <transport>: selects the DDS transport to be used by the generated code.");
-            //System.out.println("\t\t\tSupported DDS transports:");
-            //System.out.println("\t\t\t* rti (Default) - DDS transport implemented using RTI DDS middleware.");
-            //System.out.println("\t\t\t* rtps - DDS transport implemented using FastRTPS library.");
-            //System.out.println("\t\t-types <mapping>: selects the C++ mapping used for user types. Only supported in protocol dds.");
-            //System.out.println("\t\t\tSupported C++ mapping:");
-            //System.out.println("\t\t\t* c++11 (Default) - C++11 native types.");
-            //System.out.println("\t\t\t* rti - RTI DDS types. This option only supported by RTI DDS transport");
-            //System.out.println("");
+            if(!m_vendorSelected)
+            {
+                System.out.println("\t\t-transport <transport>: selects the DDS transport to be used by the generated code.");
+                System.out.println("\t\t\tSupported DDS transports:");
+                System.out.println("\t\t\t* rti (Default) - DDS transport implemented using RTI DDS middleware.");
+                System.out.println("\t\t\t* rtps - DDS transport implemented using FastRTPS library.");
+                System.out.println("\t\t-types <mapping>: selects the C++ mapping used for user types. Only supported in protocol dds.");
+                System.out.println("\t\t\tSupported C++ mapping:");
+                System.out.println("\t\t\t* c++11 (Default) - C++11 native types.");
+                System.out.println("\t\t\t* rti - RTI DDS types. This option only supported by RTI DDS transport");
+                System.out.println("");
+            }
             System.out.println("\t\t" + TOPIC_GENERATION_OPTION + " <option>: defines how DDS topics are generated. Only supported in protocol dds.");
             System.out.println("\t\t\tSupported topics generation:");
             System.out.println("\t\t\t* " + TOPIC_GENERATION_OPTION_VALUE_BY_INTERFACE + " (Default) - Generate a topic for each IDL interface.");

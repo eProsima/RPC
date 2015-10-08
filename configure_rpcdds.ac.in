@@ -25,27 +25,7 @@ AC_CHECK_HEADER([fastcdr/config.h],
 
 AC_DEFINE(EPROSIMA_RPC_LIB_NAME , rpcdds, [Define the name of the library])
 
-AC_ARG_WITH([fastrtps],
-        AS_HELP_STRING(["--without-fastrtps"], ["Disables the compilation against eProsima Fast RTPS"]))
-
-AS_IF([test "x$with_fastrtps" = "xno"],
-    [AC_DEFINE([RPC_WITH_FASTRTPS], [0], [Defined if building agaist eProsima Fast RTPS])],
-    [AC_CHECK_HEADER([fastrtps/config.h],
-	    [AC_MSG_NOTICE([Found eProsima Fast RTPS])
-         AC_DEFINE([RPC_WITH_FASTRTPS], [1], [Defined if building agaist eProsima Fast RTPS])],
-	    [AC_MSG_ERROR([Could not find eProsima Fast RTPS])],
-	    []) LDFLAGS="$LDFLAGS -lfastrtps"])
-
-AC_ARG_WITH([rtidds],
-        AS_HELP_STRING(["--with-rtidds=[ARG]"], ["Enables the compilation against RTI DDS. The argument is the RTI DDS platform [ARG=x64Linux2.6gcc4.4.5]"]))
-
-AS_IF([test "x$with_rtidds" = "x"],
-    [AC_DEFINE([RPC_WITH_RTIDDS], [0], [Defined if building agaist RTI DDS])],
-    [AC_CHECK_HEADER([$NDDSHOME/include/ndds/ndds_version.h],
-	    [AC_MSG_NOTICE([Found RTI DDS])
-         AC_DEFINE([RPC_WITH_RTIDDS], [1], [Defined if building agaist RTI DDS])],
-	    [AC_MSG_ERROR([Could not find RTI DDS. Set NDDSHOME environment variable])],
-	    []) LDFLAGS="$LDFLAGS -L$NDDSHOME/lib/$with_rtidds -lnddscore -lnddsc -lnddscpp -lpthread -ldl" CPPFLAGS="$CPPFLAGS -DRTI_UNIX -DRTI_LINUX -I$NDDSHOME/include -I$NDDSHOME/include/ndds"])
+@RPCDDS_CONFIGURE_AC_EXTRA@
 
 # Makes version available in config.h
 AC_DEFINE(RPC_VERSION_MAJOR, version_major, [rpcdds version major])
@@ -69,9 +49,10 @@ AC_C_BIGENDIAN(
 AX_BOOST_BASE([1.53],
 	AC_MSG_NOTICE([Found Boost]),
 	AC_MSG_ERROR([Could not find Boost]))
-AX_BOOST_SYSTEM
 AX_BOOST_THREAD
+AX_BOOST_SYSTEM
 AX_BOOST_DATE_TIME
+AX_BOOST_CHRONO
 
 # Check for libraries used in the main build process
 AC_PROG_CXX

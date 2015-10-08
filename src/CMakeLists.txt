@@ -206,7 +206,7 @@ else()
 
     # Link library to external libraries.
     target_link_libraries(${PROJECT_NAME}
-        ${Boost_LIBRARIES}
+        ${Boost_LIBRARIES} -lboost_thread
         )
 endif()
 

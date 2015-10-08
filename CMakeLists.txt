@@ -59,18 +59,23 @@ message(STATUS "Configuring ${PROJECT_NAME_LARGE}")
 
 #If not set, copy over product version from configure.ac
 if(NOT PROJECT_MAJOR_VERSION)
+    set(CONFIGURE_SUFFIX "")
+    if(RPCPROTO STREQUAL "rpcdds")
+        set(CONFIGURE_SUFFIX ".in")
+    endif()
+
     file(STRINGS
-        ${PROJECT_SOURCE_DIR}/configure_${PROJECT_NAME}.ac
+        ${PROJECT_SOURCE_DIR}/configure_${PROJECT_NAME}.ac${CONFIGURE_SUFFIX}
         PROJECT_MAJOR_VERSION_TMP
         REGEX "^m4_define\\(\\[?version_major\\]?, *\\[?[0-9]+\\]?\\)"
         )
     file(STRINGS
-        ${PROJECT_SOURCE_DIR}/configure_${PROJECT_NAME}.ac
+        ${PROJECT_SOURCE_DIR}/configure_${PROJECT_NAME}.ac${CONFIGURE_SUFFIX}
         PROJECT_MINOR_VERSION_TMP
         REGEX "^m4_define\\(\\[?version_minor\\]?, *\\[?[0-9]+\\]?\\)"
         )
     file(STRINGS
-        ${PROJECT_SOURCE_DIR}/configure_${PROJECT_NAME}.ac
+        ${PROJECT_SOURCE_DIR}/configure_${PROJECT_NAME}.ac${CONFIGURE_SUFFIX}
         PROJECT_MICRO_VERSION_TMP
         REGEX "^m4_define\\(\\[?version_micro\\]?, *\\[?[0-9]+\\]?\\)"
         )
@@ -95,7 +100,7 @@ endif()
 set(PROJECT_VERSION ${PROJECT_MAJOR_VERSION}.${PROJECT_MINOR_VERSION}.${PROJECT_MICRO_VERSION})
 
 message(STATUS "Version: ${PROJECT_VERSION}")
-message(STATUS "To change de version modify the file configure_${PROJECT_NAME}.ac")
+message(STATUS "To change de version modify the file configure_${PROJECT_NAME}.ac${CONFIGURE_SUFFIX}")
 
 ###############################################################################
 # Generation of windows installers.

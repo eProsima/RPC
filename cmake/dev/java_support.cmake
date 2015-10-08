@@ -1,4 +1,5 @@
 macro(gradle_build directory jar)
+    find_package(Java 1.6 COMPONENTS Runtime REQUIRED)
     find_program(GRADLE_EXE gradle)
     if(GRADLE_EXE)
         message(STATUS "Found Gradle: ${GRADLE_EXE}")
@@ -7,14 +8,19 @@ macro(gradle_build directory jar)
     endif()
 
     set(RPCDDS_CUSTOM_VENDOR "")
-    if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
+    if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS AND NOT WITH_RTIDDS)
         set(RPCDDS_CUSTOM_VENDOR "-Pcustomvendor=eProsima")
-    elseif(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS)
+    elseif(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS AND NOT WITH_FASTRTPS)
         set(RPCDDS_CUSTOM_VENDOR "-Pcustomvendor=RTI")
     endif()
 
+    get_filename_component(Java_JAVA_EXECUTABLE_DIR ${Java_JAVA_EXECUTABLE} DIRECTORY)
+
     add_custom_target(java ALL
-        COMMAND "${GRADLE_EXE}" -Pcustomversion=${PROJECT_VERSION} ${RPCDDS_CUSTOM_VENDOR} ${jar}
+        COMMAND ${CMAKE_COMMAND} -E env
+        "JAVA_HOME="
+        "PATH=${Java_JAVA_EXECUTABLE_DIR}"
+        "${GRADLE_EXE}" -Pcustomversion=${PROJECT_VERSION} ${RPCDDS_CUSTOM_VENDOR} ${jar}
         WORKING_DIRECTORY ${directory}
         COMMENT "Generating Java application" VERBATIM)
 
