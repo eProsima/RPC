@@ -304,10 +304,13 @@ if(BUILD_DOCUMENTATION)
     endif()
 
     # User manuals and installation manuals
-    if(NOT (RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS))
+    if((NOT RPCPROTO STREQUAL "rpcdds") OR (RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS AND WITH_RTIDDS))
         set(LIBREOFFICE_CONVERT_INSTALLATION_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual")
         set(LIBREOFFICE_CONVERT_USER_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual")
-    else()
+    elseif(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
+        set(LIBREOFFICE_CONVERT_INSTALLATION_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual For FastRTPS")
+        set(LIBREOFFICE_CONVERT_USER_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual For FastRTPS")
+    elseif(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS)
         set(LIBREOFFICE_CONVERT_INSTALLATION_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual For RTIDDS")
         set(LIBREOFFICE_CONVERT_USER_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual For RTIDDS")
     endif()
@@ -358,26 +361,22 @@ install(FILES ${PROJECT_SOURCE_DIR}/${PROJECT_NAME_UPPER}_LICENSE.txt
 set(CPACK_COMPONENT_LICENSES_HIDDEN 1)
 
 # Install examples
-if(RPCPROTO STREQUAL "rpcdds")
-    if(WITH_RTIDDS)
-        install(DIRECTORY ${PROJECT_SOURCE_DIR}/examples/C++/${PROJECT_NAME}/ddsTypes/
-            DESTINATION examples/C++
-            COMPONENT examples
-            )
-    endif()
-
-    if(WITH_FASTRTPS)
-        install(DIRECTORY ${PROJECT_SOURCE_DIR}/examples/C++/${PROJECT_NAME}/c++11Types/RTPSCalculator/
-            DESTINATION examples/C++/RTPSCalculator
-            COMPONENT examples
-            )
-        install(DIRECTORY ${PROJECT_SOURCE_DIR}/examples/C++/${PROJECT_NAME}/c++11Types/RTPSCalculatorAsync/
-            DESTINATION examples/C++/RTPSCalculatorAsync
-            COMPONENT examples
-            )
-    endif()
-else()
+if((NOT RPCPROTO STREQUAL "rpcdds") OR (RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS AND WITH_RTIDDS))
     install(DIRECTORY ${PROJECT_SOURCE_DIR}/examples/C++/${PROJECT_NAME}/
+        DESTINATION examples/C++
+        COMPONENT examples
+        )
+elseif(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
+    install(DIRECTORY ${PROJECT_SOURCE_DIR}/examples/C++/${PROJECT_NAME}/c++11Types/RTPSCalculator/
+        DESTINATION examples/C++/RTPSCalculator
+        COMPONENT examples
+        )
+    install(DIRECTORY ${PROJECT_SOURCE_DIR}/examples/C++/${PROJECT_NAME}/c++11Types/RTPSCalculatorAsync/
+        DESTINATION examples/C++/RTPSCalculatorAsync
+        COMPONENT examples
+        )
+elseif(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS)
+    install(DIRECTORY ${PROJECT_SOURCE_DIR}/examples/C++/${PROJECT_NAME}/ddsTypes/
         DESTINATION examples/C++
         COMPONENT examples
         )
