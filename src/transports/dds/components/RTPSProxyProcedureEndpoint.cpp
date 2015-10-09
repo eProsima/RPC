@@ -24,11 +24,9 @@
 #include <fastrtps/attributes/SubscriberAttributes.h>
 #include <fastrtps/subscriber/SampleInfo.h>
 
-#include <boost/config/user.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/shared_mutex.hpp>
 #include <boost/thread/condition_variable.hpp>
-#include <boost/chrono.hpp>
 
 #ifdef __linux
 #include <cinttypes>

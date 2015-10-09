@@ -12,4 +12,4 @@ if [ $? != 0 ]; then
 fi
 
 prefix="@prefix@"
-exec $java_exec -jar "@datadir@/rpcdds/rpcddsgen.jar" "$@"
+exec $java_exec -jar "@datadir@/rpcdds/rpcddsgen.jar" -datadir "@datadir@/rpcdds" "$@"

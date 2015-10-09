@@ -9,7 +9,7 @@
 #ifndef _UTILS_DDS_MIDDLEWARE_H_
 #define _UTILS_DDS_MIDDLEWARE_H_
 
-#include "config.h"
+#include "../../rpc_dll.h"
 
 #if RPC_WITH_RTIDDS
 

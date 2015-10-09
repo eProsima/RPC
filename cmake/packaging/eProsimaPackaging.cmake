@@ -73,6 +73,15 @@ elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
 
     # Prepare specific cmake scripts
     configure_file(${PROJECT_SOURCE_DIR}/cmake/packaging/linux/LinuxPackaging.cmake.in ${PROJECT_BINARY_DIR}/cmake/packaging/linux/LinuxPackaging.cmake @ONLY)
+
+    if(RPCPROTO STREQUAL "rpcdds")
+        set(AUTOTOOLS_CONFIGURE_AC_FILE ${PROJECT_BINARY_DIR}/configure_${PROJECT_NAME}.ac)
+        include(${PROJECT_SOURCE_DIR}/cmake/packaging/linux/generate_configure_ac.cmake)
+        generate_rpcdds_configure_ac()
+    else()
+        set(AUTOTOOLS_CONFIGURE_AC_FILE ${PROJECT_SOURCE_DIR}/configure_${PROJECT_NAME}.ac)
+    endif()
+
     configure_file(${PROJECT_SOURCE_DIR}/cmake/packaging/linux/AutotoolsPackaging.cmake.in ${PROJECT_BINARY_DIR}/cmake/packaging/linux/AutotoolsPackaging.cmake @ONLY)
 
     # Prepare scripts for autotools

@@ -6,13 +6,11 @@ SUBDIRS = include src
 @PROJECT_NAME@_scriptdir = $(bindir)
 @PROJECT_NAME@_script_SCRIPTS = .bin/@PROJECT_NAME@gen
 
-@PROJECT_NAME@_javadir = $(datadir)/@PROJECT_NAME@
-@PROJECT_NAME@_java_DATA = share/@PROJECT_NAME@/@PROJECT_NAME@gen.jar
-
 install-data-hook:
 	mkdir -p $(DESTDIR)$(datadir)/doc/@PROJECT_NAME@; \
 	cp -r share/doc/* $(DESTDIR)$(datadir)/doc/@PROJECT_NAME@; \
 	mkdir -p $(DESTDIR)$(datadir)/@PROJECT_NAME@; \
+	cp -r share/@PROJECT_NAME@/* $(DESTDIR)$(datadir)/@PROJECT_NAME@; \
 	cp -r examples $(DESTDIR)$(datadir)/@PROJECT_NAME@/;
 
 uninstall-hook:

@@ -11,4 +11,4 @@ if [ $? != 0 ]; then
     java_exec="${JAVA_HOME}/bin/java"
 fi
 
-exec $java_exec -jar "$dir/../share/rpcdds/rpcddsgen.jar" "$@"
+exec $java_exec -jar "$dir/../share/rpcdds/rpcddsgen.jar" -datadir "$dir/../share/rpcdds" "$@"

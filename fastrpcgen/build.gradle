@@ -46,6 +46,15 @@ task copyResources {
     File versionFile = new File("${project.buildDir}/resources/main/version")
     versionFile.createNewFile();
     pversion.store(versionFile.newWriter(), null)
+
+    if(project.hasProperty('customvendor'))
+    {
+        Properties pvendor = new Properties()
+        pvendor.setProperty('vendor', project.customvendor.toString())
+        File vendorFile = new File("${project.buildDir}/resources/main/vendor")
+        vendorFile.createNewFile();
+        pvendor.store(vendorFile.newWriter(), null)
+    }
 }
 
 sourceSets {
