@@ -169,7 +169,7 @@ endif()
 ###############################################################################
 set(BIN_INSTALL_DIR bin/ CACHE PATH "Installation directory for binaries")
 set(INCLUDE_INSTALL_DIR include/ CACHE PATH "Installation directory for C++ headers")
-if(MSVC OR MSVC_IDE)
+if((MSVC OR MSVC_IDE) AND EPROSIMA_BUILD)
     set(LIB_INSTALL_DIR lib/${MSVC_ARCH}/ CACHE PATH "Installation directory for libraries")
 else()
     set(LIB_INSTALL_DIR lib/ CACHE PATH "Installation directory for libraries")
