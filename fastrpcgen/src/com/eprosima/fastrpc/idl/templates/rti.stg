@@ -158,13 +158,13 @@ $endif$
 extractParamFromTopic(param, varname, isReply) ::= <<
 $if(isReply)$
 $if(param.input)$
-$if(param.typecode.primitive)$
+$if(!param.typecode.primitive)$
 $if(param.typecode.isType_d)$
 if($param.name$ != NULL)
-    free($param.name$);
-$endif$
+   free($param.name$);
 $else$
 $varComplexDel(variable=param)$
+$endif$
 $endif$
 $endif$
 $if(param.typecode.isType_f)$
@@ -175,13 +175,13 @@ $endif$
 $else$
 $if(param.output)$
 $if(param.typecode.primitive)$
+$param.name$ = $varname$.$param.name$;
+$else$
 $if(param.typecode.isType_d)$
 $param.name$ = strdup($varname$.$param.name$);
 $else$
-$param.name$ = $varname$.$param.name$;
-$endif$
-$else$
 $param.typecode.cppTypename$_copy(&$param.name$, &$varname$.$param.name$);
+$endif$
 $endif$
 $else$
 $if(param.typecode.isType_f)$
@@ -281,13 +281,13 @@ $endif$
 
 paramTypeByValue(typecode) ::= <<
 $if(typecode.primitive)$
+$typecode.cppTypename$
+$else$
 $if(typecode.isType_d)$
 const $typecode.cppTypename$
 $else$
-$typecode.cppTypename$
-$endif$
-$else$
 const $typecode.cppTypename$&
+$endif$
 $endif$
 >>
 
@@ -315,13 +315,13 @@ $endif$
 
 varDel(variable) ::= <<
 $if(variable)$
-$if(variable.typecode.primitive)$
+$if(!variable.typecode.primitive)$
+$if(!variable.typecode.isType_f)$
 $if(variable.typecode.isType_d)$
 $varStringDel(name=variable.name)$
-$endif$
 $else$
-$if(!variable.typecode.isType_f)$
 $varComplexDel(...)$
+$endif$
 $endif$
 $endif$
 $endif$
