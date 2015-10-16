@@ -1032,8 +1032,8 @@ inst:
 
   noOptionsPage:
 
-  File /oname=$PLUGINSDIR\spltmp.png "@CPACK_TOPLEVEL_DIRECTORY@\eProsimaLogo.png"
-  newadvsplash::show 1000 600 400 -1 "$PLUGINSDIR\spltmp.png"
+  File /oname=$PLUGINSDIR\spltmp.jpg "@CPACK_TOPLEVEL_DIRECTORY@\eProsimaLogo.jpg"
+  newadvsplash::show 1000 600 400 0xFFFFFF "$PLUGINSDIR\spltmp.jpg"
   Pop $0
 
 FunctionEnd
