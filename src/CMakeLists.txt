@@ -152,7 +152,7 @@ if(MSVC OR MSVC_IDE)
         endif()
 
         if(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS)
-            target_compile_definitions(${PROJECT_NAME} PUBLIC ${RTIDDS_DEFINITIONS})
+            target_compile_definitions(${PROJECT_NAME} PUBLIC ${RTIDDS_DEFINITIONS} ${RTIDDS_DLL_DEFINITIONS})
             target_compile_definitions(${PROJECT_NAME}_static PUBLIC ${RTIDDS_DEFINITIONS})
             target_include_directories(${PROJECT_NAME} PUBLIC ${RTIDDS_INCLUDE_DIRS})
             target_include_directories(${PROJECT_NAME}_static PUBLIC ${RTIDDS_INCLUDE_DIRS})

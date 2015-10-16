@@ -43,7 +43,11 @@ exception(ctx, parent, exception) ::= <<
  * @ingroup $ctx.trimfilename$
  */
 struct $exception.name$_t{
-   $exception.members:{member | $member.typecode.idlTypename$ $member.name$$if(member.typecode.isType_f)$$member.typecode.arrayExtension$$endif$;}; separator="\n"$
+    $if(exception.members)$
+    $exception.members:{member | $member.typecode.idlTypename$ $member.name$$if(member.typecode.isType_f)$$member.typecode.arrayExtension$$endif$;}; separator="\n"$
+    $else$
+    octet dummy;
+    $endif$
 }; $nolevelIDLdefine()$
 >>
 
