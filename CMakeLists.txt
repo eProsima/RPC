@@ -124,9 +124,29 @@ if(MSVC OR MSVC_IDE)
 endif()
 
 ###############################################################################
+# Installation paths
+###############################################################################
+set(BIN_INSTALL_DIR bin/ CACHE PATH "Installation directory for binaries")
+set(INCLUDE_INSTALL_DIR include/ CACHE PATH "Installation directory for C++ headers")
+set(LIB_INSTALL_DIR lib/ CACHE PATH "Installation directory for libraries")
+set(DATA_INSTALL_DIR share/ CACHE PATH "Installation directory for data")
+if(WIN32)
+    set(DOC_DIR "doc")
+else()
+    set(DOC_DIR "${DATA_INSTALL_DIR}/doc")
+endif()
+set(DOC_INSTALL_DIR ${DOC_DIR} CACHE PATH "Installation directory for documentation")
+if(WIN32)
+    set(LICENSE_INSTALL_DIR . CACHE PATH "Installation directory for licenses")
+else()
+    set(LICENSE_INSTALL_DIR ${DATA_INSTALL_DIR}/${PROJECT_NAME} CACHE PATH "Installation directory for licenses")
+endif()
+
+###############################################################################
 # eProsima build options
 ###############################################################################
 option(EPROSIMA_BUILD "Activate internal building" OFF)
+option(MINION "Tells if it is a subproject of a superproject" OFF)
 
 if(EPROSIMA_INSTALLER)
     set(EPROSIMA_BUILD ON)
@@ -162,29 +182,6 @@ endif()
 if(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS)
     set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/modules)
     find_package(RTIDDS 5.1)
-endif()
-
-###############################################################################
-# Installation paths
-###############################################################################
-set(BIN_INSTALL_DIR bin/ CACHE PATH "Installation directory for binaries")
-set(INCLUDE_INSTALL_DIR include/ CACHE PATH "Installation directory for C++ headers")
-if((MSVC OR MSVC_IDE) AND EPROSIMA_BUILD)
-    set(LIB_INSTALL_DIR lib/${MSVC_ARCH}/ CACHE PATH "Installation directory for libraries")
-else()
-    set(LIB_INSTALL_DIR lib/ CACHE PATH "Installation directory for libraries")
-endif()
-set(DATA_INSTALL_DIR share/ CACHE PATH "Installation directory for data")
-if(WIN32)
-    set(DOC_DIR "doc")
-else()
-    set(DOC_DIR "${DATA_INSTALL_DIR}/doc")
-endif()
-set(DOC_INSTALL_DIR ${DOC_DIR} CACHE PATH "Installation directory for documentation")
-if(WIN32)
-    set(LICENSE_INSTALL_DIR . CACHE PATH "Installation directory for licenses")
-else()
-    set(LICENSE_INSTALL_DIR ${DATA_INSTALL_DIR}/${PROJECT_NAME} CACHE PATH "Installation directory for licenses")
 endif()
 
 ###############################################################################
@@ -342,15 +339,11 @@ endif()
 # Packaging
 ###############################################################################
 # Install external eprosima libraries
-if(EPROSIMA_BUILD)
-    if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
-        install_eprosima_fastcdr()
-    endif()
-    if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
-        install_eprosima_fastrtps()
-    endif()
-    install_boost(thread system date_time chrono regex)
+if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
+    install_eprosima_libraries()
 endif()
+
+install_boost(thread system date_time chrono regex)
 
 # Install licenses
 install(FILES ${PROJECT_SOURCE_DIR}/${PROJECT_NAME_UPPER}_LICENSE.txt
