@@ -181,7 +181,7 @@ endif()
 
 if(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS)
     set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/modules)
-    find_package(RTIDDS 5.1)
+    find_package(RTIDDS 5.1 REQUIRED)
 endif()
 
 ###############################################################################
