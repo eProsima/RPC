@@ -135,7 +135,6 @@ if(MSVC OR MSVC_IDE)
             target_link_libraries(${PROJECT_NAME}
                 fastcdr
                 )
-            target_compile_definitions(${PROJECT_NAME}_static PRIVATE FASTCDR_NO_LIB)
             target_include_directories(${PROJECT_NAME}_static PRIVATE ${fastcdr_INCLUDE_DIR})
         endif()
 
@@ -143,7 +142,6 @@ if(MSVC OR MSVC_IDE)
             target_link_libraries(${PROJECT_NAME}
                 fastrtps
                 )
-            target_compile_definitions(${PROJECT_NAME}_static PRIVATE FASTRTPS_NO_LIB)
             target_include_directories(${PROJECT_NAME}_static PRIVATE ${fastrtps_INCLUDE_DIR})
         endif()
 
