@@ -1,0 +1,11 @@
+if(BUILD_JAVA)
+    find_package(PythonInterp 3)
+
+    if(PYTHONINTERP_FOUND)
+        if(RPCPROTO STREQUAL "rpcdds")
+            if(WITH_RTIDDS)
+                add_subdirectory(rpcdds_rti)
+            endif()
+        endif()
+    endif()
+endif()
