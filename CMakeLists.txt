@@ -343,7 +343,7 @@ if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
     install_eprosima_libraries()
 endif()
 
-install_boost(RUNTIME thread system date_time chrono regex)
+install_boost(ALL thread system date_time chrono regex)
 
 # Install licenses
 install(FILES ${PROJECT_SOURCE_DIR}/${PROJECT_NAME_UPPER}_LICENSE.txt

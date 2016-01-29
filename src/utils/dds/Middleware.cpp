@@ -120,6 +120,7 @@ void eprosima::rpc::util::dds::set_datawriter_protocol(DDS::DataWriterQos &wQos)
 void eprosima::rpc::util::dds::increase_buffers(DDS::DomainParticipantQos &pQos)
 {
 #if defined(RTI_WIN32) || defined(RTI_LINUX)
+#if RTI_DDS_VERSION_MAJOR <= 5 && ( RTI_DDS_VERSION_MAJOR != 5 || RTI_DDS_VERSION_MINOR < 1) 
     pQos.receiver_pool.buffer_size = 65536;
     int length = pQos.property.value.length();
     pQos.property.value.ensure_length(length + 3, length + 3);
@@ -129,6 +130,8 @@ void eprosima::rpc::util::dds::increase_buffers(DDS::DomainParticipantQos &pQos)
     pQos.property.value[length++].value = strdup("65536");
     pQos.property.value[length].name = strdup("dds.transport.UDPv4.builtin.recv_socket_buffer_size");
     pQos.property.value[length].value = strdup("65536");
+#endif
+    pQos.resource_limits.contentfilter_property_max_length = 512;
 #endif
 }
 

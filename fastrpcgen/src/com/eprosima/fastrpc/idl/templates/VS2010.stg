@@ -62,7 +62,7 @@ project(solution, project, example, configurations, local) ::= <<
   <PropertyGroup Label="UserMacros" />
   $configurations:{<PropertyGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
     <IntDir>\$(Platform)\\\$(Configuration)\\\$(ProjectName)\</IntDir>
-    <OutDir>$if(it.dll)$.\bin\\$example$\\$else$.\lib\\$example$\\$endif$</OutDir>
+    <OutDir>.\\$if(!it.dll)$lib$else$bin$endif$\\$example$\</OutDir>
     <TargetName>$if(!it.dll)$lib$endif$\$(ProjectName)$if(it.debug)$d$endif$</TargetName>
   </PropertyGroup>};separator="\n"$
   $configurations:{<ItemDefinitionGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
@@ -74,6 +74,7 @@ project(solution, project, example, configurations, local) ::= <<
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
+      <ProgramDataBaseFileName>.\lib\\$example$\\\$(TargetName).pdb</ProgramDataBaseFileName>
       $bigObjOption()$
     </ClCompile>
     <Link>
@@ -179,7 +180,7 @@ projectClient(solution, project, example, configurations, local) ::= <<
   <PropertyGroup Label="UserMacros" />
   $configurations:{<PropertyGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
     <IntDir>\$(Platform)\\\$(Configuration)\\\$(ProjectName)\</IntDir>
-    <OutDir>$if(it.dll)$.\bin\\$example$\\$else$.\lib\\$example$\\$endif$</OutDir>
+    <OutDir>.\\$if(!it.dll)$lib$else$bin$endif$\\$example$\</OutDir>
     <TargetName>$if(!it.dll)$lib$endif$\$(ProjectName)$if(it.debug)$d$endif$</TargetName>
   </PropertyGroup>};separator="\n"$
   $configurations:{<ItemDefinitionGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
@@ -191,6 +192,8 @@ projectClient(solution, project, example, configurations, local) ::= <<
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
+      <ProgramDataBaseFileName>.\lib\\$example$\\\$(TargetName).pdb</ProgramDataBaseFileName>
+      $bigObjOption()$
       $bigObjOption()$
     </ClCompile>
     <Link>
@@ -395,7 +398,7 @@ projectServer(solution, project, example, configurations, local) ::= <<
   <PropertyGroup Label="UserMacros" />
   $configurations:{<PropertyGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
     <IntDir>\$(Platform)\\\$(Configuration)\\\$(ProjectName)\</IntDir>
-    <OutDir>$if(it.dll)$.\bin\\$example$\\$else$.\lib\\$example$\\$endif$</OutDir>
+    <OutDir>.\\$if(!it.dll)$lib$else$bin$endif$\\$example$\</OutDir>
     <TargetName>$if(!it.dll)$lib$endif$\$(ProjectName)$if(it.debug)$d$endif$</TargetName>
   </PropertyGroup>};separator="\n"$
   $configurations:{<ItemDefinitionGroup Condition="'\$(Configuration)|\$(Platform)'=='$it.name$|$it.platform$'">
@@ -407,6 +410,8 @@ projectServer(solution, project, example, configurations, local) ::= <<
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
+      <ProgramDataBaseFileName>.\lib\\$example$\\\$(TargetName).pdb</ProgramDataBaseFileName>
+      $bigObjOption()$
       $bigObjOption()$
     </ClCompile>
     <Link>
