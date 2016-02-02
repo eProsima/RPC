@@ -19,11 +19,10 @@ namespace { char dummy; }
 
 #include "Calculator.h"
 
-#include "fastcdr/Cdr.h"
+#include <fastcdr/Cdr.h>
 
-
-#include "rpcdds/exceptions/BadParamException.h"
-using namespace eprosima::rpc::exception;
+#include <fastcdr/exceptions/BadParamException.h>
+using namespace eprosima::fastcdr::exception;
 
 #include <utility>
 

@@ -223,9 +223,9 @@ typedef struct Calculator_addition_Result {
     struct Calculator_addition_Result_u
 
     {
-    dds::rpc::UnknownException  unknownEx;
-
     Calculator_addition_Out  result;
+
+    dds::rpc::UnknownException  unknownEx;
 
 
     } _u;
@@ -484,9 +484,9 @@ typedef struct Calculator_subtraction_Result {
     struct Calculator_subtraction_Result_u
 
     {
-    dds::rpc::UnknownException  unknownEx;
-
     Calculator_subtraction_Out  result;
+
+    dds::rpc::UnknownException  unknownEx;
 
 
     } _u;
@@ -575,11 +575,11 @@ typedef struct Calculator_Call {
     struct Calculator_Call_u
 
     {
-    dds::rpc::UnknownOperation  unknownOp;
-
     Calculator_addition_In  addition;
 
     Calculator_subtraction_In  subtraction;
+
+    dds::rpc::UnknownOperation  unknownOp;
 
 
     } _u;
@@ -766,11 +766,11 @@ typedef struct Calculator_Return {
     struct Calculator_Return_u
 
     {
-    dds::rpc::UnknownOperation  unknownOp;
-
     Calculator_addition_Result  addition;
 
     Calculator_subtraction_Result  subtraction;
+
+    dds::rpc::UnknownOperation  unknownOp;
 
 
     } _u;

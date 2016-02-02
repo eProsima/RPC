@@ -57,7 +57,9 @@ size_t Calculator_addition_In::getMaxCdrSerializedSize(size_t current_alignment)
     size_t initial_alignment = current_alignment;
             
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
 
     return current_alignment - initial_alignment;
 }
@@ -67,7 +69,9 @@ size_t Calculator_addition_In::getSerializedSize(size_t current_alignment) const
     size_t current_align = current_alignment;
 
     current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
+
     current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
+
 
     return current_align;
 }
@@ -123,6 +127,7 @@ size_t Calculator_addition_Out::getMaxCdrSerializedSize(size_t current_alignment
             
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
+
     return current_alignment - initial_alignment;
 }
 
@@ -132,7 +137,9 @@ size_t Calculator_addition_Out::getSerializedSize(size_t current_alignment) cons
     // TODO Header
 
     //current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
+
 current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
+
 
     return current_align;
 }
@@ -378,7 +385,9 @@ size_t Calculator_subtraction_In::getMaxCdrSerializedSize(size_t current_alignme
     size_t initial_alignment = current_alignment;
             
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
 
     return current_alignment - initial_alignment;
 }
@@ -388,7 +397,9 @@ size_t Calculator_subtraction_In::getSerializedSize(size_t current_alignment) co
     size_t current_align = current_alignment;
 
     current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
+
     current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
+
 
     return current_align;
 }
@@ -444,6 +455,7 @@ size_t Calculator_subtraction_Out::getMaxCdrSerializedSize(size_t current_alignm
             
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
+
     return current_alignment - initial_alignment;
 }
 
@@ -453,7 +465,9 @@ size_t Calculator_subtraction_Out::getSerializedSize(size_t current_alignment) c
     // TODO Header
 
     //current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
+
 current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4);
+
 
     return current_align;
 }

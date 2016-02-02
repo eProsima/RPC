@@ -92,7 +92,7 @@
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>Disabled</Optimization>
-        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;_DEBUG;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
@@ -100,17 +100,17 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscored.lib;nddscd.lib;nddscppd.lib;
+        <AdditionalDependencies>
   ;Calculatord.lib;CalculatorClientd.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2013;$(NDDSHOME)/lib/x64Win64VS2013;.\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2013;.\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>MaxSpeed</Optimization>
-        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;NDEBUG;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
@@ -118,17 +118,17 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscore.lib;nddsc.lib;nddscpp.lib;
+        <AdditionalDependencies>
   ;Calculator.lib;CalculatorClient.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2013;$(NDDSHOME)/lib/x64Win64VS2013;.\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2013;.\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>Disabled</Optimization>
-        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_DEBUG;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
@@ -136,11 +136,10 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscorezd.lib;nddsczd.lib;nddscppzd.lib;
-                                iphlpapi.lib;Shlwapi.lib;
+        <AdditionalDependencies>                              iphlpapi.lib;Shlwapi.lib;
   ;libCalculatord.lib;libCalculatorClientd.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2013;$(NDDSHOME)/lib/x64Win64VS2013;.\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2013;.\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
   <IgnoreSpecificDefaultLibraries>libcmtd.lib</IgnoreSpecificDefaultLibraries>
       </Link>
     </ItemDefinitionGroup>
@@ -148,7 +147,7 @@
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>MaxSpeed</Optimization>
-        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDEBUG;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
@@ -156,11 +155,10 @@
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscorez.lib;nddscz.lib;nddscppz.lib;
-                                iphlpapi.lib;Shlwapi.lib;
+        <AdditionalDependencies>                              iphlpapi.lib;Shlwapi.lib;
   ;libCalculator.lib;libCalculatorClient.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2013;$(NDDSHOME)/lib/x64Win64VS2013;.\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/x64Win64VS2013;.\lib\x64Win64VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
   <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
       </Link>
     </ItemDefinitionGroup>

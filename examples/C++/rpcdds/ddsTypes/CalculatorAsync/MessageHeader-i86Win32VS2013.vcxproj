@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>MessageHeader</ProjectName>
-    <ProjectGuid>{CD8D2936-C6EA-1543-EB13-1FA8A2D45B3D}</ProjectGuid>
+    <ProjectGuid>{9B06E020-F892-F649-168E-F3ED1B773F5C}</ProjectGuid>
     <RootNamespace>MessageHeader</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -70,12 +70,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">
       <IntDir>$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
-      <OutDir>.\lib\i86Win32VS2013\</OutDir>
+      <OutDir>.\bin\i86Win32VS2013\</OutDir>
       <TargetName>$(ProjectName)d</TargetName>
     </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
       <IntDir>$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
-      <OutDir>.\lib\i86Win32VS2013\</OutDir>
+      <OutDir>.\bin\i86Win32VS2013\</OutDir>
       <TargetName>$(ProjectName)</TargetName>
     </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -97,6 +97,7 @@
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
+        <ProgramDataBaseFileName>.\lib\i86Win32VS2013\$(TargetName).pdb</ProgramDataBaseFileName>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -104,7 +105,7 @@
   ;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-        <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>   
+        <ImportLibrary>.\lib\i86Win32VS2013\$(TargetName).lib</ImportLibrary>   
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
@@ -116,6 +117,7 @@
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
+        <ProgramDataBaseFileName>.\lib\i86Win32VS2013\$(TargetName).pdb</ProgramDataBaseFileName>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -123,7 +125,7 @@
   ;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-        <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>   
+        <ImportLibrary>.\lib\i86Win32VS2013\$(TargetName).lib</ImportLibrary>   
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -135,6 +137,7 @@
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
+        <ProgramDataBaseFileName>.\lib\i86Win32VS2013\$(TargetName).pdb</ProgramDataBaseFileName>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -155,6 +158,7 @@
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
+        <ProgramDataBaseFileName>.\lib\i86Win32VS2013\$(TargetName).pdb</ProgramDataBaseFileName>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>

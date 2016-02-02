@@ -78,12 +78,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">
       <IntDir>$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
-      <OutDir>.\lib\i86Win32VS2010\</OutDir>
+      <OutDir>.\bin\i86Win32VS2010\</OutDir>
       <TargetName>$(ProjectName)d</TargetName>
     </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
       <IntDir>$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
-      <OutDir>.\lib\i86Win32VS2010\</OutDir>
+      <OutDir>.\bin\i86Win32VS2010\</OutDir>
       <TargetName>$(ProjectName)</TargetName>
     </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -105,6 +105,7 @@
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
+        <ProgramDataBaseFileName>.\lib\i86Win32VS2010\$(TargetName).pdb</ProgramDataBaseFileName>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -112,7 +113,7 @@
   ;Calculatord.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/i86Win32VS2010;$(NDDSHOME)/lib/i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-        <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>   
+        <ImportLibrary>.\lib\i86Win32VS2010\$(TargetName).lib</ImportLibrary>   
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
@@ -124,6 +125,7 @@
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
+        <ProgramDataBaseFileName>.\lib\i86Win32VS2010\$(TargetName).pdb</ProgramDataBaseFileName>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -131,7 +133,7 @@
   ;Calculator.lib;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
         <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/i86Win32VS2010;$(NDDSHOME)/lib/i86Win32VS2010;.\lib\i86Win32VS2010;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-        <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>   
+        <ImportLibrary>.\lib\i86Win32VS2010\$(TargetName).lib</ImportLibrary>   
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -143,6 +145,7 @@
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
+        <ProgramDataBaseFileName>.\lib\i86Win32VS2010\$(TargetName).pdb</ProgramDataBaseFileName>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -163,6 +166,7 @@
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
+        <ProgramDataBaseFileName>.\lib\i86Win32VS2010\$(TargetName).pdb</ProgramDataBaseFileName>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>

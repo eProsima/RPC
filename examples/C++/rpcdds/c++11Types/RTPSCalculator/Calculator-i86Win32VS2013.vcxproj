@@ -70,12 +70,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">
       <IntDir>$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
-      <OutDir>.\lib\i86Win32VS2013\</OutDir>
+      <OutDir>.\bin\i86Win32VS2013\</OutDir>
       <TargetName>$(ProjectName)d</TargetName>
     </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
       <IntDir>$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
-      <OutDir>.\lib\i86Win32VS2013\</OutDir>
+      <OutDir>.\bin\i86Win32VS2013\</OutDir>
       <TargetName>$(ProjectName)</TargetName>
     </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -92,53 +92,56 @@
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>Disabled</Optimization>
-        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;_DEBUG;NDDS_USER_DLL_EXPORT;;Calculator_SOURCE;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
+        <ProgramDataBaseFileName>.\lib\i86Win32VS2013\$(TargetName).pdb</ProgramDataBaseFileName>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscored.lib;nddscd.lib;nddscppd.lib;
+        <AdditionalDependencies>
   ;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-        <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>   
+        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <ImportLibrary>.\lib\i86Win32VS2013\$(TargetName).lib</ImportLibrary>   
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>MaxSpeed</Optimization>
-        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;NDEBUG;NDDS_USER_DLL_EXPORT;;Calculator_SOURCE;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
+        <ProgramDataBaseFileName>.\lib\i86Win32VS2013\$(TargetName).pdb</ProgramDataBaseFileName>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscore.lib;nddsc.lib;nddscpp.lib;
+        <AdditionalDependencies>
   ;%(AdditionalDependencies)</AdditionalDependencies>
         <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
-        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-        <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>   
+        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        <ImportLibrary>.\lib\i86Win32VS2013\$(TargetName).lib</ImportLibrary>   
       </Link>
     </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>Disabled</Optimization>
-        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_DEBUG;;Calculator_SOURCE;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
+        <ProgramDataBaseFileName>.\lib\i86Win32VS2013\$(TargetName).pdb</ProgramDataBaseFileName>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscorezd.lib;nddsczd.lib;nddscppzd.lib;
+        <AdditionalDependencies>
   ;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>
@@ -150,15 +153,16 @@
       <ClCompile>
         <WarningLevel>Level3</WarningLevel>
         <Optimization>MaxSpeed</Optimization>
-        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDEBUG;;Calculator_SOURCE;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
         <PrecompiledHeader>NotUsing</PrecompiledHeader>
         <PrecompiledHeaderFile>
         </PrecompiledHeaderFile>
+        <ProgramDataBaseFileName>.\lib\i86Win32VS2013\$(TargetName).pdb</ProgramDataBaseFileName>
       </ClCompile>
       <Link>
         <GenerateDebugInformation>true</GenerateDebugInformation>
-        <AdditionalDependencies>nddscorez.lib;nddscz.lib;nddscppz.lib;
+        <AdditionalDependencies>
   ;%(AdditionalDependencies)</AdditionalDependencies>
      
       </Link>

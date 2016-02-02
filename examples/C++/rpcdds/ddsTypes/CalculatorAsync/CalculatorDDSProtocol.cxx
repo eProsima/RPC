@@ -183,6 +183,7 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
                     //TODO Quitar el unsetReply
                     //memset((char*)&replyData + sizeof(replyData.header), 0, sizeof(replyData) - sizeof(replyData.header));
                     replyData.header.remoteEx = ::dds::rpc::REMOTE_EX_UNSUPPORTED;
+                    replyData.data._u.addition._d = Calculator_addition_Result_getDefaultDiscriminator();
 
                     _protocol.Calculator_se->sendReply(&replyData);
                 }
@@ -231,6 +232,7 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
                     //TODO Quitar el unsetReply
                     //memset((char*)&replyData + sizeof(replyData.header), 0, sizeof(replyData) - sizeof(replyData.header));
                     replyData.header.remoteEx = ::dds::rpc::REMOTE_EX_UNSUPPORTED;
+                    replyData.data._u.subtraction._d = Calculator_subtraction_Result_getDefaultDiscriminator();
 
                     _protocol.Calculator_se->sendReply(&replyData);
                 }

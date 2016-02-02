@@ -1635,15 +1635,7 @@ Calculator_addition_ResultPluginSupport_print_data(
             
 
     switch(sample->_d) {
-          default:
-        {                                    
-        
-    dds::rpc::UnknownExceptionPluginSupport_print_data(
-        &sample->_u.unknownEx, "_u.unknownEx", indent_level + 1);
-            
-
-        };
-      case (dds::rpc::REMOTE_EX_OK):
+          case (dds::rpc::REMOTE_EX_OK):
         {                                    
         
     Calculator_addition_OutPluginSupport_print_data(
@@ -1651,6 +1643,14 @@ Calculator_addition_ResultPluginSupport_print_data(
             
 
         } break;
+      default:
+        {                                    
+        
+    dds::rpc::UnknownExceptionPluginSupport_print_data(
+        &sample->_u.unknownEx, "_u.unknownEx", indent_level + 1);
+            
+
+        };
               
     }
       
@@ -1719,22 +1719,7 @@ Calculator_addition_ResultPlugin_serialize(
             
 
     switch(sample->_d) {
-          default:
-        {                                    
-        
-    if (!dds::rpc::UnknownExceptionPlugin_serialize(
-            endpoint_data,
-            &sample->_u.unknownEx, 
-            stream, 
-            RTI_FALSE, encapsulation_id, 
-            RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-
-        };
-      case (dds::rpc::REMOTE_EX_OK):
+          case (dds::rpc::REMOTE_EX_OK):
         {                                    
         
     if (!Calculator_addition_OutPlugin_serialize(
@@ -1749,6 +1734,21 @@ Calculator_addition_ResultPlugin_serialize(
             
 
         } break;
+      default:
+        {                                    
+        
+    if (!dds::rpc::UnknownExceptionPlugin_serialize(
+            endpoint_data,
+            &sample->_u.unknownEx, 
+            stream, 
+            RTI_FALSE, encapsulation_id, 
+            RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
               
     }
       
@@ -1798,21 +1798,7 @@ Calculator_addition_ResultPlugin_deserialize_sample(
     }
 
     switch(sample->_d) {
-          default:
-        {                                    
-        
-    if (!dds::rpc::UnknownExceptionPlugin_deserialize_sample(
-            endpoint_data,
-            &sample->_u.unknownEx,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-
-        };
-      case (dds::rpc::REMOTE_EX_OK):
+          case (dds::rpc::REMOTE_EX_OK):
         {                                    
         
     if (!Calculator_addition_OutPlugin_deserialize_sample(
@@ -1826,6 +1812,20 @@ Calculator_addition_ResultPlugin_deserialize_sample(
             
 
         } break;
+      default:
+        {                                    
+        
+    if (!dds::rpc::UnknownExceptionPlugin_deserialize_sample(
+            endpoint_data,
+            &sample->_u.unknownEx,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
               
     }
       
@@ -1908,20 +1908,7 @@ DDS_Long    disc;
     }
 
     switch(disc) {
-          default:
-        {                                    
-        
-    if (!dds::rpc::UnknownExceptionPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-
-        };
-      case (dds::rpc::REMOTE_EX_OK):
+          case (dds::rpc::REMOTE_EX_OK):
         {                                    
         
     if (!Calculator_addition_OutPlugin_skip(
@@ -1934,6 +1921,19 @@ DDS_Long    disc;
             
 
         } break;
+      default:
+        {                                    
+        
+    if (!dds::rpc::UnknownExceptionPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
               
     }
       
@@ -1985,11 +1985,11 @@ Calculator_addition_ResultPlugin_get_serialized_sample_max_size(
         current_alignment);
             
 
-    union_max_size_serialized = RTIOsapiUtility_max( dds::rpc::UnknownExceptionPlugin_get_serialized_sample_max_size(
+    union_max_size_serialized = RTIOsapiUtility_max( Calculator_addition_OutPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
             
 
-    union_max_size_serialized = RTIOsapiUtility_max( Calculator_addition_OutPlugin_get_serialized_sample_max_size(
+    union_max_size_serialized = RTIOsapiUtility_max( dds::rpc::UnknownExceptionPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
             
 
@@ -2036,11 +2036,11 @@ Calculator_addition_ResultPlugin_get_serialized_sample_min_size(
         current_alignment);
             
 
-    union_min_size_serialized = RTIOsapiUtility_min( dds::rpc::UnknownExceptionPlugin_get_serialized_sample_min_size(
+    union_min_size_serialized = RTIOsapiUtility_min( Calculator_addition_OutPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
             
 
-    union_min_size_serialized = RTIOsapiUtility_min( Calculator_addition_OutPlugin_get_serialized_sample_min_size(
+    union_min_size_serialized = RTIOsapiUtility_min( dds::rpc::UnknownExceptionPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
             
 
@@ -2094,16 +2094,7 @@ Calculator_addition_ResultPlugin_get_serialized_sample_size(
             
 
     switch(sample->_d) {
-          default:
-        {                                    
-        
-    current_alignment += dds::rpc::UnknownExceptionPlugin_get_serialized_sample_size(
-        endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->_u.unknownEx);
-            
-
-        };
-      case (dds::rpc::REMOTE_EX_OK):
+          case (dds::rpc::REMOTE_EX_OK):
         {                                    
         
     current_alignment += Calculator_addition_OutPlugin_get_serialized_sample_size(
@@ -2112,6 +2103,15 @@ Calculator_addition_ResultPlugin_get_serialized_sample_size(
             
 
         } break;
+      default:
+        {                                    
+        
+    current_alignment += dds::rpc::UnknownExceptionPlugin_get_serialized_sample_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, 
+        current_alignment, &sample->_u.unknownEx);
+            
+
+        };
               
     }
       
@@ -3932,15 +3932,7 @@ Calculator_subtraction_ResultPluginSupport_print_data(
             
 
     switch(sample->_d) {
-          default:
-        {                                    
-        
-    dds::rpc::UnknownExceptionPluginSupport_print_data(
-        &sample->_u.unknownEx, "_u.unknownEx", indent_level + 1);
-            
-
-        };
-      case (dds::rpc::REMOTE_EX_OK):
+          case (dds::rpc::REMOTE_EX_OK):
         {                                    
         
     Calculator_subtraction_OutPluginSupport_print_data(
@@ -3948,6 +3940,14 @@ Calculator_subtraction_ResultPluginSupport_print_data(
             
 
         } break;
+      default:
+        {                                    
+        
+    dds::rpc::UnknownExceptionPluginSupport_print_data(
+        &sample->_u.unknownEx, "_u.unknownEx", indent_level + 1);
+            
+
+        };
               
     }
       
@@ -4016,22 +4016,7 @@ Calculator_subtraction_ResultPlugin_serialize(
             
 
     switch(sample->_d) {
-          default:
-        {                                    
-        
-    if (!dds::rpc::UnknownExceptionPlugin_serialize(
-            endpoint_data,
-            &sample->_u.unknownEx, 
-            stream, 
-            RTI_FALSE, encapsulation_id, 
-            RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-
-        };
-      case (dds::rpc::REMOTE_EX_OK):
+          case (dds::rpc::REMOTE_EX_OK):
         {                                    
         
     if (!Calculator_subtraction_OutPlugin_serialize(
@@ -4046,6 +4031,21 @@ Calculator_subtraction_ResultPlugin_serialize(
             
 
         } break;
+      default:
+        {                                    
+        
+    if (!dds::rpc::UnknownExceptionPlugin_serialize(
+            endpoint_data,
+            &sample->_u.unknownEx, 
+            stream, 
+            RTI_FALSE, encapsulation_id, 
+            RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
               
     }
       
@@ -4095,21 +4095,7 @@ Calculator_subtraction_ResultPlugin_deserialize_sample(
     }
 
     switch(sample->_d) {
-          default:
-        {                                    
-        
-    if (!dds::rpc::UnknownExceptionPlugin_deserialize_sample(
-            endpoint_data,
-            &sample->_u.unknownEx,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-
-        };
-      case (dds::rpc::REMOTE_EX_OK):
+          case (dds::rpc::REMOTE_EX_OK):
         {                                    
         
     if (!Calculator_subtraction_OutPlugin_deserialize_sample(
@@ -4123,6 +4109,20 @@ Calculator_subtraction_ResultPlugin_deserialize_sample(
             
 
         } break;
+      default:
+        {                                    
+        
+    if (!dds::rpc::UnknownExceptionPlugin_deserialize_sample(
+            endpoint_data,
+            &sample->_u.unknownEx,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
               
     }
       
@@ -4205,20 +4205,7 @@ DDS_Long    disc;
     }
 
     switch(disc) {
-          default:
-        {                                    
-        
-    if (!dds::rpc::UnknownExceptionPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-
-        };
-      case (dds::rpc::REMOTE_EX_OK):
+          case (dds::rpc::REMOTE_EX_OK):
         {                                    
         
     if (!Calculator_subtraction_OutPlugin_skip(
@@ -4231,6 +4218,19 @@ DDS_Long    disc;
             
 
         } break;
+      default:
+        {                                    
+        
+    if (!dds::rpc::UnknownExceptionPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
               
     }
       
@@ -4282,11 +4282,11 @@ Calculator_subtraction_ResultPlugin_get_serialized_sample_max_size(
         current_alignment);
             
 
-    union_max_size_serialized = RTIOsapiUtility_max( dds::rpc::UnknownExceptionPlugin_get_serialized_sample_max_size(
+    union_max_size_serialized = RTIOsapiUtility_max( Calculator_subtraction_OutPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
             
 
-    union_max_size_serialized = RTIOsapiUtility_max( Calculator_subtraction_OutPlugin_get_serialized_sample_max_size(
+    union_max_size_serialized = RTIOsapiUtility_max( dds::rpc::UnknownExceptionPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
             
 
@@ -4333,11 +4333,11 @@ Calculator_subtraction_ResultPlugin_get_serialized_sample_min_size(
         current_alignment);
             
 
-    union_min_size_serialized = RTIOsapiUtility_min( dds::rpc::UnknownExceptionPlugin_get_serialized_sample_min_size(
+    union_min_size_serialized = RTIOsapiUtility_min( Calculator_subtraction_OutPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
             
 
-    union_min_size_serialized = RTIOsapiUtility_min( Calculator_subtraction_OutPlugin_get_serialized_sample_min_size(
+    union_min_size_serialized = RTIOsapiUtility_min( dds::rpc::UnknownExceptionPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
             
 
@@ -4391,16 +4391,7 @@ Calculator_subtraction_ResultPlugin_get_serialized_sample_size(
             
 
     switch(sample->_d) {
-          default:
-        {                                    
-        
-    current_alignment += dds::rpc::UnknownExceptionPlugin_get_serialized_sample_size(
-        endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->_u.unknownEx);
-            
-
-        };
-      case (dds::rpc::REMOTE_EX_OK):
+          case (dds::rpc::REMOTE_EX_OK):
         {                                    
         
     current_alignment += Calculator_subtraction_OutPlugin_get_serialized_sample_size(
@@ -4409,6 +4400,15 @@ Calculator_subtraction_ResultPlugin_get_serialized_sample_size(
             
 
         } break;
+      default:
+        {                                    
+        
+    current_alignment += dds::rpc::UnknownExceptionPlugin_get_serialized_sample_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, 
+        current_alignment, &sample->_u.unknownEx);
+            
+
+        };
               
     }
       
@@ -4771,15 +4771,7 @@ Calculator_CallPluginSupport_print_data(
             
 
     switch(sample->_d) {
-          default:
-        {                                    
-        
-    dds::rpc::UnknownOperationPluginSupport_print_data(
-        &sample->_u.unknownOp, "_u.unknownOp", indent_level + 1);
-            
-
-        };
-      case 0xCBC6CEAA:
+          case 0xCBC6CEAA:
         {                                    
         
     Calculator_addition_InPluginSupport_print_data(
@@ -4795,6 +4787,14 @@ Calculator_CallPluginSupport_print_data(
             
 
         } break;
+      default:
+        {                                    
+        
+    dds::rpc::UnknownOperationPluginSupport_print_data(
+        &sample->_u.unknownOp, "_u.unknownOp", indent_level + 1);
+            
+
+        };
               
     }
       
@@ -4863,22 +4863,7 @@ Calculator_CallPlugin_serialize(
             
 
     switch(sample->_d) {
-          default:
-        {                                    
-        
-    if (!dds::rpc::UnknownOperationPlugin_serialize(
-            endpoint_data,
-            &sample->_u.unknownOp, 
-            stream, 
-            RTI_FALSE, encapsulation_id, 
-            RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-
-        };
-      case 0xCBC6CEAA:
+          case 0xCBC6CEAA:
         {                                    
         
     if (!Calculator_addition_InPlugin_serialize(
@@ -4908,6 +4893,21 @@ Calculator_CallPlugin_serialize(
             
 
         } break;
+      default:
+        {                                    
+        
+    if (!dds::rpc::UnknownOperationPlugin_serialize(
+            endpoint_data,
+            &sample->_u.unknownOp, 
+            stream, 
+            RTI_FALSE, encapsulation_id, 
+            RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
               
     }
       
@@ -4957,21 +4957,7 @@ Calculator_CallPlugin_deserialize_sample(
     }
 
     switch(sample->_d) {
-          default:
-        {                                    
-        
-    if (!dds::rpc::UnknownOperationPlugin_deserialize_sample(
-            endpoint_data,
-            &sample->_u.unknownOp,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-
-        };
-      case 0xCBC6CEAA:
+          case 0xCBC6CEAA:
         {                                    
         
     if (!Calculator_addition_InPlugin_deserialize_sample(
@@ -4999,6 +4985,20 @@ Calculator_CallPlugin_deserialize_sample(
             
 
         } break;
+      default:
+        {                                    
+        
+    if (!dds::rpc::UnknownOperationPlugin_deserialize_sample(
+            endpoint_data,
+            &sample->_u.unknownOp,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
               
     }
       
@@ -5081,20 +5081,7 @@ DDS_Long    disc;
     }
 
     switch(disc) {
-          default:
-        {                                    
-        
-    if (!dds::rpc::UnknownOperationPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-
-        };
-      case 0xCBC6CEAA:
+          case 0xCBC6CEAA:
         {                                    
         
     if (!Calculator_addition_InPlugin_skip(
@@ -5120,6 +5107,19 @@ DDS_Long    disc;
             
 
         } break;
+      default:
+        {                                    
+        
+    if (!dds::rpc::UnknownOperationPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
               
     }
       
@@ -5171,15 +5171,15 @@ Calculator_CallPlugin_get_serialized_sample_max_size(
         current_alignment);
             
 
-    union_max_size_serialized = RTIOsapiUtility_max( dds::rpc::UnknownOperationPlugin_get_serialized_sample_max_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
-            
-
     union_max_size_serialized = RTIOsapiUtility_max( Calculator_addition_InPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
             
 
     union_max_size_serialized = RTIOsapiUtility_max( Calculator_subtraction_InPlugin_get_serialized_sample_max_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
+            
+
+    union_max_size_serialized = RTIOsapiUtility_max( dds::rpc::UnknownOperationPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
             
 
@@ -5226,15 +5226,15 @@ Calculator_CallPlugin_get_serialized_sample_min_size(
         current_alignment);
             
 
-    union_min_size_serialized = RTIOsapiUtility_min( dds::rpc::UnknownOperationPlugin_get_serialized_sample_min_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
-            
-
     union_min_size_serialized = RTIOsapiUtility_min( Calculator_addition_InPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
             
 
     union_min_size_serialized = RTIOsapiUtility_min( Calculator_subtraction_InPlugin_get_serialized_sample_min_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
+            
+
+    union_min_size_serialized = RTIOsapiUtility_min( dds::rpc::UnknownOperationPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
             
 
@@ -5288,16 +5288,7 @@ Calculator_CallPlugin_get_serialized_sample_size(
             
 
     switch(sample->_d) {
-          default:
-        {                                    
-        
-    current_alignment += dds::rpc::UnknownOperationPlugin_get_serialized_sample_size(
-        endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->_u.unknownOp);
-            
-
-        };
-      case 0xCBC6CEAA:
+          case 0xCBC6CEAA:
         {                                    
         
     current_alignment += Calculator_addition_InPlugin_get_serialized_sample_size(
@@ -5315,6 +5306,15 @@ Calculator_CallPlugin_get_serialized_sample_size(
             
 
         } break;
+      default:
+        {                                    
+        
+    current_alignment += dds::rpc::UnknownOperationPlugin_get_serialized_sample_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, 
+        current_alignment, &sample->_u.unknownOp);
+            
+
+        };
               
     }
       
@@ -6666,15 +6666,7 @@ Calculator_ReturnPluginSupport_print_data(
             
 
     switch(sample->_d) {
-          default:
-        {                                    
-        
-    dds::rpc::UnknownOperationPluginSupport_print_data(
-        &sample->_u.unknownOp, "_u.unknownOp", indent_level + 1);
-            
-
-        };
-      case 0xCBC6CEAA:
+          case 0xCBC6CEAA:
         {                                    
         
     Calculator_addition_ResultPluginSupport_print_data(
@@ -6690,6 +6682,14 @@ Calculator_ReturnPluginSupport_print_data(
             
 
         } break;
+      default:
+        {                                    
+        
+    dds::rpc::UnknownOperationPluginSupport_print_data(
+        &sample->_u.unknownOp, "_u.unknownOp", indent_level + 1);
+            
+
+        };
               
     }
       
@@ -6758,22 +6758,7 @@ Calculator_ReturnPlugin_serialize(
             
 
     switch(sample->_d) {
-          default:
-        {                                    
-        
-    if (!dds::rpc::UnknownOperationPlugin_serialize(
-            endpoint_data,
-            &sample->_u.unknownOp, 
-            stream, 
-            RTI_FALSE, encapsulation_id, 
-            RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-
-        };
-      case 0xCBC6CEAA:
+          case 0xCBC6CEAA:
         {                                    
         
     if (!Calculator_addition_ResultPlugin_serialize(
@@ -6803,6 +6788,21 @@ Calculator_ReturnPlugin_serialize(
             
 
         } break;
+      default:
+        {                                    
+        
+    if (!dds::rpc::UnknownOperationPlugin_serialize(
+            endpoint_data,
+            &sample->_u.unknownOp, 
+            stream, 
+            RTI_FALSE, encapsulation_id, 
+            RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
               
     }
       
@@ -6852,21 +6852,7 @@ Calculator_ReturnPlugin_deserialize_sample(
     }
 
     switch(sample->_d) {
-          default:
-        {                                    
-        
-    if (!dds::rpc::UnknownOperationPlugin_deserialize_sample(
-            endpoint_data,
-            &sample->_u.unknownOp,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-
-        };
-      case 0xCBC6CEAA:
+          case 0xCBC6CEAA:
         {                                    
         
     if (!Calculator_addition_ResultPlugin_deserialize_sample(
@@ -6894,6 +6880,20 @@ Calculator_ReturnPlugin_deserialize_sample(
             
 
         } break;
+      default:
+        {                                    
+        
+    if (!dds::rpc::UnknownOperationPlugin_deserialize_sample(
+            endpoint_data,
+            &sample->_u.unknownOp,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
               
     }
       
@@ -6976,20 +6976,7 @@ DDS_Long    disc;
     }
 
     switch(disc) {
-          default:
-        {                                    
-        
-    if (!dds::rpc::UnknownOperationPlugin_skip(
-            endpoint_data,
-            stream, 
-            RTI_FALSE, RTI_TRUE, 
-            endpoint_plugin_qos)) {
-        return RTI_FALSE;
-    }
-            
-
-        };
-      case 0xCBC6CEAA:
+          case 0xCBC6CEAA:
         {                                    
         
     if (!Calculator_addition_ResultPlugin_skip(
@@ -7015,6 +7002,19 @@ DDS_Long    disc;
             
 
         } break;
+      default:
+        {                                    
+        
+    if (!dds::rpc::UnknownOperationPlugin_skip(
+            endpoint_data,
+            stream, 
+            RTI_FALSE, RTI_TRUE, 
+            endpoint_plugin_qos)) {
+        return RTI_FALSE;
+    }
+            
+
+        };
               
     }
       
@@ -7066,15 +7066,15 @@ Calculator_ReturnPlugin_get_serialized_sample_max_size(
         current_alignment);
             
 
-    union_max_size_serialized = RTIOsapiUtility_max( dds::rpc::UnknownOperationPlugin_get_serialized_sample_max_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
-            
-
     union_max_size_serialized = RTIOsapiUtility_max( Calculator_addition_ResultPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
             
 
     union_max_size_serialized = RTIOsapiUtility_max( Calculator_subtraction_ResultPlugin_get_serialized_sample_max_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
+            
+
+    union_max_size_serialized = RTIOsapiUtility_max( dds::rpc::UnknownOperationPlugin_get_serialized_sample_max_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_max_size_serialized);
             
 
@@ -7121,15 +7121,15 @@ Calculator_ReturnPlugin_get_serialized_sample_min_size(
         current_alignment);
             
 
-    union_min_size_serialized = RTIOsapiUtility_min( dds::rpc::UnknownOperationPlugin_get_serialized_sample_min_size(
-        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
-            
-
     union_min_size_serialized = RTIOsapiUtility_min( Calculator_addition_ResultPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
             
 
     union_min_size_serialized = RTIOsapiUtility_min( Calculator_subtraction_ResultPlugin_get_serialized_sample_min_size(
+        endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
+            
+
+    union_min_size_serialized = RTIOsapiUtility_min( dds::rpc::UnknownOperationPlugin_get_serialized_sample_min_size(
         endpoint_data,RTI_FALSE,encapsulation_id,current_alignment), union_min_size_serialized);
             
 
@@ -7183,16 +7183,7 @@ Calculator_ReturnPlugin_get_serialized_sample_size(
             
 
     switch(sample->_d) {
-          default:
-        {                                    
-        
-    current_alignment += dds::rpc::UnknownOperationPlugin_get_serialized_sample_size(
-        endpoint_data,RTI_FALSE, encapsulation_id, 
-        current_alignment, &sample->_u.unknownOp);
-            
-
-        };
-      case 0xCBC6CEAA:
+          case 0xCBC6CEAA:
         {                                    
         
     current_alignment += Calculator_addition_ResultPlugin_get_serialized_sample_size(
@@ -7210,6 +7201,15 @@ Calculator_ReturnPlugin_get_serialized_sample_size(
             
 
         } break;
+      default:
+        {                                    
+        
+    current_alignment += dds::rpc::UnknownOperationPlugin_get_serialized_sample_size(
+        endpoint_data,RTI_FALSE, encapsulation_id, 
+        current_alignment, &sample->_u.unknownOp);
+            
+
+        };
               
     }
       
