@@ -1,8 +1,8 @@
 CPP= g++
-CPPFLAGS = -c -Wall -fpic -m32 -std=c++0x
+CPPFLAGS = -c -Wall -fpic -m32 -O2 -std=c++0x
 LN= g++
 AR=ar
-LDFLAGS= -m32
+LDFLAGS= -m32 -O2 -Wl,--no-as-needed
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
 DEFINES= -DRTI_LINUX -DRTI_UNIX
 
@@ -39,18 +39,18 @@ Calculator_SERVEROBJS    = $(Calculator_SERVERSOURCES:%.cxx=output/i86Linux2.6gc
 OBJS+= $(Calculator_COMMONOBJS) $(Calculator_CLIENTOBJS) $(Calculator_SERVEROBJS)
 
 $(Calculator_TARGET): $(Calculator_COMMONOBJS)
-	$(LN) $(LDFLAGS) -shared -o $(Calculator_TARGET) $(Calculator_COMMONOBJS) $(LIBS) -Llib/i86Linux2.6gcc4.4.5 
+	$(LN) $(LDFLAGS) -shared -o $(Calculator_TARGET) $(Calculator_COMMONOBJS) -Llib/i86Linux2.6gcc4.4.5  $(LIBS)
 
 $(Calculator_TARGET_Z): $(Calculator_COMMONOBJS)
 	$(AR) -cru $(Calculator_TARGET_Z) $(Calculator_COMMONOBJS)
 $(Calculator_CLIENT_TARGET): $(Calculator_CLIENTOBJS)
-	$(LN) $(LDFLAGS) -shared -o $(Calculator_CLIENT_TARGET) $(LIBS) -Llib/i86Linux2.6gcc4.4.5 -lCalculator $(Calculator_CLIENTOBJS)
+	$(LN) $(LDFLAGS) -shared -o $(Calculator_CLIENT_TARGET) $(Calculator_CLIENTOBJS) -Llib/i86Linux2.6gcc4.4.5 -lCalculator $(LIBS)
 
 $(Calculator_CLIENT_TARGET_Z): $(Calculator_CLIENTOBJS)
 	$(AR) -cru $(Calculator_CLIENT_TARGET_Z) $(Calculator_CLIENTOBJS)
 	
 $(Calculator_SERVER_TARGET): $(Calculator_SERVEROBJS)
-	$(LN) $(LDFLAGS) -shared -o $(Calculator_SERVER_TARGET) $(LIBS) -Llib/i86Linux2.6gcc4.4.5 -lCalculator $(Calculator_SERVEROBJS)
+	$(LN) $(LDFLAGS) -shared -o $(Calculator_SERVER_TARGET) $(Calculator_SERVEROBJS) -Llib/i86Linux2.6gcc4.4.5 -lCalculator $(LIBS)
 
 $(Calculator_SERVER_TARGET_Z): $(Calculator_COMMONOBJS) $(Calculator_SERVEROBJS)
 	$(AR) -cru $(Calculator_SERVER_TARGET_Z) $(Calculator_SERVEROBJS)

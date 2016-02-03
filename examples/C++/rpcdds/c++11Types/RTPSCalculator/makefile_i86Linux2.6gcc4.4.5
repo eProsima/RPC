@@ -1,14 +1,14 @@
 CPP= g++
-CPPFLAGS = -c -Wall -fpic -m32 -std=c++0x
+CPPFLAGS = -c -Wall -fpic -m32 -O2 -std=c++0x
 LN= g++
 AR=ar
-LDFLAGS= -m32
+LDFLAGS= -m32 -O2 -Wl,--no-as-needed
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
 DEFINES= -DRTI_LINUX -DRTI_UNIX
 
-INCLUDES= -I. -I$(RPCDDSHOME)/include -I$(NDDSHOME)/include -I$(NDDSHOME)/include/ndds
+INCLUDES= -I. -I$(RPCDDSHOME)/include
 
-LIBS = -L$(RPCDDSHOME)/lib/i86Linux2.6gcc4.4.5 -L$(NDDSHOME)/lib/i86Linux2.6gcc4.4.5 -lfastcdr -lfastrtps -lnddscore -lnddsc -lnddscpp -lrpcdds $(SYSLIBS)
+LIBS = -L$(RPCDDSHOME)/lib/i86Linux2.6gcc4.4.5 -lfastcdr -lfastrtps -lrpcdds $(SYSLIBS)
 
 DIRECTORIES= output.dir output/i86Linux2.6gcc4.4.5.dir lib.dir lib/i86Linux2.6gcc4.4.5.dir bin.dir bin/i86Linux2.6gcc4.4.5.dir
 
