@@ -15,8 +15,8 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "Topics.h"], description=["This header
 #define _$ctx.filename;format="toUpper"$_TOPICS_H_
 
 #include "$ctx.filename$.h"
-#include <$ctx.product$/protocols/dds/MessageHeader.h>
-#include <$ctx.product$/utils/Messages.h>
+#include <$ctx.includePrefix$protocols/dds/MessageHeader.h>
+#include <$ctx.includePrefix$utils/Messages.h>
 
 #include <cstddef>
 

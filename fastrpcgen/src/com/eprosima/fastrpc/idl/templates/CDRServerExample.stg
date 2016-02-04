@@ -4,11 +4,11 @@ main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "ServerExample.cxx"], description=["This source file shows a simple example of how to create a server for an interface."])$
 
 #include "$ctx.filename$Server.h"
-#include <$ctx.product$/strategies/ThreadPoolStrategy.h>
+#include <$ctx.includePrefix$strategies/ThreadPoolStrategy.h>
 #include "$ctx.filename$CDRProtocol.h"
-#include <$ctx.product$/transports/TCPServerTransport.h>
-#include <$ctx.product$/exceptions/Exceptions.h>
-#include <$ctx.product$/utils/Utilities.h>
+#include <$ctx.includePrefix$transports/TCPServerTransport.h>
+#include <$ctx.includePrefix$exceptions/Exceptions.h>
+#include <$ctx.includePrefix$utils/Utilities.h>
 #include "$ctx.filename$ServerImplExample.h"
 
 #include <iostream>

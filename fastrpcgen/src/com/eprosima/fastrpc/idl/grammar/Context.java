@@ -11,7 +11,7 @@ import org.antlr.v4.runtime.Token;
 public abstract class Context extends com.eprosima.idl.context.Context implements com.eprosima.fastcdr.idl.context.Context
 {
     public Context(String filename, String file, ArrayList<String> includePaths, boolean clientcode, boolean servercode,
-            String appProduct)
+            String appProduct, boolean include_include_prefix)
     {
         super(filename, file, includePaths);
         
@@ -20,6 +20,7 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
         m_servercode = servercode;
         m_randomGenNames = new Stack<String>();
         m_appProduct = appProduct;
+        m_include_include_prefix = include_include_prefix;
     }
     
     public void setTypelimitation(String lt)
@@ -61,6 +62,14 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
     public String getProduct()
     {
         return m_appProduct;
+    }
+
+    public String getIncludePrefix()
+    {
+        if(m_include_include_prefix)
+            return m_appProduct + "/";
+
+        return "";
     }
 
     public String getNamespace()
@@ -138,4 +147,5 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
     private boolean m_servercode = true;
 
     private String m_appProduct = null;
+    private boolean m_include_include_prefix = true;
 }

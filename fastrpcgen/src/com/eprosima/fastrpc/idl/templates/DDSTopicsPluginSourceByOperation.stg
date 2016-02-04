@@ -12,8 +12,8 @@ main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "TopicsPlugin.cpp"], description=["TODO This header file contains the declaration of topics generated using operations in the IDL file."])$
 
 #include "$ctx.filename$TopicsPlugin.h"
-#include <$ctx.product$/protocols/dds/MessageHeaderPlugin.h>
-#include <$ctx.product$/exceptions/BadParamException.h>
+#include <$ctx.includePrefix$protocols/dds/MessageHeaderPlugin.h>
+#include <$ctx.includePrefix$exceptions/BadParamException.h>
 
 #include <fastcdr/Cdr.h>
 #include <fastcdr/exceptions/BadParamException.h>

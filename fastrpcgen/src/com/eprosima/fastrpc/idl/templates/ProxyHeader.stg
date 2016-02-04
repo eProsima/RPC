@@ -6,7 +6,7 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "Proxy.h"], description=["This header 
 #ifndef _$ctx.filename;format="toUpper"$_PROXY_H_
 #define _$ctx.filename;format="toUpper"$_PROXY_H_
 
-#include <$ctx.product$/client/Proxy.h>
+#include <$ctx.includePrefix$client/Proxy.h>
 #include "$ctx.filename$.h"
 $if(ctx.dds)$
 #include "$ctx.filename$AsyncCallbackHandlers.h"

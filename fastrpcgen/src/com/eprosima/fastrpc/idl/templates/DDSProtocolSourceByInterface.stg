@@ -12,19 +12,19 @@ class __declspec(dllimport) DDSEntity;
 $endif$
 
 #include "$ctx.filename$DDSProtocol.h"
-#include <$ctx.product$/transports/Transport.h>
+#include <$ctx.includePrefix$transports/Transport.h>
 $if(ctx.client)$
-#include <$ctx.product$/transports/dds/ProxyTransport.h>
-#include <$ctx.product$/transports/dds/components/ProxyProcedureEndpoint.h>
+#include <$ctx.includePrefix$transports/dds/ProxyTransport.h>
+#include <$ctx.includePrefix$transports/dds/components/ProxyProcedureEndpoint.h>
 #include "$ctx.filename$DDSAsyncSupport.h"
 
 $endif$
 $if(ctx.server)$
-#include <$ctx.product$/transports/dds/ServerTransport.h>
-#include <$ctx.product$/transports/dds/components/ServerProcedureEndpoint.h>
+#include <$ctx.includePrefix$transports/dds/ServerTransport.h>
+#include <$ctx.includePrefix$transports/dds/components/ServerProcedureEndpoint.h>
 
 $endif$
-#include <$ctx.product$/exceptions/Exceptions.h>
+#include <$ctx.includePrefix$exceptions/Exceptions.h>
 $if(!ctx.rtiTypes)$
 #include "$ctx.filename$TopicsPlugin.h"
 $else$

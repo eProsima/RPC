@@ -68,7 +68,6 @@ public class fastrpcgen
     /// Common options ///
     protected static String m_appName = "fastrpcgen";
     protected static String m_appProduct = "fastrpc";
-    protected static String m_localAppProduct = "fastrpc";
     protected static String m_appEnv = "FASTRPCHOME";
     private static ArrayList<String> m_platforms = null;
     private String m_os = null;
@@ -89,6 +88,7 @@ public class fastrpcgen
     //! Add information to use fastrpcgen internally. 
     private static boolean m_vendorSelected = false;
     private boolean m_local = false;
+    private boolean m_include_include_prefix = true;
     private boolean m_rpm = false;
 
     // Use to know the protocol
@@ -496,22 +496,54 @@ public class fastrpcgen
             System.out.println("Loading Templates...");     
             TemplateManager.setGroupLoaderDirectories("com/eprosima/fastrpc/idl/templates:com/eprosima/fastcdr/idl/templates");
 
-            // In local for all products
-            if(m_local) {
-                if(m_protocol == PROTOCOL.FASTCDR) {
-                    solution.addInclude("$(FASTRPCHOME)/thirdparty/eprosima-common-code");
-                } else if(m_protocol == PROTOCOL.DDS) {
-                    solution.addInclude("$(RPCDDSHOME)/thirdparty/eprosima-common-code");
-                } else if(m_protocol == PROTOCOL.REST) {
-                    solution.addInclude("$(RPCRESTHOME)/thirdparty/eprosima-common-code");
-                }				
+            // In local for all products insert includes and libraries from environment variables.
+            // Therefore get other environment variables.
+            if(m_local)
+            {
+                // Get include directories from environment variable.
+                String include_directories_env = System.getenv("CMAKE_INCLUDE_DIRECTORIES");
 
-                if(m_exampleOption != null && m_exampleOption.contains("Win"))
-                    solution.addLibraryPath("$(BOOST_LIBRARYDIR)/" + m_exampleOption);
+                if(include_directories_env != null)
+                {
+                    String[] include_directories = include_directories_env.split(";");
+
+                    for(String include_directory : include_directories)
+                        solution.addInclude(include_directory);
+                }
+
+                // Get library directories from environment variable.
+                String library_directories_env = System.getenv("CMAKE_LIBRARY_DIRECTORIES");
+
+                if(library_directories_env != null)
+                {
+                    String[] library_directories = library_directories_env.split(";");
+
+                    for(String library_directory : library_directories)
+                        solution.addLibraryPath(library_directory);
+                }
+
+                // Get libraries from environment variable.
+                String libraries_env = System.getenv("CMAKE_LIBRARIES");
+
+                if(libraries_env != null)
+                {
+                    String[] libraries = libraries_env.split(";");
+
+                    for(String library : libraries)
+                        solution.addLibrary(library);
+                }
+
+                String remove_include_prefix = System.getenv("CMAKE_REMOVE_INCLUDE_PREFIX");
+
+                if(remove_include_prefix != null)
+                    m_include_include_prefix = false;
             }
             solution.addInclude("$(" + m_appEnv + ")/include");
             if(m_exampleOption != null)
-                solution.addLibraryPath("$(" + m_appEnv + ")/lib/" + m_exampleOption);
+                if(m_exampleOption.contains("Win"))
+                    solution.addLibraryPath("$(" + m_appEnv + ")/lib/" + m_exampleOption);
+                else
+                    solution.addLibraryPath("$(" + m_appEnv + ")/lib");
 
             if(m_protocol == PROTOCOL.DDS)
             {
@@ -547,47 +579,11 @@ public class fastrpcgen
                         return false;
                     }
                 }
-                // Our types need to add fastcdr library as dependency.
-                else
+
+                // Include rpcdds library.
+                if(m_exampleOption != null && !m_exampleOption.contains("Win"))
                 {
-
-                    if(m_local) {
-                        solution.addInclude("$(RPCDDSHOME)/thirdparty/fastcdr/include");
-                        if(m_ddstransport == DDS_TRANSPORT.RTPS)
-                            solution.addInclude("$(RPCDDSHOME)/thirdparty/fastrtps/include");
-
-                        if(m_exampleOption != null)
-                        {
-                            if(!m_exampleOption.contains("Win"))
-                            {
-                                if(m_exampleOption.startsWith("i86Linux2.6gcc"))
-                                {
-                                    solution.addLibraryPath("$(RPCDDSHOME)/thirdparty/fastcdr/lib/i86Linux2.6gcc");
-                                    if(m_ddstransport == DDS_TRANSPORT.RTPS)
-                                        solution.addLibraryPath("$(RPCDDSHOME)/thirdparty/fastrtps/lib/i86Linux2.6gcc");
-                                }
-                                else if(m_exampleOption.startsWith("x64Linux2.6gcc"))
-                                {
-                                    solution.addLibraryPath("$(RPCDDSHOME)/thirdparty/fastcdr/lib/x64Linux2.6gcc");
-                                    if(m_ddstransport == DDS_TRANSPORT.RTPS)
-                                        solution.addLibraryPath("$(RPCDDSHOME)/thirdparty/fastrtps/lib/x64Linux2.6gcc");
-                                }
-
-                            }
-                            else
-                            {
-                                solution.addLibraryPath("$(RPCDDSHOME)/thirdparty/fastcdr/lib/" + m_exampleOption);
-                                if(m_ddstransport == DDS_TRANSPORT.RTPS)
-                                    solution.addLibraryPath("$(RPCDDSHOME)/thirdparty/fastrtps/lib/" + m_exampleOption);
-                            }
-                        }
-                    }
-                    if(m_exampleOption != null && !m_exampleOption.contains("Win"))
-                    {
-                        solution.addLibrary("fastcdr");
-                        if(m_ddstransport == DDS_TRANSPORT.RTPS)
-                            solution.addLibrary("fastrtps");
-                    }
+                    solution.addLibrary("fastcdr");
                 }
 
                 // Add dds middleware code dependencies
@@ -600,18 +596,23 @@ public class fastrpcgen
                     solution.addLibrary("nddscore");
                     solution.addLibrary("nddsc");
                     solution.addLibrary("nddscpp");
+
+                    if(m_exampleOption != null && m_exampleOption.contains("Win"))
+                    {
+                        solution.addDefine("RTI_WIN32");
+                    }
+                    else if(m_exampleOption != null && m_exampleOption.contains("Linux"))
+                    {
+                        solution.addDefine("RTI_LINUX");
+                        solution.addDefine("RTI_UNIX");
+                    }
+                }
+                else if(m_ddstransport == DDS_TRANSPORT.RTPS && m_exampleOption != null && !m_exampleOption.contains("Win"))
+                {
+                    solution.addLibrary("fastrtps");
                 }
 
-                if(m_exampleOption != null && m_exampleOption.contains("Win"))
-                {
-                    solution.addDefine("RTI_WIN32");
-                }
-                else if(m_exampleOption != null && m_exampleOption.contains("Linux"))
-                {
-                    solution.addDefine("RTI_LINUX");
-                    solution.addDefine("RTI_UNIX");
-                }
-
+                // Include rpcdds library.
                 if(m_exampleOption != null && !m_exampleOption.contains("Win"))
                 {
                     // Add product library.
@@ -640,25 +641,6 @@ public class fastrpcgen
                     solution.addLibrary("boost_thread");
                 }
 
-                if(m_local)
-                {
-                    solution.addInclude("$(FASTRPCHOME)/thirdparty/fastcdr/include");
-
-                    if(m_exampleOption != null)
-                    {
-                        if(!m_exampleOption.contains("Win"))
-                        {
-                            if(m_exampleOption.startsWith("i86Linux2.6gcc"))
-                                solution.addLibraryPath("$(FASTRPCHOME)/thirdparty/fastcdr/lib/i86Linux2.6gcc");
-                            else if(m_exampleOption.startsWith("x64Linux2.6gcc"))
-                                solution.addLibraryPath("$(FASTRPCHOME)/thirdparty/fastcdr/lib/x64Linux2.6gcc");
-                        }
-                        else
-                        {
-                            solution.addLibraryPath("$(FASTRPCHOME)/thirdparty/fastcdr/lib/" + m_exampleOption);
-                        }
-                    }
-                }
                 if(m_exampleOption != null && !m_exampleOption.contains("Win"))
                 {
                     solution.addLibrary("fastcdr");
@@ -853,7 +835,7 @@ public class fastrpcgen
         {
             // Create initial context.
             Context ctx = new RESTContext(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode,
-                    (!m_local ? m_appProduct : m_localAppProduct));
+                    m_appProduct, m_include_include_prefix);
 
             // Create template manager
             TemplateManager tmanager = new TemplateManager("FastCdrCommon:eprosima:Common");
@@ -1025,7 +1007,7 @@ public class fastrpcgen
         {
             // Create initial context.
             Context ctx = new FastContext(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode,
-                    (!m_local ? m_appProduct : m_localAppProduct));
+                    m_appProduct, m_include_include_prefix);
 
             // Create template manager
             TemplateManager tmanager = new TemplateManager("FastCdrCommon:eprosima:Common");
@@ -1192,7 +1174,7 @@ public class fastrpcgen
         {
             // Create initial context.
             Context ctx = new DDSContext(onlyFileName, idlFilename, m_includePaths, m_clientcode, m_servercode,
-                    (!m_local ? m_appProduct : m_localAppProduct), m_types);
+                    m_appProduct, m_include_include_prefix, m_types);
 
             // Create template manager
             TemplateManager tmanager = null;
@@ -1869,35 +1851,30 @@ public class fastrpcgen
                 tproject.setAttribute("solution", solution);
                 tproject.setAttribute("project", project);
                 tproject.setAttribute("example", m_exampleOption);
-                tproject.setAttribute("local", m_local);
 
                 tprojectFiles.setAttribute("project", project);
 
                 tprojectClient.setAttribute("solution", solution);
                 tprojectClient.setAttribute("project", project);
                 tprojectClient.setAttribute("example", m_exampleOption);
-                tprojectClient.setAttribute("local", m_local);
 
                 tprojectFilesClient.setAttribute("project", project);
 
                 tprojectClientExample.setAttribute("solution", solution);
                 tprojectClientExample.setAttribute("project", project);
                 tprojectClientExample.setAttribute("example", m_exampleOption);
-                tprojectClientExample.setAttribute("local", m_local);
 
                 tprojectFilesClientExample.setAttribute("project", project);
 
                 tprojectServer.setAttribute("solution", solution);
                 tprojectServer.setAttribute("project", project);
                 tprojectServer.setAttribute("example", m_exampleOption);
-                tprojectServer.setAttribute("local", m_local);
 
                 tprojectFilesServer.setAttribute("project", project);
 
                 tprojectServerExample.setAttribute("solution", solution);
                 tprojectServerExample.setAttribute("project", project);
                 tprojectServerExample.setAttribute("example", m_exampleOption);
-                tprojectServerExample.setAttribute("local", m_local);
 
                 tprojectFilesServerExample.setAttribute("project", project);
 

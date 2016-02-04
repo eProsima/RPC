@@ -1,0 +1,57 @@
+const long sequence_length = 2;
+const long array_length = 2;
+
+struct Datos
+{
+	long count;
+	string message;
+};
+
+typedef sequence<long> largo;
+typedef sequence<string> cadena;
+typedef sequence<Datos> dattos;
+// NOT SUPPORTED
+//typedef sequence<sequence<long, 2>, sequence_length> seqseq;
+typedef sequence<dattos, sequence_length> seqdat;
+typedef long larray[2];
+typedef string sarray[2];
+typedef string ssarray[2][3];
+typedef Datos darray[2];
+typedef Datos ddarray[2][3];
+typedef Datos cdarray[array_length];
+
+interface SequenceTest
+{
+    struct Sequences
+    {
+        sequence<string, 2> strings;
+        sequence<Datos, 2> datos;
+        // NOT SUPPORTED
+        //sequence<sequence<long, 2>, 2> seqseq;
+        sequence<dattos, 2> seqdat;
+    };
+
+    struct Arrays
+    {
+        string strings[2];
+        string stringss[2][3];
+        Datos datos[2];
+        Datos datoss[2][3];
+        ddarray arradat[2];
+    };
+
+	largo getSeqLong(in largo l1, inout largo l2, out largo l3);
+	cadena getSeqString(in cadena s1, inout cadena s2, out cadena s3);
+	dattos getSeqDatos(in dattos sb1, inout dattos sb2, out dattos sb3);
+    // NOT SUPPORTED
+    //seqseq getSeqSeq(in seqseq ss1, inout seqseq ss2, out seqseq ss3);
+    seqdat getSeqDat(in seqdat sd1, inout seqdat sd2, out seqdat sd3);
+    Sequences getSequences(in Sequences seq1, inout Sequences seq2, out Sequences seq3);
+    void getArrLong(in larray lar1, inout larray lar2, out larray lar3);
+    void getArrString(in sarray sar1, inout sarray sar2, out sarray sar3);
+    void getArrSString(in ssarray ssar1, inout ssarray ssar2, out ssarray ssar3);
+    void getArrDatos(in darray dar1, inout darray dar2, out darray dar3);
+    void getArrDDatos(in ddarray ddar1, inout ddarray ddar2, out ddarray ddar3);
+    void getArrCDatos(in cdarray cdar1, inout cdarray cdar2, out cdarray cdar3);
+    Arrays getArrays(in Arrays array1, inout Arrays array2, out Arrays array3);
+};

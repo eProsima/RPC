@@ -70,18 +70,6 @@ public class Solution extends com.eprosima.solution.Solution
         return ret;
     }
 
-    public String getProductDefine()
-    {
-	if(m_protocol == fastrpcgen.PROTOCOL.FASTCDR)
-            return "EPROSIMA_LIB_NAME=fastrpc;";
-	else if(m_protocol == fastrpcgen.PROTOCOL.DDS)
-            return "EPROSIMA_LIB_NAME=rpcdds;";
-	else if(m_protocol == fastrpcgen.PROTOCOL.REST)
-            return "EPROSIMA_LIB_NAME=rpcrest;";
-
-	return null;
-    }
-
     public boolean isIsVS2010()
     {
 	    return m_example.substring(8, 14).equals("VS2010");

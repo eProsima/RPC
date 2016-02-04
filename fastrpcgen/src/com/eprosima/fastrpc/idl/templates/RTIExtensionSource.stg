@@ -12,7 +12,7 @@ class __declspec(dllimport) DDSEntity;
 $endif$
 
 #include "$ctx.filename$Extension.h"
-#include <$ctx.product$/utils/macros/strdup.h>
+#include <$ctx.includePrefix$utils/macros/strdup.h>
 #include <string.h>
 #include <utility>
 

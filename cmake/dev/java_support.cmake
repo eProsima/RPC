@@ -24,7 +24,7 @@ macro(gradle_build directory jar)
     add_custom_target(java ALL
         COMMAND ${CMAKE_COMMAND} -E env
         --unset=JAVA_HOME
-        "PATH=${Java_JAVA_EXECUTABLE_DIR}"
+        "PATH=${Java_JAVA_EXECUTABLE_DIR};$ENV{PATH}"
         "${GRADLE_EXE}" -Pcustomversion=${PROJECT_VERSION} ${RPCDDS_CUSTOM_VENDOR} ${jar}
         WORKING_DIRECTORY ${directory}
         COMMENT "Generating Java application" VERBATIM)

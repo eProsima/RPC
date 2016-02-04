@@ -7,8 +7,8 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "RESTProtocol.h"], description=["This 
 #define _$ctx.filename;format="toUpper"$_REST_PROTOCOL_H_
 
 #include "$ctx.filename$Protocol.h"
-#include <$ctx.product$/transports/messages/HttpMessage.h>
-#include <$ctx.product$/utils/Messages.h>
+#include <$ctx.includePrefix$transports/messages/HttpMessage.h>
+#include <$ctx.includePrefix$utils/Messages.h>
 $ctx.includeDependencies : { include |#include "$include$T.h"$\n$#include "$include$.h"}; separator="\n"$
 
 #include <string>

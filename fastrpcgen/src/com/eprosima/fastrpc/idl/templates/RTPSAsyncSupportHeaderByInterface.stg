@@ -6,8 +6,8 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "AsyncSupport.h"], description=["This 
 #ifndef _$ctx.filename;format="toUpper"$_DDS_ASYNC_SUPPORT_H_
 #define _$ctx.filename;format="toUpper"$_DDS_ASYNC_SUPPORT_H_
 
-#include <$ctx.product$/transports/dds/RTPSAsyncTask.h>
-#include <$ctx.product$/exceptions/UserException.h>
+#include <$ctx.includePrefix$transports/dds/RTPSAsyncTask.h>
+#include <$ctx.includePrefix$exceptions/UserException.h>
 #include "$ctx.filename$AsyncCallbackHandlers.h"
 $if(!ctx.rtiTypes)$
 #include "$ctx.filename$Topics.h"

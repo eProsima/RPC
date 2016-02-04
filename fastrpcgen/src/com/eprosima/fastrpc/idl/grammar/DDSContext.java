@@ -7,9 +7,9 @@ import com.eprosima.fastrpc.fastrpcgen;
 public class DDSContext extends Context
 {
     public DDSContext(String filename, String file, ArrayList includePaths, boolean clientcode, boolean servercode,
-            String appProduct, fastrpcgen.DDS_TYPES ddstypes)
+            String appProduct, boolean include_include_prefix, fastrpcgen.DDS_TYPES ddstypes)
     {
-        super(filename, file, includePaths, clientcode, servercode, appProduct);
+        super(filename, file, includePaths, clientcode, servercode, appProduct, include_include_prefix);
         
         m_ddstypes = ddstypes;
     }

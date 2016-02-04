@@ -6,8 +6,8 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "AsyncCallbackHandlers.h"], descriptio
 #ifndef _$ctx.filename;format="toUpper"$_ASYNC_CALLBACK_HANDLERS_H_
 #define _$ctx.filename;format="toUpper"$_ASYNC_CALLBACK_HANDLERS_H_
 
-#include <$ctx.product$/exceptions/SystemException.h>
-#include <$ctx.product$/exceptions/UserException.h>
+#include <$ctx.includePrefix$exceptions/SystemException.h>
+#include <$ctx.includePrefix$exceptions/UserException.h>
 #include "$ctx.filename$.h"
 
 $definitions; separator="\n"$

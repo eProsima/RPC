@@ -18,27 +18,41 @@ group main;
 
 memberComplexInit(member) ::= <<
 $if(member)$
+$if(!member.typecode.isType_d)$
 memset(&$member.name$, 0, sizeof($member.typecode.cppTypename$));
+$endif$
 $endif$
 >>
 
 memberComplexInitCopy(member, dataname) ::= <<
 $if(member)$
+$if(member.typecode.isType_d)$
+$member.name$ = DDS_String_dup($dataname$.$member.name$);
+$else$
 $member.typecode.cppTypename$_initialize(&$member.name$);
 $member.typecode.cppTypename$_copy(&$member.name$, &$dataname$.$member.name$);
+$endif$
 $endif$
 >>
 
 memberComplexCopy(member, dataname) ::= <<
 $if(member)$
+$if(member.typecode.isType_d)$
+$member.name$ = DDS_String_dup($dataname$.$member.name$);
+$else$
 $member.typecode.cppTypename$_copy(&$member.name$, &$dataname$.$member.name$);
+$endif$
 $endif$
 >>
 
 // TODO Es necesario?
 memberComplexExtract(member, dataname) ::= <<
 $if(member)$
+$if(member.typecode.isType_d)$
+$dataname$.$member.name$ = DDS_String_dup($member.name$);
+$else$
 $member.typecode.cppTypename$_copy(&$dataname$.$member.name$, &$member.name$);
+$endif$
 $endif$
 >>
 
@@ -55,7 +69,9 @@ $typeName$_initialize(&$name$);
 
 varComplexInitialize(variable) ::= <<
 $if(variable)$
+$if(!variable.typecode.isType_d)$
 $variable.typecode.cppTypename$_initialize(&$variable.name$);
+$endif$
 $endif$
 >>
 

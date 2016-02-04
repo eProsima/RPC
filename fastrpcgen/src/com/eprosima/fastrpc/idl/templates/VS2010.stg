@@ -25,7 +25,7 @@ EndGlobal
 
 >>
 
-project(solution, project, example, configurations, local) ::= <<
+project(solution, project, example, configurations) ::= <<
 <?xml version="1.0" encoding="Windows-1252"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
@@ -70,7 +70,7 @@ project(solution, project, example, configurations, local) ::= <<
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
       <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$;$preprocessorTypesLibDefs(conf=it)$;$project.name;format="toUpper"$_SOURCE$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$$if(local)$$solution.productDefine$$endif$%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$;$preprocessorTypesLibDefs(conf=it)$;$project.name;format="toUpper"$_SOURCE$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -143,7 +143,7 @@ projectFiles(project) ::= <<
 </Project>
 >>
 
-projectClient(solution, project, example, configurations, local) ::= <<
+projectClient(solution, project, example, configurations) ::= <<
 <?xml version="1.0" encoding="Windows-1252"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
@@ -188,7 +188,7 @@ projectClient(solution, project, example, configurations, local) ::= <<
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
       <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$$if(local)$$solution.productDefine$$endif$%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -262,7 +262,7 @@ projectFilesClient(project) ::= <<
 </Project>
 >>
 
-projectClientExample(solution, project, example, configurations, local) ::= <<
+projectClientExample(solution, project, example, configurations) ::= <<
 <?xml version="1.0" encoding="Windows-1252"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
@@ -307,7 +307,7 @@ projectClientExample(solution, project, example, configurations, local) ::= <<
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
       <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$$if(local)$$solution.productDefine$$endif$%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -361,7 +361,7 @@ projectFilesClientExample(project) ::= <<
 </Project>
 >>
 
-projectServer(solution, project, example, configurations, local) ::= <<
+projectServer(solution, project, example, configurations) ::= <<
 <?xml version="1.0" encoding="Windows-1252"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
@@ -406,7 +406,7 @@ projectServer(solution, project, example, configurations, local) ::= <<
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
       <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$$if(local)$$solution.productDefine$$endif$%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -480,7 +480,7 @@ projectFilesServer(project) ::= <<
 </Project>
 >>
 
-projectServerExample(solution, project, example, configurations, local) ::= <<
+projectServerExample(solution, project, example, configurations) ::= <<
 <?xml version="1.0" encoding="Windows-1252"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
@@ -525,7 +525,7 @@ projectServerExample(solution, project, example, configurations, local) ::= <<
       <WarningLevel>Level3</WarningLevel>
       <Optimization>$if(it.debug)$Disabled$else$MaxSpeed$endif$</Optimization>
       <AdditionalIncludeDirectories>$solution.includes : {include |$include$;}$%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$$if(local)$$solution.productDefine$$endif$%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$preprocessorDefs(conf=it)$$if(it.dll)$;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT$endif$;$solution.defines : {define |$define$;}$%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
