@@ -1488,13 +1488,29 @@ public class fastrpcgen
 
             if(m_middleware.equals("rti"))
             {
-                // Directory $NDDSHOME/scripts/rtiddsgen.bat
-                m_command = dds_root + File.separator + "scripts" + File.separator;
-
+                // Check location rtiddsgen
+                String[] directories = {dds_root + File.separator + "scripts" + File.separator,
+                    dds_root + File.separator + "bin" + File.separator
+                };
+                
+                String native_command = "rtiddsgen";
                 if(m_os.contains("Windows"))
-                    m_command += "rtiddsgen.bat";
-                else if(m_os.contains("Linux"))
-                    m_command += "rtiddsgen";
+                    native_command += "rtiddsgen.bat";
+
+                boolean found_command = false;
+                for(String dir : directories)
+                {
+                    m_command = dir + native_command;
+                    File f = new File(m_command);
+                    if(f.exists())
+                    {
+                        found_command = true;
+                        break;
+                    }
+                }
+
+                if(!found_command)
+                    m_command = native_command;
 
                 // Add that creates file in the current directory.
 

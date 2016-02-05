@@ -1,9 +1,26 @@
 if(NOT ((MSVC OR MSVC_IDE) AND EPROSIMA_INSTALLER))
     macro(add_env_test_by_topic TEST TEST_NAME BYTOPIC)
+        # Check parameters
+        set(lib_tag_)
+        set(CMAKE_LIBRARIES)
+        foreach(arg ${ARGN})
+            if("${arg}" STREQUAL "LIB")
+                set(lib_tag_ "true")
+            else()
+                if(lib_tag_)
+                    set(CMAKE_LIBRARIES ${CMAKE_LIBRARIES} ${arg})
+                else()
+                    message(FATAL_ERROR "Bad argument ${arg}")
+                endif()
+            endif()
+        endforeach()
+
+        #Add test
         add_test(NAME ${TEST}
             COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/run_test.py
             ${TEST_NAME} rti ${BYTOPIC})
 
+        # Set enviroment variables
         set_property(TEST ${TEST} PROPERTY ENVIRONMENT
             "CMAKE_JAVA_EXECUTABLE=${Java_JAVA_EXECUTABLE}")
         set_property(TEST ${TEST} APPEND PROPERTY ENVIRONMENT
@@ -31,6 +48,9 @@ if(NOT ((MSVC OR MSVC_IDE) AND EPROSIMA_INSTALLER))
             "CMAKE_LIBRARY_DIRECTORIES=${Boost_LIBRARY_DIRS}\\;$<TARGET_FILE_DIR:${PROJECT_NAME}>\\;$<TARGET_FILE_DIR:fastcdr>")
 
         set_property(TEST ${TEST} APPEND PROPERTY ENVIRONMENT
+            "CMAKE_LIBRARIES=$<JOIN:${CMAKE_LIBRARIES},\\;>")
+
+        set_property(TEST ${TEST} APPEND PROPERTY ENVIRONMENT
             "CMAKE_REMOVE_INCLUDE_PREFIX=true")
 
         # Set NDDSHOME environment variable
@@ -39,9 +59,11 @@ if(NOT ((MSVC OR MSVC_IDE) AND EPROSIMA_INSTALLER))
     endmacro()
 
     macro(add_env_test TEST)
-        add_env_test_by_topic(rpcdds_rti.${TEST}_byInterface ${TEST} byInterface)
+        add_env_test_by_topic(rpcdds_rti.${TEST}.byInterface ${TEST}
+            byInterface ${ARGN})
 
-        add_env_test_by_topic(rpcdds_rti.${TEST}_byOperation ${TEST} byOperation)
+        add_env_test_by_topic(rpcdds_rti.${TEST}.byOperation ${TEST}
+            byOperation ${ARGN})
     endmacro()
 
     add_env_test(AsyncCallTest)
@@ -54,7 +76,7 @@ if(NOT ((MSVC OR MSVC_IDE) AND EPROSIMA_INSTALLER))
 
     add_env_test(MultiInterfacesTest)
 
-    add_env_test(MultithreadTest)
+    add_env_test(MultithreadTest LIB boost_system boost_thread)
 
     add_env_test(OnewayCallTest)
 
