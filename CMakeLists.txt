@@ -107,13 +107,29 @@ message(STATUS "To change de version modify the file configure_${PROJECT_NAME}.a
 ###############################################################################
 if(WIN32)
     option(EPROSIMA_INSTALLER "Activate the creation of a build to create windows installers" OFF)
+    option(EPROSIMA_INSTALLER_MINION "Informs this is part of an installe " OFF)
 endif()
+
+###############################################################################
+# Warning level
+###############################################################################
+if(MSVC OR MSVC_IDE)
+    if(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
+        string(REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    else()
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS] /W4")
+    endif()
+else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Wextra -Wno-unknown-pragmas")
+endif()
+
 
 ###############################################################################
 # Test system configuration
 ###############################################################################
 include(${PROJECT_SOURCE_DIR}/cmake/dev/check_configuration.cmake)
 check_stdcxx()
+# check_compile_feature()
 check_endianness()
 
 ###############################################################################
@@ -210,9 +226,20 @@ add_subdirectory(src)
 ###############################################################################
 # Testing
 ###############################################################################
-enable_testing()
-include(CTest)
-add_subdirectory(test)
+if(NOT EPROSIMA_INSTALLER AND NOT EPROSIMA_INSTALLER_MINION)
+	enable_testing()
+	include(CTest)
+	add_subdirectory(test)
+endif()
+
+###############################################################################
+# Examples 
+###############################################################################
+option(COMPILE_EXAMPLES "Build example" ON)
+if(COMPILE_EXAMPLES)
+	add_subdirectory(examples)
+endif()
+
 
 ###############################################################################
 # Documentation
@@ -439,10 +466,10 @@ endif()
 if(MSVC OR MSVC_IDE)
     if(EPROSIMA_INSTALLER)
         set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL}
-            libraries_i86Win32VS2010
-            libraries_x64Win64VS2010
             libraries_i86Win32VS2013
             libraries_x64Win64VS2013
+            libraries_i86Win32VS2015
+            libraries_x64Win64VS2015
             )
     else()
         set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} libraries_${MSVC_ARCH})

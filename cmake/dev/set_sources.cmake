@@ -1,6 +1,5 @@
 macro(set_sources)
     set(${PROJECT_NAME}_SOURCES
-        ${${PROJECT_NAME}_SOURCES}
         ${ARGN}
         )
 

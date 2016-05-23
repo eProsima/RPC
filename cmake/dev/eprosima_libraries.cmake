@@ -9,9 +9,6 @@ macro(find_eprosima_package package)
             endforeach()
 
             set(${package}ExternalDir ${PROJECT_BINARY_DIR}/external/${package})
-            if(NOT MSVC AND NOT MSVC_IDE)
-                set(BUILD_OPTION "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
-            endif()
 
             if(MINION)
                 set(CMAKE_INSTALL_PREFIX_ "${CMAKE_INSTALL_PREFIX}")
@@ -25,8 +22,10 @@ macro(find_eprosima_package package)
                 "\${SOURCE_DIR_}"
                 "\${GENERATOR_}"
                 ${BUILD_OPTION}
-                ${USE_BOOST_}
+		"-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
+		${USE_BOOST}
                 "-DMINION=ON"
+		"-DEPROSIMA_INSTALLER_MINION=${EPROSIMA_INSTALLER_MINION}"
                 "-DBIN_INSTALL_DIR:PATH=${BIN_INSTALL_DIR}"
                 "-DINCLUDE_INSTALL_DIR:PATH=${INCLUDE_INSTALL_DIR}"
                 "-DLIB_INSTALL_DIR:PATH=${LIB_INSTALL_DIR}"
@@ -65,6 +64,12 @@ macro(find_eprosima_package package)
             endif()
 
             if(MSVC OR MSVC_IDE)
+		if("${CMAKE_BUILD_TYPE}" MATCHES "^([Dd][Ed][Bb][Uu][Gg])$")
+		    set(BUILD_TYPE_GENERATION "Release")
+		else()
+		    set(BUILD_TYPE_GENERATION ${CMAKE_BUILD_TYPE})
+		endif()
+		
                 execute_process(COMMAND ${CMAKE_COMMAND} --build . --config Debug
                     WORKING_DIRECTORY ${${package}ExternalDir}
                     RESULT_VARIABLE EXECUTE_RESULT
@@ -74,13 +79,13 @@ macro(find_eprosima_package package)
                     message(FATAL_ERROR "Cannot build Git submodule ${package} in debug mode")
                 endif()
 
-                execute_process(COMMAND ${CMAKE_COMMAND} --build . --config Release
+		execute_process(COMMAND ${CMAKE_COMMAND} --build . --config ${BUILD_TYPE_GENERATION} 
                     WORKING_DIRECTORY ${${package}ExternalDir}
                     RESULT_VARIABLE EXECUTE_RESULT
                     )
 
                 if(NOT EXECUTE_RESULT EQUAL 0)
-                    message(FATAL_ERROR "Cannot build Git submodule ${package} in release mode")
+			message(FATAL_ERROR "Cannot build Git submodule ${package} in ${BUILD_TYPE_GENERATION} mode")
                 endif()
             else()
                 execute_process(COMMAND ${CMAKE_COMMAND} --build .
@@ -96,7 +101,7 @@ macro(find_eprosima_package package)
             set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${CMAKE_INSTALL_PREFIX_})
         endif()
 
-        find_package(${package})
+	find_package(${package} QUIET)
 
         if(${package}_FOUND)
             message(STATUS "${package} library found...")
@@ -124,6 +129,12 @@ macro(install_eprosima_libraries)
                 OPTIONAL
                 )
         else()
+	    if("${CMAKE_BUILD_TYPE}" MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
+		set(BUILD_TYPE_INSTALLATION "Release")
+	    else()
+		set(BUILD_TYPE_INSTALLATION ${CMAKE_BUILD_TYPE})
+	    endif()
+
             # Install includes
             install(DIRECTORY ${PROJECT_BINARY_DIR}/external/install/${INCLUDE_INSTALL_DIR}/
                 DESTINATION ${INCLUDE_INSTALL_DIR}
