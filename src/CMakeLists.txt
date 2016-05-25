@@ -122,13 +122,15 @@ if(MSVC OR MSVC_IDE)
 
         # Define public headers
         target_include_directories(${PROJECT_NAME} PUBLIC
-            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}>
+            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+	    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include> $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}>
             $<INSTALL_INTERFACE:include>
             )
 
         # Define public headers for static library
         target_include_directories(${PROJECT_NAME}_static PUBLIC
-            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}>
+            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+	    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include> $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}>
             $<INSTALL_INTERFACE:include>
             )
 
@@ -171,7 +173,8 @@ else()
 
     # Define public headers
     target_include_directories(${PROJECT_NAME} PUBLIC
-        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}>
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+	$<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include> $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}>
         $<INSTALL_INTERFACE:include>
         )
 

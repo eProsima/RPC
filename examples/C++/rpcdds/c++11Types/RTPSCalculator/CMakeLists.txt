@@ -4,7 +4,7 @@ project("RTPSCalculator")
 # Find requirements
 find_package(fastcdr REQUIRED)
 find_package(fastrtps REQUIRED)
-find_package(rpcdds  REQUIRED)
+find_package(rpcdds REQUIRED)
 # Set C++11
 include(CheckCXXCompilerFlag)
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANG OR
@@ -17,18 +17,38 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANG OR
     endif()
 endif()
 
-message(STATUS "Configuring RTPSCalculator Server and Client...")
-set(RTPSCALCULATORSERVER_SOURCES_CXX Calculator.cxx CalculatorDDSAsyncSupport.cxx CalculatorDDSProtocol.cxx CalculatorDDSProtocol.cxx CalculatorProxy.cxx CalculatorServer.cxx CalculatorServerExample.cxx CalculatorServerImplExample.cxx CalculatorTopics.cxx CalculatorTopicsPlugin.cxx)
-set(RTPSCALCULATORCLIENT_SOURCES_CXX Calculator.cxx CalculatorDDSAsyncSupport.cxx CalculatorDDSProtocol.cxx CalculatorDDSProtocol.cxx CalculatorProxy.cxx CalculatorClientExample.cxx CalculatorTopics.cxx CalculatorTopicsPlugin.cxx)
+set(RTPSCALCULATOR_COMMON_SOURCES_CXX CalculatorTopicsPlugin.cxx CalculatorTopics.cxx CalculatorDDSProtocol.cxx CalculatorDDSAsyncSupport.cxx)
+message(STATUS "Configuring RTPS Calculator libraries...")
+set(RTPSCALCULATOR_SOURCES_CXX Calculator.cxx)
+set(RTPSCALCULATORCLIENT_SOURCES_CXX CalculatorProxy.cxx)
+set(RTPSCALCULATORSERVER_SOURCES_CXX CalculatorServer.cxx)
 
-add_executable(RTPSCALCULATORSERVER ${RTPSCALCULATORSERVER_SOURCES_CXX})
-target_include_directories(RTPSCALCULATORSERVER PRIVATE ${Boost_INCLUDE_DIR})
-target_link_libraries(RTPSCALCULATORSERVER fastrtps fastcdr rpcdds ${Boost_LIBRARIES})
-install(TARGETS RTPSCALCULATORSERVER
-	RUNTIME DESTINATION examples/C++/RTPSCALCULATORCLIENT/${BIN_INSTALL_DIR})
+add_library(rtpscalculator SHARED ${RTPSCALCULATOR_COMMON_SOURCES_CXX} ${RTPSCALCULATOR_SOURCES_CXX})
+target_include_directories(rtpscalculator PRIVATE ${Boost_INCLUDE_DIR})
+target_link_libraries(rtpscalculator PUBLIC rpcdds fastrtps fastcdr ${Boost_LIBRARIES})
 
-add_executable(RTPSCALCULATORCLIENT ${RTPSCALCULATORCLIENT_SOURCES_CXX})
-target_include_directories(RTPSCALCULATORCLIENT PRIVATE ${Boost_INCLUDE_DIR})
-target_link_libraries(RTPSCALCULATORCLIENT fastrtps fastcdr rpcdds ${Boost_LIBRARIES})
-install(TARGETS RTPSCALCULATORCLIENT
-	RUNTIME DESTINATION examples/C++/RTPSCALCULATORCLIENT/${BIN_INSTALL_DIR})
+add_library(rtpscalculatorclient SHARED ${RTPSCALCULATORCLIENT_SOURCES_CXX})
+target_include_directories(rtpscalculatorclient PRIVATE ${Boost_INCLUDE_DIR})
+target_link_libraries(rtpscalculatorclient rtpscalculator)
+
+add_library(rtpscalculatorserver SHARED ${RTPSCALCULATORSERVER_SOURCES_CXX})
+target_include_directories(rtpscalculatorserver PRIVATE ${Boost_INCLUDE_DIR})
+target_link_libraries(rtpscalculatorserver rtpscalculator)
+
+message(STATUS "Configuring RTPSCalculator Server and Client examples...")
+set(RTPSCALCULATORSERVEREXAMPLE_SOURCES_CXX CalculatorServerExample.cxx CalculatorServerImplExample.cxx) 
+set(RTPSCALCULATORCLIENTEXAMPLE_SOURCES_CXX CalculatorClientExample.cxx) 
+
+add_executable(RTPSCALCULATORSERVEREXAMPLE ${RTPSCALCULATORSERVEREXAMPLE_SOURCES_CXX})
+target_include_directories(RTPSCALCULATORSERVEREXAMPLE PRIVATE ${Boost_INCLUDE_DIR})
+target_link_libraries(RTPSCALCULATORSERVEREXAMPLE rtpscalculatorserver rtpscalculator)
+
+install(TARGETS RTPSCALCULATORSERVEREXAMPLE
+	RUNTIME DESTINATION examples/C++/RTPSCALCULATORSERVER/${BIN_INSTALL_DIR})
+
+add_executable(RTPSCALCULATORCLIENTEXAMPLE ${RTPSCALCULATORCLIENTEXAMPLE_SOURCES_CXX})
+target_include_directories(RTPSCALCULATORCLIENTEXAMPLE PRIVATE ${Boost_INCLUDE_DIR})
+target_link_libraries(RTPSCALCULATORCLIENTEXAMPLE rtpscalculatorclient rtpscalculator)
+
+install(TARGETS RTPSCALCULATORCLIENTEXAMPLE
+	RUNTIME DESTINATION examples/C++/RTPSCALCULATORCLIENTEXAMPLE/${BIN_INSTALL_DIR})
