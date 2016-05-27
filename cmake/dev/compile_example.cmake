@@ -1,7 +1,9 @@
 macro(compile_example example example_directory)
     if(NOT ((EPROSIMA_INSTALLER OR EPROSIMA_INSTALLER_MINION) AND (MSVC OR MSVC_IDE)))
 
+	get_target_property(${PROJECT_NAME}_INCLUDE_DIR ${PROJECT_NAME} INTERFACE_INCLUDE_DIRECTORIES)
 	file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/config/${PROJECT_NAME}Config.cmake
+		"set(${PROJECT_NAME}_INCLUDE_DIR ${${PROJECT_NAME}_INCLUDE_DIR})\n"
 		"include(\"${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Targets.cmake\")\n"
 		)
 
