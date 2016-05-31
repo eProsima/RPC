@@ -14,6 +14,7 @@ else()
         )
 endif()
 
+
 if(DEFINED RPCPROTO)
     set(RPCPROTO ${RPCPROTO} CACHE STRING
         "Choose the RPC library to build, options are: fastrpc, rpcdds, rpcrest."
@@ -107,7 +108,7 @@ message(STATUS "To change de version modify the file configure_${PROJECT_NAME}.a
 ###############################################################################
 if(WIN32)
     option(EPROSIMA_INSTALLER "Activate the creation of a build to create windows installers" OFF)
-    option(EPROSIMA_INSTALLER_MINION "Informs this is part of an installe " OFF)
+    option(EPROSIMA_INSTALLER_MINION "Informs this is part of an installee " OFF)
 endif()
 
 ###############################################################################
@@ -129,7 +130,7 @@ endif()
 ###############################################################################
 include(${PROJECT_SOURCE_DIR}/cmake/dev/check_configuration.cmake)
 check_stdcxx()
-# check_compile_feature()
+#check_compile_feature()
 check_endianness()
 
 ###############################################################################

@@ -114,6 +114,7 @@ if(MSVC OR MSVC_IDE)
         set_target_properties(${PROJECT_NAME}_static PROPERTIES OUTPUT_NAME lib${PROJECT_NAME})
 
         set_target_properties(${PROJECT_NAME} ${PROJECT_NAME}_static PROPERTIES RELEASE_POSTFIX -${PROJECT_MAJOR_VERSION}.${PROJECT_MINOR_VERSION})
+	set_target_properties(${PROJECT_NAME} ${PROJECT_NAME}_static PROPERTIES RELWITHDEBINFO_POSTFIX -${PROJECT_MAJOR_VERSION}.${PROJECT_MINOR_VERSION})
         set_target_properties(${PROJECT_NAME} ${PROJECT_NAME}_static PROPERTIES DEBUG_POSTFIX d-${PROJECT_MAJOR_VERSION}.${PROJECT_MINOR_VERSION})
 
         # Export symbols in DLL library
@@ -246,29 +247,35 @@ endif()
 # Install libraries
 if(MSVC OR MSVC_IDE)
     if(EPROSIMA_INSTALLER)
-        install_msvc_libraries(i86Win32VS2010)
-        install_msvc_libraries(x64Win64VS2010)
+        install_msvc_libraries(i86Win32VS2015)
+        install_msvc_libraries(x64Win64VS2015)
         install_msvc_libraries(i86Win32VS2013)
         install_msvc_libraries(x64Win64VS2013)
     else()
-        install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_static
+	    #Kasbe
+	set(DIR_EXTENSION "")
+	if(EPROSIMA_INSTALLER_MINION)
+		set(DIR_EXTENSION "/${MSVC_ARCH}")
+	endif()
+
+	install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_static
             EXPORT ${PROJECT_NAME}Targets
-            RUNTIME DESTINATION ${BIN_INSTALL_DIR}
-            LIBRARY DESTINATION ${LIB_INSTALL_DIR}
-            ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
+	    RUNTIME DESTINATION ${BIN_INSTALL_DIR}${DIR_EXTENSION}
+            LIBRARY DESTINATION ${LIB_INSTALL_DIR}${DIR_EXTENSION}
+            ARCHIVE DESTINATION ${LIB_INSTALL_DIR}${DIR_EXTENSION}
             COMPONENT libraries_${MSVC_ARCH}
             )
 
         export(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_static FILE ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Targets.cmake)
         install(EXPORT ${PROJECT_NAME}Targets
-            DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake
+            DESTINATION ${LIB_INSTALL_DIR}${DIR_EXTENSION}/${PROJECT_NAME}/cmake
             COMPONENT cmake
             )
 
 
         # Install pdb files
         install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Debug/
-            DESTINATION ${LIB_INSTALL_DIR}
+            DESTINATION ${LIB_INSTALL_DIR}${DIR_EXTENSION}
             COMPONENT libraries_${MSVC_ARCH}
             CONFIGURATIONS Debug
             FILES_MATCHING
