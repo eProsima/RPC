@@ -1,5 +1,5 @@
 include(${PROJECT_SOURCE_DIR}/cmake/dev/compile_example.cmake)
 if(RPCPROTO STREQUAL "rpcdds")
 	file(COPY ${PROJECT_SOURCE_DIR}/include/ DESTINATION ${PROJECT_BINARY_DIR}/include/rpcdds/) 
-	compile_example(RTPSCalculator C++/rpcdds/c++11Types/RTPSCalculator)
+	compile_example(RTPSCalculator C++/rpcdds/c++11Types/RTPSCalculator BOOST_NOT_REQUIRED)
 endif()
