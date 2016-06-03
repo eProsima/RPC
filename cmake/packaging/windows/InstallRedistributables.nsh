@@ -1,38 +1,38 @@
 !include x64.nsh
 
-Var X64VS2010Needed
-Var I86VS2010Needed
+Var X64VS2015Needed
+Var I86VS2015Needed
 Var X64VS2013Needed
 Var I86VS2013Needed
 
 Function InstallRedistributables
 
-    StrCpy $X64VS2010Needed "1"
-    StrCpy $I86VS2010Needed "1"
+    StrCpy $X64VS2015Needed "1"
+    StrCpy $I86VS2015Needed "1"
     StrCpy $X64VS2013Needed "1"
     StrCpy $I86VS2013Needed "1"
 
-    # Check if it is necessary to install to x64VS2010
+    # Check if it is necessary to install to x64VS2015
     ${If} ${RunningX64}
-        ${If} ${SectionIsSelected} ${libraries_x64Win64VS2010}
-        ${OrIf} ${SectionIsSelected} ${libraries_i86Win32VS2010}
+        ${If} ${SectionIsSelected} ${libraries_x64Win64VS2015}
+        ${OrIf} ${SectionIsSelected} ${libraries_i86Win32VS2015}
 	    ClearErrors
             SetRegView 64
             ReadRegDword $0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{1D8E6291-B0D5-35EC-8441-6616F567A0F7}" "Version"
-            IfErrors 0 VC2010RedistInstalled
-            StrCpy $X64VS2010Needed "0"
+            IfErrors 0 VC2015RedistInstalled
+            StrCpy $X64VS2015Needed "0"
         ${EndIf}
     ${Else}
-        # Check if it is necessary to install to i86VS2010
-        ${If} ${SectionIsSelected} ${libraries_i86Win32VS2010}
+        # Check if it is necessary to install to i86VS2015
+        ${If} ${SectionIsSelected} ${libraries_i86Win32VS2015}
 	    ClearErrors
             ReadRegDword $0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{F0C3E5D1-1ADE-321E-8167-68EF0DE699A5}" "Version"
-            IfErrors 0 VC2010RedistInstalled
-            StrCpy $I86VS2010Needed "0"
+            IfErrors 0 VC2015RedistInstalled
+            StrCpy $I86VS2015Needed "0"
         ${EndIf}
     ${EndIf}
 
-    VC2010RedistInstalled:
+    VC2015RedistInstalled:
 
     # Check if it is necessary to install to x64VS2013
     ${If} ${RunningX64}
@@ -57,9 +57,9 @@ Function InstallRedistributables
     VC2013RedistInstalled:
 
     ${If} ${RunningX64}
-        StrCmp $X64VS2010Needed "1" notinstall2010 install2010
+        StrCmp $X64VS2015Needed "1" notinstall2010 install2010
     ${Else}
-        StrCmp $I86VS2010Needed "1" notinstall2010 install2010
+        StrCmp $I86VS2015Needed "1" notinstall2010 install2010
     ${EndIf}
 
     install2010:
