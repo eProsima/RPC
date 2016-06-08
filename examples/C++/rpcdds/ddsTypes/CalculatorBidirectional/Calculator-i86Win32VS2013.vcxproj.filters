@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+        <ClCompile Include="CalculatorExtension.cxx">
+          <Filter>Source Files</Filter>
+        </ClCompile>
+        
+        <ClCompile Include="CalculatorDDSProtocol.cxx">
+          <Filter>Source Files</Filter>
+        </ClCompile>
+        
+        <ClCompile Include="CalculatorDDSAsyncSupport.cxx">
+          <Filter>Source Files</Filter>
+        </ClCompile>
+        
+        <ClCompile Include="Calculator.cxx">
+          <Filter>Source Files</Filter>
+        </ClCompile>
+        
+        <ClCompile Include="CalculatorPlugin.cxx">
+          <Filter>Source Files</Filter>
+        </ClCompile>
+        
+        <ClCompile Include="CalculatorSupport.cxx">
+          <Filter>Source Files</Filter>
+        </ClCompile>
+        
+        <ClCompile Include="CalculatorRequestReply.cxx">
+          <Filter>Source Files</Filter>
+        </ClCompile>
+        
+        <ClCompile Include="CalculatorRequestReplyPlugin.cxx">
+          <Filter>Source Files</Filter>
+        </ClCompile>
+        
+        <ClCompile Include="CalculatorRequestReplySupport.cxx">
+          <Filter>Source Files</Filter>
+        </ClCompile>
+        
+  </ItemGroup>
+  <ItemGroup>
+        <ClInclude Include="CalculatorExtension.h">
+          <Filter>Header Files</Filter>
+        </ClInclude>
+        
+        <ClInclude Include="CalculatorProtocol.h">
+          <Filter>Header Files</Filter>
+        </ClInclude>
+        
+        <ClInclude Include="CalculatorDDSProtocol.h">
+          <Filter>Header Files</Filter>
+        </ClInclude>
+        
+        <ClInclude Include="CalculatorAsyncCallbackHandlers.h">
+          <Filter>Header Files</Filter>
+        </ClInclude>
+        
+        <ClInclude Include="CalculatorDDSAsyncSupport.h">
+          <Filter>Header Files</Filter>
+        </ClInclude>
+        
+        <ClInclude Include="Calculator.h">
+          <Filter>Header Files</Filter>
+        </ClInclude>
+        
+        <ClInclude Include="CalculatorPlugin.h">
+          <Filter>Header Files</Filter>
+        </ClInclude>
+        
+        <ClInclude Include="CalculatorSupport.h">
+          <Filter>Header Files</Filter>
+        </ClInclude>
+        
+        <ClInclude Include="CalculatorRequestReply.h">
+          <Filter>Header Files</Filter>
+        </ClInclude>
+        
+        <ClInclude Include="CalculatorRequestReplyPlugin.h">
+          <Filter>Header Files</Filter>
+        </ClInclude>
+        
+        <ClInclude Include="CalculatorRequestReplySupport.h">
+          <Filter>Header Files</Filter>
+        </ClInclude>
+        
+  </ItemGroup>
+</Project>

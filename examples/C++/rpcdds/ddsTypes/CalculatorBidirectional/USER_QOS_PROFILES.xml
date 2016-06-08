@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dds>
+	<qos_library name="ExampleLibrary">
+		<qos_profile name="CustomProfile" is_default_qos="true">
+			<datawriter_qos>
+				<history>
+					<kind>KEEP_ALL_HISTORY_QOS</kind>
+				</history>
+				<reliability>
+					<kind>RELIABLE_RELIABILITY_QOS</kind>
+				</reliability>
+				<durability>
+					<kind>DDS_TRANSIENT_DURABILITY_QOS</kind>
+				</durability>
+			</datawriter_qos>
+			<datareader_qos>
+				<history>
+					<kind>KEEP_ALL_HISTORY_QOS</kind>
+				</history>
+				<reliability>
+					<kind>RELIABLE_RELIABILITY_QOS</kind>
+				</reliability>
+				<durability>
+					<kind>DDS_TRANSIENT_DURABILITY_QOS</kind>
+				</durability>
+			</datareader_qos>
+		</qos_profile>
+	</qos_library>
+</dds>

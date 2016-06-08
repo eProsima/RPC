@@ -16,20 +16,25 @@
  *	eProsima 2016
  * */
 
+#include "CalculatorServer.h"
 #include <rpcdds/strategies/ThreadPoolStrategy.h>
+#include "CalculatorDDSProtocol.h"
 #include <rpcdds/transports/dds/UDPServerTransport.h>
-#include <rpcdds/transports/dds/UDPProxyTransport.h>
 #include <rpcdds/exceptions/Exceptions.h>
 #include <rpcdds/utils/Utilities.h>
-
-
-#include "CalculatorServer.h"
-#include "CalculatorDDSProtocol.h"
 #include "CalculatorServerImplExample.h"
+
 #include "CalculatorProxy.h"
 #include "Calculator.h"
+#include "CalculatorDDSProtocol.h"
+#include <rpcdds/transports/dds/UDPProxyTransport.h>
+
 
 #include <iostream>
+
+
+
+
 
 using namespace eprosima::rpc;
 using namespace ::exception;
@@ -42,12 +47,13 @@ int main(int argc, char **argv){
 //Server side variable declaration
 unsigned int threadPoolSize = 5;
 ThreadPoolStrategy *pool = NULL;
-CalculatorProtocol *protocol = NULL;
+CalculatorProtocol *serverProtocol = NULL;
 UDPServerTransport *serverTransport = NULL;
 CalculatorServer *server = NULL;
 CalculatorServerImplExample servant;
 //Client side declaration
 CalculatorProxy *proxy = NULL;
+CalculatorProtocol *clientProtocol = NULL;
 UDPProxyTransport *clientTransport = NULL;
 DDS_Long value1, value2;
 DDS_Long addition_ret, substraction_ret;
@@ -90,10 +96,11 @@ std::string client_ServiceName;
 	 */
 	try{
 		pool = new ThreadPoolStrategy(threadPoolSize);
-		protocol = new CalculatorProtocol();
-		serverTransport = new UDPServerTransport(server_ServiceName.c_str(), "ServerInstance");
-		server = new CalculatorServer(*pool, *serverTransport, *protocol, servant);
+		serverProtocol = new CalculatorProtocol();
+		serverTransport = new UDPServerTransport(server_ServiceName.c_str(), "Instance");
+		server = new CalculatorServer(*pool, *serverTransport, *serverProtocol, servant);
 		server -> serve();
+		std::cout << "RPC Server online, priving service name " << server_ServiceName << std::endl;
 	}
 	catch(InitializeException &ex){
 		std::cout << ex.what() << std::endl;
@@ -101,15 +108,17 @@ std::string client_ServiceName;
 	}
 	//Client side
 	try{
-		clientTransport = new UDPProxyTransport(client_ServiceName.c_str(), "ClientInstance");
-		proxy = newCalculatorProxy(*clientTransport, *protocol); //Sharing the same protocol instance
+		clientProtocol = new CalculatorProtocol();
+		clientTransport = new UDPProxyTransport(client_ServiceName.c_str(), "Instance");
+		proxy = new CalculatorProxy(*clientTransport, *clientProtocol);
+		std::cout << "RPC Proxy online, connecting to service name " << client_ServiceName << std::endl;
 	}
-	catch(InitilizeException &ex){
+	catch (InitializeException &ex){
 		std::cout << ex.what() << std::endl;
 		return -1;
-	{
+	}
 	/*Once the server is running on the background, application can lock on user input to request a remote operation*/
-	run = true;
+	bool run = true;
 	while(run){
 		std::cout << "Please enter two numbers on separate lines to perform a remote operation. Enter an invalid parameter to quit." << std::endl;
 		std::cin >> placeholder_string;
@@ -140,7 +149,7 @@ std::string client_ServiceName;
 			}
 			substraction_ret = 0;
 			try{
-				substraction_ret = proxy->substraction(value1,value2);
+				substraction_ret = proxy->subtraction(value1,value2);
 				std::cout << "Substraction result is " << substraction_ret << std::endl;
 			}
 			catch(SystemException &ex){
@@ -154,7 +163,8 @@ std::string client_ServiceName;
 	delete clientTransport;
 	delete server;
 	delete serverTransport;
-	delete protocol;
+	delete clientProtocol;
+	delete serverProtocol;
 	delete pool;
 
 	return 0;

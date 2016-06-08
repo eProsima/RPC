@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug DLL|Win32">
+          <Configuration>Debug DLL</Configuration>
+          <Platform>Win32</Platform>
+        </ProjectConfiguration>
+    <ProjectConfiguration Include="Release DLL|Win32">
+          <Configuration>Release DLL</Configuration>
+          <Platform>Win32</Platform>
+        </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+          <Configuration>Debug</Configuration>
+          <Platform>Win32</Platform>
+        </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+          <Configuration>Release</Configuration>
+          <Platform>Win32</Platform>
+        </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>CalculatorServerExample</ProjectName>
+    <ProjectGuid>{C656E6C9-1201-749D-D14D-7C43CB2556B0}</ProjectGuid>
+    <RootNamespace>CalculatorServerExample</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'" Label="Configuration">
+      <ConfigurationType>Application</ConfigurationType>
+      <UseDebugLibraries>true</UseDebugLibraries>
+      <UseOfMfc>false</UseOfMfc>
+      <CharacterSet>MultiByte</CharacterSet>
+      <PlatformToolset>v120</PlatformToolset>
+    </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'" Label="Configuration">
+      <ConfigurationType>Application</ConfigurationType>
+      <UseDebugLibraries>false</UseDebugLibraries>
+      <UseOfMfc>false</UseOfMfc>
+      <CharacterSet>MultiByte</CharacterSet>
+      <PlatformToolset>v120</PlatformToolset>
+    </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+      <ConfigurationType>Application</ConfigurationType>
+      <UseDebugLibraries>true</UseDebugLibraries>
+      <UseOfMfc>false</UseOfMfc>
+      <CharacterSet>MultiByte</CharacterSet>
+      <PlatformToolset>v120</PlatformToolset>
+    </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+      <ConfigurationType>Application</ConfigurationType>
+      <UseDebugLibraries>false</UseDebugLibraries>
+      <UseOfMfc>false</UseOfMfc>
+      <CharacterSet>MultiByte</CharacterSet>
+      <PlatformToolset>v120</PlatformToolset>
+    </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">
+      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
+      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">
+      <IntDir>$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+      <OutDir>.\bin\i86Win32VS2013\</OutDir>
+      <TargetName>$(ProjectName)</TargetName>
+    </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
+      <IntDir>$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+      <OutDir>.\bin\i86Win32VS2013\</OutDir>
+      <TargetName>$(ProjectName)</TargetName>
+    </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <IntDir>$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+      <OutDir>.\bin\i86Win32VS2013\</OutDir>
+      <TargetName>$(ProjectName)</TargetName>
+    </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      <IntDir>$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+      <OutDir>.\bin\i86Win32VS2013\</OutDir>
+      <TargetName>$(ProjectName)</TargetName>
+    </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">
+      <ClCompile>
+        <WarningLevel>Level3</WarningLevel>
+        <Optimization>Disabled</Optimization>
+        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;_DEBUG;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
+        <PrecompiledHeader>NotUsing</PrecompiledHeader>
+        <PrecompiledHeaderFile>
+        </PrecompiledHeaderFile>
+      </ClCompile>
+      <Link>
+        <GenerateDebugInformation>true</GenerateDebugInformation>
+        <AdditionalDependencies>nddscored.lib;nddscd.lib;nddscppd.lib;
+                                MessageHeaderd.lib;Calculatord.lib;CalculatorServerd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
+        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      </Link>
+    </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
+      <ClCompile>
+        <WarningLevel>Level3</WarningLevel>
+        <Optimization>MaxSpeed</Optimization>
+        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDDS_DLL_VARIABLE;WIN32_LEAN_AND_MEAN;NDEBUG;EPROSIMA_ALL_DYN_LINK;EPROSIMA_USER_DLL_EXPORT;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
+        <PrecompiledHeader>NotUsing</PrecompiledHeader>
+        <PrecompiledHeaderFile>
+        </PrecompiledHeaderFile>
+      </ClCompile>
+      <Link>
+        <GenerateDebugInformation>true</GenerateDebugInformation>
+        <AdditionalDependencies>nddscore.lib;nddsc.lib;nddscpp.lib;
+                                MessageHeader.lib;Calculator.lib;CalculatorServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
+        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      </Link>
+    </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <ClCompile>
+        <WarningLevel>Level3</WarningLevel>
+        <Optimization>Disabled</Optimization>
+        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_DEBUG;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
+        <PrecompiledHeader>NotUsing</PrecompiledHeader>
+        <PrecompiledHeaderFile>
+        </PrecompiledHeaderFile>
+      </ClCompile>
+      <Link>
+        <GenerateDebugInformation>true</GenerateDebugInformation>
+        <AdditionalDependencies>nddscorezd.lib;nddsczd.lib;nddscppzd.lib;
+                                iphlpapi.lib;Shlwapi.lib;
+                                libMessageHeaderd.lib;libCalculatord.lib;libCalculatorServerd.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
+        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+  <IgnoreSpecificDefaultLibraries>libcmtd.lib</IgnoreSpecificDefaultLibraries>
+      </Link>
+    </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      <ClCompile>
+        <WarningLevel>Level3</WarningLevel>
+        <Optimization>MaxSpeed</Optimization>
+        <AdditionalIncludeDirectories>$(RPCDDSHOME)/include;$(NDDSHOME)/include;$(NDDSHOME)/include/ndds;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        <PreprocessorDefinitions>WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;NDEBUG;RTI_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+        <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
+        <PrecompiledHeader>NotUsing</PrecompiledHeader>
+        <PrecompiledHeaderFile>
+        </PrecompiledHeaderFile>
+      </ClCompile>
+      <Link>
+        <GenerateDebugInformation>true</GenerateDebugInformation>
+        <AdditionalDependencies>nddscorez.lib;nddscz.lib;nddscppz.lib;
+                                iphlpapi.lib;Shlwapi.lib;
+                                libMessageHeader.lib;libCalculator.lib;libCalculatorServer.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        <OutputFile>$(TargetDir)$(TargetName)$(TargetExt)</OutputFile>
+        <AdditionalLibraryDirectories>$(RPCDDSHOME)/lib/i86Win32VS2013;$(NDDSHOME)/lib/i86Win32VS2013;.\lib\i86Win32VS2013;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+  <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
+      </Link>
+    </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="CalculatorServerExample.cxx" />
+    <ClCompile Include="CalculatorServerImplExample.cxx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CalculatorServerImplExample.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
