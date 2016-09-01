@@ -107,7 +107,7 @@ void RTPSServerTransport::process(RTPSServerProcedureEndpoint *endpoint, void *d
     }
 }
 
-void RTPSServerTransport::sendReply(void *data, size_t dataLength, ::transport::Endpoint *endpoint)
+void RTPSServerTransport::sendReply(void *data, size_t /*dataLength*/, ::transport::Endpoint *endpoint)
 {
     RTPSServerProcedureEndpoint *procedure = dynamic_cast<RTPSServerProcedureEndpoint*>(endpoint);
 
@@ -141,7 +141,7 @@ void RTPSServerTransport::stop()
     }
 }
 
-int RTPSServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataToRead, ::transport::Endpoint *endpoint)
+int RTPSServerTransport::receive(char* /*buffer*/, size_t /*bufferLength*/, size_t& /*dataToRead*/, ::transport::Endpoint* /*endpoint*/)
 {
     // EMPTY. Not used.
     return -1;

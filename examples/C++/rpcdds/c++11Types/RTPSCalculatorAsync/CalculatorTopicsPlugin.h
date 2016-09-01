@@ -44,6 +44,8 @@ class Calculator_RequestPlugin : public eprosima::fastrtps::TopicDataType
 
         user_cpp_DllExport bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
 
+        user_cpp_DllExport std::function<uint32_t()> getSerializedSizeProvider(void* data);
+
         user_cpp_DllExport void* createData();
 
         user_cpp_DllExport static void* create_data();
@@ -70,6 +72,8 @@ class Calculator_ReplyPlugin : public eprosima::fastrtps::TopicDataType
         user_cpp_DllExport bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
 
         user_cpp_DllExport bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
+
+        user_cpp_DllExport std::function<uint32_t()> getSerializedSizeProvider(void* data);
 
         user_cpp_DllExport void* createData();
 

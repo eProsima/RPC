@@ -94,7 +94,7 @@ size_t $interface.scopedname$_$operation.name$_In::getSerializedSize(size_t curr
 {
     size_t current_align = current_alignment;
 
-    $operation.inputparam : { param |$serialized_size(param=param, var="current_align")$}; separator="\n"$
+    $operation.inputparam : { param |$serialized_size(ctx=ctx, object=param, data="data", var="current_align")$}; separator="\n"$
 
     return current_align;
 }
@@ -247,7 +247,7 @@ size_t $interface.scopedname$_$operation.name$_Out::getSerializedSize(size_t cur
     size_t current_align = current_alignment;
     // TODO Header
 
-    //$operation.inputparam : { param |$serialized_size(param=param, var="current_align")$}; separator="\n"$
+    //$operation.inputparam : { param |$serialized_size(ctx=ctx, object=param, data="data", var="current_align")$}; separator="\n"$
 
     return current_align;
 }

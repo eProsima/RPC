@@ -14,20 +14,20 @@ Exception::Exception()
 {
 }
 
-Exception::Exception(const Exception &ex)
+Exception::Exception(const Exception& /*ex*/)
 {
 }
 
-Exception::Exception(Exception&& ex)
+Exception::Exception(Exception&& /*ex*/)
 {
 }
 
-Exception& Exception::operator=(const Exception &ex)
+Exception& Exception::operator=(const Exception& /*ex*/)
 {
     return *this;
 }
 
-Exception& Exception::operator=(Exception&&)
+Exception& Exception::operator=(Exception&& /*ex*/)
 {
     return *this;
 }

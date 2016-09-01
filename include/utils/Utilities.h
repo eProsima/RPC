@@ -21,7 +21,7 @@ namespace eprosima
 		 * \param milliseconds Time in milliseconds that the thread will be sleeping.
 		 */
 		RPC_DllAPI void sleep(unsigned int milliseconds);
-    }; // namespace rpc
-}; // namespace eprosima
+    } // namespace rpc
+} // namespace eprosima
 
 #endif // _UTILS_UTILITIES_H_

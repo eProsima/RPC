@@ -40,6 +40,11 @@ size_t EntityId_t::getMaxCdrSerializedSize(size_t /*current_alignment*/)
     return 4;
 }
 
+size_t EntityId_t::getSerializedSize(size_t /*current_alignment*/) const
+{
+    return 4;
+}
+
 void EntityId_t::serialize(eprosima::fastcdr::Cdr &cdr) const
 {
     cdr.serializeArray(entityKey_, 3);
@@ -112,6 +117,11 @@ size_t GUID_t::getMaxCdrSerializedSize(size_t /*current_alignment*/)
     return 16;
 }
 
+size_t GUID_t::getSerializedSize(size_t /*current_alignment*/) const
+{
+    return 16;
+}
+
 void GUID_t::serialize(eprosima::fastcdr::Cdr &cdr) const
 {
     cdr.serializeArray(guidPrefix_, 12);
@@ -161,6 +171,15 @@ SequenceNumber_t& SequenceNumber_t::operator=(SequenceNumber_t &&x)
 }
 
 size_t SequenceNumber_t::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+    return current_alignment - initial_alignment;
+}
+
+size_t SequenceNumber_t::getSerializedSize(size_t current_alignment) const
 {
     size_t initial_alignment = current_alignment;
 
@@ -227,6 +246,16 @@ size_t SampleIdentity::getMaxCdrSerializedSize(size_t current_alignment)
     return current_alignment - initial_alignment;
 }
 
+size_t SampleIdentity::getSerializedSize(size_t current_alignment) const
+{
+    size_t initial_alignment = current_alignment;
+
+    current_alignment += writer_guid_.getSerializedSize(current_alignment);
+    current_alignment += sequence_number_.getSerializedSize(current_alignment);
+
+    return current_alignment - initial_alignment;
+}
+
 void SampleIdentity::serialize(eprosima::fastcdr::Cdr &cdr) const
 {
     cdr << writer_guid_ << sequence_number_;
@@ -287,6 +316,16 @@ size_t rpc::RequestHeader::getMaxCdrSerializedSize(size_t current_alignment)
     return current_alignment - initial_alignment;
 }
 
+size_t rpc::RequestHeader::getSerializedSize(size_t current_alignment) const
+{
+    size_t initial_alignment = current_alignment;
+
+    current_alignment += requestId_.getSerializedSize(current_alignment);
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + strlen(instanceName_) + 1;
+
+    return current_alignment - initial_alignment;
+}
+
 void rpc::RequestHeader::serialize(eprosima::fastcdr::Cdr &cdr) const
 {
     cdr << requestId_ << instanceName_;
@@ -336,6 +375,16 @@ size_t rpc::ReplyHeader::getMaxCdrSerializedSize(size_t current_alignment)
     size_t initial_alignment = current_alignment;
 
     current_alignment += SampleIdentity::getMaxCdrSerializedSize(current_alignment);
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+    return current_alignment - initial_alignment;
+}
+
+size_t rpc::ReplyHeader::getSerializedSize(size_t current_alignment) const
+{
+    size_t initial_alignment = current_alignment;
+
+    current_alignment += relatedRequestId_.getSerializedSize(current_alignment);
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
     return current_alignment - initial_alignment;

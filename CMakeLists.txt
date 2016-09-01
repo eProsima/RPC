@@ -108,7 +108,7 @@ message(STATUS "To change de version modify the file configure_${PROJECT_NAME}.a
 ###############################################################################
 if(WIN32)
     option(EPROSIMA_INSTALLER "Activate the creation of a build to create windows installers" OFF)
-    option(EPROSIMA_INSTALLER_MINION "Informs this is part of an installee " OFF)
+    option(EPROSIMA_INSTALLER_MINION "Informs this is part of an installer " OFF)
 endif()
 
 ###############################################################################

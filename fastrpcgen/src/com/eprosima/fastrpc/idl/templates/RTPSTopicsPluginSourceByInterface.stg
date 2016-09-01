@@ -77,6 +77,14 @@ bool $interface.scopedname$_RequestPlugin::deserialize(SerializedPayload_t* payl
 	return true;
 }
 
+std::function<uint32_t()> $interface.scopedname$_RequestPlugin::getSerializedSizeProvider(void* data)
+{
+    return [data]() -> uint32_t {
+        $interface.scopedname$_Request* p_type = ($interface.scopedname$_Request*) data;
+        return p_type->getSerializedSize();
+    };
+}
+
 void* $interface.scopedname$_RequestPlugin::createData()
 {
 	return (void*)new $interface.scopedname$_Request();
@@ -148,6 +156,14 @@ bool $interface.scopedname$_ReplyPlugin::deserialize(SerializedPayload_t* payloa
 	//deserialize the object:
 	p_type->deserialize(deser);
 	return true;
+}
+
+std::function<uint32_t()> $interface.scopedname$_ReplyPlugin::getSerializedSizeProvider(void* data)
+{
+    return [data]() -> uint32_t {
+        $interface.scopedname$_Reply* p_type = ($interface.scopedname$_Reply*) data;
+        return p_type->getSerializedSize();
+    };
 }
 
 void* $interface.scopedname$_ReplyPlugin::createData()
