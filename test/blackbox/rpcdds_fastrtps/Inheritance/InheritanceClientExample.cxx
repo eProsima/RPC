@@ -15,8 +15,8 @@
 #include "InheritanceProxy.h"
 #include "Inheritance.h"
 #include "InheritanceDDSProtocol.h"
-#include <fastrpc/transports/dds/RTPSProxyTransport.h>
-#include <fastrpc/exceptions/Exceptions.h>
+#include <transports/dds/RTPSProxyTransport.h>
+#include <exceptions/Exceptions.h>
 
 #include <iostream>
 #ifdef __linux

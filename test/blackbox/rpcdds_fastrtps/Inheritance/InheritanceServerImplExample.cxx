@@ -13,7 +13,7 @@
  */
 
 #include "InheritanceServerImplExample.h"
-#include <fastrpc/utils/Utilities.h>
+#include <utils/Utilities.h>
 
 static ModuleA::Interface1::Dato function1_data;
 static bool function1_set_call = false;

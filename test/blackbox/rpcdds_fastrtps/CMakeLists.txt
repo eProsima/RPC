@@ -19,7 +19,7 @@ if(NOT ((MSVC OR MSVC_IDE) AND EPROSIMA_INSTALLER))
             #Add test
             add_test(NAME ${TEST}
                 COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/run_test.py
-                ${TEST_NAME} rti ${BYTOPIC})
+                ${TEST_NAME} ${BYTOPIC})
 
             # Set enviroment variables
             set_property(TEST ${TEST} PROPERTY ENVIRONMENT
@@ -53,17 +53,13 @@ if(NOT ((MSVC OR MSVC_IDE) AND EPROSIMA_INSTALLER))
 
             set_property(TEST ${TEST} APPEND PROPERTY ENVIRONMENT
                 "CMAKE_REMOVE_INCLUDE_PREFIX=true")
-
-            # Set NDDSHOME environment variable
-            set_property(TEST ${TEST} APPEND PROPERTY ENVIRONMENT
-                "NDDSHOME=$ENV{NDDSHOME}")
         endmacro()
 
         macro(add_env_test TEST)
-            add_env_test_by_topic(rpcdds_rti.${TEST}.byInterface ${TEST}
+            add_env_test_by_topic(rpcdds_fastrtps.${TEST}.byInterface ${TEST}
                 byInterface ${ARGN})
 
-            add_env_test_by_topic(rpcdds_rti.${TEST}.byOperation ${TEST}
+            add_env_test_by_topic(rpcdds_fastrtps.${TEST}.byOperation ${TEST}
                 byOperation ${ARGN})
         endmacro()
 
@@ -77,22 +73,18 @@ if(NOT ((MSVC OR MSVC_IDE) AND EPROSIMA_INSTALLER))
 
         add_env_test(MultiInterfacesTest)
 
-        add_env_test(MultithreadTest LIB boost_system boost_thread)
-
         add_env_test(OnewayCallTest)
 
         add_env_test(SequenceTest)
 
-        add_env_test(ServerException)
-
         add_env_test(StructTest)
+
+        add_env_test(ServerException)
 
         add_env_test(TypedefTest)
 
         add_env_test(UnionTest)
 
         add_env_test(UserExceptions)
-
-        add_env_test(WANTest)
     endif()
 endif()

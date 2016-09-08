@@ -15,9 +15,9 @@
 #include "AsyncCallTestProxy.h"
 #include "AsyncCallTest.h"
 #include "AsyncCallTestDDSProtocol.h"
-#include <fastrpc/transports/dds/RTPSProxyTransport.h>
-#include <fastrpc/exceptions/Exceptions.h>
-#include <fastrpc/utils/Utilities.h>
+#include <transports/dds/RTPSProxyTransport.h>
+#include <exceptions/Exceptions.h>
+#include <utils/Utilities.h>
 
 #include <iostream>
 #ifdef __linux

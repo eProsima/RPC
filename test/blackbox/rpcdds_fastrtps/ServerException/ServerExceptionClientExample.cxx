@@ -15,8 +15,8 @@
 #include "ServerExceptionProxy.h"
 #include "ServerException.h"
 #include "ServerExceptionDDSProtocol.h"
-#include <fastrpc/transports/dds/RTPSProxyTransport.h>
-#include <fastrpc/exceptions/Exceptions.h>
+#include <transports/dds/RTPSProxyTransport.h>
+#include <exceptions/Exceptions.h>
 
 #include <iostream>
 #include <string.h>

@@ -13,7 +13,7 @@
  */
 
 #include "OnewayCallTestServerImplExample.h"
-#include <fastrpc/utils/Utilities.h>
+#include <utils/Utilities.h>
 
 static int32_t l = 0;
 static bool setLong_call = false;

@@ -13,11 +13,11 @@
  */
 
 #include "InheritanceServer.h"
-#include "fastrpc/strategies/ThreadPoolStrategy.h"
+#include <strategies/ThreadPoolStrategy.h>
 #include "InheritanceDDSProtocol.h"
-#include "fastrpc/transports/dds/RTPSServerTransport.h"
-#include "fastrpc/exceptions/Exceptions.h"
-#include "fastrpc/utils/Utilities.h"
+#include <transports/dds/RTPSServerTransport.h>
+#include <exceptions/Exceptions.h>
+#include <utils/Utilities.h>
 #include "InheritanceServerImplExample.h"
 
 #include <iostream>

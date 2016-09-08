@@ -15,8 +15,8 @@
 #include "TypedefTestProxy.h"
 #include "TypedefTest.h"
 #include "TypedefTestDDSProtocol.h"
-#include <fastrpc/transports/dds/RTPSProxyTransport.h>
-#include <fastrpc/exceptions/Exceptions.h>
+#include <transports/dds/RTPSProxyTransport.h>
+#include <exceptions/Exceptions.h>
 
 #include <iostream>
 #ifdef __linux

@@ -126,7 +126,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport static size_t getCdrSerializedSize(const $interface.name$_$operation.name$_In& data, size_t current_alignment = 0);
 
     /*!
      * @brief This function serializes an object using CDR serialization.
@@ -224,7 +224,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport static size_t getCdrSerializedSize(const $interface.name$_$operation.name$_Out& data, size_t current_alignment = 0);
 
     /*!
      * @brief This function serializes an object using CDR serialization.
@@ -334,7 +334,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport static size_t getCdrSerializedSize(const $interface.name$_$operation.name$_Result& data, size_t current_alignment = 0);
 
     /*!
      * @brief This function serializes an object using CDR serialization.
@@ -445,7 +445,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport static size_t getCdrSerializedSize(const $interface.name$_Call& data, size_t current_alignment = 0);
 
     /*!
      * @brief This function serializes an object using CDR serialization.
@@ -595,7 +595,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport static size_t getCdrSerializedSize(const $interface.name$_Request& data, size_t current_alignment = 0);
 
     /*!
      * @brief This function serializes an object using CDR serialization.
@@ -699,7 +699,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport static size_t getCdrSerializedSize(const $interface.name$_Return& data, size_t current_alignment = 0);
 
     /*!
      * @brief This function serializes an object using CDR serialization.
@@ -850,7 +850,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport static size_t getCdrSerializedSize(const $interface.name$_Reply& data, size_t current_alignment = 0);
 
     /*!
      * @brief This function serializes an object using CDR serialization.

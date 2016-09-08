@@ -240,7 +240,7 @@ ReturnMessage RTPSProxyProcedureEndpoint::checkServerConnection(long timeout)
 {
     boost::shared_lock<boost::shared_mutex> lock(*matched_mutex_);
 
-    if(num_matched_sub_ == 0)
+    if(num_matched_sub_ == 0 && m_reader != nullptr)
     {
         matched_sub_cond_->wait_for(lock, boost::chrono::milliseconds(timeout));
 

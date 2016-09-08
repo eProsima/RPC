@@ -14,6 +14,7 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "Topics.cpp"], description=["This sour
 #include "$ctx.filename$Topics.h"
 
 #include <fastcdr/Cdr.h>
+#include <fastcdr/exceptions/BadParamException.h>
 #include <$ctx.includePrefix$exceptions/BadParamException.h>
 
 $definitions; separator="\n"$
@@ -92,7 +93,7 @@ size_t $interface.scopedname$_$operation.name$_In::getMaxCdrSerializedSize(size_
     return current_alignment - initial_alignment;
 }
 
-size_t $interface.scopedname$_$operation.name$_In::getSerializedSize(size_t current_alignment) const
+size_t $interface.scopedname$_$operation.name$_In::getCdrSerializedSize(const $interface.scopedname$_$operation.name$_In& data, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
@@ -185,7 +186,7 @@ size_t $interface.scopedname$_$operation.name$_Out::getMaxCdrSerializedSize(size
     return current_alignment - initial_alignment;
 }
 
-size_t $interface.scopedname$_$operation.name$_Out::getSerializedSize(size_t current_alignment) const
+size_t $interface.scopedname$_$operation.name$_Out::getCdrSerializedSize(const $interface.scopedname$_$operation.name$_Out& data, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
@@ -399,20 +400,20 @@ size_t $interface.scopedname$_$operation.name$_Result::getMaxCdrSerializedSize(s
     return union_max_size_serialized - initial_alignment;
 }
 
-size_t $interface.scopedname$_$operation.name$_Result::getSerializedSize(size_t current_alignment) const
+size_t $interface.scopedname$_$operation.name$_Result::getCdrSerializedSize(const $interface.scopedname$_$operation.name$_Result& data, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
-    switch(m__d)
+    switch(data.m__d)
     {
         case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
-            current_alignment += m_result.getSerializedSize(current_alignment);
+            current_alignment += $interface.name$_$operation.name$_Out::getCdrSerializedSize(data.m_result, current_alignment);
             break;
         $operation.exceptions : { exception |
         case (int32_t)$exception.md5$:
-            current_alignment += m_$exception.formatedScopedname$_ex.getSerializedSize(current_alignment);
+            current_alignment += $exception.scopedname$::getCdrSerializedSize(data.m_$exception.formatedScopedname$_ex, current_alignment);
             break;
         }; separator="\n"$
     }
@@ -629,17 +630,17 @@ size_t $interface.scopedname$_Call::getMaxCdrSerializedSize(size_t current_align
     return union_max_size_serialized - initial_alignment;
 }
 
-size_t $interface.scopedname$_Call::getSerializedSize(size_t current_alignment) const
+size_t $interface.scopedname$_Call::getCdrSerializedSize(const $interface.scopedname$_Call& data, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
-    switch(m__d)
+    switch(data.m__d)
     {
         $interface.all_operations : { operation |
         case (int32_t)$operation.md5$:
-            current_alignment += m_$operation.name$.getSerializedSize(current_alignment);
+            current_alignment += $interface.name$_$operation.name$_In::getCdrSerializedSize(data.m_$operation.name$, current_alignment);
             break;
         }; separator="\n"$
     }
@@ -725,12 +726,12 @@ size_t $interface.scopedname$_Request::getMaxCdrSerializedSize(size_t current_al
     return current_alignment - initial_alignment;
 }
 
-size_t $interface.scopedname$_Request::getSerializedSize(size_t current_alignment) const
+size_t $interface.scopedname$_Request::getCdrSerializedSize(const $interface.scopedname$_Request& data, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
-    current_alignment += m_header.getSerializedSize(current_alignment);
-    current_alignment += m_data.getSerializedSize(current_alignment);
+    current_alignment += data.m_header.getCdrSerializedSize(current_alignment);
+    current_alignment += $interface.name$_Call::getCdrSerializedSize(data.m_data, current_alignment);
 
     return current_alignment - initial_alignment;
 }
@@ -919,18 +920,18 @@ size_t $interface.scopedname$_Return::getMaxCdrSerializedSize(size_t current_ali
     return union_max_size_serialized - initial_alignment;
 }
 
-size_t $interface.scopedname$_Return::getSerializedSize(size_t current_alignment) const
+size_t $interface.scopedname$_Return::getCdrSerializedSize(const $interface.scopedname$_Return& data, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
     $if(interface.notAllOnewayOperations)$
-    switch(m__d)
+    switch(data.m__d)
     {
         $interface.notAllOnewayOperations : { operation |
         case (int32_t)$operation.md5$:
-            current_alignment += m_$operation.name$.getSerializedSize(current_alignment);
+            current_alignment += $interface.name$_$operation.name$_Result::getCdrSerializedSize(data.m_$operation.name$, current_alignment);
             break;
         }; separator="\n"$
     }
@@ -1020,12 +1021,12 @@ size_t $interface.scopedname$_Reply::getMaxCdrSerializedSize(size_t current_alig
     return current_alignment - initial_alignment;
 }
 
-size_t $interface.scopedname$_Reply::getSerializedSize(size_t current_alignment) const
+size_t $interface.scopedname$_Reply::getCdrSerializedSize(const $interface.scopedname$_Reply& data, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
-    current_alignment += m_header.getSerializedSize(current_alignment);
-    current_alignment += m_data.getSerializedSize(current_alignment);
+    current_alignment += data.m_header.getCdrSerializedSize(current_alignment);
+    current_alignment += $interface.name$_Return::getCdrSerializedSize(data.m_data, current_alignment);
 
     return current_alignment - initial_alignment;
 }

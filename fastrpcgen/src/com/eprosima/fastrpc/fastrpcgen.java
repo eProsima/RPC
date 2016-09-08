@@ -519,7 +519,8 @@ public class fastrpcgen
                     String[] library_directories = library_directories_env.split(";");
 
                     for(String library_directory : library_directories)
-                        solution.addLibraryPath(library_directory);
+                        if(!library_directory.trim().isEmpty())
+                            solution.addLibraryPath(library_directory);
                 }
 
                 // Get libraries from environment variable.
@@ -530,7 +531,8 @@ public class fastrpcgen
                     String[] libraries = libraries_env.split(";");
 
                     for(String library : libraries)
-                        solution.addLibrary(library);
+                        if(!library.trim().isEmpty())
+                            solution.addLibrary(library);
                 }
 
                 String remove_include_prefix = System.getenv("CMAKE_REMOVE_INCLUDE_PREFIX");

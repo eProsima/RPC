@@ -72,7 +72,7 @@ namespace eprosima
                          * @param current_alignment Buffer alignment.
                          * @return Serialized size.
                          */
-                        size_t getSerializedSize(size_t current_alignment = 0) const;
+                        size_t getCdrSerializedSize(size_t current_alignment = 0) const;
 
                         /*!
                          * @brief This function serializes the GUID_t object using CDR serialization.
@@ -133,7 +133,7 @@ namespace eprosima
                          * @param current_alignment Buffer alignment.
                          * @return Serialized size.
                          */
-                        size_t getSerializedSize(size_t current_alignment = 0) const;
+                        size_t getCdrSerializedSize(size_t current_alignment = 0) const;
 
                         /*!
                          * @brief This function serializes the GUID_t object using CDR serialization.
@@ -262,7 +262,7 @@ namespace eprosima
                          * @param current_alignment Buffer alignment.
                          * @return Serialized size.
                          */
-                        size_t getSerializedSize(size_t current_alignment = 0) const;
+                        size_t getCdrSerializedSize(size_t current_alignment = 0) const;
 
                         /*!
                          * @brief This function serializes an object using FastCDR serialization.
@@ -397,7 +397,7 @@ namespace eprosima
                          * @param current_alignment Buffer alignment.
                          * @return Serialized size.
                          */
-                        size_t getSerializedSize(size_t current_alignment = 0) const;
+                        size_t getCdrSerializedSize(size_t current_alignment = 0) const;
 
                         /*!
                          * @brief This function serializes the SampleIdentity object using CDR serialization.
@@ -545,7 +545,7 @@ namespace eprosima
                              * @param current_alignment Buffer alignment.
                              * @return Serialized size.
                              */
-                            size_t getSerializedSize(size_t current_alignment = 0) const;
+                            size_t getCdrSerializedSize(size_t current_alignment = 0) const;
 
                             /*!
                              * @brief This function serializes the RequestHeader object using CDR serialization.
@@ -669,7 +669,7 @@ namespace eprosima
                              * @param current_alignment Buffer alignment.
                              * @return Serialized size.
                              */
-                            size_t getSerializedSize(size_t current_alignment = 0) const;
+                            size_t getCdrSerializedSize(size_t current_alignment = 0) const;
 
                             /*!
                              * @brief This function serializes the ReplyHeader object using CDR serialization.

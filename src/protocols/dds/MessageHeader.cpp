@@ -40,7 +40,7 @@ size_t EntityId_t::getMaxCdrSerializedSize(size_t /*current_alignment*/)
     return 4;
 }
 
-size_t EntityId_t::getSerializedSize(size_t /*current_alignment*/) const
+size_t EntityId_t::getCdrSerializedSize(size_t /*current_alignment*/) const
 {
     return 4;
 }
@@ -117,7 +117,7 @@ size_t GUID_t::getMaxCdrSerializedSize(size_t /*current_alignment*/)
     return 16;
 }
 
-size_t GUID_t::getSerializedSize(size_t /*current_alignment*/) const
+size_t GUID_t::getCdrSerializedSize(size_t /*current_alignment*/) const
 {
     return 16;
 }
@@ -179,7 +179,7 @@ size_t SequenceNumber_t::getMaxCdrSerializedSize(size_t current_alignment)
     return current_alignment - initial_alignment;
 }
 
-size_t SequenceNumber_t::getSerializedSize(size_t current_alignment) const
+size_t SequenceNumber_t::getCdrSerializedSize(size_t current_alignment) const
 {
     size_t initial_alignment = current_alignment;
 
@@ -246,12 +246,12 @@ size_t SampleIdentity::getMaxCdrSerializedSize(size_t current_alignment)
     return current_alignment - initial_alignment;
 }
 
-size_t SampleIdentity::getSerializedSize(size_t current_alignment) const
+size_t SampleIdentity::getCdrSerializedSize(size_t current_alignment) const
 {
     size_t initial_alignment = current_alignment;
 
-    current_alignment += writer_guid_.getSerializedSize(current_alignment);
-    current_alignment += sequence_number_.getSerializedSize(current_alignment);
+    current_alignment += writer_guid_.getCdrSerializedSize(current_alignment);
+    current_alignment += sequence_number_.getCdrSerializedSize(current_alignment);
 
     return current_alignment - initial_alignment;
 }
@@ -316,11 +316,11 @@ size_t rpc::RequestHeader::getMaxCdrSerializedSize(size_t current_alignment)
     return current_alignment - initial_alignment;
 }
 
-size_t rpc::RequestHeader::getSerializedSize(size_t current_alignment) const
+size_t rpc::RequestHeader::getCdrSerializedSize(size_t current_alignment) const
 {
     size_t initial_alignment = current_alignment;
 
-    current_alignment += requestId_.getSerializedSize(current_alignment);
+    current_alignment += requestId_.getCdrSerializedSize(current_alignment);
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + strlen(instanceName_) + 1;
 
     return current_alignment - initial_alignment;
@@ -380,11 +380,11 @@ size_t rpc::ReplyHeader::getMaxCdrSerializedSize(size_t current_alignment)
     return current_alignment - initial_alignment;
 }
 
-size_t rpc::ReplyHeader::getSerializedSize(size_t current_alignment) const
+size_t rpc::ReplyHeader::getCdrSerializedSize(size_t current_alignment) const
 {
     size_t initial_alignment = current_alignment;
 
-    current_alignment += relatedRequestId_.getSerializedSize(current_alignment);
+    current_alignment += relatedRequestId_.getCdrSerializedSize(current_alignment);
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
     return current_alignment - initial_alignment;

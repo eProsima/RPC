@@ -1,5 +1,6 @@
 include(${PROJECT_SOURCE_DIR}/cmake/dev/compile_example.cmake)
 if(RPCPROTO STREQUAL "rpcdds")
+    #TODO It only copy in configuration time. Change for a command that execute cmake -E copy
 	file(COPY ${PROJECT_SOURCE_DIR}/include/ DESTINATION ${PROJECT_BINARY_DIR}/include/rpcdds/) 
 
     if(WITH_FASTRTPS)

@@ -14,6 +14,7 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "Topics.cpp"], description=["This sour
 #include "$ctx.filename$Topics.h"
 
 #include <fastcdr/Cdr.h>
+#include <fastcdr/exceptions/BadParamException.h>
 #include <$ctx.includePrefix$exceptions/BadParamException.h>
 
 $definitions; separator="\n"$
@@ -90,13 +91,17 @@ size_t $interface.scopedname$_$operation.name$_In::getMaxCdrSerializedSize(size_
     return current_alignment - initial_alignment;
 }
 
-size_t $interface.scopedname$_$operation.name$_In::getSerializedSize(size_t current_alignment) const
+size_t $interface.scopedname$_$operation.name$_In::getCdrSerializedSize(const $interface.scopedname$_$operation.name$_In& data, size_t current_alignment)
 {
-    size_t current_align = current_alignment;
+    size_t initial_alignment = current_alignment;
 
-    $operation.inputparam : { param |$serialized_size(ctx=ctx, object=param, data="data", var="current_align")$}; separator="\n"$
+    $if(operation.inputparam)$
+    $operation.inputparam : { param |$serialized_size(ctx=ctx, object=param, data="data", var="current_alignment")$}; separator="\n"$
+    $else$
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+    $endif$
 
-    return current_align;
+    return current_alignment - initial_alignment;
 }
 
 void $interface.scopedname$_$operation.name$_In::serialize(eprosima::fastcdr::Cdr &scdr) const
@@ -161,12 +166,14 @@ size_t $interface.scopedname$_$operation.name$_Request::getMaxCdrSerializedSize(
     return current_alignment - initial_alignment;
 }
 
-size_t $interface.scopedname$_$operation.name$_Request::getSerializedSize(size_t current_alignment) const
+size_t $interface.scopedname$_$operation.name$_Request::getCdrSerializedSize(const $interface.scopedname$_$operation.name$_Request& data, size_t current_alignment)
 {
-    size_t current_align = current_alignment;
-    // TODO Header
+    size_t initial_alignment = current_alignment;
 
-    return current_align;
+    current_alignment += data.m_header.getCdrSerializedSize(current_alignment);
+    current_alignment += $interface.scopedname$_$operation.name$_In::getCdrSerializedSize(data.m_$operation.name$, current_alignment);
+
+    return current_alignment - initial_alignment;
 }
 
 void $interface.scopedname$_$operation.name$_Request::serialize(eprosima::fastcdr::Cdr &scdr) const
@@ -242,14 +249,17 @@ size_t $interface.scopedname$_$operation.name$_Out::getMaxCdrSerializedSize(size
     return current_alignment - initial_alignment;
 }
 
-size_t $interface.scopedname$_$operation.name$_Out::getSerializedSize(size_t current_alignment) const
+size_t $interface.scopedname$_$operation.name$_Out::getCdrSerializedSize(const $interface.scopedname$_$operation.name$_Out& data, size_t current_alignment)
 {
-    size_t current_align = current_alignment;
-    // TODO Header
+    size_t initial_alignment = current_alignment;
+            
+    $if([operation.outputparam, operation.rettypeparam])$
+    $[operation.outputparam, operation.rettypeparam] : { param |$serialized_size(ctx=ctx, object=param, data="data", var="current_alignment")$}; separator="\n"$
+    $else$
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+    $endif$
 
-    //$operation.inputparam : { param |$serialized_size(ctx=ctx, object=param, data="data", var="current_align")$}; separator="\n"$
-
-    return current_align;
+    return current_alignment - initial_alignment;
 }
 
 void $interface.scopedname$_$operation.name$_Out::serialize(eprosima::fastcdr::Cdr &scdr) const
@@ -453,12 +463,25 @@ size_t $interface.scopedname$_$operation.name$_Result::getMaxCdrSerializedSize(s
     return union_max_size_serialized - initial_alignment;
 }
 
-size_t $interface.scopedname$_$operation.name$_Result::getSerializedSize(size_t current_alignment) const
+size_t $interface.scopedname$_$operation.name$_Result::getCdrSerializedSize(const $interface.scopedname$_$operation.name$_Result& data, size_t current_alignment)
 {
-    size_t current_align = current_alignment;
-    // TODO Discriminator
+    size_t initial_alignment = current_alignment;
 
-    return current_align;
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+    switch(data.m__d)
+    {
+        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
+            current_alignment += $interface.scopedname$_$operation.name$_Out::getCdrSerializedSize(data.m_result, current_alignment);
+            break;
+        $operation.exceptions : { exception |
+        case (int32_t)$exception.md5$:
+            current_alignment += $exception.scopedname$::getCdrSerializedSize(data.m_$exception.formatedScopedname$_ex, current_alignment);
+            break;
+        }; separator="\n"$
+    }
+
+    return current_alignment - initial_alignment;
 }
 
 void $interface.scopedname$_$operation.name$_Result::serialize(eprosima::fastcdr::Cdr &scdr) const
@@ -547,12 +570,14 @@ size_t $interface.scopedname$_$operation.name$_Reply::getMaxCdrSerializedSize(si
     return current_alignment - initial_alignment;
 }
 
-size_t $interface.scopedname$_$operation.name$_Reply::getSerializedSize(size_t current_alignment) const
+size_t $interface.scopedname$_$operation.name$_Reply::getCdrSerializedSize(const $interface.scopedname$_$operation.name$_Reply& data, size_t current_alignment)
 {
-    size_t current_align = current_alignment;
-    // TODO Header
+    size_t initial_alignment = current_alignment;
 
-    return current_align;
+    current_alignment +=  data.m_header.getCdrSerializedSize(current_alignment);
+    current_alignment += $interface.name$_$operation.name$_Result::getCdrSerializedSize(data.m_$operation.name$, current_alignment);
+            
+    return current_alignment - initial_alignment;
 }
 
 void $interface.scopedname$_$operation.name$_Reply::serialize(eprosima::fastcdr::Cdr &scdr) const
