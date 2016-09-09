@@ -15,6 +15,7 @@
 #include "CalculatorTopics.h"
 
 #include <fastcdr/Cdr.h>
+#include <fastcdr/exceptions/BadParamException.h>
 #include <rpcdds/exceptions/BadParamException.h>
 
 
@@ -64,7 +65,7 @@ size_t Calculator_addition_In::getMaxCdrSerializedSize(size_t current_alignment)
     return current_alignment - initial_alignment;
 }
 
-size_t Calculator_addition_In::getSerializedSize(size_t current_alignment) const
+size_t Calculator_addition_In::getCdrSerializedSize(const Calculator_addition_In& data, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
@@ -131,7 +132,7 @@ size_t Calculator_addition_Out::getMaxCdrSerializedSize(size_t current_alignment
     return current_alignment - initial_alignment;
 }
 
-size_t Calculator_addition_Out::getSerializedSize(size_t current_alignment) const
+size_t Calculator_addition_Out::getCdrSerializedSize(const Calculator_addition_Out& data, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
@@ -305,16 +306,16 @@ size_t Calculator_addition_Result::getMaxCdrSerializedSize(size_t current_alignm
     return union_max_size_serialized - initial_alignment;
 }
 
-size_t Calculator_addition_Result::getSerializedSize(size_t current_alignment) const
+size_t Calculator_addition_Result::getCdrSerializedSize(const Calculator_addition_Result& data, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
-    switch(m__d)
+    switch(data.m__d)
     {
         case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
-            current_alignment += m_result.getSerializedSize(current_alignment);
+            current_alignment += Calculator_addition_Out::getCdrSerializedSize(data.m_result, current_alignment);
             break;
     }
 
@@ -397,7 +398,7 @@ size_t Calculator_subtraction_In::getMaxCdrSerializedSize(size_t current_alignme
     return current_alignment - initial_alignment;
 }
 
-size_t Calculator_subtraction_In::getSerializedSize(size_t current_alignment) const
+size_t Calculator_subtraction_In::getCdrSerializedSize(const Calculator_subtraction_In& data, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
@@ -464,7 +465,7 @@ size_t Calculator_subtraction_Out::getMaxCdrSerializedSize(size_t current_alignm
     return current_alignment - initial_alignment;
 }
 
-size_t Calculator_subtraction_Out::getSerializedSize(size_t current_alignment) const
+size_t Calculator_subtraction_Out::getCdrSerializedSize(const Calculator_subtraction_Out& data, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
@@ -638,16 +639,16 @@ size_t Calculator_subtraction_Result::getMaxCdrSerializedSize(size_t current_ali
     return union_max_size_serialized - initial_alignment;
 }
 
-size_t Calculator_subtraction_Result::getSerializedSize(size_t current_alignment) const
+size_t Calculator_subtraction_Result::getCdrSerializedSize(const Calculator_subtraction_Result& data, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
-    switch(m__d)
+    switch(data.m__d)
     {
         case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
-            current_alignment += m_result.getSerializedSize(current_alignment);
+            current_alignment += Calculator_subtraction_Out::getCdrSerializedSize(data.m_result, current_alignment);
             break;
     }
 
@@ -897,20 +898,20 @@ size_t Calculator_Call::getMaxCdrSerializedSize(size_t current_alignment)
     return union_max_size_serialized - initial_alignment;
 }
 
-size_t Calculator_Call::getSerializedSize(size_t current_alignment) const
+size_t Calculator_Call::getCdrSerializedSize(const Calculator_Call& data, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
-    switch(m__d)
+    switch(data.m__d)
     {
                 case (int32_t)0xCBC6CEAA:
-                    current_alignment += m_addition.getSerializedSize(current_alignment);
+                    current_alignment += Calculator_addition_In::getCdrSerializedSize(data.m_addition, current_alignment);
                     break;
                 
                 case (int32_t)0xCA019A14:
-                    current_alignment += m_subtraction.getSerializedSize(current_alignment);
+                    current_alignment += Calculator_subtraction_In::getCdrSerializedSize(data.m_subtraction, current_alignment);
                     break;
                 
     }
@@ -1002,12 +1003,12 @@ size_t Calculator_Request::getMaxCdrSerializedSize(size_t current_alignment)
     return current_alignment - initial_alignment;
 }
 
-size_t Calculator_Request::getSerializedSize(size_t current_alignment) const
+size_t Calculator_Request::getCdrSerializedSize(const Calculator_Request& data, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
-    current_alignment += m_header.getSerializedSize(current_alignment);
-    current_alignment += m_data.getSerializedSize(current_alignment);
+    current_alignment += data.m_header.getCdrSerializedSize(current_alignment);
+    current_alignment += Calculator_Call::getCdrSerializedSize(data.m_data, current_alignment);
 
     return current_alignment - initial_alignment;
 }
@@ -1234,20 +1235,20 @@ size_t Calculator_Return::getMaxCdrSerializedSize(size_t current_alignment)
     return union_max_size_serialized - initial_alignment;
 }
 
-size_t Calculator_Return::getSerializedSize(size_t current_alignment) const
+size_t Calculator_Return::getCdrSerializedSize(const Calculator_Return& data, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
-    switch(m__d)
+    switch(data.m__d)
     {
                 case (int32_t)0xCBC6CEAA:
-                    current_alignment += m_addition.getSerializedSize(current_alignment);
+                    current_alignment += Calculator_addition_Result::getCdrSerializedSize(data.m_addition, current_alignment);
                     break;
                 
                 case (int32_t)0xCA019A14:
-                    current_alignment += m_subtraction.getSerializedSize(current_alignment);
+                    current_alignment += Calculator_subtraction_Result::getCdrSerializedSize(data.m_subtraction, current_alignment);
                     break;
                 
     }
@@ -1338,12 +1339,12 @@ size_t Calculator_Reply::getMaxCdrSerializedSize(size_t current_alignment)
     return current_alignment - initial_alignment;
 }
 
-size_t Calculator_Reply::getSerializedSize(size_t current_alignment) const
+size_t Calculator_Reply::getCdrSerializedSize(const Calculator_Reply& data, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
-    current_alignment += m_header.getSerializedSize(current_alignment);
-    current_alignment += m_data.getSerializedSize(current_alignment);
+    current_alignment += data.m_header.getCdrSerializedSize(current_alignment);
+    current_alignment += Calculator_Return::getCdrSerializedSize(data.m_data, current_alignment);
 
     return current_alignment - initial_alignment;
 }

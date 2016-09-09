@@ -69,8 +69,7 @@ bool Calculator_RequestPlugin::deserialize(SerializedPayload_t* payload, void* d
 std::function<uint32_t()> Calculator_RequestPlugin::getSerializedSizeProvider(void* data)
 {
     return [data]() -> uint32_t {
-        Calculator_Request* p_type = (Calculator_Request*) data;
-        return p_type->getSerializedSize();
+        return Calculator_Request::getCdrSerializedSize(*static_cast<Calculator_Request*>(data));
     };
 }
 
@@ -150,8 +149,7 @@ bool Calculator_ReplyPlugin::deserialize(SerializedPayload_t* payload, void* dat
 std::function<uint32_t()> Calculator_ReplyPlugin::getSerializedSizeProvider(void* data)
 {
     return [data]() -> uint32_t {
-        Calculator_Reply* p_type = (Calculator_Reply*) data;
-        return p_type->getSerializedSize();
+        return Calculator_Reply::getCdrSerializedSize(*static_cast<Calculator_Reply*>(data));
     };
 }
 

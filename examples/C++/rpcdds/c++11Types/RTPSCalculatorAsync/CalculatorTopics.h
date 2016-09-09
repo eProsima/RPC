@@ -144,7 +144,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport static size_t getCdrSerializedSize(const Calculator_addition_In& data, size_t current_alignment = 0);
 
     /*!
      * @brief This function serializes an object using CDR serialization.
@@ -246,7 +246,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport static size_t getCdrSerializedSize(const Calculator_addition_Out& data, size_t current_alignment = 0);
 
     /*!
      * @brief This function serializes an object using CDR serialization.
@@ -375,7 +375,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport static size_t getCdrSerializedSize(const Calculator_addition_Result& data, size_t current_alignment = 0);
 
     /*!
      * @brief This function serializes an object using CDR serialization.
@@ -509,7 +509,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport static size_t getCdrSerializedSize(const Calculator_subtraction_In& data, size_t current_alignment = 0);
 
     /*!
      * @brief This function serializes an object using CDR serialization.
@@ -611,7 +611,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport static size_t getCdrSerializedSize(const Calculator_subtraction_Out& data, size_t current_alignment = 0);
 
     /*!
      * @brief This function serializes an object using CDR serialization.
@@ -740,7 +740,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport static size_t getCdrSerializedSize(const Calculator_subtraction_Result& data, size_t current_alignment = 0);
 
     /*!
      * @brief This function serializes an object using CDR serialization.
@@ -893,7 +893,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport static size_t getCdrSerializedSize(const Calculator_Call& data, size_t current_alignment = 0);
 
     /*!
      * @brief This function serializes an object using CDR serialization.
@@ -1044,7 +1044,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport static size_t getCdrSerializedSize(const Calculator_Request& data, size_t current_alignment = 0);
 
     /*!
      * @brief This function serializes an object using CDR serialization.
@@ -1193,7 +1193,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport static size_t getCdrSerializedSize(const Calculator_Return& data, size_t current_alignment = 0);
 
     /*!
      * @brief This function serializes an object using CDR serialization.
@@ -1345,7 +1345,7 @@ public:
      * @param current_alignment Buffer alignment.
      * @return Serialized size.
      */
-    user_cpp_DllExport size_t getSerializedSize(size_t current_alignment = 0) const;
+    user_cpp_DllExport static size_t getCdrSerializedSize(const Calculator_Reply& data, size_t current_alignment = 0);
 
     /*!
      * @brief This function serializes an object using CDR serialization.
