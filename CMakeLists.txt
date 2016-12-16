@@ -299,7 +299,7 @@ if(BUILD_DOCUMENTATION)
     # documentation.
     add_custom_command(TARGET doxygen POST_BUILD
         COMMAND "${DOXYFILE_MAKE}"
-        COMMAND cp refman.pdf "${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - C++ API Manual.pdf"
+        COMMAND ${CMAKE_COMMAND} -E copy refman.pdf "${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - C++ API Manual.pdf"
         WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/doxygen/latex"
         COMMENT "Running LaTex for doxygen documentation" VERBATIM)
 
