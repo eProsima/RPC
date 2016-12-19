@@ -22,6 +22,11 @@ set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/${PROJECT_NAME_UPPER}_LIC
 # Create CMake package config file
 ###############################################################################
 if(NOT((MSVC OR MSVC_IDE) AND EPROSIMA_INSTALLER))
+    set(DIR_EXTENSION "")
+    if(EPROSIMA_INSTALLER_MINION)
+        set(DIR_EXTENSION "/${MSVC_ARCH}")
+    endif()
+    
     include(CMakePackageConfigHelpers)
 
     if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
@@ -36,7 +41,7 @@ if(NOT((MSVC OR MSVC_IDE) AND EPROSIMA_INSTALLER))
 
     configure_package_config_file(${PROJECT_SOURCE_DIR}/cmake/packaging/Config.cmake.in
         ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Config.cmake
-        INSTALL_DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake
+        INSTALL_DESTINATION ${LIB_INSTALL_DIR}${DIR_EXTENSION}/${PROJECT_NAME}/cmake
         PATH_VARS BIN_INSTALL_DIR INCLUDE_INSTALL_DIR LIB_INSTALL_DIR
         )
     write_basic_package_version_file(${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}ConfigVersion.cmake
@@ -45,7 +50,7 @@ if(NOT((MSVC OR MSVC_IDE) AND EPROSIMA_INSTALLER))
         )
     install(FILES ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Config.cmake
         ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}ConfigVersion.cmake
-        DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake
+        DESTINATION ${LIB_INSTALL_DIR}${DIR_EXTENSION}/${PROJECT_NAME}/cmake
         COMPONENT cmake
         )
 endif()
@@ -57,6 +62,19 @@ set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} cmake)
 # Platform and architecture dependant
 ###############################################################################
 if(WIN32)
+    if(EPROSIMA_INSTALLER_MINION)
+        file(COPY ${PROJECT_SOURCE_DIR}/cmake/packaging/windows/Config.cmake
+            DESTINATION ${PROJECT_BINARY_DIR}/cmake/packaging/windows
+            )
+        file(RENAME ${PROJECT_BINARY_DIR}/cmake/packaging/windows/Config.cmake
+            ${PROJECT_BINARY_DIR}/cmake/packaging/windows/${PROJECT_NAME}Config.cmake
+            )
+        install(FILES ${PROJECT_BINARY_DIR}/cmake/packaging/windows/${PROJECT_NAME}Config.cmake
+            DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake
+            COMPONENT cmake
+            )
+    endif()
+    
     set(CPACK_GENERATOR NSIS)
 
     configure_file(${PROJECT_SOURCE_DIR}/cmake/packaging/windows/WindowsPackaging.cmake.in ${PROJECT_BINARY_DIR}/cmake/packaging/windows/WindowsPackaging.cmake @ONLY)
