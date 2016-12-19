@@ -1,9 +1,9 @@
 group VS2010;
 
 solution(solution, example, configurations) ::= <<
-$if(solution.isVS2010)$
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+$if(solution.isVS2015)$
+Microsoft Visual Studio Solution File, Format Version 14.00
+# Visual Studio 2015
 
 $elseif(solution.isVS2013)$
 Microsoft Visual Studio Solution File, Format Version 12.00
@@ -45,8 +45,8 @@ project(solution, project, example, configurations) ::= <<
     <UseDebugLibraries>$if(it.debug)$true$else$false$endif$</UseDebugLibraries>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
-    $if(solution.isVS2010)$
-    <PlatformToolset>v100</PlatformToolset>
+    $if(solution.isVS2015)$
+    <PlatformToolset>v140</PlatformToolset>
 
     $elseif(solution.isVS2013)$
     <PlatformToolset>v120</PlatformToolset>
@@ -163,8 +163,8 @@ projectClient(solution, project, example, configurations) ::= <<
     <UseDebugLibraries>$if(it.debug)$true$else$false$endif$</UseDebugLibraries>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
-    $if(solution.isVS2010)$
-    <PlatformToolset>v100</PlatformToolset>
+    $if(solution.isVS2015)$
+    <PlatformToolset>v140</PlatformToolset>
 
     $elseif(solution.isVS2013)$
 
@@ -282,8 +282,8 @@ projectClientExample(solution, project, example, configurations) ::= <<
     <UseDebugLibraries>$if(it.debug)$true$else$false$endif$</UseDebugLibraries>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
-    $if(solution.isVS2010)$
-    <PlatformToolset>v100</PlatformToolset>
+    $if(solution.isVS2015)$
+    <PlatformToolset>v140</PlatformToolset>
 
     $elseif(solution.isVS2013)$
 
@@ -381,8 +381,8 @@ projectServer(solution, project, example, configurations) ::= <<
     <UseDebugLibraries>$if(it.debug)$true$else$false$endif$</UseDebugLibraries>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
-    $if(solution.isVS2010)$
-    <PlatformToolset>v100</PlatformToolset>
+    $if(solution.isVS2015)$
+    <PlatformToolset>v140</PlatformToolset>
 
     $elseif(solution.isVS2013)$
     <PlatformToolset>v120</PlatformToolset>
@@ -500,8 +500,8 @@ projectServerExample(solution, project, example, configurations) ::= <<
     <UseDebugLibraries>$if(it.debug)$true$else$false$endif$</UseDebugLibraries>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
-    $if(solution.isVS2010)$
-    <PlatformToolset>v100</PlatformToolset>
+    $if(solution.isVS2015)$
+    <PlatformToolset>v140</PlatformToolset>
 
     $elseif(solution.isVS2013)$
     <PlatformToolset>v120</PlatformToolset>

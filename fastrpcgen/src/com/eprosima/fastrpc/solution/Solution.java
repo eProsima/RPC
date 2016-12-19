@@ -70,9 +70,9 @@ public class Solution extends com.eprosima.solution.Solution
         return ret;
     }
 
-    public boolean isIsVS2010()
+    public boolean isIsVS2015()
     {
-	    return m_example.substring(8, 14).equals("VS2010");
+	    return m_example.substring(8, 14).equals("VS2015");
     }
 
     public boolean isIsVS2013()
