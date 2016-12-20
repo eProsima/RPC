@@ -173,7 +173,7 @@ endif()
 # Check libraries
 ###############################################################################
 include(${PROJECT_SOURCE_DIR}/cmake/dev/boost_libraries.cmake)
-check_boost(thread system date_time chrono regex)
+check_boost(thread system date_time chrono regex atomic)
 
 ###############################################################################
 # Load external eProsima projects.
@@ -371,7 +371,7 @@ if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
     install_eprosima_libraries()
 endif()
 
-install_boost(ALL thread system date_time chrono regex)
+install_boost(ALL thread system date_time chrono regex atomic)
 
 # Install licenses
 install(FILES ${PROJECT_SOURCE_DIR}/${PROJECT_NAME_UPPER}_LICENSE.txt
