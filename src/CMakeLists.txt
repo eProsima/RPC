@@ -159,8 +159,14 @@ if(MSVC OR MSVC_IDE)
                 )
         endif()
 
+        # Made linked libraries PRIVATE to prevent local directories in Windows installer.
+        set(PRIVACY "")
+        if(EPROSIMA_INSTALLER_MINION)
+            set(PRIVACY "PRIVATE")
+        endif()
+
         # Link library to external win32 libraries.
-        target_link_libraries(${PROJECT_NAME}
+        target_link_libraries(${PROJECT_NAME} ${PRIVACY}
             ${Boost_LIBRARIES}
             )
     endif()

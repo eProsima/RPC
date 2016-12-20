@@ -63,12 +63,7 @@ set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} cmake)
 ###############################################################################
 if(WIN32)
     if(EPROSIMA_INSTALLER_MINION)
-        file(COPY ${PROJECT_SOURCE_DIR}/cmake/packaging/windows/Config.cmake
-            DESTINATION ${PROJECT_BINARY_DIR}/cmake/packaging/windows
-            )
-        file(RENAME ${PROJECT_BINARY_DIR}/cmake/packaging/windows/Config.cmake
-            ${PROJECT_BINARY_DIR}/cmake/packaging/windows/${PROJECT_NAME}Config.cmake
-            )
+        configure_file(${PROJECT_SOURCE_DIR}/cmake/packaging/windows/Config.cmake.in ${PROJECT_BINARY_DIR}/cmake/packaging/windows/${PROJECT_NAME}Config.cmake @ONLY)
         install(FILES ${PROJECT_BINARY_DIR}/cmake/packaging/windows/${PROJECT_NAME}Config.cmake
             DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake
             COMPONENT cmake
