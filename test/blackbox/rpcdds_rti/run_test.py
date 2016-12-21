@@ -89,8 +89,8 @@ def make_dirs():
 def remove_dirs():
     pass
     # Remove directory
-    #if os.path.exists(output_dir):
-        #shutil.rmtree(output_dir, True)
+    if os.path.exists(output_dir):
+        shutil.rmtree(output_dir, True)
 
 def generate_code():
     # Call generator

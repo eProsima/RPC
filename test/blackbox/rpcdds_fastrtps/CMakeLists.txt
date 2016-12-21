@@ -48,8 +48,10 @@ if(NOT ((MSVC OR MSVC_IDE) AND EPROSIMA_INSTALLER))
             set_property(TEST ${TEST} APPEND PROPERTY ENVIRONMENT
                 "CMAKE_LIBRARY_DIRECTORIES=${Boost_LIBRARY_DIRS}\\;$<TARGET_FILE_DIR:${PROJECT_NAME}>\\;$<TARGET_FILE_DIR:fastcdr>")
 
-            set_property(TEST ${TEST} APPEND PROPERTY ENVIRONMENT
-                "CMAKE_LIBRARIES=$<JOIN:${CMAKE_LIBRARIES},\\;>")
+            if(CMAKE_LIBRARIES)
+                set_property(TEST ${TEST} APPEND PROPERTY ENVIRONMENT
+                    "CMAKE_LIBRARIES=$<JOIN:${CMAKE_LIBRARIES},\\;>")
+            endif()
 
             set_property(TEST ${TEST} APPEND PROPERTY ENVIRONMENT
                 "CMAKE_REMOVE_INCLUDE_PREFIX=true")
