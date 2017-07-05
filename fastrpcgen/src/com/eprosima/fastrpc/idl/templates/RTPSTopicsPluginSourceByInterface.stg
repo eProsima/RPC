@@ -34,9 +34,9 @@ $export_list$
 
 $interface.scopedname$_RequestPlugin::$interface.name$_RequestPlugin() 
 {
-	setName("$interface.scopedname$_Request");
-	m_typeSize = (uint32_t)$interface.scopedname$_Request::getMaxCdrSerializedSize();
-	m_isGetKeyDefined = false;
+    setName("$interface.scopedname$_Request");
+    m_typeSize = (uint32_t)$interface.scopedname$_Request::getMaxCdrSerializedSize() + 4 /*encapsulation*/;
+    m_isGetKeyDefined = false;
 }
 
 $interface.scopedname$_RequestPlugin::~$interface.name$_RequestPlugin() 
@@ -45,36 +45,56 @@ $interface.scopedname$_RequestPlugin::~$interface.name$_RequestPlugin()
 
 bool $interface.scopedname$_RequestPlugin::serialize(void *data, SerializedPayload_t *payload) 
 {
-	$interface.scopedname$_Request *p_type = ($interface.scopedname$_Request*) data;
-	
-	// Object that manages the raw buffer.
-	eprosima::fastcdr::FastBuffer fastbuffer((char*) payload->data, payload->max_size);
-	// Object that serializes the data.
-	eprosima::fastcdr::Cdr ser(fastbuffer,eprosima::fastcdr::Cdr::LITTLE_ENDIANNESS);
-	//Select the correct endianess
-	payload->encapsulation = CDR_LE; 
-	// Serialize the object:
-	p_type->serialize(ser);
-	//Get the serialized length
+    $interface.scopedname$_Request *p_type = ($interface.scopedname$_Request*) data;
+
+    // Object that manages the raw buffer.
+    eprosima::fastcdr::FastBuffer fastbuffer((char*) payload->data, payload->max_size);
+    eprosima::fastcdr::Cdr ser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
+            eprosima::fastcdr::Cdr::DDS_CDR); // Object that serializes the data.
+    payload->encapsulation = ser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
+    // Serialize encapsulation
+    ser.serialize_encapsulation();
+
+    try
+    {
+        // Serialize the object:
+        p_type->serialize(ser);
+    }
+    catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
+    {
+        return false;
+    }
+
+    //Get the serialized length
     payload->length = (uint16_t)ser.getSerializedDataLength();
-    	
-	return true;
+
+    return true;
 }
 
 bool $interface.scopedname$_RequestPlugin::deserialize(SerializedPayload_t* payload, void* data)
 {
-	//CONVERT DATA to pointer of your type
-	$interface.scopedname$_Request* p_type = ($interface.scopedname$_Request*) data;
+    //CONVERT DATA to pointer of your type
+    $interface.scopedname$_Request* p_type = ($interface.scopedname$_Request*) data;
 
-	// Object that manages the raw buffer.
-	eprosima::fastcdr::FastBuffer fastbuffer((char*)payload->data, payload->length);
-	//select the correct endianess
-	eprosima::fastcdr::Cdr::Endianness endian = payload->encapsulation == CDR_LE ? eprosima::fastcdr::Cdr::LITTLE_ENDIANNESS : eprosima::fastcdr::Cdr::BIG_ENDIANNESS;
-	// Object that deserializes the data.
-	eprosima::fastcdr::Cdr deser(fastbuffer,endian);
-	//deserialize the object:
-	p_type->deserialize(deser);
-	return true;
+    // Object that manages the raw buffer.
+    eprosima::fastcdr::FastBuffer fastbuffer((char*)payload->data, payload->length);
+    eprosima::fastcdr::Cdr deser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
+            eprosima::fastcdr::Cdr::DDS_CDR); // Object that deserializes the data.
+    // Deserialize encapsulation.
+    deser.read_encapsulation();
+    payload->encapsulation = deser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
+
+    try
+    {
+        //deserialize the object:
+        p_type->deserialize(deser);
+    }
+    catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
+    {
+        return false;
+    }
+
+    return true;
 }
 
 std::function<uint32_t()> $interface.scopedname$_RequestPlugin::getSerializedSizeProvider(void* data)
@@ -86,37 +106,37 @@ std::function<uint32_t()> $interface.scopedname$_RequestPlugin::getSerializedSiz
 
 void* $interface.scopedname$_RequestPlugin::createData()
 {
-	return (void*)new $interface.scopedname$_Request();
+    return (void*)new $interface.scopedname$_Request();
 }
 
 void* $interface.scopedname$_RequestPlugin::create_data()
 {
-	return (void*)new $interface.scopedname$_Request();
+    return (void*)new $interface.scopedname$_Request();
 }
 
 void $interface.scopedname$_RequestPlugin::deleteData(void* data)
 {
-	delete(($interface.scopedname$_Request*)data);
+    delete(($interface.scopedname$_Request*)data);
 }
 
 void $interface.scopedname$_RequestPlugin::delete_data(void* data)
 {
-	delete(($interface.scopedname$_Request*)data);
+    delete(($interface.scopedname$_Request*)data);
 }
 
 void $interface.scopedname$_RequestPlugin::copy_data(
-    $interface.name$_Request *dst,
-    const $interface.name$_Request *src)
+        $interface.name$_Request *dst,
+        const $interface.name$_Request *src)
 {
     *dst = *src;
 }
- 
+
 // Reply interfaces
 $interface.scopedname$_ReplyPlugin::$interface.name$_ReplyPlugin() 
 {
-	setName("$interface.scopedname$_Reply");
-	m_typeSize = (uint32_t)$interface.scopedname$_Reply::getMaxCdrSerializedSize();
-	m_isGetKeyDefined = false;
+    setName("$interface.scopedname$_Reply");
+    m_typeSize = (uint32_t)$interface.scopedname$_Reply::getMaxCdrSerializedSize() + 4 /*encapsulation*/;
+    m_isGetKeyDefined = false;
 }
 
 $interface.scopedname$_ReplyPlugin::~$interface.name$_ReplyPlugin() 
@@ -125,36 +145,56 @@ $interface.scopedname$_ReplyPlugin::~$interface.name$_ReplyPlugin()
 
 bool $interface.scopedname$_ReplyPlugin::serialize(void *data, SerializedPayload_t *payload) 
 {
-	$interface.scopedname$_Reply *p_type = ($interface.scopedname$_Reply*) data;
-	
-	// Object that manages the raw buffer.
-	eprosima::fastcdr::FastBuffer fastbuffer((char*) payload->data, payload->max_size);
-	// Object that serializes the data.
-	eprosima::fastcdr::Cdr ser(fastbuffer,eprosima::fastcdr::Cdr::LITTLE_ENDIANNESS);
-	//Select the correct endianess
-	payload->encapsulation = CDR_LE; 
-	// Serialize the object:
-	p_type->serialize(ser);
-	//Get the serialized length
+    $interface.scopedname$_Reply *p_type = ($interface.scopedname$_Reply*) data;
+
+    // Object that manages the raw buffer.
+    eprosima::fastcdr::FastBuffer fastbuffer((char*) payload->data, payload->max_size);
+    eprosima::fastcdr::Cdr ser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
+            eprosima::fastcdr::Cdr::DDS_CDR); // Object that serializes the data.
+    payload->encapsulation = ser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
+    // Serialize encapsulation
+    ser.serialize_encapsulation();
+
+    try
+    {
+        // Serialize the object:
+        p_type->serialize(ser);
+    }
+    catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
+    {
+        return false;
+    }
+
+    //Get the serialized length
     payload->length = (uint16_t)ser.getSerializedDataLength();
-    	
-	return true;
+
+    return true;
 }
 
 bool $interface.scopedname$_ReplyPlugin::deserialize(SerializedPayload_t* payload, void* data)
 {
-	//CONVERT DATA to pointer of your type
-	$interface.scopedname$_Reply* p_type = ($interface.scopedname$_Reply*) data;
+    //CONVERT DATA to pointer of your type
+    $interface.scopedname$_Reply* p_type = ($interface.scopedname$_Reply*) data;
 
-	// Object that manages the raw buffer.
-	eprosima::fastcdr::FastBuffer fastbuffer((char*)payload->data, payload->length);
-	//select the correct endianess
-	eprosima::fastcdr::Cdr::Endianness endian = payload->encapsulation == CDR_LE ? eprosima::fastcdr::Cdr::LITTLE_ENDIANNESS : eprosima::fastcdr::Cdr::BIG_ENDIANNESS;
-	// Object that deserializes the data.
-	eprosima::fastcdr::Cdr deser(fastbuffer,endian);
-	//deserialize the object:
-	p_type->deserialize(deser);
-	return true;
+    // Object that manages the raw buffer.
+    eprosima::fastcdr::FastBuffer fastbuffer((char*)payload->data, payload->length);
+    eprosima::fastcdr::Cdr deser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
+            eprosima::fastcdr::Cdr::DDS_CDR); // Object that deserializes the data.
+    // Deserialize encapsulation.
+    deser.read_encapsulation();
+    payload->encapsulation = deser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
+
+    try
+    {
+        //deserialize the object:
+        p_type->deserialize(deser);
+    }
+    catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
+    {
+        return false;
+    }
+
+    return true;
 }
 
 std::function<uint32_t()> $interface.scopedname$_ReplyPlugin::getSerializedSizeProvider(void* data)
@@ -166,27 +206,27 @@ std::function<uint32_t()> $interface.scopedname$_ReplyPlugin::getSerializedSizeP
 
 void* $interface.scopedname$_ReplyPlugin::createData()
 {
-	return (void*)new $interface.scopedname$_Reply();
+    return (void*)new $interface.scopedname$_Reply();
 }
 
 void* $interface.scopedname$_ReplyPlugin::create_data()
 {
-	return (void*)new $interface.scopedname$_Reply();
+    return (void*)new $interface.scopedname$_Reply();
 }
 
 void $interface.scopedname$_ReplyPlugin::deleteData(void* data)
 {
-	delete(($interface.scopedname$_Reply*)data);
+    delete(($interface.scopedname$_Reply*)data);
 }
 
 void $interface.scopedname$_ReplyPlugin::delete_data(void* data)
 {
-	delete(($interface.scopedname$_Reply*)data);
+    delete(($interface.scopedname$_Reply*)data);
 }
 
 void $interface.scopedname$_ReplyPlugin::copy_data(
-    $interface.name$_Reply *dst,
-    const $interface.name$_Reply *src)
+        $interface.name$_Reply *dst,
+        const $interface.name$_Reply *src)
 {
     *dst = *src;
 }

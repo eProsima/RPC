@@ -23,9 +23,9 @@ using namespace eprosima::fastrtps;
 
 Calculator_RequestPlugin::Calculator_RequestPlugin() 
 {
-	setName("Calculator_Request");
-	m_typeSize = (uint32_t)Calculator_Request::getMaxCdrSerializedSize();
-	m_isGetKeyDefined = false;
+    setName("Calculator_Request");
+    m_typeSize = (uint32_t)Calculator_Request::getMaxCdrSerializedSize() + 4 /*encapsulation*/;
+    m_isGetKeyDefined = false;
 }
 
 Calculator_RequestPlugin::~Calculator_RequestPlugin() 
@@ -34,36 +34,56 @@ Calculator_RequestPlugin::~Calculator_RequestPlugin()
 
 bool Calculator_RequestPlugin::serialize(void *data, SerializedPayload_t *payload) 
 {
-	Calculator_Request *p_type = (Calculator_Request*) data;
-	
-	// Object that manages the raw buffer.
-	eprosima::fastcdr::FastBuffer fastbuffer((char*) payload->data, payload->max_size);
-	// Object that serializes the data.
-	eprosima::fastcdr::Cdr ser(fastbuffer,eprosima::fastcdr::Cdr::LITTLE_ENDIANNESS);
-	//Select the correct endianess
-	payload->encapsulation = CDR_LE; 
-	// Serialize the object:
-	p_type->serialize(ser);
-	//Get the serialized length
+    Calculator_Request *p_type = (Calculator_Request*) data;
+
+    // Object that manages the raw buffer.
+    eprosima::fastcdr::FastBuffer fastbuffer((char*) payload->data, payload->max_size);
+    eprosima::fastcdr::Cdr ser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
+            eprosima::fastcdr::Cdr::DDS_CDR);
+    payload->encapsulation = ser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
+    // Serialize encapsulation
+    ser.serialize_encapsulation();
+
+    try
+    {
+        // Serialize the object:
+        p_type->serialize(ser);
+    }
+    catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
+    {
+        return false;
+    }
+
+    //Get the serialized length
     payload->length = (uint16_t)ser.getSerializedDataLength();
-    	
-	return true;
+
+    return true;
 }
 
 bool Calculator_RequestPlugin::deserialize(SerializedPayload_t* payload, void* data)
 {
-	//CONVERT DATA to pointer of your type
-	Calculator_Request* p_type = (Calculator_Request*) data;
+    //CONVERT DATA to pointer of your type
+    Calculator_Request* p_type = (Calculator_Request*) data;
 
-	// Object that manages the raw buffer.
-	eprosima::fastcdr::FastBuffer fastbuffer((char*)payload->data, payload->length);
-	//select the correct endianess
-	eprosima::fastcdr::Cdr::Endianness endian = payload->encapsulation == CDR_LE ? eprosima::fastcdr::Cdr::LITTLE_ENDIANNESS : eprosima::fastcdr::Cdr::BIG_ENDIANNESS;
-	// Object that deserializes the data.
-	eprosima::fastcdr::Cdr deser(fastbuffer,endian);
-	//deserialize the object:
-	p_type->deserialize(deser);
-	return true;
+    // Object that manages the raw buffer.
+    eprosima::fastcdr::FastBuffer fastbuffer((char*)payload->data, payload->length);
+    eprosima::fastcdr::Cdr deser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
+            eprosima::fastcdr::Cdr::DDS_CDR); // Object that deserializes the data.
+    // Deserialize encapsulation.
+    deser.read_encapsulation();
+    payload->encapsulation = deser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
+
+    try
+    {
+        //deserialize the object:
+        p_type->deserialize(deser);
+    }
+    catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
+    {
+        return false;
+    }
+
+    return true;
 }
 
 std::function<uint32_t()> Calculator_RequestPlugin::getSerializedSizeProvider(void* data)
@@ -75,37 +95,37 @@ std::function<uint32_t()> Calculator_RequestPlugin::getSerializedSizeProvider(vo
 
 void* Calculator_RequestPlugin::createData()
 {
-	return (void*)new Calculator_Request();
+    return (void*)new Calculator_Request();
 }
 
 void* Calculator_RequestPlugin::create_data()
 {
-	return (void*)new Calculator_Request();
+    return (void*)new Calculator_Request();
 }
 
 void Calculator_RequestPlugin::deleteData(void* data)
 {
-	delete((Calculator_Request*)data);
+    delete((Calculator_Request*)data);
 }
 
 void Calculator_RequestPlugin::delete_data(void* data)
 {
-	delete((Calculator_Request*)data);
+    delete((Calculator_Request*)data);
 }
 
 void Calculator_RequestPlugin::copy_data(
-    Calculator_Request *dst,
-    const Calculator_Request *src)
+        Calculator_Request *dst,
+        const Calculator_Request *src)
 {
     *dst = *src;
 }
- 
+
 // Reply interfaces
 Calculator_ReplyPlugin::Calculator_ReplyPlugin() 
 {
-	setName("Calculator_Reply");
-	m_typeSize = (uint32_t)Calculator_Reply::getMaxCdrSerializedSize();
-	m_isGetKeyDefined = false;
+    setName("Calculator_Reply");
+    m_typeSize = (uint32_t)Calculator_Reply::getMaxCdrSerializedSize() + 4 /*encapsulation*/;
+    m_isGetKeyDefined = false;
 }
 
 Calculator_ReplyPlugin::~Calculator_ReplyPlugin() 
@@ -114,36 +134,56 @@ Calculator_ReplyPlugin::~Calculator_ReplyPlugin()
 
 bool Calculator_ReplyPlugin::serialize(void *data, SerializedPayload_t *payload) 
 {
-	Calculator_Reply *p_type = (Calculator_Reply*) data;
-	
-	// Object that manages the raw buffer.
-	eprosima::fastcdr::FastBuffer fastbuffer((char*) payload->data, payload->max_size);
-	// Object that serializes the data.
-	eprosima::fastcdr::Cdr ser(fastbuffer,eprosima::fastcdr::Cdr::LITTLE_ENDIANNESS);
-	//Select the correct endianess
-	payload->encapsulation = CDR_LE; 
-	// Serialize the object:
-	p_type->serialize(ser);
-	//Get the serialized length
+    Calculator_Reply *p_type = (Calculator_Reply*) data;
+
+    // Object that manages the raw buffer.
+    eprosima::fastcdr::FastBuffer fastbuffer((char*) payload->data, payload->max_size);
+    eprosima::fastcdr::Cdr ser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
+            eprosima::fastcdr::Cdr::DDS_CDR);
+    payload->encapsulation = ser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
+    // Serialize encapsulation
+    ser.serialize_encapsulation();
+
+    try
+    {
+        // Serialize the object:
+        p_type->serialize(ser);
+    }
+    catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
+    {
+        return false;
+    }
+
+    //Get the serialized length
     payload->length = (uint16_t)ser.getSerializedDataLength();
-    	
-	return true;
+
+    return true;
 }
 
 bool Calculator_ReplyPlugin::deserialize(SerializedPayload_t* payload, void* data)
 {
-	//CONVERT DATA to pointer of your type
-	Calculator_Reply* p_type = (Calculator_Reply*) data;
+    //CONVERT DATA to pointer of your type
+    Calculator_Reply* p_type = (Calculator_Reply*) data;
 
-	// Object that manages the raw buffer.
-	eprosima::fastcdr::FastBuffer fastbuffer((char*)payload->data, payload->length);
-	//select the correct endianess
-	eprosima::fastcdr::Cdr::Endianness endian = payload->encapsulation == CDR_LE ? eprosima::fastcdr::Cdr::LITTLE_ENDIANNESS : eprosima::fastcdr::Cdr::BIG_ENDIANNESS;
-	// Object that deserializes the data.
-	eprosima::fastcdr::Cdr deser(fastbuffer,endian);
-	//deserialize the object:
-	p_type->deserialize(deser);
-	return true;
+    // Object that manages the raw buffer.
+    eprosima::fastcdr::FastBuffer fastbuffer((char*)payload->data, payload->length);
+    eprosima::fastcdr::Cdr deser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
+            eprosima::fastcdr::Cdr::DDS_CDR); // Object that deserializes the data.
+    // Deserialize encapsulation.
+    deser.read_encapsulation();
+    payload->encapsulation = deser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
+
+    try
+    {
+        //deserialize the object:
+        p_type->deserialize(deser);
+    }
+    catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
+    {
+        return false;
+    }
+
+    return true;
 }
 
 std::function<uint32_t()> Calculator_ReplyPlugin::getSerializedSizeProvider(void* data)
@@ -155,27 +195,27 @@ std::function<uint32_t()> Calculator_ReplyPlugin::getSerializedSizeProvider(void
 
 void* Calculator_ReplyPlugin::createData()
 {
-	return (void*)new Calculator_Reply();
+    return (void*)new Calculator_Reply();
 }
 
 void* Calculator_ReplyPlugin::create_data()
 {
-	return (void*)new Calculator_Reply();
+    return (void*)new Calculator_Reply();
 }
 
 void Calculator_ReplyPlugin::deleteData(void* data)
 {
-	delete((Calculator_Reply*)data);
+    delete((Calculator_Reply*)data);
 }
 
 void Calculator_ReplyPlugin::delete_data(void* data)
 {
-	delete((Calculator_Reply*)data);
+    delete((Calculator_Reply*)data);
 }
 
 void Calculator_ReplyPlugin::copy_data(
-    Calculator_Reply *dst,
-    const Calculator_Reply *src)
+        Calculator_Reply *dst,
+        const Calculator_Reply *src)
 {
     *dst = *src;
 }

@@ -1,10 +1,14 @@
 macro(find_eprosima_package package)
     if(NOT (EPROSIMA_INSTALLER AND (MSVC OR MSVC_IDE)))
         if(THIRDPARTY)
-            set(USE_BOOST_ "")
+            set(LIST_OF_OPTIONS "")
+            set(next_is_option FALSE)
             foreach(arg ${ARGN})
-                if("${arg}" STREQUAL "USE_BOOST")
-                    set(USE_BOOST_ "-DEPROSIMA_BOOST=${EPROSIMA_BOOST}")
+                if(next_is_option)
+                    set(next_is_option FALSE)
+                    list(APPEND LIST_OF_OPTIONS "-D${arg}=ON")
+                elseif("${arg}" STREQUAL "OPTION")
+                    set(next_is_option TRUE)
                 endif()
             endforeach()
 
@@ -23,7 +27,7 @@ macro(find_eprosima_package package)
                 "\${GENERATOR_}"
                 ${BUILD_OPTION}
                 "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
-                ${USE_BOOST_}
+                ${LIST_OF_OPTIONS}
                 "-DMINION=ON"
                 "-DEPROSIMA_INSTALLER_MINION=${EPROSIMA_INSTALLER_MINION}"
                 "-DBIN_INSTALL_DIR:PATH=${BIN_INSTALL_DIR}"
