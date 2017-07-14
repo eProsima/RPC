@@ -316,17 +316,20 @@ if(BUILD_DOCUMENTATION)
         COMPONENT documentation
         )
 
-    ### Libreoffice ########################3
+    ### README html ########################
 
     if(WIN32)
-        set(LIBREOFFICE_CONVERT_README_MACRO "macro:///eProsima.documentation.changeHyperlinksAndVersionToHTML(${PROJECT_SOURCE_DIR}/doc/README_${PROJECT_NAME}.odt,${PROJECT_VERSION},./,/doc/)")
         set(README_LOCATION "${PROJECT_BINARY_DIR}/")
+        set(README_LOCATION_PREFFIX "doc/")
         set(README_INSTALL_LOCATION ".")
     else()
-        set(LIBREOFFICE_CONVERT_README_MACRO "macro:///eProsima.documentation.changeVersionToHTML(${PROJECT_SOURCE_DIR}/doc/README_${PROJECT_NAME}.odt,${PROJECT_VERSION})")
         set(README_LOCATION "${PROJECT_BINARY_DIR}/doc/")
         set(README_INSTALL_LOCATION "${DOC_INSTALL_DIR}")
     endif()
+
+    configure_file(doc/README.html.in ${README_LOCATION}/README.html @ONLY IMMEDIATE)
+
+    ### Libreoffice ########################3
 
     # User manuals and installation manuals
     if((NOT RPCPROTO STREQUAL "rpcdds") OR (RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS AND WITH_RTIDDS))
@@ -347,12 +350,9 @@ if(BUILD_DOCUMENTATION)
         COMMAND "${LIBREOFFICE_EXE}" --headless
         "macro:///eProsima.documentation.changeVersion(${LIBREOFFICE_CONVERT_USER_MANUAL_DOC}.odt,${PROJECT_VERSION})"
         COMMAND ${CMAKE_COMMAND} -E rename "${LIBREOFFICE_CONVERT_USER_MANUAL_DOC}.pdf" "${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual.pdf"
-        COMMAND "${LIBREOFFICE_EXE}" --headless ${LIBREOFFICE_CONVERT_README_MACRO} 
-        COMMAND ${CMAKE_COMMAND} -E rename "${PROJECT_SOURCE_DIR}/doc/README_${PROJECT_NAME}.html" "${README_LOCATION}/README.html"
         DEPENDS
         "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual.odt"
         "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual.odt"
-        "${PROJECT_SOURCE_DIR}/doc/README_${PROJECT_NAME}.odt"
         COMMENT "Generating documentation with libreoffice" VERBATIM)
 
     add_dependencies(libreoffice docdirs)
@@ -451,8 +451,7 @@ if(BUILD_DOCUMENTATION)
         COMPONENT documentation
         )
 
-    install(FILES 
-        "${README_LOCATION}/README.html"
+    install(FILES "${README_LOCATION}/README.html"
         DESTINATION ${README_INSTALL_LOCATION}
         COMPONENT documentation
         )
