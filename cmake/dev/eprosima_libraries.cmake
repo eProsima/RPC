@@ -27,6 +27,7 @@ macro(find_eprosima_package package)
                 "\${GENERATOR_}"
                 ${BUILD_OPTION}
                 "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
+                "-DCMAKE_CXX_COMPILER_LAUNCHER=${CMAKE_CXX_COMPILER_LAUNCHER}"
                 ${LIST_OF_OPTIONS}
                 "-DMINION=ON"
                 "-DEPROSIMA_INSTALLER_MINION=${EPROSIMA_INSTALLER_MINION}"
@@ -55,6 +56,10 @@ macro(find_eprosima_package package)
                 "SOURCE_DIR \${SOURCE_DIR_}\n"
                 "BINARY_DIR \"${${package}ExternalDir}/build\"\n"
                 ")\n")
+
+            if(NOT "$ENV{CMAKE_MAKEFLAGS}" STREQUAL "")
+                set(ENV{MAKEFLAGS} "$ENV{CMAKE_MAKEFLAGS}")
+            endif()
 
             execute_process(COMMAND ${CMAKE_COMMAND}
                 -G ${CMAKE_GENERATOR}
