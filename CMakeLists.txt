@@ -54,6 +54,11 @@ endif()
 
 message(STATUS "Configuring ${PROJECT_NAME_LARGE}")
 
+# Turn on -std=c++11 on clang to avoid warnings about using c++11 features.
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+endif()
+
 ###############################################################################
 # Version information                                                         #
 ###############################################################################
