@@ -31,7 +31,7 @@ EntityId_t& EntityId_t::operator=(const EntityId_t &x)
     entityKey_[1] = x.entityKey_[1];
     entityKey_[2] = x.entityKey_[2];
     entityKind_ = x.entityKind_;
-    
+
     return *this;
 }
 
@@ -392,10 +392,12 @@ size_t rpc::ReplyHeader::getCdrSerializedSize(size_t current_alignment) const
 
 void rpc::ReplyHeader::serialize(eprosima::fastcdr::Cdr &cdr) const
 {
-    cdr << relatedRequestId_ << (uint32_t)remoteEx_;
+    cdr << relatedRequestId_ << static_cast<uint32_t>(remoteEx_);
 }
 
 void rpc::ReplyHeader::deserialize(eprosima::fastcdr::Cdr &cdr)
 {
-    cdr >> relatedRequestId_ >> (uint32_t&)remoteEx_;
+    uint32_t ex_value = 0;
+    cdr >> relatedRequestId_ >> ex_value;
+    remoteEx_ = static_cast<RemoteExceptionCode_t>(ex_value);
 }
