@@ -12,16 +12,16 @@ macro(find_eprosima_package package)
                 endif()
             endforeach()
 
-            set(EPROSIMA_PACKAGE_EXTERNAL_DIR "" CACHE STRING "External directory to compile eprosima libraries")
+            set(EPROSIMA_PACKAGE_EXTERNAL_DIR "" CACHE PATH "External directory to compile eprosima libraries")
+            set(${package}ExternalDir ${PROJECT_BINARY_DIR}/external/${package})
 
             if("${EPROSIMA_PACKAGE_EXTERNAL_DIR}" STREQUAL "")
-                set(${package}ExternalDir ${PROJECT_BINARY_DIR}/external/${package})
                 set(EPROSIMA_PACKAGE_EXTERNAL_DIR ${PROJECT_BINARY_DIR}/external)
             else()
                 set(${package}ExternalDir ${EPROSIMA_PACKAGE_EXTERNAL_DIR}/${package})
             endif()
 
-            if(NOT EXISTS "${${package}ExternalDir}/cmake_install.cmake")
+            if(NOT EXISTS "${${package}ExternalDir}/build/cmake_install.cmake")
                 if(MINION)
                     set(CMAKE_INSTALL_PREFIX_ "${CMAKE_INSTALL_PREFIX}")
                 else()
@@ -56,7 +56,7 @@ macro(find_eprosima_package package)
                     "set(GENERATOR_ -G \"${CMAKE_GENERATOR}\")\n"
                     "set(CMAKE_INSTALL_PREFIX_ \"-DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX_}\")\n"
                     "set(CMAKE_PREFIX_PATH_ -DCMAKE_PREFIX_PATH=\"${CMAKE_PREFIX_PATH_}\")\n"
-                    "set(EPROSIMA_PACKAGE_EXTERNAL_DIR_ -DEPROSIMA_PACKAGE_EXTERNAL_DIR=\"${EPROSIMA_PACKAGE_EXTERNAL_DIR}\")\n"
+                    "set(EPROSIMA_PACKAGE_EXTERNAL_DIR_ \"-DEPROSIMA_PACKAGE_EXTERNAL_DIR:PATH=${EPROSIMA_PACKAGE_EXTERNAL_DIR}\")\n"
                     "ExternalProject_Add(${package}\n"
                     "CONFIGURE_COMMAND \"${CMAKE_COMMAND}\"\n"
                     "${${package}_CMAKE_ARGS}\n"
