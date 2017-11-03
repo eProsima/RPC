@@ -397,15 +397,12 @@ $interface.scopedname$_RequestPlugin::get_serialized_sample_size(
     current_alignment += rpc::RequestHeaderPlugin::get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
-            
 
     current_alignment += RTICdrType_getOctetMaxSizeSerialized(
         current_alignment);
-            
 
     current_alignment += RTICdrType_getOctetMaxSizeSerialized(
         current_alignment);
-            
 
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -414,7 +411,7 @@ $interface.scopedname$_RequestPlugin::get_serialized_sample_size(
     return current_alignment - initial_alignment;
     */
 
-    return (unsigned int)sample->getSerializedSize(current_alignment);
+    return (unsigned int)$interface.scopedname$_Request::getCdrSerializedSize(*sample, current_alignment);
 }
 
 unsigned int 
@@ -1010,15 +1007,12 @@ $interface.scopedname$_ReplyPlugin::get_serialized_sample_size(
     current_alignment += rpc::ReplyHeaderPlugin::get_serialized_sample_size(
         endpoint_data,RTI_FALSE, encapsulation_id, 
         current_alignment, &sample->header);
-            
 
     current_alignment += RTICdrType_getOctetMaxSizeSerialized(
         current_alignment);
-            
 
     current_alignment += RTICdrType_getOctetMaxSizeSerialized(
         current_alignment);
-            
 
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
@@ -1027,7 +1021,7 @@ $interface.scopedname$_ReplyPlugin::get_serialized_sample_size(
     return current_alignment - initial_alignment;
     */
 
-    return (unsigned int)sample->getSerializedSize(current_alignment);
+    return (unsigned int)$interface.scopedname$_Reply::getCdrSerializedSize(*sample, current_alignment);
 }
 
 unsigned int 
@@ -1802,10 +1796,10 @@ $endif$
 ddsTypeCodeDefs(name, typecode) ::= <<
 $if(typecode.isType_10)$
 $if(typecode.hasScope)$$typecode.scope$$if(typecode.parent.parent)$$if(typecode.parent.parent.isInterface)$Plugin$endif$$endif$::$endif$$typecode.name$Plugin::get_typecode()
-$elseif(typecode.primitive)$
-$if(typecode.isType_d)$
+$elseif(typecode.isType_d)$
 &$name$_g_tc_string
-$elseif(typecode.isType_c)$
+$elseif(typecode.primitive)$
+$if(typecode.isType_c)$
 $if(typecode.hasScope)$$typecode.scope$$if(typecode.parent.parent)$$if(typecode.parent.parent.isInterface)$Plugin$endif$$endif$::$endif$$typecode.name$Plugin::get_typecode()
 $else$
 &$basicDDSTypeCodeDefs.(typecode.stType)$
