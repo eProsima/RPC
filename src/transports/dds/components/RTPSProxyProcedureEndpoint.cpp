@@ -432,7 +432,7 @@ void RTPSProxyProcedureEndpoint::onNewDataMessage(eprosima::fastrtps::Subscriber
 
     if(sub->takeNextData(data_, &info))
     {
-        if(info.sampleKind == eprosima::fastrtps::ALIVE)
+        if(info.sampleKind == eprosima::fastrtps::rtps::ALIVE)
         {
             eprosima::rpc::protocol::dds::rpc::ReplyHeader *replyHeader = reinterpret_cast<eprosima::rpc::protocol::dds::rpc::ReplyHeader*>(data_);
 
@@ -493,7 +493,7 @@ void RTPSProxyProcedureEndpoint::onSubscriptionMatched(eprosima::fastrtps::Subsc
     boost::upgrade_lock<boost::shared_mutex> lock(*matched_mutex_);
     boost::upgrade_to_unique_lock<boost::shared_mutex> uniqueLock(lock);
 
-    if(info.status == MatchingStatus::MATCHED_MATCHING)
+    if(info.status == eprosima::fastrtps::rtps::MatchingStatus::MATCHED_MATCHING)
     {
         ++num_matched_sub_;
 
@@ -511,7 +511,7 @@ void RTPSProxyProcedureEndpoint::onPublicationMatched(eprosima::fastrtps::Publis
     boost::upgrade_lock<boost::shared_mutex> lock(*matched_mutex_);
     boost::upgrade_to_unique_lock<boost::shared_mutex> uniqueLock(lock);
 
-    if(info.status == MatchingStatus::MATCHED_MATCHING)
+    if(info.status == eprosima::fastrtps::rtps::MatchingStatus::MATCHED_MATCHING)
     {
         ++num_matched_pub_;
 
