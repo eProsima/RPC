@@ -66,9 +66,9 @@ elseif(RPCPROTO STREQUAL "rpcrest")
 endif()
 
 # Set version
-set(RPC_VERSION_MAJOR ${PROJECT_MAJOR_VERSION})
-set(RPC_VERSION_MINOR ${PROJECT_MINOR_VERSION})
-set(RPC_VERSION_MICRO ${PROJECT_MICRO_VERSION})
+set(RPC_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(RPC_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(RPC_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(RPC_VERSION_STR ${PROJECT_VERSION})
 
 set(EPROSIMA_RPC_LIB_NAME ${PROJECT_NAME})
@@ -78,6 +78,9 @@ else()
     set(RPC_WITH_FASTRTPS 0)
 endif()
 if(WITH_RTIDDS)
+    string(REPLACE ";" "$<SEMICOLON>" RTIDDS_DEFINITIONS_ "${RTIDDS_DEFINITIONS}")
+    string(REPLACE ";" "$<SEMICOLON>" RTIDDS_INCLUDE_DIRS_ "${RTIDDS_INCLUDE_DIRS}")
+    string(REPLACE ";" "$<SEMICOLON>" RTIDDS_LIBRARIES_"${RTIDDS_LIBRARIES}")
     set(RPC_WITH_RTIDDS 1)
 else()
     set(RPC_WITH_RTIDDS 0)
@@ -102,12 +105,12 @@ elseif(NOT EPROSIMA_INSTALLER)
 
     target_compile_definitions(${PROJECT_NAME} PRIVATE
         RPC_SOURCE
-        $<$<BOOL:${WIN32}>:BOOST_ALL_DYN_LINK>
         $<$<AND:$<NOT:$<BOOL:${WIN32}>>,$<STREQUAL:"${CMAKE_BUILD_TYPE}","Debug">>:__DEBUG>
         $<$<AND:$<BOOL:${WIN32}>,$<STREQUAL:"${CMAKE_SYSTEM_NAME}","WindowsStore">>:_WIN32_WINNT=0x0603>
         $<$<AND:$<BOOL:${WIN32}>,$<NOT:$<STREQUAL:"${CMAKE_SYSTEM_NAME}","WindowsStore">>>:_WIN32_WINNT=0x0601>
         PUBLIC
-        $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_RTIDDS}>>:${RTIDDS_DEFINITIONS}>
+        $<$<BOOL:${WIN32}>:BOOST_ALL_DYN_LINK>
+        $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_RTIDDS}>>:${RTIDDS_DEFINITIONS_}>
         )
 
     # Define public headers
@@ -115,7 +118,7 @@ elseif(NOT EPROSIMA_INSTALLER)
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
         $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include> $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}>
         $<INSTALL_INTERFACE:include>
-        $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_RTIDDS}>>:${RTIDDS_INCLUDE_DIRS}>
+        $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_RTIDDS}>>:${RTIDDS_INCLUDE_DIRS_}>
         PRIVATE
         ${Boost_INCLUDE_DIR} # Include Boost header files.
         ${PROJECT_SOURCE_DIR}/thirdparty/boost-threadpool # Include threadpool header files.
@@ -130,7 +133,7 @@ elseif(NOT EPROSIMA_INSTALLER)
         ${Boost_LIBRARIES}
         $<$<OR:$<STREQUAL:"${RPCPROTO}","fastrpc">,$<STREQUAL:"${RPCPROTO}","rpcdds">>:fastcdr>
         $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_FASTRTPS}>>:fastrtps>
-        $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_RTIDDS}>>:${RTIDDS_LIBRARIES}>
+        $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_RTIDDS}>>:${RTIDDS_LIBRARIES_}>
         )
 
     if(MSVC OR MSVC_IDE)
