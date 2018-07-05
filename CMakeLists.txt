@@ -178,7 +178,7 @@ else()
     set(DOC_DIR "${DATA_INSTALL_DIR}/doc")
 endif()
 set(DOC_INSTALL_DIR ${DOC_DIR} CACHE PATH "Installation directory for documentation")
-if(WIN32)
+if(WIN32 AND EPROSIMA_INSTALLER AND IS_TOP_LEVEL)
     set(LICENSE_INSTALL_DIR . CACHE PATH "Installation directory for licenses")
 else()
     set(LICENSE_INSTALL_DIR ${DATA_INSTALL_DIR}/${PROJECT_NAME} CACHE PATH "Installation directory for licenses")
@@ -199,6 +199,14 @@ endif()
 ###############################################################################
 include(${PROJECT_SOURCE_DIR}/cmake/dev/boost_libraries.cmake)
 check_boost(thread system date_time chrono regex atomic)
+
+###############################################################################
+# Default shared libraries
+###############################################################################
+# Global flag to cause add_library() to create shared libraries if on.
+# If set to true, this will cause all libraries to be built shared
+# unless the library was explicitly added as a static library.
+option(BUILD_SHARED_LIBS "Create shared libraries by default" ON)
 
 ###############################################################################
 # Load external eProsima projects.
@@ -254,9 +262,9 @@ add_subdirectory(src)
 # Testing
 ###############################################################################
 if(NOT EPROSIMA_INSTALLER AND NOT EPROSIMA_INSTALLER_MINION)
-	enable_testing()
-	include(CTest)
-	add_subdirectory(test)
+    enable_testing()
+    include(CTest)
+    add_subdirectory(test)
 endif()
 
 ###############################################################################
@@ -264,7 +272,7 @@ endif()
 ###############################################################################
 option(COMPILE_EXAMPLES "Build example" ON)
 if(COMPILE_EXAMPLES)
-	add_subdirectory(examples)
+    add_subdirectory(examples)
 endif()
 
 
