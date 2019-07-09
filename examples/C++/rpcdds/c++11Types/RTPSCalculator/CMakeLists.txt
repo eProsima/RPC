@@ -2,9 +2,17 @@ cmake_minimum_required(VERSION 2.8.12)
 project("RTPSCalculator")
 
 # Find requirements
-find_package(fastcdr REQUIRED)
-find_package(fastrtps REQUIRED)
-find_package(rpcdds REQUIRED)
+if(NOT fastcdr_FOUND)
+    find_package(fastcdr REQUIRED)
+endif()
+
+if(NOT fastrtps_FOUND)
+    find_package(fastrtps REQUIRED)
+endif()
+if(NOT rpcdds_FOUND)
+    find_package(rpcdds REQUIRED)
+endif()
+
 # Set C++11
 include(CheckCXXCompilerFlag)
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANG OR
