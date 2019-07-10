@@ -1,4 +1,9 @@
 cmake_minimum_required(VERSION 2.8.12)
+
+if(NOT CMAKE_VERSION VERSION_LESS 3.0)
+    cmake_policy(SET CMP0048 NEW)
+endif()
+
 project("RTPSCalculatorAsync")
 
 # Find requirements
@@ -9,6 +14,7 @@ endif()
 if(NOT fastrtps_FOUND)
     find_package(fastrtps REQUIRED)
 endif()
+
 if(NOT rpcdds_FOUND)
     find_package(rpcdds REQUIRED)
 endif()
@@ -31,34 +37,37 @@ set(RTPSCALCULATOR_SOURCES_CXX Calculator.cxx)
 set(RTPSCALCULATORCLIENT_SOURCES_CXX CalculatorProxy.cxx)
 set(RTPSCALCULATORSERVER_SOURCES_CXX CalculatorServer.cxx)
 
-add_library(Calculator STATIC ${RTPSCALCULATOR_COMMON_SOURCES_CXX} ${RTPSCALCULATOR_SOURCES_CXX})
-target_compile_definitions(Calculator PRIVATE BOOST_ALL_DYN_LINK EPROSIMA_ALL_DYN_LINK)
-target_include_directories(Calculator PRIVATE ${rpcdds_INCLUDE_DIR} ${fastrtps_INCLUDE_DIR} ${fastcdr_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
+add_library(CalculatorAsync STATIC ${RTPSCALCULATOR_COMMON_SOURCES_CXX} ${RTPSCALCULATOR_SOURCES_CXX})
+target_compile_definitions(CalculatorAsync PRIVATE BOOST_ALL_DYN_LINK EPROSIMA_ALL_DYN_LINK)
+target_include_directories(CalculatorAsync PRIVATE ${rpcdds_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
+target_link_libraries(CalculatorAsync fastrtps fastcdr)
 
-add_library(CalculatorClient STATIC ${RTPSCALCULATORCLIENT_SOURCES_CXX})
-target_compile_definitions(CalculatorClient PRIVATE BOOST_ALL_DYN_LINK EPROSIMA_ALL_DYN_LINK)
-target_include_directories(CalculatorClient PRIVATE ${rpcdds_INCLUDE_DIR} ${fastrtps_INCLUDE_DIR} ${fastcdr_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
+add_library(CalculatorAsyncClient STATIC ${RTPSCALCULATORCLIENT_SOURCES_CXX})
+target_compile_definitions(CalculatorAsyncClient PRIVATE BOOST_ALL_DYN_LINK EPROSIMA_ALL_DYN_LINK)
+target_include_directories(CalculatorAsyncClient PRIVATE ${rpcdds_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
+target_link_libraries(CalculatorAsyncClient fastrtps fastcdr)
 
-add_library(CalculatorServer STATIC ${RTPSCALCULATORSERVER_SOURCES_CXX})
-target_compile_definitions(CalculatorServer PRIVATE BOOST_ALL_DYN_LINK EPROSIMA_ALL_DYN_LINK)
-target_include_directories(CalculatorServer PRIVATE ${rpcdds_INCLUDE_DIR} ${fastrtps_INCLUDE_DIR} ${fastcdr_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
+add_library(CalculatorAsyncServer STATIC ${RTPSCALCULATORSERVER_SOURCES_CXX})
+target_compile_definitions(CalculatorAsyncServer PRIVATE BOOST_ALL_DYN_LINK EPROSIMA_ALL_DYN_LINK)
+target_include_directories(CalculatorAsyncServer PRIVATE ${rpcdds_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
+target_link_libraries(CalculatorAsyncServer fastrtps fastcdr)
 
 message(STATUS "Configuring RTPSCalculator Server and Client examples...")
 set(RTPSCALCULATORSERVEREXAMPLE_SOURCES_CXX CalculatorServerExample.cxx CalculatorServerImplExample.cxx) 
 set(RTPSCALCULATORCLIENTEXAMPLE_SOURCES_CXX CalculatorClientExample.cxx) 
 
-add_executable(CalculatorServerExample ${RTPSCALCULATORSERVEREXAMPLE_SOURCES_CXX})
-target_include_directories(CalculatorServerExample PRIVATE ${Boost_INCLUDE_DIR})
-target_link_libraries(CalculatorServerExample CalculatorServer Calculator)
-target_link_libraries(CalculatorServerExample rpcdds fastrtps fastcdr ${Boost_LIBRARIES})
+add_executable(CalculatorAsyncServerExample ${RTPSCALCULATORSERVEREXAMPLE_SOURCES_CXX})
+target_include_directories(CalculatorAsyncServerExample PRIVATE ${Boost_INCLUDE_DIR})
+target_link_libraries(CalculatorAsyncServerExample CalculatorServer Calculator)
+target_link_libraries(CalculatorAsyncServerExample rpcdds fastrtps fastcdr ${Boost_LIBRARIES})
 
-install(TARGETS CalculatorServerExample
+install(TARGETS CalculatorAsyncServerExample
     RUNTIME DESTINATION examples/C++/RTPSCalculator/${BIN_INSTALL_DIR})
 
-add_executable(CalculatorClientExample ${RTPSCALCULATORCLIENTEXAMPLE_SOURCES_CXX})
-target_include_directories(CalculatorClientExample PRIVATE ${Boost_INCLUDE_DIR})
-target_link_libraries(CalculatorClientExample CalculatorClient Calculator)
-target_link_libraries(CalculatorClientExample rpcdds fastrtps fastcdr ${Boost_LIBRARIES})
+add_executable(CalculatorAsyncClientExample ${RTPSCALCULATORCLIENTEXAMPLE_SOURCES_CXX})
+target_include_directories(CalculatorAsyncClientExample PRIVATE ${Boost_INCLUDE_DIR})
+target_link_libraries(CalculatorAsyncClientExample CalculatorClient Calculator)
+target_link_libraries(CalculatorAsyncClientExample rpcdds fastrtps fastcdr ${Boost_LIBRARIES})
 
-install(TARGETS CalculatorClientExample
+install(TARGETS CalculatorAsyncClientExample
     RUNTIME DESTINATION examples/C++/RTPSCalculator/${BIN_INSTALL_DIR})

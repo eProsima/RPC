@@ -840,7 +840,7 @@ public class fastrpcgen
                     m_appProduct, m_include_include_prefix);
 
             // Create template manager
-            TemplateManager tmanager = new TemplateManager("FastCdrCommon:eprosima:Common");
+            TemplateManager tmanager = new TemplateManager("FastCdrCommon:eprosima:Common", ctx, false);
             // Load template to generate source for common types.
             tmanager.addGroup("TypesHeader");
             tmanager.addGroup("TypesSource");
@@ -1012,7 +1012,7 @@ public class fastrpcgen
                     m_appProduct, m_include_include_prefix);
 
             // Create template manager
-            TemplateManager tmanager = new TemplateManager("FastCdrCommon:eprosima:Common");
+            TemplateManager tmanager = new TemplateManager("FastCdrCommon:eprosima:Common", ctx, false);
             // Load template to generate source for common types.
             tmanager.addGroup("TypesHeader");
             tmanager.addGroup("TypesSource");
@@ -1183,7 +1183,7 @@ public class fastrpcgen
             // Load templates depending on dds types.
             if(m_types == DDS_TYPES.EPROSIMA)
             {
-                tmanager = new TemplateManager("FastCdrCommon:eprosima:Common");
+                tmanager = new TemplateManager("FastCdrCommon:eprosima:Common", ctx, false);
                 // Load template to generate source for common types.
                 tmanager.addGroup("TypesHeader");
                 tmanager.addGroup("TypesSource");
@@ -1196,7 +1196,7 @@ public class fastrpcgen
             }
             else if(m_types == DDS_TYPES.RTI)
             {
-                tmanager = new TemplateManager("rti:Common");
+                tmanager = new TemplateManager("rti:Common", ctx, false);
                 // Load CPP type for RTI types.
                 tmanager.changeCppTypesTemplateGroup("rtiTypes");
                 // TODO OpenDDS not

@@ -1,4 +1,9 @@
 cmake_minimum_required(VERSION 2.8.12)
+
+if(NOT CMAKE_VERSION VERSION_LESS 3.0)
+    cmake_policy(SET CMP0048 NEW)
+endif()
+
 project("RTPSCalculator")
 
 # Find requirements
@@ -9,6 +14,7 @@ endif()
 if(NOT fastrtps_FOUND)
     find_package(fastrtps REQUIRED)
 endif()
+
 if(NOT rpcdds_FOUND)
     find_package(rpcdds REQUIRED)
 endif()
@@ -33,15 +39,18 @@ set(RTPSCALCULATORSERVER_SOURCES_CXX CalculatorServer.cxx)
 
 add_library(Calculator STATIC ${RTPSCALCULATOR_COMMON_SOURCES_CXX} ${RTPSCALCULATOR_SOURCES_CXX})
 target_compile_definitions(Calculator PRIVATE BOOST_ALL_DYN_LINK EPROSIMA_ALL_DYN_LINK)
-target_include_directories(Calculator PRIVATE ${rpcdds_INCLUDE_DIR} ${fastrtps_INCLUDE_DIR} ${fastcdr_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
+target_include_directories(Calculator PRIVATE ${rpcdds_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
+target_link_libraries(Calculator fastcdr fastrtps)
 
 add_library(CalculatorClient STATIC ${RTPSCALCULATORCLIENT_SOURCES_CXX})
 target_compile_definitions(CalculatorClient PRIVATE BOOST_ALL_DYN_LINK EPROSIMA_ALL_DYN_LINK)
-target_include_directories(CalculatorClient PRIVATE ${rpcdds_INCLUDE_DIR} ${fastrtps_INCLUDE_DIR} ${fastcdr_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
+target_include_directories(CalculatorClient PRIVATE ${rpcdds_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
+target_link_libraries(CalculatorClient fastcdr fastrtps)
 
 add_library(CalculatorServer STATIC ${RTPSCALCULATORSERVER_SOURCES_CXX})
 target_compile_definitions(CalculatorServer PRIVATE BOOST_ALL_DYN_LINK EPROSIMA_ALL_DYN_LINK)
-target_include_directories(CalculatorServer PRIVATE ${rpcdds_INCLUDE_DIR} ${fastrtps_INCLUDE_DIR} ${fastcdr_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
+target_include_directories(CalculatorServer PRIVATE ${rpcdds_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
+target_link_libraries(CalculatorServer fastcdr fastrtps)
 
 message(STATUS "Configuring RTPSCalculator Server and Client examples...")
 set(RTPSCALCULATORSERVEREXAMPLE_SOURCES_CXX CalculatorServerExample.cxx CalculatorServerImplExample.cxx) 
