@@ -39,6 +39,6 @@ file(INSTALL @PROJECT_SOURCE_DIR@/thirdparty/boost-threadpool/boost
 
 # Copy licenses
 file(INSTALL @PROJECT_SOURCE_DIR@/@PROJECT_NAME_UPPER@_LICENSE.txt
-    @PROJECT_SOURCE_DIR@/LGPLv3_LICENSE.txt
+    @PROJECT_SOURCE_DIR@/LICENSE.txt
     DESTINATION @PROJECT_BINARY_DIR@/autotools
     )
