@@ -4,11 +4,11 @@ LN= g++
 AR=ar
 LDFLAGS= -m64 -O2 -Wl,--no-as-needed
 SYSLIBS= -ldl -lnsl -lm -lpthread -lrt
-DEFINES= -DRTI_LINUX -DRTI_UNIX
+DEFINES= 
 
 INCLUDES= -I. -I$(RPCDDSHOME)/include
 
-LIBS = -L$(RPCDDSHOME)/lib/x64Linux2.6gcc4.4.5 -lfastcdr -lfastrtps -lrpcdds $(SYSLIBS)
+LIBS = -L$(RPCDDSHOME)/lib -lfastcdr -lfastrtps -lrpcdds $(SYSLIBS)
 
 DIRECTORIES= output.dir output/x64Linux2.6gcc4.4.5.dir lib.dir lib/x64Linux2.6gcc4.4.5.dir bin.dir bin/x64Linux2.6gcc4.4.5.dir
 

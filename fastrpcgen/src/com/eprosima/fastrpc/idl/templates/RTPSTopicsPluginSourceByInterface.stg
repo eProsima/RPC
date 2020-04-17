@@ -16,6 +16,7 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "TopicsPlugin.cpp"], description=["TOD
 #include <fastcdr/Cdr.h>
 
 using namespace eprosima::fastrtps;
+using namespace ::rtps;
 
 $definitions; separator="\n"$
 
@@ -41,6 +42,11 @@ $interface.scopedname$_RequestPlugin::$interface.name$_RequestPlugin()
 
 $interface.scopedname$_RequestPlugin::~$interface.name$_RequestPlugin() 
 {
+}
+
+bool $interface.scopedname$_RequestPlugin::getKey(void*, InstanceHandle_t*, bool)
+{
+    return false;
 }
 
 bool $interface.scopedname$_RequestPlugin::serialize(void *data, SerializedPayload_t *payload) 
@@ -141,6 +147,11 @@ $interface.scopedname$_ReplyPlugin::$interface.name$_ReplyPlugin()
 
 $interface.scopedname$_ReplyPlugin::~$interface.name$_ReplyPlugin() 
 {
+}
+
+bool $interface.scopedname$_ReplyPlugin::getKey(void*, InstanceHandle_t*, bool)
+{
+    return false;
 }
 
 bool $interface.scopedname$_ReplyPlugin::serialize(void *data, SerializedPayload_t *payload) 

@@ -17,6 +17,7 @@
 #include "../../../utils/Messages.h"
 #include "../../../protocols/dds/MessageHeader.h"
 
+#include <fastrtps/fastrtps_dll.h>
 #include <fastrtps/subscriber/SubscriberListener.h>
 #include <fastrtps/publisher/PublisherListener.h>
 #include <fastrtps/rtps/common/MatchingInfo.h>
@@ -51,7 +52,7 @@ namespace eprosima
                 /*!
                  * @brief This class represents a remote endpoint used by a proxy.
                  * It also encapsulates the DDS datawriter and the DDS datareader.
-				 * @ingroup TRANSPORTMODULE
+                 * @ingroup TRANSPORTMODULE
                  */
                 class RTPSProxyProcedureEndpoint : public Endpoint, public eprosima::fastrtps::SubscriberListener,
                 public eprosima::fastrtps::PublisherListener
@@ -69,7 +70,7 @@ namespace eprosima
 
                         /*!
                          * @brief This function initializes the proxy procedure endpoint.
-						 *
+                         *
                          * @param name The name associated with this proxy procedure endpoint. It cannot be NULL.
                          * @param writertypename The type name of the topic that the proxy procedure endpoint uses in the datawriter. It cannot be NULL.
                          * @param writertopicname The name of the topic that the proxy procedure endpoint uses in the datawriter. It cannot be NULL.
@@ -98,21 +99,21 @@ namespace eprosima
                          * @param request Pointer to the allocated request. It cannot be NULL.
                          * @param reply Pointer to the allocated reply. This memory will be filled with the incoming data.
                          *        The pointer can be NULL and this means that the RPC call is oneway.
-						 * @return Operation status
+                         * @return Operation status
                          * @throw eprosima::rpc::exception::ServerTimeoutException.
                          */
                         RPC_DllAPI eprosima::rpc::ReturnMessage send(void *request, void* reply);
 
-						/*!
-						 * @brief This function sends an asynchronous RPC call.
+                        /*!
+                         * @brief This function sends an asynchronous RPC call.
                          * It sends the request to the server and does not wait for the reply.
-						 * Instead, the corresponding callback inside the RTPSAsyncTask object
-						 * will be invoked when the response arrives.
-						 *
-						 * @param request Pointer to the allocated request. It cannot be NULL.
-						 * @param task Object containing information of the asynchronous task.
-						 * @return Operation status. It can be CLIENT_INTERNAL_ERROR or NO_SERVER
-						 */
+                         * Instead, the corresponding callback inside the RTPSAsyncTask object
+                         * will be invoked when the response arrives.
+                         *
+                         * @param request Pointer to the allocated request. It cannot be NULL.
+                         * @param task Object containing information of the asynchronous task.
+                         * @return Operation status. It can be CLIENT_INTERNAL_ERROR or NO_SERVER
+                         */
                         RPC_DllAPI eprosima::rpc::ReturnMessage send_async(void *request, RTPSAsyncTask *task);
 
                         /// @brief DDS callback.

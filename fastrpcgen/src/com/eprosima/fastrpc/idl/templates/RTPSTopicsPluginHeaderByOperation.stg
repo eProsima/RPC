@@ -70,6 +70,8 @@ class user_cpp_DllExport $interface.name$Plugin
 
                 virtual user_cpp_DllExport ~$operation.name$_RequestPlugin();
 
+                user_cpp_DllExport bool getKey(void *data, eprosima::fastrtps::rtps::InstanceHandle_t* ihandle, bool force_md5);
+
                 user_cpp_DllExport bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
 
                 user_cpp_DllExport bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
@@ -77,7 +79,7 @@ class user_cpp_DllExport $interface.name$Plugin
                 user_cpp_DllExport std::function<uint32_t()> getSerializedSizeProvider(void* data);
 
                 user_cpp_DllExport void* createData();
-                
+
                 user_cpp_DllExport static void* create_data();
 
                 user_cpp_DllExport void deleteData(void *data);
@@ -100,6 +102,8 @@ class user_cpp_DllExport $interface.name$Plugin
                 user_cpp_DllExport $operation.name$_ReplyPlugin();
 
                 virtual user_cpp_DllExport ~$operation.name$_ReplyPlugin();
+
+                user_cpp_DllExport bool getKey(void *data, eprosima::fastrtps::rtps::InstanceHandle_t* ihandle, bool force_md5);
 
                 user_cpp_DllExport bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
 

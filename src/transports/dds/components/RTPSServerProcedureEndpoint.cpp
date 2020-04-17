@@ -219,7 +219,7 @@ void RTPSServerProcedureEndpoint::onNewDataMessage(eprosima::fastrtps::Subscribe
 
     while(data != NULL && sub->takeNextData(data, &info))
     {
-        if(info.sampleKind == eprosima::fastrtps::ALIVE)
+        if(info.sampleKind == eprosima::fastrtps::rtps::ALIVE)
         {
             m_transport.getStrategy().getImpl()->schedule(boost::bind(&RTPSServerTransport::process, &m_transport, this, data));
 

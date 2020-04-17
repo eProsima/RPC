@@ -33,7 +33,8 @@ task generateWADLParser {
 }
 
 task copyResources {
-    File outputDir = file(new File(buildDir, "resources/main"))
+    // Copy platforms file
+    File outputDir = file(new File("${project.buildDir}", "resources/main"))
     outputDir.exists() || outputDir.mkdirs()
     project.copy {
         from(file(new File(projectDir, '../src/platforms')))
@@ -44,8 +45,9 @@ task copyResources {
     Properties pversion = new Properties()
     project.hasProperty('customversion') ? pversion.setProperty('version', project.customversion.toString()) : pversion.setProperty('version', '0.0.0')
     File versionFile = new File("${project.buildDir}/resources/main/version")
-    versionFile.createNewFile();
-    pversion.store(versionFile.newWriter(), null)
+    versionFile.withWriter {
+        pversion.store(it, null)
+    }
 
     if(project.hasProperty('customvendor'))
     {
@@ -106,7 +108,9 @@ task rpcrestgenJar(type: Jar) {
 
 compileJava.dependsOn buildIDLParser
 compileJava {
-    sourceCompatibility = 1.6
-    targetCompatibility = 1.6
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    options.compilerArgs.add('-Xlint:deprecation')
+    options.compilerArgs.add('-Xlint:unchecked')
 }
 build.dependsOn fastrpcgenJar, rpcddsgenJar, rpcrestgenJar
