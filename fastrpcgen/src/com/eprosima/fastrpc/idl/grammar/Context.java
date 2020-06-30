@@ -126,6 +126,18 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
     }
 
     @Override
+    public boolean isGenerateTypesC()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isGenerateTypesROS2()
+    {
+        return false;
+    }
+
+    @Override
     public String getHeaderGuardName ()
     {
         return getFilename().toUpperCase();
