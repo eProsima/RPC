@@ -41,7 +41,7 @@ void HttpServerTransport::stop()
     m_tcptransport.stop();
 }
 
-void HttpServerTransport::sendReply(void *data, size_t dataLength, Endpoint *connection)
+void HttpServerTransport::sendReply(void *data, size_t /*dataLength*/, Endpoint *connection)
 {
     TCPEndpoint *conn = dynamic_cast<TCPEndpoint*>(connection);
     const HttpMessage *httpMessage = reinterpret_cast<const HttpMessage*>(data);
@@ -92,7 +92,7 @@ void HttpServerTransport::sendReply(void *data, size_t dataLength, Endpoint *con
     }
 }
 
-int HttpServerTransport::receive(char *buffer, size_t bufferLength, size_t &dataToRead, Endpoint *endpoint)
+int HttpServerTransport::receive(char* /*buffer*/, size_t /*bufferLength*/, size_t& /*dataToRead*/, Endpoint* /*endpoint*/)
 {
     // EMPTY Not used.
     return -1;

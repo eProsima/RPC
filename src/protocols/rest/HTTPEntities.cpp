@@ -173,7 +173,7 @@ HTTPResponseCode::HTTPResponseCode(std::string &code, std::string &text)
     data_ = code+std::string(" ")+text+std::string("\r\n");
 }
 
-HTTPResponseCode::~HTTPResponseCode(){};
+HTTPResponseCode::~HTTPResponseCode(){}
 
 //PARAM
 

@@ -37,9 +37,6 @@ class CalculatorServerImplExample : public CalculatorServerImpl
                 //! @brief Implementation of the remote procedure subtraction
                 int32_t subtraction(/*in*/ int32_t value1, /*in*/ int32_t value2);
                 
-
-
-;
 };
 
 

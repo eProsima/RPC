@@ -67,7 +67,7 @@ size_t Calculator_addition_In::getMaxCdrSerializedSize(size_t current_alignment)
     return current_alignment - initial_alignment;
 }
 
-size_t Calculator_addition_In::getCdrSerializedSize(const Calculator_addition_In& data, size_t current_alignment)
+size_t Calculator_addition_In::getCdrSerializedSize(const Calculator_addition_In& /*data*/, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
@@ -134,7 +134,7 @@ size_t Calculator_addition_Out::getMaxCdrSerializedSize(size_t current_alignment
     return current_alignment - initial_alignment;
 }
 
-size_t Calculator_addition_Out::getCdrSerializedSize(const Calculator_addition_Out& data, size_t current_alignment)
+size_t Calculator_addition_Out::getCdrSerializedSize(const Calculator_addition_Out& /*data*/, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
@@ -401,7 +401,7 @@ size_t Calculator_subtraction_In::getMaxCdrSerializedSize(size_t current_alignme
     return current_alignment - initial_alignment;
 }
 
-size_t Calculator_subtraction_In::getCdrSerializedSize(const Calculator_subtraction_In& data, size_t current_alignment)
+size_t Calculator_subtraction_In::getCdrSerializedSize(const Calculator_subtraction_In& /*data*/, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
@@ -468,7 +468,7 @@ size_t Calculator_subtraction_Out::getMaxCdrSerializedSize(size_t current_alignm
     return current_alignment - initial_alignment;
 }
 
-size_t Calculator_subtraction_Out::getCdrSerializedSize(const Calculator_subtraction_Out& data, size_t current_alignment)
+size_t Calculator_subtraction_Out::getCdrSerializedSize(const Calculator_subtraction_Out& /*data*/, size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
 
