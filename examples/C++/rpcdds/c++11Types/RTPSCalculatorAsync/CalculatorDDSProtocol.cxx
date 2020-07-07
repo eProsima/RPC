@@ -121,7 +121,7 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
 }
 
 void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &protocol,
-    void *_data , eprosima::rpc::transport::Endpoint *endpoint)
+    void *_data , eprosima::rpc::transport::Endpoint* /*endpoint*/)
 {
     CalculatorProtocol &_protocol = dynamic_cast<CalculatorProtocol&>(protocol);
     Calculator_Request &requestData = *(Calculator_Request*)_data;

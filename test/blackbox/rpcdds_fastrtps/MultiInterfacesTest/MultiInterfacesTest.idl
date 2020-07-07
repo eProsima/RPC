@@ -20,7 +20,7 @@ module BasicTypes
     };
 };
 
-module Struct
+module _Struct
 {
     struct Envio
     {

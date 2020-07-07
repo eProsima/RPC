@@ -14,15 +14,15 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
             String appProduct, boolean include_include_prefix)
     {
         super(filename, file, includePaths);
-        
-        
+
+
         m_clientcode = clientcode;
         m_servercode = servercode;
         m_randomGenNames = new Stack<String>();
         m_appProduct = appProduct;
         m_include_include_prefix = include_include_prefix;
     }
-    
+
     public void setTypelimitation(String lt)
     {
         m_typelimitation = lt;
@@ -37,7 +37,7 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
     {
         return m_clientcode;
     }
-    
+
     public boolean isServer()
     {
         return m_servercode;
@@ -119,6 +119,30 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
         return paramObject;
     }
 
+    @Override
+    public boolean isGenerateTypeObject()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isGenerateTypesC()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isGenerateTypesROS2()
+    {
+        return false;
+    }
+
+    @Override
+    public String getHeaderGuardName ()
+    {
+        return getFilename().toUpperCase();
+    }
+
     // TODO Para stringtemplate TopicsPlugin de nuestros tipos DDS.
     public String getNewRandomName()
     {
@@ -134,13 +158,13 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
     }
 
     private String m_typelimitation = null;
-    
+
     // TODO Lleva la cuenta de generacion de nuevos nombres.
     private int m_randomGenName = 0;
     private Stack<String> m_randomGenNames = null;
     // TODO Lleva la cuenta del nombre de variables para bucles anidados.
     private char m_loopVarName = 'a';
-    
+
     // Stores if the user will generate the client source.
     private boolean m_clientcode = true;
     // Stores if the user will generate the server source.

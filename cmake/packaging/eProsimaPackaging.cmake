@@ -11,49 +11,12 @@ set(CPACK_PACKAGE_DESCRIPTION "${${PROJECT_NAME}_DESCRIPTION}")
 set(CPACK_PACKAGE_VENDOR "eProsima")
 set(CPACK_PACKAGE_CONTACT "eProsima Support <support@eprosima.com>")
 
-set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_MAJOR_VERSION})
-set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_MINOR_VERSION})
-set(CPACK_PACKAGE_VERSION_PATH ${PROJECT_MICRO_VERSION})
+set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATH ${PROJECT_VERSION_PATCH})
 set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
 
 set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/${PROJECT_NAME_UPPER}_LICENSE.txt")
-
-###############################################################################
-# Create CMake package config file
-###############################################################################
-if(NOT((MSVC OR MSVC_IDE) AND EPROSIMA_INSTALLER))
-    set(DIR_EXTENSION "")
-    if(EPROSIMA_INSTALLER_MINION)
-        set(DIR_EXTENSION "/${MSVC_ARCH}")
-    endif()
-    
-    include(CMakePackageConfigHelpers)
-
-    if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
-        set(EPROSIMA_FIND_DEPENDENCIES
-            "if(NOT fastcdr_FOUND)\n    find_package(fastcdr REQUIRED)\nendif()\n")
-    endif()
-
-    if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
-        set(EPROSIMA_FIND_DEPENDENCIES
-            "if(NOT fastrtps_FOUND)\n    find_package(fastcdr REQUIRED)\nendif()\n")
-    endif()
-
-    configure_package_config_file(${PROJECT_SOURCE_DIR}/cmake/packaging/Config.cmake.in
-        ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Config.cmake
-        INSTALL_DESTINATION ${LIB_INSTALL_DIR}${DIR_EXTENSION}/${PROJECT_NAME}/cmake
-        PATH_VARS BIN_INSTALL_DIR INCLUDE_INSTALL_DIR LIB_INSTALL_DIR
-        )
-    write_basic_package_version_file(${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}ConfigVersion.cmake
-        VERSION ${PROJECT_VERSION}
-        COMPATIBILITY SameMajorVersion
-        )
-    install(FILES ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Config.cmake
-        ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}ConfigVersion.cmake
-        DESTINATION ${LIB_INSTALL_DIR}${DIR_EXTENSION}/${PROJECT_NAME}/cmake
-        COMPONENT cmake
-        )
-endif()
 
 set(CPACK_COMPONENT_CMAKE_HIDDEN 1)
 set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} cmake)
@@ -62,14 +25,6 @@ set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} cmake)
 # Platform and architecture dependant
 ###############################################################################
 if(WIN32)
-    if(EPROSIMA_INSTALLER_MINION)
-        configure_file(${PROJECT_SOURCE_DIR}/cmake/packaging/windows/Config.cmake.in ${PROJECT_BINARY_DIR}/cmake/packaging/windows/${PROJECT_NAME}Config.cmake @ONLY)
-        install(FILES ${PROJECT_BINARY_DIR}/cmake/packaging/windows/${PROJECT_NAME}Config.cmake
-            DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake
-            COMPONENT cmake
-            )
-    endif()
-    
     set(CPACK_GENERATOR NSIS)
 
     configure_file(${PROJECT_SOURCE_DIR}/cmake/packaging/windows/WindowsPackaging.cmake.in ${PROJECT_BINARY_DIR}/cmake/packaging/windows/WindowsPackaging.cmake @ONLY)

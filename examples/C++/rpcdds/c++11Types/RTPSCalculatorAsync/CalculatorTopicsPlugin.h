@@ -40,6 +40,8 @@ class Calculator_RequestPlugin : public eprosima::fastrtps::TopicDataType
 
         virtual user_cpp_DllExport ~Calculator_RequestPlugin();
 
+        user_cpp_DllExport bool getKey(void *data, eprosima::fastrtps::rtps::InstanceHandle_t* ihandle, bool force_md5);
+
         user_cpp_DllExport bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
 
         user_cpp_DllExport bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
@@ -68,6 +70,8 @@ class Calculator_ReplyPlugin : public eprosima::fastrtps::TopicDataType
         user_cpp_DllExport Calculator_ReplyPlugin();
 
         virtual user_cpp_DllExport ~Calculator_ReplyPlugin();
+
+        user_cpp_DllExport bool getKey(void *data, eprosima::fastrtps::rtps::InstanceHandle_t* ihandle, bool force_md5);
 
         user_cpp_DllExport bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
 

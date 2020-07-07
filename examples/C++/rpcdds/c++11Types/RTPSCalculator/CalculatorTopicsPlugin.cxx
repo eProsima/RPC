@@ -17,6 +17,7 @@
 #include <fastcdr/Cdr.h>
 
 using namespace eprosima::fastrtps;
+using namespace ::rtps;
 
 
 
@@ -32,6 +33,11 @@ Calculator_RequestPlugin::~Calculator_RequestPlugin()
 {
 }
 
+bool Calculator_RequestPlugin::getKey(void*, InstanceHandle_t*, bool)
+{
+    return false;
+}
+
 bool Calculator_RequestPlugin::serialize(void *data, SerializedPayload_t *payload) 
 {
     Calculator_Request *p_type = (Calculator_Request*) data;
@@ -39,7 +45,7 @@ bool Calculator_RequestPlugin::serialize(void *data, SerializedPayload_t *payloa
     // Object that manages the raw buffer.
     eprosima::fastcdr::FastBuffer fastbuffer((char*) payload->data, payload->max_size);
     eprosima::fastcdr::Cdr ser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
-            eprosima::fastcdr::Cdr::DDS_CDR);
+            eprosima::fastcdr::Cdr::DDS_CDR); // Object that serializes the data.
     payload->encapsulation = ser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
     // Serialize encapsulation
     ser.serialize_encapsulation();
@@ -132,6 +138,11 @@ Calculator_ReplyPlugin::~Calculator_ReplyPlugin()
 {
 }
 
+bool Calculator_ReplyPlugin::getKey(void*, InstanceHandle_t*, bool)
+{
+    return false;
+}
+
 bool Calculator_ReplyPlugin::serialize(void *data, SerializedPayload_t *payload) 
 {
     Calculator_Reply *p_type = (Calculator_Reply*) data;
@@ -139,7 +150,7 @@ bool Calculator_ReplyPlugin::serialize(void *data, SerializedPayload_t *payload)
     // Object that manages the raw buffer.
     eprosima::fastcdr::FastBuffer fastbuffer((char*) payload->data, payload->max_size);
     eprosima::fastcdr::Cdr ser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
-            eprosima::fastcdr::Cdr::DDS_CDR);
+            eprosima::fastcdr::Cdr::DDS_CDR); // Object that serializes the data.
     payload->encapsulation = ser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
     // Serialize encapsulation
     ser.serialize_encapsulation();

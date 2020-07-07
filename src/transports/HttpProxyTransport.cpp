@@ -76,7 +76,7 @@ bool HttpProxyTransport::connect()
     return m_tcptransport.connect();
 }
 
-bool HttpProxyTransport::send(const void* buffer, const size_t bufferSize)
+bool HttpProxyTransport::send(const void* buffer, const size_t /*bufferSize*/)
 {
     const HttpMessage *httpMessage = reinterpret_cast<const HttpMessage*>(buffer);
 
@@ -128,7 +128,7 @@ bool HttpProxyTransport::send(const void* buffer, const size_t bufferSize)
     return false;
 }
 
-int HttpProxyTransport::receive(void *buffer, const size_t bufferSize, size_t &dataToRead)
+int HttpProxyTransport::receive(void *buffer, const size_t /*bufferSize*/, size_t& /*dataToRead*/)
 {
     if(buffer != NULL)
     {

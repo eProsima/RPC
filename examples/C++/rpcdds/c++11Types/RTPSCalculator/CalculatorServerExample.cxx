@@ -28,7 +28,7 @@ using namespace ::strategy;
 using namespace ::transport::dds;
 using namespace ::protocol::dds;
 
-int main(int argc, char **argv)
+int main(void)
 {
     unsigned int threadPoolSize = 5;
     ThreadPoolStrategy *pool = NULL;

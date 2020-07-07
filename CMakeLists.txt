@@ -3,17 +3,19 @@
 ###############################################################################
 cmake_minimum_required(VERSION 2.8.11)
 
-# Set CMAKE_BUILD_TYPE to Release by default.
-if(DEFINED CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE} CACHE STRING
-        "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
-        )
-else()
-    set(CMAKE_BUILD_TYPE Release CACHE STRING
-        "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
-        )
+set(IS_TOP_LEVEL TRUE)
+if(PROJECT_SOURCE_DIR)
+    set(IS_TOP_LEVEL FALSE)
 endif()
 
+# Set CMAKE_BUILD_TYPE to Release by default.
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    message(STATUS "Setting build type to 'Release' as none was specified.")
+    set(CMAKE_BUILD_TYPE Release CACHE STRING
+        "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
+        FORCE)
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
 
 if(DEFINED RPCPROTO)
     set(RPCPROTO ${RPCPROTO} CACHE STRING
@@ -25,15 +27,76 @@ else()
         )
 endif()
 
+###############################################################################
+# Version information                                                         #
+###############################################################################
+
+set(CONFIGURE_SUFFIX "")
+if(RPCPROTO STREQUAL "rpcdds")
+    set(CONFIGURE_SUFFIX ".in")
+endif()
+#If not set, copy over product version from configure.ac
+file(STRINGS
+    configure_${RPCPROTO}.ac${CONFIGURE_SUFFIX}
+    LIB_MAJOR_VERSION_TMP
+    REGEX "^m4_define\\(\\[?version_major\\]?, *\\[?[0-9]+\\]?\\)"
+    )
+file(STRINGS
+    configure_${RPCPROTO}.ac${CONFIGURE_SUFFIX}
+    LIB_MINOR_VERSION_TMP
+    REGEX "^m4_define\\(\\[?version_minor\\]?, *\\[?[0-9]+\\]?\\)"
+    )
+file(STRINGS
+    configure_${RPCPROTO}.ac${CONFIGURE_SUFFIX}
+    LIB_PATCH_VERSION_TMP
+    REGEX "^m4_define\\(\\[?version_micro\\]?, *\\[?[0-9]+\\]?\\)"
+    )
+
+string(REGEX REPLACE "m4_define\\(\\[?version_major\\]?, *\\[?([0-9]+)\\]?\\)"
+    "\\1"
+    LIB_MAJOR_VERSION
+    ${LIB_MAJOR_VERSION_TMP}
+    )
+string(REGEX REPLACE "m4_define\\(\\[?version_minor\\]?, *\\[?([0-9]+)\\]?\\)"
+    "\\1"
+    LIB_MINOR_VERSION
+    ${LIB_MINOR_VERSION_TMP}
+    )
+string(REGEX REPLACE "m4_define\\(\\[?version_micro\\]?, *\\[?([0-9]+)\\]?\\)"
+    "\\1"
+    LIB_PATCH_VERSION
+    ${LIB_PATCH_VERSION_TMP}
+    )
+
+set(LIB_VERSION_STR "${LIB_MAJOR_VERSION}.${LIB_MINOR_VERSION}.${LIB_PATCH_VERSION}")
+
 if(RPCPROTO STREQUAL "fastrpc")
-    project("fastrpc")
+    if(CMAKE_VERSION VERSION_LESS 3.0)
+        project(fastrpc C CXX)
+        set(PROJECT_VERSION_MAJOR "${LIB_MAJOR_VERSION}")
+        set(PROJECT_VERSION_MINOR "${LIB_MINOR_VERSION}")
+        set(PROJECT_VERSION_PATCH "${LIB_PATCH_VERSION}")
+        set(PROJECT_VERSION "${LIB_VERSION_STR}")
+    else()
+        cmake_policy(SET CMP0048 NEW)
+        project(fastrpc VERSION "${LIB_VERSION_STR}" LANGUAGES C CXX)
+    endif()
     set(PROJECT_NAME_STYLED "FastRPC")
     set(PROJECT_NAME_LARGE "Fast RPC")
     string(TOUPPER "${PROJECT_NAME}" PROJECT_NAME_UPPER)
     set(${PROJECT_NAME}_DESCRIPTION_SUMMARY "C++ library implementation fast remote procedure calls")
     set(${PROJECT_NAME}_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} library provides fast RPC communications.")
 elseif(RPCPROTO STREQUAL "rpcdds")
-    project("rpcdds")
+    if(CMAKE_VERSION VERSION_LESS 3.0)
+        project(rpcdds C CXX)
+        set(PROJECT_VERSION_MAJOR "${LIB_MAJOR_VERSION}")
+        set(PROJECT_VERSION_MINOR "${LIB_MINOR_VERSION}")
+        set(PROJECT_VERSION_PATCH "${LIB_PATCH_VERSION}")
+        set(PROJECT_VERSION "${LIB_VERSION_STR}")
+    else()
+        cmake_policy(SET CMP0048 NEW)
+        project(rpcdds VERSION "${LIB_VERSION_STR}" LANGUAGES C CXX)
+    endif()
     set(PROJECT_NAME_STYLED "RPCDDS")
     set(PROJECT_NAME_LARGE "RPC over DDS")
     string(TOUPPER "${PROJECT_NAME}" PROJECT_NAME_UPPER)
@@ -42,7 +105,16 @@ elseif(RPCPROTO STREQUAL "rpcdds")
     option(WITH_FASTRTPS "Defined if building agaist eProsima Fast RTPS" ON)
     option(WITH_RTIDDS "Defined if building agaist RTI DDS" OFF)
 elseif(RPCPROTO STREQUAL "rpcrest")
-    project("rpcrest")
+    if(CMAKE_VERSION VERSION_LESS 3.0)
+        project(rpcrest C CXX)
+        set(PROJECT_VERSION_MAJOR "${LIB_MAJOR_VERSION}")
+        set(PROJECT_VERSION_MINOR "${LIB_MINOR_VERSION}")
+        set(PROJECT_VERSION_PATCH "${LIB_PATCH_VERSION}")
+        set(PROJECT_VERSION "${LIB_VERSION_STR}")
+    else()
+        cmake_policy(SET CMP0048 NEW)
+        project(rpcrest VERSION "${LIB_VERSION_STR}" LANGUAGES C CXX)
+    endif()
     set(PROJECT_NAME_STYLED "RPCREST")
     set(PROJECT_NAME_LARGE "RPC over REST")
     string(TOUPPER "${PROJECT_NAME}" PROJECT_NAME_UPPER)
@@ -53,53 +125,6 @@ else()
 endif()
 
 message(STATUS "Configuring ${PROJECT_NAME_LARGE}")
-
-###############################################################################
-# Version information                                                         #
-###############################################################################
-
-#If not set, copy over product version from configure.ac
-if(NOT PROJECT_MAJOR_VERSION)
-    set(CONFIGURE_SUFFIX "")
-    if(RPCPROTO STREQUAL "rpcdds")
-        set(CONFIGURE_SUFFIX ".in")
-    endif()
-
-    file(STRINGS
-        ${PROJECT_SOURCE_DIR}/configure_${PROJECT_NAME}.ac${CONFIGURE_SUFFIX}
-        PROJECT_MAJOR_VERSION_TMP
-        REGEX "^m4_define\\(\\[?version_major\\]?, *\\[?[0-9]+\\]?\\)"
-        )
-    file(STRINGS
-        ${PROJECT_SOURCE_DIR}/configure_${PROJECT_NAME}.ac${CONFIGURE_SUFFIX}
-        PROJECT_MINOR_VERSION_TMP
-        REGEX "^m4_define\\(\\[?version_minor\\]?, *\\[?[0-9]+\\]?\\)"
-        )
-    file(STRINGS
-        ${PROJECT_SOURCE_DIR}/configure_${PROJECT_NAME}.ac${CONFIGURE_SUFFIX}
-        PROJECT_MICRO_VERSION_TMP
-        REGEX "^m4_define\\(\\[?version_micro\\]?, *\\[?[0-9]+\\]?\\)"
-        )
-
-    string(REGEX REPLACE "m4_define\\(\\[?version_major\\]?, *\\[?([0-9]+)\\]?\\)"
-        "\\1"
-        PROJECT_MAJOR_VERSION
-        ${PROJECT_MAJOR_VERSION_TMP}
-        )
-    string(REGEX REPLACE "m4_define\\(\\[?version_minor\\]?, *\\[?([0-9]+)\\]?\\)"
-        "\\1"
-        PROJECT_MINOR_VERSION
-        ${PROJECT_MINOR_VERSION_TMP}
-        )
-    string(REGEX REPLACE "m4_define\\(\\[?version_micro\\]?, *\\[?([0-9]+)\\]?\\)"
-        "\\1"
-        PROJECT_MICRO_VERSION
-        ${PROJECT_MICRO_VERSION_TMP}
-        )
-endif()
-
-set(PROJECT_VERSION ${PROJECT_MAJOR_VERSION}.${PROJECT_MINOR_VERSION}.${PROJECT_MICRO_VERSION})
-
 message(STATUS "Version: ${PROJECT_VERSION}")
 message(STATUS "To change de version modify the file configure_${PROJECT_NAME}.ac${CONFIGURE_SUFFIX}")
 
@@ -128,7 +153,7 @@ endif()
 ###############################################################################
 # Test system configuration
 ###############################################################################
-include(${PROJECT_SOURCE_DIR}/cmake/dev/check_configuration.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/common/check_configuration.cmake)
 check_stdcxx()
 #check_compile_feature()
 check_endianness()
@@ -153,7 +178,7 @@ else()
     set(DOC_DIR "${DATA_INSTALL_DIR}/doc")
 endif()
 set(DOC_INSTALL_DIR ${DOC_DIR} CACHE PATH "Installation directory for documentation")
-if(WIN32)
+if(WIN32 AND EPROSIMA_INSTALLER AND IS_TOP_LEVEL)
     set(LICENSE_INSTALL_DIR . CACHE PATH "Installation directory for licenses")
 else()
     set(LICENSE_INSTALL_DIR ${DATA_INSTALL_DIR}/${PROJECT_NAME} CACHE PATH "Installation directory for licenses")
@@ -176,6 +201,14 @@ include(${PROJECT_SOURCE_DIR}/cmake/dev/boost_libraries.cmake)
 check_boost(thread system date_time chrono regex atomic)
 
 ###############################################################################
+# Default shared libraries
+###############################################################################
+# Global flag to cause add_library() to create shared libraries if on.
+# If set to true, this will cause all libraries to be built shared
+# unless the library was explicitly added as a static library.
+option(BUILD_SHARED_LIBS "Create shared libraries by default" ON)
+
+###############################################################################
 # Load external eProsima projects.
 ###############################################################################
 option(THIRDPARTY "Activate the use of internal thirdparties" OFF)
@@ -184,16 +217,17 @@ if(EPROSIMA_BUILD)
     set(THIRDPARTY ON)
 endif()
 
+include(${PROJECT_SOURCE_DIR}/cmake/common/eprosima_libraries.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/dev/eprosima_libraries.cmake)
 
 check_threadpool()
 
 if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
-    find_eprosima_package(fastcdr)
+    eprosima_find_package(fastcdr)
 endif()
 
 if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
-    find_eprosima_package(fastrtps OPTION TINYXML2_FROM_SOURCE)
+    eprosima_find_package(fastrtps OPTIONS TINYXML2_FROM_SOURCE)
 endif()
 
 if(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS)
@@ -228,9 +262,9 @@ add_subdirectory(src)
 # Testing
 ###############################################################################
 if(NOT EPROSIMA_INSTALLER AND NOT EPROSIMA_INSTALLER_MINION)
-	enable_testing()
-	include(CTest)
-	add_subdirectory(test)
+    enable_testing()
+    include(CTest)
+    add_subdirectory(test)
 endif()
 
 ###############################################################################
@@ -238,7 +272,7 @@ endif()
 ###############################################################################
 option(COMPILE_EXAMPLES "Build example" ON)
 if(COMPILE_EXAMPLES)
-	add_subdirectory(examples)
+    add_subdirectory(examples)
 endif()
 
 
@@ -366,11 +400,6 @@ endif()
 ###############################################################################
 # Packaging
 ###############################################################################
-# Install external eprosima libraries
-if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
-    install_eprosima_libraries()
-endif()
-
 install_boost(ALL thread system date_time chrono regex atomic)
 
 # Install licenses

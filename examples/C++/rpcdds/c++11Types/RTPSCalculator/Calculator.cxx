@@ -18,7 +18,6 @@ namespace { char dummy; }
 #endif
 
 #include "Calculator.h"
-
 #include <fastcdr/Cdr.h>
 
 #include <fastcdr/exceptions/BadParamException.h>

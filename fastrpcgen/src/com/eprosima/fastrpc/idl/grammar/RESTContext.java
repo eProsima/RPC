@@ -12,7 +12,7 @@ import com.eprosima.idl.parser.typecode.TypeCode;
 
 public class RESTContext extends Context
 {
-    public RESTContext(String filename, String file, ArrayList includePaths, boolean clientcode, boolean servercode,
+    public RESTContext(String filename, String file, ArrayList<String> includePaths, boolean clientcode, boolean servercode,
             String appProduct, boolean include_include_prefix)
     {
         super(filename, file, includePaths, clientcode, servercode, appProduct, include_include_prefix);

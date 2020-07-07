@@ -126,7 +126,7 @@ int main(int argc, char **argv)
     {
             std::cout << "Usage: CalculatorClient <first value> <second value>" << std::endl;
     }
-   
+
     return 0;
 }
 

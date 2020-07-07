@@ -14,6 +14,8 @@
 #include <cstdint>
 #include <string>
 
+#undef minor
+
 namespace eprosima
 {
     namespace rpc

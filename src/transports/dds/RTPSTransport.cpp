@@ -42,7 +42,7 @@ void RTPSTransport::initialize()
     {
         std::string errorMessage;
         eprosima::fastrtps::ParticipantAttributes pQos;
-        pQos.rtps.builtin.domainId = m_domainId;
+        pQos.domainId = m_domainId;
 
         // Creating the domain participant that will be used to create DDS entities.
         m_participant = eprosima::fastrtps::Domain::createParticipant(pQos, nullptr);

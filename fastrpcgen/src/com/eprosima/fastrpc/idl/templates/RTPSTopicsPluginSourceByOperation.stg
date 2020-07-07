@@ -16,6 +16,7 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "TopicsPlugin.cpp"], description=["TOD
 #include <fastcdr/Cdr.h>
 
 using namespace eprosima::fastrtps;
+using namespace ::rtps;
 
 $definitions; separator="\n"$
 
@@ -46,7 +47,12 @@ $interface.scopedname$Plugin::$operation.name$_RequestPlugin::~$operation.name$_
 {
 }
 
-bool $interface.scopedname$Plugin::$operation.name$_RequestPlugin::serialize(void *data, SerializedPayload_t *payload) 
+bool $interface.scopedname$Plugin::$operation.name$_RequestPlugin::getKey(void*, InstanceHandle_t*, bool)
+{
+    return false;
+}
+
+bool $interface.scopedname$Plugin::$operation.name$_RequestPlugin::serialize(void *data, SerializedPayload_t *payload)
 {
     $interface.scopedname$_$operation.name$_Request *p_type = ($interface.scopedname$_$operation.name$_Request*) data;
 
@@ -146,6 +152,11 @@ $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::$operation.name$_Rep
 
 $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::~$operation.name$_ReplyPlugin() 
 {
+}
+
+bool $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::getKey(void*, InstanceHandle_t*, bool)
+{
+    return false;
 }
 
 bool $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::serialize(void *data, SerializedPayload_t *payload) 
