@@ -217,17 +217,16 @@ if(EPROSIMA_BUILD)
     set(THIRDPARTY ON)
 endif()
 
-include(${PROJECT_SOURCE_DIR}/cmake/common/eprosima_libraries.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/dev/eprosima_libraries.cmake)
 
 check_threadpool()
 
 if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
-    eprosima_find_package(fastcdr)
+    find_package(fastcdr)
 endif()
 
 if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
-    eprosima_find_package(fastrtps OPTIONS TINYXML2_FROM_SOURCE)
+    find_package(fastrtps)
 endif()
 
 if(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS)

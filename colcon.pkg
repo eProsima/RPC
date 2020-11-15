@@ -1,0 +1,5 @@
+{
+    "name": "rpc",
+    "type": "cmake",
+    "dependencies" : ["fastcdr", "fastrtps"]
+}
