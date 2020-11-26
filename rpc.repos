@@ -10,7 +10,7 @@ repositories:
     fastrtps:
         type: git
         url: https://github.com/eProsima/Fast-DDS.git
-        version: feature/custom-features
+        version: master
     rpc:
         type: git
         url: https://github.com/eProsima/RPC.git
