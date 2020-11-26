@@ -234,6 +234,8 @@ if(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS)
     find_package(RTIDDS 5.1 REQUIRED)
 endif()
 
+find_package(BoostThreadpool REQUIRED)
+
 ###############################################################################
 # Java application
 ###############################################################################

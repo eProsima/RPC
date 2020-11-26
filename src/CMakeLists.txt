@@ -121,7 +121,6 @@ elseif(NOT EPROSIMA_INSTALLER)
         $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_RTIDDS}>>:${RTIDDS_INCLUDE_DIRS_}>
         PRIVATE
         ${Boost_INCLUDE_DIR} # Include Boost header files.
-        ${PROJECT_SOURCE_DIR}/thirdparty/boost-threadpool # Include threadpool header files.
         )
 
     # Made linked libraries PRIVATE to prevent local directories in Windows installer.
@@ -131,6 +130,7 @@ elseif(NOT EPROSIMA_INSTALLER)
 
     target_link_libraries(${PROJECT_NAME} ${PRIVACY}
         ${Boost_LIBRARIES}
+	boost::threadpool
         $<$<OR:$<STREQUAL:"${RPCPROTO}","fastrpc">,$<STREQUAL:"${RPCPROTO}","rpcdds">>:fastcdr>
         $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_FASTRTPS}>>:fastrtps>
         $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_RTIDDS}>>:${RTIDDS_LIBRARIES_}>
