@@ -217,10 +217,6 @@ if(EPROSIMA_BUILD)
     set(THIRDPARTY ON)
 endif()
 
-include(${PROJECT_SOURCE_DIR}/cmake/dev/eprosima_libraries.cmake)
-
-check_threadpool()
-
 if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
     find_package(fastcdr)
 endif()
