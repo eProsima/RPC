@@ -133,8 +133,8 @@ public:
             Endpoint* endpoint);
 };
 
-}         // namespace transport
-}    // namespace rpc
+} // namespace transport
+} // namespace rpc
 } // namespace eprosima
 
 #endif // _TRANSPORTS_TCPSERVERTRANSPORT_H_
