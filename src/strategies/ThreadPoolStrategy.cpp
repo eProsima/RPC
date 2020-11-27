@@ -18,6 +18,7 @@ static const char* const CLASS_NAME = "ThreadPoolStrategy";
 namespace eprosima {
 namespace rpc {
 namespace strategy {
+
 class ThreadPoolStrategyJob
 {
 public:
@@ -69,8 +70,9 @@ private:
 
     boost::threadpool::pool* m_pool;
 };
-}         // namespace strategy
-}     // namespace rpc
+
+} // namespace strategy
+} // namespace rpc
 } // namespace eprosima
 
 using namespace eprosima::rpc;

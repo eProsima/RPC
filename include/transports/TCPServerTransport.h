@@ -30,6 +30,7 @@ class error_code;
 namespace eprosima {
 namespace rpc {
 namespace transport {
+
 class TCPServerTransportBoost;
 class BossProcess;
 class TCPEndpoint;
