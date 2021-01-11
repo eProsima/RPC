@@ -246,7 +246,6 @@ if(BUILD_JAVA)
 
     gradle_build(${PROJECT_SOURCE_DIR}/fastrpcgen ${PROJECT_NAME}genJar
         THIRDPARTY_DEPENDENCY idl
-        THIRDPARTY_DEPENDENCY fastcdr
         )
 endif()
 
