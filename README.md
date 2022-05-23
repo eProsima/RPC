@@ -120,6 +120,22 @@ This section explains how to use it to compile *eProsima RPC* and its dependenci
      ```cmd
      colcon build --cmake-args -DNO_TLS=ON -DRPCPROTO=rpcdds
      ```
+### Run an application
+
+When running an instance of an application using *eProsima RPC*, the colcon overlay built in the
+dedicated `RPC` directory must be sourced.
+There are two possibilities:
+
+* Every time a new shell is opened, prepare the environment locally by typing the
+  command:
+
+  ```
+  setup.bat
+  ```
+
+* Add the sourcing of the colcon overlay permanently, by opening the
+  *Edit the system environment variables* control panel, and adding `~/RPC/install/setup.bat`
+  to the `PATH`.
 
 ## CMake installation
 
@@ -190,7 +206,7 @@ This section explains how to compile *eProsima RPC* with [CMake][cmake], either 
 
      ```cmd
      cd ~\RPC
-     git clone https://github.com/eProsima/RPC.git
+     [git](git) clone https://github.com/eProsima/RPC.git
      cd RPC
      mkdir build && cd build
      cmake -DRPCPROTO=rpcdds -DCMAKE_INSTALL_PREFIX=~/RPC/install ..
@@ -201,6 +217,17 @@ This section explains how to compile *eProsima RPC* with [CMake][cmake], either 
 
 To install *eProsima RPC* system-wide instead of locally, remove the `CMAKE_INSTALL_PREFIX` flags that
 appear in the configuration steps.
+
+### Run an application
+
+When running an instance of an application using *eProsima RPC*, it must be linked with the library where the
+packages have been installed.
+This can be done by opening the *Edit system environment variables* control panel and adding to the `PATH` the *RPC*, *Fast DDS*
+and *Fast CDR* installation directories:
+
+*   *RPC*: C:\\Program Files\\rpc
+*   *Fast DDS*: C:\\Program Files\\fastrtps
+*   *Fast CDR*: C:\\Program Files\\fastcdr
 
 
 [eprosima]: http://www.eprosima.com
