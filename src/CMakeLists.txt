@@ -1,8 +1,5 @@
-include(${PROJECT_SOURCE_DIR}/cmake/dev/set_sources.cmake)
-include(${PROJECT_SOURCE_DIR}/cmake/dev/generate_msvc_libraries.cmake)
-
 # Set source files
-set_sources(
+set(${PROJECT_NAME}_source_files
     client/Proxy.cpp
     server/Server.cpp
     utils/Utilities.cpp
@@ -23,13 +20,13 @@ set_sources(
     )
 
 if(RPCPROTO STREQUAL "fastrpc")
-set_sources(
+set(proto_dep_source_files
     transports/components/TCPEndpoint.cpp
     transports/TCPProxyTransport.cpp
     transports/TCPServerTransport.cpp
     )
 elseif(RPCPROTO STREQUAL "rpcdds")
-set_sources(
+set(proto_dep_source_files
     utils/dds/Middleware.cpp
     transports/AsyncTask.cpp
     protocols/dds/MessageHeader.cpp
@@ -53,7 +50,7 @@ set_sources(
     transports/dds/components/RTPSServerProcedureEndpoint.cpp
     )
 elseif(RPCPROTO STREQUAL "rpcrest")
-    set_sources(
+set(proto_dep_source_files
         protocols/rest/FastBuffer.cpp
         protocols/rest/HTTPEntities.cpp
         protocols/rest/RESTSerializer.cpp
@@ -64,6 +61,10 @@ elseif(RPCPROTO STREQUAL "rpcrest")
         transports/HttpServerTransport.cpp
         )
 endif()
+
+list(APPEND ${PROJECT_NAME}_source_files
+    ${proto_dep_source_files}
+    )
 
 # Set version
 set(RPC_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
@@ -89,83 +90,61 @@ endif()
 configure_file(${PROJECT_SOURCE_DIR}/include/config.h.in
     ${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}/config.h)
 
-# Create libraries
-if(MSVC OR MSVC_IDE AND EPROSIMA_INSTALLER AND IS_TOP_LEVEL)
-    generate_msvc_libraries(i86Win32VS2013)
-    generate_msvc_libraries(x64Win64VS2013)
-    generate_msvc_libraries(i86Win32VS2015)
-    generate_msvc_libraries(x64Win64VS2015)
-    generate_msvc_libraries(i86Win32VS2017)
-    generate_msvc_libraries(x64Win64VS2017)
-elseif(NOT EPROSIMA_INSTALLER)
-    #Create library
-    add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_SOURCES})
-    set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${PROJECT_VERSION})
-    set_target_properties(${PROJECT_NAME} PROPERTIES SOVERSION ${PROJECT_VERSION_MAJOR})
+#Create library
+add_library(${PROJECT_NAME} ${${PROJECT_NAME}_source_files})
+set_target_properties(${PROJECT_NAME} PROPERTIES 
+    VERSION ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_VERSION_MAJOR}
+    )
 
-    target_compile_definitions(${PROJECT_NAME} PRIVATE
-        RPC_SOURCE
-        $<$<AND:$<NOT:$<BOOL:${WIN32}>>,$<STREQUAL:"${CMAKE_BUILD_TYPE}","Debug">>:__DEBUG>
-        $<$<AND:$<BOOL:${WIN32}>,$<STREQUAL:"${CMAKE_SYSTEM_NAME}","WindowsStore">>:_WIN32_WINNT=0x0603>
-        $<$<AND:$<BOOL:${WIN32}>,$<NOT:$<STREQUAL:"${CMAKE_SYSTEM_NAME}","WindowsStore">>>:_WIN32_WINNT=0x0601>
-        PUBLIC
-        $<$<BOOL:${WIN32}>:BOOST_ALL_DYN_LINK>
-        $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_RTIDDS}>>:${RTIDDS_DEFINITIONS_}>
-        )
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+    RPC_SOURCE
+    $<$<AND:$<NOT:$<BOOL:${WIN32}>>,$<STREQUAL:"${CMAKE_BUILD_TYPE}","Debug">>:__DEBUG>
+    $<$<AND:$<BOOL:${WIN32}>,$<STREQUAL:"${CMAKE_SYSTEM_NAME}","WindowsStore">>:_WIN32_WINNT=0x0603>
+    $<$<AND:$<BOOL:${WIN32}>,$<NOT:$<STREQUAL:"${CMAKE_SYSTEM_NAME}","WindowsStore">>>:_WIN32_WINNT=0x0601>
+    PUBLIC
+    $<$<BOOL:${WIN32}>:BOOST_ALL_DYN_LINK>
+    $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_RTIDDS}>>:${RTIDDS_DEFINITIONS_}>
+    )
 
-    # Define public headers
-    target_include_directories(${PROJECT_NAME} PUBLIC
-        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-        $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include> $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}>
-        $<INSTALL_INTERFACE:include>
-        $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_RTIDDS}>>:${RTIDDS_INCLUDE_DIRS_}>
-        PRIVATE
-        ${Boost_INCLUDE_DIR} # Include Boost header files.
-        )
+# Define public headers
+target_include_directories(${PROJECT_NAME} PUBLIC
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include> $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}>
+    $<INSTALL_INTERFACE:include>
+    $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_RTIDDS}>>:${RTIDDS_INCLUDE_DIRS_}>
+    PRIVATE
+    ${Boost_INCLUDE_DIR} # Include Boost header files.
+    )
 
-    # Made linked libraries PRIVATE to prevent local directories in Windows installer.
-    if(EPROSIMA_INSTALLER_MINION)
-        set(PRIVACY "PRIVATE")
+target_link_libraries(${PROJECT_NAME} PUBLIC
+    $<$<OR:$<STREQUAL:"${RPCPROTO}","fastrpc">,$<STREQUAL:"${RPCPROTO}","rpcdds">>:fastcdr>
+    $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_FASTRTPS}>>:fastrtps>
+    $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_RTIDDS}>>:${RTIDDS_LIBRARIES_}>
+    PRIVATE
+    ${Boost_LIBRARIES}
+    boost::threadpool
+    )
+
+if(MSVC OR MSVC_IDE)
+    set_target_properties(${PROJECT_NAME} PROPERTIES RELEASE_POSTFIX -${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR})
+    set_target_properties(${PROJECT_NAME} PROPERTIES RELWITHDEBINFO_POSTFIX -${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR})
+    set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX d-${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR})
+
+    get_target_property(TARGET_TYPE ${PROJECT_NAME} TYPE)
+    if(TARGET_TYPE STREQUAL "SHARED_LIBRARY")
+        # Export symbols in DLL library
+        target_compile_definitions(${PROJECT_NAME} PUBLIC RPC_DYN_LINK)
+        if(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS)
+            target_compile_definitions(${PROJECT_NAME} PUBLIC ${RTIDDS_DLL_DEFINITIONS})
+        endif()
+    else()
+        # Rename the library to have a "lib" before.
+        set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME lib${PROJECT_NAME})
     endif()
 
-    target_link_libraries(${PROJECT_NAME} ${PRIVACY}
-        ${Boost_LIBRARIES}
-        boost::threadpool
-        $<$<OR:$<STREQUAL:"${RPCPROTO}","fastrpc">,$<STREQUAL:"${RPCPROTO}","rpcdds">>:fastcdr>
-        $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_FASTRTPS}>>:fastrtps>
-        $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_RTIDDS}>>:${RTIDDS_LIBRARIES_}>
-        )
-
-    if(MSVC OR MSVC_IDE)
-        set_target_properties(${PROJECT_NAME} PROPERTIES RELEASE_POSTFIX -${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR})
-        set_target_properties(${PROJECT_NAME} PROPERTIES RELWITHDEBINFO_POSTFIX -${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR})
-        set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX d-${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR})
-
-        get_target_property(TARGET_TYPE ${PROJECT_NAME} TYPE)
-        if(TARGET_TYPE STREQUAL "SHARED_LIBRARY")
-            # Export symbols in DLL library
-            target_compile_definitions(${PROJECT_NAME} PUBLIC RPC_DYN_LINK)
-            if(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS)
-                target_compile_definitions(${PROJECT_NAME} PUBLIC ${RTIDDS_DLL_DEFINITIONS})
-            endif()
-        else()
-            # Rename the library to have a "lib" before.
-            set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME lib${PROJECT_NAME})
-        endif()
-
-        if("${CMAKE_SYSTEM_NAME}" STREQUAL "WindowsStore")
-            set_target_properties(${PROJECT_NAME} PROPERTIES VS_WINRT_COMPONENT "true")
-        endif()
-
-        # For installing purpose.
-        if(EPROSIMA_INSTALLER_MINION)
-            set(MSVCARCH_EXTENSION "_${MSVC_ARCH}")
-            set(MSVCARCH_DIR_EXTENSION "/${MSVC_ARCH}")
-            set(MSVCARCH_DIR_EXTENSION_EXT "/${MSVC_ARCH}")
-            if(NOT TARGET_TYPE STREQUAL "SHARED_LIBRARY")
-                set(MSVCARCH_DIR_EXTENSION_EXT "${MSVCARCH_DIR_EXTENSION_EXT}_static")
-            endif()
-        endif()
+    if("${CMAKE_SYSTEM_NAME}" STREQUAL "WindowsStore")
+        set_target_properties(${PROJECT_NAME} PROPERTIES VS_WINRT_COMPONENT "true")
     endif()
 endif()
 
@@ -173,14 +152,17 @@ endif()
 # Packaging
 ###############################################################################
 
-# Install public headers
-set_public_headers_directory(${PROJECT_SOURCE_DIR}/include ""
+# Install headers
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/
     DESTINATION ${INCLUDE_INSTALL_DIR}/${PROJECT_NAME}
     COMPONENT headers
+    FILES_MATCHING
+    PATTERN "*.h"
+    PATTERN "*.hpp"
     )
 
 # Install config.h header
-set_public_header(${PROJECT_BINARY_DIR}/include ${PROJECT_NAME} config.h
+install(FILES ${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}/config.h
     DESTINATION ${INCLUDE_INSTALL_DIR}/${PROJECT_NAME}
     COMPONENT headers
     )
@@ -188,112 +170,70 @@ set_public_header(${PROJECT_BINARY_DIR}/include ${PROJECT_NAME} config.h
 set(CPACK_COMPONENT_HEADERS_DISPLAY_NAME "C++ Headers" PARENT_SCOPE)
 set(CPACK_COMPONENT_HEADERS_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} C++ Headers" PARENT_SCOPE)
 
-# Install sources
-if(UNIX AND EPROSIMA_INSTALLER)
-    install(DIRECTORY ${PROJECT_SOURCE_DIR}/src/
-        DESTINATION src
-        COMPONENT sources
+# Generate different target names depending on linking
+get_target_property(TARGET_TYPE ${PROJECT_NAME} TYPE)
+if(TARGET_TYPE STREQUAL "SHARED_LIBRARY")
+    set(RPC_LINKING dynamic)
+else()
+    set(RPC_LINKING static)
+endif()
+
+install(TARGETS ${PROJECT_NAME}
+    EXPORT ${PROJECT_NAME}-${RPC_LINKING}-targets
+    RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+    LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+    ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
+    COMPONENT libraries
+    )
+
+export(TARGETS ${PROJECT_NAME} FILE 
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-${RPC_LINKING}-targets.cmake)
+install(EXPORT ${PROJECT_NAME}-${RPC_LINKING}-targets
+    DESTINATION ${LIB_INSTALL_DIR}/cmake/${PROJECT_NAME}
+    COMPONENT cmake
+    )
+
+if(MSVC OR MSVC_IDE)
+    # Install pdb files
+    install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Debug/
+        DESTINATION ${LIB_INSTALL_DIR}
+        COMPONENT libraries
+        CONFIGURATIONS Debug
         FILES_MATCHING
-        PATTERN "*.c"
-        PATTERN "*.cpp"
-        PATTERN "*.h"
-        PATTERN "*.hpp"
-        )
-
-    install(DIRECTORY ${PROJECT_BINARY_DIR}/autotools/
-        DESTINATION .
-        USE_SOURCE_PERMISSIONS
-        OPTIONAL
-        COMPONENT sources
+        PATTERN "*.pdb"
         )
 endif()
 
-# Install libraries
-if(MSVC OR MSVC_IDE AND EPROSIMA_INSTALLER AND IS_TOP_LEVEL)
-    install_msvc_libraries(i86Win32VS2013)
-    install_msvc_libraries(x64Win64VS2013)
-    install_msvc_libraries(i86Win32VS2015)
-    install_msvc_libraries(x64Win64VS2015)
-    install_msvc_libraries(i86Win32VS2017)
-    install_msvc_libraries(x64Win64VS2017)
+###############################################################################
+# Create CMake package config file
+###############################################################################
+include(CMakePackageConfigHelpers)
 
-    configure_file(${PROJECT_SOURCE_DIR}/cmake/packaging/windows/Config.cmake.in ${PROJECT_BINARY_DIR}/cmake/packaging/windows/${PROJECT_NAME}-config.cmake @ONLY)
-    install(FILES ${PROJECT_BINARY_DIR}/cmake/packaging/windows/${PROJECT_NAME}-config.cmake
-        DESTINATION ${DATA_INSTALL_DIR}/${PROJECT_NAME}/cmake
-        COMPONENT cmake
-        )
-elseif(NOT EPROSIMA_INSTALLER)
-    install(TARGETS ${PROJECT_NAME}
-        EXPORT ${PROJECT_NAME}-targets
-        RUNTIME DESTINATION ${BIN_INSTALL_DIR}${MSVCARCH_DIR_EXTENSION}
-        LIBRARY DESTINATION ${LIB_INSTALL_DIR}${MSVCARCH_DIR_EXTENSION}
-        ARCHIVE DESTINATION ${LIB_INSTALL_DIR}${MSVCARCH_DIR_EXTENSION}
-        COMPONENT libraries${MSVCARCH_EXTENSION}
-        )
-
-    export(TARGETS ${PROJECT_NAME} FILE ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}-targets.cmake)
-    install(EXPORT ${PROJECT_NAME}-targets
-        DESTINATION ${DATA_INSTALL_DIR}/${PROJECT_NAME}/cmake${MSVCARCH_DIR_EXTENSION_EXT}
-        COMPONENT cmake
-        )
-
-    if(MSVC OR MSVC_IDE)
-        if(TARGET_TYPE STREQUAL "SHARED_LIBRARY")
-            # Install pdb files
-            install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Debug/
-                DESTINATION ${LIB_INSTALL_DIR}${MSVCARCH_DIR_EXTENSION}
-                COMPONENT libraries${MSVCARCH_EXTENSION}
-                CONFIGURATIONS Debug
-                FILES_MATCHING
-                PATTERN "*.pdb"
-                )
-        elseif(NOT (("${MSVC_ARCH}" STREQUAL "i86Win32VS2013") OR ("${MSVC_ARCH}" STREQUAL "x64Win64VS2013")))
-            install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.dir/Debug/${PROJECT_NAME}.pdb
-                DESTINATION ${LIB_INSTALL_DIR}${MSVCARCH_DIR_EXTENSION}
-                COMPONENT libraries${MSVCARCH_EXTENSION}
-                CONFIGURATIONS Debug
-                )
-        endif()
-    endif()
-
-    ###############################################################################
-    # Create CMake package config file
-    ###############################################################################
-    include(CMakePackageConfigHelpers)
-
-    if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
-        set(EPROSIMA_FIND_DEPENDENCIES
-            "if(NOT fastcdr_FOUND)\n    find_package(fastcdr REQUIRED)\nendif()\n")
-    endif()
-
-    if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
-        set(EPROSIMA_FIND_DEPENDENCIES
-            "if(NOT fastrtps_FOUND)\n    find_package(fastcdr REQUIRED)\nendif()\n")
-    endif()
-
-    configure_package_config_file(${PROJECT_SOURCE_DIR}/cmake/packaging/Config.cmake.in
-        ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}-config.cmake
-        INSTALL_DESTINATION ${DATA_INSTALL_DIR}$/${PROJECT_NAME}/cmake${MSVCARCH_DIR_EXTENSION_EXT}
-        PATH_VARS BIN_INSTALL_DIR INCLUDE_INSTALL_DIR LIB_INSTALL_DIR
-        )
-    write_basic_package_version_file(${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}-config-version.cmake
-        VERSION ${PROJECT_VERSION}
-        COMPATIBILITY SameMajorVersion
-        )
-    install(FILES ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}-config.cmake
-        ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}-config-version.cmake
-        DESTINATION ${DATA_INSTALL_DIR}/${PROJECT_NAME}/cmake${MSVCARCH_DIR_EXTENSION_EXT}
-        COMPONENT cmake
-        )
-
-    if(MSVCARCH_EXTENSION)
-        string(TOUPPER "${MSVC_ARCH}" MSVC_ARCH_UPPER)
-        set(CPACK_COMPONENT_LIBRARIES_${MSVC_ARCH_UPPER}_DISPLAY_NAME "${MSVC_ARCH}" PARENT_SCOPE)
-        set(CPACK_COMPONENT_LIBRARIES_${MSVC_ARCH_UPPER}_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} libraries for platform ${MSVC_ARCH}" PARENT_SCOPE)
-        set(CPACK_COMPONENT_LIBRARIES_${MSVC_ARCH_UPPER}_GROUP "Libraries" PARENT_SCOPE)
-        set(CPACK_COMPONENT_GROUP_LIBRARIES_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} libraries" PARENT_SCOPE)
-    else()
-        set(CPACK_COMPONENT_LIBRARIES_DISPLAY_NAME "Libraries" PARENT_SCOPE)
-        set(CPACK_COMPONENT_LIBRARIES_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} libraries" PARENT_SCOPE)
-    endif()
+if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
+    set(EPROSIMA_FIND_DEPENDENCIES
+        "if(NOT fastcdr_FOUND)\n    find_package(fastcdr REQUIRED)\nendif()\n")
 endif()
+
+if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
+    set(EPROSIMA_FIND_DEPENDENCIES
+        "if(NOT fastrtps_FOUND)\n    find_package(fastcdr REQUIRED)\nendif()\n")
+endif()
+
+configure_package_config_file(${PROJECT_SOURCE_DIR}/cmake/packaging/Config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
+    INSTALL_DESTINATION ${LIB_INSTALL_DIR}/cmake/${PROJECT_NAME}
+    PATH_VARS BIN_INSTALL_DIR INCLUDE_INSTALL_DIR LIB_INSTALL_DIR
+    )
+write_basic_package_version_file(
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion
+    )
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake
+    DESTINATION ${LIB_INSTALL_DIR}/cmake/${PROJECT_NAME}
+    COMPONENT cmake
+    )
+
+set(CPACK_COMPONENT_LIBRARIES_DISPLAY_NAME "Libraries" PARENT_SCOPE)
+set(CPACK_COMPONENT_LIBRARIES_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} libraries" PARENT_SCOPE)

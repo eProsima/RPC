@@ -1,12 +1,7 @@
 ###############################################################################
 # CMake build rules for RPC                                                    
 ###############################################################################
-cmake_minimum_required(VERSION 2.8.11)
-
-set(IS_TOP_LEVEL TRUE)
-if(PROJECT_SOURCE_DIR)
-    set(IS_TOP_LEVEL FALSE)
-endif()
+cmake_minimum_required(VERSION 3.0)
 
 # Set CMAKE_BUILD_TYPE to Release by default.
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -31,23 +26,20 @@ endif()
 # Version information                                                         #
 ###############################################################################
 
-set(CONFIGURE_SUFFIX "")
-if(RPCPROTO STREQUAL "rpcdds")
-    set(CONFIGURE_SUFFIX ".in")
-endif()
+if(NOT RPCPROTO STREQUAL "rpcdds")
 #If not set, copy over product version from configure.ac
 file(STRINGS
-    configure_${RPCPROTO}.ac${CONFIGURE_SUFFIX}
+    configure_${RPCPROTO}.ac
     LIB_MAJOR_VERSION_TMP
     REGEX "^m4_define\\(\\[?version_major\\]?, *\\[?[0-9]+\\]?\\)"
     )
 file(STRINGS
-    configure_${RPCPROTO}.ac${CONFIGURE_SUFFIX}
+    configure_${RPCPROTO}.ac
     LIB_MINOR_VERSION_TMP
     REGEX "^m4_define\\(\\[?version_minor\\]?, *\\[?[0-9]+\\]?\\)"
     )
 file(STRINGS
-    configure_${RPCPROTO}.ac${CONFIGURE_SUFFIX}
+    configure_${RPCPROTO}.ac
     LIB_PATCH_VERSION_TMP
     REGEX "^m4_define\\(\\[?version_micro\\]?, *\\[?[0-9]+\\]?\\)"
     )
@@ -69,34 +61,17 @@ string(REGEX REPLACE "m4_define\\(\\[?version_micro\\]?, *\\[?([0-9]+)\\]?\\)"
     )
 
 set(LIB_VERSION_STR "${LIB_MAJOR_VERSION}.${LIB_MINOR_VERSION}.${LIB_PATCH_VERSION}")
+endif()
 
 if(RPCPROTO STREQUAL "fastrpc")
-    if(CMAKE_VERSION VERSION_LESS 3.0)
-        project(fastrpc C CXX)
-        set(PROJECT_VERSION_MAJOR "${LIB_MAJOR_VERSION}")
-        set(PROJECT_VERSION_MINOR "${LIB_MINOR_VERSION}")
-        set(PROJECT_VERSION_PATCH "${LIB_PATCH_VERSION}")
-        set(PROJECT_VERSION "${LIB_VERSION_STR}")
-    else()
-        cmake_policy(SET CMP0048 NEW)
-        project(fastrpc VERSION "${LIB_VERSION_STR}" LANGUAGES C CXX)
-    endif()
+    project(fastrpc VERSION "${LIB_VERSION_STR}" LANGUAGES C CXX)
     set(PROJECT_NAME_STYLED "FastRPC")
     set(PROJECT_NAME_LARGE "Fast RPC")
     string(TOUPPER "${PROJECT_NAME}" PROJECT_NAME_UPPER)
     set(${PROJECT_NAME}_DESCRIPTION_SUMMARY "C++ library implementation fast remote procedure calls")
     set(${PROJECT_NAME}_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} library provides fast RPC communications.")
 elseif(RPCPROTO STREQUAL "rpcdds")
-    if(CMAKE_VERSION VERSION_LESS 3.0)
-        project(rpcdds C CXX)
-        set(PROJECT_VERSION_MAJOR "${LIB_MAJOR_VERSION}")
-        set(PROJECT_VERSION_MINOR "${LIB_MINOR_VERSION}")
-        set(PROJECT_VERSION_PATCH "${LIB_PATCH_VERSION}")
-        set(PROJECT_VERSION "${LIB_VERSION_STR}")
-    else()
-        cmake_policy(SET CMP0048 NEW)
-        project(rpcdds VERSION "${LIB_VERSION_STR}" LANGUAGES C CXX)
-    endif()
+    project(rpcdds VERSION "1.1.1" LANGUAGES C CXX)
     set(PROJECT_NAME_STYLED "RPCDDS")
     set(PROJECT_NAME_LARGE "RPC over DDS")
     string(TOUPPER "${PROJECT_NAME}" PROJECT_NAME_UPPER)
@@ -105,16 +80,7 @@ elseif(RPCPROTO STREQUAL "rpcdds")
     option(WITH_FASTRTPS "Defined if building agaist eProsima Fast RTPS" ON)
     option(WITH_RTIDDS "Defined if building agaist RTI DDS" OFF)
 elseif(RPCPROTO STREQUAL "rpcrest")
-    if(CMAKE_VERSION VERSION_LESS 3.0)
-        project(rpcrest C CXX)
-        set(PROJECT_VERSION_MAJOR "${LIB_MAJOR_VERSION}")
-        set(PROJECT_VERSION_MINOR "${LIB_MINOR_VERSION}")
-        set(PROJECT_VERSION_PATCH "${LIB_PATCH_VERSION}")
-        set(PROJECT_VERSION "${LIB_VERSION_STR}")
-    else()
-        cmake_policy(SET CMP0048 NEW)
-        project(rpcrest VERSION "${LIB_VERSION_STR}" LANGUAGES C CXX)
-    endif()
+    project(rpcrest VERSION "${LIB_VERSION_STR}" LANGUAGES C CXX)
     set(PROJECT_NAME_STYLED "RPCREST")
     set(PROJECT_NAME_LARGE "RPC over REST")
     string(TOUPPER "${PROJECT_NAME}" PROJECT_NAME_UPPER)
@@ -126,15 +92,7 @@ endif()
 
 message(STATUS "Configuring ${PROJECT_NAME_LARGE}")
 message(STATUS "Version: ${PROJECT_VERSION}")
-message(STATUS "To change de version modify the file configure_${PROJECT_NAME}.ac${CONFIGURE_SUFFIX}")
-
-###############################################################################
-# Generation of windows installers.
-###############################################################################
-if(WIN32)
-    option(EPROSIMA_INSTALLER "Activate the creation of a build to create windows installers" OFF)
-    option(EPROSIMA_INSTALLER_MINION "Informs this is part of an installer " OFF)
-endif()
+message(STATUS "To change de version modify the file configure_${PROJECT_NAME}.ac")
 
 ###############################################################################
 # Warning level
@@ -149,6 +107,13 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Wextra -Wno-unknown-pragmas")
 endif()
 
+###############################################################################
+# Default shared libraries
+###############################################################################
+# Global flag to cause add_library() to create shared libraries if on.
+# If set to true, this will cause all libraries to be built shared
+# unless the library was explicitly added as a static library.
+option(BUILD_SHARED_LIBS "Create shared libraries by default" ON)
 
 ###############################################################################
 # Test system configuration
@@ -157,13 +122,6 @@ include(${PROJECT_SOURCE_DIR}/cmake/common/check_configuration.cmake)
 check_stdcxx()
 #check_compile_feature()
 check_endianness()
-
-###############################################################################
-# Check MSVC architecture
-###############################################################################
-if(MSVC OR MSVC_IDE)
-    check_msvc_arch()
-endif()
 
 ###############################################################################
 # Installation paths
@@ -178,27 +136,15 @@ else()
     set(DOC_DIR "${DATA_INSTALL_DIR}/doc")
 endif()
 set(DOC_INSTALL_DIR ${DOC_DIR} CACHE PATH "Installation directory for documentation")
-if(WIN32 AND EPROSIMA_INSTALLER AND IS_TOP_LEVEL)
-    set(LICENSE_INSTALL_DIR . CACHE PATH "Installation directory for licenses")
-else()
-    set(LICENSE_INSTALL_DIR ${DATA_INSTALL_DIR}/${PROJECT_NAME} CACHE PATH "Installation directory for licenses")
-endif()
-
-###############################################################################
-# eProsima build options
-###############################################################################
-option(EPROSIMA_BUILD "Activate internal building" OFF)
-option(MINION "Tells if it is a subproject of a superproject" OFF)
-
-if(EPROSIMA_INSTALLER)
-    set(EPROSIMA_BUILD ON)
-endif()
+set(LICENSE_INSTALL_DIR . CACHE PATH "Installation directory for licenses")
 
 ###############################################################################
 # Check libraries
 ###############################################################################
-include(${PROJECT_SOURCE_DIR}/cmake/dev/boost_libraries.cmake)
-check_boost(thread system date_time chrono regex atomic)
+set(Boost_USE_STATIC_LIBS OFF)
+set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_STATIC_RUNTIME OFF)
+find_package(Boost REQUIRED COMPONENTS thread chrono)
 
 ###############################################################################
 # Default shared libraries
@@ -211,12 +157,6 @@ option(BUILD_SHARED_LIBS "Create shared libraries by default" ON)
 ###############################################################################
 # Load external eProsima projects.
 ###############################################################################
-option(THIRDPARTY "Activate the use of internal thirdparties" OFF)
-
-if(EPROSIMA_BUILD)
-    set(THIRDPARTY ON)
-endif()
-
 if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
     find_package(fastcdr)
 endif()
@@ -236,11 +176,6 @@ find_package(BoostThreadpool REQUIRED)
 # Java application
 ###############################################################################
 option(BUILD_JAVA "Activate the compilation of the Java application" OFF)
-
-if(EPROSIMA_INSTALLER)
-    set(BUILD_JAVA ON)
-endif()
-
 if(BUILD_JAVA)
     include(${PROJECT_SOURCE_DIR}/cmake/dev/java_support.cmake)
 
@@ -257,7 +192,8 @@ add_subdirectory(src)
 ###############################################################################
 # Testing
 ###############################################################################
-if(NOT EPROSIMA_INSTALLER AND NOT EPROSIMA_INSTALLER_MINION)
+option(EPROSIMA_BUILD_TESTS "Compilation of tests" OFF)
+if(EPROSIMA_BUILD_TESTS)
     enable_testing()
     include(CTest)
     add_subdirectory(test)
@@ -266,7 +202,7 @@ endif()
 ###############################################################################
 # Examples 
 ###############################################################################
-option(COMPILE_EXAMPLES "Build example" ON)
+option(COMPILE_EXAMPLES "Build example" OFF)
 if(COMPILE_EXAMPLES)
     add_subdirectory(examples)
 endif()
@@ -278,74 +214,7 @@ endif()
 # Add an option to toggle the generation of the API documentation.
 option(BUILD_DOCUMENTATION "Use doxygen and libreoffice to create product documentation" OFF)
 
-if(EPROSIMA_INSTALLER)
-    set(BUILD_DOCUMENTATION ON)
-    set(DOXYGEN_SHOULD_SKIP_THIS_PUBLIC "DOXYGEN_SHOULD_SKIP_THIS_PUBLIC")
-endif()
-
 if(BUILD_DOCUMENTATION)
-    find_package(Doxygen)
-    if(NOT DOXYGEN_FOUND)
-        message(FATAL_ERROR "doxygen is needed to build the documentation. Please install it correctly")
-    endif()
-    find_package(LATEX)
-    if(NOT LATEX_COMPILER)
-        message(FATAL_ERROR "latex is needed to build the documentation. Please install it correctly")
-    endif()
-    if(UNIX)
-        find_program(DOXYFILE_MAKE make)
-        if(DOXYFILE_MAKE)
-            message(STATUS "Found Make: ${DOXYFILE_MAKE}")
-        else()
-            message(FATAL_ERROR "make is needed to build the documentation. Please install it correctly")
-        endif()
-    elseif(WIN32)
-        set(DOXYFILE_MAKE make.bat)
-    endif()
-    find_program(LIBREOFFICE_EXE soffice)
-    if(LIBREOFFICE_EXE)
-        message(STATUS "Found Libreoffice: ${LIBREOFFICE_EXE}")
-        message(STATUS "Recall you need to have installed the eProsima macros for Libreoffice")
-    else()
-        message(FATAL_ERROR "libreoffice is needed to build the documentation. Please install it correctly")
-    endif()
-    
-    # Target to create documentation directories
-    add_custom_target(docdirs
-        COMMAND ${CMAKE_COMMAND} -E make_directory ${PROJECT_BINARY_DIR}/doc
-        COMMAND ${CMAKE_COMMAND} -E make_directory ${PROJECT_BINARY_DIR}/doc/pdf
-        COMMENT "Creating documentation directory" VERBATIM)
-
-    ### Doxygen ########################3
-
-    # Configure the template doxyfile for or specific project
-    configure_file(doxyfile.in ${PROJECT_BINARY_DIR}/doxyfile @ONLY IMMEDIATE)
-    # Add custom target to run doxygen when ever the project is build
-    add_custom_target(doxygen
-        COMMAND "${DOXYGEN_EXECUTABLE}" "${PROJECT_BINARY_DIR}/doxyfile"
-        SOURCES "${PROJECT_BINARY_DIR}/doxyfile"
-        COMMENT "Generating API documentation with doxygen" VERBATIM)
-    # Add custom post_build target to run make and generate latex
-    # documentation.
-    add_custom_command(TARGET doxygen POST_BUILD
-        COMMAND "${DOXYFILE_MAKE}"
-        COMMAND ${CMAKE_COMMAND} -E copy refman.pdf "${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - C++ API Manual.pdf"
-        WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/doxygen/latex"
-        COMMENT "Running LaTex for doxygen documentation" VERBATIM)
-
-    add_dependencies(doxygen docdirs)
-
-    # Instalation of doxygen files
-    install(DIRECTORY ${PROJECT_BINARY_DIR}/doc/html
-        DESTINATION ${DOC_INSTALL_DIR}
-        COMPONENT documentation
-        )
-
-    install(FILES "${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - C++ API Manual.pdf"
-        DESTINATION ${DOC_INSTALL_DIR}/pdf
-        COMPONENT documentation
-        )
-
     ### README html ########################
 
     if(WIN32)
@@ -359,7 +228,21 @@ if(BUILD_DOCUMENTATION)
 
     configure_file(doc/README.html.in ${README_LOCATION}/README.html @ONLY IMMEDIATE)
 
-    ### Libreoffice ########################3
+    #### Libreoffice ########################3
+    #find_program(LIBREOFFICE_EXE soffice
+    #    HINTS "/Program Files/LibreOffice/program"
+    #    )
+    #if(LIBREOFFICE_EXE)
+    #    message(STATUS "Found Libreoffice: ${LIBREOFFICE_EXE}")
+    #    message(STATUS "Recall you need to have installed the eProsima macros for Libreoffice")
+    #else()
+    #    message(FATAL_ERROR "libreoffice is needed to build the documentation. Please install it correctly")
+    #endif()
+
+    add_custom_target(docdirs
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${PROJECT_BINARY_DIR}/doc
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${PROJECT_BINARY_DIR}/doc/pdf
+        COMMENT "Creating documentation directory" VERBATIM)
 
     # User manuals and installation manuals
     if((NOT RPCPROTO STREQUAL "rpcdds") OR (RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS AND WITH_RTIDDS))
@@ -367,37 +250,31 @@ if(BUILD_DOCUMENTATION)
         set(LIBREOFFICE_CONVERT_USER_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual")
     elseif(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
         set(LIBREOFFICE_CONVERT_INSTALLATION_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual For FastRTPS")
-        set(LIBREOFFICE_CONVERT_USER_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual For FastRTPS")
+        set(LIBREOFFICE_CONVERT_USER_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual For FastDDS")
     elseif(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS)
         set(LIBREOFFICE_CONVERT_INSTALLATION_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual For RTIDDS")
         set(LIBREOFFICE_CONVERT_USER_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual For RTIDDS")
     endif()
 
-    add_custom_target(libreoffice
-        COMMAND "${LIBREOFFICE_EXE}" --headless
-        "macro:///eProsima.documentation.changeVersion(${LIBREOFFICE_CONVERT_INSTALLATION_MANUAL_DOC}.odt,${PROJECT_VERSION})"
-        COMMAND ${CMAKE_COMMAND} -E rename "${LIBREOFFICE_CONVERT_INSTALLATION_MANUAL_DOC}.pdf" "${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual.pdf"
-        COMMAND "${LIBREOFFICE_EXE}" --headless
-        "macro:///eProsima.documentation.changeVersion(${LIBREOFFICE_CONVERT_USER_MANUAL_DOC}.odt,${PROJECT_VERSION})"
-        COMMAND ${CMAKE_COMMAND} -E rename "${LIBREOFFICE_CONVERT_USER_MANUAL_DOC}.pdf" "${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual.pdf"
-        DEPENDS
-        "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual.odt"
-        "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual.odt"
-        COMMENT "Generating documentation with libreoffice" VERBATIM)
+    #add_custom_target(libreoffice
+    #    COMMAND "${LIBREOFFICE_EXE}" --headless
+    #    "macro:///eProsima.documentation.changeVersion(${LIBREOFFICE_CONVERT_USER_MANUAL_DOC}.odt,${PROJECT_VERSION})"
+    #    COMMAND ${CMAKE_COMMAND} -E rename "${LIBREOFFICE_CONVERT_USER_MANUAL_DOC}.pdf" "${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual.pdf"
+    #    DEPENDS
+    #    "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual.odt"
+    #    COMMENT "Generating documentation with libreoffice" VERBATIM)
 
-    add_dependencies(libreoffice docdirs)
+    #add_dependencies(libreoffice docdirs)
 
-    add_custom_target(doc ALL
-        COMMENT "Generated project documentation" VERBATIM)
+    #add_custom_target(doc ALL
+    #    COMMENT "Generated project documentation" VERBATIM)
 
-    add_dependencies(doc doxygen libreoffice)
+    #add_dependencies(doc libreoffice)
 endif()
 
 ###############################################################################
 # Packaging
 ###############################################################################
-install_boost(ALL thread system date_time chrono regex atomic)
-
 # Install licenses
 install(FILES ${PROJECT_SOURCE_DIR}/${PROJECT_NAME_UPPER}_LICENSE.txt
     ${PROJECT_SOURCE_DIR}/LICENSE
@@ -468,39 +345,28 @@ if(BUILD_JAVA)
 endif()
 
 if(BUILD_DOCUMENTATION)
-    # Instalation of pdf files
-    install(FILES 
-        "${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual.pdf"
-        "${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual.pdf"
-        DESTINATION ${DOC_INSTALL_DIR}/pdf
-        COMPONENT documentation
-        )
+    ## Instalation of pdf files
+    #install(FILES 
+    #"${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual.pdf"
+    #"${PROJECT_BINARY_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual.pdf"
+    #DESTINATION ${DOC_INSTALL_DIR}/pdf
+    #COMPONENT documentation
+    #)
 
     install(FILES "${README_LOCATION}/README.html"
         DESTINATION ${README_INSTALL_LOCATION}
         COMPONENT documentation
         )
 
-    ### Documentation component
-    set(CPACK_COMPONENT_DOCUMENTATION_DISPLAY_NAME "Documentation")
-    set(CPACK_COMPONENT_DOCUMENTATION_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} documentation")
+    install(FILES "${LIBREOFFICE_CONVERT_USER_MANUAL_DOC}.pdf"
+        DESTINATION ${DOC_INSTALL_DIR}/pdf
+        RENAME "${PROJECT_NAME_LARGE} - User Manual.pdf"
+        COMPONENT documentation
+        )
 
-    set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} documentation)
+    #### Documentation component
+    #set(CPACK_COMPONENT_DOCUMENTATION_DISPLAY_NAME "Documentation")
+    #set(CPACK_COMPONENT_DOCUMENTATION_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} documentation")
+
+    #set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} documentation)
 endif()
-
-if(MSVC OR MSVC_IDE)
-    if(EPROSIMA_INSTALLER)
-        set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL}
-            libraries_i86Win32VS2013
-            libraries_x64Win64VS2013
-            libraries_i86Win32VS2015
-            libraries_x64Win64VS2015
-            )
-    else()
-        set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} libraries_${MSVC_ARCH})
-    endif()
-else()
-    set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} libraries)
-endif()
-
-include(${PROJECT_SOURCE_DIR}/cmake/packaging/eProsimaPackaging.cmake)
