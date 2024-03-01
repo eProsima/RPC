@@ -225,7 +225,7 @@ This section explains how to compile *eProsima RPC* with [CMake][cmake], either 
 
      ```cmd
      cd ~\RPC
-     git clone https://github.com/eProsima/boost_threadpool.git
+     git clone -b cmake https://github.com/eProsima/boost_threadpool.git
      cd boost_threadpool
      mkdir build && cd build
      cmake -DCMAKE_INSTALL_PREFIX=~/RPC/install ..
