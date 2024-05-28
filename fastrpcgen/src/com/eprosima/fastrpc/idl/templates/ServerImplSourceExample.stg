@@ -1,19 +1,12 @@
 group ServerImplSourceExample;
 
+import "eprosima.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "ServerImplExample.cxx"], description=["This source file contains an example of the declaration of a servant."])$
 
 #include "$ctx.filename$ServerImplExample.h"
 
-$definitions; separator="\n"$
->>
-
-module(ctx, parent, module, definition_list) ::= <<
-$definition_list$
-
->>
-
-definition_list(definitions) ::= <<
 $definitions; separator="\n"$
 >>
 
@@ -25,34 +18,12 @@ $interface.all_operations : { operation |
 $paramRetType(operation.rettype)$ $interface.name$ServerImplExample::$operation.name$($paramDeclarations(params=operation.parameters)$)
 {
     $varDecl(variable=operation.rettypeparam)$
-   
+
     $if(operation.rettypeparam)$
     return $operation.rettypeparam.name$;
     $endif$
-} 
+\}
 }; separator="\n"$
 
 $export_list$
 >>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
-exception(ctx, parent, exception) ::= <<>>
-
-operation(ctx, parent, operation, param_list) ::= <<>>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<>>
-
-struct_type(ctx, parent, struct) ::= <<>>
-
-union_type(ctx, parent, union) ::= <<>>
-
-enum_type(ctx, parent, enum) ::= <<>>

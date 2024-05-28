@@ -11,25 +11,24 @@ repositories {
 configurations { antxr }
 
 dependencies {
-    compile group: 'com.javadude', name: 'antxr', version:'0.9.0'
-    compile files('../thirdparty/idl/build/libs/idlparser-1.0.0.jar')
+    antxr 'com.javadude:antxr:0.9.0'
+    implementation files('../thirdparty/idl/build/libs/idlparser-3.0.0.jar')
+    implementation group: 'com.javadude', name: 'antxr', version: '0.9.0'
 }
 
 task buildIDLParser(type: GradleBuild) {
-    buildFile = '../thirdparty/idl/idl.gradle'
+    dir = '../thirdparty/idl'
     tasks = ['clean', 'build']
 }
 
-task generateWADLParser {
+task generateWADLParser(type: JavaExec) {
     File outputDir = file(new File(buildDir, "generated-src/com/eprosima/fastrpc/wadl/grammar"))
     outputs.dir outputDir
     outputDir.exists() || outputDir.mkdirs()
-    project.javaexec {
-        classpath configurations.compile
-        main = 'com.javadude.antxr.Tool'
-        args = [ "-o", "build/generated-src/com/eprosima/fastrpc/wadl/grammar", "grammars/wadl.antxr"]
-        workingDir = projectDir
-    }
+    classpath configurations.antxr
+    mainClass = 'com.javadude.antxr.Tool'
+    args = [ "-o", "build/generated-src/com/eprosima/fastrpc/wadl/grammar", "grammars/wadl.antxr"]
+    workingDir = projectDir
 }
 
 task copyResources {
@@ -77,36 +76,69 @@ sourceSets {
 }
 
 task fastrpcgenJar(type: Jar) {
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    duplicatesStrategy 'exclude'
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
-    baseName = 'fastrpcgen'
-    destinationDir = file(new File(projectDir, 'share/fastrpc'))
+    archiveBaseName = 'fastrpcgen'
     manifest {
-        attributes("Created-By": "eProsima", "Main-Class": "com.eprosima.fastrpc.fastrpcgen")
+        attributes(
+            "Created-By": "eProsima",
+            "Main-Class": "com.eprosima.fastrpc.fastrpcgen",
+            "Class-Path": configurations.runtimeClasspath.collect { it.getName() }.join(' ')
+            )
+    }
+    doLast
+    {
+        copy {
+            from fastrpcgenJar
+            into "share/fastrpc"
+        }
     }
 }
 
 task rpcddsgenJar(type: Jar) {
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    duplicatesStrategy 'exclude'
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
-    baseName = 'rpcddsgen'
-    destinationDir = file(new File(projectDir, 'share/rpcdds'))
+    archiveBaseName = 'rpcddsgen'
     manifest {
-        attributes("Created-By": "eProsima", "Main-Class": "com.eprosima.fastrpc.rpcddsgen")
+        attributes(
+            "Created-By": "eProsima",
+            "Main-Class": "com.eprosima.fastrpc.rpcddsgen",
+            "Class-Path": configurations.runtimeClasspath.collect { it.getName() }.join(' ')
+            )
+    }
+    doLast
+    {
+        copy {
+            from rpcddsgenJar
+            into "share/rpcdds"
+        }
     }
 }
 
 task rpcrestgenJar(type: Jar) {
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    duplicatesStrategy 'exclude'
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
-    baseName = 'rpcrestgen'
-    destinationDir = file(new File(projectDir, 'share/rpcrest'))
+    archiveBaseName = 'rpcrestgen'
     manifest {
-        attributes("Created-By": "eProsima", "Main-Class": "com.eprosima.fastrpc.rpcrestgen")
+        attributes(
+            "Created-By": "eProsima",
+            "Main-Class": "com.eprosima.fastrpc.rpcrestgen",
+            "Class-Path": configurations.runtimeClasspath.collect { it.getName() }.join(' ')
+            )
+    }
+    doLast
+    {
+        copy {
+            from rpcrestgenJar
+            into "share/rpcrest"
+        }
     }
 }
 
-compileJava.dependsOn buildIDLParser
+compileJava.dependsOn buildIDLParser, generateWADLParser
 compileJava {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8

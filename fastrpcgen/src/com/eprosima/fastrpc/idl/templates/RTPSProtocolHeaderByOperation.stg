@@ -1,5 +1,7 @@
 group DDSProtocolHeaderByOperation;
 
+import "eprosima.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "DDSProtocol.h"], description=["This header file contains the declaration of the protocol used to create DDS messages."])$
 
@@ -29,7 +31,7 @@ namespace eprosima
                 class RTPSTransport;
             }
         }
-        
+
         namespace protocol
         {
             namespace dds
@@ -42,45 +44,45 @@ namespace eprosima
                 class  $ctx.filename$Protocol : public eprosima::rpc::protocol::$ctx.filename$Protocol
                 {
                     public:
-                    
+
                        /*!
                         * @brief Default constructor
                         */
                         RPCUSERDllExport $ctx.filename$Protocol();
-                        
+
                        /*!
                         * @brief Destructor
                         */
                         virtual RPCUSERDllExport ~$ctx.filename$Protocol();
-                    
+
                        /*!
                         * @brief This method sets the transport for the communications.
                         * @param transport Transport to use
                         * @return True if the assignment is successful, false otherwise
                         */
                         virtual RPCUSERDllExport bool setTransport(eprosima::rpc::transport::Transport &transport);
-                        
+
                         /*!
                          * @brief This function activates needed DDS entities to use an interface.
                          * @param interfaceName Interface name.
                          * @return Whether the activation works successfully.
                          */
                         RPCUSERDllExport bool activateInterface(const char* interfaceName);
-                        
+
                         $definitions; separator="\n"$
-                        
+
                     private:
-                    
+
                         eprosima::rpc::transport::dds::RTPSTransport *m_ddsTransport;
-                    
+
                         $ctx.scopedInterfaces : { interface |
                         $interface.all_operations : { operation |
                         const char* const $interface.formatedScopedname$_$operation.name$_str;
-                        
+
                         $if(ctx.client)$
                         eprosima::rpc::transport::dds::RTPSProxyProcedureEndpoint *$interface.formatedScopedname$_$operation.name$_pe;
                         $endif$
-                        
+
                         $if(ctx.server)$
                         eprosima::rpc::transport::dds::RTPSServerProcedureEndpoint *$interface.formatedScopedname$_$operation.name$_se;
                         $endif$
@@ -89,7 +91,7 @@ namespace eprosima
                         $if(!operation.oneway)$
                         $interface.scopedname$Plugin::$operation.name$_ReplyPlugin $interface.formatedScopedname$_$operation.name$_replyPlugin;
                         $endif$
-                        
+
                         }; separator="\n"$
                         }; separator="\n"$
                 };
@@ -99,16 +101,6 @@ namespace eprosima
 } // namespace eprosima
 
 #endif // _$ctx.filename;format="toUpper"$_DDS_PROTOCOL_H_
->>
-
-module(ctx, parent, module, definition_list) ::= <<
-$definition_list$
-
->>
-
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
-
 >>
 
 interface(ctx, parent, interface, export_list) ::= <<
@@ -145,26 +137,3 @@ $endif$
 
 $export_list$
 >>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
-
->>
-
-exception(ctx, parent, exception) ::= <<>>
-
-operation(ctx, parent, operation, param_list) ::= <<>>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<>>
-
-struct_type(ctx, parent, struct) ::= <<>>
-
-union_type(ctx, parent, union) ::= <<>>
-
-enum_type(ctx, parent, enum) ::= <<>>

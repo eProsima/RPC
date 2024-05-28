@@ -2,20 +2,21 @@ package com.eprosima.fastrpc.idl.grammar;
 
 import java.util.ArrayList;
 
-import com.eprosima.idl.parser.tree.Module;
+import com.eprosima.fastcdr.idl.util.CdrVersion;
 import com.eprosima.fastrpc.idl.tree.Interface;
 import com.eprosima.fastrpc.idl.tree.Operation;
 import com.eprosima.fastrpc.idl.tree.Param;
+import com.eprosima.idl.parser.tree.Module;
 import com.eprosima.idl.parser.typecode.Member;
 import com.eprosima.idl.parser.typecode.StructTypeCode;
 import com.eprosima.idl.parser.typecode.TypeCode;
 
 public class RESTContext extends Context
 {
-    public RESTContext(String filename, String file, ArrayList<String> includePaths, boolean clientcode, boolean servercode,
-            String appProduct, boolean include_include_prefix)
+    public RESTContext(String file, ArrayList<String> includePaths, boolean clientcode, boolean servercode,
+            String appProduct, boolean include_include_prefix, CdrVersion.Select cdr_version)
     {
-        super(filename, file, includePaths, clientcode, servercode, appProduct, include_include_prefix);
+        super(file, includePaths, clientcode, servercode, appProduct, include_include_prefix, cdr_version);
     }
 
     public boolean isDds()
@@ -38,12 +39,12 @@ public class RESTContext extends Context
         return false;
     }
 
-    public String getDeserializeCode() {  
+    public String getDeserializeCode() {
     	PathTree pathTree = new PathTree();
     	for(com.eprosima.idl.parser.tree.Interface interf: getInterfaces()) {
             Interface iface = (Interface)interf;
     		String path = iface.getPath();
-    		
+
     		pathTree.addInterfaceName(path, iface.getName());
    			for(com.eprosima.idl.parser.tree.Operation operation: iface.getOperations()) {
    	   			pathTree.addMethod((Operation)operation);
@@ -59,13 +60,13 @@ public class RESTContext extends Context
     					String type = member.getTypecode().getCppTypename();
     					String name = "{" + member.getName().substring(0, member.getName().length() - 1) + "}";
     					pos = path.indexOf(name);
-    					String variablePath = path.substring(0, pos + name.length());   
+    					String variablePath = path.substring(0, pos + name.length());
     					pathTree.setVariableType(variablePath, type);
     				}
     			}
     		}
-    	}    
-    	    	
+    	}
+
     	return pathTree.getIterationCode();
     }
 

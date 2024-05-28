@@ -8,6 +8,8 @@
 
 group TopicsHeaderByOperation;
 
+import "eprosima.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "Topics.h"], description=["This header file contains the declaration of topics generated using operations in the IDL file."])$
 
@@ -42,10 +44,6 @@ namespace $module.name$
 }
 >>
 
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
->>
-
 interface(ctx, parent, interface, export_list) ::= <<
 $interface.all_operations : { operation |
 /*!
@@ -61,18 +59,18 @@ public:
      * @brief Default constructor.
      */
     user_cpp_DllExport $interface.name$_$operation.name$_In();
-    
+
     /*!
      * @brief Destructor.
      */
     user_cpp_DllExport ~$interface.name$_$operation.name$_In();
-    
+
     /*
      * @brief Copy constructor.
      * @param x Reference to the object $interface.name$_$operation.name$_In that will be copied.
      */
     user_cpp_DllExport $interface.name$_$operation.name$_In(const $interface.name$_$operation.name$_In &x);
-    
+
     /*!
      * @brief Move constructor.
      * @param x Reference to the object $interface.name$_$operation.name$_In that will be copied.
@@ -160,18 +158,18 @@ public:
      * @brief Default constructor.
      */
     user_cpp_DllExport $interface.name$_$operation.name$_Request();
-    
+
     /*!
      * @brief Destructor.
      */
     user_cpp_DllExport ~$interface.name$_$operation.name$_Request();
-    
+
     /*!
      * @brief Copy constructor.
      * @param x Reference to the object $interface.name$_$operation.name$_Request that will be copied.
      */
     user_cpp_DllExport $interface.name$_$operation.name$_Request(const $interface.name$_$operation.name$_Request &x);
-    
+
     /*!
      * @brief Move constructor.
      * @param x Reference to the object $interface.name$_$operation.name$_Request that will be copied.
@@ -225,7 +223,7 @@ public:
     {
         return m_header;
     }
-    
+
     /*!
      * @brief This function copies the value in member $operation.name$
      * @param _$operation.name$ New value to be copied in member $operation.name$
@@ -309,18 +307,18 @@ public:
      * @brief Default constructor.
      */
     user_cpp_DllExport $interface.name$_$operation.name$_Out();
-    
+
     /*!
      * @brief Destructor.
      */
     user_cpp_DllExport ~$interface.name$_$operation.name$_Out();
-    
+
     /*!
      * @brief Copy constructor.
      * @param x Reference to the object $interface.name$_$operation.name$_Out that will be copied.
      */
     user_cpp_DllExport $interface.name$_$operation.name$_Out(const $interface.name$_$operation.name$_Out &x);
-    
+
     /*!
      * @brief Move constructor.
      * @param x Reference to the object $interface.name$_$operation.name$_Out that will be copied.
@@ -398,7 +396,7 @@ private:
 /*!
  * @brief This class represents the structure $interface.name$_$operation.name$_Result that can be used to send/receive replies
  * for the operation $interface.name$::$operation.name$.
- * 
+ *
  * @ingroup $ctx.trimfilename$
  */
 class $interface.name$_$operation.name$_Result
@@ -409,18 +407,18 @@ public:
      * @brief Default constructor.
      */
     user_cpp_DllExport $interface.name$_$operation.name$_Result();
-    
+
     /*!
      * @brief Destructor.
      */
     user_cpp_DllExport ~$interface.name$_$operation.name$_Result();
-    
+
     /*!
      * @brief Copy constructor.
      * @param x Reference to the object $interface.name$_$operation.name$_Result that will be copied.
      */
     user_cpp_DllExport $interface.name$_$operation.name$_Result(const $interface.name$_$operation.name$_Result &x);
-    
+
     /*!
      * @brief Move constructor.
      * @param x Reference to the object $interface.name$_$operation.name$_Result that will be copied.
@@ -445,13 +443,13 @@ public:
      * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
      */
     user_cpp_DllExport void _d(int32_t __d);
-    
+
     /*!
      * @brief This function returns the value of the discriminator.
      * @return Value of the discriminator
      */
     user_cpp_DllExport int32_t _d() const;
-    
+
     /*!
      * @brief This function returns a reference to the discriminator.
      * @return Reference to the discriminator.
@@ -461,7 +459,7 @@ public:
     user_cpp_DllExport void unknownEx(eprosima::rpc::protocol::dds::rpc::UnknownException _unknownEx);
 
     user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::UnknownException unknownEx() const;
-    
+
     user_cpp_DllExport eprosima::rpc::protocol::dds::rpc::UnknownException& unknownEx();
 
     $public_exception_union_member_declaration(typename=[interface.name, "_", operation.name, "_Out"], name="result")$
@@ -520,18 +518,18 @@ public:
      * @brief Default constructor.
      */
     user_cpp_DllExport $interface.name$_$operation.name$_Reply();
-    
+
     /*!
      * @brief Destructor.
      */
     user_cpp_DllExport ~$interface.name$_$operation.name$_Reply();
-    
+
     /*!
      * @brief Copy constructor.
      * @param x Reference to the object $interface.name$_$operation.name$_Reply that will be copied.
      */
     user_cpp_DllExport $interface.name$_$operation.name$_Reply(const $interface.name$_$operation.name$_Reply &x);
-    
+
     /*!
      * @brief Move constructor.
      * @param x Reference to the object $interface.name$_$operation.name$_Reply that will be copied.
@@ -621,7 +619,7 @@ public:
     {
         return m_$operation.name$;
     }
-    
+
     /*!
      * @brief This function returns the maximum serialized size of an object
      * depending on the buffer alignment.
@@ -661,28 +659,6 @@ $endif$
 
 $export_list$
 >>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
-exception(ctx, parent, exception) ::= <<>>
-
-operation(ctx, parent, operation, param_list) ::= <<>>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<>>
-
-struct_type(ctx, parent, struct) ::= <<>>
-
-union_type(ctx, parent, union) ::= <<>>
-
-enum_type(ctx, parent, enum) ::= <<>>
 
 /***** Utils *****/
 

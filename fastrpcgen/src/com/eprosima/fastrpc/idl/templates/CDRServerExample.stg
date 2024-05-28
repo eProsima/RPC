@@ -1,5 +1,7 @@
 group ServiceExample;
 
+import "eprosima.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "ServerExample.cxx"], description=["This source file shows a simple example of how to create a server for an interface."])$
 
@@ -27,7 +29,7 @@ int main(int argc, char **argv)
     TCPServerTransport *transport = NULL;
     $first(ctx.scopedInterfaces).scopedname$Server *server = NULL;
     $first(ctx.scopedInterfaces).name$ServerImplExample servant;
-    
+
     // Create and initialize the server for interface "$first(ctx.scopedInterfaces).scopedname$".
     try
     {
@@ -42,57 +44,21 @@ int main(int argc, char **argv)
         std::cout << ex.what() << std::endl;
         return -1;
     }
-    
+
     while(1)
     {
         eprosima::rpc::sleep(10000);
     }
-    
+
     // Stop and delete the server.
     server->stop();
     delete server;
     delete protocol;
     delete transport;
     delete pool;
-    
+
     return 0;
 }
 
 $definitions; separator="\n"$
 >>
-
-module(ctx, parent, module, definition_list) ::= <<
-$definition_list$
->>
-
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
->>
-
-interface(ctx, parent, interface, export_list) ::= <<
-$export_list$
->>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
-exception(ctx, parent, exception) ::= <<>>
-
-operation(ctx, parent, operation, param_list) ::= <<
-$param_list$
->>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<>>
-
-struct_type(ctx, parent, struct) ::= <<>>
-
-union_type(ctx, parent, union) ::= <<>>
-
-enum_type(ctx, parent, enum) ::= <<>>

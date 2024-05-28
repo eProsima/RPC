@@ -2,12 +2,14 @@ package com.eprosima.fastrpc.idl.grammar;
 
 import java.util.ArrayList;
 
+import com.eprosima.fastcdr.idl.util.CdrVersion;
+
 public class FastContext extends Context
 {
-    public FastContext(String filename, String file, ArrayList<String> includePaths, boolean clientcode, boolean servercode,
-            String appProduct, boolean include_include_prefix)
+    public FastContext(String file, ArrayList<String> includePaths, boolean clientcode, boolean servercode,
+            String appProduct, boolean include_include_prefix, CdrVersion.Select cdr_version)
     {
-        super(filename, file, includePaths, clientcode, servercode, appProduct, include_include_prefix);
+        super(file, includePaths, clientcode, servercode, appProduct, include_include_prefix, cdr_version);
     }
 
     public boolean isDds()
@@ -19,7 +21,7 @@ public class FastContext extends Context
     {
         return false;
     }
-    
+
     public boolean isFastcdr()
     {
         return true;
@@ -30,4 +32,3 @@ public class FastContext extends Context
         return false;
     }
 }
-

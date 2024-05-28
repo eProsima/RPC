@@ -1,5 +1,7 @@
 group AsyncCallbackHandlers;
 
+import "eprosima.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "AsyncCallbackHandlers.h"], description=["This header file contains the declaration of callback handlers used in asynchronous calls."])$
 
@@ -23,11 +25,6 @@ namespace $module.name$
 
 >>
 
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
-
->>
-
 /*!
  * The export_list will be the definition of synchronize functions.
  */
@@ -46,7 +43,7 @@ class $interface.name$_$operation.name$CallbackHandler
          * This function is called when is received the reply from the server.
          */
         virtual void $operation.name$($paramDeclarationsByValue(params=[operation.outputparam, operation.rettypeparam])$) = 0;
-        
+
         /*!
          * @brief This function is called when an exception occurs.
          *        This exception can be launched in the server's side or in the client's side.
@@ -63,34 +60,10 @@ class $interface.name$_$operation.name$CallbackHandler
          */
         virtual void on_exception(const eprosima::rpc::exception::UserException &ex) = 0;
         $endif$
-};
+\};
 
 $endif$
 }; separator="\n"$
 
 $export_list$
 >>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
-
->>
-
-exception(ctx, parent, exception) ::= <<>>
-
-operation(ctx, parent, operation, param_list) ::= <<>>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<>>
-
-struct_type(ctx, parent, struct) ::= <<>>
-
-union_type(ctx, parent, union) ::= <<>>
-
-enum_type(ctx, parent, enum) ::= <<>>
-

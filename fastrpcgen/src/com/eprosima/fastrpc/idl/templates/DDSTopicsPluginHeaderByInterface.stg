@@ -8,6 +8,8 @@
 
 group TopicsPluginHeaderByInterface;
 
+import "eprosima.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "TopicsPlugin.h"], description=["This header file contains the declaration of methods used by DDS middleware."])$
 
@@ -44,10 +46,6 @@ namespace $module.name$
 }
 >>
 
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
->>
-
 interface(ctx, parent, interface, export_list) ::= <<
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
@@ -65,32 +63,32 @@ class user_cpp_DllExport $interface.name$Plugin
         class user_cpp_DllExport $operation.name$_InPlugin
         {
             public:
-        
+
                 static DDS_TypeCode* get_typecode();
-        };
-        
+        \};
+
         $if(!operation.oneway)$
-        
+
         /*!
          * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
          */
         class user_cpp_DllExport $operation.name$_OutPlugin
         {
             public:
-        
+
                 static DDS_TypeCode* get_typecode();
-        };
-        
+        \};
+
         /*!
          * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
          */
         class user_cpp_DllExport $operation.name$_ResultPlugin : public DDSTypeSupport
         {
             public:
-        
+
                 static DDS_TypeCode* get_typecode();
-        };
-        
+        \};
+
         $endif$
         }; separator="\n"$
 
@@ -140,84 +138,84 @@ class user_cpp_DllExport $interface.name$_RequestPlugin : public DDSTypeSupport
         static const char* get_typename();
 
         static $interface.scopedname$_Request* create_data(void);
-        
+
         static void destroy_data($interface.scopedname$_Request *sample);
-        
+
         static void copy_data($interface.scopedname$_Request *dst,
             const $interface.scopedname$_Request *src);
-        
+
         static unsigned int get_serialized_sample_max_size(
             PRESTypePluginEndpointData endpoint_data,
             RTIBool include_encapsulation,
             RTIEncapsulationId encapsulation_id,
             unsigned int current_alignment);
-        
+
         static unsigned int get_serialized_sample_size(
             PRESTypePluginEndpointData endpoint_data,
             RTIBool include_encapsulation,
             RTIEncapsulationId encapsulation_id,
             unsigned int current_alignment,
             const $interface.scopedname$_Request * sample);
-        
+
         static unsigned int get_serialized_sample_min_size(
             PRESTypePluginEndpointData endpoint_data,
             RTIBool include_encapsulation,
             RTIEncapsulationId encapsulation_id,
             unsigned int current_alignment);
-        
+
         static PRESTypePluginParticipantData on_participant_attached(
-            void *registration_data, 
+            void *registration_data,
             const struct PRESTypePluginParticipantInfo *participant_info,
-            RTIBool top_level_registration, 
+            RTIBool top_level_registration,
             void *container_plugin_context,
             RTICdrTypeCode *typeCode);
-        
+
         static void on_participant_detached(
             PRESTypePluginParticipantData participant_data);
-        
+
         static PRESTypePluginEndpointData on_endpoint_attached(
             PRESTypePluginParticipantData participant_data,
             const struct PRESTypePluginEndpointInfo *endpoint_info,
-            RTIBool top_level_registration, 
+            RTIBool top_level_registration,
             void *container_plugin_context);
-        
+
         static void on_endpoint_detached(
             PRESTypePluginEndpointData endpoint_data);
-        
+
         static RTIBool copy_sample(
             PRESTypePluginEndpointData endpoint_data,
             $interface.scopedname$_Request *dst,
             const $interface.scopedname$_Request *src);
-        
+
         static RTIBool serialize(PRESTypePluginEndpointData endpoint_data,
-            const $interface.scopedname$_Request *sample, 
-            struct RTICdrStream *stream,    
+            const $interface.scopedname$_Request *sample,
+            struct RTICdrStream *stream,
             RTIBool serialize_encapsulation,
             RTIEncapsulationId encapsulation_id,
-            RTIBool serialize_sample, 
+            RTIBool serialize_sample,
             void *endpoint_plugin_qos);
-        
+
         static RTIBool deserialize(PRESTypePluginEndpointData endpoint_data,
             $interface.scopedname$_Request **sample,
             RTIBool * drop_sample,
-            struct RTICdrStream *stream,   
+            struct RTICdrStream *stream,
             RTIBool deserialize_encapsulation,
-            RTIBool deserialize_sample, 
+            RTIBool deserialize_sample,
             void *endpoint_plugin_qos);
-        
+
         static PRESTypePluginKeyKind get_key_kind(void);
-        
+
         static DDS_TypeCode* get_typecode();
-        
+
         static struct PRESTypePlugin *new_plugin(void);
-        
+
         static void delete_plugin(struct PRESTypePlugin *plugin);
-        
+
         // TODO cambiar a isDDS.
         $if(ctx.dds)$
         /*! TODO Mover al transporte */
         static bool register_type(DDSDomainParticipant *participant, const char *type_name);
-        
+
         // TODO unregister_type.
         $endif$
 
@@ -228,7 +226,7 @@ class user_cpp_DllExport $interface.name$_RequestPlugin : public DDSTypeSupport
         DDSDataWriter* create_datawriterI(DDSDataWriter* dataWriter);
 
         DDS_ReturnCode_t destroy_datawriterI(DDSDataWriter* dataWriter);
-        
+
     private:
 
         static const char *m_typename;
@@ -272,83 +270,83 @@ class user_cpp_DllExport $interface.name$_ReplyPlugin : public DDSTypeSupport
     public:
 
         static const char* get_typename();
-        
+
         static $interface.scopedname$_Reply* create_data(void);
-        
+
         static void destroy_data($interface.scopedname$_Reply *sample);
-        
+
         static void copy_data($interface.scopedname$_Reply *dst,
             const $interface.scopedname$_Reply *src);
-        
+
         static unsigned int get_serialized_sample_max_size(
             PRESTypePluginEndpointData endpoint_data,
             RTIBool include_encapsulation,
             RTIEncapsulationId encapsulation_id,
             unsigned int current_alignment);
-        
+
         static unsigned int get_serialized_sample_size(
             PRESTypePluginEndpointData endpoint_data,
             RTIBool include_encapsulation,
             RTIEncapsulationId encapsulation_id,
             unsigned int current_alignment,
             const $interface.scopedname$_Reply * sample);
-        
+
         static unsigned int get_serialized_sample_min_size(
             PRESTypePluginEndpointData endpoint_data,
             RTIBool include_encapsulation,
             RTIEncapsulationId encapsulation_id,
             unsigned int current_alignment);
-        
+
         static PRESTypePluginParticipantData on_participant_attached(
-            void *registration_data, 
+            void *registration_data,
             const struct PRESTypePluginParticipantInfo *participant_info,
-            RTIBool top_level_registration, 
+            RTIBool top_level_registration,
             void *container_plugin_context,
             RTICdrTypeCode *typeCode);
-        
+
         static void on_participant_detached(PRESTypePluginParticipantData participant_data);
-        
+
         static PRESTypePluginEndpointData on_endpoint_attached(
             PRESTypePluginParticipantData participant_data,
             const struct PRESTypePluginEndpointInfo *endpoint_info,
-            RTIBool top_level_registration, 
+            RTIBool top_level_registration,
             void *container_plugin_context);
-        
+
         static void on_endpoint_detached(PRESTypePluginEndpointData endpoint_data);
-        
+
         static RTIBool copy_sample(PRESTypePluginEndpointData endpoint_data,
             $interface.scopedname$_Reply *dst,
             const $interface.scopedname$_Reply *src);
-        
+
         static RTIBool serialize(PRESTypePluginEndpointData endpoint_data,
-            const $interface.scopedname$_Reply *sample, 
-            struct RTICdrStream *stream,    
+            const $interface.scopedname$_Reply *sample,
+            struct RTICdrStream *stream,
             RTIBool serialize_encapsulation,
             RTIEncapsulationId encapsulation_id,
-            RTIBool serialize_sample, 
+            RTIBool serialize_sample,
             void *endpoint_plugin_qos);
-        
+
         static RTIBool deserialize(PRESTypePluginEndpointData endpoint_data,
             $interface.scopedname$_Reply **sample,
             RTIBool * drop_sample,
-            struct RTICdrStream *stream,   
+            struct RTICdrStream *stream,
             RTIBool deserialize_encapsulation,
-            RTIBool deserialize_sample, 
+            RTIBool deserialize_sample,
             void *endpoint_plugin_qos);
-        
+
         static PRESTypePluginKeyKind get_key_kind(void);
-        
+
         static DDS_TypeCode* get_typecode();
-        
+
         static struct PRESTypePlugin* new_plugin(void);
-        
+
         static void delete_plugin(struct PRESTypePlugin *plugin);
-        
+
         // TODO cambiar a isDDS.
         $if(ctx.dds)$
         /*! TODO Mover al transporte */
         static bool register_type(DDSDomainParticipant *participant, const char *type_name);
-        
+
         // TODO unregister_type.
         $endif$
 
@@ -367,10 +365,6 @@ class user_cpp_DllExport $interface.name$_ReplyPlugin : public DDSTypeSupport
 
 >>
 
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
 exception(ctx, parent, exception) ::= <<
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
@@ -383,15 +377,7 @@ class user_cpp_DllExport $exception.name$Plugin
 };
 >>
 
-operation(ctx, parent, operation, param_list) ::= <<>>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<
+typedef_decl(ctx, parent, typedefs, typedefs_type, declarator_type) ::= <<
 $typedefs : { typedef |
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
@@ -401,12 +387,12 @@ class user_cpp_DllExport $typedef.name$Plugin
     public:
 
         static DDS_TypeCode* get_typecode();
-        
-};
+
+\};
 }; separator="\n"$
 >>
 
-struct_type(ctx, parent, struct) ::= <<
+struct_type(ctx, parent, struct, extensions, member_list) ::= <<
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
@@ -415,11 +401,11 @@ class user_cpp_DllExport $struct.name$Plugin
     public:
 
         static DDS_TypeCode* get_typecode();
-        
+
 };
 >>
 
-union_type(ctx, parent, union) ::= <<
+union_type(ctx, parent, union, extensions, switch_type) ::= <<
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
@@ -428,7 +414,7 @@ class user_cpp_DllExport $union.name$Plugin
     public:
 
         static DDS_TypeCode* get_typecode();
-        
+
 };
 >>
 
@@ -441,7 +427,6 @@ class user_cpp_DllExport $enum.name$Plugin
     public:
 
         static DDS_TypeCode* get_typecode();
-        
+
 };
 >>
-

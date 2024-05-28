@@ -1,5 +1,7 @@
 group AsyncSupportHeaderByOperation;
 
+import "eprosima.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "AsyncSupport.h"], description=["This header file contains functionality to use asynchronous calls for all interfaces."])$
 
@@ -28,10 +30,6 @@ namespace $module.name$
 
 >>
 
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
->>
-
 interface(ctx, parent, interface, export_list) ::= <<
 $interface.all_operations : { operation |
 $if(!operation.oneway)$
@@ -54,19 +52,19 @@ class $interface.name$_$operation.name$Task : public eprosima::rpc::transport::d
 
         //! @brief Destructor.
         virtual ~$interface.name$_$operation.name$Task();
-        
+
         /*!
          * @brief This funcion is called when the reply sample is received.
          */
         virtual void execute();
-        
+
         /*!
          * @brief This function is called when an exception occurs.
          *        This exception can be launched in the server's side or in the client's side.
          *
          * @param ex The exception that will be launched.
          */
-        virtual void on_exception(const eprosima::rpc::exception::SystemException &ex);        
+        virtual void on_exception(const eprosima::rpc::exception::SystemException &ex);
 
         $if(operation.exceptions)$
         /*!
@@ -77,7 +75,7 @@ class $interface.name$_$operation.name$Task : public eprosima::rpc::transport::d
          */
         virtual void on_exception(const eprosima::rpc::exception::UserException &ex);
         $endif$
-        
+
         /*!
          * @brief This function returns the object used by the task.
          *
@@ -90,9 +88,9 @@ class $interface.name$_$operation.name$Task : public eprosima::rpc::transport::d
          * @return Pointer to the allocated reply sample.
          */
         virtual void* getReplyInstance();
-        
+
         private:
-        
+
         $interface.name$_$operation.name$CallbackHandler &m_obj;
 
         $interface.name$_$operation.name$_Reply m_reply;
@@ -102,25 +100,3 @@ $endif$
 
 $export_list$
 >>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
-exception(ctx, parent, exception) ::= <<>>
-
-operation(ctx, parent, operation, param_list) ::= <<>>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<>>
-
-struct_type(ctx, parent, struct) ::= <<>>
-
-union_type(ctx, parent, union) ::= <<>>
-
-enum_type(ctx, parent, enum) ::= <<>>

@@ -1,5 +1,6 @@
 package com.eprosima.fastrpc.idl.grammar;
 
+import com.eprosima.fastcdr.idl.util.CdrVersion;
 import com.eprosima.fastrpc.idl.tree.*;
 import com.eprosima.idl.parser.typecode.TypeCode;
 
@@ -10,10 +11,10 @@ import org.antlr.v4.runtime.Token;
 
 public abstract class Context extends com.eprosima.idl.context.Context implements com.eprosima.fastcdr.idl.context.Context
 {
-    public Context(String filename, String file, ArrayList<String> includePaths, boolean clientcode, boolean servercode,
-            String appProduct, boolean include_include_prefix)
+    public Context(String file, ArrayList<String> includePaths, boolean clientcode, boolean servercode,
+            String appProduct, boolean include_include_prefix, CdrVersion.Select cdr_version)
     {
-        super(filename, file, includePaths);
+        super(file, includePaths);
 
 
         m_clientcode = clientcode;
@@ -21,6 +22,7 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
         m_randomGenNames = new Stack<String>();
         m_appProduct = appProduct;
         m_include_include_prefix = include_include_prefix;
+        cdr_version_ = cdr_version;
     }
 
     public void setTypelimitation(String lt)
@@ -157,6 +159,12 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
         return m_randomGenNames.pop();
     }
 
+    @Override
+    public boolean isCdr_both()
+    {
+        return CdrVersion.Select.BOTH == cdr_version_;
+    }
+
     private String m_typelimitation = null;
 
     // TODO Lleva la cuenta de generacion de nuevos nombres.
@@ -172,4 +180,6 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
 
     private String m_appProduct = null;
     private boolean m_include_include_prefix = true;
+
+    private CdrVersion.Select cdr_version_ = CdrVersion.Select.V2;
 }

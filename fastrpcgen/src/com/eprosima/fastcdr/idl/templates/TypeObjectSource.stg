@@ -15,7 +15,7 @@
 group TypeObjectSource;
 
 main(ctx, definitions) ::= <<
-$fileHeader(file=[ctx.filename, "TypeObject.cpp"], description=["This source file contains the definition of the described types in the IDL file."])$
+$fileHeader(ctx=ctx, file=[ctx.filename, "TypeObject.cpp"], description=["This source file contains the definition of the described types in the IDL file."])$
 
 #ifdef _WIN32
 // Remove linker warning LNK4221 on Visual Studio
@@ -227,9 +227,9 @@ const TypeObject* GetComplete$annotation.name$Object()
 
 namespace $annotation.name$
 {
-$annotation.enums : {$enum_type(ctx=ctx, parent=annotation, enum=it)$}; separator="\n"$
+$annotation.enums : { enum | $enum_type(ctx=ctx, parent=annotation, enum=enum)$}; separator="\n"$
 
-$annotation.typeDefs : {$typedef_decl(ctx=ctx, parent=annotation, typedefs=it)$}; separator="\n"$
+$annotation.typeDefs : { typedef | $typedef_decl(ctx=ctx, parent=annotation, typedefs=typedef)$}; separator="\n"$
 
 } // $annotation.name$ namespace
 >>
@@ -280,7 +280,7 @@ export_list(exports) ::= <<>>
 
 const_decl(ctx, parent, const) ::= <<>>
 
-typedef_decl(ctx, parent, typedefs) ::= <<
+typedef_decl(ctx, parent, typedefs, typedefs_type, declarator_type) ::= <<
 const TypeIdentifier* Get$typedefs.name$Identifier(bool complete)
 {
     const TypeIdentifier* c_identifier = TypeObjectFactory::get_instance()->get_type_identifier("$typedefs.name$", complete);
@@ -693,7 +693,7 @@ type_object->complete().enumerated_type().literal_seq().emplace_back(cel_$object
 
 >>
 
-struct_type(ctx, parent, struct, extensions) ::= <<
+struct_type(ctx, parent, struct, extensions, member_list) ::= <<
 const TypeIdentifier* Get$struct.name$Identifier(bool complete)
 {
     const TypeIdentifier * c_identifier = TypeObjectFactory::get_instance()->get_type_identifier("$struct.name$", complete);
@@ -746,7 +746,7 @@ const TypeObject* GetMinimal$struct.name$Object()
     // TODO Inheritance
     //type_object->minimal().struct_type().header().base_type()._d(EK_MINIMAL);
     //type_object->minimal().struct_type().header().base_type().equivalence_hash()[0..13];
-    $struct.inheritances:{$minimal_struct_inheritance(it)$}; separator="\n"$
+    $minimal_struct_inheritance(struct.inheritance)$
 
     TypeIdentifier identifier;
     identifier._d(EK_MINIMAL);
@@ -799,7 +799,7 @@ const TypeObject* GetComplete$struct.name$Object()
     // Header
     type_object->complete().struct_type().header().detail().type_name("$struct.name$");
     // TODO inheritance
-    $struct.inheritances:{$complete_struct_inheritance(it)$}; separator="\n"$
+    $complete_struct_inheritance(struct.inheritance)$
 
     $if(struct.annotationList)$
     $struct.annotationList:{ ann |
@@ -965,7 +965,7 @@ get_type_identifier(ctx, type, ek) ::= <<$if(type.isSequenceType)$TypeObjectFact
 
 get_content_type(ctx, type) ::= <<$if(type.plainType)$$if(type.isSequenceType)$TypeNamesGenerator::get_sequence_type_name($get_content_type(ctx=ctx, type=type.contentTypeCode)$, $type.maxsize$)$elseif(type.isArrayType)$TypeNamesGenerator::get_array_type_name($get_content_type(ctx=ctx, type=type.contentTypeCode)$, {$type.dimensions:{ dim |$dim$}; separator=", "$})$elseif(type.isSetType)$TypeNamesGenerator::get_sequence_type_name($get_content_type(ctx=ctx, type=type.contentTypeCode)$, $type.maxsize$)$elseif(type.isMapType)$TypeNamesGenerator::get_map_type_name($get_content_type(ctx=ctx, type=type.keyTypeCode)$, $get_content_type(ctx=ctx, type=type.valueTypeCode)$, $type.maxsize$)$elseif(type.isStringType)$TypeNamesGenerator::get_string_type_name($type.maxsize$, false)$elseif(type.isWStringType)$TypeNamesGenerator::get_string_type_name($type.maxsize$, true)$else$"$type.cppTypename$"$endif$$else$"$type.cppTypename$"$endif$>>
 
-union_type(ctx, parent, union) ::= <<
+union_type(ctx, parent, union, extensions, switch_type) ::= <<
 const TypeIdentifier* Get$union.name$Identifier(bool complete)
 {
     const TypeIdentifier * c_identifier = TypeObjectFactory::get_instance()->get_type_identifier("$union.name$", complete);

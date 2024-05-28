@@ -8,6 +8,8 @@
 
 group TopicsPluginSourceByInterface;
 
+import "eprosima.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "TopicsPlugin.cpp"], description=["TODO This header file contains the declaration of topics generated using operations in the IDL file."])$
 
@@ -23,17 +25,9 @@ $definitions; separator="\n"$
 
 >>
 
-module(ctx, parent, module, definition_list) ::= <<
-$definition_list$
->>
-
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
->>
-
 interface(ctx, parent, interface, export_list) ::= <<
 $export_list$
- 
+
 $interface.all_operations : { operation |
 // Request operations
 DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_InPlugin::get_typecode()
@@ -54,7 +48,7 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_InPlugin::get_typec
                 DDS_BOOLEAN_FALSE,
                 -1,
                 NULL
-            },
+            \},
             0,
             0,
             0,
@@ -63,8 +57,9 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_InPlugin::get_typec
             DDS_PRIVATE_MEMBER,
             1,
             NULL
-        }}; separator=",\n"$
-    };
+        \}
+        }; separator=",\n"$
+    \};
     $else$
     static DDS_TypeCode_Member $interface.name$_$operation.name$_In_g_tc_members[1] =
     {
@@ -75,7 +70,7 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_InPlugin::get_typec
                 DDS_BOOLEAN_FALSE,
                 -1,
                 NULL
-            },
+            \},
             0,
             0,
             0,
@@ -84,8 +79,8 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_InPlugin::get_typec
             DDS_PRIVATE_MEMBER,
             1,
             NULL
-        }
-    };
+        \}
+    \};
     $endif$
 
     static DDS_TypeCode $interface.name$_$operation.name$_In_g_tc =
@@ -101,8 +96,8 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_InPlugin::get_typec
          $if(operation.inputparam)$$length(operation.inputparam)$$else$1$endif$,
          $interface.name$_$operation.name$_In_g_tc_members,
          DDS_VM_NONE
-    }};
-    
+    \}\};
+
     if(!is_initialized)
     {
         $if(operation.inputparam)$
@@ -112,10 +107,10 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_InPlugin::get_typec
         $endif$
 
         is_initialized = true;
-    }
+    \}
 
     return &$interface.name$_$operation.name$_In_g_tc;
-}
+\}
 
 // Reply operations
 
@@ -138,7 +133,7 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_OutPlugin::get_type
                 DDS_BOOLEAN_FALSE,
                 -1,
                 NULL
-            },
+            \},
             0,
             0,
             0,
@@ -147,8 +142,9 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_OutPlugin::get_type
             DDS_PRIVATE_MEMBER,
             1,
             NULL
-        }}; separator=",\n"$
-    };
+        \}
+        }; separator=",\n"$
+    \};
     $else$
     static DDS_TypeCode_Member $interface.name$_$operation.name$_Out_g_tc_members[1] =
     {
@@ -159,7 +155,7 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_OutPlugin::get_type
                 DDS_BOOLEAN_FALSE,
                 -1,
                 NULL
-            },
+            \},
             0,
             0,
             0,
@@ -168,8 +164,8 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_OutPlugin::get_type
             DDS_PRIVATE_MEMBER,
             1,
             NULL
-        }
-    };
+        \}
+    \};
     $endif$
 
     static DDS_TypeCode $interface.name$_$operation.name$_Out_g_tc =
@@ -185,8 +181,8 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_OutPlugin::get_type
          $if([operation.outputparam, operation.rettypeparam])$$length([operation.outputparam, operation.rettypeparam])$$else$1$endif$,
          $interface.name$_$operation.name$_Out_g_tc_members,
          DDS_VM_NONE
-    }};
-    
+    \}\};
+
     if(!is_initialized)
     {
         $if([operation.outputparam, operation.rettypeparam])$
@@ -196,10 +192,10 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_OutPlugin::get_type
         $endif$
 
         is_initialized = true;
-    }
+    \}
 
     return &$interface.name$_$operation.name$_Out_g_tc;
-}
+\}
 
 DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_ResultPlugin::get_typecode()
 {
@@ -215,7 +211,7 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_ResultPlugin::get_t
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
                 -1, /* Bitfield bits */
                 NULL/* Member type code is assigned later */
-            },
+            \},
             0, /* Ignored */
             1, /* Number of labels */
             RTI_CDR_TYPE_CODE_UNION_DEFAULT_LABEL, /* First label */
@@ -224,7 +220,7 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_ResultPlugin::get_t
             DDS_PRIVATE_MEMBER,/* Ignored */
             1,
             NULL/* Ignored */
-        }
+        \}
         ,
         {
             (char *)"result",
@@ -233,7 +229,7 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_ResultPlugin::get_t
                 DDS_BOOLEAN_FALSE,
                 -1,
                 NULL
-            },
+            \},
             0,
             1,
             0,
@@ -242,7 +238,7 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_ResultPlugin::get_t
             DDS_PRIVATE_MEMBER,
             1,
             NULL
-        }
+        \}
         $operation.exceptions : { exception |
         ,
         {
@@ -252,7 +248,7 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_ResultPlugin::get_t
                 DDS_BOOLEAN_FALSE,
                 -1,
                 NULL
-            },
+            \},
             0,
             1,
             (RTICdrLong)$exception.md5$,
@@ -261,8 +257,9 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_ResultPlugin::get_t
             DDS_PRIVATE_MEMBER,
             1,
             NULL
-        }}; separator="\n"$
-    };
+        \}
+        }; separator="\n"$
+    \};
 
     static DDS_TypeCode $interface.name$_$operation.name$_Result_g_tc =
     {{
@@ -277,8 +274,8 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_ResultPlugin::get_t
          $length(operation.exceptions)$ + 2,
          $interface.name$_$operation.name$_Result_g_tc_members,
          DDS_VM_NONE
-    }};
-    
+    \}\};
+
     if(!is_initialized)
     {
         $interface.name$_$operation.name$_Result_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::rpc::UnknownExceptionPlugin::get_typecode();
@@ -288,10 +285,10 @@ DDS_TypeCode* $interface.scopedname$Plugin::$operation.name$_ResultPlugin::get_t
         $interface.name$_$operation.name$_Result_g_tc._data._typeCode = (RTICdrTypeCode*)&DDS_g_tc_long;
 
         is_initialized = true;
-    }
+    \}
 
     return &$interface.name$_$operation.name$_Result_g_tc;
-}
+\}
 
 $endif$
 }; separator="\n"$
@@ -313,7 +310,7 @@ $interface.scopedname$_RequestPlugin::create_data(void)
     return request;
 }
 
-void 
+void
 $interface.scopedname$_RequestPlugin::destroy_data(
     $interface.scopedname$_Request *sample)
 {
@@ -322,7 +319,7 @@ $interface.scopedname$_RequestPlugin::destroy_data(
         delete sample;
 }
 
-void 
+void
 $interface.scopedname$_RequestPlugin::copy_data(
     $interface.scopedname$_Request *dst,
     const $interface.scopedname$_Request *src)
@@ -331,7 +328,7 @@ $interface.scopedname$_RequestPlugin::copy_data(
     *dst = *src;
 }
 
-unsigned int 
+unsigned int
 $interface.scopedname$_RequestPlugin::get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
@@ -360,7 +357,7 @@ $interface.scopedname$_RequestPlugin::get_serialized_sample_max_size(
 
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
-    } 
+    }
 
     //printf("Max ser size: %u\n", current_alignment - initial_alignment);
     return current_alignment - initial_alignment;
@@ -395,7 +392,7 @@ $interface.scopedname$_RequestPlugin::get_serialized_sample_size(
 
 
     current_alignment += rpc::RequestHeaderPlugin::get_serialized_sample_size(
-        endpoint_data,RTI_FALSE, encapsulation_id, 
+        endpoint_data,RTI_FALSE, encapsulation_id,
         current_alignment, &sample->header);
 
     current_alignment += RTICdrType_getOctetMaxSizeSerialized(
@@ -414,7 +411,7 @@ $interface.scopedname$_RequestPlugin::get_serialized_sample_size(
     return (unsigned int)$interface.scopedname$_Request::getCdrSerializedSize(*sample, current_alignment);
 }
 
-unsigned int 
+unsigned int
 $interface.scopedname$_RequestPlugin::get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
@@ -426,11 +423,11 @@ $interface.scopedname$_RequestPlugin::get_serialized_sample_min_size(
     return 0;
 }
 
-PRESTypePluginParticipantData 
+PRESTypePluginParticipantData
 $interface.scopedname$_RequestPlugin::on_participant_attached(
-    void *registration_data, 
+    void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
-    RTIBool top_level_registration, 
+    RTIBool top_level_registration,
     void *container_plugin_context,
     RTICdrTypeCode *typeCode)
 {
@@ -446,11 +443,11 @@ $interface.scopedname$_RequestPlugin::on_participant_detached(
     PRESTypePluginDefaultParticipantData_delete(participant_data);
 }
 
-PRESTypePluginEndpointData 
+PRESTypePluginEndpointData
 $interface.scopedname$_RequestPlugin::on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
-    RTIBool top_level_registration, 
+    RTIBool top_level_registration,
     void *container_plugin_context)
 {
     //printf("=> $interface.scopedname$_RequestPlugin::on_endpoint_attached\n");
@@ -490,18 +487,18 @@ $interface.scopedname$_RequestPlugin::on_endpoint_attached(
         }
     }
 
-    return epd;    
+    return epd;
 }
 
-void 
+void
 $interface.scopedname$_RequestPlugin::on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
-{  
+{
     //printf("=> $interface.scopedname$_RequestPlugin::on_endpoint_detached\n");
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
 
-RTIBool 
+RTIBool
 $interface.scopedname$_RequestPlugin::copy_sample(
     PRESTypePluginEndpointData endpoint_data,
     $interface.scopedname$_Request *dst,
@@ -513,14 +510,14 @@ $interface.scopedname$_RequestPlugin::copy_sample(
     return RTI_TRUE;
 }
 
-RTIBool 
+RTIBool
 $interface.scopedname$_RequestPlugin::serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const $interface.scopedname$_Request *sample, 
-    struct RTICdrStream *stream,    
+    const $interface.scopedname$_Request *sample,
+    struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
-    RTIBool serialize_sample, 
+    RTIBool serialize_sample,
     void *endpoint_plugin_qos)
 {
     //printf("=> $interface.scopedname$_RequestPlugin::serialize\n");
@@ -564,14 +561,14 @@ $interface.scopedname$_RequestPlugin::serialize(
     return RTI_TRUE;
 }
 
-RTIBool 
+RTIBool
 $interface.scopedname$_RequestPlugin::deserialize(
     PRESTypePluginEndpointData endpoint_data,
     $interface.scopedname$_Request **sample,
     RTIBool * drop_sample,
-    struct RTICdrStream *stream,   
+    struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
-    RTIBool deserialize_sample, 
+    RTIBool deserialize_sample,
     void *endpoint_plugin_qos)
 {
     //printf("=> $interface.scopedname$_RequestPlugin::deserialize\n");
@@ -597,7 +594,7 @@ $interface.scopedname$_RequestPlugin::deserialize(
     return RTI_TRUE;
 }
 
-PRESTypePluginKeyKind 
+PRESTypePluginKeyKind
 $interface.scopedname$_RequestPlugin::get_key_kind(void)
 {
     //printf("=> $interface.scopedname$_RequestPlugin::get_key_kind\n");
@@ -636,7 +633,7 @@ DDS_TypeCode* $interface.scopedname$_CallPlugin::get_typecode()
                 DDS_BOOLEAN_FALSE,
                 -1,
                 NULL
-            },
+            \},
             0,
             1,
             (RTICdrLong)$operation.md5$,
@@ -645,7 +642,8 @@ DDS_TypeCode* $interface.scopedname$_CallPlugin::get_typecode()
             DDS_PRIVATE_MEMBER,
             1,
             NULL
-        }}; separator="\n"$
+        \}
+        }; separator="\n"$
     };
 
     static DDS_TypeCode $interface.name$_Call_g_tc =
@@ -662,7 +660,7 @@ DDS_TypeCode* $interface.scopedname$_CallPlugin::get_typecode()
          $interface.name$_Call_g_tc_members,
          DDS_VM_NONE
     }};
-    
+
     if(!is_initialized)
     {
 
@@ -735,7 +733,7 @@ DDS_TypeCode* $interface.scopedname$_RequestPlugin::get_typecode()
          $interface.name$_Request_g_tc_members,
          DDS_VM_NONE
     }};
-    
+
     if(!is_initialized)
     {
         $interface.name$_Request_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::rpc::RequestHeaderPlugin::get_typecode();
@@ -825,13 +823,13 @@ struct PRESTypePlugin *$interface.scopedname$_RequestPlugin::new_plugin(void)
 
         plugin->typeCode =  (struct RTICdrTypeCode *)$interface.scopedname$_RequestPlugin::get_typecode();
 
-        plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
+        plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE;
 
         /* Serialized buffer */
-        plugin->getBuffer = 
+        plugin->getBuffer =
             (PRESTypePluginGetBufferFunction)
             PRESTypePluginDefaultEndpointData_getBuffer;
-        plugin->returnBuffer = 
+        plugin->returnBuffer =
             (PRESTypePluginReturnBufferFunction)
             PRESTypePluginDefaultEndpointData_returnBuffer;
         plugin->getSerializedSampleSizeFnc =
@@ -914,7 +912,7 @@ const char* $interface.scopedname$_ReplyPlugin::get_typename()
     return m_typename;
 }
 
-void 
+void
 $interface.scopedname$_ReplyPlugin::copy_data(
     $interface.scopedname$_Reply *dst,
     const $interface.scopedname$_Reply *src)
@@ -931,7 +929,7 @@ $interface.scopedname$_ReplyPlugin::create_data(void)
     return reply;
 }
 
-void 
+void
 $interface.scopedname$_ReplyPlugin::destroy_data(
     $interface.scopedname$_Reply *sample)
 {
@@ -940,7 +938,7 @@ $interface.scopedname$_ReplyPlugin::destroy_data(
         delete sample;
 }
 
-unsigned int 
+unsigned int
 $interface.scopedname$_ReplyPlugin::get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
@@ -970,7 +968,7 @@ $interface.scopedname$_ReplyPlugin::get_serialized_sample_max_size(
 
     if (include_encapsulation) {
         current_alignment += encapsulation_size;
-    } 
+    }
 
     //printf("Max ser size: %u\n", current_alignment - initial_alignment);
     return current_alignment - initial_alignment;
@@ -1005,7 +1003,7 @@ $interface.scopedname$_ReplyPlugin::get_serialized_sample_size(
 
 
     current_alignment += rpc::ReplyHeaderPlugin::get_serialized_sample_size(
-        endpoint_data,RTI_FALSE, encapsulation_id, 
+        endpoint_data,RTI_FALSE, encapsulation_id,
         current_alignment, &sample->header);
 
     current_alignment += RTICdrType_getOctetMaxSizeSerialized(
@@ -1024,7 +1022,7 @@ $interface.scopedname$_ReplyPlugin::get_serialized_sample_size(
     return (unsigned int)$interface.scopedname$_Reply::getCdrSerializedSize(*sample, current_alignment);
 }
 
-unsigned int 
+unsigned int
 $interface.scopedname$_ReplyPlugin::get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
@@ -1036,11 +1034,11 @@ $interface.scopedname$_ReplyPlugin::get_serialized_sample_min_size(
     return 0;
 }
 
-PRESTypePluginParticipantData 
+PRESTypePluginParticipantData
 $interface.scopedname$_ReplyPlugin::on_participant_attached(
-    void *registration_data, 
+    void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
-    RTIBool top_level_registration, 
+    RTIBool top_level_registration,
     void *container_plugin_context,
     RTICdrTypeCode *typeCode)
 {
@@ -1056,11 +1054,11 @@ $interface.scopedname$_ReplyPlugin::on_participant_detached(
     PRESTypePluginDefaultParticipantData_delete(participant_data);
 }
 
-PRESTypePluginEndpointData 
+PRESTypePluginEndpointData
 $interface.scopedname$_ReplyPlugin::on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
-    RTIBool top_level_registration, 
+    RTIBool top_level_registration,
     void *container_plugin_context)
 {
     //printf("=> $interface.scopedname$_ReplyPlugin::on_endpoint_attached\n");
@@ -1100,18 +1098,18 @@ $interface.scopedname$_ReplyPlugin::on_endpoint_attached(
         }
     }
 
-    return epd;    
+    return epd;
 }
 
-void 
+void
 $interface.scopedname$_ReplyPlugin::on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
-{  
+{
     //printf("=> $interface.scopedname$_ReplyPlugin::on_endpoint_detached\n");
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
 
-RTIBool 
+RTIBool
 $interface.scopedname$_ReplyPlugin::copy_sample(
     PRESTypePluginEndpointData endpoint_data,
     $interface.scopedname$_Reply *dst,
@@ -1122,14 +1120,14 @@ $interface.scopedname$_ReplyPlugin::copy_sample(
     return RTI_TRUE;
 }
 
-RTIBool 
+RTIBool
 $interface.scopedname$_ReplyPlugin::serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const $interface.scopedname$_Reply *sample, 
-    struct RTICdrStream *stream,    
+    const $interface.scopedname$_Reply *sample,
+    struct RTICdrStream *stream,
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
-    RTIBool serialize_sample, 
+    RTIBool serialize_sample,
     void *endpoint_plugin_qos)
 {
     //printf("=> $interface.scopedname$_ReplyPlugin::serialize\n");
@@ -1172,14 +1170,14 @@ $interface.scopedname$_ReplyPlugin::serialize(
     return RTI_TRUE;
 }
 
-RTIBool 
+RTIBool
 $interface.scopedname$_ReplyPlugin::deserialize(
     PRESTypePluginEndpointData endpoint_data,
     $interface.scopedname$_Reply **sample,
     RTIBool * drop_sample,
-    struct RTICdrStream *stream,   
+    struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
-    RTIBool deserialize_sample, 
+    RTIBool deserialize_sample,
     void *endpoint_plugin_qos)
 {
     //printf("=> $interface.scopedname$_ReplyPlugin::deserialize\n");
@@ -1204,7 +1202,7 @@ $interface.scopedname$_ReplyPlugin::deserialize(
     return RTI_TRUE;
 }
 
-PRESTypePluginKeyKind 
+PRESTypePluginKeyKind
 $interface.scopedname$_ReplyPlugin::get_key_kind(void)
 {
     //printf("=> $interface.scopedname$_ReplyPlugin::get_key_kind\n");
@@ -1243,7 +1241,7 @@ DDS_TypeCode* $interface.scopedname$_ReturnPlugin::get_typecode()
                 DDS_BOOLEAN_FALSE,
                 -1,
                 NULL
-            },
+            \},
             0,
             1,
             (RTICdrLong)$operation.md5$,
@@ -1252,7 +1250,8 @@ DDS_TypeCode* $interface.scopedname$_ReturnPlugin::get_typecode()
             DDS_PRIVATE_MEMBER,
             1,
             NULL
-        }}; separator="\n"$
+        \}
+        }; separator="\n"$
     };
 
     static DDS_TypeCode $interface.name$_Return_g_tc =
@@ -1269,7 +1268,7 @@ DDS_TypeCode* $interface.scopedname$_ReturnPlugin::get_typecode()
          $interface.name$_Return_g_tc_members,
          DDS_VM_NONE
     }};
-    
+
     if(!is_initialized)
     {
         $interface.name$_Return_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::rpc::UnknownOperationPlugin::get_typecode();
@@ -1341,7 +1340,7 @@ DDS_TypeCode* $interface.scopedname$_ReplyPlugin::get_typecode()
          $interface.name$_Reply_g_tc_members,
          DDS_VM_NONE
     }};
-    
+
     if(!is_initialized)
     {
         $interface.name$_Reply_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)eprosima::rpc::protocol::dds::rpc::ReplyHeaderPlugin::get_typecode();
@@ -1432,13 +1431,13 @@ struct PRESTypePlugin *$interface.scopedname$_ReplyPlugin::new_plugin(void)
 
         plugin->typeCode =  (struct RTICdrTypeCode *)$interface.scopedname$_ReplyPlugin::get_typecode();
 
-        plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE; 
+        plugin->languageKind = PRES_TYPEPLUGIN_DDS_TYPE;
 
         /* Serialized buffer */
-        plugin->getBuffer = 
+        plugin->getBuffer =
             (PRESTypePluginGetBufferFunction)
             PRESTypePluginDefaultEndpointData_getBuffer;
-        plugin->returnBuffer = 
+        plugin->returnBuffer =
             (PRESTypePluginReturnBufferFunction)
             PRESTypePluginDefaultEndpointData_returnBuffer;
         plugin->getSerializedSampleSizeFnc =
@@ -1515,10 +1514,6 @@ DDS_ReturnCode_t $interface.scopedname$_ReplyPlugin::destroy_datawriterI(DDSData
 
 >>
 
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
 exception(ctx, parent, exception) ::= <<
 DDS_TypeCode* $if(exception.hasScope)$$exception.scope$$if(exception.parent)$$if(exception.parent.isInterface)$Plugin$endif$$endif$::$endif$$exception.name$Plugin::get_typecode()
 {
@@ -1536,7 +1531,7 @@ DDS_TypeCode* $if(exception.hasScope)$$exception.scope$$if(exception.parent)$$if
                 DDS_BOOLEAN_FALSE,
                 -1,
                 NULL
-            },
+            \},
             0,
             0,
             0,
@@ -1545,7 +1540,8 @@ DDS_TypeCode* $if(exception.hasScope)$$exception.scope$$if(exception.parent)$$if
             DDS_PRIVATE_MEMBER,
             1,
             NULL
-        }}; separator=",\n"$
+        \}
+        }; separator=",\n"$
     };
 
     static DDS_TypeCode $exception.name$_g_tc =
@@ -1562,7 +1558,7 @@ DDS_TypeCode* $if(exception.hasScope)$$exception.scope$$if(exception.parent)$$if
          $exception.name$_g_tc_members,
          DDS_VM_NONE
     }};
-    
+
     if(!is_initialized)
     {
         $exception.members : { member |$exception.name$_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=member.name, typecode=member.typecode)$;}; separator="\n"$
@@ -1573,15 +1569,7 @@ DDS_TypeCode* $if(exception.hasScope)$$exception.scope$$if(exception.parent)$$if
 }
 >>
 
-operation(ctx, parent, operation, param_list) ::= <<>>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<
+typedef_decl(ctx, parent, typedefs, typedefs_type, declarator_type) ::= <<
 $typedefs : { typedef |
 DDS_TypeCode* $if(typedef.hasScope)$$typedef.scope$$if(typedef.parent.parent)$$if(typedef.parent.parent.isInterface)$Plugin$endif$$endif$::$endif$$typedef.name$Plugin::get_typecode()
 {
@@ -1602,20 +1590,20 @@ DDS_TypeCode* $if(typedef.hasScope)$$typedef.scope$$if(typedef.parent.parent)$$i
          0,
          NULL,
          DDS_VM_NONE
-    }};
+    \}\};
 
     if(!is_initialized)
     {
         $typedef.name$_g_tc._data._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=typedef.name, typecode=typedef.typedefContentTypeCode)$;
         is_initialized = true;
-    }
-    
+    \}
+
     return &$typedef.name$_g_tc;
-}
+\}
 }; separator="\n"$
 >>
 
-struct_type(ctx, parent, struct) ::= <<
+struct_type(ctx, parent, struct, extensions, member_list) ::= <<
 DDS_TypeCode* $if(struct.hasScope)$$struct.scope$$if(struct.parent.parent)$$if(struct.parent.parent.isInterface)$Plugin$endif$$endif$::$endif$$struct.name$Plugin::get_typecode()
 {
     static bool is_initialized = false;
@@ -1632,7 +1620,7 @@ DDS_TypeCode* $if(struct.hasScope)$$struct.scope$$if(struct.parent.parent)$$if(s
                 DDS_BOOLEAN_FALSE,
                 -1,
                 NULL
-            },
+            \},
             0,
             0,
             0,
@@ -1641,7 +1629,8 @@ DDS_TypeCode* $if(struct.hasScope)$$struct.scope$$if(struct.parent.parent)$$if(s
             DDS_PRIVATE_MEMBER,
             1,
             NULL
-        }}; separator=",\n"$
+        \}
+        }; separator=",\n"$
     };
 
     static DDS_TypeCode $struct.name$_g_tc =
@@ -1658,7 +1647,7 @@ DDS_TypeCode* $if(struct.hasScope)$$struct.scope$$if(struct.parent.parent)$$if(s
          $struct.name$_g_tc_members,
          DDS_VM_NONE
     }};
-    
+
     if(!is_initialized)
     {
         $struct.members : { member |$struct.name$_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=member.name, typecode=member.typecode)$;}; separator="\n"$
@@ -1669,7 +1658,7 @@ DDS_TypeCode* $if(struct.hasScope)$$struct.scope$$if(struct.parent.parent)$$if(s
 }
 >>
 
-union_type(ctx, parent, union) ::= <<
+union_type(ctx, parent, union, extensions, switch_type) ::= <<
 DDS_TypeCode* $if(union.hasScope)$$union.scope$$if(union.parent.parent)$$if(union.parent.parent.isInterface)$Plugin$endif$$endif$::$endif$$union.name$Plugin::get_typecode()
 {
     static bool is_initialized = false;
@@ -1688,7 +1677,7 @@ DDS_TypeCode* $if(union.hasScope)$$union.scope$$if(union.parent.parent)$$if(unio
                 DDS_BOOLEAN_FALSE,
                 -1,
                 NULL
-            },
+            \},
             0,
             $length(member.labels)$,
             $first(member.labels)$,
@@ -1697,7 +1686,8 @@ DDS_TypeCode* $if(union.hasScope)$$union.scope$$if(union.parent.parent)$$if(unio
             DDS_PRIVATE_MEMBER,
             1,
             NULL
-        }}; separator=",\n"$
+        \}
+        }; separator=",\n"$
     };
 
     static DDS_TypeCode $union.name$_g_tc =
@@ -1714,7 +1704,7 @@ DDS_TypeCode* $if(union.hasScope)$$union.scope$$if(union.parent.parent)$$if(unio
          $union.name$_g_tc_members,
          DDS_VM_NONE
     }};
-    
+
     if(!is_initialized)
     {
         $union.members : { member |$union.name$_g_tc_members[$i$ - 1]._representation._typeCode = (RTICdrTypeCode*)$ddsTypeCodeDefs(name=member.name, typecode=member.typecode)$;}; separator="\n"$
@@ -1741,7 +1731,7 @@ DDS_TypeCode* $if(enum.hasScope)$$enum.scope$$if(enum.parent.parent)$$if(enum.pa
                 DDS_BOOLEAN_FALSE,
                 -1,
                 NULL
-            },
+            \},
             $if(enum.hasScope)$$enum.scope$::$endif$$member.name$,
             0,
             0,
@@ -1750,7 +1740,8 @@ DDS_TypeCode* $if(enum.hasScope)$$enum.scope$$if(enum.parent.parent)$$if(enum.pa
             DDS_PRIVATE_MEMBER,
             1,
             NULL
-        }}; separator=",\n"$
+        \}
+        }; separator=",\n"$
     };
 
     static DDS_TypeCode $enum.name$_g_tc =
@@ -1767,7 +1758,7 @@ DDS_TypeCode* $if(enum.hasScope)$$enum.scope$$if(enum.parent.parent)$$if(enum.pa
          $enum.name$_g_tc_members,
          DDS_VM_NONE
     }};
-    
+
     return &$enum.name$_g_tc;
 }
 >>
@@ -1784,7 +1775,7 @@ $ddsTypeCodeDecls(ctx=ctx, name=ctx.newRandomName, typecode=typecode.contentType
 static DDS_TypeCode $name$_g_tc_sequence = DDS_INITIALIZE_SEQUENCE_TYPECODE($typecode.maxsize$, (RTICdrTypeCode*)$ddsTypeCodeDefs(name=ctx.lastRandomName, typecode=typecode.contentTypeCode)$);
 $elseif(typecode.isType_f)$
 $if(rest(typecode.dimensions))$
-static DDS_UnsignedLong $name$_g_tc_dimensions[$length(typecode.dimensions)$] = {$typecode.dimensions : {$it$}; separator=", "$};
+static DDS_UnsignedLong $name$_g_tc_dimensions[$length(typecode.dimensions)$] = {$typecode.dimensions : { dimension | {$dimension$\}}; separator=", "$};
 $endif$
 $ddsTypeCodeDecls(ctx=ctx, name=ctx.newRandomName, typecode=typecode.contentTypeCode)$
 static DDS_TypeCode $name$_g_tc_array = DDS_INITIALIZE_ARRAY_TYPECODE($length(typecode.dimensions)$, $first(typecode.dimensions)$, $if(rest(typecode.dimensions))$$name$_g_tc_dimensions$else$NULL$endif$, (RTICdrTypeCode*)$ddsTypeCodeDefs(name=ctx.lastRandomName, typecode=typecode.contentTypeCode)$);
@@ -1843,5 +1834,5 @@ basicDDSTypeCodeDefs ::= [
         "type_14":"DDS_g_tc_wchar",
         "type_7":"DDS_g_tc_boolean",
         "type_9":"DDS_g_tc_octet",
-        default: // not basic type.
+        default: "" // not basic type.
 ]

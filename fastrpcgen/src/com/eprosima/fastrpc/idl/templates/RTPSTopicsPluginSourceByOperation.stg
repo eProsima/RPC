@@ -8,6 +8,8 @@
 
 group TopicsPluginSourceByOperation;
 
+import "eprosima.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "TopicsPlugin.cpp"], description=["TODO This header file contains the declaration of topics generated using operations in the IDL file."])$
 
@@ -22,20 +24,12 @@ $definitions; separator="\n"$
 
 >>
 
-module(ctx, parent, module, definition_list) ::= <<
-$definition_list$
->>
-
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
->>
-
 interface(ctx, parent, interface, export_list) ::= <<
 $export_list$
- 
+
 $interface.all_operations : { operation |
 
-$interface.scopedname$Plugin::$operation.name$_RequestPlugin::$operation.name$_RequestPlugin() 
+$interface.scopedname$Plugin::$operation.name$_RequestPlugin::$operation.name$_RequestPlugin()
 {
     setName("$interface.scopedname$_$operation.name$_Request");
 	m_typeSize = (uint32_t)$interface.scopedname$_$operation.name$_Request::getMaxCdrSerializedSize() + 4
@@ -43,7 +37,7 @@ $interface.scopedname$Plugin::$operation.name$_RequestPlugin::$operation.name$_R
 	m_isGetKeyDefined = false;
 }
 
-$interface.scopedname$Plugin::$operation.name$_RequestPlugin::~$operation.name$_RequestPlugin() 
+$interface.scopedname$Plugin::$operation.name$_RequestPlugin::~$operation.name$_RequestPlugin()
 {
 }
 
@@ -82,11 +76,11 @@ bool $interface.scopedname$Plugin::$operation.name$_RequestPlugin::serialize(voi
 
 bool $interface.scopedname$Plugin::$operation.name$_RequestPlugin::deserialize(SerializedPayload_t* payload, void* data)
 {
-	//CONVERT DATA to pointer of your type
-	$interface.scopedname$_$operation.name$_Request* p_type = ($interface.scopedname$_$operation.name$_Request*) data;
+    //CONVERT DATA to pointer of your type
+    $interface.scopedname$_$operation.name$_Request* p_type = ($interface.scopedname$_$operation.name$_Request*) data;
 
-	// Object that manages the raw buffer.
-	eprosima::fastcdr::FastBuffer fastbuffer((char*)payload->data, payload->length);
+    // Object that manages the raw buffer.
+    eprosima::fastcdr::FastBuffer fastbuffer((char*)payload->data, payload->length);
     eprosima::fastcdr::Cdr deser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
             eprosima::fastcdr::Cdr::DDS_CDR); // Object that deserializes the data.
     // Deserialize encapsulation.
@@ -115,7 +109,7 @@ std::function<uint32_t()> $interface.scopedname$Plugin::$operation.name$_Request
 
 void* $interface.scopedname$Plugin::$operation.name$_RequestPlugin::createData()
 {
-	return (void*)new $interface.scopedname$_$operation.name$_Request();
+    return (void*)new $interface.scopedname$_$operation.name$_Request();
 }
 
 void* $interface.scopedname$Plugin::$operation.name$_RequestPlugin::create_data()
@@ -125,7 +119,7 @@ void* $interface.scopedname$Plugin::$operation.name$_RequestPlugin::create_data(
 
 void $interface.scopedname$Plugin::$operation.name$_RequestPlugin::deleteData(void* data)
 {
-	delete(($interface.scopedname$_$operation.name$_Request*)data);
+    delete(($interface.scopedname$_$operation.name$_Request*)data);
 }
 
 void $interface.scopedname$Plugin::$operation.name$_RequestPlugin::delete_data(void* data)
@@ -142,7 +136,7 @@ void $interface.scopedname$Plugin::$operation.name$_RequestPlugin::copy_data(
 
 // Reply operations
 $if(!operation.oneway)$
-$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::$operation.name$_ReplyPlugin() 
+$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::$operation.name$_ReplyPlugin()
 {
     setName("$interface.scopedname$_$operation.name$_Reply");
     m_typeSize = (uint32_t)$interface.scopedname$_$operation.name$_Reply::getMaxCdrSerializedSize() + 4
@@ -150,7 +144,7 @@ $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::$operation.name$_Rep
     m_isGetKeyDefined = false;
 }
 
-$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::~$operation.name$_ReplyPlugin() 
+$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::~$operation.name$_ReplyPlugin()
 {
 }
 
@@ -159,7 +153,7 @@ bool $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::getKey(void*, I
     return false;
 }
 
-bool $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::serialize(void *data, SerializedPayload_t *payload) 
+bool $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::serialize(void *data, SerializedPayload_t *payload)
 {
     $interface.scopedname$_$operation.name$_Reply *p_type = ($interface.scopedname$_$operation.name$_Reply*) data;
 
@@ -250,25 +244,3 @@ $endif$
 }; separator="\n"$
 
 >>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
-exception(ctx, parent, exception) ::= <<>>
-
-operation(ctx, parent, operation, param_list) ::= <<>>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<>>
-
-struct_type(ctx, parent, struct) ::= <<>>
-
-union_type(ctx, parent, union) ::= <<>>
-
-enum_type(ctx, parent, enum) ::= <<>>

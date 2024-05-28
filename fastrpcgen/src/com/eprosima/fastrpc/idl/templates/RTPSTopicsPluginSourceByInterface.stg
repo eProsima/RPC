@@ -8,6 +8,8 @@
 
 group TopicsPluginSourceByInterface;
 
+import "eprosima.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "TopicsPlugin.cpp"], description=["TODO This header file contains the declaration of topics generated using operations in the IDL file."])$
 
@@ -22,25 +24,17 @@ $definitions; separator="\n"$
 
 >>
 
-module(ctx, parent, module, definition_list) ::= <<
-$definition_list$
->>
-
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
->>
-
 interface(ctx, parent, interface, export_list) ::= <<
 $export_list$
 
-$interface.scopedname$_RequestPlugin::$interface.name$_RequestPlugin() 
+$interface.scopedname$_RequestPlugin::$interface.name$_RequestPlugin()
 {
     setName("$interface.scopedname$_Request");
     m_typeSize = (uint32_t)$interface.scopedname$_Request::getMaxCdrSerializedSize() + 4 /*encapsulation*/;
     m_isGetKeyDefined = false;
 }
 
-$interface.scopedname$_RequestPlugin::~$interface.name$_RequestPlugin() 
+$interface.scopedname$_RequestPlugin::~$interface.name$_RequestPlugin()
 {
 }
 
@@ -49,7 +43,7 @@ bool $interface.scopedname$_RequestPlugin::getKey(void*, InstanceHandle_t*, bool
     return false;
 }
 
-bool $interface.scopedname$_RequestPlugin::serialize(void *data, SerializedPayload_t *payload) 
+bool $interface.scopedname$_RequestPlugin::serialize(void *data, SerializedPayload_t *payload)
 {
     $interface.scopedname$_Request *p_type = ($interface.scopedname$_Request*) data;
 
@@ -138,14 +132,14 @@ void $interface.scopedname$_RequestPlugin::copy_data(
 }
 
 // Reply interfaces
-$interface.scopedname$_ReplyPlugin::$interface.name$_ReplyPlugin() 
+$interface.scopedname$_ReplyPlugin::$interface.name$_ReplyPlugin()
 {
     setName("$interface.scopedname$_Reply");
     m_typeSize = (uint32_t)$interface.scopedname$_Reply::getMaxCdrSerializedSize() + 4 /*encapsulation*/;
     m_isGetKeyDefined = false;
 }
 
-$interface.scopedname$_ReplyPlugin::~$interface.name$_ReplyPlugin() 
+$interface.scopedname$_ReplyPlugin::~$interface.name$_ReplyPlugin()
 {
 }
 
@@ -154,7 +148,7 @@ bool $interface.scopedname$_ReplyPlugin::getKey(void*, InstanceHandle_t*, bool)
     return false;
 }
 
-bool $interface.scopedname$_ReplyPlugin::serialize(void *data, SerializedPayload_t *payload) 
+bool $interface.scopedname$_ReplyPlugin::serialize(void *data, SerializedPayload_t *payload)
 {
     $interface.scopedname$_Reply *p_type = ($interface.scopedname$_Reply*) data;
 
@@ -243,25 +237,3 @@ void $interface.scopedname$_ReplyPlugin::copy_data(
 }
 
 >>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
-exception(ctx, parent, exception) ::= <<>>
-
-operation(ctx, parent, operation, param_list) ::= <<>>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<>>
-
-struct_type(ctx, parent, struct) ::= <<>>
-
-union_type(ctx, parent, union) ::= <<>>
-
-enum_type(ctx, parent, enum) ::= <<>>

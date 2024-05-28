@@ -1,5 +1,7 @@
 group RESTProtocolHeader;
 
+import "eprosima.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "RESTProtocol.h"], description=["This header file contains the declaration of the protocol used to create REST messages."])$
 
@@ -25,7 +27,7 @@ namespace eprosima
             {
                 // TODO Quitar
                 class RESTSerializer;
-            
+
                 /*!
                  * @brief This class is responsible for serializing and deserializing the requests and responses of this application.
                  *  It uses a RESTful protocol.
@@ -34,17 +36,17 @@ namespace eprosima
                 class RPCUSERDllExport $ctx.filename$Protocol : public eprosima::rpc::protocol::$ctx.filename$Protocol
                 {
                     public:
-                    
+
                        /*!
                         * @brief Default constructor
                         */
                         $ctx.filename$Protocol();
-                        
+
                        /*!
                         * @brief Default destructor
                         */
                         virtual ~$ctx.filename$Protocol();
-                        
+
                        /*!
                         * @brief This method sets the transport for the communications.
                         *        It must be an HTTP transport.
@@ -52,12 +54,12 @@ namespace eprosima
                         * @return True if the assignment is successful, false otherwise
                         */
                         bool setTransport(eprosima::rpc::transport::Transport &transport);
-                        
+
                        /*!
                         * @brief This method does not apply to this class
                         */
                         bool activateInterface(const char* interfaceName);
-                        
+
                        /*!
                         * @brief This callback receives the requests and calls the specific protocol to process them
                         * @param protocol Protocol that must process the request
@@ -67,18 +69,18 @@ namespace eprosima
                         * @param endpoint Proxy endpoint where the request came from
                         */
                         static size_t worker(Protocol& protocol, void *&buffer, size_t &bufferLength, size_t &bufferSize, eprosima::rpc::transport::Endpoint *endpoint);
-                        
+
                         $definitions; separator="\n"$
-                        
+
                         // Server
                         eprosima::rpc::transport::HttpMessage processRequest(eprosima::rpc::transport::HttpMessage &httpMessage);
-                        
+
                     private:
-                    
+
                     	static int deserializeContentLength(char* buffer);
-                    	
+
                     	static bool isNumeric(string&& myString);
-                    
+
                 };
             } // namespace rest
         } // namespace protocol
@@ -87,28 +89,6 @@ namespace eprosima
 
 #endif // _$ctx.filename;format="toUpper"$_REST_PROTOCOL_H_
 >>
-
-
-module(ctx, parent, module, definition_list) ::= <<
-$definition_list$
-
->>
-
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
-
->>
-
-interface(ctx, parent, interface, export_list) ::= <<
-$export_list$
->>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
-
->>
-
-exception(ctx, parent, exception) ::= <<>>
 
 operation(ctx, parent, operation, param_list) ::= <<
 /*!
@@ -135,17 +115,3 @@ $endif$
 $paramRetType(operation.rettype)$ $operation.parent.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$);
 
 >>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<>>
-
-struct_type(ctx, parent, struct) ::= <<>>
-
-union_type(ctx, parent, union) ::= <<>>
-
-enum_type(ctx, parent, enum) ::= <<>>
