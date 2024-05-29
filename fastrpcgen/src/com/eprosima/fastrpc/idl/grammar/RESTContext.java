@@ -6,6 +6,8 @@ import com.eprosima.fastcdr.idl.util.CdrVersion;
 import com.eprosima.fastrpc.idl.tree.Interface;
 import com.eprosima.fastrpc.idl.tree.Operation;
 import com.eprosima.fastrpc.idl.tree.Param;
+import com.eprosima.idl.generator.manager.TemplateGroup;
+import com.eprosima.idl.generator.manager.TemplateManager;
 import com.eprosima.idl.parser.tree.Module;
 import com.eprosima.idl.parser.typecode.Member;
 import com.eprosima.idl.parser.typecode.StructTypeCode;
@@ -13,10 +15,18 @@ import com.eprosima.idl.parser.typecode.TypeCode;
 
 public class RESTContext extends Context
 {
-    public RESTContext(String file, ArrayList<String> includePaths, boolean clientcode, boolean servercode,
-            String appProduct, boolean include_include_prefix, CdrVersion.Select cdr_version)
+    public RESTContext(
+            TemplateManager tmanager,
+            String file,
+            ArrayList<String> includePaths,
+            boolean clientcode,
+            boolean servercode,
+            String appProduct,
+            boolean include_include_prefix,
+            boolean is_generating_api,
+            CdrVersion.Select cdr_version)
     {
-        super(file, includePaths, clientcode, servercode, appProduct, include_include_prefix, cdr_version);
+        super(tmanager, file, includePaths, clientcode, servercode, appProduct, include_include_prefix, is_generating_api, cdr_version);
     }
 
     public boolean isDds()
@@ -71,11 +81,11 @@ public class RESTContext extends Context
     }
 
     @Override
-    public void addModule(Module module)
+    public TemplateGroup addModule(Module module)
     {
-        super.addModule(module);
-
         m_currentmodule = module;
+
+        return super.addModule(module);
     }
 
     /*!

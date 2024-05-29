@@ -2,6 +2,8 @@ package com.eprosima.fastrpc.util;
 
 import org.stringtemplate.v4.ST;
 
+import com.eprosima.idl.generator.manager.TemplateST;
+
 import java.io.*;
 
 public class Utils
@@ -58,6 +60,11 @@ public class Utils
             returnedValue = directory + File.separator;
 
         return returnedValue;
+    }
+
+    public static boolean writeFile(String file, TemplateST template, boolean replace)
+    {
+        return writeFile(file, template.get_st(), replace);
     }
 
     public static boolean writeFile(String file, ST template, boolean replace)

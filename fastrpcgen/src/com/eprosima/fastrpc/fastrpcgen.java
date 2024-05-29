@@ -134,6 +134,7 @@ public class fastrpcgen
         new VSConfiguration("Debug", "Win32", true, false),
         new VSConfiguration("Release", "Win32", false, false)};
 
+    private boolean gen_api_ = false;
 
     private CdrVersion.Select cdr_version_ = CdrVersion.Select.V2;
 
@@ -356,6 +357,11 @@ public class fastrpcgen
                 printHelp();
                 System.exit(0);
             }
+            else if (arg.equals("-help+"))
+            {
+                printEnhacedHelp();
+                System.exit(0);
+            }
             else if(arg.equals("-local"))
             {
                 m_local = true;
@@ -391,6 +397,10 @@ public class fastrpcgen
                {
                m_clientcode = false;
                }*/
+            else if (arg.equals(generate_api_arg))
+            {
+                gen_api_ = true;
+            }
             else if (arg.equals("-cdr"))
             {
                 if (count < args.length)
@@ -846,12 +856,12 @@ public class fastrpcgen
 
         if(idlParseFileName != null)
         {
-            // Create initial context.
-            Context ctx = new RESTContext(idlFilename, m_includePaths, m_clientcode, m_servercode,
-                    m_appProduct, m_include_include_prefix, cdr_version_);
-
             // Create template manager
-            TemplateManager tmanager = new TemplateManager("FastCdrCommon:eprosima:Common", ctx, false);
+            TemplateManager tmanager = new TemplateManager();
+            // Create initial context.
+            Context ctx = new RESTContext(tmanager, idlFilename, m_includePaths, m_clientcode, m_servercode,
+                    m_appProduct, m_include_include_prefix, gen_api_, cdr_version_);
+
             // Load template to generate source for common types.
             tmanager.addGroup("com/eprosima/fastcdr/idl/templates/TypesHeader.stg");
             tmanager.addGroup("com/eprosima/fastcdr/idl/templates/TypesSource.stg");
@@ -1012,12 +1022,12 @@ public class fastrpcgen
 
         if(idlParseFileName != null)
         {
-            // Create initial context.
-            Context ctx = new FastContext(idlFilename, m_includePaths, m_clientcode, m_servercode,
-                    m_appProduct, m_include_include_prefix, cdr_version_);
-
             // Create template manager
-            TemplateManager tmanager = new TemplateManager("FastCdrCommon:eprosima:Common", ctx, false);
+            TemplateManager tmanager = new TemplateManager();
+            // Create initial context.
+            Context ctx = new FastContext(tmanager, idlFilename, m_includePaths, m_clientcode, m_servercode,
+                    m_appProduct, m_include_include_prefix, gen_api_, cdr_version_);
+
             // Load template to generate source for common types.
             tmanager.addGroup("com/eprosima/fastcdr/idl/templates/TypesHeader.stg");
             tmanager.addGroup("com/eprosima/fastcdr/idl/templates/TypesSource.stg");
@@ -1171,16 +1181,15 @@ public class fastrpcgen
 
         if(idlParseFileName != null)
         {
-            // Create initial context.
-            Context ctx = new DDSContext(idlFilename, m_includePaths, m_clientcode, m_servercode,
-                    m_appProduct, m_include_include_prefix, m_types, cdr_version_);
-
             // Create template manager
-            TemplateManager tmanager = null;
+            TemplateManager tmanager = new TemplateManager();
+            // Create initial context.
+            Context ctx = new DDSContext(tmanager, idlFilename, m_includePaths, m_clientcode, m_servercode,
+                    m_appProduct, m_include_include_prefix, m_types, gen_api_, cdr_version_);
+
             // Load templates depending on dds types.
             if(m_types == DDS_TYPES.EPROSIMA)
             {
-                tmanager = new TemplateManager("FastCdrCommon:eprosima:Common", ctx, false);
                 // Load template to generate source for common types.
                 if(CdrVersion.Select.V1 != cdr_version_)
                 {
@@ -1201,7 +1210,6 @@ public class fastrpcgen
             }
             else if(m_types == DDS_TYPES.RTI)
             {
-                tmanager = new TemplateManager("rti:Common", ctx, false);
                 // Load CPP type for RTI types.
                 //tmanager.changeCppTypesTemplateGroup("rtiTypes");
                 // TODO OpenDDS not
@@ -2136,6 +2144,8 @@ public class fastrpcgen
         return outputfile;
     }
 
+    private static final String generate_api_arg = "-genapi";
+
     public static void printHelp()
     {
         System.out.println(m_appName + " usage:");
@@ -2192,11 +2202,23 @@ public class fastrpcgen
             System.out.println("\t\t\t* " + TOPIC_GENERATION_OPTION_VALUE_BY_OPERATION + " - Generate a topic for each IDL operation.");
             System.out.println("");
         }
+        System.out.println("\t\t-cdr <version>: sets the CDR version used to generate types source code.");
+        System.out.println("\t\t Values:");
+        System.out.println("\t\t\t* " + CdrVersion.v1_str);
+        System.out.println("\t\t\t* " + CdrVersion.v2_str + " (default)");
+        System.out.println("\t\t\t* " + CdrVersion.both_str);
         System.out.println("\tand the supported input files are:");
         if(m_protocol == PROTOCOL.DDS || m_protocol == PROTOCOL.FASTCDR)
             System.out.println("\t* IDL files.");
         else if(m_protocol == PROTOCOL.REST)
             System.out.println("\t* WADL files.");
+    }
+
+    public static void printEnhacedHelp()
+    {
+        printHelp();
+        System.out.println("\tand the extra developer options are:");
+        System.out.println("\t\t" + generate_api_arg + ": apply rules to generate internal API.");
     }
 
     public static void main(String[] args) throws Exception

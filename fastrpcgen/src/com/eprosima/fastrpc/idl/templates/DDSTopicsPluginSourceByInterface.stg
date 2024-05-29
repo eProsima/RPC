@@ -1836,3 +1836,17 @@ basicDDSTypeCodeDefs ::= [
         "type_9":"DDS_g_tc_octet",
         default: "" // not basic type.
 ]
+
+//{ RPC DDS-Gen extensions
+module_conversion(ctx, parent, modules, definition_list) ::= <<
+$modules : { module |
+namespace $module.name$ {
+}; separator="\n"$
+
+$definition_list$
+
+$reverse(modules) : { module |
+\} // namespace $module.name$
+}; separator="\n"$
+>>
+//}

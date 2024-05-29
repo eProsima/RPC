@@ -405,3 +405,17 @@ class user_cpp_DllExport $enum.name$Plugin
 
 };
 >>
+
+//{ RPC DDS-Gen extensions
+module_conversion(ctx, parent, modules, definition_list) ::= <<
+$modules : { module |
+namespace $module.name$ {
+}; separator="\n"$
+
+$definition_list$
+
+$reverse(modules) : { module |
+\} // namespace $module.name$
+}; separator="\n"$
+>>
+//}
