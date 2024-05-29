@@ -1,10 +1,10 @@
 /*************************************************************************
- * Copyright (c) 2013 eProsima. All rights reserved.
- *
- * This copy of FASTRPC is licensed to you under the terms described in the
- * FASTRPC_LICENSE file included in this distribution.
- *
- *************************************************************************/
+* Copyright (c) 2013 eProsima. All rights reserved.
+*
+* This copy of FASTRPC is licensed to you under the terms described in the
+* FASTRPC_LICENSE file included in this distribution.
+*
+*************************************************************************/
 #include <config.h>
 
 #if RPC_WITH_FASTRTPS
@@ -30,45 +30,84 @@
 
 #ifdef __linux
 #include <cinttypes>
-#endif
+#endif // ifdef __linux
 
 static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::RTPSProxyProcedureEndpoint";
 
-namespace eprosima { namespace rpc { namespace transport { namespace dds {
-        class RecvPoint
+namespace eprosima {
+namespace rpc {
+namespace transport {
+namespace dds {
+class RecvPoint
+{
+public:
+
+    RecvPoint(
+            void* reply)
+        : received_(false)
+        , reply_(reply)
+        , task_(NULL)
+    {
+    }
+
+    explicit RecvPoint(
+            RTPSAsyncTask* task)
+        : received_(false)
+        , reply_(NULL)
+        , task_(task)
+    {
+        if (task_ != NULL)
         {
-            public:
+            reply_ = task_->getReplyInstance();
+        }
+    }
 
-                RecvPoint(void *reply) : received_(false), reply_(reply), task_(NULL) {}
+    void* getReply()
+    {
+        return reply_;
+    }
 
-                explicit RecvPoint(RTPSAsyncTask *task) : received_(false), reply_(NULL), task_(task)
-            {
-                if(task_ != NULL) reply_ = task_->getReplyInstance();
-            }
+    RTPSAsyncTask* getTask()
+    {
+        return task_;
+    }
 
-                void* getReply() { return reply_;}
+    bool received_;
+    boost::mutex mutex_;
+    boost::condition_variable cond_;
 
-                RTPSAsyncTask* getTask() { return task_;}
+private:
 
-                bool received_;
-                boost::mutex mutex_;
-                boost::condition_variable cond_;
+    void* reply_;
 
-            private:
-
-                void *reply_;
-
-                RTPSAsyncTask *task_;
-        };
-}}}}
+    RTPSAsyncTask* task_;
+};
+} // namespace dds
+} // namespace transport
+} // namespace rpc
+} // namespace eprosima
 
 using namespace eprosima::rpc;
 using namespace ::transport::dds;
 
-RTPSProxyProcedureEndpoint::RTPSProxyProcedureEndpoint(RTPSProxyTransport &transport) : m_mutex(NULL), recv_mutex_(NULL),
-    matched_mutex_(NULL), matched_sub_cond_(NULL), matched_pub_cond_(NULL), num_matched_sub_(0), num_matched_pub_(0),
-    m_transport(transport), m_writer(NULL), m_reader(NULL), m_numSec(0),
-    m_create_data(NULL), m_copy_data(NULL), m_destroy_data(NULL), m_dataSize(0), data_(NULL)
+RTPSProxyProcedureEndpoint::RTPSProxyProcedureEndpoint(
+        RTPSProxyTransport& transport)
+    : m_mutex(NULL)
+    , recv_mutex_(NULL)
+    , matched_mutex_(NULL)
+    , matched_sub_cond_(NULL)
+    , matched_pub_cond_(NULL)
+    , num_matched_sub_(0)
+    , num_matched_pub_(0)
+    , m_transport(transport)
+    , m_writer(NULL)
+    , m_reader(NULL)
+    , m_numSec(0)
+    , m_create_data(NULL)
+    , m_copy_data(NULL)
+    , m_destroy_data(NULL)
+    , m_dataSize(0)
+    , data_(NULL)
 {
 }
 
@@ -81,10 +120,16 @@ RTPSProxyProcedureEndpoint::~RTPSProxyProcedureEndpoint()
     finalize();
 }
 
-int RTPSProxyProcedureEndpoint::initialize(const char *name, const char *writertypename,
-        const char *writertopicname, const char *readertypename, const char *readertopicname,
-        RTPSTransport::Create_data create_data, RTPSTransport::Copy_data copy_data,
-        RTPSTransport::Destroy_data destroy_data, size_t dataSize)
+int RTPSProxyProcedureEndpoint::initialize(
+        const char* name,
+        const char* writertypename,
+        const char* writertopicname,
+        const char* readertypename,
+        const char* readertopicname,
+        RTPSTransport::Create_data create_data,
+        RTPSTransport::Copy_data copy_data,
+        RTPSTransport::Destroy_data destroy_data,
+        size_t dataSize)
 {
     const char* const METHOD_NAME = "initialize";
     m_create_data = create_data;
@@ -97,24 +142,30 @@ int RTPSProxyProcedureEndpoint::initialize(const char *name, const char *writert
     matched_sub_cond_ = new boost::condition_variable_any();
     matched_pub_cond_ = new boost::condition_variable_any();
 
-    if(m_mutex != NULL && recv_mutex_ != NULL && matched_mutex_ != NULL &&
+    if (m_mutex != NULL && recv_mutex_ != NULL && matched_mutex_ != NULL &&
             matched_sub_cond_ != NULL && matched_pub_cond_ != NULL)
     {
-        if(createEntities(name, writertypename, writertopicname,
-                    readertypename, readertopicname) == 0)
+        if (createEntities(name, writertypename, writertopicname,
+                readertypename, readertopicname) == 0)
         {
             // Not oneway
-            if(m_reader != NULL)
+            if (m_reader != NULL)
             {
                 data_ = m_create_data(dataSize);
 
-                if(data_ != NULL)
+                if (data_ != NULL)
+                {
                     return 0;
+                }
                 else
+                {
                     printf("ERROR<%s::%s>: Cannot create data\n", CLASS_NAME, METHOD_NAME);
+                }
             }
             else
+            {
                 return 0;
+            }
         }
         else
         {
@@ -131,57 +182,65 @@ int RTPSProxyProcedureEndpoint::initialize(const char *name, const char *writert
 
 void RTPSProxyProcedureEndpoint::finalize()
 {
-    if(data_ != NULL)
+    if (data_ != NULL)
+    {
         m_destroy_data(data_);
+    }
 
     // if not operation oneway.
-    if(m_reader != nullptr)
+    if (m_reader != nullptr)
     {
         eprosima::fastrtps::Domain::removeSubscriber(m_reader);
     }
 
-    if(m_writer != nullptr)
+    if (m_writer != nullptr)
+    {
         eprosima::fastrtps::Domain::removePublisher(m_writer);
+    }
 
-    if(matched_pub_cond_ != NULL)
+    if (matched_pub_cond_ != NULL)
     {
         delete matched_pub_cond_;
         matched_pub_cond_ = NULL;
     }
 
-    if(matched_sub_cond_ != NULL)
+    if (matched_sub_cond_ != NULL)
     {
         delete matched_sub_cond_;
         matched_sub_cond_ = NULL;
     }
 
-    if(matched_mutex_ != NULL)
+    if (matched_mutex_ != NULL)
     {
         delete matched_mutex_;
         matched_mutex_ = NULL;
     }
 
-    if(recv_mutex_ != NULL)
+    if (recv_mutex_ != NULL)
     {
         delete recv_mutex_;
         recv_mutex_ = NULL;
     }
 
-    if(m_mutex != NULL)
+    if (m_mutex != NULL)
     {
         delete m_mutex;
         m_mutex = NULL;
     }
 }
 
-int RTPSProxyProcedureEndpoint::createEntities(const char *name, const char *writertypename, const char *writertopicname,
-        const char *readertypename, const char *readertopicname)
+int RTPSProxyProcedureEndpoint::createEntities(
+        const char* name,
+        const char* writertypename,
+        const char* writertopicname,
+        const char* readertypename,
+        const char* readertopicname)
 {
     const char* const METHOD_NAME = "createEntities";
 
-    if(name != NULL)
+    if (name != NULL)
     {
-        if(writertypename != NULL)
+        if (writertypename != NULL)
         {
             eprosima::fastrtps::PublisherAttributes wQos;
 
@@ -192,10 +251,10 @@ int RTPSProxyProcedureEndpoint::createEntities(const char *name, const char *wri
 
             m_writer = eprosima::fastrtps::Domain::createPublisher(m_transport.getParticipant(), wQos, this);
 
-            if(m_writer != nullptr)
+            if (m_writer != nullptr)
             {
                 // Is not oneway operation
-                if(readertypename != NULL)
+                if (readertypename != NULL)
                 {
                     eprosima::fastrtps::SubscriberAttributes rQos;
 
@@ -206,7 +265,7 @@ int RTPSProxyProcedureEndpoint::createEntities(const char *name, const char *wri
 
                     m_reader = eprosima::fastrtps::Domain::createSubscriber(m_transport.getParticipant(), rQos, this);
 
-                    if(m_reader != nullptr)
+                    if (m_reader != nullptr)
                     {
                         return 0;
                     }
@@ -236,42 +295,49 @@ int RTPSProxyProcedureEndpoint::createEntities(const char *name, const char *wri
     return -1;
 }
 
-ReturnMessage RTPSProxyProcedureEndpoint::checkServerConnection(long timeout)
+ReturnMessage RTPSProxyProcedureEndpoint::checkServerConnection(
+        long timeout)
 {
     boost::shared_lock<boost::shared_mutex> lock(*matched_mutex_);
 
-    if(num_matched_sub_ == 0 && m_reader != nullptr)
+    if (num_matched_sub_ == 0 && m_reader != nullptr)
     {
         matched_sub_cond_->wait_for(lock, boost::chrono::milliseconds(timeout));
 
-        if(num_matched_sub_ == 0)
+        if (num_matched_sub_ == 0)
+        {
             return SERVER_NOT_FOUND;
+        }
     }
 
-    if(num_matched_pub_ == 0)
+    if (num_matched_pub_ == 0)
     {
         matched_pub_cond_->wait_for(lock, boost::chrono::milliseconds(timeout));
 
-        if(num_matched_pub_ == 0)
+        if (num_matched_pub_ == 0)
+        {
             return SERVER_NOT_FOUND;
+        }
     }
 
     return OK;
 }
 
-ReturnMessage RTPSProxyProcedureEndpoint::send(void *request, void *reply)
+ReturnMessage RTPSProxyProcedureEndpoint::send(
+        void* request,
+        void* reply)
 {
     const char* const METHOD_NAME = "send";
     ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
-    eprosima::rpc::protocol::dds::rpc::RequestHeader *requestHeader = NULL;
+    eprosima::rpc::protocol::dds::rpc::RequestHeader* requestHeader = NULL;
     int64_t numSec = 0;
 
-    if(request != NULL)
+    if (request != NULL)
     {
         requestHeader = reinterpret_cast<eprosima::rpc::protocol::dds::rpc::RequestHeader*>(request);
-        memcpy(requestHeader->requestId().writer_guid().guidPrefix(), m_proxyId.guidPrefix(), 12);
-        memcpy(requestHeader->requestId().writer_guid().entityId().entityKey(), m_proxyId.entityId().entityKey(), 3);
-        requestHeader->requestId().writer_guid().entityId().entityKind() = m_proxyId.entityId().entityKind();
+        requestHeader->requestId().writer_guid().guidPrefix(m_proxyId.guidPrefix());
+        requestHeader->requestId().writer_guid().entityId().entityKey(m_proxyId.entityId().entityKey());
+        requestHeader->requestId().writer_guid().entityId().entityKind(m_proxyId.entityId().entityKind());
         requestHeader->instanceName(m_transport.getInstanceName());
 
         m_mutex->lock();
@@ -284,12 +350,12 @@ ReturnMessage RTPSProxyProcedureEndpoint::send(void *request, void *reply)
         ++m_numSec;
         m_mutex->unlock();
 
-        if(checkServerConnection(m_transport.getTimeout()) == OK)
+        if (checkServerConnection(m_transport.getTimeout()) == OK)
         {
-            RecvPoint *recvpoint = nullptr;
+            RecvPoint* recvpoint = nullptr;
 
             // Its not a oneway function.
-            if(m_reader != nullptr && reply != NULL)
+            if (m_reader != nullptr && reply != NULL)
             {
                 recvpoint = new RecvPoint(reply);
                 // Insert reply in map before sending the data.
@@ -300,15 +366,16 @@ ReturnMessage RTPSProxyProcedureEndpoint::send(void *request, void *reply)
             bool retWrite = m_writer->write(request);
 
             // Its not a oneway function.
-            if(recvpoint != nullptr)
+            if (recvpoint != nullptr)
             {
-                if(retWrite)
+                if (retWrite)
                 {
                     boost::unique_lock<boost::mutex> lock(recvpoint->mutex_);
 
-                    if(!recvpoint->received_)
+                    if (!recvpoint->received_)
                     {
-                        if(recvpoint->cond_.wait_for(lock, boost::chrono::milliseconds(m_transport.getTimeout())) != boost::cv_status::timeout)
+                        if (recvpoint->cond_.wait_for(lock,
+                                boost::chrono::milliseconds(m_transport.getTimeout())) != boost::cv_status::timeout)
                         {
                             returnedValue = OK;
                         }
@@ -318,28 +385,34 @@ ReturnMessage RTPSProxyProcedureEndpoint::send(void *request, void *reply)
                         }
                     }
                     else
+                    {
                         returnedValue = OK;
+                    }
                 }
                 else
+                {
                     printf("ERROR <%s::%s>: Some error occurs\n", CLASS_NAME, METHOD_NAME);
+                }
 
                 boost::unique_lock<boost::mutex> lock(*recv_mutex_);
 
                 std::map<int64_t, RecvPoint&>::iterator it = recv_threads.find(numSec);
 
-                if(it != recv_threads.end())
+                if (it != recv_threads.end())
                 {
                     recv_threads.erase(it);
                 }
 
                 delete recvpoint;
             }
-            else if(retWrite)
+            else if (retWrite)
             {
                 returnedValue = OK;
             }
             else
+            {
                 printf("ERROR <%s::%s>: Some error occurs\n", CLASS_NAME, METHOD_NAME);
+            }
         }
         else
         {
@@ -355,19 +428,21 @@ ReturnMessage RTPSProxyProcedureEndpoint::send(void *request, void *reply)
     return returnedValue;
 }
 
-ReturnMessage RTPSProxyProcedureEndpoint::send_async(void *request, RTPSAsyncTask *task)
+ReturnMessage RTPSProxyProcedureEndpoint::send_async(
+        void* request,
+        RTPSAsyncTask* task)
 {
     const char* const METHOD_NAME = "send_async";
     ReturnMessage returnedValue = CLIENT_INTERNAL_ERROR;
-    eprosima::rpc::protocol::dds::rpc::RequestHeader *requestHeader = NULL;
+    eprosima::rpc::protocol::dds::rpc::RequestHeader* requestHeader = NULL;
     int64_t numSec = 0;
 
-    if(request != NULL)
+    if (request != NULL)
     {
         requestHeader = reinterpret_cast<eprosima::rpc::protocol::dds::rpc::RequestHeader*>(request);
-        memcpy(requestHeader->requestId().writer_guid().guidPrefix(), m_proxyId.guidPrefix(), 12);
-        memcpy(requestHeader->requestId().writer_guid().entityId().entityKey(), m_proxyId.entityId().entityKey(), 3);
-        requestHeader->requestId().writer_guid().entityId().entityKind() = m_proxyId.entityId().entityKind();
+        requestHeader->requestId().writer_guid().guidPrefix(m_proxyId.guidPrefix());
+        requestHeader->requestId().writer_guid().entityId().entityKey(m_proxyId.entityId().entityKey());
+        requestHeader->requestId().writer_guid().entityId().entityKind(m_proxyId.entityId().entityKind());
         requestHeader->instanceName(m_transport.getInstanceName());
 
 
@@ -381,17 +456,17 @@ ReturnMessage RTPSProxyProcedureEndpoint::send_async(void *request, RTPSAsyncTas
         ++m_numSec;
         m_mutex->unlock();
 
-        if(checkServerConnection(m_transport.getTimeout()) == OK)
+        if (checkServerConnection(m_transport.getTimeout()) == OK)
         {
-            RecvPoint *recvpoint = nullptr;
+            RecvPoint* recvpoint = nullptr;
 
             {
                 recvpoint = new RecvPoint(task);
                 boost::unique_lock<boost::mutex> lock(*recv_mutex_);
                 recv_threads.insert(std::pair<int64_t, RecvPoint&>(numSec, *recvpoint));
             }
-            
-            if(m_writer->write(request))
+
+            if (m_writer->write(request))
             {
                 returnedValue = OK;
             }
@@ -402,7 +477,7 @@ ReturnMessage RTPSProxyProcedureEndpoint::send_async(void *request, RTPSAsyncTas
                 boost::unique_lock<boost::mutex> lock(*recv_mutex_);
                 std::map<int64_t, RecvPoint&>::iterator it = recv_threads.find(numSec);
 
-                if(it != recv_threads.end())
+                if (it != recv_threads.end())
                 {
                     recv_threads.erase(it);
                 }
@@ -424,19 +499,21 @@ ReturnMessage RTPSProxyProcedureEndpoint::send_async(void *request, RTPSAsyncTas
     return returnedValue;
 }
 
-void RTPSProxyProcedureEndpoint::onNewDataMessage(eprosima::fastrtps::Subscriber *sub)
+void RTPSProxyProcedureEndpoint::onNewDataMessage(
+        eprosima::fastrtps::Subscriber* sub)
 {
     eprosima::fastrtps::SampleInfo_t info;
 
     boost::unique_lock<boost::mutex> lock(*recv_mutex_);
 
-    if(sub->takeNextData(data_, &info))
+    if (sub->takeNextData(data_, &info))
     {
-        if(info.sampleKind == eprosima::fastrtps::rtps::ALIVE)
+        if (info.sampleKind == eprosima::fastrtps::rtps::ALIVE)
         {
-            eprosima::rpc::protocol::dds::rpc::ReplyHeader *replyHeader = reinterpret_cast<eprosima::rpc::protocol::dds::rpc::ReplyHeader*>(data_);
+            eprosima::rpc::protocol::dds::rpc::ReplyHeader* replyHeader =
+                    reinterpret_cast<eprosima::rpc::protocol::dds::rpc::ReplyHeader*>(data_);
 
-            if(replyHeader->relatedRequestId().writer_guid().guidPrefix()[0] == m_proxyId.guidPrefix()[0] &&
+            if (replyHeader->relatedRequestId().writer_guid().guidPrefix()[0] == m_proxyId.guidPrefix()[0] &&
                     replyHeader->relatedRequestId().writer_guid().guidPrefix()[1] == m_proxyId.guidPrefix()[1] &&
                     replyHeader->relatedRequestId().writer_guid().guidPrefix()[2] == m_proxyId.guidPrefix()[2] &&
                     replyHeader->relatedRequestId().writer_guid().guidPrefix()[3] == m_proxyId.guidPrefix()[3] &&
@@ -448,10 +525,14 @@ void RTPSProxyProcedureEndpoint::onNewDataMessage(eprosima::fastrtps::Subscriber
                     replyHeader->relatedRequestId().writer_guid().guidPrefix()[9] == m_proxyId.guidPrefix()[9] &&
                     replyHeader->relatedRequestId().writer_guid().guidPrefix()[10] == m_proxyId.guidPrefix()[10] &&
                     replyHeader->relatedRequestId().writer_guid().guidPrefix()[11] == m_proxyId.guidPrefix()[11] &&
-                    replyHeader->relatedRequestId().writer_guid().entityId().entityKey()[0] == m_proxyId.entityId().entityKey()[0] &&
-                    replyHeader->relatedRequestId().writer_guid().entityId().entityKey()[1] == m_proxyId.entityId().entityKey()[1] &&
-                    replyHeader->relatedRequestId().writer_guid().entityId().entityKey()[2] == m_proxyId.entityId().entityKey()[2] &&
-                    replyHeader->relatedRequestId().writer_guid().entityId().entityKind() == m_proxyId.entityId().entityKind())
+                    replyHeader->relatedRequestId().writer_guid().entityId().entityKey()[0] ==
+                    m_proxyId.entityId().entityKey()[0] &&
+                    replyHeader->relatedRequestId().writer_guid().entityId().entityKey()[1] ==
+                    m_proxyId.entityId().entityKey()[1] &&
+                    replyHeader->relatedRequestId().writer_guid().entityId().entityKey()[2] ==
+                    m_proxyId.entityId().entityKey()[2] &&
+                    replyHeader->relatedRequestId().writer_guid().entityId().entityKind() ==
+                    m_proxyId.entityId().entityKind())
             {
                 int64_t numSec = replyHeader->relatedRequestId().sequence_number().high();
 
@@ -461,12 +542,12 @@ void RTPSProxyProcedureEndpoint::onNewDataMessage(eprosima::fastrtps::Subscriber
 
                 std::map<int64_t, RecvPoint&>::iterator it = recv_threads.find(numSec);
 
-                if(it != recv_threads.end())
+                if (it != recv_threads.end())
                 {
-                    RecvPoint *rp = &it->second;
+                    RecvPoint* rp = &it->second;
                     m_copy_data(rp->getReply(), data_);
 
-                    if(rp->getTask() == NULL)
+                    if (rp->getTask() == NULL)
                     {
                         boost::unique_lock<boost::mutex> lockC(rp->mutex_);
                         rp->received_ = true;
@@ -477,7 +558,7 @@ void RTPSProxyProcedureEndpoint::onNewDataMessage(eprosima::fastrtps::Subscriber
                     else
                     {
                         recv_threads.erase(it);
-                        RTPSAsyncTask *task = rp->getTask();
+                        RTPSAsyncTask* task = rp->getTask();
                         delete rp;
                         lock.unlock();
                         task->execute();
@@ -488,17 +569,21 @@ void RTPSProxyProcedureEndpoint::onNewDataMessage(eprosima::fastrtps::Subscriber
     }
 }
 
-void RTPSProxyProcedureEndpoint::onSubscriptionMatched(eprosima::fastrtps::Subscriber* /*sub*/, eprosima::fastrtps::rtps::MatchingInfo& info)
+void RTPSProxyProcedureEndpoint::onSubscriptionMatched(
+        eprosima::fastrtps::Subscriber* /*sub*/,
+        eprosima::fastrtps::rtps::MatchingInfo& info)
 {
     boost::upgrade_lock<boost::shared_mutex> lock(*matched_mutex_);
     boost::upgrade_to_unique_lock<boost::shared_mutex> uniqueLock(lock);
 
-    if(info.status == eprosima::fastrtps::rtps::MatchingStatus::MATCHED_MATCHING)
+    if (info.status == eprosima::fastrtps::rtps::MatchingStatus::MATCHED_MATCHING)
     {
         ++num_matched_sub_;
 
-        if(num_matched_sub_ == 1)
+        if (num_matched_sub_ == 1)
+        {
             matched_sub_cond_->notify_all();
+        }
     }
     else
     {
@@ -506,17 +591,21 @@ void RTPSProxyProcedureEndpoint::onSubscriptionMatched(eprosima::fastrtps::Subsc
     }
 }
 
-void RTPSProxyProcedureEndpoint::onPublicationMatched(eprosima::fastrtps::Publisher* /*pub*/, eprosima::fastrtps::rtps::MatchingInfo& info)
+void RTPSProxyProcedureEndpoint::onPublicationMatched(
+        eprosima::fastrtps::Publisher* /*pub*/,
+        eprosima::fastrtps::rtps::MatchingInfo& info)
 {
     boost::upgrade_lock<boost::shared_mutex> lock(*matched_mutex_);
     boost::upgrade_to_unique_lock<boost::shared_mutex> uniqueLock(lock);
 
-    if(info.status == eprosima::fastrtps::rtps::MatchingStatus::MATCHED_MATCHING)
+    if (info.status == eprosima::fastrtps::rtps::MatchingStatus::MATCHED_MATCHING)
     {
         ++num_matched_pub_;
 
-        if(num_matched_pub_ == 1)
+        if (num_matched_pub_ == 1)
+        {
             matched_pub_cond_->notify_all();
+        }
     }
     else
     {
