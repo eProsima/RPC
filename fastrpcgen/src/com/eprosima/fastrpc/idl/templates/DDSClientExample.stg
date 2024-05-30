@@ -1,5 +1,6 @@
 group ClientExample;
 
+import "Common.stg"
 import "eprosima.stg"
 
 main(ctx, definitions) ::= <<

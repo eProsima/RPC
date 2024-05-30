@@ -45,7 +45,7 @@ const $typecode.cppTypename$&
 $endif$
 >>
 
-varDecl(variable, create) ::= <<
+varDecl(variable, create="") ::= <<
 $if(variable)$
 $if(variable.typecode.primitive)$
 $variable.typecode.cppTypename$  $variable.name$ = $variable.typecode.initialValue$;
@@ -133,7 +133,7 @@ destroyDataCallbackInterface(interface, suffix) ::= <<
 (::transport::dds::Transport::Destroy_data)$interface.scopedname$$suffix$Plugin::destroy_data
 >>
 
-addParamToTopic(param, varname, isRequest) ::= <<
+addParamToTopic(param, varname, isRequest="") ::= <<
 $if(param)$
 $if(isRequest)$
 $varname$.$param.name$($param.name$);
@@ -155,7 +155,7 @@ $varname$.$exception.formatedScopedname$_ex().$member.name$(std::move(ex.$member
 $endif$
 >>
 
-extractParamFromTopic(param, varname, isReply) ::= <<
+extractParamFromTopic(param, varname, isReply="") ::= <<
 $if(param.typecode.primitive)$
 $param.name$ = $varname$.$param.name$();
 $else$

@@ -1,6 +1,7 @@
 group RESTProtocolSource;
 
 import "eprosima.stg"
+import "com/eprosima/fastcdr/idl/templates/FastCdrCommon.stg"
 
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "RESTProtocol.cxx"], description=["This source file contains the definition of the protocol used to create REST messages."])$

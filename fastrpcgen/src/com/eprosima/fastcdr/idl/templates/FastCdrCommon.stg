@@ -34,11 +34,11 @@ paramTypeByRef(typecode) ::= <<
 $typecode.cppTypename$&
 >>
 
-paramDeclarations(params, separatorInicial) ::= <<
+paramDeclarations(params, separatorInicial="") ::= <<
 $if(params)$$separatorInicial$$endif$$params : {param | /*$param.comment$*/ $if(param.output)$$paramTypeByRef(typecode=param.typecode)$$else$$paramTypeByValue(typecode=param.typecode)$$endif$ $param.name$}; separator=", "$
 >>
 
-paramDeclarationsByValue(params, separatorInicial) ::= <<
+paramDeclarationsByValue(params, separatorInicial="") ::= <<
 $if(params)$$separatorInicial$$endif$$params : {param | /*$param.comment$*/ $paramTypeByValue(typecode=param.typecode)$ $param.name$}; separator=", "$
 >>
 

@@ -15,6 +15,7 @@
 group TypesSource;
 
 import "com/eprosima/fastrpc/idl/templates/eprosima.stg"
+import "FastCdrCommon.stg"
 
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx, file=[ctx.filename, ".cpp"], description=["This source file contains the definition of the described types in the IDL file."])$

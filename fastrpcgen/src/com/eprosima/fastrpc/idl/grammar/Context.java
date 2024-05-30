@@ -36,6 +36,7 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
     {
         super(tmanager, file, includePaths, false);
 
+        m_fileNameUpper = getFilename().toUpperCase();
         m_clientcode = clientcode;
         m_servercode = servercode;
         m_randomGenNames = new Stack<String>();
@@ -179,6 +180,11 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
         return m_randomGenNames.pop();
     }
 
+    public String getFileNameUpper()
+    {
+        return m_fileNameUpper;
+    }
+
     @Override
     public TemplateGroup addModule(
             com.eprosima.idl.parser.tree.Module module)
@@ -260,4 +266,6 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     private CdrVersion.Select cdr_version_ = CdrVersion.Select.V2;
+
+    private String m_fileNameUpper = null;
 }

@@ -93,7 +93,7 @@ public class fastrpcgen
         RTPS
     };
 
-    private DDS_TRANSPORT m_ddstransport = DDS_TRANSPORT.RTI;
+    private DDS_TRANSPORT m_ddstransport = DDS_TRANSPORT.RTPS;
 
     /// DDS options ///
     private static String m_middleware = "rti";

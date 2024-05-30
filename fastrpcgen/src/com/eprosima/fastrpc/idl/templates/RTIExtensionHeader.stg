@@ -1,6 +1,7 @@
 group RTIExtensionHeader;
 
 import "eprosima.stg"
+import "com/eprosima/fastcdr/idl/templates/FastCdrCommon.stg"
 
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "Extension.h"], description=["This header file contains the declaration of user exceptions in ", ctx.filename, ".idl"])$

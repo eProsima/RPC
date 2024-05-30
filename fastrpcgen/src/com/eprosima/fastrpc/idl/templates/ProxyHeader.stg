@@ -1,6 +1,7 @@
 group ProxyHeader;
 
 import "eprosima.stg"
+import "com/eprosima/fastcdr/idl/templates/FastCdrCommon.stg"
 
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "Proxy.h"], description=["This header file contains the declaration of the proxy for all interfaces."])$

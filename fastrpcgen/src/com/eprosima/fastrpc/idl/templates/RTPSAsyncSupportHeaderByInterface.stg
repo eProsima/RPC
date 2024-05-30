@@ -94,7 +94,7 @@ class $interface.name$_$operation.name$Task : public eprosima::rpc::transport::d
         $interface.name$_$operation.name$CallbackHandler &m_obj;
 
         $interface.name$_Reply m_reply;
-};
+\};
 
 $endif$
 }; separator="\n"$

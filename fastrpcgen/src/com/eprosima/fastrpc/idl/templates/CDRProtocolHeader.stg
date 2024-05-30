@@ -1,6 +1,7 @@
 group CDRProtocolHeader;
 
 import "eprosima.stg"
+import "com/eprosima/fastcdr/idl/templates/FastCdrCommon.stg"
 
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "CDRProtocol.h"], description=["This header file contains the declaration of the protocol used to create CDR messages."])$
