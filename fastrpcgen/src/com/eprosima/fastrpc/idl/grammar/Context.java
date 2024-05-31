@@ -4,7 +4,10 @@ import com.eprosima.fastcdr.idl.util.CdrVersion;
 import com.eprosima.fastrpc.idl.tree.*;
 import com.eprosima.idl.generator.manager.TemplateGroup;
 import com.eprosima.idl.generator.manager.TemplateManager;
+import com.eprosima.idl.parser.tree.TypeDeclaration;
+import com.eprosima.idl.parser.typecode.StructTypeCode;
 import com.eprosima.idl.parser.typecode.TypeCode;
+import com.eprosima.idl.parser.typecode.UnionTypeCode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -183,6 +186,20 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
     public String getFileNameUpper()
     {
         return m_fileNameUpper;
+    }
+
+    public boolean isThereIsStructOrUnion()
+    {
+        for (TypeDeclaration type : m_types.values())
+        {
+            if (type.getTypeCode() instanceof StructTypeCode ||
+                    type.getTypeCode() instanceof UnionTypeCode)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override

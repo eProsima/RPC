@@ -819,3 +819,6 @@ eprosima::rpc::protocol::dds::rpc::RemoteExceptionCode_t& ReplyHeader::remoteEx(
 
 } // namespace eprosima
 
+// Include auxiliary functions like for serializing/deserializing.
+#include "MessageHeaderCdrAux.ipp"
+

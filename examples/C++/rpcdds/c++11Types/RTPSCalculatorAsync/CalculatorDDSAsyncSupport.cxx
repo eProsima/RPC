@@ -5,7 +5,7 @@
  * rpcdds_LICENSE file included in this rpcdds distribution.
  *
  *************************************************************************
- * 
+ *
  * @file CalculatorAsyncSupport.cxx
  * This source file contains functionality to use asynchronous calls for all interfaces.
  *
@@ -40,23 +40,27 @@ void* Calculator_additionTask::getReplyInstance()
 }
 
 void Calculator_additionTask::execute()
-{  
+{
     int32_t  return_ = 0;
-    
+
+
     if(m_reply.header().remoteEx() == eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK)
     {
         switch (m_reply.data().addition()._d())
         {
             case 0:
-                return_ = m_reply.data().addition().result().return_(); 
-	    	    getObject().addition(return_);
+                return_ = m_reply.data().addition().result().return_();
+
+                getObject().addition(return_);
                 break;
             default:
                 getObject().on_exception(ClientInternalException("Error extracting information from server"));
         }
     }
     else
+    {
         getObject().on_exception(ServerInternalException(""));
+    }
 }
 
 void Calculator_additionTask::on_exception(const SystemException &ex)
@@ -85,30 +89,33 @@ void* Calculator_subtractionTask::getReplyInstance()
 }
 
 void Calculator_subtractionTask::execute()
-{  
+{
     int32_t  return_ = 0;
-    
+
+
     if(m_reply.header().remoteEx() == eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK)
     {
         switch (m_reply.data().subtraction()._d())
         {
             case 0:
-                return_ = m_reply.data().subtraction().result().return_(); 
-	    	    getObject().subtraction(return_);
+                return_ = m_reply.data().subtraction().result().return_();
+
+                getObject().subtraction(return_);
                 break;
             default:
                 getObject().on_exception(ClientInternalException("Error extracting information from server"));
         }
     }
     else
+    {
         getObject().on_exception(ServerInternalException(""));
+    }
 }
 
 void Calculator_subtractionTask::on_exception(const SystemException &ex)
 {
     getObject().on_exception(ex);
 }
-
 
 
 

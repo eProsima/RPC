@@ -50,16 +50,16 @@
 
 #if defined(_WIN32)
 #if defined(EPROSIMA_USER_DLL_EXPORT)
-#if defined(_SOURCE)
-#define _DllAPI __declspec( dllexport )
+#if defined(MESSAGEHEADER_SOURCE)
+#define MESSAGEHEADER_DllAPI __declspec( dllexport )
 #else
-#define _DllAPI __declspec( dllimport )
-#endif // _SOURCE
+#define MESSAGEHEADER_DllAPI __declspec( dllimport )
+#endif // MESSAGEHEADER_SOURCE
 #else
-#define _DllAPI
+#define MESSAGEHEADER_DllAPI
 #endif  // EPROSIMA_USER_DLL_EXPORT
 #else
-#define _DllAPI
+#define MESSAGEHEADER_DllAPI
 #endif // _WIN32
 
 namespace eprosima {

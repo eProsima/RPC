@@ -99,6 +99,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
     RPC_SOURCE
+    EPROSIMA_USER_DLL_EXPORT
     $<$<AND:$<NOT:$<BOOL:${WIN32}>>,$<STREQUAL:"${CMAKE_BUILD_TYPE}","Debug">>:__DEBUG>
     $<$<AND:$<BOOL:${WIN32}>,$<STREQUAL:"${CMAKE_SYSTEM_NAME}","WindowsStore">>:_WIN32_WINNT=0x0603>
     $<$<AND:$<BOOL:${WIN32}>,$<NOT:$<STREQUAL:"${CMAKE_SYSTEM_NAME}","WindowsStore">>>:_WIN32_WINNT=0x0601>

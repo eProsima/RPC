@@ -1190,21 +1190,25 @@ public class fastrpcgen
             // Load templates depending on dds types.
             if(m_types == DDS_TYPES.EPROSIMA)
             {
-                // Load template to generate source for common types.
                 if(CdrVersion.Select.V1 != cdr_version_)
                 {
+                // Load template to generate source for common types.
                     tmanager.addGroup("com/eprosima/fastcdr/idl/templates/TypesHeader.stg");
                     tmanager.addGroup("com/eprosima/fastcdr/idl/templates/TypesSource.stg");
+                    // Load template to generate topics for operations.
+                    tmanager.addGroup("com/eprosima/fastrpc/idl/templates/TopicsHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + ".stg");
+                    tmanager.addGroup("com/eprosima/fastrpc/idl/templates/TopicsSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + ".stg");
                 }
                 if(CdrVersion.Select.V2 != cdr_version_)
                 {
                     tmanager.addGroup("com/eprosima/fastcdr/idl/templates/TypesHeaderv1.stg");
                     tmanager.addGroup("com/eprosima/fastcdr/idl/templates/TypesSourcev1.stg");
+                    tmanager.addGroup("com/eprosima/fastrpc/idl/templates/TopicsHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + "v1.stg");
+                    tmanager.addGroup("com/eprosima/fastrpc/idl/templates/TopicsSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + "v1.stg");
                 }
-                // Load template to generate topics for operations.
-                tmanager.addGroup("com/eprosima/fastrpc/idl/templates/TopicsHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + ".stg");
-                tmanager.addGroup("com/eprosima/fastrpc/idl/templates/TopicsSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + ".stg");
 
+                tmanager.addGroup("com/eprosima/fastrpc/idl/templates/TypesCdrAuxHeaderImpl.stg");
+                tmanager.addGroup("com/eprosima/fastrpc/idl/templates/TopicsCdrAuxHeaderImpl.stg");
                 tmanager.addGroup("com/eprosima/fastrpc/idl/templates/" + (m_ddstransport == DDS_TRANSPORT.RTI ? "DDS" : "RTPS") + "TopicsPluginHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + ".stg");
                 tmanager.addGroup("com/eprosima/fastrpc/idl/templates/" + (m_ddstransport == DDS_TRANSPORT.RTI ? "DDS" : "RTPS") + "TopicsPluginSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + ".stg");
             }
@@ -1310,26 +1314,31 @@ public class fastrpcgen
                 // Generate file using our types.
                 if(m_types == DDS_TYPES.EPROSIMA)
                 {
-                    if((returnedValue) && (CdrVersion.Select.V1 == cdr_version_ || (returnedValue = Utils.writeFile(m_outputDir + onlyFileName + ".h", maintemplates.getTemplate("com/eprosima/fastcdr/idl/templates/TypesHeader.stg"), m_replace))))
+                    if(CdrVersion.Select.V1 == cdr_version_ || (returnedValue &= Utils.writeFile(m_outputDir + onlyFileName + ".h", maintemplates.getTemplate("com/eprosima/fastcdr/idl/templates/TypesHeader.stg"), m_replace)))
                     {
-                        if (CdrVersion.Select.V2 == cdr_version_ || (returnedValue = Utils.writeFile(m_outputDir + onlyFileName + (CdrVersion.Select.BOTH == cdr_version_ ? "v1" : "") + ".h",
+                        if (CdrVersion.Select.V2 == cdr_version_ || (returnedValue &= Utils.writeFile(m_outputDir + onlyFileName + (CdrVersion.Select.BOTH == cdr_version_ ? "v1" : "") + ".h",
                                         maintemplates.getTemplate("com/eprosima/fastcdr/idl/templates/TypesHeaderv1.stg"), m_replace)))
                         {
-                            if(CdrVersion.Select.V1 == cdr_version_ || (returnedValue = Utils.writeFile(m_outputDir + onlyFileName + ".cxx", maintemplates.getTemplate("com/eprosima/fastcdr/idl/templates/TypesSource.stg"), m_replace)))
+                            if(CdrVersion.Select.V1 == cdr_version_ || (returnedValue &= Utils.writeFile(m_outputDir + onlyFileName + ".cxx", maintemplates.getTemplate("com/eprosima/fastcdr/idl/templates/TypesSource.stg"), m_replace)))
                             {
-                                if(CdrVersion.Select.V2 == cdr_version_ || (returnedValue = Utils.writeFile(m_outputDir + onlyFileName + (CdrVersion.Select.BOTH == cdr_version_ ? "v1" : "") + ".cxx",
+                                if(CdrVersion.Select.V2 == cdr_version_ || (returnedValue &= Utils.writeFile(m_outputDir + onlyFileName + (CdrVersion.Select.BOTH == cdr_version_ ? "v1" : "") + ".cxx",
                                         maintemplates.getTemplate("com/eprosima/fastcdr/idl/templates/TypesSourcev1.stg"), m_replace)))
                                 {
-                                    if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "TopicsPlugin.h", maintemplates.getTemplate(
+                                    if(returnedValue &= Utils.writeFile(m_outputDir + onlyFileName + "TopicsPlugin.h", maintemplates.getTemplate(
                                                     "com/eprosima/fastrpc/idl/templates/" +
                                                     (m_ddstransport == DDS_TRANSPORT.RTI ? "DDS" : "RTPS") + "TopicsPluginHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + ".stg"), m_replace))
                                     {
-                                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "TopicsPlugin.cxx", maintemplates.getTemplate(
+                                        if(returnedValue &= Utils.writeFile(m_outputDir + onlyFileName + "TopicsPlugin.cxx", maintemplates.getTemplate(
                                                         "com/eprosima/fastrpc/idl/templates/" +
                                                         (m_ddstransport == DDS_TRANSPORT.RTI ? "DDS" : "RTPS") + "TopicsPluginSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + ".stg"), m_replace))
                                         {
                                             project.addCommonIncludeFile(onlyFileName + ".h");
                                             project.addCommonSrcFile(onlyFileName + ".cxx");
+                                            if (CdrVersion.Select.BOTH == cdr_version_)
+                                            {
+                                                project.addCommonIncludeFile(onlyFileName + "v1.h");
+                                                project.addCommonSrcFile(onlyFileName + "v1.cxx");
+                                            }
                                             project.addCommonIncludeFile(onlyFileName + "TopicsPlugin.h");
                                             project.addCommonSrcFile(onlyFileName + "TopicsPlugin.cxx");
                                         }
@@ -1338,19 +1347,27 @@ public class fastrpcgen
                             }
                         }
                     }
+
+                if (ctx.isThereIsStructOrUnion())
+                {
+                    returnedValue &=
+                        Utils.writeFile(m_outputDir + onlyFileName + "CdrAux.ipp",
+                                maintemplates.getTemplate("com/eprosima/fastrpc/idl/templates/TypesCdrAuxHeaderImpl.stg"), m_replace);
+                }
+
                 }
                 else if(m_types == DDS_TYPES.RTI)
                 {
                     // Generate the supported IDL to RTI.
-                    if(returnedValue = Utils.writeFile(m_tempDir + onlyFileName + ".idl", maintemplates.getTemplate("rtiIDL"), true))
+                    if(returnedValue &= Utils.writeFile(m_tempDir + onlyFileName + ".idl", maintemplates.getTemplate("rtiIDL"), true))
                     {
-                        if(returnedValue = Utils.writeFile(m_tempDir + onlyFileName + "RequestReply.idl", maintemplates.getTemplate(
+                        if(returnedValue &= Utils.writeFile(m_tempDir + onlyFileName + "RequestReply.idl", maintemplates.getTemplate(
                                         "com/eprosima/fastrpc/idl/templates/TopicsIDL" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + ".stg"), true))
                         {
                             // Zone used to write all files using the generated string templates.
-                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Extension.h", maintemplates.getTemplate("com/eprosima/fastrpc/idl/templates/RTIExtensionHeader.stg"), m_replace))
+                            if(returnedValue &= Utils.writeFile(m_outputDir + onlyFileName + "Extension.h", maintemplates.getTemplate("com/eprosima/fastrpc/idl/templates/RTIExtensionHeader.stg"), m_replace))
                             {
-                                if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Extension.cxx", maintemplates.getTemplate("com/eprosima/fastrpc/idl/templates/RTIExtensionSource.stg"), m_replace))
+                                if(returnedValue &= Utils.writeFile(m_outputDir + onlyFileName + "Extension.cxx", maintemplates.getTemplate("com/eprosima/fastrpc/idl/templates/RTIExtensionSource.stg"), m_replace))
                                 {
                                     project.addCommonIncludeFile(onlyFileName + "Extension.h");
                                     project.addCommonSrcFile(onlyFileName + "Extension.cxx");
@@ -1365,15 +1382,33 @@ public class fastrpcgen
                     // Generate file using our types.
                     if(m_types == DDS_TYPES.EPROSIMA)
                     {
-                        if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Topics.h", maintemplates.getTemplate(
-                                        "com/eprosima/fastrpc/idl/templates/TopicsHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + ".stg"), m_replace))
+                        if(CdrVersion.Select.V1 == cdr_version_ || (returnedValue &= Utils.writeFile(m_outputDir + onlyFileName + "Topics.h", maintemplates.getTemplate(
+                                        "com/eprosima/fastrpc/idl/templates/TopicsHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + ".stg"), m_replace)))
                         {
-                            if(returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "Topics.cxx", maintemplates.getTemplate("com/eprosima/fastrpc/idl/templates/TopicsSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + ".stg"), m_replace))
+                            if(CdrVersion.Select.V2 == cdr_version_ || (returnedValue &= Utils.writeFile(m_outputDir + onlyFileName + "Topics" + (CdrVersion.Select.BOTH == cdr_version_ ? "v1" : "") + ".h",
+                                            maintemplates.getTemplate("com/eprosima/fastrpc/idl/templates/TopicsHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + "v1.stg"), m_replace)))
                             {
-                                project.addCommonIncludeFile(onlyFileName + "Topics.h");
-                                project.addCommonSrcFile(onlyFileName + "Topics.cxx");
+                                if(CdrVersion.Select.V1 == cdr_version_ || (returnedValue &= Utils.writeFile(m_outputDir + onlyFileName + "Topics.cxx",
+                                                maintemplates.getTemplate("com/eprosima/fastrpc/idl/templates/TopicsSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + ".stg"), m_replace)))
+                                {
+                                    if(CdrVersion.Select.V2 == cdr_version_ || (returnedValue &= Utils.writeFile(m_outputDir + onlyFileName + "Topics" + (CdrVersion.Select.BOTH == cdr_version_ ? "v1" : "") + ".cxx",
+                                                    maintemplates.getTemplate("com/eprosima/fastrpc/idl/templates/TopicsSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + "v1.stg"), m_replace)))
+                                    {
+                                        project.addCommonIncludeFile(onlyFileName + "Topics.h");
+                                        project.addCommonSrcFile(onlyFileName + "Topics.cxx");
+                                        if (CdrVersion.Select.BOTH == cdr_version_)
+                                        {
+                                            project.addCommonIncludeFile(onlyFileName + "Topicsv1.h");
+                                            project.addCommonSrcFile(onlyFileName + "Topicsv1.cxx");
+                                        }
+                                    }
+                                }
                             }
                         }
+
+                        returnedValue &=
+                            Utils.writeFile(m_outputDir + onlyFileName + "TopicsCdrAux.ipp",
+                                    maintemplates.getTemplate("com/eprosima/fastrpc/idl/templates/TopicsCdrAuxHeaderImpl.stg"), m_replace);
                     }
 
                     if(returnedValue && (returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "AsyncCallbackHandlers.h", maintemplates.getTemplate(

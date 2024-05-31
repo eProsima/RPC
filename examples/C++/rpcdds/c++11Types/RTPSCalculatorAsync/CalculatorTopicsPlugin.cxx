@@ -1,11 +1,18 @@
-/*************************************************************************
- * Copyright (c) 2013 eProsima. All rights reserved.
- *
- * This generated file is licensed to you under the terms described in the
- * rpcdds_LICENSE file included in this rpcdds distribution.
- *
- *************************************************************************
- * 
+// Copyright 2016 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+/*!
  * @file CalculatorTopicsPlugin.cpp
  * TODO This header file contains the declaration of topics generated using operations in the IDL file.
  *
@@ -14,22 +21,31 @@
 
 #include "CalculatorTopicsPlugin.h"
 
-#include <fastcdr/Cdr.h>
+#include <fastdds/rtps/common/CdrSerialization.hpp>
 
-using namespace eprosima::fastrtps;
-using namespace ::rtps;
+// Include auxiliary functions like for serializing/deserializing.
+#include "CalculatorTopicsCdrAux.ipp"
+
+using SerializedPayload_t = eprosima::fastrtps::rtps::SerializedPayload_t;
+using InstanceHandle_t = eprosima::fastrtps::rtps::InstanceHandle_t;
+using DataRepresentationId_t = eprosima::fastdds::dds::DataRepresentationId_t;
 
 
-
-
-Calculator_RequestPlugin::Calculator_RequestPlugin() 
+Calculator_RequestPlugin::Calculator_RequestPlugin()
 {
     setName("Calculator_Request");
-    m_typeSize = (uint32_t)Calculator_Request::getMaxCdrSerializedSize() + 4 /*encapsulation*/;
+    uint32_t type_size =
+#if FASTCDR_VERSION_MAJOR == 1
+        static_cast<uint32_t>(Calculator_Request::getMaxCdrSerializedSize());
+#else
+        Calculator_Request_max_cdr_typesize;
+#endif
+    type_size += static_cast<uint32_t>(eprosima::fastcdr::Cdr::alignment(type_size, 4)); /* possible submessage alignment */
+    m_typeSize = type_size + 4; /*encapsulation*/
     m_isGetKeyDefined = false;
 }
 
-Calculator_RequestPlugin::~Calculator_RequestPlugin() 
+Calculator_RequestPlugin::~Calculator_RequestPlugin()
 {
 }
 
@@ -38,51 +54,73 @@ bool Calculator_RequestPlugin::getKey(void*, InstanceHandle_t*, bool)
     return false;
 }
 
-bool Calculator_RequestPlugin::serialize(void *data, SerializedPayload_t *payload) 
+bool Calculator_RequestPlugin::serialize(
+        void* data,
+        SerializedPayload_t* payload,
+        DataRepresentationId_t data_representation)
 {
-    Calculator_Request *p_type = (Calculator_Request*) data;
+    Calculator_Request *p_type {static_cast<Calculator_Request*>(data)};
 
     // Object that manages the raw buffer.
-    eprosima::fastcdr::FastBuffer fastbuffer((char*) payload->data, payload->max_size);
+    eprosima::fastcdr::FastBuffer fastbuffer(reinterpret_cast<char*>(payload->data), payload->max_size);
+    // Object that serializes the data.
     eprosima::fastcdr::Cdr ser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
-            eprosima::fastcdr::Cdr::DDS_CDR); // Object that serializes the data.
+            data_representation == DataRepresentationId_t::XCDR_DATA_REPRESENTATION ?
+            eprosima::fastcdr::CdrVersion::XCDRv1 : eprosima::fastcdr::CdrVersion::XCDRv2);
     payload->encapsulation = ser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
-    // Serialize encapsulation
-    ser.serialize_encapsulation();
+#if FASTCDR_VERSION_MAJOR > 1
+    ser.set_encoding_flag(
+        data_representation == DataRepresentationId_t::XCDR_DATA_REPRESENTATION ?
+        eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR :
+        eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR2);
+#endif // FASTCDR_VERSION_MAJOR > 1
 
     try
     {
-        // Serialize the object:
-        p_type->serialize(ser);
+        // Serialize encapsulation
+        ser.serialize_encapsulation();
+        // Serialize the object.
+        ser << *p_type;
     }
     catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
     {
         return false;
     }
 
-    //Get the serialized length
-    payload->length = (uint16_t)ser.getSerializedDataLength();
+    // Get the serialized length
+#if FASTCDR_VERSION_MAJOR == 1
+    payload->length = static_cast<uint32_t>(ser.getSerializedDataLength());
+#else
+    payload->length = static_cast<uint32_t>(ser.get_serialized_data_length());
+#endif // FASTCDR_VERSION_MAJOR == 1
 
     return true;
 }
 
-bool Calculator_RequestPlugin::deserialize(SerializedPayload_t* payload, void* data)
+bool Calculator_RequestPlugin::deserialize(
+        SerializedPayload_t* payload,
+        void* data)
 {
-    //CONVERT DATA to pointer of your type
-    Calculator_Request* p_type = (Calculator_Request*) data;
-
-    // Object that manages the raw buffer.
-    eprosima::fastcdr::FastBuffer fastbuffer((char*)payload->data, payload->length);
-    eprosima::fastcdr::Cdr deser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
-            eprosima::fastcdr::Cdr::DDS_CDR); // Object that deserializes the data.
-    // Deserialize encapsulation.
-    deser.read_encapsulation();
-    payload->encapsulation = deser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
-
     try
     {
+        Calculator_Request* p_type {static_cast<Calculator_Request*>(data)};
+
+        // Object that manages the raw buffer.
+        eprosima::fastcdr::FastBuffer fastbuffer(reinterpret_cast<char*>(payload->data), payload->length);
+
+        // Object that deserializes the data.
+        eprosima::fastcdr::Cdr deser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN
+#if FASTCDR_VERSION_MAJOR == 1
+                , eprosima::fastcdr::Cdr::CdrType::DDS_CDR
+#endif // FASTCDR_VERSION_MAJOR == 1
+                );
+
+        // Deserialize encapsulation.
+        deser.read_encapsulation();
+        payload->encapsulation = deser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
+
         //deserialize the object:
-        p_type->deserialize(deser);
+        deser >> *p_type;
     }
     catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
     {
@@ -92,11 +130,33 @@ bool Calculator_RequestPlugin::deserialize(SerializedPayload_t* payload, void* d
     return true;
 }
 
-std::function<uint32_t()> Calculator_RequestPlugin::getSerializedSizeProvider(void* data)
+std::function<uint32_t()> Calculator_RequestPlugin::getSerializedSizeProvider(
+        void* data,
+        DataRepresentationId_t data_representation)
 {
-    return [data]() -> uint32_t {
-        return Calculator_Request::getCdrSerializedSize(*static_cast<Calculator_Request*>(data));
-    };
+    return [data, data_representation]() -> uint32_t
+           {
+#if FASTCDR_VERSION_MAJOR == 1
+               static_cast<void>(data_representation);
+               return static_cast<uint32_t>(Calculator_Request::getCdrSerializedSize(*static_cast<Calculator_Request*>(data))) +
+                      4u /*encapsulation*/;
+#else
+               try
+               {
+                   eprosima::fastcdr::CdrSizeCalculator calculator(
+                       data_representation == DataRepresentationId_t::XCDR_DATA_REPRESENTATION ?
+                       eprosima::fastcdr::CdrVersion::XCDRv1 :eprosima::fastcdr::CdrVersion::XCDRv2);
+                   size_t current_alignment {0};
+                   return static_cast<uint32_t>(calculator.calculate_serialized_size(
+                               *static_cast<Calculator_Request*>(data), current_alignment)) +
+                           4u /*encapsulation*/;
+               }
+               catch (eprosima::fastcdr::exception::Exception& /*exception*/)
+               {
+                   return 0;
+               }
+#endif // FASTCDR_VERSION_MAJOR == 1
+           };
 }
 
 void* Calculator_RequestPlugin::createData()
@@ -127,14 +187,21 @@ void Calculator_RequestPlugin::copy_data(
 }
 
 // Reply interfaces
-Calculator_ReplyPlugin::Calculator_ReplyPlugin() 
+Calculator_ReplyPlugin::Calculator_ReplyPlugin()
 {
     setName("Calculator_Reply");
-    m_typeSize = (uint32_t)Calculator_Reply::getMaxCdrSerializedSize() + 4 /*encapsulation*/;
+    uint32_t type_size =
+#if FASTCDR_VERSION_MAJOR == 1
+        static_cast<uint32_t>(Calculator_Reply::getMaxCdrSerializedSize());
+#else
+        Calculator_Reply_max_cdr_typesize;
+#endif
+    type_size += static_cast<uint32_t>(eprosima::fastcdr::Cdr::alignment(type_size, 4)); /* possible submessage alignment */
+    m_typeSize = type_size + 4; /*encapsulation*/
     m_isGetKeyDefined = false;
 }
 
-Calculator_ReplyPlugin::~Calculator_ReplyPlugin() 
+Calculator_ReplyPlugin::~Calculator_ReplyPlugin()
 {
 }
 
@@ -143,51 +210,73 @@ bool Calculator_ReplyPlugin::getKey(void*, InstanceHandle_t*, bool)
     return false;
 }
 
-bool Calculator_ReplyPlugin::serialize(void *data, SerializedPayload_t *payload) 
+bool Calculator_ReplyPlugin::serialize(
+        void* data,
+        SerializedPayload_t* payload,
+        DataRepresentationId_t data_representation)
 {
-    Calculator_Reply *p_type = (Calculator_Reply*) data;
+    Calculator_Reply *p_type {static_cast<Calculator_Reply*>(data)};
 
     // Object that manages the raw buffer.
-    eprosima::fastcdr::FastBuffer fastbuffer((char*) payload->data, payload->max_size);
+    eprosima::fastcdr::FastBuffer fastbuffer(reinterpret_cast<char*>(payload->data), payload->max_size);
+    // Object that serializes the data.
     eprosima::fastcdr::Cdr ser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
-            eprosima::fastcdr::Cdr::DDS_CDR); // Object that serializes the data.
+            data_representation == DataRepresentationId_t::XCDR_DATA_REPRESENTATION ?
+            eprosima::fastcdr::CdrVersion::XCDRv1 : eprosima::fastcdr::CdrVersion::XCDRv2);
     payload->encapsulation = ser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
-    // Serialize encapsulation
-    ser.serialize_encapsulation();
+#if FASTCDR_VERSION_MAJOR > 1
+    ser.set_encoding_flag(
+        data_representation == DataRepresentationId_t::XCDR_DATA_REPRESENTATION ?
+        eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR :
+        eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR2);
+#endif // FASTCDR_VERSION_MAJOR > 1
 
     try
     {
-        // Serialize the object:
-        p_type->serialize(ser);
+        // Serialize encapsulation
+        ser.serialize_encapsulation();
+        // Serialize the object.
+        ser << *p_type;
     }
     catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
     {
         return false;
     }
 
-    //Get the serialized length
-    payload->length = (uint16_t)ser.getSerializedDataLength();
+    // Get the serialized length
+#if FASTCDR_VERSION_MAJOR == 1
+    payload->length = static_cast<uint32_t>(ser.getSerializedDataLength());
+#else
+    payload->length = static_cast<uint32_t>(ser.get_serialized_data_length());
+#endif // FASTCDR_VERSION_MAJOR == 1
 
     return true;
 }
 
-bool Calculator_ReplyPlugin::deserialize(SerializedPayload_t* payload, void* data)
+bool Calculator_ReplyPlugin::deserialize(
+        SerializedPayload_t* payload,
+        void* data)
 {
-    //CONVERT DATA to pointer of your type
-    Calculator_Reply* p_type = (Calculator_Reply*) data;
-
-    // Object that manages the raw buffer.
-    eprosima::fastcdr::FastBuffer fastbuffer((char*)payload->data, payload->length);
-    eprosima::fastcdr::Cdr deser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
-            eprosima::fastcdr::Cdr::DDS_CDR); // Object that deserializes the data.
-    // Deserialize encapsulation.
-    deser.read_encapsulation();
-    payload->encapsulation = deser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
-
     try
     {
+        Calculator_Reply* p_type {static_cast<Calculator_Reply*>(data)};
+
+        // Object that manages the raw buffer.
+        eprosima::fastcdr::FastBuffer fastbuffer(reinterpret_cast<char*>(payload->data), payload->length);
+
+        // Object that deserializes the data.
+        eprosima::fastcdr::Cdr deser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN
+#if FASTCDR_VERSION_MAJOR == 1
+                , eprosima::fastcdr::Cdr::CdrType::DDS_CDR
+#endif // FASTCDR_VERSION_MAJOR == 1
+                );
+
+        // Deserialize encapsulation.
+        deser.read_encapsulation();
+        payload->encapsulation = deser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
+
         //deserialize the object:
-        p_type->deserialize(deser);
+        deser >> *p_type;
     }
     catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
     {
@@ -197,11 +286,33 @@ bool Calculator_ReplyPlugin::deserialize(SerializedPayload_t* payload, void* dat
     return true;
 }
 
-std::function<uint32_t()> Calculator_ReplyPlugin::getSerializedSizeProvider(void* data)
+std::function<uint32_t()> Calculator_ReplyPlugin::getSerializedSizeProvider(
+        void* data,
+        DataRepresentationId_t data_representation)
 {
-    return [data]() -> uint32_t {
-        return Calculator_Reply::getCdrSerializedSize(*static_cast<Calculator_Reply*>(data));
-    };
+    return [data, data_representation]() -> uint32_t
+           {
+#if FASTCDR_VERSION_MAJOR == 1
+               static_cast<void>(data_representation);
+               return static_cast<uint32_t>(Calculator_Reply::getCdrSerializedSize(*static_cast<Calculator_Reply*>(data))) +
+                      4u /*encapsulation*/;
+#else
+               try
+               {
+                   eprosima::fastcdr::CdrSizeCalculator calculator(
+                       data_representation == DataRepresentationId_t::XCDR_DATA_REPRESENTATION ?
+                       eprosima::fastcdr::CdrVersion::XCDRv1 :eprosima::fastcdr::CdrVersion::XCDRv2);
+                   size_t current_alignment {0};
+                   return static_cast<uint32_t>(calculator.calculate_serialized_size(
+                               *static_cast<Calculator_Reply*>(data), current_alignment)) +
+                           4u /*encapsulation*/;
+               }
+               catch (eprosima::fastcdr::exception::Exception& /*exception*/)
+               {
+                   return 0;
+               }
+#endif // FASTCDR_VERSION_MAJOR == 1
+           };
 }
 
 void* Calculator_ReplyPlugin::createData()

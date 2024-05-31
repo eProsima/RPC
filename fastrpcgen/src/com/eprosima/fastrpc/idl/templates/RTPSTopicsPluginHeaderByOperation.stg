@@ -26,12 +26,12 @@ $ctx.directIncludeDependencies : {include | #include "$include$TopicsPlugin.h"};
 
 #if defined(_WIN32)
 #if defined(EPROSIMA_USER_DLL_EXPORT)
-#define user_cpp_DllExport __declspec( dllexport )
+#define eProsima_user_DllExport __declspec( dllexport )
 #else
-#define user_cpp_DllExport
+#define eProsima_user_DllExport
 #endif
 #else
-#define user_cpp_DllExport
+#define eProsima_user_DllExport
 #endif
 
 $definitions; separator="\n"$
@@ -50,7 +50,7 @@ interface(ctx, parent, interface, export_list) ::= <<
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class user_cpp_DllExport $interface.name$Plugin
+class eProsima_user_DllExport $interface.name$Plugin
 {
     public:
 
@@ -64,27 +64,27 @@ class user_cpp_DllExport $interface.name$Plugin
         {
             public:
 
-                user_cpp_DllExport $operation.name$_RequestPlugin();
+                eProsima_user_DllExport $operation.name$_RequestPlugin();
 
-                virtual user_cpp_DllExport ~$operation.name$_RequestPlugin();
+                virtual eProsima_user_DllExport ~$operation.name$_RequestPlugin();
 
-                user_cpp_DllExport bool getKey(void *data, eprosima::fastrtps::rtps::InstanceHandle_t* ihandle, bool force_md5);
+                eProsima_user_DllExport bool getKey(void *data, eprosima::fastrtps::rtps::InstanceHandle_t* ihandle, bool force_md5);
 
-                user_cpp_DllExport bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
+                eProsima_user_DllExport bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
 
-                user_cpp_DllExport bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
+                eProsima_user_DllExport bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
 
-                user_cpp_DllExport std::function<uint32_t()> getSerializedSizeProvider(void* data);
+                eProsima_user_DllExport std::function<uint32_t()> getSerializedSizeProvider(void* data);
 
-                user_cpp_DllExport void* createData();
+                eProsima_user_DllExport void* createData();
 
-                user_cpp_DllExport static void* create_data();
+                eProsima_user_DllExport static void* create_data();
 
-                user_cpp_DllExport void deleteData(void *data);
+                eProsima_user_DllExport void deleteData(void *data);
 
-                user_cpp_DllExport static void delete_data(void *data);
+                eProsima_user_DllExport static void delete_data(void *data);
 
-                user_cpp_DllExport static void copy_data($interface.name$_$operation.name$_Request *dst,
+                eProsima_user_DllExport static void copy_data($interface.name$_$operation.name$_Request *dst,
                         const $interface.name$_$operation.name$_Request *src);
         };
 
@@ -97,27 +97,27 @@ class user_cpp_DllExport $interface.name$Plugin
         {
             public:
 
-                user_cpp_DllExport $operation.name$_ReplyPlugin();
+                eProsima_user_DllExport $operation.name$_ReplyPlugin();
 
-                virtual user_cpp_DllExport ~$operation.name$_ReplyPlugin();
+                virtual eProsima_user_DllExport ~$operation.name$_ReplyPlugin();
 
-                user_cpp_DllExport bool getKey(void *data, eprosima::fastrtps::rtps::InstanceHandle_t* ihandle, bool force_md5);
+                eProsima_user_DllExport bool getKey(void *data, eprosima::fastrtps::rtps::InstanceHandle_t* ihandle, bool force_md5);
 
-                user_cpp_DllExport bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
+                eProsima_user_DllExport bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
 
-                user_cpp_DllExport bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
+                eProsima_user_DllExport bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
 
-                user_cpp_DllExport std::function<uint32_t()> getSerializedSizeProvider(void* data);
+                eProsima_user_DllExport std::function<uint32_t()> getSerializedSizeProvider(void* data);
 
-                user_cpp_DllExport void* createData();
+                eProsima_user_DllExport void* createData();
 
-                user_cpp_DllExport static void* create_data();
+                eProsima_user_DllExport static void* create_data();
 
-                user_cpp_DllExport void deleteData(void *data);
+                eProsima_user_DllExport void deleteData(void *data);
 
-                user_cpp_DllExport static void delete_data(void *data);
+                eProsima_user_DllExport static void delete_data(void *data);
 
-                user_cpp_DllExport static void copy_data($interface.name$_$operation.name$_Reply *dst,
+                eProsima_user_DllExport static void copy_data($interface.name$_$operation.name$_Reply *dst,
                         const $interface.name$_$operation.name$_Reply *src);
         };
         $endif$

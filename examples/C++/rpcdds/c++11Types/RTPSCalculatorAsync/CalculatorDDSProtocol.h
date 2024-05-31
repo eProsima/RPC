@@ -1,11 +1,18 @@
-/*************************************************************************
- * Copyright (c) 2013 eProsima. All rights reserved.
- *
- * This generated file is licensed to you under the terms described in the
- * rpcdds_LICENSE file included in this rpcdds distribution.
- *
- *************************************************************************
- * 
+// Copyright 2016 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+/*!
  * @file CalculatorDDSProtocol.h
  * This header file contains the declaration of the protocol used to create DDS messages.
  *
@@ -33,7 +40,7 @@ namespace eprosima
                 class RTPSTransport;
             }
         }
-        
+
         namespace protocol
         {
             namespace dds
@@ -41,36 +48,36 @@ namespace eprosima
                 /*!
                  * @brief This class is responsible for serializing and deserializing the requests and responses of this application.
                  * It uses DDS.
-		         * @ingroup CALCULATOR
+		         * @ingroup Calculator
                  */
                 class  CalculatorProtocol : public eprosima::rpc::protocol::CalculatorProtocol
                 {
                     public:
-                    
+
                        /*!
                         * @brief Default constructor
                         */
                         RPCUSERDllExport CalculatorProtocol();
-                        
+
                        /*!
                         * @brief Destructor
                         */
                         virtual RPCUSERDllExport ~CalculatorProtocol();
-                    
+
                        /*!
                         * @brief This method sets the transport for the communications.
                         * @param transport Transport to use
                         * @return True if the assignment is successful, false otherwise
                         */
                         virtual RPCUSERDllExport bool setTransport(eprosima::rpc::transport::Transport &transport);
-                        
+
                         /*!
                          * @brief This function activates needed DDS entities to use an interface.
                          * @param interfaceName Interface name.
                          * @return Whether the activation works successfully.
                          */
                         RPCUSERDllExport bool activateInterface(const char* interfaceName);
-                        
+
                         /*!
                          * @brief This method implements the server part of the protocol for the interface Calculator.
                          * It is called when a request sample is received.
@@ -80,49 +87,70 @@ namespace eprosima
                          */
                         RPCUSERDllExport static void Calculator_serve(eprosima::rpc::protocol::Protocol &protocol,
                             void *data , eprosima::rpc::transport::Endpoint *endpoint);
+
                         /*!
                          * @brief This method implements the proxy part of the protocol for the operation addition.
                          * It is called from the Proxy interface.
                          */
-                        RPCUSERDllExport int32_t Calculator_addition(/*in*/ int32_t value1, /*in*/ int32_t value2);
+                        RPCUSERDllExport 
+                        int32_t
+                         Calculator_addition(/*in*/ 
+                        int32_t
+                         value1, /*in*/ 
+                        int32_t
+                         value2);
 
                         /*!
                          * @brief This asynchronous method implements the proxy part of the protocol for the operation addition.
                          * It is called from the Proxy interface.
                          */
-                        RPCUSERDllExport void Calculator_addition_async(Calculator_additionCallbackHandler &obj, /*in*/ int32_t value1, /*in*/ int32_t value2);
+                        RPCUSERDllExport void Calculator_addition_async(Calculator_additionCallbackHandler &obj, /*in*/ 
+                        int32_t
+                         value1, /*in*/ 
+                        int32_t
+                         value2);
+
 
                         /*!
                          * @brief This method implements the proxy part of the protocol for the operation subtraction.
                          * It is called from the Proxy interface.
                          */
-                        RPCUSERDllExport int32_t Calculator_subtraction(/*in*/ int32_t value1, /*in*/ int32_t value2);
+                        RPCUSERDllExport 
+                        int32_t
+                         Calculator_subtraction(/*in*/ 
+                        int32_t
+                         value1, /*in*/ 
+                        int32_t
+                         value2);
 
                         /*!
                          * @brief This asynchronous method implements the proxy part of the protocol for the operation subtraction.
                          * It is called from the Proxy interface.
                          */
-                        RPCUSERDllExport void Calculator_subtraction_async(Calculator_subtractionCallbackHandler &obj, /*in*/ int32_t value1, /*in*/ int32_t value2);
+                        RPCUSERDllExport void Calculator_subtraction_async(Calculator_subtractionCallbackHandler &obj, /*in*/ 
+                        int32_t
+                         value1, /*in*/ 
+                        int32_t
+                         value2);
 
 
 
 
 
-                        
                     private:
-                    
+
                         eprosima::rpc::transport::dds::RTPSTransport *m_ddsTransport;
-                    
+
                                                 const char* const Calculator_str;
-                                                
+
                                                 eprosima::rpc::transport::dds::RTPSProxyProcedureEndpoint *Calculator_pe;
-                                                
+
                                                 eprosima::rpc::transport::dds::RTPSServerProcedureEndpoint *Calculator_se;
 
                                                 Calculator_RequestPlugin Calculator_requestPlugin;
                                                 Calculator_ReplyPlugin Calculator_replyPlugin;
-                                                
-                                                
+
+
                 };
             } // namespace dds
         } // namespace protocol

@@ -151,7 +151,7 @@ int RTPSProxyProcedureEndpoint::initialize(
             // Not oneway
             if (m_reader != NULL)
             {
-                data_ = m_create_data(dataSize);
+                data_ = m_create_data();
 
                 if (data_ != NULL)
                 {

@@ -188,7 +188,7 @@ $definitions; separator="\n"$
 interface(ctx, parent, interface, export_list) ::= <<
 $if(ctx.server)$
 void $ctx.filename$Protocol::$interface.formatedScopedname$_serve(eprosima::rpc::protocol::Protocol &protocol,
-    void *_data , eprosima::rpc::transport::Endpoint *endpoint)
+    void *_data , eprosima::rpc::transport::Endpoint*)
 {
     $ctx.filename$Protocol &_protocol = dynamic_cast<$ctx.filename$Protocol&>(protocol);
     $interface.scopedname$_Request &requestData = *($interface.scopedname$_Request*)_data;
@@ -196,7 +196,7 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_serve(eprosima::rpc:
     switch($requestUnionDiscriminatorByInterface(varname="requestData")$)
     {
         $interface.all_operations : { operation |
-        case $operation.md5$:
+        case static_cast<int32_t>($operation.md5$):
         {
         $operation.parameters : {param | $varDecl(variable=param, create=param.onlyOutput)$}; separator="\n"$
         $varDecl(variable=operation.rettypeparam, create="yes")$
@@ -295,7 +295,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$interface.formatedSco
                     $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=replyOperationUnionDataAccessByInterface(operation=operation, varname="retInstance", dataname="result"), isReply="yes")$};separator="\n"$
                     break;
                 $operation.exceptions : { exception |
-                case $exception.md5$:
+                case static_cast<int32_t>($exception.md5$):
                     {
                     $exception.scopedname$ ex;
                     // TODO No permite arrays.

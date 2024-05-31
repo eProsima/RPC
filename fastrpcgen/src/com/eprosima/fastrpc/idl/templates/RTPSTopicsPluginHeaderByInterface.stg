@@ -26,12 +26,12 @@ $ctx.directIncludeDependencies : {include | #include "$include$TopicsPlugin.h"};
 
 #if defined(_WIN32)
 #if defined(EPROSIMA_USER_DLL_EXPORT)
-#define user_cpp_DllExport __declspec( dllexport )
+#define eProsima_user_DllExport __declspec( dllexport )
 #else
-#define user_cpp_DllExport
+#define eProsima_user_DllExport
 #endif
 #else
-#define user_cpp_DllExport
+#define eProsima_user_DllExport
 #endif
 
 $definitions; separator="\n"$
@@ -54,27 +54,47 @@ class $interface.name$_RequestPlugin : public eprosima::fastrtps::TopicDataType
 {
     public:
 
-        user_cpp_DllExport $interface.name$_RequestPlugin();
+        eProsima_user_DllExport $interface.name$_RequestPlugin();
 
-        virtual user_cpp_DllExport ~$interface.name$_RequestPlugin();
+        virtual eProsima_user_DllExport ~$interface.name$_RequestPlugin();
 
-        user_cpp_DllExport bool getKey(void *data, eprosima::fastrtps::rtps::InstanceHandle_t* ihandle, bool force_md5);
+        eProsima_user_DllExport bool getKey(void *data, eprosima::fastrtps::rtps::InstanceHandle_t* ihandle, bool force_md5);
 
-        user_cpp_DllExport bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
+        eProsima_user_DllExport bool serialize(
+                void* data,
+                eprosima::fastrtps::rtps::SerializedPayload_t* payload) override
+        {
+            return serialize(data, payload, eprosima::fastdds::dds::DEFAULT_DATA_REPRESENTATION);
+        }
 
-        user_cpp_DllExport bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
+        eProsima_user_DllExport bool serialize(
+                void* data,
+                eprosima::fastrtps::rtps::SerializedPayload_t* payload,
+                eprosima::fastdds::dds::DataRepresentationId_t data_representation) override;
 
-        user_cpp_DllExport std::function<uint32_t()> getSerializedSizeProvider(void* data);
+        eProsima_user_DllExport bool deserialize(
+                eprosima::fastrtps::rtps::SerializedPayload_t* payload,
+                void* data) override;
 
-        user_cpp_DllExport void* createData();
+        eProsima_user_DllExport std::function<uint32_t()> getSerializedSizeProvider(
+                void* data) override
+        {
+            return getSerializedSizeProvider(data, eprosima::fastdds::dds::DEFAULT_DATA_REPRESENTATION);
+        }
 
-        user_cpp_DllExport static void* create_data();
+        eProsima_user_DllExport std::function<uint32_t()> getSerializedSizeProvider(
+                void* data,
+                eprosima::fastdds::dds::DataRepresentationId_t data_representation) override;
 
-        user_cpp_DllExport void deleteData(void *data);
+        eProsima_user_DllExport void* createData();
 
-        user_cpp_DllExport static void delete_data(void *data);
+        eProsima_user_DllExport static void* create_data();
 
-        user_cpp_DllExport static void copy_data($interface.scopedname$_Request *dst,
+        eProsima_user_DllExport void deleteData(void *data);
+
+        eProsima_user_DllExport static void delete_data(void *data);
+
+        eProsima_user_DllExport static void copy_data($interface.scopedname$_Request *dst,
                 const $interface.scopedname$_Request *src);
 };
 
@@ -85,27 +105,47 @@ class $interface.name$_ReplyPlugin : public eprosima::fastrtps::TopicDataType
 {
     public:
 
-        user_cpp_DllExport $interface.name$_ReplyPlugin();
+        eProsima_user_DllExport $interface.name$_ReplyPlugin();
 
-        virtual user_cpp_DllExport ~$interface.name$_ReplyPlugin();
+        virtual eProsima_user_DllExport ~$interface.name$_ReplyPlugin();
 
-        user_cpp_DllExport bool getKey(void *data, eprosima::fastrtps::rtps::InstanceHandle_t* ihandle, bool force_md5);
+        eProsima_user_DllExport bool getKey(void *data, eprosima::fastrtps::rtps::InstanceHandle_t* ihandle, bool force_md5);
 
-        user_cpp_DllExport bool serialize(void *data, eprosima::fastrtps::rtps::SerializedPayload_t *payload);
+        eProsima_user_DllExport bool serialize(
+                void* data,
+                eprosima::fastrtps::rtps::SerializedPayload_t* payload) override
+        {
+            return serialize(data, payload, eprosima::fastdds::dds::DEFAULT_DATA_REPRESENTATION);
+        }
 
-        user_cpp_DllExport bool deserialize(eprosima::fastrtps::rtps::SerializedPayload_t *payload, void *data);
+        eProsima_user_DllExport bool serialize(
+                void* data,
+                eprosima::fastrtps::rtps::SerializedPayload_t* payload,
+                eprosima::fastdds::dds::DataRepresentationId_t data_representation) override;
 
-        user_cpp_DllExport std::function<uint32_t()> getSerializedSizeProvider(void* data);
+        eProsima_user_DllExport bool deserialize(
+                eprosima::fastrtps::rtps::SerializedPayload_t* payload,
+                void* data) override;
 
-        user_cpp_DllExport void* createData();
+        eProsima_user_DllExport std::function<uint32_t()> getSerializedSizeProvider(
+                void* data) override
+        {
+            return getSerializedSizeProvider(data, eprosima::fastdds::dds::DEFAULT_DATA_REPRESENTATION);
+        }
 
-        user_cpp_DllExport static void* create_data();
+        eProsima_user_DllExport std::function<uint32_t()> getSerializedSizeProvider(
+                void* data,
+                eprosima::fastdds::dds::DataRepresentationId_t data_representation) override;
 
-        user_cpp_DllExport void deleteData(void *data);
+        eProsima_user_DllExport void* createData();
 
-        user_cpp_DllExport static void delete_data(void *data);
+        eProsima_user_DllExport static void* create_data();
 
-        user_cpp_DllExport static void copy_data($interface.scopedname$_Reply *dst,
+        eProsima_user_DllExport void deleteData(void *data);
+
+        eProsima_user_DllExport static void delete_data(void *data);
+
+        eProsima_user_DllExport static void copy_data($interface.scopedname$_Reply *dst,
                 const $interface.scopedname$_Reply *src);
 };
 
