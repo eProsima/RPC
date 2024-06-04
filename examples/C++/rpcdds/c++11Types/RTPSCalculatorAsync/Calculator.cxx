@@ -28,6 +28,8 @@ char dummy;
 
 #include "Calculator.h"
 
+#if FASTCDR_VERSION_MAJOR > 1
+
 #include <fastcdr/Cdr.h>
 
 
@@ -37,3 +39,4 @@ using namespace eprosima::fastcdr::exception;
 #include <utility>
 
 
+#endif // FASTCDR_VERSION_MAJOR > 1

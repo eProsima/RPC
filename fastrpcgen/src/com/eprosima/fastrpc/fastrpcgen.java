@@ -1208,7 +1208,7 @@ public class fastrpcgen
                 }
 
                 tmanager.addGroup("com/eprosima/fastrpc/idl/templates/TypesCdrAuxHeaderImpl.stg");
-                tmanager.addGroup("com/eprosima/fastrpc/idl/templates/TopicsCdrAuxHeaderImpl.stg");
+                tmanager.addGroup("com/eprosima/fastrpc/idl/templates/TopicsCdrAuxHeaderImpl" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + ".stg");
                 tmanager.addGroup("com/eprosima/fastrpc/idl/templates/" + (m_ddstransport == DDS_TRANSPORT.RTI ? "DDS" : "RTPS") + "TopicsPluginHeader" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + ".stg");
                 tmanager.addGroup("com/eprosima/fastrpc/idl/templates/" + (m_ddstransport == DDS_TRANSPORT.RTI ? "DDS" : "RTPS") + "TopicsPluginSource" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + ".stg");
             }
@@ -1408,7 +1408,7 @@ public class fastrpcgen
 
                         returnedValue &=
                             Utils.writeFile(m_outputDir + onlyFileName + "TopicsCdrAux.ipp",
-                                    maintemplates.getTemplate("com/eprosima/fastrpc/idl/templates/TopicsCdrAuxHeaderImpl.stg"), m_replace);
+                                    maintemplates.getTemplate("com/eprosima/fastrpc/idl/templates/TopicsCdrAuxHeaderImpl" + (m_mode == DDS_TOPIC_MODE.BY_OPERATION ? "ByOperation" : "ByInterface") + ".stg"), m_replace);
                     }
 
                     if(returnedValue && (returnedValue = Utils.writeFile(m_outputDir + onlyFileName + "AsyncCallbackHandlers.h", maintemplates.getTemplate(

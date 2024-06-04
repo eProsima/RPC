@@ -20,28 +20,24 @@
  */
 
 #include <fastcdr/config.h>
-#include "Calculatorv1.h"
 
-#if FASTCDR_VERSION_MAJOR > 1
+#if FASTCDR_VERSION_MAJOR == 1
 
-#ifndef _RPC_GENERATED_CALCULATOR_H_
-#define _RPC_GENERATED_CALCULATOR_H_
+#ifndef _RPC_DDS_GENERATED_CALCULATOR_H_
+#define _RPC_DDS_GENERATED_CALCULATOR_H_
+
+#include <rpcdds/exceptions/UserException.h>
+
+
+#include <fastrtps/utils/fixed_size_string.hpp>
 
 #include <array>
 #include <bitset>
 #include <cstdint>
 #include <map>
+#include <stdint.h>
 #include <string>
 #include <vector>
-
-#include <fastcdr/cdr/fixed_size_string.hpp>
-#include <fastcdr/xcdr/external.hpp>
-#include <fastcdr/xcdr/optional.hpp>
-
-// TODO Poner en el contexto.
-#include <rpcdds/exceptions/UserException.h>
-
-
 
 #if defined(_WIN32)
 #if defined(EPROSIMA_USER_DLL_EXPORT)
@@ -70,7 +66,6 @@
 namespace eprosima {
 namespace fastcdr {
 class Cdr;
-class CdrSizeCalculator;
 } // namespace fastcdr
 } // namespace eprosima
 
@@ -104,8 +99,8 @@ public:
 
 };
 
-#endif // _RPC_GENERATED_CALCULATOR_H_
+#endif // _RPC_DDS_GENERATED_CALCULATOR_H_
 
 
 
-#endif // FASTCDR_VERSION_MAJOR > 1
+#endif // FASTCDR_VERSION_MAJOR == 1

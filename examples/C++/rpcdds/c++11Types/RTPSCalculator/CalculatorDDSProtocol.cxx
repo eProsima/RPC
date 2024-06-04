@@ -31,9 +31,13 @@ using namespace ::transport;
 using namespace ::exception;
 
 CalculatorProtocol::CalculatorProtocol() : ::protocol::CalculatorProtocol(), m_ddsTransport(NULL)
-, Calculator_str("Calculator")
-, Calculator_pe(NULL)
-, Calculator_se(NULL)
+, Calculator_addition_str("Calculator_addition")
+, Calculator_addition_pe(NULL)
+, Calculator_addition_se(NULL)
+, Calculator_subtraction_str("Calculator_subtraction")
+, Calculator_subtraction_pe(NULL)
+, Calculator_subtraction_se(NULL)
+
 
 {
 }
@@ -73,45 +77,88 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
 
         if(strcmp(interfaceName, "Calculator") == 0)
         {
-            eprosima::fastrtps::Domain::registerType(m_ddsTransport->getParticipant(), &Calculator_requestPlugin);
+                        eprosima::fastrtps::Domain::registerType(m_ddsTransport->getParticipant(), &Calculator_addition_requestPlugin);
 
-            requesttopicName = "Calculator_";
-            requesttopicName += m_ddsTransport->getRemoteServiceName();
-            requesttopicName += "_Request";
+                        requesttopicName = "Calculator_addition_";
+                        requesttopicName += m_ddsTransport->getRemoteServiceName();
+                        requesttopicName += "_Request";
 
-            eprosima::fastrtps::Domain::registerType(m_ddsTransport->getParticipant(), &Calculator_replyPlugin);
+                        eprosima::fastrtps::Domain::registerType(m_ddsTransport->getParticipant(), &Calculator_addition_replyPlugin);
 
-            replytopicName = "Calculator_";
-            replytopicName += m_ddsTransport->getRemoteServiceName();
-            replytopicName += "_Reply";
+                        replytopicName = "Calculator_addition_";
+                        replytopicName += m_ddsTransport->getRemoteServiceName();
+                        replytopicName += "_Reply";
 
-            if(behaviour == ::transport::PROXY_BEHAVIOUR)
-            {
-                Calculator_pe = dynamic_cast<eprosima::rpc::transport::dds::RTPSProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint(Calculator_str,
-                Calculator_requestPlugin.getName(),
-                requesttopicName.c_str(),
-                Calculator_replyPlugin.getName(),
-                replytopicName.c_str(),
-                (::transport::dds::RTPSTransport::Create_data)Calculator_ReplyPlugin::create_data,
-                (::transport::dds::RTPSTransport::Copy_data)Calculator_ReplyPlugin::copy_data,
-                (::transport::dds::RTPSTransport::Destroy_data)Calculator_ReplyPlugin::delete_data,
-                NULL,
-                sizeof(Calculator_Reply)
-                ));
-            }
-            if(behaviour == ::transport::SERVER_BEHAVIOUR)
-            {
-                Calculator_se = dynamic_cast<eprosima::rpc::transport::dds::RTPSServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint(Calculator_str,
-                    Calculator_replyPlugin.getName(),
-                    replytopicName.c_str(),
-                    Calculator_requestPlugin.getName(),
-                    requesttopicName.c_str(),
-                    (::transport::dds::RTPSTransport::Create_data)Calculator_RequestPlugin::create_data,
-                    (::transport::dds::RTPSTransport::Copy_data)Calculator_RequestPlugin::copy_data,
-                    (::transport::dds::RTPSTransport::Destroy_data)Calculator_RequestPlugin::delete_data,
-                    CalculatorProtocol::Calculator_serve,
-                    sizeof(Calculator_Request)));
-            }
+                        if(behaviour == ::transport::PROXY_BEHAVIOUR)
+                        {
+                            Calculator_addition_pe = dynamic_cast<eprosima::rpc::transport::dds::RTPSProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint(Calculator_addition_str,
+                            Calculator_addition_requestPlugin.getName(),
+                            requesttopicName.c_str(),
+                            Calculator_addition_replyPlugin.getName(),
+                            replytopicName.c_str(),
+                            (::transport::dds::RTPSTransport::Create_data)CalculatorPlugin::addition_ReplyPlugin::create_data,
+                            (::transport::dds::RTPSTransport::Copy_data)CalculatorPlugin::addition_ReplyPlugin::copy_data,
+                            (::transport::dds::RTPSTransport::Destroy_data)CalculatorPlugin::addition_ReplyPlugin::delete_data,
+                            NULL,
+                            sizeof(Calculator_addition_Reply)
+            ));
+                        }
+                        if(behaviour == ::transport::SERVER_BEHAVIOUR)
+                        {
+                            Calculator_addition_se = dynamic_cast<eprosima::rpc::transport::dds::RTPSServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint(Calculator_addition_str,
+                                            Calculator_addition_replyPlugin.getName(),
+                                            replytopicName.c_str()
+            ,
+                            Calculator_addition_requestPlugin.getName(),
+                            requesttopicName.c_str(),
+                            (::transport::dds::RTPSTransport::Create_data)CalculatorPlugin::addition_RequestPlugin::create_data,
+                            (::transport::dds::RTPSTransport::Copy_data)CalculatorPlugin::addition_RequestPlugin::copy_data,
+                            (::transport::dds::RTPSTransport::Destroy_data)CalculatorPlugin::addition_RequestPlugin::delete_data,
+                            CalculatorProtocol::Calculator_addition_serve,
+                            sizeof(Calculator_addition_Request)));
+                        }
+
+                        eprosima::fastrtps::Domain::registerType(m_ddsTransport->getParticipant(), &Calculator_subtraction_requestPlugin);
+
+                        requesttopicName = "Calculator_subtraction_";
+                        requesttopicName += m_ddsTransport->getRemoteServiceName();
+                        requesttopicName += "_Request";
+
+                        eprosima::fastrtps::Domain::registerType(m_ddsTransport->getParticipant(), &Calculator_subtraction_replyPlugin);
+
+                        replytopicName = "Calculator_subtraction_";
+                        replytopicName += m_ddsTransport->getRemoteServiceName();
+                        replytopicName += "_Reply";
+
+                        if(behaviour == ::transport::PROXY_BEHAVIOUR)
+                        {
+                            Calculator_subtraction_pe = dynamic_cast<eprosima::rpc::transport::dds::RTPSProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint(Calculator_subtraction_str,
+                            Calculator_subtraction_requestPlugin.getName(),
+                            requesttopicName.c_str(),
+                            Calculator_subtraction_replyPlugin.getName(),
+                            replytopicName.c_str(),
+                            (::transport::dds::RTPSTransport::Create_data)CalculatorPlugin::subtraction_ReplyPlugin::create_data,
+                            (::transport::dds::RTPSTransport::Copy_data)CalculatorPlugin::subtraction_ReplyPlugin::copy_data,
+                            (::transport::dds::RTPSTransport::Destroy_data)CalculatorPlugin::subtraction_ReplyPlugin::delete_data,
+                            NULL,
+                            sizeof(Calculator_subtraction_Reply)
+            ));
+                        }
+                        if(behaviour == ::transport::SERVER_BEHAVIOUR)
+                        {
+                            Calculator_subtraction_se = dynamic_cast<eprosima::rpc::transport::dds::RTPSServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint(Calculator_subtraction_str,
+                                            Calculator_subtraction_replyPlugin.getName(),
+                                            replytopicName.c_str()
+            ,
+                            Calculator_subtraction_requestPlugin.getName(),
+                            requesttopicName.c_str(),
+                            (::transport::dds::RTPSTransport::Create_data)CalculatorPlugin::subtraction_RequestPlugin::create_data,
+                            (::transport::dds::RTPSTransport::Copy_data)CalculatorPlugin::subtraction_RequestPlugin::copy_data,
+                            (::transport::dds::RTPSTransport::Destroy_data)CalculatorPlugin::subtraction_RequestPlugin::delete_data,
+                            CalculatorProtocol::Calculator_subtraction_serve,
+                            sizeof(Calculator_subtraction_Request)));
+                        }
+
         }
 
         return true;
@@ -124,119 +171,6 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
     return false;
 }
 
-void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &protocol,
-    void *_data , eprosima::rpc::transport::Endpoint*)
-{
-    CalculatorProtocol &_protocol = dynamic_cast<CalculatorProtocol&>(protocol);
-    Calculator_Request &requestData = *(Calculator_Request*)_data;
-
-    switch(requestData.data()._d())
-    {
-                case static_cast<int32_t>(0xCBC6CEAA):
-                {
-                int32_t  value1 = 0;
-
-
-                int32_t  value2 = 0;
-
-                int32_t  return_ = 0;
-
-                Calculator_Reply replyData;
-                replyData.header().relatedRequestId(requestData.header().requestId());
-                replyData.header().remoteEx(eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK);
-
-                replyData.data()._d() = 0xCBC6CEAA;
-
-
-                value1 = requestData.data().addition().value1();
-
-
-                value2 = requestData.data().addition().value2();
-
-
-                try
-                {
-                    if(_protocol._Calculator_impl != NULL)
-                    {
-                        return_ = _protocol._Calculator_impl->addition(value1, value2);
-
-                        replyData.data().addition()._d() = 0;
-
-                        replyData.data().addition().result().return_(return_);
-
-
-                        _protocol.Calculator_se->sendReply(&replyData);
-                    }
-                    // TODO Send exception.
-                }
-                catch(const ServerInternalException &)
-                {
-                    //TODO Quitar el unsetReply
-                    //
-                    replyData.header().remoteEx(eprosima::rpc::protocol::dds::rpc::REMOTE_EX_UNSUPPORTED);
-
-                    _protocol.Calculator_se->sendReply(&replyData);
-                }
-
-
-
-                }
-                break;
-
-                case static_cast<int32_t>(0xCA019A14):
-                {
-                int32_t  value1 = 0;
-
-
-                int32_t  value2 = 0;
-
-                int32_t  return_ = 0;
-
-                Calculator_Reply replyData;
-                replyData.header().relatedRequestId(requestData.header().requestId());
-                replyData.header().remoteEx(eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK);
-
-                replyData.data()._d() = 0xCA019A14;
-
-
-                value1 = requestData.data().subtraction().value1();
-
-
-                value2 = requestData.data().subtraction().value2();
-
-
-                try
-                {
-                    if(_protocol._Calculator_impl != NULL)
-                    {
-                        return_ = _protocol._Calculator_impl->subtraction(value1, value2);
-
-                        replyData.data().subtraction()._d() = 0;
-
-                        replyData.data().subtraction().result().return_(return_);
-
-
-                        _protocol.Calculator_se->sendReply(&replyData);
-                    }
-                    // TODO Send exception.
-                }
-                catch(const ServerInternalException &)
-                {
-                    //TODO Quitar el unsetReply
-                    //
-                    replyData.header().remoteEx(eprosima::rpc::protocol::dds::rpc::REMOTE_EX_UNSUPPORTED);
-
-                    _protocol.Calculator_se->sendReply(&replyData);
-                }
-
-
-
-                }
-                break;
-
-    };
-}
-
 int32_t
  CalculatorProtocol::Calculator_addition(/*in*/ 
 int32_t
@@ -247,28 +181,26 @@ int32_t
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
     int32_t  return_ = 0;
 
-    Calculator_Request instance;
-    Calculator_Reply retInstance;
+    Calculator_addition_Request instance;
+    Calculator_addition_Reply retInstance;
 
 
-    instance.data()._d() = 0xCBC6CEAA;
-
-    instance.data().addition().value1(value1);
+    instance.addition().value1(value1);
 
 
-    instance.data().addition().value2(value2);
+    instance.addition().value2(value2);
 
 
-    retcode = Calculator_pe->send(&instance, &retInstance);
+    retcode = Calculator_addition_pe->send(&instance, &retInstance);
 
     if(retcode == OK)
     {
         if(retInstance.header().remoteEx() == eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK)
         {
-            switch (retInstance.data().addition()._d())
+            switch (retInstance.addition()._d())
             {
                 case 0:
-                    return_ = retInstance.data().addition().result().return_();
+                    return_ = retInstance.addition().result().return_();
 
                     break;
                 default:
@@ -308,18 +240,16 @@ int32_t
  value2)
 {
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
-    Calculator_Request instance;
+    Calculator_addition_Request instance;
     Calculator_additionTask *task = new Calculator_additionTask(obj);
 
-    instance.data()._d() = 0xCBC6CEAA;
-
-    instance.data().addition().value1(value1);
+    instance.addition().value1(value1);
 
 
-    instance.data().addition().value2(value2);
+    instance.addition().value2(value2);
 
 
-    retcode = Calculator_pe->send_async(&instance, task);
+    retcode = Calculator_addition_pe->send_async(&instance, task);
 
     switch (retcode)
     {
@@ -335,6 +265,56 @@ int32_t
 }
 
 
+void CalculatorProtocol::Calculator_addition_serve(eprosima::rpc::protocol::Protocol &protocol,
+    void *_data , eprosima::rpc::transport::Endpoint*)
+{
+    CalculatorProtocol &_protocol = dynamic_cast<CalculatorProtocol&>(protocol);
+    Calculator_addition_Request &requestData = *(Calculator_addition_Request*)_data;
+    int32_t  value1 = 0;
+
+
+    int32_t  value2 = 0;
+
+    int32_t  return_ = 0;
+
+    Calculator_addition_Reply replyData;
+    replyData.header().relatedRequestId(requestData.header().requestId());
+    replyData.header().remoteEx(eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK);
+
+
+    value1 = requestData.addition().value1();
+
+
+    value2 = requestData.addition().value2();
+
+
+    try
+    {
+        if(_protocol._Calculator_impl != NULL)
+        {
+            return_ = _protocol._Calculator_impl->addition(value1, value2);
+
+            replyData.addition()._d() = 0;
+
+            replyData.addition().result().return_(return_);
+
+
+            _protocol.Calculator_addition_se->sendReply(&replyData);
+        }
+        // TODO Send exception.
+    }
+    catch(const ServerInternalException &)
+    {
+        //TODO Quitar el unsetReply
+        //
+        replyData.header().remoteEx(eprosima::rpc::protocol::dds::rpc::REMOTE_EX_UNSUPPORTED);
+
+        _protocol.Calculator_addition_se->sendReply(&replyData);
+    }
+
+
+}
+
 int32_t
  CalculatorProtocol::Calculator_subtraction(/*in*/ 
 int32_t
@@ -345,28 +325,26 @@ int32_t
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
     int32_t  return_ = 0;
 
-    Calculator_Request instance;
-    Calculator_Reply retInstance;
+    Calculator_subtraction_Request instance;
+    Calculator_subtraction_Reply retInstance;
 
 
-    instance.data()._d() = 0xCA019A14;
-
-    instance.data().subtraction().value1(value1);
+    instance.subtraction().value1(value1);
 
 
-    instance.data().subtraction().value2(value2);
+    instance.subtraction().value2(value2);
 
 
-    retcode = Calculator_pe->send(&instance, &retInstance);
+    retcode = Calculator_subtraction_pe->send(&instance, &retInstance);
 
     if(retcode == OK)
     {
         if(retInstance.header().remoteEx() == eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK)
         {
-            switch (retInstance.data().subtraction()._d())
+            switch (retInstance.subtraction()._d())
             {
                 case 0:
-                    return_ = retInstance.data().subtraction().result().return_();
+                    return_ = retInstance.subtraction().result().return_();
 
                     break;
                 default:
@@ -406,18 +384,16 @@ int32_t
  value2)
 {
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
-    Calculator_Request instance;
+    Calculator_subtraction_Request instance;
     Calculator_subtractionTask *task = new Calculator_subtractionTask(obj);
 
-    instance.data()._d() = 0xCA019A14;
-
-    instance.data().subtraction().value1(value1);
+    instance.subtraction().value1(value1);
 
 
-    instance.data().subtraction().value2(value2);
+    instance.subtraction().value2(value2);
 
 
-    retcode = Calculator_pe->send_async(&instance, task);
+    retcode = Calculator_subtraction_pe->send_async(&instance, task);
 
     switch (retcode)
     {
@@ -432,5 +408,55 @@ int32_t
     }
 }
 
+
+void CalculatorProtocol::Calculator_subtraction_serve(eprosima::rpc::protocol::Protocol &protocol,
+    void *_data , eprosima::rpc::transport::Endpoint*)
+{
+    CalculatorProtocol &_protocol = dynamic_cast<CalculatorProtocol&>(protocol);
+    Calculator_subtraction_Request &requestData = *(Calculator_subtraction_Request*)_data;
+    int32_t  value1 = 0;
+
+
+    int32_t  value2 = 0;
+
+    int32_t  return_ = 0;
+
+    Calculator_subtraction_Reply replyData;
+    replyData.header().relatedRequestId(requestData.header().requestId());
+    replyData.header().remoteEx(eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK);
+
+
+    value1 = requestData.subtraction().value1();
+
+
+    value2 = requestData.subtraction().value2();
+
+
+    try
+    {
+        if(_protocol._Calculator_impl != NULL)
+        {
+            return_ = _protocol._Calculator_impl->subtraction(value1, value2);
+
+            replyData.subtraction()._d() = 0;
+
+            replyData.subtraction().result().return_(return_);
+
+
+            _protocol.Calculator_subtraction_se->sendReply(&replyData);
+        }
+        // TODO Send exception.
+    }
+    catch(const ServerInternalException &)
+    {
+        //TODO Quitar el unsetReply
+        //
+        replyData.header().remoteEx(eprosima::rpc::protocol::dds::rpc::REMOTE_EX_UNSUPPORTED);
+
+        _protocol.Calculator_subtraction_se->sendReply(&replyData);
+    }
+
+
+}
 
 

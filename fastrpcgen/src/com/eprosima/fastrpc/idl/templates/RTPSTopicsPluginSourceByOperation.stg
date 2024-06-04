@@ -15,10 +15,14 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "TopicsPlugin.cpp"], description=["TOD
 
 #include "$ctx.filename$TopicsPlugin.h"
 
-#include <fastcdr/Cdr.h>
+#include <fastdds/rtps/common/CdrSerialization.hpp>
 
-using namespace eprosima::fastrtps;
-using namespace ::rtps;
+// Include auxiliary functions like for serializing/deserializing.
+#include "$ctx.filename$TopicsCdrAux.ipp"
+
+using SerializedPayload_t = eprosima::fastrtps::rtps::SerializedPayload_t;
+using InstanceHandle_t = eprosima::fastrtps::rtps::InstanceHandle_t;
+using DataRepresentationId_t = eprosima::fastdds::dds::DataRepresentationId_t;
 
 $definitions; separator="\n"$
 
@@ -32,214 +36,314 @@ $interface.all_operations : { operation |
 $interface.scopedname$Plugin::$operation.name$_RequestPlugin::$operation.name$_RequestPlugin()
 {
     setName("$interface.scopedname$_$operation.name$_Request");
-	m_typeSize = (uint32_t)$interface.scopedname$_$operation.name$_Request::getMaxCdrSerializedSize() + 4
-        /*encapsulation*/;
+    uint32_t type_size =
+#if FASTCDR_VERSION_MAJOR == 1
+        static_cast<uint32_t>($interface.scopedname$_$operation.name$_Request::getMaxCdrSerializedSize());
+#else
+        $interface.cScopedname$_$operation.name$_Request_max_cdr_typesize;
+#endif
+    type_size += static_cast<uint32_t>(eprosima::fastcdr::Cdr::alignment(type_size, 4)); /* possible submessage alignment */
+    m_typeSize = type_size + 4; /*encapsulation*/
 	m_isGetKeyDefined = false;
-}
+\}
 
 $interface.scopedname$Plugin::$operation.name$_RequestPlugin::~$operation.name$_RequestPlugin()
 {
-}
+\}
 
 bool $interface.scopedname$Plugin::$operation.name$_RequestPlugin::getKey(void*, InstanceHandle_t*, bool)
 {
     return false;
-}
+\}
 
-bool $interface.scopedname$Plugin::$operation.name$_RequestPlugin::serialize(void *data, SerializedPayload_t *payload)
+bool $interface.scopedname$Plugin::$operation.name$_RequestPlugin::serialize(
+        void *data,
+        SerializedPayload_t *payload,
+        DataRepresentationId_t data_representation)
 {
-    $interface.scopedname$_$operation.name$_Request *p_type = ($interface.scopedname$_$operation.name$_Request*) data;
+    $interface.scopedname$_$operation.name$_Request *p_type {static_cast<$interface.scopedname$_$operation.name$_Request*>(data)\};
 
     // Object that manages the raw buffer.
-    eprosima::fastcdr::FastBuffer fastbuffer((char*) payload->data, payload->max_size);
+    eprosima::fastcdr::FastBuffer fastbuffer(reinterpret_cast<char*>(payload->data), payload->max_size);
+    // Object that serializes the data.
     eprosima::fastcdr::Cdr ser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
-            eprosima::fastcdr::Cdr::DDS_CDR); // Object that serializes the data.
+            data_representation == DataRepresentationId_t::XCDR_DATA_REPRESENTATION ?
+            eprosima::fastcdr::CdrVersion::XCDRv1 : eprosima::fastcdr::CdrVersion::XCDRv2);
     payload->encapsulation = ser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
-    // Serialize encapsulation
-    ser.serialize_encapsulation();
+#if FASTCDR_VERSION_MAJOR > 1
+    ser.set_encoding_flag(
+        data_representation == DataRepresentationId_t::XCDR_DATA_REPRESENTATION ?
+        eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR :
+        eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR2);
+#endif // FASTCDR_VERSION_MAJOR > 1
 
     try
     {
-        // Serialize the object:
-        p_type->serialize(ser);
-    }
+        // Serialize encapsulation
+        ser.serialize_encapsulation();
+        // Serialize the object.
+        ser << *p_type;
+    \}
     catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
     {
         return false;
-    }
+    \}
 
-    //Get the serialized length
-    payload->length = (uint16_t)ser.getSerializedDataLength();
+    // Get the serialized length
+#if FASTCDR_VERSION_MAJOR == 1
+    payload->length = static_cast<uint32_t>(ser.getSerializedDataLength());
+#else
+    payload->length = static_cast<uint32_t>(ser.get_serialized_data_length());
+#endif // FASTCDR_VERSION_MAJOR == 1
 
     return true;
-}
+\}
 
-bool $interface.scopedname$Plugin::$operation.name$_RequestPlugin::deserialize(SerializedPayload_t* payload, void* data)
+bool $interface.scopedname$Plugin::$operation.name$_RequestPlugin::deserialize(
+        SerializedPayload_t* payload,
+        void* data)
 {
-    //CONVERT DATA to pointer of your type
-    $interface.scopedname$_$operation.name$_Request* p_type = ($interface.scopedname$_$operation.name$_Request*) data;
-
-    // Object that manages the raw buffer.
-    eprosima::fastcdr::FastBuffer fastbuffer((char*)payload->data, payload->length);
-    eprosima::fastcdr::Cdr deser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
-            eprosima::fastcdr::Cdr::DDS_CDR); // Object that deserializes the data.
-    // Deserialize encapsulation.
-    deser.read_encapsulation();
-    payload->encapsulation = deser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
-
     try
     {
+        $interface.scopedname$_$operation.name$_Request* p_type {static_cast<$interface.scopedname$_$operation.name$_Request*>(data)\};
+
+        // Object that manages the raw buffer.
+        eprosima::fastcdr::FastBuffer fastbuffer(reinterpret_cast<char*>(payload->data), payload->length);
+
+        // Object that deserializes the data.
+        eprosima::fastcdr::Cdr deser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN
+#if FASTCDR_VERSION_MAJOR == 1
+                , eprosima::fastcdr::Cdr::CdrType::DDS_CDR
+#endif // FASTCDR_VERSION_MAJOR == 1
+                );
+
+        // Deserialize encapsulation.
+        deser.read_encapsulation();
+        payload->encapsulation = deser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
+
         //deserialize the object:
-        p_type->deserialize(deser);
-    }
+        deser \>> *p_type;
+    \}
     catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
     {
         return false;
-    }
+    \}
 
     return true;
-}
+\}
 
-std::function<uint32_t()> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::getSerializedSizeProvider(void* data)
+std::function<uint32_t()> $interface.scopedname$Plugin::$operation.name$_RequestPlugin::getSerializedSizeProvider(
+        void* data,
+        DataRepresentationId_t data_representation)
 {
-    return [data]() -> uint32_t {
-        return $interface.scopedname$_$operation.name$_Request::getCdrSerializedSize(*static_cast<$interface.scopedname$_$operation.name$_Request*>(data));
-    };
-}
+    return [data, data_representation]() -> uint32_t
+           {
+#if FASTCDR_VERSION_MAJOR == 1
+               static_cast<void>(data_representation);
+               return static_cast<uint32_t>($interface.scopedname$_$operation.name$_Request::getCdrSerializedSize(*static_cast<$interface.scopedname$_$operation.name$_Request*>(data))) +
+                      4u /*encapsulation*/;
+#else
+               try
+               {
+                   eprosima::fastcdr::CdrSizeCalculator calculator(
+                       data_representation == DataRepresentationId_t::XCDR_DATA_REPRESENTATION ?
+                       eprosima::fastcdr::CdrVersion::XCDRv1 :eprosima::fastcdr::CdrVersion::XCDRv2);
+                   size_t current_alignment {0\};
+                   return static_cast<uint32_t>(calculator.calculate_serialized_size(
+                               *static_cast<$interface.scopedname$_$operation.name$_Request*>(data), current_alignment)) +
+                           4u /*encapsulation*/;
+               \}
+               catch (eprosima::fastcdr::exception::Exception& /*exception*/)
+               {
+                   return 0;
+               \}
+#endif // FASTCDR_VERSION_MAJOR == 1
+           \};
+\}
 
 void* $interface.scopedname$Plugin::$operation.name$_RequestPlugin::createData()
 {
     return (void*)new $interface.scopedname$_$operation.name$_Request();
-}
+\}
 
 void* $interface.scopedname$Plugin::$operation.name$_RequestPlugin::create_data()
 {
 	return (void*)new $interface.scopedname$_$operation.name$_Request();
-}
+\}
 
 void $interface.scopedname$Plugin::$operation.name$_RequestPlugin::deleteData(void* data)
 {
     delete(($interface.scopedname$_$operation.name$_Request*)data);
-}
+\}
 
 void $interface.scopedname$Plugin::$operation.name$_RequestPlugin::delete_data(void* data)
 {
     delete(($interface.scopedname$_$operation.name$_Request*)data);
-}
+\}
 
 void $interface.scopedname$Plugin::$operation.name$_RequestPlugin::copy_data(
     $interface.name$_$operation.name$_Request *dst,
     const $interface.name$_$operation.name$_Request *src)
 {
     *dst = *src;
-}
+\}
 
 // Reply operations
 $if(!operation.oneway)$
 $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::$operation.name$_ReplyPlugin()
 {
     setName("$interface.scopedname$_$operation.name$_Reply");
-    m_typeSize = (uint32_t)$interface.scopedname$_$operation.name$_Reply::getMaxCdrSerializedSize() + 4
-        /*encapsulation*/;
+    uint32_t type_size =
+#if FASTCDR_VERSION_MAJOR == 1
+        static_cast<uint32_t>($interface.scopedname$_$operation.name$_Reply::getMaxCdrSerializedSize());
+#else
+        $interface.cScopedname$_$operation.name$_Reply_max_cdr_typesize;
+#endif
+    type_size += static_cast<uint32_t>(eprosima::fastcdr::Cdr::alignment(type_size, 4)); /* possible submessage alignment */
+    m_typeSize = type_size + 4; /*encapsulation*/
     m_isGetKeyDefined = false;
-}
+\}
 
 $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::~$operation.name$_ReplyPlugin()
 {
-}
+\}
 
 bool $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::getKey(void*, InstanceHandle_t*, bool)
 {
     return false;
-}
+\}
 
-bool $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::serialize(void *data, SerializedPayload_t *payload)
+bool $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::serialize(
+        void *data,
+        SerializedPayload_t *payload,
+        DataRepresentationId_t data_representation)
 {
-    $interface.scopedname$_$operation.name$_Reply *p_type = ($interface.scopedname$_$operation.name$_Reply*) data;
+    $interface.scopedname$_$operation.name$_Reply *p_type {static_cast<$interface.scopedname$_$operation.name$_Reply*>(data)\};
 
     // Object that manages the raw buffer.
-    eprosima::fastcdr::FastBuffer fastbuffer((char*) payload->data, payload->max_size);
+    eprosima::fastcdr::FastBuffer fastbuffer(reinterpret_cast<char*>(payload->data), payload->max_size);
+    // Object that serializes the data.
     eprosima::fastcdr::Cdr ser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
-            eprosima::fastcdr::Cdr::DDS_CDR); // Object that serializes the data.
+            data_representation == DataRepresentationId_t::XCDR_DATA_REPRESENTATION ?
+            eprosima::fastcdr::CdrVersion::XCDRv1 : eprosima::fastcdr::CdrVersion::XCDRv2);
     payload->encapsulation = ser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
-    // Serialize encapsulation
-    ser.serialize_encapsulation();
+#if FASTCDR_VERSION_MAJOR > 1
+    ser.set_encoding_flag(
+        data_representation == DataRepresentationId_t::XCDR_DATA_REPRESENTATION ?
+        eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR :
+        eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR2);
+#endif // FASTCDR_VERSION_MAJOR > 1
 
     try
     {
-        // Serialize the object:
-        p_type->serialize(ser);
-    }
+        // Serialize encapsulation
+        ser.serialize_encapsulation();
+        // Serialize the object.
+        ser << *p_type;
+    \}
     catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
     {
         return false;
-    }
+    \}
 
-    //Get the serialized length
-    payload->length = (uint16_t)ser.getSerializedDataLength();
+    // Get the serialized length
+#if FASTCDR_VERSION_MAJOR == 1
+    payload->length = static_cast<uint32_t>(ser.getSerializedDataLength());
+#else
+    payload->length = static_cast<uint32_t>(ser.get_serialized_data_length());
+#endif // FASTCDR_VERSION_MAJOR == 1
 
     return true;
-}
+\}
 
-bool $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::deserialize(SerializedPayload_t* payload, void* data)
+bool $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::deserialize(
+        SerializedPayload_t* payload,
+        void* data)
 {
-    //CONVERT DATA to pointer of your type
-    $interface.scopedname$_$operation.name$_Reply* p_type = ($interface.scopedname$_$operation.name$_Reply*) data;
-
-    // Object that manages the raw buffer.
-    eprosima::fastcdr::FastBuffer fastbuffer((char*)payload->data, payload->length);
-    eprosima::fastcdr::Cdr deser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
-            eprosima::fastcdr::Cdr::DDS_CDR); // Object that deserializes the data.
-    // Deserialize encapsulation.
-    deser.read_encapsulation();
-    payload->encapsulation = deser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
-
     try
     {
+        $interface.scopedname$_$operation.name$_Reply* p_type {static_cast<$interface.scopedname$_$operation.name$_Reply*>(data)\};
+
+        // Object that manages the raw buffer.
+        eprosima::fastcdr::FastBuffer fastbuffer(reinterpret_cast<char*>(payload->data), payload->length);
+
+        // Object that deserializes the data.
+        eprosima::fastcdr::Cdr deser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN
+#if FASTCDR_VERSION_MAJOR == 1
+                , eprosima::fastcdr::Cdr::CdrType::DDS_CDR
+#endif // FASTCDR_VERSION_MAJOR == 1
+                );
+
+        // Deserialize encapsulation.
+        deser.read_encapsulation();
+        payload->encapsulation = deser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
+
         //deserialize the object:
-        p_type->deserialize(deser);
-    }
+        deser \>> *p_type;
+    \}
     catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
     {
         return false;
-    }
+    \}
 
     return true;
-}
+\}
 
-std::function<uint32_t()> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::getSerializedSizeProvider(void* data)
+std::function<uint32_t()> $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::getSerializedSizeProvider(
+        void* data,
+        DataRepresentationId_t data_representation)
 {
-    return [data]() -> uint32_t {
-        return $interface.scopedname$_$operation.name$_Reply::getCdrSerializedSize(*static_cast<$interface.scopedname$_$operation.name$_Reply*>(data));
-    };
-}
+    return [data, data_representation]() -> uint32_t
+           {
+#if FASTCDR_VERSION_MAJOR == 1
+               static_cast<void>(data_representation);
+               return static_cast<uint32_t>($interface.scopedname$_$operation.name$_Reply::getCdrSerializedSize(*static_cast<$interface.scopedname$_$operation.name$_Reply*>(data))) +
+                      4u /*encapsulation*/;
+#else
+               try
+               {
+                   eprosima::fastcdr::CdrSizeCalculator calculator(
+                       data_representation == DataRepresentationId_t::XCDR_DATA_REPRESENTATION ?
+                       eprosima::fastcdr::CdrVersion::XCDRv1 :eprosima::fastcdr::CdrVersion::XCDRv2);
+                   size_t current_alignment {0\};
+                   return static_cast<uint32_t>(calculator.calculate_serialized_size(
+                               *static_cast<$interface.scopedname$_$operation.name$_Reply*>(data), current_alignment)) +
+                           4u /*encapsulation*/;
+               \}
+               catch (eprosima::fastcdr::exception::Exception& /*exception*/)
+               {
+                   return 0;
+               \}
+#endif // FASTCDR_VERSION_MAJOR == 1
+           \};
+\}
 
 void* $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::createData()
 {
-	return (void*)new $interface.scopedname$_$operation.name$_Reply();
-}
+    return (void*)new $interface.scopedname$_$operation.name$_Reply();
+\}
 
 void* $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::create_data()
 {
-	return (void*)new $interface.scopedname$_$operation.name$_Reply();
-}
+    return (void*)new $interface.scopedname$_$operation.name$_Reply();
+\}
 
 void $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::deleteData(void* data)
 {
-	delete(($interface.scopedname$_$operation.name$_Reply*)data);
-}
+    delete(($interface.scopedname$_$operation.name$_Reply*)data);
+\}
 
 void $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::delete_data(void* data)
 {
-	delete(($interface.scopedname$_$operation.name$_Reply*)data);
-}
+    delete(($interface.scopedname$_$operation.name$_Reply*)data);
+\}
 
 void $interface.scopedname$Plugin::$operation.name$_ReplyPlugin::copy_data(
     $interface.name$_$operation.name$_Reply *dst,
     const $interface.name$_$operation.name$_Reply *src)
 {
     *dst = *src;
-}
+\}
 $endif$
 }; separator="\n"$
 

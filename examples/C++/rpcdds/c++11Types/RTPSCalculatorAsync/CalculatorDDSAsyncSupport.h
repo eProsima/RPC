@@ -34,12 +34,12 @@ class Calculator_additionTask : public eprosima::rpc::transport::dds::RTPSAsyncT
 {
     public:
 
-        /*!
-         * @brief The default constructor.
+        /**
+         * \brief The default constructor.
          *
-         * @param obj Object that implements the callbacks that FastRPC will call when
+         * \param obj Object that implements the callbacks that FastRPC will call when
          *            the reply will be received or and exception will be launched.
-         * @param client Pointer to the server's proxy. Cannot be NULL.
+         * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         Calculator_additionTask(Calculator_additionCallbackHandler &obj);
 
@@ -76,9 +76,8 @@ class Calculator_additionTask : public eprosima::rpc::transport::dds::RTPSAsyncT
 
         Calculator_additionCallbackHandler &m_obj;
 
-        Calculator_Reply m_reply;
+        Calculator_addition_Reply m_reply;
 };
-
 
 /*!
  * @brief This class represents a asynchronous task created to wait the reply of the procedure Calculator::subtraction from the server in an asynchronous call.
@@ -88,12 +87,12 @@ class Calculator_subtractionTask : public eprosima::rpc::transport::dds::RTPSAsy
 {
     public:
 
-        /*!
-         * @brief The default constructor.
+        /**
+         * \brief The default constructor.
          *
-         * @param obj Object that implements the callbacks that FastRPC will call when
+         * \param obj Object that implements the callbacks that FastRPC will call when
          *            the reply will be received or and exception will be launched.
-         * @param client Pointer to the server's proxy. Cannot be NULL.
+         * \param client Pointer to the server's proxy. Cannot be NULL.
          */
         Calculator_subtractionTask(Calculator_subtractionCallbackHandler &obj);
 
@@ -130,9 +129,8 @@ class Calculator_subtractionTask : public eprosima::rpc::transport::dds::RTPSAsy
 
         Calculator_subtractionCallbackHandler &m_obj;
 
-        Calculator_Reply m_reply;
+        Calculator_subtraction_Reply m_reply;
 };
-
 
 
 

@@ -46,22 +46,22 @@ $interface.name$_$operation.name$Task::$interface.name$_$operation.name$Task($in
     RTPSAsyncTask(), m_obj(obj)
 {
     $varComplexInitializeT(typeName=[interface.name, "_", operation.name, "_Reply"], name="m_reply")$
-}
+\}
 
 $interface.name$_$operation.name$Task::~$interface.name$_$operation.name$Task()
 {
     $varComplexDelT(typeName=[interface.name, "_", operation.name, "_Reply"], name="m_reply")$
-}
+\}
 
 $interface.name$_$operation.name$CallbackHandler& $interface.name$_$operation.name$Task::getObject()
 {
     return m_obj;
-}
+\}
 
 void* $interface.name$_$operation.name$Task::getReplyInstance()
 {
     return &m_reply;
-}
+\}
 
 void $interface.name$_$operation.name$Task::execute()
 {
@@ -84,27 +84,29 @@ void $interface.name$_$operation.name$Task::execute()
                 $exception.members : { member |$extractExceptionMemberFromTopic(exception=exception, member=member, varname=replyOperationUnionDataByOperation(operation=operation, varname="m_reply"))$}; separator="\n"$
 
                 getObject().on_exception(ex);
-                }
+                \}
                 break;
             }; separator="\n"$
             default:
                 getObject().on_exception(ClientInternalException("Error extracting information from server"));
-        }
-    }
+        \}
+    \}
     else
+    {
         getObject().on_exception(ServerInternalException(""));
-}
+    \}
+\}
 
 void $interface.name$_$operation.name$Task::on_exception(const SystemException &ex)
 {
     getObject().on_exception(ex);
-}
+\}
 
 $if(operation.exceptions)$
 void $interface.name$_$operation.name$Task::on_exception(const UserException &ex)
 {
     getObject().on_exception(ex);
-}
+\}
 $endif$
 
 $endif$

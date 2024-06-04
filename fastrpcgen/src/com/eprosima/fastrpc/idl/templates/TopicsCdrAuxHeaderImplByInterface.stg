@@ -1,4 +1,4 @@
-// Copyright 2023 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+// Copyright 2024 Proyectos y Sistemas de Mantenimiento SL (eProsima).
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,15 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-group TypesCdrAuxHeader;
+group TopicsCdrAuxHeader;
 
 import "eprosima.stg"
+import "TopicsCdrAuxHeaderImplCommon.stg"
 
 main(ctx, definitions, extensions) ::= <<
 $fileHeader(ctx=ctx, file=[ctx.filename, "CdrAux.ipp"], description=["This source file contains some declarations of CDR related functions."])$
 
-#ifndef _FAST_DDS_GENERATED_$ctx.headerGuardName$CDRAUX_IPP_
-#define _FAST_DDS_GENERATED_$ctx.headerGuardName$CDRAUX_IPP_
+#ifndef _RPC_DDS_GENERATED_$ctx.headerGuardName$CDRAUX_IPP_
+#define _RPC_DDS_GENERATED_$ctx.headerGuardName$CDRAUX_IPP_
 
 $if(ctx.cdr)$
 #include <fastcdr/Cdr.h>
@@ -46,7 +47,7 @@ $definitions; separator="\n"$
 } // namespace fastcdr
 } // namespace eprosima
 
-#endif // _FAST_DDS_GENERATED_$ctx.headerGuardName$CDRAUX_IPP_
+#endif // _RPC_DDS_GENERATED_$ctx.headerGuardName$CDRAUX_IPP_
 $"\n"$
 >>
 
@@ -65,330 +66,12 @@ interface(ctx, parent, interface, export_list) ::= <<
 $export_list$
 
 $interface.all_operations : { operation |
-$if(ctx.anyCdr)$
 
-template<>
-eProsima_user_DllExport size_t calculate_serialized_size(
-        eprosima::fastcdr::CdrSizeCalculator& calculator,
-        const $interface.scopedname$_$operation.name$_In& data,
-        size_t& current_alignment)
-{
-    $if(!interface.scope.empty)$
-    using namespace $interface.scope$;
-    $endif$
+$common_structures_cdr_aux_functions(ctx, interface, operation)$
 
-    eprosima::fastcdr::EncodingAlgorithmFlag previous_encoding = calculator.get_encoding();
-    size_t calculated_size {calculator.begin_calculate_type_serialized_size(
-                                eprosima::fastcdr::CdrVersion::XCDRv2 == calculator.get_cdr_version() ?
-                                eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR2 :
-                                eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR,
-                                current_alignment)\};
-
-
-    $if(operation.inputparam)$
-    $operation.inputparam : { param |
-    calculated_size += calculator.calculate_member_serialized_size($i0$, data.$param.name$(), current_alignment);
-    }; separator="\n"$
-    $else$
-    calculated_size += calculator.calculate_member_serialized_size(0, data.dummy(), current_alignment);
-    $endif$
-
-    calculated_size += calculator.end_calculate_type_serialized_size(previous_encoding, current_alignment);
-
-    return calculated_size;
-\}
-
-template<>
-eProsima_user_DllExport size_t calculate_serialized_size(
-        eprosima::fastcdr::CdrSizeCalculator& calculator,
-        const $interface.scopedname$_$operation.name$_Out& data,
-        size_t& current_alignment)
-{
-    $if(!interface.scope.empty)$
-    using namespace $interface.scope$;
-    $endif$
-
-    eprosima::fastcdr::EncodingAlgorithmFlag previous_encoding = calculator.get_encoding();
-    size_t calculated_size {calculator.begin_calculate_type_serialized_size(
-                                eprosima::fastcdr::CdrVersion::XCDRv2 == calculator.get_cdr_version() ?
-                                eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR2 :
-                                eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR,
-                                current_alignment)\};
-
-
-    $if([operation.outputparam, operation.rettypeparam])$
-    $[operation.outputparam, operation.rettypeparam] : { param |
-    calculated_size += calculator.calculate_member_serialized_size($i0$, data.$param.name$(), current_alignment);
-    }; separator="\n"$
-    $else$
-    calculated_size += calculator.calculate_member_serialized_size(0, data.dummy(), current_alignment);
-    $endif$
-
-    calculated_size += calculator.end_calculate_type_serialized_size(previous_encoding, current_alignment);
-
-    return calculated_size;
-\}
-
-template<>
-eProsima_user_DllExport size_t calculate_serialized_size(
-        eprosima::fastcdr::CdrSizeCalculator& calculator,
-        const $interface.scopedname$_$operation.name$_Result& data,
-        size_t& current_alignment)
-{
-    $if(!interface.scope.empty)$
-    using namespace $interface.scope$;
-    $endif$
-
-    eprosima::fastcdr::EncodingAlgorithmFlag previous_encoding = calculator.get_encoding();
-    size_t calculated_size {calculator.begin_calculate_type_serialized_size(
-                                eprosima::fastcdr::CdrVersion::XCDRv2 == calculator.get_cdr_version() ?
-                                eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR2 :
-                                eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR,
-                                current_alignment)\};
-
-    calculated_size += calculator.calculate_member_serialized_size(eprosima::fastcdr::MemberId(0), data._d(),
-                    current_alignment);
-
-    switch(data._d())
-    {
-        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
-            calculated_size += calculator.calculate_member_serialized_size(2, data.result(), current_alignment);
-            break;
-        $operation.exceptions : { exception |
-        case static_cast<int32_t>($exception.md5$):
-            calculated_size += calculator.calculate_member_serialized_size($i$ + 2, data.$exception.formatedScopedname$_ex(), current_alignment);
-            break;
-        }; separator="\n"$
-        default:
-            calculated_size += calculator.calculate_member_serialized_size(1, data.unknownEx(), current_alignment);
-            break;
-    \}
-
-    calculated_size += calculator.end_calculate_type_serialized_size(previous_encoding, current_alignment);
-
-    return calculated_size;
-\}
-$endif$
-
-$if(ctx.cdr)$
-template<>
-eProsima_user_DllExport void serialize(
-        eprosima::fastcdr::Cdr& scdr,
-        const $interface.scopedname$_$operation.name$_In& data)
-{
-    $if(!interface.scope.empty)$
-    using namespace $interface.scope$;
-    $endif$
-
-    eprosima::fastcdr::Cdr::state current_state(scdr);
-    scdr.begin_serialize_type(current_state,
-            eprosima::fastcdr::CdrVersion::XCDRv2 == scdr.get_cdr_version() ?
-            eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR2 :
-            eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR);
-
-    $if(operation.inputparam)$
-    scdr$operation.inputparam : { param |
-        << eprosima::fastcdr::MemberId($i0$) << data.$param.name$()
-    }; separator=""$;
-    $else$
-    scdr << data.dummy();
-    $endif$
-
-    scdr.end_serialize_type(current_state);
-\}
-
-template<>
-eProsima_user_DllExport void deserialize(
-        eprosima::fastcdr::Cdr& cdr,
-        $interface.scopedname$_$operation.name$_In& data)
-{
-    $if(!interface.scope.empty)$
-    using namespace $interface.scope$;
-    $endif$
-
-    cdr.deserialize_type(eprosima::fastcdr::CdrVersion::XCDRv2 == cdr.get_cdr_version() ?
-            eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR2 :
-            eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR,
-            [&data](eprosima::fastcdr::Cdr& dcdr, const eprosima::fastcdr::MemberId& mid) -> bool
-            {
-                bool ret_value = true;
-                switch (mid.id)
-                {
-                    $if(operation.inputparam)$
-                    $operation.inputparam : { param |
-                    case $i0$:
-                        dcdr \>> data.$param.name$();
-                        break;
-                    }; separator="\n"$
-                    $else$
-                    case 0:
-                        dcdr \>> data.dummy();
-                        break;
-                    $endif$
-                    default:
-                        ret_value = false;
-                        break;
-                \}
-                return ret_value;
-            \});
-\}
-
-template<>
-eProsima_user_DllExport void serialize(
-        eprosima::fastcdr::Cdr& scdr,
-        const $interface.scopedname$_$operation.name$_Out& data)
-{
-    $if(!interface.scope.empty)$
-    using namespace $interface.scope$;
-    $endif$
-
-    eprosima::fastcdr::Cdr::state current_state(scdr);
-    scdr.begin_serialize_type(current_state,
-            eprosima::fastcdr::CdrVersion::XCDRv2 == scdr.get_cdr_version() ?
-            eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR2 :
-            eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR);
-
-    $if([operation.outputparam, operation.rettypeparam])$
-    scdr$[operation.outputparam, operation.rettypeparam] : { param |
-        << eprosima::fastcdr::MemberId($i0$) << data.$param.name$()
-    }; separator=""$;
-    $else$
-    scdr << data.dummy();
-    $endif$
-
-    scdr.end_serialize_type(current_state);
-\}
-
-template<>
-eProsima_user_DllExport void deserialize(
-        eprosima::fastcdr::Cdr& cdr,
-        $interface.scopedname$_$operation.name$_Out& data)
-{
-    $if(!interface.scope.empty)$
-    using namespace $interface.scope$;
-    $endif$
-
-    cdr.deserialize_type(eprosima::fastcdr::CdrVersion::XCDRv2 == cdr.get_cdr_version() ?
-            eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR2 :
-            eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR,
-            [&data](eprosima::fastcdr::Cdr& dcdr, const eprosima::fastcdr::MemberId& mid) -> bool
-            {
-                bool ret_value = true;
-                switch (mid.id)
-                {
-                    $if([operation.outputparam, operation.rettypeparam])$
-                    $[operation.outputparam, operation.rettypeparam] : { param |
-                    case $i0$:
-                        dcdr \>> data.$param.name$();
-                        break;
-                    }; separator="\n"$
-                    $else$
-                    case 0:
-                        dcdr \>> data.dummy();
-                        break;
-                    $endif$
-                    default:
-                        ret_value = false;
-                        break;
-                \}
-                return ret_value;
-            \});
-\}
-
-template<>
-eProsima_user_DllExport void serialize(
-        eprosima::fastcdr::Cdr& scdr,
-        const $interface.scopedname$_$operation.name$_Result& data)
-{
-    $if(!interface.scope.empty)$
-    using namespace $interface.scope$;
-    $endif$
-
-    eprosima::fastcdr::Cdr::state current_state(scdr);
-    scdr.begin_serialize_type(current_state,
-            eprosima::fastcdr::CdrVersion::XCDRv2 == scdr.get_cdr_version() ?
-            eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR2 :
-            eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR);
-
-    scdr << eprosima::fastcdr::MemberId(0) << data._d();
-
-    switch (data._d())
-    {
-        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
-            scdr << eprosima::fastcdr::MemberId(2) << data.result();
-            break;
-        $operation.exceptions : { exception |
-        case static_cast<int32_t>($exception.md5$):
-            scdr << eprosima::fastcdr::MemberId($i$ + 2) << data.$exception.formatedScopedname$_ex();
-            break;
-        }; separator="\n"$
-        default:
-            scdr << eprosima::fastcdr::MemberId(1) << data.unknownEx();
-            break;
-    \}
-
-    scdr.end_serialize_type(current_state);
-\}
-
-template<>
-eProsima_user_DllExport void deserialize(
-        eprosima::fastcdr::Cdr& cdr,
-        $interface.scopedname$_$operation.name$_Result& data)
-{
-    $if(!interface.scope.empty)$
-    using namespace $interface.scope$;
-    $endif$
-
-    cdr.deserialize_type(eprosima::fastcdr::CdrVersion::XCDRv2 == cdr.get_cdr_version() ?
-            eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR2 :
-            eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR,
-            [&data](eprosima::fastcdr::Cdr& dcdr, const eprosima::fastcdr::MemberId& mid) -> bool
-            {
-                bool ret_value = true;
-                if (0 == mid.id)
-                {
-                    int32_t discriminator;
-                    dcdr \>> discriminator;
-
-                    switch (discriminator)
-                    {
-                        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
-                            data.result({\});
-                            break;
-                        $operation.exceptions : { exception |
-                        case static_cast<int32_t>($exception.md5$):
-                            data.$exception.formatedScopedname$_ex({\});
-                            break;
-                        }; separator="\n"$
-                        default:
-                            data.unknownEx({\});
-                            break;
-                    \}
-                \}
-                else
-                {
-                    switch (data._d())
-                    {
-                        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
-                            dcdr \>> data.result();
-                            break;
-                        $operation.exceptions : { exception |
-                        case static_cast<int32_t>($exception.md5$):
-                            dcdr \>> data.$exception.formatedScopedname$_ex();
-                            break;
-                        }; separator="\n"$
-                        default:
-                            dcdr \>> data.unknownEx();
-                            break;
-                    \}
-                    ret_value = false;
-                \}
-                return ret_value;
-            \});
-\}
-$endif$
 }; separator="\n"$
 
+$if(ctx.anyCdr)$
 template<>
 eProsima_user_DllExport size_t calculate_serialized_size(
         eprosima::fastcdr::CdrSizeCalculator& calculator,
@@ -518,7 +201,9 @@ eProsima_user_DllExport size_t calculate_serialized_size(
 
     return calculated_size;
 \}
+$endif$
 
+$if(ctx.cdr)$
 template<>
 eProsima_user_DllExport void serialize(
         eprosima::fastcdr::Cdr& scdr,
@@ -618,7 +303,7 @@ eProsima_user_DllExport void serialize(
             eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR);
 
     scdr << eprosima::fastcdr::MemberId(0) << data.header();
-    scdr << eprosima::fastcdr::MemberId(0) << data.data();
+    scdr << eprosima::fastcdr::MemberId(1) << data.data();
 
     scdr.end_serialize_type(current_state);
 \}
@@ -759,7 +444,7 @@ eProsima_user_DllExport void serialize(
             eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR);
 
     scdr << eprosima::fastcdr::MemberId(0) << data.header();
-    scdr << eprosima::fastcdr::MemberId(0) << data.data();
+    scdr << eprosima::fastcdr::MemberId(1) << data.data();
 
     scdr.end_serialize_type(current_state);
 \}
@@ -794,6 +479,7 @@ eProsima_user_DllExport void deserialize(
                 return ret_value;
             \});
 \}
+$endif$
 >>
 
 export_list(exports) ::= <<

@@ -141,7 +141,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 $if(operation.oneway)$NULL, NULL$else$replytypeName, replytopicName.c_str()$endif$,
                 requesttypeName,
                 requesttopicName.c_str(),
-		        $eprosimaTypesBool()$,
+                $eprosimaTypesBool()$,
                 $createDataCallback(interface=first(ctx.scopedInterfaces), operation=operation, suffix="_Request")$,
                 $copyDataCallback(interface=first(ctx.scopedInterfaces), operation=operation, suffix="_Request")$,
                 $destroyDataCallback(interface=first(ctx.scopedInterfaces), operation=operation, suffix="_Request")$,
@@ -203,7 +203,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 $if(operation.oneway)$NULL, NULL$else$replytypeName, replytopicName.c_str()$endif$,
                 requesttypeName,
                 requesttopicName.c_str(),
-		        $eprosimaTypesBool()$,
+                $eprosimaTypesBool()$,
                 $createDataCallback(interface=interface, operation=operation, suffix="_Request")$,
                 $copyDataCallback(interface=interface, operation=operation, suffix="_Request")$,
                 $destroyDataCallback(interface=interface, operation=operation, suffix="_Request")$,
@@ -254,7 +254,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$interface.formatedSco
             switch ($replyOperationUnionDiscriminatorByOperation(operation=operation, varname="retInstance")$)
             {
                 case 0:
-		            $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=replyOperationUnionDataAccessByOperation(operation=operation, varname="retInstance", dataname="result"), isReply="yes")$};separator="\n"$
+                    $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=replyOperationUnionDataAccessByOperation(operation=operation, varname="retInstance", dataname="result"), isReply="yes")$};separator="\n"$
                     break;
                 $operation.exceptions : { exception |
                 case $exception.md5$:
@@ -335,7 +335,7 @@ $endif$
 
 $if(ctx.server)$
 void $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$_serve(eprosima::rpc::protocol::Protocol &protocol,
-    void *_data , eprosima::rpc::transport::Endpoint *endpoint)
+    void *_data , eprosima::rpc::transport::Endpoint*)
 {
     $ctx.filename$Protocol &_protocol = dynamic_cast<$ctx.filename$Protocol&>(protocol);
     $interface.scopedname$_$operation.name$_Request &requestData = *($interface.scopedname$_$operation.name$_Request*)_data;
@@ -354,15 +354,15 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$_ser
     {
         if(_protocol._$interface.formatedScopedname$_impl != NULL)
         {
-	        $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$_protocol._$interface.formatedScopedname$_impl->$operation.name$($extractParams(params=operation.parameters)$);
+            $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$_protocol._$interface.formatedScopedname$_impl->$operation.name$($extractParams(params=operation.parameters)$);
 
-	        $if(!operation.oneway)$
-	        $replyOperationUnionDiscriminatorByOperation(operation=operation, varname="replyData")$ = 0;
+            $if(!operation.oneway)$
+            $replyOperationUnionDiscriminatorByOperation(operation=operation, varname="replyData")$ = 0;
 
             $[operation.outputparam, operation.rettypeparam] : { param |$addParamToTopic(param=param, varname=replyOperationUnionDataAccessByOperation(operation=operation, varname="replyData", dataname="result"))$};separator="\n"$
 
-	        _protocol.$interface.formatedScopedname$_$operation.name$_se->sendReply(&replyData);
-	        $endif$
+            _protocol.$interface.formatedScopedname$_$operation.name$_se->sendReply(&replyData);
+            $endif$
         }
         // TODO Send exception.
     }

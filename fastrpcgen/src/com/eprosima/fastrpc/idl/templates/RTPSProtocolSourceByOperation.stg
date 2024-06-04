@@ -110,7 +110,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 NULL,
                 sizeof($first(ctx.scopedInterfaces).scopedname$_$operation.name$_Reply)
                 $else$NULL, NULL, NULL, NULL, NULL, NULL, 0$endif$));
-            }
+            \}
             $endif$
             $if(ctx.server)$
             if(behaviour == ::transport::SERVER_BEHAVIOUR)
@@ -128,7 +128,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 (::transport::dds::RTPSTransport::Destroy_data)$first(ctx.scopedInterfaces).scopedname$Plugin::$operation.name$_RequestPlugin::delete_data,
                 $ctx.filename$Protocol::$first(ctx.scopedInterfaces).formatedScopedname$_$operation.name$_serve,
                 sizeof($first(ctx.scopedInterfaces).scopedname$_$operation.name$_Request)));
-            }
+            \}
             $endif$
             }; separator="\n"$
         }
@@ -165,7 +165,7 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 NULL,
                 sizeof($interface.scopedname$_$operation.name$_Reply)
                 $else$NULL, NULL, NULL, NULL, NULL, NULL, 0$endif$));
-            }
+            \}
             $endif$
             $if(ctx.server)$
             if(behaviour == ::transport::SERVER_BEHAVIOUR)
@@ -182,10 +182,11 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 (::transport::dds::RTPSTransport::Destroy_data)$interface.scopedname$Plugin::$operation.name$_RequestPlugin::delete_data,
                 $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$_serve,
                 sizeof($interface.scopedname$_$operation.name$_Request)));
-            }
+            \}
             $endif$
             }; separator="\n"$
-        }}; separator="\n"$
+        \}
+        }; separator="\n"$
 
         return true;
         $endif$
@@ -227,7 +228,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$interface.formatedSco
             switch ($replyOperationUnionDiscriminatorByOperation(operation=operation, varname="retInstance")$)
             {
                 case 0:
-		            $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=replyOperationUnionDataAccessByOperation(operation=operation, varname="retInstance", dataname="result"), isReply="yes")$};separator="\n"$
+                    $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=replyOperationUnionDataAccessByOperation(operation=operation, varname="retInstance", dataname="result"), isReply="yes")$};separator="\n"$
                     break;
                 $operation.exceptions : { exception |
                 case $exception.md5$:
@@ -241,16 +242,16 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$interface.formatedSco
                     $endif$
 
                     ex.raise();
-                    }
+                    \}
                     break;
                 }; separator="\n"$
                 default:
                     throw ClientInternalException("Error extracting information from server");
-            }
-        }
+            \}
+        \}
         else
             retcode = SERVER_INTERNAL_ERROR;
-    }
+    \}
 
     $endif$
     switch (retcode)
@@ -271,13 +272,13 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$interface.formatedSco
         $endif$
         default:
             break;
-    };
+    \};
 
 
     $if(operation.rettypeparam)$
     return $operation.rettypeparam.name$;
     $endif$
-}
+\}
 $endif$
 
 $if(!operation.oneway)$
@@ -301,14 +302,14 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$_asy
             break;
         default:
             break;
-    }
-}
+    \}
+\}
 
 $endif$
 
 $if(ctx.server)$
 void $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$_serve(eprosima::rpc::protocol::Protocol &protocol,
-    void *_data , eprosima::rpc::transport::Endpoint *endpoint)
+    void *_data , eprosima::rpc::transport::Endpoint*)
 {
     $ctx.filename$Protocol &_protocol = dynamic_cast<$ctx.filename$Protocol&>(protocol);
     $interface.scopedname$_$operation.name$_Request &requestData = *($interface.scopedname$_$operation.name$_Request*)_data;
@@ -327,18 +328,18 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$_ser
     {
         if(_protocol._$interface.formatedScopedname$_impl != NULL)
         {
-	        $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$_protocol._$interface.formatedScopedname$_impl->$operation.name$($extractParams(params=operation.parameters)$);
+            $if(operation.rettypeparam)$$operation.rettypeparam.name$ = $endif$_protocol._$interface.formatedScopedname$_impl->$operation.name$($extractParams(params=operation.parameters)$);
 
-	        $if(!operation.oneway)$
-	        $replyOperationUnionDiscriminatorByOperation(operation=operation, varname="replyData")$ = 0;
+            $if(!operation.oneway)$
+            $replyOperationUnionDiscriminatorByOperation(operation=operation, varname="replyData")$ = 0;
 
             $[operation.outputparam, operation.rettypeparam] : { param |$addParamToTopic(param=param, varname=replyOperationUnionDataAccessByOperation(operation=operation, varname="replyData", dataname="result"))$};separator="\n"$
 
-	        _protocol.$interface.formatedScopedname$_$operation.name$_se->sendReply(&replyData);
-	        $endif$
-        }
+            _protocol.$interface.formatedScopedname$_$operation.name$_se->sendReply(&replyData);
+            $endif$
+        \}
         // TODO Send exception.
-    }
+    \}
     $operation.exceptions : { exception |
     catch(const $exception.scopedname$ &ex)
     {
@@ -353,7 +354,7 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$_ser
 
         _protocol.$interface.formatedScopedname$_$operation.name$_se->sendReply(&replyData);
         $endif$
-    }
+    \}
     }; separator="\n"$
     catch(const ServerInternalException &)
     {
@@ -364,12 +365,12 @@ void $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$_ser
 
         _protocol.$interface.formatedScopedname$_$operation.name$_se->sendReply(&replyData);
         $endif$
-    }
+    \}
 
     $reqrepRefFinalize(type=[interface.scopedname, "_", operation.name], reqrep="Request", name="requestData")$
 
     $[operation.outputparam, operation.rettypeparam] : {param | $varDel(variable=param)$}; separator="\n"$
-}
+\}
 $endif$
 }; separator="\n"$
 
