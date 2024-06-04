@@ -43,6 +43,7 @@
 #define eProsima_user_DllExport
 #endif
 
+
 /*!
  * @brief This class represents the structure Calculator_addition_In that can be used to send/receive requests
  * for the operation Calculator::addition.
@@ -145,128 +146,6 @@ private:
 
     int32_t m_value1;
     int32_t m_value2;
-};
-
-/*!
- * @brief This class represents the structure Calculator_addition_Request that can be used to send/receive requests
- * for the operation Calculator::addition.
- * @ingroup Calculator
- */
-class Calculator_addition_Request
-{
-public:
-
-    /*!
-     * @brief Default constructor.
-     */
-    eProsima_user_DllExport Calculator_addition_Request();
-
-    /*!
-     * @brief Destructor.
-     */
-    eProsima_user_DllExport ~Calculator_addition_Request();
-
-    /*!
-     * @brief Copy constructor.
-     * @param x Reference to the object Calculator_addition_Request that will be copied.
-     */
-    eProsima_user_DllExport Calculator_addition_Request(const Calculator_addition_Request &x);
-
-    /*!
-     * @brief Move constructor.
-     * @param x Reference to the object Calculator_addition_Request that will be copied.
-     */
-    eProsima_user_DllExport Calculator_addition_Request(Calculator_addition_Request &&x);
-
-    /*!
-     * @brief Copy assignment.
-     * @param x Reference to the object Calculator_addition that will be copied.
-     */
-    eProsima_user_DllExport Calculator_addition_Request& operator=(const Calculator_addition_Request &x);
-
-    /*!
-     * @brief Copy assignment.
-     * @param x Reference to the object Calculator_addition that will be copied.
-     */
-    eProsima_user_DllExport Calculator_addition_Request& operator=(Calculator_addition_Request &&x);
-
-    /*!
-     * @brief This method sets the request header information.
-     * @param _header Request header.
-     */
-    inline eProsima_user_DllExport void header(const eprosima::rpc::protocol::dds::rpc::RequestHeader &_header)
-    {
-        m_header = _header;
-    }
-
-    /*!
-     * @brief This method sets the request header information.
-     * @param _header Request header.
-     */
-    inline eProsima_user_DllExport void header(eprosima::rpc::protocol::dds::rpc::RequestHeader &&_header)
-    {
-        m_header = std::move(_header);
-    }
-
-    /*!
-     * @brief This method returns the request header information.
-     * @return Request header.
-     */
-    inline eProsima_user_DllExport const eprosima::rpc::protocol::dds::rpc::RequestHeader& header() const
-    {
-        return m_header;
-    }
-
-    /*!
-     * @brief This method returns the request header information.
-     * @return Request header.
-     */
-    inline eProsima_user_DllExport eprosima::rpc::protocol::dds::rpc::RequestHeader& header()
-    {
-        return m_header;
-    }
-
-    /*!
-     * @brief This function copies the value in member addition
-     * @param _addition New value to be copied in member addition
-     */
-    inline eProsima_user_DllExport void addition(const Calculator_addition_In &_addition)
-    {
-        m_addition = _addition;
-    }
-
-    /*!
-     * @brief This function moves the value in member addition
-     * @param _addition New value to be moved in member addition
-     */
-    inline eProsima_user_DllExport void addition(Calculator_addition_In &&_addition)
-    {
-        m_addition = std::move(_addition);
-    }
-
-    /*!
-     * @brief This function returns a constant reference to member addition
-     * @return Constant reference to member addition
-     */
-    inline eProsima_user_DllExport const Calculator_addition_In& addition() const
-    {
-        return m_addition;
-    }
-
-    /*!
-     * @brief This function returns a reference to member addition
-     * @return Reference to member addition
-     */
-    inline eProsima_user_DllExport Calculator_addition_In& addition()
-    {
-        return m_addition;
-    }
-
-private:
-
-    eprosima::rpc::protocol::dds::rpc::RequestHeader m_header;
-
-    Calculator_addition_In m_addition;
 };
 
 /*!
@@ -426,14 +305,14 @@ public:
     /*!
      * @brief This function returns a constant reference to member result
      * @return Constant reference to member result
-     * @exception eprosima::BadParamException This exception is thrown if the requested union member is not the current selection.
+     * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the requested union member is not the current selection.
      */
     eProsima_user_DllExport const Calculator_addition_Out& result() const;
 
     /*!
      * @brief This function returns a reference to member result
      * @return Reference to member result
-     * @exception eprosima::BadParamException This exception is thrown if the requested union member is not the current selection.
+     * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the requested union member is not the current selection.
      */
     eProsima_user_DllExport Calculator_addition_Out& result();
 
@@ -448,127 +327,6 @@ private:
 
 };
 
-/*!
- * @brief This class represents the structure Calculator_addition_Reply that can be used to send/receive replies
- * for the operation Calculator::addition.
- * @ingroup Calculator
- */
-class Calculator_addition_Reply
-{
-public:
-
-    /*!
-     * @brief Default constructor.
-     */
-    eProsima_user_DllExport Calculator_addition_Reply();
-
-    /*!
-     * @brief Destructor.
-     */
-    eProsima_user_DllExport ~Calculator_addition_Reply();
-
-    /*!
-     * @brief Copy constructor.
-     * @param x Reference to the object Calculator_addition_Reply that will be copied.
-     */
-    eProsima_user_DllExport Calculator_addition_Reply(const Calculator_addition_Reply &x);
-
-    /*!
-     * @brief Move constructor.
-     * @param x Reference to the object Calculator_addition_Reply that will be copied.
-     */
-    eProsima_user_DllExport Calculator_addition_Reply(Calculator_addition_Reply &&x);
-
-    /*!
-     * @brief Copy assignment.
-     * @param x Reference to the object Calculator_addition that will be copied.
-     */
-    eProsima_user_DllExport Calculator_addition_Reply& operator=(const Calculator_addition_Reply &x);
-
-    /*!
-     * @brief Copy assignment.
-     * @param x Reference to the object Calculator_addition that will be copied.
-     */
-    eProsima_user_DllExport Calculator_addition_Reply& operator=(Calculator_addition_Reply &&x);
-
-    /*!
-     * @brief This method sets the reply header information.
-     * @param _header Reply header.
-     */
-    inline eProsima_user_DllExport void header(const eprosima::rpc::protocol::dds::rpc::ReplyHeader &_header)
-    {
-        m_header = _header;
-    }
-
-    /*!
-     * @brief This method sets the reply header information.
-     * @param _header Reply header.
-     */
-    inline eProsima_user_DllExport void header(eprosima::rpc::protocol::dds::rpc::ReplyHeader &&_header)
-    {
-        m_header = std::move(_header);
-    }
-
-    /*!
-     * @brief This method returns the reply header information.
-     * @return Reply header.
-     */
-    inline eProsima_user_DllExport const eprosima::rpc::protocol::dds::rpc::ReplyHeader& header() const
-    {
-        return m_header;
-    }
-
-    /*!
-     * @brief This method returns the reply header information.
-     * @return Reply header.
-     */
-    inline eProsima_user_DllExport eprosima::rpc::protocol::dds::rpc::ReplyHeader& header()
-    {
-        return m_header;
-    }
-
-    /*!
-     * @brief This function copies the value in member addition
-     * @param _addition New value to be copied in member addition
-     */
-    inline eProsima_user_DllExport void addition(const Calculator_addition_Result &_addition)
-    {
-        m_addition = _addition;
-    }
-
-    /*!
-     * @brief This function moves the value in member addition
-     * @param _addition New value to be moved in member addition
-     */
-    inline eProsima_user_DllExport void addition(Calculator_addition_Result &&_addition)
-    {
-        m_addition = std::move(_addition);
-    }
-
-    /*!
-     * @brief This function returns a constant reference to member addition
-     * @return Constant reference to member addition
-     */
-    inline eProsima_user_DllExport const Calculator_addition_Result& addition() const
-    {
-        return m_addition;
-    }
-
-    /*!
-     * @brief This function returns a reference to member addition
-     * @return Reference to member addition
-     */
-    inline eProsima_user_DllExport Calculator_addition_Result& addition()
-    {
-        return m_addition;
-    }
-
-private:
-
-    eprosima::rpc::protocol::dds::rpc::ReplyHeader m_header;
-
-    Calculator_addition_Result m_addition;
-};
 
 /*!
  * @brief This class represents the structure Calculator_subtraction_In that can be used to send/receive requests
@@ -672,128 +430,6 @@ private:
 
     int32_t m_value1;
     int32_t m_value2;
-};
-
-/*!
- * @brief This class represents the structure Calculator_subtraction_Request that can be used to send/receive requests
- * for the operation Calculator::subtraction.
- * @ingroup Calculator
- */
-class Calculator_subtraction_Request
-{
-public:
-
-    /*!
-     * @brief Default constructor.
-     */
-    eProsima_user_DllExport Calculator_subtraction_Request();
-
-    /*!
-     * @brief Destructor.
-     */
-    eProsima_user_DllExport ~Calculator_subtraction_Request();
-
-    /*!
-     * @brief Copy constructor.
-     * @param x Reference to the object Calculator_subtraction_Request that will be copied.
-     */
-    eProsima_user_DllExport Calculator_subtraction_Request(const Calculator_subtraction_Request &x);
-
-    /*!
-     * @brief Move constructor.
-     * @param x Reference to the object Calculator_subtraction_Request that will be copied.
-     */
-    eProsima_user_DllExport Calculator_subtraction_Request(Calculator_subtraction_Request &&x);
-
-    /*!
-     * @brief Copy assignment.
-     * @param x Reference to the object Calculator_subtraction that will be copied.
-     */
-    eProsima_user_DllExport Calculator_subtraction_Request& operator=(const Calculator_subtraction_Request &x);
-
-    /*!
-     * @brief Copy assignment.
-     * @param x Reference to the object Calculator_subtraction that will be copied.
-     */
-    eProsima_user_DllExport Calculator_subtraction_Request& operator=(Calculator_subtraction_Request &&x);
-
-    /*!
-     * @brief This method sets the request header information.
-     * @param _header Request header.
-     */
-    inline eProsima_user_DllExport void header(const eprosima::rpc::protocol::dds::rpc::RequestHeader &_header)
-    {
-        m_header = _header;
-    }
-
-    /*!
-     * @brief This method sets the request header information.
-     * @param _header Request header.
-     */
-    inline eProsima_user_DllExport void header(eprosima::rpc::protocol::dds::rpc::RequestHeader &&_header)
-    {
-        m_header = std::move(_header);
-    }
-
-    /*!
-     * @brief This method returns the request header information.
-     * @return Request header.
-     */
-    inline eProsima_user_DllExport const eprosima::rpc::protocol::dds::rpc::RequestHeader& header() const
-    {
-        return m_header;
-    }
-
-    /*!
-     * @brief This method returns the request header information.
-     * @return Request header.
-     */
-    inline eProsima_user_DllExport eprosima::rpc::protocol::dds::rpc::RequestHeader& header()
-    {
-        return m_header;
-    }
-
-    /*!
-     * @brief This function copies the value in member subtraction
-     * @param _subtraction New value to be copied in member subtraction
-     */
-    inline eProsima_user_DllExport void subtraction(const Calculator_subtraction_In &_subtraction)
-    {
-        m_subtraction = _subtraction;
-    }
-
-    /*!
-     * @brief This function moves the value in member subtraction
-     * @param _subtraction New value to be moved in member subtraction
-     */
-    inline eProsima_user_DllExport void subtraction(Calculator_subtraction_In &&_subtraction)
-    {
-        m_subtraction = std::move(_subtraction);
-    }
-
-    /*!
-     * @brief This function returns a constant reference to member subtraction
-     * @return Constant reference to member subtraction
-     */
-    inline eProsima_user_DllExport const Calculator_subtraction_In& subtraction() const
-    {
-        return m_subtraction;
-    }
-
-    /*!
-     * @brief This function returns a reference to member subtraction
-     * @return Reference to member subtraction
-     */
-    inline eProsima_user_DllExport Calculator_subtraction_In& subtraction()
-    {
-        return m_subtraction;
-    }
-
-private:
-
-    eprosima::rpc::protocol::dds::rpc::RequestHeader m_header;
-
-    Calculator_subtraction_In m_subtraction;
 };
 
 /*!
@@ -953,14 +589,14 @@ public:
     /*!
      * @brief This function returns a constant reference to member result
      * @return Constant reference to member result
-     * @exception eprosima::BadParamException This exception is thrown if the requested union member is not the current selection.
+     * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the requested union member is not the current selection.
      */
     eProsima_user_DllExport const Calculator_subtraction_Out& result() const;
 
     /*!
      * @brief This function returns a reference to member result
      * @return Reference to member result
-     * @exception eprosima::BadParamException This exception is thrown if the requested union member is not the current selection.
+     * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the requested union member is not the current selection.
      */
     eProsima_user_DllExport Calculator_subtraction_Out& result();
 
@@ -975,48 +611,417 @@ private:
 
 };
 
+
+
 /*!
- * @brief This class represents the structure Calculator_subtraction_Reply that can be used to send/receive replies
- * for the operation Calculator::subtraction.
+ * @brief This class represents the union used in the DDS topic to encapsulate the operations in request samples.
  * @ingroup Calculator
  */
-class Calculator_subtraction_Reply
+class Calculator_Call
 {
 public:
 
     /*!
      * @brief Default constructor.
      */
-    eProsima_user_DllExport Calculator_subtraction_Reply();
+    eProsima_user_DllExport Calculator_Call();
 
     /*!
      * @brief Destructor.
      */
-    eProsima_user_DllExport ~Calculator_subtraction_Reply();
+    eProsima_user_DllExport ~Calculator_Call();
 
     /*!
      * @brief Copy constructor.
-     * @param x Reference to the object Calculator_subtraction_Reply that will be copied.
+     * @param x Reference to the object Calculator_Call that will be copied.
      */
-    eProsima_user_DllExport Calculator_subtraction_Reply(const Calculator_subtraction_Reply &x);
+    eProsima_user_DllExport Calculator_Call(const Calculator_Call &x);
 
     /*!
      * @brief Move constructor.
-     * @param x Reference to the object Calculator_subtraction_Reply that will be copied.
+     * @param x Reference to the object Calculator_Call that will be copied.
      */
-    eProsima_user_DllExport Calculator_subtraction_Reply(Calculator_subtraction_Reply &&x);
+    eProsima_user_DllExport Calculator_Call(Calculator_Call &&x);
 
     /*!
      * @brief Copy assignment.
-     * @param x Reference to the object Calculator_subtraction that will be copied.
+     * @param x Reference to the object Calculator_Call that will be copied.
      */
-    eProsima_user_DllExport Calculator_subtraction_Reply& operator=(const Calculator_subtraction_Reply &x);
+    eProsima_user_DllExport Calculator_Call& operator=(const Calculator_Call &x);
+
+    /*!
+     * @brief Move assignment.
+     * @param x Reference to the object Calculator_Call that will be copied.
+     */
+    eProsima_user_DllExport Calculator_Call& operator=(Calculator_Call &&x);
+
+    /*!
+     * @brief This function sets the discriminator value.
+     * @param __d New value for the discriminator.
+     * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
+     */
+    eProsima_user_DllExport void _d(int32_t __d);
+
+    /*!
+     * @brief This function returns the value of the discriminator.
+     * @return Value of the discriminator
+     */
+    eProsima_user_DllExport int32_t _d() const;
+
+    /*!
+     * @brief This function returns a reference to the discriminator.
+     * @return Reference to the discriminator.
+     */
+    eProsima_user_DllExport int32_t& _d();
+
+    eProsima_user_DllExport void unknownOp(eprosima::rpc::protocol::dds::rpc::UnknownOperation _unknownOp);
+
+    eProsima_user_DllExport eprosima::rpc::protocol::dds::rpc::UnknownOperation unknownOp() const;
+
+    eProsima_user_DllExport eprosima::rpc::protocol::dds::rpc::UnknownOperation& unknownOp();
+
+    /*!
+     * @brief This function copies the value in member addition
+     * @param _addition New value to be copied in member addition
+     */
+    eProsima_user_DllExport void addition(const Calculator_addition_In &_addition);
+
+    /*!
+     * @brief This function moves the value in member addition
+     * @param _addition New value to be moved in member addition
+     */
+    eProsima_user_DllExport void addition(Calculator_addition_In &&_addition);
+
+    /*!
+     * @brief This function returns a constant reference to member addition
+     * @return Constant reference to member addition
+     */
+    eProsima_user_DllExport const Calculator_addition_In& addition() const;
+
+    /*!
+     * @brief This function returns a reference to member addition
+     * @return Reference to member addition
+     */
+    eProsima_user_DllExport Calculator_addition_In& addition();
+    /*!
+     * @brief This function copies the value in member subtraction
+     * @param _subtraction New value to be copied in member subtraction
+     */
+    eProsima_user_DllExport void subtraction(const Calculator_subtraction_In &_subtraction);
+
+    /*!
+     * @brief This function moves the value in member subtraction
+     * @param _subtraction New value to be moved in member subtraction
+     */
+    eProsima_user_DllExport void subtraction(Calculator_subtraction_In &&_subtraction);
+
+    /*!
+     * @brief This function returns a constant reference to member subtraction
+     * @return Constant reference to member subtraction
+     */
+    eProsima_user_DllExport const Calculator_subtraction_In& subtraction() const;
+
+    /*!
+     * @brief This function returns a reference to member subtraction
+     * @return Reference to member subtraction
+     */
+    eProsima_user_DllExport Calculator_subtraction_In& subtraction();
+
+private:
+    int32_t m__d;
+
+    eprosima::rpc::protocol::dds::rpc::UnknownOperation m_unknownOp;
+    Calculator_addition_In m_addition;
+    Calculator_subtraction_In m_subtraction;
+};
+
+/*!
+ * @brief This class represents the structure Calculator_Request that can be used to send/receive requests
+ * for the interface Calculator.
+ * @ingroup Calculator
+ */
+class Calculator_Request
+{
+public:
+
+    /*!
+     * @brief Default constructor.
+     */
+    eProsima_user_DllExport Calculator_Request();
+
+    /*!
+     * @brief Destructor.
+     */
+    eProsima_user_DllExport ~Calculator_Request();
+
+    /*!
+     * @brief Copy constructor.
+     * @param x Reference to the object Calculator_Request that will be copied.
+     */
+    eProsima_user_DllExport Calculator_Request(const Calculator_Request &x);
+
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object Calculator_Request that will be copied.
+     */
+    eProsima_user_DllExport Calculator_Request(Calculator_Request &&x);
 
     /*!
      * @brief Copy assignment.
-     * @param x Reference to the object Calculator_subtraction that will be copied.
+     * @param x Reference to the object Calculator that will be copied.
      */
-    eProsima_user_DllExport Calculator_subtraction_Reply& operator=(Calculator_subtraction_Reply &&x);
+    eProsima_user_DllExport Calculator_Request& operator=(const Calculator_Request &x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object Calculator that will be copied.
+     */
+    eProsima_user_DllExport Calculator_Request& operator=(Calculator_Request &&x);
+
+    /*!
+     * @brief This method sets the request header information.
+     * @param _header Request header.
+     */
+    inline eProsima_user_DllExport void header(const eprosima::rpc::protocol::dds::rpc::RequestHeader &_header)
+    {
+        m_header = _header;
+    }
+
+    /*!
+     * @brief This method sets the request header information.
+     * @param _header Request header.
+     */
+    inline eProsima_user_DllExport void header(eprosima::rpc::protocol::dds::rpc::RequestHeader &&_header)
+    {
+        m_header = std::move(_header);
+    }
+
+    /*!
+     * @brief This method returns the request header information.
+     * @return Request header.
+     */
+    inline eProsima_user_DllExport const eprosima::rpc::protocol::dds::rpc::RequestHeader& header() const
+    {
+        return m_header;
+    }
+
+    /*!
+     * @brief This method returns the request header information.
+     * @return Request header.
+     */
+    inline eProsima_user_DllExport eprosima::rpc::protocol::dds::rpc::RequestHeader& header()
+    {
+        return m_header;
+    }
+
+    /*!
+     * @brief This method sets the union that encapsulates the interface operations.
+     * @param _request Union.
+     */
+    inline eProsima_user_DllExport void data(const Calculator_Call &_data)
+    {
+        m_data = _data;
+    }
+
+    /*!
+     * @brief This method sets the union that encapsulates the interface operations.
+     * @param _request Union.
+     */
+    inline eProsima_user_DllExport void data(Calculator_Call &&_data)
+    {
+        m_data = std::move(_data);
+    }
+
+    /*!
+     * @brief This method returns the union that encapsulates the interface operations.
+     * @return Union.
+     */
+    inline eProsima_user_DllExport const Calculator_Call& data() const
+    {
+        return m_data;
+    }
+
+    /*!
+     * @brief This method returns the union that encapsulates the interface operations.
+     * @return Union.
+     */
+    inline eProsima_user_DllExport Calculator_Call& data()
+    {
+        return m_data;
+    }
+
+private:
+
+    eprosima::rpc::protocol::dds::rpc::RequestHeader m_header;
+
+    Calculator_Call m_data;
+};
+
+/*!
+ * @brief This class represents the union used in the DDS topic to encapsulate the operations in reply samples.
+ * @ingroup Calculator
+ */
+class Calculator_Return
+{
+public:
+
+    /*!
+     * @brief Default constructor.
+     */
+    eProsima_user_DllExport Calculator_Return();
+
+    /*!
+     * @brief Destructor.
+     */
+    eProsima_user_DllExport ~Calculator_Return();
+
+    /*!
+     * @brief Copy constructor.
+     * @param x Reference to the object Calculator_Return that will be copied.
+     */
+    eProsima_user_DllExport Calculator_Return(const Calculator_Return &x);
+
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object Calculator_Return that will be copied.
+     */
+    eProsima_user_DllExport Calculator_Return(Calculator_Return &&x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object Calculator_Return that will be copied.
+     */
+    eProsima_user_DllExport Calculator_Return& operator=(const Calculator_Return &x);
+
+    /*!
+     * @brief Move assignment.
+     * @param x Reference to the object Calculator_Return that will be copied.
+     */
+    eProsima_user_DllExport Calculator_Return& operator=(Calculator_Return &&x);
+
+    /*!
+     * @brief This function sets the discriminator value.
+     * @param __d New value for the discriminator.
+     * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
+     */
+    eProsima_user_DllExport void _d(int32_t __d);
+
+    /*!
+     * @brief This function returns the value of the discriminator.
+     * @return Value of the discriminator
+     */
+    eProsima_user_DllExport int32_t _d() const;
+
+    /*!
+     * @brief This function returns a reference to the discriminator.
+     * @return Reference to the discriminator.
+     */
+    eProsima_user_DllExport int32_t& _d();
+
+    eProsima_user_DllExport void unknownOp(eprosima::rpc::protocol::dds::rpc::UnknownOperation _unknownOp);
+
+    eProsima_user_DllExport eprosima::rpc::protocol::dds::rpc::UnknownOperation unknownOp() const;
+
+    eProsima_user_DllExport eprosima::rpc::protocol::dds::rpc::UnknownOperation& unknownOp();
+
+    /*!
+     * @brief This function copies the value in member addition
+     * @param _addition New value to be copied in member addition
+     */
+    eProsima_user_DllExport void addition(const Calculator_addition_Result &_addition);
+
+    /*!
+     * @brief This function moves the value in member addition
+     * @param _addition New value to be moved in member addition
+     */
+    eProsima_user_DllExport void addition(Calculator_addition_Result &&_addition);
+
+    /*!
+     * @brief This function returns a constant reference to member addition
+     * @return Constant reference to member addition
+     */
+    eProsima_user_DllExport const Calculator_addition_Result& addition() const;
+
+    /*!
+     * @brief This function returns a reference to member addition
+     * @return Reference to member addition
+     */
+    eProsima_user_DllExport Calculator_addition_Result& addition();
+    /*!
+     * @brief This function copies the value in member subtraction
+     * @param _subtraction New value to be copied in member subtraction
+     */
+    eProsima_user_DllExport void subtraction(const Calculator_subtraction_Result &_subtraction);
+
+    /*!
+     * @brief This function moves the value in member subtraction
+     * @param _subtraction New value to be moved in member subtraction
+     */
+    eProsima_user_DllExport void subtraction(Calculator_subtraction_Result &&_subtraction);
+
+    /*!
+     * @brief This function returns a constant reference to member subtraction
+     * @return Constant reference to member subtraction
+     */
+    eProsima_user_DllExport const Calculator_subtraction_Result& subtraction() const;
+
+    /*!
+     * @brief This function returns a reference to member subtraction
+     * @return Reference to member subtraction
+     */
+    eProsima_user_DllExport Calculator_subtraction_Result& subtraction();
+
+private:
+    int32_t m__d;
+
+    eprosima::rpc::protocol::dds::rpc::UnknownOperation m_unknownOp;
+
+    Calculator_addition_Result m_addition;
+    Calculator_subtraction_Result m_subtraction;
+};
+
+/*!
+ * @brief This class represents the structure Calculator_Reply that can be used to send/receive replies
+ * for the interface Calculator.
+ * @ingroup Calculator
+ */
+class Calculator_Reply
+{
+public:
+
+    /*!
+     * @brief Default constructor.
+     */
+    eProsima_user_DllExport Calculator_Reply();
+
+    /*!
+     * @brief Destructor.
+     */
+    eProsima_user_DllExport ~Calculator_Reply();
+
+    /*
+     * @brief Copy constructor.
+     * @param x Reference to the object Calculator_Reply that will be copied.
+     */
+    eProsima_user_DllExport Calculator_Reply(const Calculator_Reply &x);
+
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object Calculator_Reply that will be copied.
+     */
+    eProsima_user_DllExport Calculator_Reply(Calculator_Reply &&x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object Calculator that will be copied.
+     */
+    eProsima_user_DllExport Calculator_Reply& operator=(const Calculator_Reply &x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object Calculator that will be copied.
+     */
+    eProsima_user_DllExport Calculator_Reply& operator=(Calculator_Reply &&x);
 
     /*!
      * @brief This method sets the reply header information.
@@ -1055,50 +1060,47 @@ public:
     }
 
     /*!
-     * @brief This function copies the value in member subtraction
-     * @param _subtraction New value to be copied in member subtraction
+     * @brief This method sets the union that encapsulates the interface operations.
+     * @param _reply Union.
      */
-    inline eProsima_user_DllExport void subtraction(const Calculator_subtraction_Result &_subtraction)
+    inline eProsima_user_DllExport void data(const Calculator_Return &_data)
     {
-        m_subtraction = _subtraction;
+        m_data = _data;
     }
 
     /*!
-     * @brief This function moves the value in member subtraction
-     * @param _subtraction New value to be moved in member subtraction
+     * @brief This method sets the union that encapsulates the interface operations.
+     * @param _reply Union.
      */
-    inline eProsima_user_DllExport void subtraction(Calculator_subtraction_Result &&_subtraction)
+    inline eProsima_user_DllExport void data(Calculator_Return &&_data)
     {
-        m_subtraction = std::move(_subtraction);
+        m_data = std::move(_data);
     }
 
     /*!
-     * @brief This function returns a constant reference to member subtraction
-     * @return Constant reference to member subtraction
+     * @brief This method sets the union that encapsulates the interface operations.
+     * @return Union.
      */
-    inline eProsima_user_DllExport const Calculator_subtraction_Result& subtraction() const
+    inline eProsima_user_DllExport const Calculator_Return& data() const
     {
-        return m_subtraction;
+        return m_data;
     }
 
     /*!
-     * @brief This function returns a reference to member subtraction
-     * @return Reference to member subtraction
+     * @brief This method sets the union that encapsulates the interface operations.
+     * @return Union.
      */
-    inline eProsima_user_DllExport Calculator_subtraction_Result& subtraction()
+    inline eProsima_user_DllExport Calculator_Return& data()
     {
-        return m_subtraction;
+        return m_data;
     }
 
 private:
 
     eprosima::rpc::protocol::dds::rpc::ReplyHeader m_header;
 
-    Calculator_subtraction_Result m_subtraction;
+    Calculator_Return m_data;
 };
-
-
-
 
 #endif // _Calculator_TOPICS_H_
 

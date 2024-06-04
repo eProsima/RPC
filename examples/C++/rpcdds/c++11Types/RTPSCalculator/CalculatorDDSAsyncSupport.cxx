@@ -46,10 +46,10 @@ void Calculator_additionTask::execute()
 
     if(m_reply.header().remoteEx() == eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK)
     {
-        switch (m_reply.addition()._d())
+        switch (m_reply.data().addition()._d())
         {
             case 0:
-                return_ = m_reply.addition().result().return_();
+                return_ = m_reply.data().addition().result().return_();
 
                 getObject().addition(return_);
                 break;
@@ -95,10 +95,10 @@ void Calculator_subtractionTask::execute()
 
     if(m_reply.header().remoteEx() == eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK)
     {
-        switch (m_reply.subtraction()._d())
+        switch (m_reply.data().subtraction()._d())
         {
             case 0:
-                return_ = m_reply.subtraction().result().return_();
+                return_ = m_reply.data().subtraction().result().return_();
 
                 getObject().subtraction(return_);
                 break;

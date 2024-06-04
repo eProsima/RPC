@@ -47,7 +47,7 @@ namespace eprosima
             {
                 /*!
                  * @brief This class is responsible for serializing and deserializing the requests and responses of this application.
-                 *  It uses DDS.
+                 * It uses DDS.
 		         * @ingroup Calculator
                  */
                 class  CalculatorProtocol : public eprosima::rpc::protocol::CalculatorProtocol
@@ -79,6 +79,16 @@ namespace eprosima
                         RPCUSERDllExport bool activateInterface(const char* interfaceName);
 
                         /*!
+                         * @brief This method implements the server part of the protocol for the interface Calculator.
+                         * It is called when a request sample is received.
+                         * @param protocol DDS protocol object that is in used.
+                         * @param data Pointer to the received request sample. Cannot be NULL.
+                         * @param endpoint Pointer to the endpoint that sent the request reply. Cannot be NULL.
+                         */
+                        RPCUSERDllExport static void Calculator_serve(eprosima::rpc::protocol::Protocol &protocol,
+                            void *data , eprosima::rpc::transport::Endpoint *endpoint);
+
+                        /*!
                          * @brief This method implements the proxy part of the protocol for the operation addition.
                          * It is called from the Proxy interface.
                          */
@@ -100,16 +110,6 @@ namespace eprosima
                         int32_t
                          value2);
 
-
-                        /*!
-                         * @brief This method implements the server part of the protocol for the operation addition.
-                         * It is called when a request sample is received.
-                         * @param protocol DDS protocol object that is in used.
-                         * @param data Pointer to the received request sample. Cannot be NULL.
-                         * @param endpoint Pointer to the endpoint that sent the request reply. Cannot be NULL.
-                         */
-                        RPCUSERDllExport static void Calculator_addition_serve(eprosima::rpc::protocol::Protocol &protocol,
-                            void *data , eprosima::rpc::transport::Endpoint *endpoint);
 
                         /*!
                          * @brief This method implements the proxy part of the protocol for the operation subtraction.
@@ -134,16 +134,6 @@ namespace eprosima
                          value2);
 
 
-                        /*!
-                         * @brief This method implements the server part of the protocol for the operation subtraction.
-                         * It is called when a request sample is received.
-                         * @param protocol DDS protocol object that is in used.
-                         * @param data Pointer to the received request sample. Cannot be NULL.
-                         * @param endpoint Pointer to the endpoint that sent the request reply. Cannot be NULL.
-                         */
-                        RPCUSERDllExport static void Calculator_subtraction_serve(eprosima::rpc::protocol::Protocol &protocol,
-                            void *data , eprosima::rpc::transport::Endpoint *endpoint);
-
 
 
 
@@ -151,25 +141,14 @@ namespace eprosima
 
                         eprosima::rpc::transport::dds::RTPSTransport *m_ddsTransport;
 
-                                                                        const char* const Calculator_addition_str;
+                                                const char* const Calculator_str;
 
-                                                                        eprosima::rpc::transport::dds::RTPSProxyProcedureEndpoint *Calculator_addition_pe;
+                                                eprosima::rpc::transport::dds::RTPSProxyProcedureEndpoint *Calculator_pe;
 
-                                                                        eprosima::rpc::transport::dds::RTPSServerProcedureEndpoint *Calculator_addition_se;
+                                                eprosima::rpc::transport::dds::RTPSServerProcedureEndpoint *Calculator_se;
 
-                                                                        CalculatorPlugin::addition_RequestPlugin Calculator_addition_requestPlugin;
-                                                                        CalculatorPlugin::addition_ReplyPlugin Calculator_addition_replyPlugin;
-
-
-                                                                        const char* const Calculator_subtraction_str;
-
-                                                                        eprosima::rpc::transport::dds::RTPSProxyProcedureEndpoint *Calculator_subtraction_pe;
-
-                                                                        eprosima::rpc::transport::dds::RTPSServerProcedureEndpoint *Calculator_subtraction_se;
-
-                                                                        CalculatorPlugin::subtraction_RequestPlugin Calculator_subtraction_requestPlugin;
-                                                                        CalculatorPlugin::subtraction_ReplyPlugin Calculator_subtraction_replyPlugin;
-
+                                                Calculator_RequestPlugin Calculator_requestPlugin;
+                                                Calculator_ReplyPlugin Calculator_replyPlugin;
 
 
                 };

@@ -33,191 +33,35 @@ using InstanceHandle_t = eprosima::fastrtps::rtps::InstanceHandle_t;
 using DataRepresentationId_t = eprosima::fastdds::dds::DataRepresentationId_t;
 
 
-CalculatorPlugin::addition_RequestPlugin::addition_RequestPlugin()
+Calculator_RequestPlugin::Calculator_RequestPlugin()
 {
-    setName("Calculator_addition_Request");
+    setName("Calculator_Request");
     uint32_t type_size =
 #if FASTCDR_VERSION_MAJOR == 1
-        static_cast<uint32_t>(Calculator_addition_Request::getMaxCdrSerializedSize());
+        static_cast<uint32_t>(Calculator_Request::getMaxCdrSerializedSize());
 #else
-        Calculator_addition_Request_max_cdr_typesize;
-#endif
-    type_size += static_cast<uint32_t>(eprosima::fastcdr::Cdr::alignment(type_size, 4)); /* possible submessage alignment */
-    m_typeSize = type_size + 4; /*encapsulation*/
-	m_isGetKeyDefined = false;
-}
-
-CalculatorPlugin::addition_RequestPlugin::~addition_RequestPlugin()
-{
-}
-
-bool CalculatorPlugin::addition_RequestPlugin::getKey(void*, InstanceHandle_t*, bool)
-{
-    return false;
-}
-
-bool CalculatorPlugin::addition_RequestPlugin::serialize(
-        void *data,
-        SerializedPayload_t *payload,
-        DataRepresentationId_t data_representation)
-{
-    Calculator_addition_Request *p_type {static_cast<Calculator_addition_Request*>(data)};
-
-    // Object that manages the raw buffer.
-    eprosima::fastcdr::FastBuffer fastbuffer(reinterpret_cast<char*>(payload->data), payload->max_size);
-    // Object that serializes the data.
-    eprosima::fastcdr::Cdr ser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
-            data_representation == DataRepresentationId_t::XCDR_DATA_REPRESENTATION ?
-            eprosima::fastcdr::CdrVersion::XCDRv1 : eprosima::fastcdr::CdrVersion::XCDRv2);
-    payload->encapsulation = ser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
-#if FASTCDR_VERSION_MAJOR > 1
-    ser.set_encoding_flag(
-        data_representation == DataRepresentationId_t::XCDR_DATA_REPRESENTATION ?
-        eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR :
-        eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR2);
-#endif // FASTCDR_VERSION_MAJOR > 1
-
-    try
-    {
-        // Serialize encapsulation
-        ser.serialize_encapsulation();
-        // Serialize the object.
-        ser << *p_type;
-    }
-    catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
-    {
-        return false;
-    }
-
-    // Get the serialized length
-#if FASTCDR_VERSION_MAJOR == 1
-    payload->length = static_cast<uint32_t>(ser.getSerializedDataLength());
-#else
-    payload->length = static_cast<uint32_t>(ser.get_serialized_data_length());
-#endif // FASTCDR_VERSION_MAJOR == 1
-
-    return true;
-}
-
-bool CalculatorPlugin::addition_RequestPlugin::deserialize(
-        SerializedPayload_t* payload,
-        void* data)
-{
-    try
-    {
-        Calculator_addition_Request* p_type {static_cast<Calculator_addition_Request*>(data)};
-
-        // Object that manages the raw buffer.
-        eprosima::fastcdr::FastBuffer fastbuffer(reinterpret_cast<char*>(payload->data), payload->length);
-
-        // Object that deserializes the data.
-        eprosima::fastcdr::Cdr deser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN
-#if FASTCDR_VERSION_MAJOR == 1
-                , eprosima::fastcdr::Cdr::CdrType::DDS_CDR
-#endif // FASTCDR_VERSION_MAJOR == 1
-                );
-
-        // Deserialize encapsulation.
-        deser.read_encapsulation();
-        payload->encapsulation = deser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
-
-        //deserialize the object:
-        deser >> *p_type;
-    }
-    catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
-    {
-        return false;
-    }
-
-    return true;
-}
-
-std::function<uint32_t()> CalculatorPlugin::addition_RequestPlugin::getSerializedSizeProvider(
-        void* data,
-        DataRepresentationId_t data_representation)
-{
-    return [data, data_representation]() -> uint32_t
-           {
-#if FASTCDR_VERSION_MAJOR == 1
-               static_cast<void>(data_representation);
-               return static_cast<uint32_t>(Calculator_addition_Request::getCdrSerializedSize(*static_cast<Calculator_addition_Request*>(data))) +
-                      4u /*encapsulation*/;
-#else
-               try
-               {
-                   eprosima::fastcdr::CdrSizeCalculator calculator(
-                       data_representation == DataRepresentationId_t::XCDR_DATA_REPRESENTATION ?
-                       eprosima::fastcdr::CdrVersion::XCDRv1 :eprosima::fastcdr::CdrVersion::XCDRv2);
-                   size_t current_alignment {0};
-                   return static_cast<uint32_t>(calculator.calculate_serialized_size(
-                               *static_cast<Calculator_addition_Request*>(data), current_alignment)) +
-                           4u /*encapsulation*/;
-               }
-               catch (eprosima::fastcdr::exception::Exception& /*exception*/)
-               {
-                   return 0;
-               }
-#endif // FASTCDR_VERSION_MAJOR == 1
-           };
-}
-
-void* CalculatorPlugin::addition_RequestPlugin::createData()
-{
-    return (void*)new Calculator_addition_Request();
-}
-
-void* CalculatorPlugin::addition_RequestPlugin::create_data()
-{
-	return (void*)new Calculator_addition_Request();
-}
-
-void CalculatorPlugin::addition_RequestPlugin::deleteData(void* data)
-{
-    delete((Calculator_addition_Request*)data);
-}
-
-void CalculatorPlugin::addition_RequestPlugin::delete_data(void* data)
-{
-    delete((Calculator_addition_Request*)data);
-}
-
-void CalculatorPlugin::addition_RequestPlugin::copy_data(
-    Calculator_addition_Request *dst,
-    const Calculator_addition_Request *src)
-{
-    *dst = *src;
-}
-
-// Reply operations
-CalculatorPlugin::addition_ReplyPlugin::addition_ReplyPlugin()
-{
-    setName("Calculator_addition_Reply");
-    uint32_t type_size =
-#if FASTCDR_VERSION_MAJOR == 1
-        static_cast<uint32_t>(Calculator_addition_Reply::getMaxCdrSerializedSize());
-#else
-        Calculator_addition_Reply_max_cdr_typesize;
+        Calculator_Request_max_cdr_typesize;
 #endif
     type_size += static_cast<uint32_t>(eprosima::fastcdr::Cdr::alignment(type_size, 4)); /* possible submessage alignment */
     m_typeSize = type_size + 4; /*encapsulation*/
     m_isGetKeyDefined = false;
 }
 
-CalculatorPlugin::addition_ReplyPlugin::~addition_ReplyPlugin()
+Calculator_RequestPlugin::~Calculator_RequestPlugin()
 {
 }
 
-bool CalculatorPlugin::addition_ReplyPlugin::getKey(void*, InstanceHandle_t*, bool)
+bool Calculator_RequestPlugin::getKey(void*, InstanceHandle_t*, bool)
 {
     return false;
 }
 
-bool CalculatorPlugin::addition_ReplyPlugin::serialize(
-        void *data,
-        SerializedPayload_t *payload,
+bool Calculator_RequestPlugin::serialize(
+        void* data,
+        SerializedPayload_t* payload,
         DataRepresentationId_t data_representation)
 {
-    Calculator_addition_Reply *p_type {static_cast<Calculator_addition_Reply*>(data)};
+    Calculator_Request *p_type {static_cast<Calculator_Request*>(data)};
 
     // Object that manages the raw buffer.
     eprosima::fastcdr::FastBuffer fastbuffer(reinterpret_cast<char*>(payload->data), payload->max_size);
@@ -255,13 +99,13 @@ bool CalculatorPlugin::addition_ReplyPlugin::serialize(
     return true;
 }
 
-bool CalculatorPlugin::addition_ReplyPlugin::deserialize(
+bool Calculator_RequestPlugin::deserialize(
         SerializedPayload_t* payload,
         void* data)
 {
     try
     {
-        Calculator_addition_Reply* p_type {static_cast<Calculator_addition_Reply*>(data)};
+        Calculator_Request* p_type {static_cast<Calculator_Request*>(data)};
 
         // Object that manages the raw buffer.
         eprosima::fastcdr::FastBuffer fastbuffer(reinterpret_cast<char*>(payload->data), payload->length);
@@ -288,7 +132,7 @@ bool CalculatorPlugin::addition_ReplyPlugin::deserialize(
     return true;
 }
 
-std::function<uint32_t()> CalculatorPlugin::addition_ReplyPlugin::getSerializedSizeProvider(
+std::function<uint32_t()> Calculator_RequestPlugin::getSerializedSizeProvider(
         void* data,
         DataRepresentationId_t data_representation)
 {
@@ -296,7 +140,7 @@ std::function<uint32_t()> CalculatorPlugin::addition_ReplyPlugin::getSerializedS
            {
 #if FASTCDR_VERSION_MAJOR == 1
                static_cast<void>(data_representation);
-               return static_cast<uint32_t>(Calculator_addition_Reply::getCdrSerializedSize(*static_cast<Calculator_addition_Reply*>(data))) +
+               return static_cast<uint32_t>(Calculator_Request::getCdrSerializedSize(*static_cast<Calculator_Request*>(data))) +
                       4u /*encapsulation*/;
 #else
                try
@@ -306,7 +150,7 @@ std::function<uint32_t()> CalculatorPlugin::addition_ReplyPlugin::getSerializedS
                        eprosima::fastcdr::CdrVersion::XCDRv1 :eprosima::fastcdr::CdrVersion::XCDRv2);
                    size_t current_alignment {0};
                    return static_cast<uint32_t>(calculator.calculate_serialized_size(
-                               *static_cast<Calculator_addition_Reply*>(data), current_alignment)) +
+                               *static_cast<Calculator_Request*>(data), current_alignment)) +
                            4u /*encapsulation*/;
                }
                catch (eprosima::fastcdr::exception::Exception& /*exception*/)
@@ -317,218 +161,63 @@ std::function<uint32_t()> CalculatorPlugin::addition_ReplyPlugin::getSerializedS
            };
 }
 
-void* CalculatorPlugin::addition_ReplyPlugin::createData()
+void* Calculator_RequestPlugin::createData()
 {
-    return (void*)new Calculator_addition_Reply();
+    return (void*)new Calculator_Request();
 }
 
-void* CalculatorPlugin::addition_ReplyPlugin::create_data()
+void* Calculator_RequestPlugin::create_data()
 {
-    return (void*)new Calculator_addition_Reply();
+    return (void*)new Calculator_Request();
 }
 
-void CalculatorPlugin::addition_ReplyPlugin::deleteData(void* data)
+void Calculator_RequestPlugin::deleteData(void* data)
 {
-    delete((Calculator_addition_Reply*)data);
+    delete((Calculator_Request*)data);
 }
 
-void CalculatorPlugin::addition_ReplyPlugin::delete_data(void* data)
+void Calculator_RequestPlugin::delete_data(void* data)
 {
-    delete((Calculator_addition_Reply*)data);
+    delete((Calculator_Request*)data);
 }
 
-void CalculatorPlugin::addition_ReplyPlugin::copy_data(
-    Calculator_addition_Reply *dst,
-    const Calculator_addition_Reply *src)
+void Calculator_RequestPlugin::copy_data(
+        Calculator_Request *dst,
+        const Calculator_Request *src)
 {
     *dst = *src;
 }
 
-CalculatorPlugin::subtraction_RequestPlugin::subtraction_RequestPlugin()
+// Reply interfaces
+Calculator_ReplyPlugin::Calculator_ReplyPlugin()
 {
-    setName("Calculator_subtraction_Request");
+    setName("Calculator_Reply");
     uint32_t type_size =
 #if FASTCDR_VERSION_MAJOR == 1
-        static_cast<uint32_t>(Calculator_subtraction_Request::getMaxCdrSerializedSize());
+        static_cast<uint32_t>(Calculator_Reply::getMaxCdrSerializedSize());
 #else
-        Calculator_subtraction_Request_max_cdr_typesize;
-#endif
-    type_size += static_cast<uint32_t>(eprosima::fastcdr::Cdr::alignment(type_size, 4)); /* possible submessage alignment */
-    m_typeSize = type_size + 4; /*encapsulation*/
-	m_isGetKeyDefined = false;
-}
-
-CalculatorPlugin::subtraction_RequestPlugin::~subtraction_RequestPlugin()
-{
-}
-
-bool CalculatorPlugin::subtraction_RequestPlugin::getKey(void*, InstanceHandle_t*, bool)
-{
-    return false;
-}
-
-bool CalculatorPlugin::subtraction_RequestPlugin::serialize(
-        void *data,
-        SerializedPayload_t *payload,
-        DataRepresentationId_t data_representation)
-{
-    Calculator_subtraction_Request *p_type {static_cast<Calculator_subtraction_Request*>(data)};
-
-    // Object that manages the raw buffer.
-    eprosima::fastcdr::FastBuffer fastbuffer(reinterpret_cast<char*>(payload->data), payload->max_size);
-    // Object that serializes the data.
-    eprosima::fastcdr::Cdr ser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
-            data_representation == DataRepresentationId_t::XCDR_DATA_REPRESENTATION ?
-            eprosima::fastcdr::CdrVersion::XCDRv1 : eprosima::fastcdr::CdrVersion::XCDRv2);
-    payload->encapsulation = ser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
-#if FASTCDR_VERSION_MAJOR > 1
-    ser.set_encoding_flag(
-        data_representation == DataRepresentationId_t::XCDR_DATA_REPRESENTATION ?
-        eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR :
-        eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR2);
-#endif // FASTCDR_VERSION_MAJOR > 1
-
-    try
-    {
-        // Serialize encapsulation
-        ser.serialize_encapsulation();
-        // Serialize the object.
-        ser << *p_type;
-    }
-    catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
-    {
-        return false;
-    }
-
-    // Get the serialized length
-#if FASTCDR_VERSION_MAJOR == 1
-    payload->length = static_cast<uint32_t>(ser.getSerializedDataLength());
-#else
-    payload->length = static_cast<uint32_t>(ser.get_serialized_data_length());
-#endif // FASTCDR_VERSION_MAJOR == 1
-
-    return true;
-}
-
-bool CalculatorPlugin::subtraction_RequestPlugin::deserialize(
-        SerializedPayload_t* payload,
-        void* data)
-{
-    try
-    {
-        Calculator_subtraction_Request* p_type {static_cast<Calculator_subtraction_Request*>(data)};
-
-        // Object that manages the raw buffer.
-        eprosima::fastcdr::FastBuffer fastbuffer(reinterpret_cast<char*>(payload->data), payload->length);
-
-        // Object that deserializes the data.
-        eprosima::fastcdr::Cdr deser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN
-#if FASTCDR_VERSION_MAJOR == 1
-                , eprosima::fastcdr::Cdr::CdrType::DDS_CDR
-#endif // FASTCDR_VERSION_MAJOR == 1
-                );
-
-        // Deserialize encapsulation.
-        deser.read_encapsulation();
-        payload->encapsulation = deser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
-
-        //deserialize the object:
-        deser >> *p_type;
-    }
-    catch(eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
-    {
-        return false;
-    }
-
-    return true;
-}
-
-std::function<uint32_t()> CalculatorPlugin::subtraction_RequestPlugin::getSerializedSizeProvider(
-        void* data,
-        DataRepresentationId_t data_representation)
-{
-    return [data, data_representation]() -> uint32_t
-           {
-#if FASTCDR_VERSION_MAJOR == 1
-               static_cast<void>(data_representation);
-               return static_cast<uint32_t>(Calculator_subtraction_Request::getCdrSerializedSize(*static_cast<Calculator_subtraction_Request*>(data))) +
-                      4u /*encapsulation*/;
-#else
-               try
-               {
-                   eprosima::fastcdr::CdrSizeCalculator calculator(
-                       data_representation == DataRepresentationId_t::XCDR_DATA_REPRESENTATION ?
-                       eprosima::fastcdr::CdrVersion::XCDRv1 :eprosima::fastcdr::CdrVersion::XCDRv2);
-                   size_t current_alignment {0};
-                   return static_cast<uint32_t>(calculator.calculate_serialized_size(
-                               *static_cast<Calculator_subtraction_Request*>(data), current_alignment)) +
-                           4u /*encapsulation*/;
-               }
-               catch (eprosima::fastcdr::exception::Exception& /*exception*/)
-               {
-                   return 0;
-               }
-#endif // FASTCDR_VERSION_MAJOR == 1
-           };
-}
-
-void* CalculatorPlugin::subtraction_RequestPlugin::createData()
-{
-    return (void*)new Calculator_subtraction_Request();
-}
-
-void* CalculatorPlugin::subtraction_RequestPlugin::create_data()
-{
-	return (void*)new Calculator_subtraction_Request();
-}
-
-void CalculatorPlugin::subtraction_RequestPlugin::deleteData(void* data)
-{
-    delete((Calculator_subtraction_Request*)data);
-}
-
-void CalculatorPlugin::subtraction_RequestPlugin::delete_data(void* data)
-{
-    delete((Calculator_subtraction_Request*)data);
-}
-
-void CalculatorPlugin::subtraction_RequestPlugin::copy_data(
-    Calculator_subtraction_Request *dst,
-    const Calculator_subtraction_Request *src)
-{
-    *dst = *src;
-}
-
-// Reply operations
-CalculatorPlugin::subtraction_ReplyPlugin::subtraction_ReplyPlugin()
-{
-    setName("Calculator_subtraction_Reply");
-    uint32_t type_size =
-#if FASTCDR_VERSION_MAJOR == 1
-        static_cast<uint32_t>(Calculator_subtraction_Reply::getMaxCdrSerializedSize());
-#else
-        Calculator_subtraction_Reply_max_cdr_typesize;
+        Calculator_Reply_max_cdr_typesize;
 #endif
     type_size += static_cast<uint32_t>(eprosima::fastcdr::Cdr::alignment(type_size, 4)); /* possible submessage alignment */
     m_typeSize = type_size + 4; /*encapsulation*/
     m_isGetKeyDefined = false;
 }
 
-CalculatorPlugin::subtraction_ReplyPlugin::~subtraction_ReplyPlugin()
+Calculator_ReplyPlugin::~Calculator_ReplyPlugin()
 {
 }
 
-bool CalculatorPlugin::subtraction_ReplyPlugin::getKey(void*, InstanceHandle_t*, bool)
+bool Calculator_ReplyPlugin::getKey(void*, InstanceHandle_t*, bool)
 {
     return false;
 }
 
-bool CalculatorPlugin::subtraction_ReplyPlugin::serialize(
-        void *data,
-        SerializedPayload_t *payload,
+bool Calculator_ReplyPlugin::serialize(
+        void* data,
+        SerializedPayload_t* payload,
         DataRepresentationId_t data_representation)
 {
-    Calculator_subtraction_Reply *p_type {static_cast<Calculator_subtraction_Reply*>(data)};
+    Calculator_Reply *p_type {static_cast<Calculator_Reply*>(data)};
 
     // Object that manages the raw buffer.
     eprosima::fastcdr::FastBuffer fastbuffer(reinterpret_cast<char*>(payload->data), payload->max_size);
@@ -566,13 +255,13 @@ bool CalculatorPlugin::subtraction_ReplyPlugin::serialize(
     return true;
 }
 
-bool CalculatorPlugin::subtraction_ReplyPlugin::deserialize(
+bool Calculator_ReplyPlugin::deserialize(
         SerializedPayload_t* payload,
         void* data)
 {
     try
     {
-        Calculator_subtraction_Reply* p_type {static_cast<Calculator_subtraction_Reply*>(data)};
+        Calculator_Reply* p_type {static_cast<Calculator_Reply*>(data)};
 
         // Object that manages the raw buffer.
         eprosima::fastcdr::FastBuffer fastbuffer(reinterpret_cast<char*>(payload->data), payload->length);
@@ -599,7 +288,7 @@ bool CalculatorPlugin::subtraction_ReplyPlugin::deserialize(
     return true;
 }
 
-std::function<uint32_t()> CalculatorPlugin::subtraction_ReplyPlugin::getSerializedSizeProvider(
+std::function<uint32_t()> Calculator_ReplyPlugin::getSerializedSizeProvider(
         void* data,
         DataRepresentationId_t data_representation)
 {
@@ -607,7 +296,7 @@ std::function<uint32_t()> CalculatorPlugin::subtraction_ReplyPlugin::getSerializ
            {
 #if FASTCDR_VERSION_MAJOR == 1
                static_cast<void>(data_representation);
-               return static_cast<uint32_t>(Calculator_subtraction_Reply::getCdrSerializedSize(*static_cast<Calculator_subtraction_Reply*>(data))) +
+               return static_cast<uint32_t>(Calculator_Reply::getCdrSerializedSize(*static_cast<Calculator_Reply*>(data))) +
                       4u /*encapsulation*/;
 #else
                try
@@ -617,7 +306,7 @@ std::function<uint32_t()> CalculatorPlugin::subtraction_ReplyPlugin::getSerializ
                        eprosima::fastcdr::CdrVersion::XCDRv1 :eprosima::fastcdr::CdrVersion::XCDRv2);
                    size_t current_alignment {0};
                    return static_cast<uint32_t>(calculator.calculate_serialized_size(
-                               *static_cast<Calculator_subtraction_Reply*>(data), current_alignment)) +
+                               *static_cast<Calculator_Reply*>(data), current_alignment)) +
                            4u /*encapsulation*/;
                }
                catch (eprosima::fastcdr::exception::Exception& /*exception*/)
@@ -628,31 +317,30 @@ std::function<uint32_t()> CalculatorPlugin::subtraction_ReplyPlugin::getSerializ
            };
 }
 
-void* CalculatorPlugin::subtraction_ReplyPlugin::createData()
+void* Calculator_ReplyPlugin::createData()
 {
-    return (void*)new Calculator_subtraction_Reply();
+    return (void*)new Calculator_Reply();
 }
 
-void* CalculatorPlugin::subtraction_ReplyPlugin::create_data()
+void* Calculator_ReplyPlugin::create_data()
 {
-    return (void*)new Calculator_subtraction_Reply();
+    return (void*)new Calculator_Reply();
 }
 
-void CalculatorPlugin::subtraction_ReplyPlugin::deleteData(void* data)
+void Calculator_ReplyPlugin::deleteData(void* data)
 {
-    delete((Calculator_subtraction_Reply*)data);
+    delete((Calculator_Reply*)data);
 }
 
-void CalculatorPlugin::subtraction_ReplyPlugin::delete_data(void* data)
+void Calculator_ReplyPlugin::delete_data(void* data)
 {
-    delete((Calculator_subtraction_Reply*)data);
+    delete((Calculator_Reply*)data);
 }
 
-void CalculatorPlugin::subtraction_ReplyPlugin::copy_data(
-    Calculator_subtraction_Reply *dst,
-    const Calculator_subtraction_Reply *src)
+void Calculator_ReplyPlugin::copy_data(
+        Calculator_Reply *dst,
+        const Calculator_Reply *src)
 {
     *dst = *src;
 }
-
 

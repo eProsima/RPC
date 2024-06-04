@@ -21,12 +21,12 @@
 
 #include "CalculatorTopics.h"
 
-
 #if FASTCDR_VERSION_MAJOR > 1
 
 #include <fastcdr/Cdr.h>
 #include <fastcdr/exceptions/BadParamException.h>
 #include <rpcdds/exceptions/BadParamException.h>
+
 
 Calculator_addition_In::Calculator_addition_In()
 : 
@@ -65,39 +65,6 @@ Calculator_addition_In& Calculator_addition_In::operator=(Calculator_addition_In
     return *this;
 }
 
-Calculator_addition_Request::Calculator_addition_Request()
-{
-}
-
-Calculator_addition_Request::~Calculator_addition_Request()
-{
-}
-
-Calculator_addition_Request::Calculator_addition_Request(const Calculator_addition_Request &x)
-: m_header(x.m_header), m_addition(x.m_addition)
-{
-}
-
-Calculator_addition_Request::Calculator_addition_Request(Calculator_addition_Request &&x)
-: m_header(std::move(x.m_header)), m_addition(std::move(x.m_addition))
-{
-}
-
-Calculator_addition_Request& Calculator_addition_Request::operator=(const Calculator_addition_Request &x)
-{
-    m_header = x.m_header;
-    m_addition = x.m_addition;
-
-    return *this;
-}
-
-Calculator_addition_Request& Calculator_addition_Request::operator=(Calculator_addition_Request &&x)
-{
-    m_header = std::move(x.m_header);
-    m_addition = std::move(x.m_addition);
-
-    return *this;
-}
 
 Calculator_addition_Out::Calculator_addition_Out()
 : 
@@ -263,39 +230,6 @@ Calculator_addition_Out& Calculator_addition_Result::result()
 }
 
 
-Calculator_addition_Reply::Calculator_addition_Reply()
-{
-}
-
-Calculator_addition_Reply::~Calculator_addition_Reply()
-{
-}
-
-Calculator_addition_Reply::Calculator_addition_Reply(const Calculator_addition_Reply &x)
-: m_header(x.m_header), m_addition(x.m_addition)
-{
-}
-
-Calculator_addition_Reply::Calculator_addition_Reply(Calculator_addition_Reply &&x)
-: m_header(std::move(x.m_header)), m_addition(std::move(x.m_addition))
-{
-}
-
-Calculator_addition_Reply& Calculator_addition_Reply::operator=(const Calculator_addition_Reply &x)
-{
-    m_header = x.m_header;
-    m_addition = x.m_addition;
-
-    return *this;
-}
-
-Calculator_addition_Reply& Calculator_addition_Reply::operator=(Calculator_addition_Reply &&x)
-{
-    m_header = std::move(x.m_header);
-    m_addition = std::move(x.m_addition);
-
-    return *this;
-}
 
 Calculator_subtraction_In::Calculator_subtraction_In()
 : 
@@ -334,39 +268,6 @@ Calculator_subtraction_In& Calculator_subtraction_In::operator=(Calculator_subtr
     return *this;
 }
 
-Calculator_subtraction_Request::Calculator_subtraction_Request()
-{
-}
-
-Calculator_subtraction_Request::~Calculator_subtraction_Request()
-{
-}
-
-Calculator_subtraction_Request::Calculator_subtraction_Request(const Calculator_subtraction_Request &x)
-: m_header(x.m_header), m_subtraction(x.m_subtraction)
-{
-}
-
-Calculator_subtraction_Request::Calculator_subtraction_Request(Calculator_subtraction_Request &&x)
-: m_header(std::move(x.m_header)), m_subtraction(std::move(x.m_subtraction))
-{
-}
-
-Calculator_subtraction_Request& Calculator_subtraction_Request::operator=(const Calculator_subtraction_Request &x)
-{
-    m_header = x.m_header;
-    m_subtraction = x.m_subtraction;
-
-    return *this;
-}
-
-Calculator_subtraction_Request& Calculator_subtraction_Request::operator=(Calculator_subtraction_Request &&x)
-{
-    m_header = std::move(x.m_header);
-    m_subtraction = std::move(x.m_subtraction);
-
-    return *this;
-}
 
 Calculator_subtraction_Out::Calculator_subtraction_Out()
 : 
@@ -532,41 +433,433 @@ Calculator_subtraction_Out& Calculator_subtraction_Result::result()
 }
 
 
-Calculator_subtraction_Reply::Calculator_subtraction_Reply()
+
+
+Calculator_Call::Calculator_Call() : m__d(0)
 {
 }
 
-Calculator_subtraction_Reply::~Calculator_subtraction_Reply()
+Calculator_Call::~Calculator_Call()
 {
 }
 
-Calculator_subtraction_Reply::Calculator_subtraction_Reply(const Calculator_subtraction_Reply &x)
-: m_header(x.m_header), m_subtraction(x.m_subtraction)
+Calculator_Call::Calculator_Call(const Calculator_Call &x)
+{
+    m__d = x.m__d;
+
+    switch(m__d)
+    {
+                case static_cast<int32_t>(0xCBC6CEAA):
+                    m_addition = x.m_addition;
+                    break;
+
+                case static_cast<int32_t>(0xCA019A14):
+                    m_subtraction = x.m_subtraction;
+                    break;
+
+    }
+}
+
+Calculator_Call::Calculator_Call(Calculator_Call &&x)
+{
+    m__d = x.m__d;
+
+    switch(m__d)
+    {
+                case static_cast<int32_t>(0xCBC6CEAA):
+                    m_addition = std::move(x.m_addition);
+                    break;
+
+                case static_cast<int32_t>(0xCA019A14):
+                    m_subtraction = std::move(x.m_subtraction);
+                    break;
+
+    }
+}
+
+Calculator_Call& Calculator_Call::operator=(const Calculator_Call &x)
+{
+    m__d = x.m__d;
+
+    switch(m__d)
+    {
+                case static_cast<int32_t>(0xCBC6CEAA):
+                    m_addition = x.m_addition;
+                    break;
+
+                case static_cast<int32_t>(0xCA019A14):
+                    m_subtraction = x.m_subtraction;
+                    break;
+
+    }
+
+    return *this;
+}
+
+Calculator_Call& Calculator_Call::operator=(Calculator_Call &&x)
+{
+    m__d = x.m__d;
+
+    switch(m__d)
+    {
+                case static_cast<int32_t>(0xCBC6CEAA):
+                    m_addition = std::move(x.m_addition);
+                    break;
+
+                case static_cast<int32_t>(0xCA019A14):
+                    m_subtraction = std::move(x.m_subtraction);
+                    break;
+
+    }
+
+    return *this;
+}
+
+void Calculator_Call::_d(int32_t __d)
+{
+    if(m__d != __d)
+    {
+        throw eprosima::rpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
+    }
+
+    m__d = __d;
+}
+
+int32_t Calculator_Call::_d() const
+{
+    return m__d;
+}
+
+int32_t& Calculator_Call::_d()
+{
+    return m__d;
+}
+
+void Calculator_Call::unknownOp(eprosima::rpc::protocol::dds::rpc::UnknownOperation _unknownOp)
+{
+    m_unknownOp = _unknownOp;
+    m__d = 0;
+}
+
+eprosima::rpc::protocol::dds::rpc::UnknownOperation Calculator_Call::unknownOp() const
+{
+    if(m__d != 0)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_unknownOp;
+}
+
+eprosima::rpc::protocol::dds::rpc::UnknownOperation& Calculator_Call::unknownOp()
+{
+    if(m__d != 0)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_unknownOp;
+}
+
+void Calculator_Call::addition(const Calculator_addition_In &_addition)
+{
+    m_addition = _addition;
+    m__d = static_cast<int32_t>(0xCBC6CEAA);
+}
+
+void Calculator_Call::addition(Calculator_addition_In &&_addition)
+{
+    m_addition = std::move(_addition);
+    m__d = static_cast<int32_t>(0xCBC6CEAA);
+}
+
+const Calculator_addition_In& Calculator_Call::addition() const
+{
+    if(m__d != static_cast<int32_t>(0xCBC6CEAA))
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_addition;
+}
+
+Calculator_addition_In& Calculator_Call::addition()
+{
+    if(m__d != static_cast<int32_t>(0xCBC6CEAA))
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_addition;
+}
+
+void Calculator_Call::subtraction(const Calculator_subtraction_In &_subtraction)
+{
+    m_subtraction = _subtraction;
+    m__d = static_cast<int32_t>(0xCA019A14);
+}
+
+void Calculator_Call::subtraction(Calculator_subtraction_In &&_subtraction)
+{
+    m_subtraction = std::move(_subtraction);
+    m__d = static_cast<int32_t>(0xCA019A14);
+}
+
+const Calculator_subtraction_In& Calculator_Call::subtraction() const
+{
+    if(m__d != static_cast<int32_t>(0xCA019A14))
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_subtraction;
+}
+
+Calculator_subtraction_In& Calculator_Call::subtraction()
+{
+    if(m__d != static_cast<int32_t>(0xCA019A14))
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_subtraction;
+}
+
+
+Calculator_Request::Calculator_Request()
 {
 }
 
-Calculator_subtraction_Reply::Calculator_subtraction_Reply(Calculator_subtraction_Reply &&x)
-: m_header(std::move(x.m_header)), m_subtraction(std::move(x.m_subtraction))
+Calculator_Request::~Calculator_Request()
 {
 }
 
-Calculator_subtraction_Reply& Calculator_subtraction_Reply::operator=(const Calculator_subtraction_Reply &x)
+Calculator_Request::Calculator_Request(const Calculator_Request &x)
+: m_header(x.m_header), m_data(x.m_data)
+{
+}
+
+Calculator_Request::Calculator_Request(Calculator_Request &&x)
+: m_header(std::move(x.m_header)), m_data(std::move(x.m_data))
+{
+}
+
+Calculator_Request& Calculator_Request::operator=(const Calculator_Request &x)
 {
     m_header = x.m_header;
-    m_subtraction = x.m_subtraction;
+    m_data = x.m_data;
 
     return *this;
 }
 
-Calculator_subtraction_Reply& Calculator_subtraction_Reply::operator=(Calculator_subtraction_Reply &&x)
+Calculator_Request& Calculator_Request::operator=(Calculator_Request &&x)
 {
     m_header = std::move(x.m_header);
-    m_subtraction = std::move(x.m_subtraction);
+    m_data = std::move(x.m_data);
 
     return *this;
 }
 
+Calculator_Return::Calculator_Return() : m__d(0)
+{
+}
 
+Calculator_Return::~Calculator_Return()
+{
+}
+
+Calculator_Return::Calculator_Return(const Calculator_Return &x)
+{
+    m__d = x.m__d;
+
+    switch(m__d)
+    {
+                case static_cast<int32_t>(0xCBC6CEAA):
+                    m_addition = x.m_addition;
+                    break;
+
+                case static_cast<int32_t>(0xCA019A14):
+                    m_subtraction = x.m_subtraction;
+                    break;
+
+    }
+}
+
+Calculator_Return::Calculator_Return(Calculator_Return &&x)
+{
+    m__d = x.m__d;
+
+    switch(m__d)
+    {
+                case static_cast<int32_t>(0xCBC6CEAA):
+                    m_addition = std::move(x.m_addition);
+                    break;
+
+                case static_cast<int32_t>(0xCA019A14):
+                    m_subtraction = std::move(x.m_subtraction);
+                    break;
+
+    }
+}
+
+Calculator_Return& Calculator_Return::operator=(const Calculator_Return &x)
+{
+    m__d = x.m__d;
+
+    switch(m__d)
+    {
+                case static_cast<int32_t>(0xCBC6CEAA):
+                    m_addition = x.m_addition;
+                    break;
+
+                case static_cast<int32_t>(0xCA019A14):
+                    m_subtraction = x.m_subtraction;
+                    break;
+
+    }
+
+    return *this;
+}
+
+Calculator_Return& Calculator_Return::operator=(Calculator_Return &&x)
+{
+    m__d = x.m__d;
+
+    switch(m__d)
+    {
+                case static_cast<int32_t>(0xCBC6CEAA):
+                    m_addition = std::move(x.m_addition);
+                    break;
+
+                case static_cast<int32_t>(0xCA019A14):
+                    m_subtraction = std::move(x.m_subtraction);
+                    break;
+
+    }
+
+    return *this;
+}
+
+void Calculator_Return::_d(int32_t __d)
+{
+    if(m__d != __d)
+    {
+        throw eprosima::rpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
+    }
+
+    m__d = __d;
+}
+
+int32_t Calculator_Return::_d() const
+{
+    return m__d;
+}
+
+int32_t& Calculator_Return::_d()
+{
+    return m__d;
+}
+
+void Calculator_Return::unknownOp(eprosima::rpc::protocol::dds::rpc::UnknownOperation _unknownOp)
+{
+    m_unknownOp = _unknownOp;
+    m__d = 0;
+}
+
+eprosima::rpc::protocol::dds::rpc::UnknownOperation Calculator_Return::unknownOp() const
+{
+    if(m__d != 0)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_unknownOp;
+}
+
+eprosima::rpc::protocol::dds::rpc::UnknownOperation& Calculator_Return::unknownOp()
+{
+    if(m__d != 0)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_unknownOp;
+}
+
+void Calculator_Return::addition(const Calculator_addition_Result &_addition)
+{
+    m_addition = _addition;
+    m__d = static_cast<int32_t>(0xCBC6CEAA);
+}
+
+void Calculator_Return::addition(Calculator_addition_Result &&_addition)
+{
+    m_addition = std::move(_addition);
+    m__d = static_cast<int32_t>(0xCBC6CEAA);
+}
+
+const Calculator_addition_Result& Calculator_Return::addition() const
+{
+    if(m__d != static_cast<int32_t>(0xCBC6CEAA))
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_addition;
+}
+
+Calculator_addition_Result& Calculator_Return::addition()
+{
+    if(m__d != static_cast<int32_t>(0xCBC6CEAA))
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_addition;
+}
+
+void Calculator_Return::subtraction(const Calculator_subtraction_Result &_subtraction)
+{
+    m_subtraction = _subtraction;
+    m__d = static_cast<int32_t>(0xCA019A14);
+}
+
+void Calculator_Return::subtraction(Calculator_subtraction_Result &&_subtraction)
+{
+    m_subtraction = std::move(_subtraction);
+    m__d = static_cast<int32_t>(0xCA019A14);
+}
+
+const Calculator_subtraction_Result& Calculator_Return::subtraction() const
+{
+    if(m__d != static_cast<int32_t>(0xCA019A14))
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_subtraction;
+}
+
+Calculator_subtraction_Result& Calculator_Return::subtraction()
+{
+    if(m__d != static_cast<int32_t>(0xCA019A14))
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_subtraction;
+}
+
+
+Calculator_Reply::Calculator_Reply()
+{
+}
+
+Calculator_Reply::~Calculator_Reply()
+{
+}
+
+Calculator_Reply::Calculator_Reply(const Calculator_Reply &x)
+: m_header(x.m_header), m_data(x.m_data)
+{
+}
+
+Calculator_Reply::Calculator_Reply(Calculator_Reply &&x)
+: m_header(std::move(x.m_header)), m_data(std::move(x.m_data))
+{
+}
+
+Calculator_Reply& Calculator_Reply::operator=(const Calculator_Reply &x)
+{
+    m_header = x.m_header;
+    m_data = x.m_data;
+
+    return *this;
+}
+
+Calculator_Reply& Calculator_Reply::operator=(Calculator_Reply &&x)
+{
+    m_header = std::move(x.m_header);
+    m_data = std::move(x.m_data);
+
+    return *this;
+}
 
 
 #endif // FASTCDR_VERSION_MAJOR > 1

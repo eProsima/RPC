@@ -18,9 +18,9 @@ cd ../../../..
 # Generate examples
 
 cd examples/C++/rpcdds/c++11Types/RTPSCalculator
-../../../../../fastrpcgen/scripts/rpcddsgen -cdr both -topicGeneration byOperation -replace Calculator.idl
+../../../../../fastrpcgen/scripts/rpcddsgen -cdr both -replace Calculator.idl
 cd ../../../../..
 
 cd examples/C++/rpcdds/c++11Types/RTPSCalculatorAsync
-../../../../../fastrpcgen/scripts/rpcddsgen -cdr both -topicGeneration byOperation -replace Calculator.idl
+../../../../../fastrpcgen/scripts/rpcddsgen -cdr both -replace Calculator.idl
 cd ../../../../..
