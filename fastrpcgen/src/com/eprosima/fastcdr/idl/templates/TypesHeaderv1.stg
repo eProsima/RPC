@@ -97,17 +97,17 @@ $endif$
 $definitions; separator="\n"$
 
 #endif // _RPC_DDS_GENERATED_$ctx.headerGuardName$_H_
-$"\n"$
 
 $if(ctx.cdr_both)$
 #endif // FASTCDR_VERSION_MAJOR == 1
 $endif$
 >>
 
-// TODO name -> module
 module(ctx, parent, module, definition_list) ::= <<
 namespace $module.name$ {
+
     $definition_list$
+
 } // namespace $module.name$
 >>
 
@@ -763,7 +763,7 @@ $if(ctx.anyCdr)$
  * @return Serialized size.
  */
 eProsima_user_DllExport static size_t getCdrSerializedSize(
-        const $type.scopedname$& data,
+        const $type.name$& data,
         size_t current_alignment = 0);
 
 $endif$
@@ -905,3 +905,17 @@ private:
     void free_memory();
 };
 >>
+
+//{ RPC DDS-Gen extensions
+module_conversion(ctx, parent, modules, definition_list) ::= <<
+$modules : { module |
+namespace $module.name$ {
+}; separator="\n"$
+
+$definition_list$
+
+$reverse(modules) : { module |
+\} // namespace $module.name$
+}; separator="\n"$
+>>
+//}

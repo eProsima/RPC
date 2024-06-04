@@ -16,12 +16,19 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "Topics.cpp"], description=["This sour
 
 #include "$ctx.filename$Topics.h"
 
+$if(ctx.cdr_both)$
+#if FASTCDR_VERSION_MAJOR > 1
+$endif$
+
 #include <fastcdr/Cdr.h>
 #include <fastcdr/exceptions/BadParamException.h>
 #include <$ctx.includePrefix$exceptions/BadParamException.h>
 
 $definitions; separator="\n"$
 
+$if(ctx.cdr_both)$
+#endif // FASTCDR_VERSION_MAJOR > 1
+$endif$
 >>
 
 interface(ctx, parent, interface, export_list) ::= <<

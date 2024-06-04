@@ -1,13 +1,23 @@
 package com.eprosima.fastrpc.idl.grammar;
 
 import com.eprosima.fastcdr.idl.util.CdrVersion;
+import com.eprosima.fastrpc.idl.parser.typecode.AliasTypeCode;
+import com.eprosima.fastrpc.idl.parser.typecode.ArrayTypeCode;
+import com.eprosima.fastrpc.idl.parser.typecode.BitmaskTypeCode;
+import com.eprosima.fastrpc.idl.parser.typecode.BitsetTypeCode;
+import com.eprosima.fastrpc.idl.parser.typecode.EnumTypeCode;
+import com.eprosima.fastrpc.idl.parser.typecode.MapTypeCode;
+import com.eprosima.fastrpc.idl.parser.typecode.PrimitiveTypeCode;
+import com.eprosima.fastrpc.idl.parser.typecode.SequenceTypeCode;
+import com.eprosima.fastrpc.idl.parser.typecode.SetTypeCode;
+import com.eprosima.fastrpc.idl.parser.typecode.StringTypeCode;
+import com.eprosima.fastrpc.idl.parser.typecode.StructTypeCode;
+import com.eprosima.fastrpc.idl.parser.typecode.UnionTypeCode;
 import com.eprosima.fastrpc.idl.tree.*;
 import com.eprosima.idl.generator.manager.TemplateGroup;
 import com.eprosima.idl.generator.manager.TemplateManager;
-import com.eprosima.idl.parser.tree.TypeDeclaration;
-import com.eprosima.idl.parser.typecode.StructTypeCode;
 import com.eprosima.idl.parser.typecode.TypeCode;
-import com.eprosima.idl.parser.typecode.UnionTypeCode;
+import com.eprosima.idl.parser.tree.TypeDeclaration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -146,6 +156,104 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
     }
 
     @Override
+    public AliasTypeCode createAliasTypeCode(
+            String scope,
+            String name)
+    {
+        return new AliasTypeCode(scope, name);
+    }
+
+    @Override
+    public ArrayTypeCode createArrayTypeCode()
+    {
+        return new ArrayTypeCode();
+    }
+
+    @Override
+    public BitsetTypeCode createBitsetTypeCode(
+            String scope,
+            String name)
+    {
+        return new BitsetTypeCode(scope, name);
+    }
+
+    @Override
+    public BitmaskTypeCode createBitmaskTypeCode(
+            String scope,
+            String name)
+    {
+        return new BitmaskTypeCode(scope, name);
+    }
+
+    @Override
+    public EnumTypeCode createEnumTypeCode(
+            String scope,
+            String name)
+    {
+        return new EnumTypeCode(scope, name);
+    }
+
+    @Override
+    public MapTypeCode createMapTypeCode(
+            String maxsize)
+    {
+        return new MapTypeCode(maxsize, evaluate_literal(maxsize));
+    }
+
+    @Override
+    public PrimitiveTypeCode createPrimitiveTypeCode(
+            int kind)
+    {
+        return new PrimitiveTypeCode(kind);
+    }
+
+    @Override
+    public SequenceTypeCode createSequenceTypeCode(
+            String maxsize)
+    {
+        return new SequenceTypeCode(maxsize, evaluate_literal(maxsize));
+    }
+
+    @Override
+    public SetTypeCode createSetTypeCode(
+            String maxsize)
+    {
+        return new SetTypeCode(maxsize, evaluate_literal(maxsize));
+    }
+
+    @Override
+    public StringTypeCode createStringTypeCode(
+            int kind,
+            String maxsize)
+    {
+        return new StringTypeCode(kind, maxsize, evaluate_literal(maxsize));
+    }
+
+    @Override
+    public StructTypeCode createStructTypeCode(
+            String name)
+    {
+        return new StructTypeCode(getScope(), name);
+    }
+
+    @Override
+    public UnionTypeCode createUnionTypeCode(
+            String scope,
+            String name)
+    {
+        return new UnionTypeCode(scope, name);
+    }
+
+    @Override
+    public UnionTypeCode createUnionTypeCode(
+            String scope,
+            String name,
+            TypeCode discriminatorTypeCode)
+    {
+        return new UnionTypeCode(scope, name, discriminatorTypeCode);
+    }
+
+    @Override
     public boolean isGenerateTypeObject()
     {
         return false;
@@ -260,6 +368,24 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
         return CdrVersion.Select.BOTH == cdr_version_;
     }
 
+    @Override
+    public void isSetCdrv1Templates()
+    {
+        cdr_v1_templates = true;
+    }
+
+    @Override
+    public void isUnsetCdrv1Templates()
+    {
+        cdr_v1_templates = false;
+    }
+
+    @Override
+    public boolean isCdrv1TemplatesEnabled()
+    {
+        return cdr_v1_templates;
+    }
+
     private String m_typelimitation = null;
 
     // TODO Lleva la cuenta de generacion de nuevos nombres.
@@ -285,4 +411,6 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
     private CdrVersion.Select cdr_version_ = CdrVersion.Select.V2;
 
     private String m_fileNameUpper = null;
+
+    private boolean cdr_v1_templates = false;
 }

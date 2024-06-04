@@ -17,8 +17,10 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "TopicsPlugin.cpp"], description=["TOD
 
 #include <fastdds/rtps/common/CdrSerialization.hpp>
 
+#if FASTCDR_VERSION_MAJOR > 1
 // Include auxiliary functions like for serializing/deserializing.
 #include "$ctx.filename$TopicsCdrAux.ipp"
+#endif
 
 using SerializedPayload_t = eprosima::fastrtps::rtps::SerializedPayload_t;
 using InstanceHandle_t = eprosima::fastrtps::rtps::InstanceHandle_t;

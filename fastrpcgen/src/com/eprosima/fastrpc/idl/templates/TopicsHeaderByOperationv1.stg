@@ -13,6 +13,12 @@ import "eprosima.stg"
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "Topics.h"], description=["This header file contains the declaration of topics generated using operations in the IDL file."])$
 
+$if(ctx.cdr_both)$
+#include <fastcdr/config.h>
+
+#if FASTCDR_VERSION_MAJOR == 1
+$endif$
+
 #ifndef _$ctx.filename;format="toUpper"$_TOPICS_H_
 #define _$ctx.filename;format="toUpper"$_TOPICS_H_
 
@@ -35,6 +41,10 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "Topics.h"], description=["This header
 $definitions; separator="\n"$
 
 #endif // _$ctx.filename;format="toUpper"$_TOPICS_H_
+
+$if(ctx.cdr_both)$
+#endif // FASTCDR_VERSION_MAJOR == 1
+$endif$
 >>
 
 module(ctx, parent, module, definition_list) ::= <<

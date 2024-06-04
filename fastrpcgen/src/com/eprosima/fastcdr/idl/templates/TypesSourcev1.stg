@@ -52,6 +52,14 @@ using namespace eprosima::fastcdr::exception;
 
 #include <utility>
 
+$if(ctx.anyCdr)$
+$ctx.setCdrv1Templates$
+$ctx.types:{ type | $if(type.typeCode.isStructType)$#define $type.typeCode.cScopedname$_max_cdr_typesize $type.typeCode.maxSerializedSize$ULL;$endif$}; separator="\n"$
+$ctx.unsetCdrv1Templates$
+$endif$
+
+$extensions : { extension | $extension$}; separator="\n"$
+
 $if(ctx.generateTypesC)$
 $ctx.typeCodesToDefine : { type |
 $sequences_definition(type.value)$
@@ -59,6 +67,14 @@ $sequences_definition(type.value)$
 $endif$
 
 $definitions; separator="\n"$
+
+$if(ctx.anyCdr)$
+$ctx.setCdrv1Templates$
+$ctx.types:{ type | $if(type.typeCode.isStructType)$#define $type.typeCode.cScopedname$_max_cdr_typesize $type.typeCode.maxSerializedSize$ULL;$endif$}; separator="\n"$
+$ctx.unsetCdrv1Templates$
+$endif$
+
+$extensions : { extension | $extension$}; separator="\n"$
 
 $if(ctx.cdr_both)$
 #endif // FASTCDR_VERSION_MAJOR == 1
@@ -2231,3 +2247,17 @@ member_array_default_cstring_init(ctx, name, loopvar, dims) ::= <<$if(rest(dims)
 indexName(name, loopvar) ::= <<$name$[$loopvar$]>>
 
 memberName(name) ::= <<m_$name$>>
+
+//{ RPC DDS-Gen extensions
+module_conversion(ctx, parent, modules, definition_list) ::= <<
+$modules : { module |
+namespace $module.name$ {
+}; separator="\n"$
+
+$definition_list$
+
+$reverse(modules) : { module |
+\} // namespace $module.name$
+}; separator="\n"$
+>>
+//}

@@ -21,6 +21,8 @@
 
 #include "CalculatorTopics.h"
 
+#if FASTCDR_VERSION_MAJOR == 1
+
 #include <fastcdr/Cdr.h>
 #include <fastcdr/exceptions/BadParamException.h>
 #include <rpcdds/exceptions/BadParamException.h>
@@ -78,14 +80,13 @@ size_t Calculator_addition_In::getMaxCdrSerializedSize(size_t current_alignment)
 
 size_t Calculator_addition_In::getCdrSerializedSize(const Calculator_addition_In& data, size_t current_alignment)
 {
+    static_cast<void>(data);
     size_t initial_alignment = current_alignment;
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
 
-
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
-
 
     return current_alignment - initial_alignment;
 }
@@ -158,7 +159,7 @@ size_t Calculator_addition_Request::getCdrSerializedSize(const Calculator_additi
 {
     size_t initial_alignment = current_alignment;
 
-    current_alignment += data.m_header.getCdrSerializedSize(current_alignment);
+    current_alignment += eprosima::rpc::protocol::dds::rpc::RequestHeader::getCdrSerializedSize(data.m_header, current_alignment);
     current_alignment += Calculator_addition_In::getCdrSerializedSize(data.m_addition, current_alignment);
 
     return current_alignment - initial_alignment;
@@ -221,10 +222,10 @@ size_t Calculator_addition_Out::getMaxCdrSerializedSize(size_t current_alignment
 
 size_t Calculator_addition_Out::getCdrSerializedSize(const Calculator_addition_Out& data, size_t current_alignment)
 {
+    static_cast<void>(data);
     size_t initial_alignment = current_alignment;
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
-
 
     return current_alignment - initial_alignment;
 }
@@ -491,7 +492,7 @@ size_t Calculator_addition_Reply::getCdrSerializedSize(const Calculator_addition
 {
     size_t initial_alignment = current_alignment;
 
-    current_alignment +=  data.m_header.getCdrSerializedSize(current_alignment);
+    current_alignment +=  eprosima::rpc::protocol::dds::rpc::ReplyHeader::getCdrSerializedSize(data.m_header, current_alignment);
     current_alignment += Calculator_addition_Result::getCdrSerializedSize(data.m_addition, current_alignment);
 
     return current_alignment - initial_alignment;
@@ -563,14 +564,13 @@ size_t Calculator_subtraction_In::getMaxCdrSerializedSize(size_t current_alignme
 
 size_t Calculator_subtraction_In::getCdrSerializedSize(const Calculator_subtraction_In& data, size_t current_alignment)
 {
+    static_cast<void>(data);
     size_t initial_alignment = current_alignment;
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
 
-
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
-
 
     return current_alignment - initial_alignment;
 }
@@ -643,7 +643,7 @@ size_t Calculator_subtraction_Request::getCdrSerializedSize(const Calculator_sub
 {
     size_t initial_alignment = current_alignment;
 
-    current_alignment += data.m_header.getCdrSerializedSize(current_alignment);
+    current_alignment += eprosima::rpc::protocol::dds::rpc::RequestHeader::getCdrSerializedSize(data.m_header, current_alignment);
     current_alignment += Calculator_subtraction_In::getCdrSerializedSize(data.m_subtraction, current_alignment);
 
     return current_alignment - initial_alignment;
@@ -706,10 +706,10 @@ size_t Calculator_subtraction_Out::getMaxCdrSerializedSize(size_t current_alignm
 
 size_t Calculator_subtraction_Out::getCdrSerializedSize(const Calculator_subtraction_Out& data, size_t current_alignment)
 {
+    static_cast<void>(data);
     size_t initial_alignment = current_alignment;
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
-
 
     return current_alignment - initial_alignment;
 }
@@ -976,7 +976,7 @@ size_t Calculator_subtraction_Reply::getCdrSerializedSize(const Calculator_subtr
 {
     size_t initial_alignment = current_alignment;
 
-    current_alignment +=  data.m_header.getCdrSerializedSize(current_alignment);
+    current_alignment +=  eprosima::rpc::protocol::dds::rpc::ReplyHeader::getCdrSerializedSize(data.m_header, current_alignment);
     current_alignment += Calculator_subtraction_Result::getCdrSerializedSize(data.m_subtraction, current_alignment);
 
     return current_alignment - initial_alignment;
@@ -997,3 +997,5 @@ void Calculator_subtraction_Reply::deserialize(eprosima::fastcdr::Cdr &dcdr)
 
 
 
+
+#endif // FASTCDR_VERSION_MAJOR == 1

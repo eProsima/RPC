@@ -106,6 +106,4 @@ public:
 
 #endif // _RPC_GENERATED_CALCULATOR_H_
 
-
-
 #endif // FASTCDR_VERSION_MAJOR > 1

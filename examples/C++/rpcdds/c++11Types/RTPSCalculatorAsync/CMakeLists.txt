@@ -31,9 +31,9 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANG OR
     endif()
 endif()
 
-set(RTPSCALCULATOR_COMMON_SOURCES_CXX CalculatorTopicsPlugin.cxx CalculatorTopics.cxx CalculatorDDSProtocol.cxx CalculatorDDSAsyncSupport.cxx)
+set(RTPSCALCULATOR_COMMON_SOURCES_CXX CalculatorTopicsPlugin.cxx CalculatorTopics.cxx CalculatorTopicsv1.cxx CalculatorDDSProtocol.cxx CalculatorDDSAsyncSupport.cxx)
 message(STATUS "Configuring RTPSCalculator libraries...")
-set(RTPSCALCULATOR_SOURCES_CXX Calculator.cxx)
+set(RTPSCALCULATOR_SOURCES_CXX Calculator.cxx Calculatorv1.cxx)
 set(RTPSCALCULATORCLIENT_SOURCES_CXX CalculatorProxy.cxx)
 set(RTPSCALCULATORSERVER_SOURCES_CXX CalculatorServer.cxx)
 
@@ -53,8 +53,8 @@ target_include_directories(CalculatorAsyncServer PRIVATE ${rpcdds_INCLUDE_DIR} $
 target_link_libraries(CalculatorAsyncServer fastrtps fastcdr)
 
 message(STATUS "Configuring RTPSCalculator Server and Client examples...")
-set(RTPSCALCULATORSERVEREXAMPLE_SOURCES_CXX CalculatorServerExample.cxx CalculatorServerImplExample.cxx) 
-set(RTPSCALCULATORCLIENTEXAMPLE_SOURCES_CXX CalculatorClientExample.cxx) 
+set(RTPSCALCULATORSERVEREXAMPLE_SOURCES_CXX CalculatorServerExample.cxx CalculatorServerImplExample.cxx)
+set(RTPSCALCULATORCLIENTEXAMPLE_SOURCES_CXX CalculatorClientExample.cxx)
 
 add_executable(CalculatorAsyncServerExample ${RTPSCALCULATORSERVEREXAMPLE_SOURCES_CXX})
 target_include_directories(CalculatorAsyncServerExample PRIVATE ${Boost_INCLUDE_DIR})

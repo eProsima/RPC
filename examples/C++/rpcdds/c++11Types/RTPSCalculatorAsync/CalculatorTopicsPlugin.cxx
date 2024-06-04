@@ -23,8 +23,10 @@
 
 #include <fastdds/rtps/common/CdrSerialization.hpp>
 
+#if FASTCDR_VERSION_MAJOR > 1
 // Include auxiliary functions like for serializing/deserializing.
 #include "CalculatorTopicsCdrAux.ipp"
+#endif
 
 using SerializedPayload_t = eprosima::fastrtps::rtps::SerializedPayload_t;
 using InstanceHandle_t = eprosima::fastrtps::rtps::InstanceHandle_t;

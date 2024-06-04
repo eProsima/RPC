@@ -104,7 +104,6 @@ $endif$
 $definitions; separator="\n"$
 
 #endif // _RPC_GENERATED_$ctx.headerGuardName$_H_
-$"\n"$
 
 $if(ctx.cdr_both)$
 #endif // FASTCDR_VERSION_MAJOR > 1

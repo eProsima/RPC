@@ -30,6 +30,7 @@ set(proto_dep_source_files
     utils/dds/Middleware.cpp
     transports/AsyncTask.cpp
     protocols/dds/MessageHeader.cpp
+    protocols/dds/MessageHeaderv1.cpp
     protocols/dds/MessageHeaderPlugin.cpp
     transports/dds/Transport.cpp
     transports/dds/RTPSTransport.cpp
