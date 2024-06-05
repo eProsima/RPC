@@ -196,8 +196,6 @@ public:
 
     $exception.members:{ member |$public_member_declaration(member=member)$}; separator="\n"$
 
-    $size_functions(exception)$
-
     $serialization_functions(exception)$
 
 private:

@@ -55,6 +55,7 @@ using namespace eprosima::fastcdr::exception;
 $if(ctx.anyCdr)$
 $ctx.setCdrv1Templates$
 $ctx.types:{ type | $if(type.typeCode.isStructType)$#define $type.typeCode.cScopedname$_max_cdr_typesize $type.typeCode.maxSerializedSize$ULL;$endif$}; separator="\n"$
+$ctx.exceptions:{ exception | #define $exception.cScopedname$_max_cdr_typesize $exception.maxSerializedSize$ULL;}; separator="\n"$
 $ctx.unsetCdrv1Templates$
 $endif$
 
@@ -67,12 +68,6 @@ $sequences_definition(type.value)$
 $endif$
 
 $definitions; separator="\n"$
-
-$if(ctx.anyCdr)$
-$ctx.setCdrv1Templates$
-$ctx.types:{ type | $if(type.typeCode.isStructType)$#define $type.typeCode.cScopedname$_max_cdr_typesize $type.typeCode.maxSerializedSize$ULL;$endif$}; separator="\n"$
-$ctx.unsetCdrv1Templates$
-$endif$
 
 $extensions : { extension | $extension$}; separator="\n"$
 
@@ -107,33 +102,40 @@ $exports; separator="\n"$
 
 exception(ctx, parent, exception) ::= <<
 $if(ctx.printexception)$
-$exception.scopedname$::$exception.name$() : UserException()
+$exception.scopedname$::$exception.name$()
+    : UserException()
 {
     $exception.members : { member |$member_default_init(ctx=ctx, member=member, loopvar=ctx.newLoopVarName)$}; separator="\n"$
 }
 
-$exception.scopedname$::$exception.name$(const $exception.name$ &x) : UserException(x)
+$exception.scopedname$::$exception.name$(
+        const $exception.scopedname$ &x)
+    : UserException(x)
 {
     $exception.members : { member |$member_copy(ctx=ctx, member=member)$}; separator="\n"$
 }
 
-$exception.scopedname$::$exception.name$($exception.name$&& x) : UserException(std::move(x))
+$exception.scopedname$::$exception.name$(
+        $exception.scopedname$&& x)
+    : UserException(std::move(x))
 {
     $exception.members : { member |$member_move(member=member)$}; separator="\n"$
 }
 
-$exception.scopedname$& $exception.scopedname$::operator=(const $exception.name$ &x)
+$exception.scopedname$& $exception.scopedname$::operator=(
+        const $exception.scopedname$ &x)
 {
-	UserException::operator=(x);
+    UserException::operator=(x);
     $exception.members : { member |$member_copy(ctx=ctx, member=member)$}; separator="\n"$
-	return *this;
+    return *this;
 }
 
-$exception.scopedname$& $exception.scopedname$::operator=($exception.name$&& x)
+$exception.scopedname$& $exception.scopedname$::operator=(
+        $exception.scopedname$&& x)
 {
-	UserException::operator=(std::move(x));
-	$exception.members : { member |$member_move(member=member)$}; separator="\n"$
-	return *this;
+    UserException::operator=(std::move(x));
+    $exception.members : { member |$member_move(member=member)$}; separator="\n"$
+    return *this;
 }
 
 $exception.scopedname$::~$exception.name$() throw()
@@ -147,16 +149,16 @@ void $exception.scopedname$::raise() const
 }
 
 $if(ctx.anyCdr)$
-size_t $exception.scopedname$::getMaxCdrSerializedSize(size_t current_alignment)
+size_t $exception.scopedname$::getMaxCdrSerializedSize(
+        size_t current_alignment)
 {
-    size_t initial_alignment = current_alignment;
-
-    $exception.members : { member |$max_serialized_size(ctx=ctx, typecode=member.typecode, var="current_alignment")$}; separator="\n"$
-
-    return current_alignment - initial_alignment;
+    static_cast<void>(current_alignment);
+    return $exception.cScopedname$_max_cdr_typesize;
 }
 
-size_t $exception.scopedname$::getCdrSerializedSize(const $exception.scopedname$& data, size_t current_alignment)
+size_t $exception.scopedname$::getCdrSerializedSize(
+        const $exception.scopedname$& data,
+        size_t current_alignment)
 {
     (void)data;
     size_t initial_alignment = current_alignment;
@@ -169,12 +171,14 @@ size_t $exception.scopedname$::getCdrSerializedSize(const $exception.scopedname$
 $endif$
 
 $if(ctx.cdr)$
-void $exception.scopedname$::serialize(eprosima::fastcdr::Cdr &scdr) const
+void $exception.scopedname$::serialize(
+        eprosima::fastcdr::Cdr &scdr) const
 {
     $exception.members : { member |$object_serialization(ctx=ctx, object=member, preffix="m_")$}; separator="\n"$
 }
 
-void $exception.scopedname$::deserialize(eprosima::fastcdr::Cdr &dcdr)
+void $exception.scopedname$::deserialize(
+        eprosima::fastcdr::Cdr &dcdr)
 {
     $exception.members : { member |$object_deserialization(ctx=ctx, object=member, preffix="m_")$}; separator="\n"$
 }
@@ -182,12 +186,14 @@ void $exception.scopedname$::deserialize(eprosima::fastcdr::Cdr &dcdr)
 $endif$
 
 $if(ctx.fastcdr)$
-void $exception.scopedname$::serialize(eprosima::fastcdr::FastCdr &scdr) const
+void $exception.scopedname$::serialize(
+        eprosima::fastcdr::FastCdr &scdr) const
 {
     $exception.members : { member |$object_serialization(ctx=ctx, object=member, preffix="m_")$}; separator="\n"$
 }
 
-void $exception.scopedname$::deserialize(eprosima::fastcdr::FastCdr &dcdr)
+void $exception.scopedname$::deserialize(
+        eprosima::fastcdr::FastCdr &dcdr)
 {
     $exception.members : { member |$object_deserialization(ctx=ctx, object=member, preffix="m_")$}; separator="\n"$
 }

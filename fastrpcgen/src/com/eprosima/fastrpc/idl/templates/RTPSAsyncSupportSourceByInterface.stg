@@ -77,7 +77,7 @@ void $interface.name$_$operation.name$Task::execute()
                 getObject().$operation.name$($extractParams(params=[operation.outputparam, operation.rettypeparam])$);
                 break;
             $operation.exceptions : { exception |
-            case $exception.md5$:
+            case static_cast<int32_t>($exception.md5$):
                 {
                 $exception.scopedname$ ex;
                 // TODO No permite arrays

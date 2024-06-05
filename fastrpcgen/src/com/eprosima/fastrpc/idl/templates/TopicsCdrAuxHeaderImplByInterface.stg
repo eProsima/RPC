@@ -20,8 +20,8 @@ import "TopicsCdrAuxHeaderImplCommon.stg"
 main(ctx, definitions, extensions) ::= <<
 $fileHeader(ctx=ctx, file=[ctx.filename, "CdrAux.ipp"], description=["This source file contains some declarations of CDR related functions."])$
 
-#ifndef _RPC_DDS_GENERATED_$ctx.headerGuardName$CDRAUX_IPP_
-#define _RPC_DDS_GENERATED_$ctx.headerGuardName$CDRAUX_IPP_
+#ifndef _RPC_DDS_GENERATED_$ctx.headerGuardName$TOPICSCDRAUX_IPP_
+#define _RPC_DDS_GENERATED_$ctx.headerGuardName$TOPICSCDRAUX_IPP_
 
 $if(ctx.cdr)$
 #include <fastcdr/Cdr.h>
@@ -47,7 +47,7 @@ $definitions; separator="\n"$
 } // namespace fastcdr
 } // namespace eprosima
 
-#endif // _RPC_DDS_GENERATED_$ctx.headerGuardName$CDRAUX_IPP_
+#endif // _RPC_DDS_GENERATED_$ctx.headerGuardName$TOPICSCDRAUX_IPP_
 $"\n"$
 >>
 

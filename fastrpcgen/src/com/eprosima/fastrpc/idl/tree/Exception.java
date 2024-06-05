@@ -1,11 +1,14 @@
 package com.eprosima.fastrpc.idl.tree;
 
+import com.eprosima.fastrpc.idl.parser.typecode.TypeCode;
+import com.eprosima.idl.parser.typecode.Member;
+
 import java.security.MessageDigest;
 import org.antlr.v4.runtime.Token;
 
 public class Exception extends com.eprosima.idl.parser.tree.Exception
 {
-	public Exception(String scopeFile, boolean isInScope, String scope, String name, Token tk)
+    public Exception(String scopeFile, boolean isInScope, String scope, String name, Token tk)
     {
         super(scopeFile, isInScope, scope, name, tk);
     }
@@ -28,7 +31,25 @@ public class Exception extends com.eprosima.idl.parser.tree.Exception
         {
             System.out.println("ERROR<Operation::getMd5>: " + ex.getMessage());
         }
-        
+
         return null;
+    }
+
+    public String getMaxSerializedSize()
+    {
+        return Long.toString(maxSerializedSize(0));
+    }
+
+    private long maxSerializedSize(
+            long current_alignment)
+    {
+        long initial_alignment = current_alignment;
+
+        for (Member member : getMembers())
+        {
+            current_alignment += ((TypeCode)member.getTypecode()).maxSerializedSize(current_alignment);
+        }
+
+        return current_alignment - initial_alignment;
     }
 }

@@ -1348,7 +1348,7 @@ public class fastrpcgen
                         }
                     }
 
-                if (ctx.isThereIsStructOrUnion())
+                if (ctx.isThereIsStructOrUnionOrException())
                 {
                     returnedValue &=
                         Utils.writeFile(m_outputDir + onlyFileName + "CdrAux.ipp",

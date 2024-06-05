@@ -389,7 +389,9 @@ size_t $interface.scopedname$_$operation.name$_Result::getMaxCdrSerializedSize(s
     reset_alignment += $interface.scopedname$_$operation.name$_Out::getMaxCdrSerializedSize(reset_alignment);
 
     if(union_max_size_serialized < reset_alignment)
+    {
         union_max_size_serialized = reset_alignment;
+    \}
 
     $operation.exceptions : { exception |
     reset_alignment = current_alignment;
@@ -397,7 +399,9 @@ size_t $interface.scopedname$_$operation.name$_Result::getMaxCdrSerializedSize(s
     reset_alignment += $exception.scopedname$::getMaxCdrSerializedSize(reset_alignment);
 
     if(union_max_size_serialized < reset_alignment)
+    {
         union_max_size_serialized = reset_alignment;
+    \}
 
     }; separator="\n"$
 

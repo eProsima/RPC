@@ -326,7 +326,9 @@ size_t Calculator_addition_Result::getMaxCdrSerializedSize(size_t current_alignm
     reset_alignment += Calculator_addition_Out::getMaxCdrSerializedSize(reset_alignment);
 
     if(union_max_size_serialized < reset_alignment)
+    {
         union_max_size_serialized = reset_alignment;
+    }
 
 
     return union_max_size_serialized - initial_alignment;
@@ -679,7 +681,9 @@ size_t Calculator_subtraction_Result::getMaxCdrSerializedSize(size_t current_ali
     reset_alignment += Calculator_subtraction_Out::getMaxCdrSerializedSize(reset_alignment);
 
     if(union_max_size_serialized < reset_alignment)
+    {
         union_max_size_serialized = reset_alignment;
+    }
 
 
     return union_max_size_serialized - initial_alignment;

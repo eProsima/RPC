@@ -192,6 +192,17 @@ public:
 
     $exception.members:{ member |$public_member_declaration(member=member)$}; separator="\n"$
 
+    $if(ctx.anyCdr)$
+    /*!
+    * @brief This function returns the maximum serialized size of an object
+    * depending on the buffer alignment.
+    * @param current_alignment Buffer alignment.
+    * @return Maximum serialized size.
+    */
+    eProsima_user_DllExport static size_t getMaxCdrSerializedSize(
+            size_t current_alignment = 0);
+    $endif$
+
     $size_functions(exception)$
 
     $serialization_functions(exception)$

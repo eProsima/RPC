@@ -231,7 +231,7 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$interface.formatedSco
                     $[operation.outputparam, operation.rettypeparam] : { param |$extractParamFromTopic(param=param, varname=replyOperationUnionDataAccessByOperation(operation=operation, varname="retInstance", dataname="result"), isReply="yes")$};separator="\n"$
                     break;
                 $operation.exceptions : { exception |
-                case $exception.md5$:
+                case static_cast<int32_t>($exception.md5$):
                     {
                     $exception.scopedname$ ex;
                     // TODO No permite arrays.

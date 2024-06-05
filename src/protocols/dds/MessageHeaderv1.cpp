@@ -1205,16 +1205,5 @@ eprosima::rpc::protocol::dds::rpc::RemoteExceptionCode_t& ReplyHeader::remoteEx(
 } // namespace eprosima
 
 
-#define eprosima_rpc_protocol_dds_rpc_ReplyHeader_max_cdr_typesize 48ULL;
-#define eprosima_rpc_protocol_dds_GUID_t_max_cdr_typesize 24ULL;
-#define eprosima_rpc_protocol_dds_SequenceNumber_t_max_cdr_typesize 12ULL;
-
-
-#define eprosima_rpc_protocol_dds_rpc_RequestHeader_max_cdr_typesize 304ULL;
-#define eprosima_rpc_protocol_dds_EntityId_t_max_cdr_typesize 8ULL;
-
-
-#define eprosima_rpc_protocol_dds_SampleIdentity_max_cdr_typesize 40ULL;
-
 
 #endif // FASTCDR_VERSION_MAJOR == 1

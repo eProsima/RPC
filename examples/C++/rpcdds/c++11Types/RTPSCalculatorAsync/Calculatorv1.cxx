@@ -42,5 +42,4 @@ using namespace eprosima::fastcdr::exception;
 
 
 
-
 #endif // FASTCDR_VERSION_MAJOR == 1

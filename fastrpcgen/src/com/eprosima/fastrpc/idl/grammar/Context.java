@@ -296,9 +296,14 @@ public abstract class Context extends com.eprosima.idl.context.Context implement
         return m_fileNameUpper;
     }
 
-    public boolean isThereIsStructOrUnion()
+    public boolean isThereIsStructOrUnionOrException()
     {
-        for (TypeDeclaration type : m_types.values())
+        if (0 < getExceptions().size())
+        {
+            return true;
+        }
+
+        for (TypeDeclaration type : getTypes())
         {
             if (type.getTypeCode() instanceof StructTypeCode ||
                     type.getTypeCode() instanceof UnionTypeCode)

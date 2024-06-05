@@ -1,9 +1,27 @@
 #include <config.h>
+#include <protocols/dds/MessageHeader.h>
+
+#if defined(_WIN32)
+#if defined(EPROSIMA_USER_DLL_EXPORT)
+#define eProsima_user_DllExport __declspec( dllexport )
+#else
+#define eProsima_user_DllExport
+#endif  // EPROSIMA_USER_DLL_EXPORT
+#else
+#define eProsima_user_DllExport
+#endif  // _WIN32
+
+#include <fastcdr/config.h>
+
+#if FASTCDR_VERSION_MAJOR > 1
+
+#include "MessageHeaderCdrAux.ipp"
+
+#endif // if FASTCDR_VERSION_MAJOR > 1
 
 #if RPC_WITH_RTIDDS
 
 #include <protocols/dds/MessageHeaderPlugin.h>
-#include <protocols/dds/MessageHeader.h>
 #include <utils/Messages.h>
 
 #include <utils/dds/Middleware.h>

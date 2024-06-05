@@ -59,10 +59,6 @@ $ctx.typeCodesToDefine : { type | $sequences_definition(type.value)$ }; separato
 $endif$
 
 $definitions; separator="\n"$
-$if(ctx.thereIsStructOrUnion)$
-// Include auxiliary functions like for serializing/deserializing.
-#include "$ctx.filename$CdrAux.ipp"
-$endif$
 
 $if(ctx.cdr_both)$
 #endif // FASTCDR_VERSION_MAJOR > 1
@@ -84,33 +80,40 @@ $definitions; separator="\n"$
 
 exception(ctx, parent, exception) ::= <<
 $if(ctx.printexception)$
-$exception.scopedname$::$exception.name$() : UserException()
+$exception.scopedname$::$exception.name$()
+    : UserException()
 {
     $exception.members : { member |$member_default_init(ctx=ctx, member=member, loopvar=ctx.newLoopVarName)$}; separator="\n"$
 }
 
-$exception.scopedname$::$exception.name$(const $exception.name$ &x) : UserException(x)
+$exception.scopedname$::$exception.name$(
+        const $exception.scopedname$ &x)
+    : UserException(x)
 {
     $exception.members : { member |$member_copy(ctx=ctx, member=member)$}; separator="\n"$
 }
 
-$exception.scopedname$::$exception.name$($exception.name$&& x) : UserException(std::move(x))
+$exception.scopedname$::$exception.name$(
+        $exception.scopedname$&& x)
+    : UserException(std::move(x))
 {
     $exception.members : { member |$member_move(member=member)$}; separator="\n"$
 }
 
-$exception.scopedname$& $exception.scopedname$::operator=(const $exception.name$ &x)
+$exception.scopedname$& $exception.scopedname$::operator=(
+        const $exception.scopedname$ &x)
 {
-	UserException::operator=(x);
+    UserException::operator=(x);
     $exception.members : { member |$member_copy(ctx=ctx, member=member)$}; separator="\n"$
-	return *this;
+    return *this;
 }
 
-$exception.scopedname$& $exception.scopedname$::operator=($exception.name$&& x)
+$exception.scopedname$& $exception.scopedname$::operator=(
+        $exception.scopedname$&& x)
 {
-	UserException::operator=(std::move(x));
-	$exception.members : { member |$member_move(member=member)$}; separator="\n"$
-	return *this;
+    UserException::operator=(std::move(x));
+    $exception.members : { member |$member_move(member=member)$}; separator="\n"$
+    return *this;
 }
 
 $exception.scopedname$::~$exception.name$() throw()
