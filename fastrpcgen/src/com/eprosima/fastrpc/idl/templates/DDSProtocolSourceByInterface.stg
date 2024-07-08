@@ -303,7 +303,8 @@ $endif$
 
 $interface.all_operations : { operation |
 $if(ctx.client)$
-$paramRetType(operation.rettype)$ $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$)
+$paramRetType(operation.rettype)$ $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$(
+        $paramDeclarations(params=operation.parameters)$)
 {
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
     $varDecl(variable=operation.rettypeparam)$
@@ -382,7 +383,8 @@ $paramRetType(operation.rettype)$ $ctx.filename$Protocol::$interface.formatedSco
 $endif$
 
 $if(!operation.oneway)$
-void $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$_async($interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$)
+void $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$_async(
+        $interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, initialSeparator=", ")$)
 {
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
     $interface.scopedname$_Request instance;

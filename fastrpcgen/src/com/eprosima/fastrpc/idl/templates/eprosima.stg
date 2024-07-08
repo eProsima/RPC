@@ -37,13 +37,13 @@ fileHeader(ctx, file, description) ::= <<
  */
 >>
 
-paramTypeByValue(typecode) ::= <<
+paramTypeByValue(typecode) ::= <%
 $if(typecode.primitive)$
 $typecode.cppTypename$
 $else$
 const $typecode.cppTypename$&
 $endif$
->>
+%>
 
 varDecl(variable, create="") ::= <<
 $if(variable)$

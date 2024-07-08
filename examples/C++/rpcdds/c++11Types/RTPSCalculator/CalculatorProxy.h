@@ -62,35 +62,25 @@ class RPCUSERDllExport CalculatorProxy : public eprosima::rpc::proxy::Proxy, pub
         virtual ~CalculatorProxy();
 
                 //! @brief Proxy method for the operation addition.
-                int32_t
-         addition(/*in*/ 
-        int32_t
-         value1, /*in*/ 
-        int32_t
-         value2);
+                int32_t addition(
+                        /*in*/ int32_t value1,
+                        /*in*/ int32_t value2);
 
                 //! @brief Proxy asynchronous method for the operation addition.
-                void addition_async(Calculator_additionCallbackHandler &obj, /*in*/ 
-        int32_t
-         value1, /*in*/ 
-        int32_t
-         value2);
+                void addition_async(
+                        Calculator_additionCallbackHandler &obj, /*in*/ int32_t value1,
+                                                                 /*in*/ int32_t value2);
 
 
                 //! @brief Proxy method for the operation subtraction.
-                int32_t
-         subtraction(/*in*/ 
-        int32_t
-         value1, /*in*/ 
-        int32_t
-         value2);
+                int32_t subtraction(
+                        /*in*/ int32_t value1,
+                        /*in*/ int32_t value2);
 
                 //! @brief Proxy asynchronous method for the operation subtraction.
-                void subtraction_async(Calculator_subtractionCallbackHandler &obj, /*in*/ 
-        int32_t
-         value1, /*in*/ 
-        int32_t
-         value2);
+                void subtraction_async(
+                        Calculator_subtractionCallbackHandler &obj, /*in*/ int32_t value1,
+                                                                    /*in*/ int32_t value2);
 
 
 

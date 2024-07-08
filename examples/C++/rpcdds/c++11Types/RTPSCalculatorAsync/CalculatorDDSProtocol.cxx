@@ -237,12 +237,9 @@ void CalculatorProtocol::Calculator_serve(eprosima::rpc::protocol::Protocol &pro
     };
 }
 
-int32_t
- CalculatorProtocol::Calculator_addition(/*in*/ 
-int32_t
- value1, /*in*/ 
-int32_t
- value2)
+int32_t CalculatorProtocol::Calculator_addition(
+        /*in*/ int32_t value1,
+        /*in*/ int32_t value2)
 {
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
     int32_t  return_ = 0;
@@ -301,11 +298,9 @@ int32_t
     return return_;
 }
 
-void CalculatorProtocol::Calculator_addition_async(Calculator_additionCallbackHandler &obj, /*in*/ 
-int32_t
- value1, /*in*/ 
-int32_t
- value2)
+void CalculatorProtocol::Calculator_addition_async(
+        Calculator_additionCallbackHandler &obj, /*in*/ int32_t value1,
+                                                 /*in*/ int32_t value2)
 {
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
     Calculator_Request instance;
@@ -335,12 +330,9 @@ int32_t
 }
 
 
-int32_t
- CalculatorProtocol::Calculator_subtraction(/*in*/ 
-int32_t
- value1, /*in*/ 
-int32_t
- value2)
+int32_t CalculatorProtocol::Calculator_subtraction(
+        /*in*/ int32_t value1,
+        /*in*/ int32_t value2)
 {
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
     int32_t  return_ = 0;
@@ -399,11 +391,9 @@ int32_t
     return return_;
 }
 
-void CalculatorProtocol::Calculator_subtraction_async(Calculator_subtractionCallbackHandler &obj, /*in*/ 
-int32_t
- value1, /*in*/ 
-int32_t
- value2)
+void CalculatorProtocol::Calculator_subtraction_async(
+        Calculator_subtractionCallbackHandler &obj, /*in*/ int32_t value1,
+                                                    /*in*/ int32_t value2)
 {
     ReturnMessage retcode = CLIENT_INTERNAL_ERROR;
     Calculator_Request instance;

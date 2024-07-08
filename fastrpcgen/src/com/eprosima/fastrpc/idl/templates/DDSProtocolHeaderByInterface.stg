@@ -119,14 +119,16 @@ $if(ctx.client)$
  * @brief This method implements the proxy part of the protocol for the operation $operation.name$.
  * It is called from the Proxy interface.
  */
-$paramRetType(operation.rettype)$ $interface.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$);
+$paramRetType(operation.rettype)$ $interface.formatedScopedname$_$operation.name$(
+        $paramDeclarations(params=operation.parameters)$);
 
 $if(!operation.oneway)$
 /*!
  * @brief This asynchronous method implements the proxy part of the protocol for the operation $operation.name$.
  * It is called from the Proxy interface.
  */
-void $interface.formatedScopedname$_$operation.name$_async($interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$);
+void $interface.formatedScopedname$_$operation.name$_async(
+        $interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, initialSeparator=", ")$);
 
 $endif$
 $endif$

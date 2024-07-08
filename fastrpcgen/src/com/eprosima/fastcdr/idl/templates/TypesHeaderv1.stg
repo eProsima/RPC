@@ -1,4 +1,4 @@
-// Copyright 2016 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+// Copyright 2024 Proyectos y Sistemas de Mantenimiento SL (eProsima).
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -217,7 +217,8 @@ $endif$
 
 operation(ctx, parent, operation, param_list) ::= <<
 $if(ctx.printoperation)$
-virtual $paramRetType(operation.rettype)$ $operation.name$($paramDeclarations(params=operation.parameters)$) = 0;
+virtual $paramRetType(operation.rettype)$ $operation.name$(
+        $paramDeclarations(params=operation.parameters)$) = 0;
 
 $endif$
 >>

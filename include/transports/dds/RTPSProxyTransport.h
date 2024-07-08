@@ -121,7 +121,6 @@ public:
 
 private:
 
-    //TODO TEMPORAL
     bool connect()
     {
         return false;

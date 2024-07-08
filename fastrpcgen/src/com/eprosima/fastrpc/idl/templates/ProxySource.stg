@@ -37,7 +37,8 @@ $interface.name$Proxy::~$interface.name$Proxy()
 }
 
 $interface.all_operations : {operation|
-$paramRetType(operation.rettype)$ $interface.name$Proxy::$operation.name$($paramDeclarations(params=operation.parameters)$)
+$paramRetType(operation.rettype)$ $interface.name$Proxy::$operation.name$(
+        $paramDeclarations(params=operation.parameters)$)
 {
     $if(operation.rettypeparam)$
     $paramRetType(operation.rettype)$ $operation.rettypeparam.name$ =
@@ -50,9 +51,10 @@ $paramRetType(operation.rettype)$ $interface.name$Proxy::$operation.name$($param
 
 $if(ctx.dds)$
 $if(!operation.oneway)$
-void $interface.name$Proxy::$operation.name$_async($interface.name$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$)
+void $interface.name$Proxy::$operation.name$_async
+        ($interface.name$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, initialSeparator=", ")$)
 {
-    dynamic_cast<eprosima::rpc::protocol::$ctx.filename$Protocol&>(getProtocol()).$interface.formatedScopedname$_$operation.name$_async(obj$extractParams(params=operation.inputparam, separatorInicial=", ")$);
+    dynamic_cast<eprosima::rpc::protocol::$ctx.filename$Protocol&>(getProtocol()).$interface.formatedScopedname$_$operation.name$_async(obj$extractParams(params=operation.inputparam, initialSeparator=", ")$);
 \}
 
 $endif$

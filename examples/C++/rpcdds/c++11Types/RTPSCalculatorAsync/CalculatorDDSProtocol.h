@@ -92,46 +92,34 @@ namespace eprosima
                          * @brief This method implements the proxy part of the protocol for the operation addition.
                          * It is called from the Proxy interface.
                          */
-                        RPCUSERDllExport 
-                        int32_t
-                         Calculator_addition(/*in*/ 
-                        int32_t
-                         value1, /*in*/ 
-                        int32_t
-                         value2);
+                        RPCUSERDllExport int32_t Calculator_addition(
+                                 /*in*/ int32_t value1,
+                                 /*in*/ int32_t value2);
 
                         /*!
                          * @brief This asynchronous method implements the proxy part of the protocol for the operation addition.
                          * It is called from the Proxy interface.
                          */
-                        RPCUSERDllExport void Calculator_addition_async(Calculator_additionCallbackHandler &obj, /*in*/ 
-                        int32_t
-                         value1, /*in*/ 
-                        int32_t
-                         value2);
+                        RPCUSERDllExport void Calculator_addition_async(
+                                Calculator_additionCallbackHandler &obj, /*in*/ int32_t value1,
+                                                                         /*in*/ int32_t value2);
 
 
                         /*!
                          * @brief This method implements the proxy part of the protocol for the operation subtraction.
                          * It is called from the Proxy interface.
                          */
-                        RPCUSERDllExport 
-                        int32_t
-                         Calculator_subtraction(/*in*/ 
-                        int32_t
-                         value1, /*in*/ 
-                        int32_t
-                         value2);
+                        RPCUSERDllExport int32_t Calculator_subtraction(
+                                 /*in*/ int32_t value1,
+                                 /*in*/ int32_t value2);
 
                         /*!
                          * @brief This asynchronous method implements the proxy part of the protocol for the operation subtraction.
                          * It is called from the Proxy interface.
                          */
-                        RPCUSERDllExport void Calculator_subtraction_async(Calculator_subtractionCallbackHandler &obj, /*in*/ 
-                        int32_t
-                         value1, /*in*/ 
-                        int32_t
-                         value2);
+                        RPCUSERDllExport void Calculator_subtraction_async(
+                                Calculator_subtractionCallbackHandler &obj, /*in*/ int32_t value1,
+                                                                            /*in*/ int32_t value2);
 
 
 

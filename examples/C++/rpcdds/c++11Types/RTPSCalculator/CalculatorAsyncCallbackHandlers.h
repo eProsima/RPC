@@ -37,9 +37,8 @@ class Calculator_additionCallbackHandler
         /*!
          * This function is called when is received the reply from the server.
          */
-        virtual void addition(/*out*/ 
-int32_t
- return_) = 0;
+        virtual void addition(
+                /*out*/ int32_t return_) = 0;
 
         /*!
          * @brief This function is called when an exception occurs.
@@ -62,9 +61,8 @@ class Calculator_subtractionCallbackHandler
         /*!
          * This function is called when is received the reply from the server.
          */
-        virtual void subtraction(/*out*/ 
-int32_t
- return_) = 0;
+        virtual void subtraction(
+                /*out*/ int32_t return_) = 0;
 
         /*!
          * @brief This function is called when an exception occurs.

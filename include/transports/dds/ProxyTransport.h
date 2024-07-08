@@ -154,7 +154,6 @@ protected:
 
 private:
 
-    //TODO TEMPORAL
     bool connect()
     {
         return false;

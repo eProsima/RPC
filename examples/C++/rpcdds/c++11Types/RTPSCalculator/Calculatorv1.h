@@ -79,22 +79,14 @@ class CALCULATOR_DllAPI Calculator
 {
 public:
 
-    virtual 
-    int32_t
-     addition(/*in*/ 
-    int32_t
-     value1, /*in*/ 
-    int32_t
-     value2) = 0;
+    virtual int32_t addition(
+            /*in*/ int32_t value1,
+            /*in*/ int32_t value2) = 0;
 
 
-    virtual 
-    int32_t
-     subtraction(/*in*/ 
-    int32_t
-     value1, /*in*/ 
-    int32_t
-     value2) = 0;
+    virtual int32_t subtraction(
+            /*in*/ int32_t value1,
+            /*in*/ int32_t value2) = 0;
 
 
 };

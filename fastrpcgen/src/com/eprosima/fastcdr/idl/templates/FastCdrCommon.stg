@@ -14,32 +14,24 @@
 
 group FastCdrCommon;
 
-paramRetType(typecode) ::= <<
+paramRetType(typecode) ::= <%
 $if(typecode)$
 $typecode.cppTypename$
 $else$
 void
 $endif$
->>
+%>
 
-paramTypeByValue(typecode) ::= <<
-$if(typecode.primitive)$
-$typecode.cppTypename$
-$else$
-const $typecode.cppTypename$&
-$endif$
->>
-
-paramTypeByRef(typecode) ::= <<
+paramTypeByRef(typecode) ::= <%
 $typecode.cppTypename$&
+%>
+
+paramDeclarations(params, initialSeparator="") ::= <<
+$if(params)$$initialSeparator$$endif$$params : {param | /*$param.comment$*/ $if(param.output)$$paramTypeByRef(typecode=param.typecode)$$else$$paramTypeByValue(typecode=param.typecode)$$endif$ $param.name$}; anchor, separator=",\n"$
 >>
 
-paramDeclarations(params, separatorInicial="") ::= <<
-$if(params)$$separatorInicial$$endif$$params : {param | /*$param.comment$*/ $if(param.output)$$paramTypeByRef(typecode=param.typecode)$$else$$paramTypeByValue(typecode=param.typecode)$$endif$ $param.name$}; separator=", "$
->>
-
-paramDeclarationsByValue(params, separatorInicial="") ::= <<
-$if(params)$$separatorInicial$$endif$$params : {param | /*$param.comment$*/ $paramTypeByValue(typecode=param.typecode)$ $param.name$}; separator=", "$
+paramDeclarationsByValue(params, initialSeparator="") ::= <<
+$if(params)$$initialSeparator$$endif$$params : {param | /*$param.comment$*/ $paramTypeByValue(typecode=param.typecode)$ $param.name$}; anchor, separator=",\n"$
 >>
 
 object_serialization(ctx, object) ::= <<

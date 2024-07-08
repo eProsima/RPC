@@ -74,12 +74,14 @@ class RPCUSERDllExport $interface.name$Proxy : public eprosima::rpc::proxy::Prox
 
         $interface.all_operations : { operation |
         //! @brief Proxy method for the operation $operation.name$.
-        $paramRetType(operation.rettype)$ $operation.name$($paramDeclarations(params=operation.parameters)$);
+        $paramRetType(operation.rettype)$ $operation.name$(
+                $paramDeclarations(params=operation.parameters)$);
 
         $if(ctx.dds)$
         $if(!operation.oneway)$
         //! @brief Proxy asynchronous method for the operation $operation.name$.
-        void $operation.name$_async($interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$);
+        void $operation.name$_async(
+                $interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, initialSeparator=", ")$);
 
         $endif$
         $endif$

@@ -41,7 +41,7 @@ $endif$
 #include <fastcdr/xcdr/external.hpp>
 #include <fastcdr/xcdr/optional.hpp>
 
-// TODO Poner en el contexto.
+$! TODO Poner en el contexto. !$
 $if(ctx.printexception)$
 #include <$ctx.product$/exceptions/UserException.h>
 $endif$
@@ -207,7 +207,8 @@ $endif$
 
 operation(ctx, parent, operation, param_list) ::= <<
 $if(ctx.printoperation)$
-virtual $paramRetType(operation.rettype)$ $operation.name$($paramDeclarations(params=operation.parameters)$) = 0;
+virtual $paramRetType(operation.rettype)$ $operation.name$(
+        $paramDeclarations(params=operation.parameters)$) = 0;
 
 $endif$
 >>

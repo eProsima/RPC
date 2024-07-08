@@ -38,7 +38,6 @@
 #include <fastcdr/xcdr/external.hpp>
 #include <fastcdr/xcdr/optional.hpp>
 
-// TODO Poner en el contexto.
 #include "../../exceptions/UserException.h"
 
 
