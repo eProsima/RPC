@@ -1,5 +1,8 @@
 group ProxyHeader;
 
+import "eprosima.stg"
+import "com/eprosima/fastcdr/idl/templates/FastCdrCommon.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "Proxy.h"], description=["This header file contains the declaration of the proxy for all interfaces."])$
 
@@ -42,10 +45,6 @@ namespace $module.name$
 
 >>
 
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
->>
-
 /*!
  * The export_list will be the definition of synchronize functions.
  */
@@ -57,7 +56,7 @@ interface(ctx, parent, interface, export_list) ::= <<
 class RPCUSERDllExport $interface.name$Proxy : public eprosima::rpc::proxy::Proxy, public $interface.name$$if(ctx.rtiTypes)$Ext$endif$
 {
     public:
-   
+
         /*!
          * @brief This constructor sets the transport that will be used by the server's proxy.
          *
@@ -75,40 +74,20 @@ class RPCUSERDllExport $interface.name$Proxy : public eprosima::rpc::proxy::Prox
 
         $interface.all_operations : { operation |
         //! @brief Proxy method for the operation $operation.name$.
-        $paramRetType(operation.rettype)$ $operation.name$($paramDeclarations(params=operation.parameters)$);
+        $paramRetType(operation.rettype)$ $operation.name$(
+                $paramDeclarations(params=operation.parameters)$);
 
         $if(ctx.dds)$
         $if(!operation.oneway)$
         //! @brief Proxy asynchronous method for the operation $operation.name$.
-        void $operation.name$_async($interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$);
+        void $operation.name$_async(
+                $interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, initialSeparator=", ")$);
 
         $endif$
         $endif$
         }; separator="\n"$
-        
+
         $export_list$
 };
 
 >>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
-exception(ctx, parent, exception) ::= <<>>
-
-operation(ctx, parent, operation, param_list) ::= <<>>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<>>
-
-struct_type(ctx, parent, struct) ::= <<>>
-
-union_type(ctx, parent, union) ::= <<>>
-
-enum_type(ctx, parent, enum) ::= <<>>

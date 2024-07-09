@@ -1,5 +1,7 @@
 group RTIExtensionSource;
 
+import "eprosima.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "Extension.cxx"], description=["TODO This source file contains the declaration of common types in ", ctx.filename, ".idl"])$
 
@@ -27,23 +29,6 @@ namespace { char dummy; }
 $definitions; separator="\n"$
 >>
 
-module(ctx, parent, module, definition_list) ::= <<
-$definition_list$
-
->>
-
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
->>
-
-interface(ctx, parent, interface, export_list) ::= <<
-$export_list$
->>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
 exception(ctx, parent, exception) ::= <<
 $exception.scopedname$::$exception.name$() : UserException()
 {
@@ -62,16 +47,16 @@ $exception.scopedname$::$exception.name$($exception.name$&& ex) : UserException(
 
 $exception.scopedname$& $exception.scopedname$::operator=(const $exception.name$ &ex)
 {
-	UserException::operator=(ex);
-	$exception.members : { member |$copy(member=member, dataname="ex")$}; separator="\n"$
-	return *this;
+    UserException::operator=(ex);
+    $exception.members : { member |$copy(member=member, dataname="ex")$}; separator="\n"$
+    return *this;
 }
 
 $exception.scopedname$& $exception.scopedname$::operator=($exception.name$&& ex)
 {
-	UserException::operator=(std::move(ex));
-	$exception.members : { member |$move(member=member, dataname="ex")$}; separator="\n"$
-	return *this;
+    UserException::operator=(std::move(ex));
+    $exception.members : { member |$move(member=member, dataname="ex")$}; separator="\n"$
+    return *this;
 }
 
 $exception.scopedname$::~$exception.name$() throw()
@@ -81,26 +66,10 @@ $exception.scopedname$::~$exception.name$() throw()
 
 void $exception.scopedname$::raise() const
 {
-	throw *this;
+    throw *this;
 }
 
 >>
-
-operation(ctx, parent, operation, param_list) ::= <<>>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<>>
-
-struct_type(ctx, parent, struct) ::= <<>>
-
-union_type(ctx, parent, union) ::= <<>>
-
-enum_type(ctx, parent, enum) ::= <<>>
 
 copy(member, dataname, constructor) ::= <<
 $if(member.typecode.primitive)$

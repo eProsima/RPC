@@ -1,0 +1,774 @@
+// Copyright 2024 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+group TopicsHeaderByOperation;
+
+import "eprosima.stg"
+
+main(ctx, definitions) ::= <<
+$fileHeader(ctx=ctx,  file=[ctx.filename, "Topics.h"], description=["This header file contains the declaration of topics generated using operations in the IDL file."])$
+
+$if(ctx.cdr_both)$
+#include <fastcdr/config.h>
+
+#if FASTCDR_VERSION_MAJOR == 1
+$endif$
+
+#ifndef _$ctx.filename;format="toUpper"$_TOPICS_H_
+#define _$ctx.filename;format="toUpper"$_TOPICS_H_
+
+#include "$ctx.filename$.h"
+#include <$ctx.includePrefix$protocols/dds/MessageHeader.h>
+#include <$ctx.includePrefix$utils/Messages.h>
+
+#include <cstddef>
+
+#if defined(_WIN32)
+#if defined(EPROSIMA_USER_DLL_EXPORT)
+#define eProsima_user_DllExport __declspec( dllexport )
+#else
+#define eProsima_user_DllExport
+#endif
+#else
+#define eProsima_user_DllExport
+#endif
+
+$definitions; separator="\n"$
+
+#endif // _$ctx.filename;format="toUpper"$_TOPICS_H_
+
+$if(ctx.cdr_both)$
+#endif // FASTCDR_VERSION_MAJOR == 1
+$endif$
+>>
+
+module(ctx, parent, module, definition_list) ::= <<
+namespace $module.name$
+{
+    $definition_list$
+}
+>>
+
+interface(ctx, parent, interface, export_list) ::= <<
+$interface.all_operations : { operation |
+/*!
+ * @brief This class represents the structure $interface.name$_$operation.name$_In that can be used to send/receive requests
+ * for the operation $interface.name$::$operation.name$.
+ * @ingroup $ctx.trimfilename$
+ */
+class $interface.name$_$operation.name$_In
+{
+public:
+
+    /*!
+     * @brief Default constructor.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_In();
+
+    /*!
+     * @brief Destructor.
+     */
+    eProsima_user_DllExport ~$interface.name$_$operation.name$_In();
+
+    /*
+     * @brief Copy constructor.
+     * @param x Reference to the object $interface.name$_$operation.name$_In that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_In(const $interface.name$_$operation.name$_In &x);
+
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object $interface.name$_$operation.name$_In that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_In($interface.name$_$operation.name$_In &&x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object $interface.name$_$operation.name$ that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_In& operator=(const $interface.name$_$operation.name$_In &x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object $interface.name$_$operation.name$ that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_In& operator=($interface.name$_$operation.name$_In &&x);
+
+    $if(operation.inputparam)$
+    $operation.inputparam : { param | $public_parameters_declaration(param)$}; separator="\n"$
+    $else$
+    inline eProsima_user_DllExport void dummy(eprosima::rpc::protocol::dds::rpc::UnusedMember _dummy)
+    {
+        m_dummy = _dummy;
+    \}
+
+    inline eProsima_user_DllExport eprosima::rpc::protocol::dds::rpc::UnusedMember dummy() const
+    {
+        return m_dummy;
+    \}
+
+    inline eProsima_user_DllExport eprosima::rpc::protocol::dds::rpc::UnusedMember& dummy()
+    {
+        return m_dummy;
+    \}
+    $endif$
+
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
+    eProsima_user_DllExport static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
+
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
+    eProsima_user_DllExport static size_t getCdrSerializedSize(const $interface.name$_$operation.name$_In& data, size_t current_alignment = 0);
+
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serialize(eprosima::fastcdr::Cdr &cdr) const;
+
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void deserialize(eprosima::fastcdr::Cdr &cdr);
+
+private:
+
+    $if(operation.inputparam)$
+    $operation.inputparam:{ param |$param.typecode.cppTypename$ m_$param.name$;}; separator="\n"$
+    $else$
+    eprosima::rpc::protocol::dds::rpc::UnusedMember m_dummy;
+    $endif$
+\};
+
+/*!
+ * @brief This class represents the structure $interface.name$_$operation.name$_Request that can be used to send/receive requests
+ * for the operation $interface.name$::$operation.name$.
+ * @ingroup $ctx.trimfilename$
+ */
+class $interface.name$_$operation.name$_Request
+{
+public:
+
+    /*!
+     * @brief Default constructor.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Request();
+
+    /*!
+     * @brief Destructor.
+     */
+    eProsima_user_DllExport ~$interface.name$_$operation.name$_Request();
+
+    /*!
+     * @brief Copy constructor.
+     * @param x Reference to the object $interface.name$_$operation.name$_Request that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Request(const $interface.name$_$operation.name$_Request &x);
+
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object $interface.name$_$operation.name$_Request that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Request($interface.name$_$operation.name$_Request &&x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object $interface.name$_$operation.name$ that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Request& operator=(const $interface.name$_$operation.name$_Request &x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object $interface.name$_$operation.name$ that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Request& operator=($interface.name$_$operation.name$_Request &&x);
+
+    /*!
+     * @brief This method sets the request header information.
+     * @param _header Request header.
+     */
+    inline eProsima_user_DllExport void header(const eprosima::rpc::protocol::dds::rpc::RequestHeader &_header)
+    {
+        m_header = _header;
+    \}
+
+    /*!
+     * @brief This method sets the request header information.
+     * @param _header Request header.
+     */
+    inline eProsima_user_DllExport void header(eprosima::rpc::protocol::dds::rpc::RequestHeader &&_header)
+    {
+        m_header = std::move(_header);
+    \}
+
+    /*!
+     * @brief This method returns the request header information.
+     * @return Request header.
+     */
+    inline eProsima_user_DllExport const eprosima::rpc::protocol::dds::rpc::RequestHeader& header() const
+    {
+        return m_header;
+    \}
+
+    /*!
+     * @brief This method returns the request header information.
+     * @return Request header.
+     */
+    inline eProsima_user_DllExport eprosima::rpc::protocol::dds::rpc::RequestHeader& header()
+    {
+        return m_header;
+    \}
+
+    /*!
+     * @brief This function copies the value in member $operation.name$
+     * @param _$operation.name$ New value to be copied in member $operation.name$
+     */
+    inline eProsima_user_DllExport void $operation.name$(const $interface.name$_$operation.name$_In &_$operation.name$)
+    {
+        m_$operation.name$ = _$operation.name$;
+    \}
+
+    /*!
+     * @brief This function moves the value in member $operation.name$
+     * @param _$operation.name$ New value to be moved in member $operation.name$
+     */
+    inline eProsima_user_DllExport void $operation.name$($interface.name$_$operation.name$_In &&_$operation.name$)
+    {
+        m_$operation.name$ = std::move(_$operation.name$);
+    \}
+
+    /*!
+     * @brief This function returns a constant reference to member $operation.name$
+     * @return Constant reference to member $operation.name$
+     */
+    inline eProsima_user_DllExport const $interface.name$_$operation.name$_In& $operation.name$() const
+    {
+        return m_$operation.name$;
+    \}
+
+    /*!
+     * @brief This function returns a reference to member $operation.name$
+     * @return Reference to member $operation.name$
+     */
+    inline eProsima_user_DllExport $interface.name$_$operation.name$_In& $operation.name$()
+    {
+        return m_$operation.name$;
+    \}
+
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
+    eProsima_user_DllExport static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
+
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
+    eProsima_user_DllExport static size_t getCdrSerializedSize(const $interface.name$_$operation.name$_Request& data, size_t current_alignment = 0);
+
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serialize(eprosima::fastcdr::Cdr &cdr) const;
+
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void deserialize(eprosima::fastcdr::Cdr &cdr);
+
+private:
+
+    eprosima::rpc::protocol::dds::rpc::RequestHeader m_header;
+
+    $interface.name$_$operation.name$_In m_$operation.name$;
+\};
+
+$if(!operation.oneway)$
+/*!
+ * @brief This class encapsulates output paramaters for operation $interface.name$::$operation.name$.
+ * @ingroup $ctx.trimfilename$
+ */
+class $interface.name$_$operation.name$_Out
+{
+public:
+    /*!
+     * @brief Default constructor.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Out();
+
+    /*!
+     * @brief Destructor.
+     */
+    eProsima_user_DllExport ~$interface.name$_$operation.name$_Out();
+
+    /*!
+     * @brief Copy constructor.
+     * @param x Reference to the object $interface.name$_$operation.name$_Out that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Out(const $interface.name$_$operation.name$_Out &x);
+
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object $interface.name$_$operation.name$_Out that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Out($interface.name$_$operation.name$_Out &&x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object $interface.name$_$operation.name$ that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Out& operator=(const $interface.name$_$operation.name$_Out &x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object $interface.name$_$operation.name$ that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Out& operator=($interface.name$_$operation.name$_Out &&x);
+
+    $if([operation.outputparam, operation.rettypeparam])$
+    $[operation.outputparam, operation.rettypeparam]:{param |$public_parameters_declaration(param=param)$}; separator="\n"$
+    $else$
+    inline eProsima_user_DllExport void dummy(eprosima::rpc::protocol::dds::rpc::UnusedMember _dummy)
+    {
+        m_dummy = _dummy;
+    \}
+
+    inline eProsima_user_DllExport eprosima::rpc::protocol::dds::rpc::UnusedMember dummy() const
+    {
+        return m_dummy;
+    \}
+
+    inline eProsima_user_DllExport eprosima::rpc::protocol::dds::rpc::UnusedMember& dummy()
+    {
+        return m_dummy;
+    \}
+    $endif$
+
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
+    eProsima_user_DllExport static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
+
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
+    eProsima_user_DllExport static size_t getCdrSerializedSize(const $interface.name$_$operation.name$_Out& data, size_t current_alignment = 0);
+
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serialize(eprosima::fastcdr::Cdr &cdr) const;
+
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void deserialize(eprosima::fastcdr::Cdr &cdr);
+
+private:
+
+    $if([operation.outputparam, operation.rettypeparam])$
+    $[operation.outputparam, operation.rettypeparam]:{ param |$param.typecode.cppTypename$ m_$param.name$;}; separator="\n"$
+    $else$
+    eprosima::rpc::protocol::dds::rpc::UnusedMember m_dummy;
+    $endif$
+\};
+
+/*!
+ * @brief This class represents the structure $interface.name$_$operation.name$_Result that can be used to send/receive replies
+ * for the operation $interface.name$::$operation.name$.
+ *
+ * @ingroup $ctx.trimfilename$
+ */
+class $interface.name$_$operation.name$_Result
+{
+public:
+
+    /*!
+     * @brief Default constructor.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Result();
+
+    /*!
+     * @brief Destructor.
+     */
+    eProsima_user_DllExport ~$interface.name$_$operation.name$_Result();
+
+    /*!
+     * @brief Copy constructor.
+     * @param x Reference to the object $interface.name$_$operation.name$_Result that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Result(const $interface.name$_$operation.name$_Result &x);
+
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object $interface.name$_$operation.name$_Result that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Result($interface.name$_$operation.name$_Result &&x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object $interface.name$_$operation.name$ that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Result& operator=(const $interface.name$_$operation.name$_Result &x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object $interface.name$_$operation.name$ that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Result& operator=($interface.name$_$operation.name$_Result &&x);
+
+    /*!
+     * @brief This function sets the discriminator value.
+     * @param __d New value for the discriminator.
+     * @exception eprosima::rpc::exception::BadParamException This exception is thrown if the new value doesn't correspond to the selected union member.
+     */
+    eProsima_user_DllExport void _d(int32_t __d);
+
+    /*!
+     * @brief This function returns the value of the discriminator.
+     * @return Value of the discriminator
+     */
+    eProsima_user_DllExport int32_t _d() const;
+
+    /*!
+     * @brief This function returns a reference to the discriminator.
+     * @return Reference to the discriminator.
+     */
+    eProsima_user_DllExport int32_t& _d();
+
+    eProsima_user_DllExport void unknownEx(eprosima::rpc::protocol::dds::rpc::UnknownException _unknownEx);
+
+    eProsima_user_DllExport eprosima::rpc::protocol::dds::rpc::UnknownException unknownEx() const;
+
+    eProsima_user_DllExport eprosima::rpc::protocol::dds::rpc::UnknownException& unknownEx();
+
+    $public_exception_union_member_declaration(typename=[interface.name, "_", operation.name, "_Out"], name="result")$
+
+    $operation.exceptions : { exception |$public_exception_union_member_declaration(typename=exception.scopedname, name=[exception.formatedScopedname, "_ex"])$}; separator="\n"$
+
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
+    eProsima_user_DllExport static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
+
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
+    eProsima_user_DllExport static size_t getCdrSerializedSize(const $interface.name$_$operation.name$_Result& data, size_t current_alignment = 0);
+
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serialize(eprosima::fastcdr::Cdr &cdr) const;
+
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void deserialize(eprosima::fastcdr::Cdr &cdr);
+
+private:
+
+    int32_t m__d;
+
+    eprosima::rpc::protocol::dds::rpc::UnknownException m_unknownEx;
+
+    $interface.name$_$operation.name$_Out m_result;
+
+    $operation.exceptions : { exception |$exception.scopedname$ m_$exception.formatedScopedname$_ex;}; separator="\n"$
+\};
+
+/*!
+ * @brief This class represents the structure $interface.name$_$operation.name$_Reply that can be used to send/receive replies
+ * for the operation $interface.name$::$operation.name$.
+ * @ingroup $ctx.trimfilename$
+ */
+class $interface.name$_$operation.name$_Reply
+{
+public:
+
+    /*!
+     * @brief Default constructor.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Reply();
+
+    /*!
+     * @brief Destructor.
+     */
+    eProsima_user_DllExport ~$interface.name$_$operation.name$_Reply();
+
+    /*!
+     * @brief Copy constructor.
+     * @param x Reference to the object $interface.name$_$operation.name$_Reply that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Reply(const $interface.name$_$operation.name$_Reply &x);
+
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object $interface.name$_$operation.name$_Reply that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Reply($interface.name$_$operation.name$_Reply &&x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object $interface.name$_$operation.name$ that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Reply& operator=(const $interface.name$_$operation.name$_Reply &x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object $interface.name$_$operation.name$ that will be copied.
+     */
+    eProsima_user_DllExport $interface.name$_$operation.name$_Reply& operator=($interface.name$_$operation.name$_Reply &&x);
+
+    /*!
+     * @brief This method sets the reply header information.
+     * @param _header Reply header.
+     */
+    inline eProsima_user_DllExport void header(const eprosima::rpc::protocol::dds::rpc::ReplyHeader &_header)
+    {
+        m_header = _header;
+    \}
+
+    /*!
+     * @brief This method sets the reply header information.
+     * @param _header Reply header.
+     */
+    inline eProsima_user_DllExport void header(eprosima::rpc::protocol::dds::rpc::ReplyHeader &&_header)
+    {
+        m_header = std::move(_header);
+    \}
+
+    /*!
+     * @brief This method returns the reply header information.
+     * @return Reply header.
+     */
+    inline eProsima_user_DllExport const eprosima::rpc::protocol::dds::rpc::ReplyHeader& header() const
+    {
+        return m_header;
+    \}
+
+    /*!
+     * @brief This method returns the reply header information.
+     * @return Reply header.
+     */
+    inline eProsima_user_DllExport eprosima::rpc::protocol::dds::rpc::ReplyHeader& header()
+    {
+        return m_header;
+    \}
+
+    /*!
+     * @brief This function copies the value in member $operation.name$
+     * @param _$operation.name$ New value to be copied in member $operation.name$
+     */
+    inline eProsima_user_DllExport void $operation.name$(const $interface.name$_$operation.name$_Result &_$operation.name$)
+    {
+        m_$operation.name$ = _$operation.name$;
+    \}
+
+    /*!
+     * @brief This function moves the value in member $operation.name$
+     * @param _$operation.name$ New value to be moved in member $operation.name$
+     */
+    inline eProsima_user_DllExport void $operation.name$($interface.name$_$operation.name$_Result &&_$operation.name$)
+    {
+        m_$operation.name$ = std::move(_$operation.name$);
+    \}
+
+    /*!
+     * @brief This function returns a constant reference to member $operation.name$
+     * @return Constant reference to member $operation.name$
+     */
+    inline eProsima_user_DllExport const $interface.name$_$operation.name$_Result& $operation.name$() const
+    {
+        return m_$operation.name$;
+    \}
+
+    /*!
+     * @brief This function returns a reference to member $operation.name$
+     * @return Reference to member $operation.name$
+     */
+    inline eProsima_user_DllExport $interface.name$_$operation.name$_Result& $operation.name$()
+    {
+        return m_$operation.name$;
+    \}
+
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
+    eProsima_user_DllExport static size_t getMaxCdrSerializedSize(size_t current_alignment = 0);
+
+    /*!
+     * @brief This function returns the serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
+    eProsima_user_DllExport static size_t getCdrSerializedSize(const $interface.name$_$operation.name$_Reply& data, size_t current_alignment = 0);
+
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serialize(eprosima::fastcdr::Cdr &cdr) const;
+
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void deserialize(eprosima::fastcdr::Cdr &cdr);
+
+private:
+
+    eprosima::rpc::protocol::dds::rpc::ReplyHeader m_header;
+
+    $interface.name$_$operation.name$_Result m_$operation.name$;
+\};
+$endif$
+}; separator="\n"$
+
+$export_list$
+>>
+
+/***** Utils *****/
+
+public_parameters_declaration(param) ::= <<
+$if(param.typecode.primitive)$
+/*!
+ * @brief This function sets a value in member $param.name$
+ * @param _$param.name$ New value for member $param.name$
+ */
+inline eProsima_user_DllExport void $param.name$($param.typecode.cppTypename$ _$param.name$)
+{
+    m_$param.name$ = _$param.name$;
+}
+
+/*!
+ * @brief This function returns the value of member $param.name$
+ * @return Value of member $param.name$
+ */
+inline eProsima_user_DllExport $param.typecode.cppTypename$ $param.name$() const
+{
+    return m_$param.name$;
+}
+
+/*!
+ * @brief This function returns a reference to member $param.name$
+ * @return Reference to member $param.name$
+ */
+inline eProsima_user_DllExport $param.typecode.cppTypename$& $param.name$()
+{
+    return m_$param.name$;
+}
+$else$
+/*!
+ * @brief This function copies the value in member $param.name$
+ * @param _$param.name$ New value to be copied in member $param.name$
+ */
+inline eProsima_user_DllExport void $param.name$(const $param.typecode.cppTypename$ &_$param.name$)
+{
+    m_$param.name$ = _$param.name$;
+}
+
+/*!
+ * @brief This function moves the value in member $param.name$
+ * @param _$param.name$ New value to be moved in member $param.name$
+ */
+inline eProsima_user_DllExport void $param.name$($param.typecode.cppTypename$ &&_$param.name$)
+{
+    m_$param.name$ = std::move(_$param.name$);
+}
+
+/*!
+ * @brief This function returns a constant reference to member $param.name$
+ * @return Constant reference to member $param.name$
+ */
+inline eProsima_user_DllExport const $param.typecode.cppTypename$& $param.name$() const
+{
+    return m_$param.name$;
+}
+
+/*!
+ * @brief This function returns a reference to member $param.name$
+ * @return Reference to member $param.name$
+ */
+inline eProsima_user_DllExport $param.typecode.cppTypename$& $param.name$()
+{
+    return m_$param.name$;
+}
+$endif$
+>>
+
+public_exception_union_member_declaration(typename, name) ::= <<
+/*!
+ * @brief This function copies the value in member $name$
+ * @param _$name$ New value to be copied in member $name$
+ */
+eProsima_user_DllExport void $name$(const $typename$ &_$name$);
+
+/*!
+ * @brief This function moves the value in member $name$
+ * @param _$name$ New value to be moved in member $name$
+ */
+eProsima_user_DllExport void $name$($typename$ &&_$name$);
+
+/*!
+ * @brief This function returns a constant reference to member $name$
+ * @return Constant reference to member $name$
+ * @exception eprosima::BadParamException This exception is thrown if the requested union member is not the current selection.
+ */
+eProsima_user_DllExport const $typename$& $name$() const;
+
+/*!
+ * @brief This function returns a reference to member $name$
+ * @return Reference to member $name$
+ * @exception eprosima::BadParamException This exception is thrown if the requested union member is not the current selection.
+ */
+eProsima_user_DllExport $typename$& $name$();
+>>

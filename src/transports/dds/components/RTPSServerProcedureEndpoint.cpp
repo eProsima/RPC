@@ -1,10 +1,10 @@
 /*************************************************************************
- * Copyright (c) 2013 eProsima. All rights reserved.
- *
- * This copy of FASTRPC is licensed to you under the terms described in the
- * FASTRPC_LICENSE file included in this distribution.
- *
- *************************************************************************/
+* Copyright (c) 2013 eProsima. All rights reserved.
+*
+* This copy of FASTRPC is licensed to you under the terms described in the
+* FASTRPC_LICENSE file included in this distribution.
+*
+*************************************************************************/
 #include <config.h>
 
 #if RPC_WITH_FASTRTPS
@@ -30,9 +30,17 @@ using namespace ::transport::dds;
 
 const char* const CLASS_NAME = "eprosima::rpc::transport::dds::RTPSServerProcedureEndpoint";
 
-RTPSServerProcedureEndpoint::RTPSServerProcedureEndpoint(RTPSServerTransport &transport) : m_transport(transport),
-    m_writer(NULL), m_reader(NULL), m_create_data(NULL), m_destroy_data(NULL),
-    m_process_func(NULL), m_dataSize(0), m_mutex(NULL), m_started(0)
+RTPSServerProcedureEndpoint::RTPSServerProcedureEndpoint(
+        RTPSServerTransport& transport)
+    : m_transport(transport)
+    , m_writer(NULL)
+    , m_reader(NULL)
+    , m_create_data(NULL)
+    , m_destroy_data(NULL)
+    , m_process_func(NULL)
+    , m_dataSize(0)
+    , m_mutex(NULL)
+    , m_started(0)
 {
 }
 
@@ -41,20 +49,26 @@ RTPSServerProcedureEndpoint::~RTPSServerProcedureEndpoint()
     finalize();
 }
 
-int RTPSServerProcedureEndpoint::initialize(const char *name, const char *writertypename, const char *writertopicname,
-        const char *readertypename, const char *readertopicname,
-        RTPSTransport::Create_data create_data, RTPSTransport::Destroy_data destroy_data,
-        RTPSTransport::ProcessFunc processFunc, size_t dataSize)
+int RTPSServerProcedureEndpoint::initialize(
+        const char* name,
+        const char* writertypename,
+        const char* writertopicname,
+        const char* readertypename,
+        const char* readertopicname,
+        RTPSTransport::Create_data create_data,
+        RTPSTransport::Destroy_data destroy_data,
+        RTPSTransport::ProcessFunc processFunc,
+        size_t dataSize)
 {
-    if(name != NULL && readertypename != NULL && create_data != NULL && destroy_data != NULL &&
+    if (name != NULL && readertypename != NULL && create_data != NULL && destroy_data != NULL &&
             processFunc != NULL && dataSize > 0)
     {
         m_mutex =  new boost::mutex();
 
-        if(m_mutex != NULL)
+        if (m_mutex != NULL)
         {
             m_name = name;
-            if(writertypename != NULL)
+            if (writertypename != NULL)
             {
                 m_writerTypeName = writertypename;
                 m_writerTopicName = writertopicname;
@@ -74,30 +88,34 @@ int RTPSServerProcedureEndpoint::initialize(const char *name, const char *writer
 
 void RTPSServerProcedureEndpoint::finalize()
 {
-    if(m_reader != nullptr)
+    if (m_reader != nullptr)
     {
         eprosima::fastrtps::Domain::removeSubscriber(m_reader);
     }
 
-    if(m_writer != nullptr)
+    if (m_writer != nullptr)
+    {
         eprosima::fastrtps::Domain::removePublisher(m_writer);
+    }
 
-    if(m_mutex != NULL)
+    if (m_mutex != NULL)
     {
         delete m_mutex;
         m_mutex = NULL;
     }
 }
 
-int RTPSServerProcedureEndpoint::start(const char* const &serviceName, const char* const &instanceName)
+int RTPSServerProcedureEndpoint::start(
+        const char* const& serviceName,
+        const char* const& instanceName)
 {
     const char* const METHOD_NAME = "start";
     int returnedValue = -1;
 
     m_mutex->lock();
-    if(m_started++ == 0)
+    if (m_started++ == 0)
     {
-        if((returnedValue = createEntities(std::string(serviceName), std::string(instanceName))) != 0)
+        if ((returnedValue = createEntities(std::string(serviceName), std::string(instanceName))) != 0)
         {
             printf("ERROR<%s::%s>: Cannot create the DDS entities\n", CLASS_NAME, METHOD_NAME);
             // TODO Borrar en caso de error los endpo8ints.
@@ -105,7 +123,9 @@ int RTPSServerProcedureEndpoint::start(const char* const &serviceName, const cha
         }
     }
     else
+    {
         returnedValue = 0;
+    }
 
     m_mutex->unlock();
 
@@ -115,14 +135,14 @@ int RTPSServerProcedureEndpoint::start(const char* const &serviceName, const cha
 void RTPSServerProcedureEndpoint::stop()
 {
     m_mutex->lock();
-    if(--m_started == 0)
+    if (--m_started == 0)
     {
-        if(m_writer != NULL)
+        if (m_writer != NULL)
         {
             eprosima::fastrtps::Domain::removePublisher(m_writer);
             m_writer = NULL;
         }
-        if(m_reader != NULL)
+        if (m_reader != NULL)
         {
             eprosima::fastrtps::Domain::removeSubscriber(m_reader);
             m_reader = NULL;
@@ -132,7 +152,9 @@ void RTPSServerProcedureEndpoint::stop()
     m_mutex->unlock();
 }
 
-int RTPSServerProcedureEndpoint::createEntities(const std::string &/*serviceName*/, const std::string &/*instanceName*/)
+int RTPSServerProcedureEndpoint::createEntities(
+        const std::string& /*serviceName*/,
+        const std::string& /*instanceName*/)
 {
     const char* const METHOD_NAME = "createEntities";
 
@@ -144,9 +166,9 @@ int RTPSServerProcedureEndpoint::createEntities(const std::string &/*serviceName
 
     m_reader = eprosima::fastrtps::Domain::createSubscriber(m_transport.getParticipant(), rQos, this);
 
-    if(m_reader != nullptr)
+    if (m_reader != nullptr)
     {
-        if(!m_writerTypeName.empty())
+        if (!m_writerTypeName.empty())
         {
             eprosima::fastrtps::PublisherAttributes wQos;
 
@@ -157,7 +179,7 @@ int RTPSServerProcedureEndpoint::createEntities(const std::string &/*serviceName
 
             m_writer = eprosima::fastrtps::Domain::createPublisher(m_transport.getParticipant(), wQos, nullptr);
 
-            if(m_writer != nullptr)
+            if (m_writer != nullptr)
             {
                 return 0;
             }
@@ -181,16 +203,17 @@ int RTPSServerProcedureEndpoint::createEntities(const std::string &/*serviceName
     return -1;
 }
 
-int RTPSServerProcedureEndpoint::sendReply(void *data)
+int RTPSServerProcedureEndpoint::sendReply(
+        void* data)
 {
     const char* const METHOD_NAME = "sendReply";
     int returnedValue = -1;
 
-    if(data != NULL)
+    if (data != NULL)
     {
-        if(m_writer != nullptr)
+        if (m_writer != nullptr)
         {
-            if(m_writer->write(data))
+            if (m_writer->write(data))
             {
                 returnedValue = 0;
             }
@@ -201,7 +224,8 @@ int RTPSServerProcedureEndpoint::sendReply(void *data)
         }
         else
         {
-            printf("ERROR<%s::%s>: DataWrite was not created. Maybe this is a oneway procedure.\n", CLASS_NAME, METHOD_NAME);
+            printf("ERROR<%s::%s>: DataWrite was not created. Maybe this is a oneway procedure.\n", CLASS_NAME,
+                    METHOD_NAME);
         }
     }
     else
@@ -212,22 +236,24 @@ int RTPSServerProcedureEndpoint::sendReply(void *data)
     return returnedValue;
 }
 
-void RTPSServerProcedureEndpoint::onNewDataMessage(eprosima::fastrtps::Subscriber *sub)
+void RTPSServerProcedureEndpoint::onNewDataMessage(
+        eprosima::fastrtps::Subscriber* sub)
 {
     eprosima::fastrtps::SampleInfo_t info;
-    void *data = m_create_data(m_dataSize);
+    void* data = m_create_data();
 
-    while(data != NULL && sub->takeNextData(data, &info))
+    while (data != NULL && sub->takeNextData(data, &info))
     {
-        if(info.sampleKind == eprosima::fastrtps::rtps::ALIVE)
+        if (info.sampleKind == eprosima::fastrtps::rtps::ALIVE)
         {
-            m_transport.getStrategy().getImpl()->schedule(boost::bind(&RTPSServerTransport::process, &m_transport, this, data));
+            m_transport.getStrategy().getImpl()->schedule(boost::bind(&RTPSServerTransport::process, &m_transport, this,
+                    data));
 
-            data = m_create_data(m_dataSize);
+            data = m_create_data();
         }
     }
 
-    if(data != NULL)
+    if (data != NULL)
     {
         m_destroy_data(data);
     }

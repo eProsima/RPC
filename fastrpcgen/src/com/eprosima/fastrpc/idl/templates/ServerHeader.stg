@@ -1,5 +1,7 @@
 group ServerHeader;
 
+import "eprosima.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "Server.h"], description=["This header file contains the declaration of the server for all interfaces."])$
 
@@ -33,10 +35,6 @@ namespace $module.name$
 
 >>
 
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
->>
-
 /*!
  * The export_list will be the definition of synchronize functions.
  */
@@ -57,7 +55,7 @@ class RPCUSERDllExport $interface.name$Server : public eprosima::rpc::server::Se
          * @param transport The network transport that the server has to use.
          *        This transport's object is not deleted by this class in its destructor. Cannot be NULL.
          * @param protocol Generated protocol that the server has to use.
-         *        This class has the information to process requests and build responses for this application environment. 
+         *        This class has the information to process requests and build responses for this application environment.
          * @param servant Servant that the server will use to invoke user's functions.
          * @exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
          */
@@ -68,33 +66,11 @@ class RPCUSERDllExport $interface.name$Server : public eprosima::rpc::server::Se
         virtual ~$interface.name$Server();
 
         $export_list$
-        
+
      private:
-        
+
         //! \brief Pointer to the server's servant implemented by the user.
         $interface.name$ServerImpl &_impl;
 };
 
 >>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
-exception(ctx, parent, exception) ::= <<>>
-
-operation(ctx, parent, operation, param_list) ::= <<>>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<>>
-
-struct_type(ctx, parent, struct) ::= <<>>
-
-union_type(ctx, parent, union) ::= <<>>
-
-enum_type(ctx, parent, enum) ::= <<>>

@@ -1,0 +1,1753 @@
+// Copyright 2024 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+group TopicsSourceInterface;
+
+import "eprosima.stg"
+import "com/eprosima/fastcdr/idl/templates/FastCdrCommon.stg"
+
+main(ctx, definitions) ::= <<
+$fileHeader(ctx=ctx,  file=[ctx.filename, "Topics.cpp"], description=["This source file contains the implementation of topics generated using operations in the IDL file."])$
+
+#include "$ctx.filename$Topics.h"
+
+$if(ctx.cdr_both)$
+#if FASTCDR_VERSION_MAJOR == 1
+$endif$
+
+#include <fastcdr/Cdr.h>
+#include <fastcdr/exceptions/BadParamException.h>
+#include <$ctx.includePrefix$exceptions/BadParamException.h>
+
+$definitions; separator="\n"$
+
+$if(ctx.cdr_both)$
+#endif // FASTCDR_VERSION_MAJOR == 1
+$endif$
+>>
+
+interface(ctx, parent, interface, export_list) ::= <<
+$export_list$
+
+$interface.all_operations : { operation |
+$interface.scopedname$_$operation.name$_In::$interface.name$_$operation.name$_In()
+$if(operation.inputparam)$$parameters_default_init(operation.inputparam)$
+$else$: m_dummy(0)
+$endif$
+{
+\}
+
+$interface.scopedname$_$operation.name$_In::~$interface.name$_$operation.name$_In()
+{
+\}
+
+$interface.scopedname$_$operation.name$_In::$interface.name$_$operation.name$_In(const $interface.name$_$operation.name$_In &x)
+$if(operation.inputparam)$$parameters_copy_init(parameters=operation.inputparam)$
+$else$: m_dummy(x.m_dummy)
+$endif$
+{
+\}
+
+$interface.scopedname$_$operation.name$_In::$interface.name$_$operation.name$_In($interface.name$_$operation.name$_In &&x)
+$if(operation.inputparam)$$parameters_move_init(parameters=operation.inputparam)$
+$else$: m_dummy(x.m_dummy)
+$endif$
+{
+\}
+
+$interface.scopedname$_$operation.name$_In& $interface.scopedname$_$operation.name$_In::operator=(const $interface.scopedname$_$operation.name$_In &x)
+{
+    $if(operation.inputparam)$
+    $operation.inputparam :{ param |$parameters_copy_assigment(param)$;}; separator="\n"$
+    $else$
+    m_dummy = x.m_dummy;
+    $endif$
+
+    return *this;
+\}
+
+$interface.scopedname$_$operation.name$_In& $interface.scopedname$_$operation.name$_In::operator=($interface.scopedname$_$operation.name$_In &&x)
+{
+    $if(operation.inputparam)$
+    $operation.inputparam :{ param |$parameters_move_assigment(param)$;}; separator="\n"$
+    $else$
+    m_dummy = x.m_dummy;
+    $endif$
+
+    return *this;
+\}
+
+size_t $interface.scopedname$_$operation.name$_In::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+    $if(operation.inputparam)$
+    $operation.inputparam : { param |$max_serialized_size(ctx=ctx, typecode=param.typecode, var="current_alignment")$}; separator="\n"$
+    $else$
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+    $endif$
+
+    return current_alignment - initial_alignment;
+\}
+
+size_t $interface.scopedname$_$operation.name$_In::getCdrSerializedSize(const $interface.scopedname$_$operation.name$_In& data, size_t current_alignment)
+{
+    static_cast<void>(data);
+    size_t initial_alignment = current_alignment;
+
+    $if(operation.inputparam)$
+    $operation.inputparam : { param |$serialized_size(ctx=ctx, object=param, data="data", var="current_alignment")$}; separator="\n"$
+    $else$
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+    $endif$
+
+    return current_alignment - initial_alignment;
+\}
+
+void $interface.scopedname$_$operation.name$_In::serialize(eprosima::fastcdr::Cdr &scdr) const
+{
+    $if(operation.inputparam)$
+    $operation.inputparam : { param |$object_serialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
+    $else$
+    scdr << m_dummy;
+    $endif$
+\}
+
+void $interface.scopedname$_$operation.name$_In::deserialize(eprosima::fastcdr::Cdr &dcdr)
+{
+    $if(operation.inputparam)$
+    $operation.inputparam : { param |$object_deserialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
+    $else$
+    dcdr \>> m_dummy;
+    $endif$
+\}
+
+$if(!operation.oneway)$
+
+$interface.scopedname$_$operation.name$_Out::$interface.name$_$operation.name$_Out()
+$if([operation.outputparam, operation.rettypeparam])$$parameters_default_init([operation.outputparam, operation.rettypeparam])$
+$else$: m_dummy(0)
+$endif$
+{
+\}
+
+$interface.scopedname$_$operation.name$_Out::~$interface.name$_$operation.name$_Out()
+{
+\}
+
+$interface.scopedname$_$operation.name$_Out::$interface.name$_$operation.name$_Out(const $interface.name$_$operation.name$_Out &x)
+$if([operation.outputparam, operation.rettypeparam])$$parameters_copy_init(parameters=[operation.outputparam, operation.rettypeparam])$
+$else$: m_dummy(x.m_dummy)
+$endif$
+{
+\}
+
+$interface.scopedname$_$operation.name$_Out::$interface.name$_$operation.name$_Out($interface.name$_$operation.name$_Out &&x)
+$if([operation.outputparam, operation.rettypeparam])$$parameters_move_init(parameters=[operation.outputparam, operation.rettypeparam])$
+$else$: m_dummy(x.m_dummy)
+$endif$
+{
+\}
+
+$interface.scopedname$_$operation.name$_Out& $interface.scopedname$_$operation.name$_Out::operator=(const $interface.scopedname$_$operation.name$_Out &x)
+{
+    $if([operation.outputparam, operation.rettypeparam])$
+    $[operation.outputparam, operation.rettypeparam] :{ param |$parameters_copy_assigment(param)$;}; separator="\n"$
+    $else$
+    m_dummy = x.m_dummy;
+    $endif$
+
+    return *this;
+\}
+
+$interface.scopedname$_$operation.name$_Out& $interface.scopedname$_$operation.name$_Out::operator=($interface.scopedname$_$operation.name$_Out &&x)
+{
+    $if([operation.outputparam, operation.rettypeparam])$
+    $[operation.outputparam, operation.rettypeparam] :{ param |$parameters_move_assigment(param)$;}; separator="\n"$
+    $else$
+    m_dummy = x.m_dummy;
+    $endif$
+
+    return *this;
+\}
+
+size_t $interface.scopedname$_$operation.name$_Out::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+    $if([operation.outputparam, operation.rettypeparam])$
+    $[operation.outputparam, operation.rettypeparam] : { param |$max_serialized_size(ctx=ctx, typecode=param.typecode, var="current_alignment")$}; separator="\n"$
+    $else$
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+    $endif$
+
+    return current_alignment - initial_alignment;
+\}
+
+size_t $interface.scopedname$_$operation.name$_Out::getCdrSerializedSize(const $interface.scopedname$_$operation.name$_Out& data, size_t current_alignment)
+{
+    static_cast<void>(data);
+    size_t initial_alignment = current_alignment;
+
+    $if([operation.outputparam, operation.rettypeparam])$
+    $[operation.outputparam, operation.rettypeparam] : { param |$serialized_size(ctx=ctx, object=param, data="data", var="current_alignment")$}; separator="\n"$
+    $else$
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+    $endif$
+
+    return current_alignment - initial_alignment;
+\}
+
+void $interface.scopedname$_$operation.name$_Out::serialize(eprosima::fastcdr::Cdr &scdr) const
+{
+    $if([operation.outputparam, operation.rettypeparam])$
+    $[operation.outputparam, operation.rettypeparam] : { param |$object_serialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
+    $else$
+    scdr << m_dummy;
+    $endif$
+\}
+
+void $interface.scopedname$_$operation.name$_Out::deserialize(eprosima::fastcdr::Cdr &dcdr)
+{
+    $if([operation.outputparam, operation.rettypeparam])$
+    $[operation.outputparam, operation.rettypeparam] : { param |$object_deserialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
+    $else$
+    dcdr \>> m_dummy;
+    $endif$
+\}
+
+$interface.scopedname$_$operation.name$_Result::$interface.name$_$operation.name$_Result() : m__d(2)
+{
+\}
+
+$interface.scopedname$_$operation.name$_Result::~$interface.name$_$operation.name$_Result()
+{
+\}
+
+$interface.scopedname$_$operation.name$_Result::$interface.name$_$operation.name$_Result(const $interface.name$_$operation.name$_Result &x)
+{
+    m__d = x.m__d;
+
+    switch(m__d)
+    {
+        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
+            m_result = x.m_result;
+            break;
+        $operation.exceptions : { exception |
+        case (int32_t)$exception.md5$:
+            m_$exception.formatedScopedname$_ex = x.m_$exception.formatedScopedname$_ex;
+            break;
+        }; separator="\n"$
+    \}
+\}
+
+$interface.scopedname$_$operation.name$_Result::$interface.name$_$operation.name$_Result($interface.name$_$operation.name$_Result &&x)
+{
+    m__d = x.m__d;
+
+    switch(m__d)
+    {
+        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
+            m_result = std::move(x.m_result);
+            break;
+        $operation.exceptions : { exception |
+        case (int32_t)$exception.md5$:
+            m_$exception.formatedScopedname$_ex = std::move(x.m_$exception.formatedScopedname$_ex);
+            break;
+        }; separator="\n"$
+    \}
+\}
+
+$interface.scopedname$_$operation.name$_Result& $interface.scopedname$_$operation.name$_Result::operator=(const $interface.scopedname$_$operation.name$_Result &x)
+{
+    m__d = x.m__d;
+
+    switch(m__d)
+    {
+        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
+            m_result = x.m_result;
+            break;
+        $operation.exceptions : { exception |
+        case (int32_t)$exception.md5$:
+            m_$exception.formatedScopedname$_ex = x.m_$exception.formatedScopedname$_ex;
+            break;
+        }; separator="\n"$
+    \}
+
+    return *this;
+\}
+
+$interface.scopedname$_$operation.name$_Result& $interface.scopedname$_$operation.name$_Result::operator=($interface.scopedname$_$operation.name$_Result &&x)
+{
+    m__d = x.m__d;
+
+    switch(m__d)
+    {
+        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
+            m_result = std::move(x.m_result);
+            break;
+        $operation.exceptions : { exception |
+        case (int32_t)$exception.md5$:
+            m_$exception.formatedScopedname$_ex = std::move(x.m_$exception.formatedScopedname$_ex);
+            break;
+        }; separator="\n"$
+    \}
+
+    return *this;
+\}
+
+void $interface.scopedname$_$operation.name$_Result::_d(int32_t __d)
+{
+    if(m__d != __d)
+    {
+        throw eprosima::rpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
+    \}
+
+    m__d = __d;
+\}
+
+int32_t $interface.scopedname$_$operation.name$_Result::_d() const
+{
+    return m__d;
+\}
+
+int32_t& $interface.scopedname$_$operation.name$_Result::_d()
+{
+    return m__d;
+\}
+
+void $interface.scopedname$_$operation.name$_Result::unknownEx(eprosima::rpc::protocol::dds::rpc::UnknownException _unknownEx)
+{
+    m_unknownEx = _unknownEx;
+    m__d = 2;
+\}
+
+eprosima::rpc::protocol::dds::rpc::UnknownException $interface.scopedname$_$operation.name$_Result::unknownEx() const
+{
+    if(m__d != 2)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_unknownEx;
+\}
+
+eprosima::rpc::protocol::dds::rpc::UnknownException& $interface.scopedname$_$operation.name$_Result::unknownEx()
+{
+    if(m__d != 2)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_unknownEx;
+\}
+
+void $interface.scopedname$_$operation.name$_Result::result(const $interface.scopedname$_$operation.name$_Out &_result)
+{
+    m_result = _result;
+    m__d = 0;
+\}
+
+void $interface.scopedname$_$operation.name$_Result::result($interface.scopedname$_$operation.name$_Out &&_result)
+{
+    m_result = std::move(_result);
+    m__d = 0;
+\}
+
+const $interface.scopedname$_$operation.name$_Out& $interface.scopedname$_$operation.name$_Result::result() const
+{
+    if(m__d != 0)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_result;
+\}
+
+$interface.scopedname$_$operation.name$_Out& $interface.scopedname$_$operation.name$_Result::result()
+{
+    if(m__d != 0)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_result;
+\}
+
+$operation.exceptions:{ exception |$public_exception_union_member_declaration(class=[interface.scopedname, "_", operation.name, "_Result"], exception=exception)$}; separator="\n"$
+
+size_t $interface.scopedname$_$operation.name$_Result::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+    size_t reset_alignment = 0;
+    size_t union_max_size_serialized = 0;
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+    // UnknowEx
+    union_max_size_serialized = current_alignment;
+    union_max_size_serialized += 1;
+
+    reset_alignment = current_alignment;
+    reset_alignment += $interface.scopedname$_$operation.name$_Out::getMaxCdrSerializedSize(reset_alignment);
+
+    if(union_max_size_serialized < reset_alignment)
+    {
+        union_max_size_serialized = reset_alignment;
+    \}
+
+    $operation.exceptions : { exception |
+    reset_alignment = current_alignment;
+
+    reset_alignment += $exception.scopedname$::getMaxCdrSerializedSize(reset_alignment);
+
+    if(union_max_size_serialized < reset_alignment)
+    {
+        union_max_size_serialized = reset_alignment;
+    \}
+
+    }; separator="\n"$
+
+    return union_max_size_serialized - initial_alignment;
+\}
+
+size_t $interface.scopedname$_$operation.name$_Result::getCdrSerializedSize(const $interface.scopedname$_$operation.name$_Result& data, size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+    switch(data.m__d)
+    {
+        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
+            current_alignment += $interface.name$_$operation.name$_Out::getCdrSerializedSize(data.m_result, current_alignment);
+            break;
+        $operation.exceptions : { exception |
+        case (int32_t)$exception.md5$:
+            current_alignment += $exception.scopedname$::getCdrSerializedSize(data.m_$exception.formatedScopedname$_ex, current_alignment);
+            break;
+        }; separator="\n"$
+    \}
+
+    return current_alignment - initial_alignment;
+\}
+
+void $interface.scopedname$_$operation.name$_Result::serialize(eprosima::fastcdr::Cdr &scdr) const
+{
+    scdr << m__d;
+
+    switch(m__d)
+    {
+        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
+            scdr << m_result;
+            break;
+        $operation.exceptions : { exception |
+        case (int32_t)$exception.md5$:
+            scdr << m_$exception.formatedScopedname$_ex;
+            break;
+        }; separator="\n"$
+
+        default:
+            scdr << m_unknownEx;
+            break;
+    \}
+\}
+
+void $interface.scopedname$_$operation.name$_Result::deserialize(eprosima::fastcdr::Cdr &dcdr)
+{
+    dcdr \>> m__d;
+
+    switch(m__d)
+    {
+        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
+            dcdr \>> m_result;
+            break;
+        $operation.exceptions : { exception |
+        case (int32_t)$exception.md5$:
+            dcdr \>> m_$exception.formatedScopedname$_ex;
+            break;
+        }; separator="\n"$
+
+        default:
+            dcdr \>> m_unknownEx;
+            break;
+    \}
+\}
+
+$endif$
+}; separator="\n"$
+
+$interface.scopedname$_Call::$interface.name$_Call() : m__d(0)
+{
+}
+
+$interface.scopedname$_Call::~$interface.name$_Call()
+{
+}
+
+$interface.scopedname$_Call::$interface.name$_Call(const $interface.name$_Call &x)
+{
+    m__d = x.m__d;
+
+    switch(m__d)
+    {
+        $interface.all_operations : { operation |
+        case (int32_t)$operation.md5$:
+            m_$operation.name$ = x.m_$operation.name$;
+            break;
+        }; separator="\n"$
+    }
+}
+
+$interface.scopedname$_Call::$interface.name$_Call($interface.name$_Call &&x)
+{
+    m__d = x.m__d;
+
+    switch(m__d)
+    {
+        $interface.all_operations : { operation |
+        case (int32_t)$operation.md5$:
+            m_$operation.name$ = std::move(x.m_$operation.name$);
+            break;
+        }; separator="\n"$
+    }
+}
+
+$interface.scopedname$_Call& $interface.scopedname$_Call::operator=(const $interface.name$_Call &x)
+{
+    m__d = x.m__d;
+
+    switch(m__d)
+    {
+        $interface.all_operations : { operation |
+        case (int32_t)$operation.md5$:
+            m_$operation.name$ = x.m_$operation.name$;
+            break;
+        }; separator="\n"$
+    }
+
+    return *this;
+}
+
+$interface.scopedname$_Call& $interface.scopedname$_Call::operator=($interface.name$_Call &&x)
+{
+    m__d = x.m__d;
+
+    switch(m__d)
+    {
+        $interface.all_operations : { operation |
+        case (int32_t)$operation.md5$:
+            m_$operation.name$ = std::move(x.m_$operation.name$);
+            break;
+        }; separator="\n"$
+    }
+
+    return *this;
+}
+
+void $interface.scopedname$_Call::_d(int32_t __d)
+{
+    if(m__d != __d)
+    {
+        throw eprosima::rpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
+    }
+
+    m__d = __d;
+}
+
+int32_t $interface.scopedname$_Call::_d() const
+{
+    return m__d;
+}
+
+int32_t& $interface.scopedname$_Call::_d()
+{
+    return m__d;
+}
+
+void $interface.scopedname$_Call::unknownOp(eprosima::rpc::protocol::dds::rpc::UnknownOperation _unknownOp)
+{
+    m_unknownOp = _unknownOp;
+    m__d = 0;
+}
+
+eprosima::rpc::protocol::dds::rpc::UnknownOperation $interface.scopedname$_Call::unknownOp() const
+{
+    if(m__d != 0)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_unknownOp;
+}
+
+eprosima::rpc::protocol::dds::rpc::UnknownOperation& $interface.scopedname$_Call::unknownOp()
+{
+    if(m__d != 0)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_unknownOp;
+}
+
+$interface.all_operations : { operation |
+void $interface.scopedname$_Call::$operation.name$(const $interface.scopedname$_$operation.name$_In &_$operation.name$)
+{
+    m_$operation.name$ = _$operation.name$;
+    m__d = (int32_t)$operation.md5$;
+\}
+
+void $interface.scopedname$_Call::$operation.name$($interface.scopedname$_$operation.name$_In &&_$operation.name$)
+{
+    m_$operation.name$ = std::move(_$operation.name$);
+    m__d = (int32_t)$operation.md5$;
+\}
+
+const $interface.scopedname$_$operation.name$_In& $interface.scopedname$_Call::$operation.name$() const
+{
+    if(m__d != (int32_t)$operation.md5$)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_$operation.name$;
+\}
+
+$interface.scopedname$_$operation.name$_In& $interface.scopedname$_Call::$operation.name$()
+{
+    if(m__d != (int32_t)$operation.md5$)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_$operation.name$;
+\}
+}; separator="\n"$
+
+size_t $interface.scopedname$_Call::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+    size_t reset_alignment = 0;
+    size_t union_max_size_serialized = 0;
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+    // Default unknownOp attribute;
+    union_max_size_serialized = current_alignment + 1;
+
+    $interface.all_operations : { operation |
+    reset_alignment = current_alignment;
+
+    reset_alignment += $interface.scopedname$_$operation.name$_In::getMaxCdrSerializedSize(reset_alignment);
+
+    if(union_max_size_serialized < reset_alignment)
+        union_max_size_serialized = reset_alignment;
+
+    }; separator="\n"$
+
+    return union_max_size_serialized - initial_alignment;
+}
+
+size_t $interface.scopedname$_Call::getCdrSerializedSize(const $interface.scopedname$_Call& data, size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+    switch(data.m__d)
+    {
+        $interface.all_operations : { operation |
+        case (int32_t)$operation.md5$:
+            current_alignment += $interface.name$_$operation.name$_In::getCdrSerializedSize(data.m_$operation.name$, current_alignment);
+            break;
+        }; separator="\n"$
+    }
+
+    return current_alignment - initial_alignment;
+}
+
+void $interface.scopedname$_Call::serialize(eprosima::fastcdr::Cdr &scdr) const
+{
+    scdr << m__d;
+
+    switch(m__d)
+    {
+        $interface.all_operations : { operation |
+        case (int32_t)$operation.md5$:
+            scdr << m_$operation.name$;
+            break;
+        }; separator="\n"$
+        default:
+            scdr << m_unknownOp;
+            break;
+    }
+}
+
+void $interface.scopedname$_Call::deserialize(eprosima::fastcdr::Cdr &dcdr)
+{
+    dcdr \>> m__d;
+
+    switch(m__d)
+    {
+        $interface.all_operations : { operation |
+        case (int32_t)$operation.md5$:
+            dcdr \>> m_$operation.name$;
+            break;
+        }; separator="\n"$
+        default:
+            dcdr \>> m_unknownOp;
+            break;
+    }
+}
+
+$interface.scopedname$_Request::$interface.name$_Request()
+{
+}
+
+$interface.scopedname$_Request::~$interface.name$_Request()
+{
+}
+
+$interface.scopedname$_Request::$interface.name$_Request(const $interface.name$_Request &x)
+: m_header(x.m_header), m_data(x.m_data)
+{
+}
+
+$interface.scopedname$_Request::$interface.name$_Request($interface.name$_Request &&x)
+: m_header(std::move(x.m_header)), m_data(std::move(x.m_data))
+{
+}
+
+$interface.scopedname$_Request& $interface.scopedname$_Request::operator=(const $interface.name$_Request &x)
+{
+    m_header = x.m_header;
+    m_data = x.m_data;
+
+    return *this;
+}
+
+$interface.scopedname$_Request& $interface.scopedname$_Request::operator=($interface.name$_Request &&x)
+{
+    m_header = std::move(x.m_header);
+    m_data = std::move(x.m_data);
+
+    return *this;
+}
+
+size_t $interface.scopedname$_Request::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+    current_alignment +=  eprosima::rpc::protocol::dds::rpc::RequestHeader::getMaxCdrSerializedSize(current_alignment);
+    current_alignment += $interface.name$_Call::getMaxCdrSerializedSize(current_alignment);
+
+    return current_alignment - initial_alignment;
+}
+
+size_t $interface.scopedname$_Request::getCdrSerializedSize(const $interface.scopedname$_Request& data, size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+    current_alignment += eprosima::rpc::protocol::dds::rpc::RequestHeader::getCdrSerializedSize(data.m_header, current_alignment);
+    current_alignment += $interface.name$_Call::getCdrSerializedSize(data.m_data, current_alignment);
+
+    return current_alignment - initial_alignment;
+}
+
+void $interface.scopedname$_Request::serialize(eprosima::fastcdr::Cdr &scdr) const
+{
+    scdr << m_header;
+    scdr << m_data;
+}
+
+void $interface.scopedname$_Request::deserialize(eprosima::fastcdr::Cdr &dcdr)
+{
+    dcdr \>> m_header;
+    dcdr \>> m_data;
+}
+
+$interface.scopedname$_Return::$interface.name$_Return() : m__d(0)
+{
+}
+
+$interface.scopedname$_Return::~$interface.name$_Return()
+{
+}
+
+$interface.scopedname$_Return::$interface.name$_Return(const $interface.name$_Return &x)
+{
+    m__d = x.m__d;
+
+    $if(interface.notAllOnewayOperations)$
+    switch(m__d)
+    {
+        $interface.notAllOnewayOperations : { operation |
+        case (int32_t)$operation.md5$:
+            m_$operation.name$ = x.m_$operation.name$;
+            break;
+        }; separator="\n"$
+    }
+    $endif$
+}
+
+$interface.scopedname$_Return::$interface.name$_Return($interface.name$_Return &&x)
+{
+    m__d = x.m__d;
+
+    $if(interface.notAllOnewayOperations)$
+    switch(m__d)
+    {
+        $interface.notAllOnewayOperations : { operation |
+        case (int32_t)$operation.md5$:
+            m_$operation.name$ = std::move(x.m_$operation.name$);
+            break;
+        }; separator="\n"$
+    }
+    $endif$
+}
+
+$interface.scopedname$_Return& $interface.scopedname$_Return::operator=(const $interface.name$_Return &x)
+{
+    m__d = x.m__d;
+
+    $if(interface.notAllOnewayOperations)$
+    switch(m__d)
+    {
+        $interface.notAllOnewayOperations : { operation |
+        case (int32_t)$operation.md5$:
+            m_$operation.name$ = x.m_$operation.name$;
+            break;
+        }; separator="\n"$
+    }
+    $endif$
+
+    return *this;
+}
+
+$interface.scopedname$_Return& $interface.scopedname$_Return::operator=($interface.name$_Return &&x)
+{
+    m__d = x.m__d;
+
+    $if(interface.notAllOnewayOperations)$
+    switch(m__d)
+    {
+        $interface.notAllOnewayOperations : { operation |
+        case (int32_t)$operation.md5$:
+            m_$operation.name$ = std::move(x.m_$operation.name$);
+            break;
+        }; separator="\n"$
+    }
+    $endif$
+
+    return *this;
+}
+
+void $interface.scopedname$_Return::_d(int32_t __d)
+{
+    if(m__d != __d)
+    {
+        throw eprosima::rpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
+    }
+
+    m__d = __d;
+}
+
+int32_t $interface.scopedname$_Return::_d() const
+{
+    return m__d;
+}
+
+int32_t& $interface.scopedname$_Return::_d()
+{
+    return m__d;
+}
+
+void $interface.scopedname$_Return::unknownOp(eprosima::rpc::protocol::dds::rpc::UnknownOperation _unknownOp)
+{
+    m_unknownOp = _unknownOp;
+    m__d = 0;
+}
+
+eprosima::rpc::protocol::dds::rpc::UnknownOperation $interface.scopedname$_Return::unknownOp() const
+{
+    if(m__d != 0)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_unknownOp;
+}
+
+eprosima::rpc::protocol::dds::rpc::UnknownOperation& $interface.scopedname$_Return::unknownOp()
+{
+    if(m__d != 0)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_unknownOp;
+}
+
+$interface.notAllOnewayOperations : { operation |
+void $interface.scopedname$_Return::$operation.name$(const $interface.scopedname$_$operation.name$_Result &_$operation.name$)
+{
+    m_$operation.name$ = _$operation.name$;
+    m__d = (int32_t)$operation.md5$;
+\}
+
+void $interface.scopedname$_Return::$operation.name$($interface.scopedname$_$operation.name$_Result &&_$operation.name$)
+{
+    m_$operation.name$ = std::move(_$operation.name$);
+    m__d = (int32_t)$operation.md5$;
+\}
+
+const $interface.scopedname$_$operation.name$_Result& $interface.scopedname$_Return::$operation.name$() const
+{
+    if(m__d != (int32_t)$operation.md5$)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_$operation.name$;
+\}
+
+$interface.scopedname$_$operation.name$_Result& $interface.scopedname$_Return::$operation.name$()
+{
+    if(m__d != (int32_t)$operation.md5$)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_$operation.name$;
+\}
+}; separator="\n"$
+
+size_t $interface.scopedname$_Return::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+    size_t reset_alignment = 0;
+    size_t union_max_size_serialized = 0;
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+    // Default unknown_operation attribute;
+    union_max_size_serialized = current_alignment + 1;
+
+    $interface.notAllOnewayOperations : { operation |
+    reset_alignment = current_alignment;
+
+    reset_alignment += $interface.scopedname$_$operation.name$_Result::getMaxCdrSerializedSize(reset_alignment);
+
+    if(union_max_size_serialized < reset_alignment)
+        union_max_size_serialized = reset_alignment;
+
+    }; separator="\n"$
+
+    return union_max_size_serialized - initial_alignment;
+}
+
+size_t $interface.scopedname$_Return::getCdrSerializedSize(const $interface.scopedname$_Return& data, size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+    $if(interface.notAllOnewayOperations)$
+    switch(data.m__d)
+    {
+        $interface.notAllOnewayOperations : { operation |
+        case (int32_t)$operation.md5$:
+            current_alignment += $interface.name$_$operation.name$_Result::getCdrSerializedSize(data.m_$operation.name$, current_alignment);
+            break;
+        }; separator="\n"$
+    }
+    $endif$
+
+    return current_alignment - initial_alignment;
+}
+
+void $interface.scopedname$_Return::serialize(eprosima::fastcdr::Cdr &scdr) const
+{
+    scdr << m__d;
+
+    $if(interface.notAllOnewayOperations)$
+    switch(m__d)
+    {
+        $interface.notAllOnewayOperations : { operation |
+        case (int32_t)$operation.md5$:
+            scdr << m_$operation.name$;
+            break;
+        }; separator="\n"$
+        default:
+            scdr << m_unknownOp;
+            break;
+    }
+    $endif$
+}
+
+void $interface.scopedname$_Return::deserialize(eprosima::fastcdr::Cdr &dcdr)
+{
+    dcdr \>> m__d;
+
+    $if(interface.notAllOnewayOperations)$
+    switch(m__d)
+    {
+        $interface.notAllOnewayOperations : { operation |
+        case (int32_t)$operation.md5$:
+            dcdr \>> m_$operation.name$;
+            break;
+        }; separator="\n"$
+        default:
+            dcdr \>>  m_unknownOp;
+            break;
+    }
+    $endif$
+}
+
+$interface.scopedname$_Reply::$interface.name$_Reply()
+{
+}
+
+$interface.scopedname$_Reply::~$interface.name$_Reply()
+{
+}
+
+$interface.scopedname$_Reply::$interface.name$_Reply(const $interface.name$_Reply &x)
+: m_header(x.m_header), m_data(x.m_data)
+{
+}
+
+$interface.scopedname$_Reply::$interface.name$_Reply($interface.name$_Reply &&x)
+: m_header(std::move(x.m_header)), m_data(std::move(x.m_data))
+{
+}
+
+$interface.scopedname$_Reply& $interface.scopedname$_Reply::operator=(const $interface.name$_Reply &x)
+{
+    m_header = x.m_header;
+    m_data = x.m_data;
+
+    return *this;
+}
+
+$interface.scopedname$_Reply& $interface.scopedname$_Reply::operator=($interface.name$_Reply &&x)
+{
+    m_header = std::move(x.m_header);
+    m_data = std::move(x.m_data);
+
+    return *this;
+}
+
+size_t $interface.scopedname$_Reply::getMaxCdrSerializedSize(size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+    current_alignment +=  eprosima::rpc::protocol::dds::rpc::ReplyHeader::getMaxCdrSerializedSize(current_alignment);
+    current_alignment += $interface.name$_Return::getMaxCdrSerializedSize(current_alignment);
+
+    return current_alignment - initial_alignment;
+}
+
+size_t $interface.scopedname$_Reply::getCdrSerializedSize(const $interface.scopedname$_Reply& data, size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+    current_alignment +=  eprosima::rpc::protocol::dds::rpc::ReplyHeader::getCdrSerializedSize(data.m_header, current_alignment);
+    current_alignment += $interface.name$_Return::getCdrSerializedSize(data.m_data, current_alignment);
+
+    return current_alignment - initial_alignment;
+}
+
+void $interface.scopedname$_Reply::serialize(eprosima::fastcdr::Cdr &scdr) const
+{
+    scdr << m_header;
+    scdr << m_data;
+}
+
+void $interface.scopedname$_Reply::deserialize(eprosima::fastcdr::Cdr &dcdr)
+{
+    dcdr \>> m_header;
+    dcdr \>> m_data;
+}
+>>
+
+/***** Utils *****/
+
+parameters_default_init(parameters) ::= <<
+$if(parameters)$: $parameters:{ param |$parameter_default_init(param)$}; separator=", "$$endif$
+>>
+
+// TODO Juntar con TypesSource.stg y TypesHeaders.stg de FastBuffers.
+parameter_default_init(param) ::= <<
+$if(param.typecode.primitive)$
+m_$param.name$($param.typecode.initialValue$)
+$else$
+m_$param.name$()
+$endif$
+>>
+
+parameters_copy_init(parameters) ::= <<
+$if(parameters)$: $parameters:{ param |m_$param.name$(x.m_$param.name$)}; separator=", "$$endif$
+>>
+
+parameters_move_init(parameters) ::= <<
+$if(parameters)$: $parameters:{ param |m_$param.name$(std::move(x.m_$param.name$))}; separator=", "$$endif$
+>>
+
+parameters_copy_assigment(param) ::= <<
+m_$param.name$ = x.m_$param.name$;
+>>
+
+parameters_move_assigment(param) ::= <<
+m_$param.name$ = x.m_$param.name$;
+>>
+
+public_exception_union_member_declaration(class, exception) ::= <<
+void $class$::$exception.formatedScopedname$_ex(const $exception.scopedname$ &_$exception.formatedScopedname$_ex)
+{
+    m_$exception.formatedScopedname$_ex = _$exception.formatedScopedname$_ex;
+    m__d = (int32_t)$exception.md5$;
+}
+
+void $class$::$exception.formatedScopedname$_ex($exception.scopedname$ &&_$exception.formatedScopedname$_ex)
+{
+    m_$exception.formatedScopedname$_ex = std::move(_$exception.formatedScopedname$_ex);
+    m__d = (int32_t)$exception.md5$;
+}
+
+const $exception.scopedname$& $class$::$exception.formatedScopedname$_ex() const
+{
+    if(m__d != (int32_t)$exception.md5$)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_$exception.formatedScopedname$_ex;
+}
+
+$exception.scopedname$& $class$::$exception.formatedScopedname$_ex()
+{
+    if(m__d != (int32_t)$exception.md5$)
+        throw eprosima::rpc::exception::BadParamException("This member is not been selected");
+
+    return m_$exception.formatedScopedname$_ex;
+}
+>>
+
+object_serialization(ctx, object, preffix) ::= <<
+$if(object.typecode.isType_f)$
+$object_array_serialization(ctx=ctx, object=object, preffix=preffix)$
+$elseif(object.typecode.isType_e)$
+$object_seq_serialization(ctx=ctx, object=object, preffix=preffix)$
+$elseif(object.typecode.isMapType)$
+$object_map_serialization(ctx=ctx, object=object, preffix=preffix)$
+$else$
+scdr << $serializeCasting(typecode=object.typecode)$$preffix$$object.name$$if(object.typecode.isStringType)$.c_str()$endif$;
+$endif$
+>>
+
+object_array_serialization(ctx, object, preffix) ::= <<
+$if(object.typecode.contentTypeCode.isStringType)$
+$string_collection_serialization(ctx=ctx, object=object, preffix=preffix)$
+$elseif(rest(object.typecode.dimensions))$
+$recursive_array_array_serialization(ctx=ctx, name=cdrMemberName(name=object.name, preffix=preffix),  loopvar=ctx.nextLoopVarName, dims=object.typecode.dimensions, object=object)$
+$elseif(object.typecode.contentTypeCode.isType_c)$
+scdr.serializeArray(reinterpret_cast<const uint32_t*>($preffix$$object.name$.data()), $preffix$$object.name$.size());
+$else$
+scdr << $serializeCasting(typecode=object.typecode)$$preffix$$object.name$;
+$endif$
+>>
+
+object_seq_serialization(ctx, object, preffix) ::= <<
+$if(object.typecode.contentTypeCode.isType_c)$
+scdr << static_cast<uint32_t>($preffix$$object.name$.size());
+scdr.serializeArray(reinterpret_cast<const uint32_t*>($preffix$$object.name$.data()), $preffix$$object.name$.size());
+$elseif(object.typecode.contentTypeCode.isStringType)$
+$string_collection_serialization(ctx=ctx, object=object, preffix=preffix)$
+$else$
+scdr << $serializeCasting(typecode=object.typecode)$$preffix$$object.name$;
+$endif$
+>>
+
+object_map_serialization(ctx, object, preffix) ::= <<
+scdr << static_cast<uint32_t>($preffix$$object.name$.size());
+for (const auto& pair : $preffix$$object.name$)
+{
+$if(object.typecode.keyTypeCode.isType_c)$
+    scdr << static_cast<uint32_t>(pair.first);
+$elseif(object.typecode.keyTypeCode.isType_d ||
+        object.typecode.keyTypeCode.isStringType ||
+        object.typecode.keyTypeCode.isWStringType)$
+    scdr << pair.first$if(object.typecode.keyTypeCode.isStringType)$.c_str()$endif$;
+$else$
+    scdr << pair.first;
+$endif$
+$if(object.typecode.valueTypeCode.isType_c)$
+    scdr << static_cast<uint32_t>(pair.second);
+$elseif(object.typecode.valueTypeCode.isType_d ||
+        object.typecode.valueTypeCode.isStringType ||
+        object.typecode.valueTypeCode.isWStringType)$
+    scdr << pair.second$if(object.typecode.valueTypeCode.isStringType)$.c_str()$endif$;
+$else$
+    scdr << pair.second;
+$endif$
+}
+>>
+
+string_collection_serialization(ctx, object, preffix) ::= <<
+$if(object.typecode.isType_f)$
+$recursive_string_array_serialization(ctx=ctx, name=cdrMemberName(name=object.name, preffix=preffix),  loopvar=ctx.nextLoopVarName, dims=object.typecode.dimensions, object=object)$
+$elseif(ctx.generateTypesC)$
+$if(object.typecode.isType_e)$
+{
+    scdr << $preffix$$object.name$;
+}
+$else$
+{
+    std::vector<std::string> temp_$object.name$;
+    for (char* str : $preffix$$object.name$)
+    {
+        temp_$object.name$.push_back(std::string(str != nullptr ? str : ""));
+    }
+    scdr << temp_$object.name$;
+}
+$endif$
+
+$elseif(object.typecode.contentTypeCode.isStringType)$
+$if(object.typecode.contentTypeCode.isBounded)$
+{
+$if(object.typecode.isType_e)$
+    scdr << static_cast<uint32_t>($preffix$$object.name$.size());
+$endif$
+
+    for (const auto& item : $preffix$$object.name$)
+    {
+        scdr << item.c_str();
+    }
+}
+
+$else$
+scdr << $serializeCasting(typecode=object.typecode)$$preffix$$object.name$;
+
+$endif$
+$else$
+scdr << $serializeCasting(typecode=object.typecode)$$preffix$$object.name$;
+
+$endif$
+>>
+
+recursive_string_array_serialization(ctx, name, loopvar, dims, object) ::= <<
+$if(rest(dims))$
+for (uint32_t $loopvar$ = 0; $loopvar$ < $name$.size(); ++$loopvar$)
+{
+    $recursive_string_array_serialization(ctx=ctx, name=cdrIndexName(name=name,loopvar=loopvar),  loopvar=ctx.nextLoopVarName, dims=rest(dims), object=object)$
+}
+$elseif(ctx.generateTypesC)$
+for (char* str : $name$)
+{
+    scdr << std::string(str != nullptr ? str : "");
+}
+$else$
+for (const auto& str : $name$)
+{
+    scdr << str$if(object.typecode.contentTypeCode.isStringType)$.c_str()$endif$;
+}
+
+$endif$
+>>
+
+recursive_array_array_serialization(ctx, name, loopvar, dims, object) ::= <<
+$if(rest(dims))$
+for (uint32_t $loopvar$ = 0; $loopvar$ < $name$.size(); ++$loopvar$)
+{
+    $recursive_array_array_serialization(ctx=ctx, name=cdrIndexName(name=name,loopvar=loopvar),  loopvar=ctx.nextLoopVarName, dims=rest(dims), object=object)$
+}
+$elseif(object.typecode.contentTypeCode.isType_c)$
+scdr.serializeArray(reinterpret_cast<const uint32_t*>($name$.data()), $name$.size());
+$elseif(object.typecode.contentTypeCode.isBitmaskType)$
+scdr.serializeArray(reinterpret_cast<const uint32_t*>($name$.data()), $name$.size());
+$elseif(object.typecode.contentTypeCode.isStringType)$
+$string_collection_serialization(ctx=ctx, object=object, preffix=preffix)$
+$else$
+scdr << $name$;
+$endif$
+>>
+
+recursive_array_array_deserialization(ctx, name, loopvar, dims, object) ::= <<
+$if(rest(dims))$
+for (uint32_t $loopvar$ = 0; $loopvar$ < $name$.size(); ++$loopvar$)
+{
+    $recursive_array_array_deserialization(ctx=ctx, name=cdrIndexName(name=name,loopvar=loopvar),  loopvar=ctx.nextLoopVarName, dims=rest(dims), object=object)$
+}
+$elseif(object.typecode.contentTypeCode.isType_c)$
+dcdr.deserializeArray(reinterpret_cast<uint32_t*>($name$.data()), $name$.size());
+$elseif(object.typecode.contentTypeCode.isBitmaskType)$
+dcdr.deserializeArray(reinterpret_cast<uint32_t*>($name$.data()), $name$.size());
+$elseif(object.typecode.contentTypeCode.isStringType)$
+$string_collection_deserialization(ctx=ctx, object=object, preffix=preffix)$
+$else$
+dcdr \>> $name$;
+$endif$
+>>
+
+object_deserialization(ctx, object, preffix) ::= <<
+$if(object.typecode.isType_f)$
+$object_array_deserialization(ctx=ctx, object=object, preffix=preffix)$
+$elseif(object.typecode.isMapType)$
+$object_map_deserialization(ctx=ctx, object=object, preffix=preffix)$
+$elseif(object.typecode.isType_e)$
+$object_map_seq_deserialization(ctx=ctx, object=object, preffix=preffix)$
+$else$
+$deserializePossibleEnum(typecode=object.typecode, name=object.name, preffix=preffix)$
+$endif$
+>>
+
+object_array_deserialization(ctx, object, preffix) ::= <<
+$if(object.typecode.contentTypeCode.isStringType)$
+$string_collection_deserialization(ctx=ctx, object=object, preffix=preffix)$
+$elseif(rest(object.typecode.dimensions))$
+$recursive_array_array_deserialization(ctx=ctx, name=cdrMemberName(name=object.name, preffix=preffix),  loopvar=ctx.nextLoopVarName, dims=object.typecode.dimensions, object=object)$
+$elseif(object.typecode.contentTypeCode.isType_c)$
+dcdr.deserializeArray(reinterpret_cast<uint32_t*>($preffix$$object.name$.data()), $preffix$$object.name$.size());
+$else$
+dcdr \>> $preffix$$object.name$;
+$endif$
+>>
+
+object_map_seq_deserialization(ctx, object, preffix) ::= <<
+$if(object.typecode.contentTypeCode.isType_c)$
+{
+    uint32_t seq_length = 0;
+    dcdr \>> seq_length;
+    $preffix$$object.name$.resize(seq_length);
+    dcdr.deserializeArray(reinterpret_cast<uint32_t*>($preffix$$object.name$.data()), seq_length);
+}
+$elseif(object.typecode.contentTypeCode.isStringType)$
+$string_collection_deserialization(ctx=ctx, object=object, preffix=preffix)$
+$else$
+dcdr \>> $preffix$$object.name$;
+$endif$
+>>
+
+object_map_deserialization(ctx, object, preffix) ::= <<
+
+$if(object.typecode.valueTypeCode.isType_c ||
+    object.typecode.valueTypeCode.isBitmaskType ||
+    object.typecode.valueTypeCode.isStringType ||
+    object.typecode.valueTypeCode.isWStringType ||
+    object.typecode.keyTypeCode.isStringType ||
+    object.typecode.keyTypeCode.isWStringType)$
+uint32_t seq_length = 0;
+dcdr \>> seq_length;
+$preffix$$object.name$.clear();
+for (uint32_t i = 0; i < seq_length; ++i)
+{
+$object_map_key_deserialization(ctx=ctx, keyTypeCode=object.typecode.keyTypeCode)$
+
+$object_map_value_deserialization(ctx=ctx, name=[preffix, object.name], keyTypeCode=object.typecode.keyTypeCode,
+        valueTypeCode=object.typecode.valueTypeCode)$
+}
+$else$
+    dcdr \>> $preffix$$object.name$;
+$endif$
+>>
+
+
+object_map_key_deserialization(ctx, keyTypeCode) ::= <<
+$if(keyTypeCode.isStringType)$
+    std::string key;
+    $if(keyTypeCode.isBounded)$
+        std::string aux;
+        dcdr \>> aux;
+        key = aux.c_str();
+    $else$
+        dcdr \>> key;
+    $endif$
+$elseif(keyTypeCode.isWStringType)$
+    std::wstring key;
+    $if(keyTypeCode.isBounded)$
+        std::wstring aux;
+        dcdr \>> aux;
+        key = aux.c_str();
+    $else$
+        dcdr \>> key;
+    $endif$
+$else$
+    $keyTypeCode.cppTypename$ key;
+    dcdr \>> key;
+$endif$
+>>
+
+object_map_value_deserialization(ctx, name, keyTypeCode, valueTypeCode) ::= <<
+$if(valueTypeCode.isStringType)$
+    std::string value;
+    dcdr \>> value;
+    $name$[key$if(keyTypeCode.isStringType)$.c_str()$endif$] = value$if(valueTypeCode.isStringType)$.c_str()$endif$;
+$elseif(valueTypeCode.isWStringType)$
+    std::wstring value;
+    dcdr \>> value;
+    $name$[key$if(keyTypeCode.isStringType)$.c_str()$endif$] = value$if(valueTypeCode.isStringType)$.c_str()$endif$;
+$elseif(valueTypeCode.isType_c)$
+    uint32_t value;
+    dcdr \>> value;
+    $name$[key$if(keyTypeCode.isStringType)$.c_str()$endif$] = static_cast<$valueTypeCode.cppTypename$>(value);
+$elseif(valueTypeCode.isBitmaskType)$
+    uint32_t value;
+    dcdr \>> value;
+    $name$[key$if(keyTypeCode.isStringType)$.c_str()$endif$] = static_cast<$valueTypeCode.cppTypename$>(value);
+$else$
+    $valueTypeCode.cppTypename$ value;
+    dcdr \>> value;
+    $name$[key$if(keyTypeCode.isStringType)$.c_str()$endif$] = value$if(valueTypeCode.isStringType)$.c_str()$endif$;
+$endif$
+>>
+
+string_collection_deserialization(ctx, object, preffix) ::= <<
+$if(object.typecode.isType_f)$
+$recursive_string_array_deserialization(ctx=ctx, name=cdrMemberName(name=object.name, preffix=preffix),  loopvar=ctx.nextLoopVarName, dims=object.typecode.dimensions, object=object)$
+$elseif(ctx.generateTypesC)$
+$if(object.typecode.isType_e)$
+{
+    dcdr \>> $preffix$$object.name$;
+}
+$else$
+{
+    // Free old memory allocation
+    for (char* str : $preffix$$object.name$)
+    {
+        free(str);
+    }
+    $preffix$$object.name$.clear();
+    std::vector<std::string> temp_$object.name$;
+    dcdr \>> temp_$object.name$;
+    for (std::string str : temp_$object.name$)
+    {
+        char* aux = (char*)malloc(str.size() + 1);
+        strncpy(aux, str.c_str(), str.size() + 1);
+        $preffix$$object.name$.push_back(aux);
+    }
+}
+$endif$
+$elseif(object.typecode.contentTypeCode.isStringType)$
+$if(object.typecode.contentTypeCode.isBounded)$
+{
+$if(object.typecode.isType_e)$
+    uint32_t sequence_size = 0;
+    dcdr \>> sequence_size;
+    $preffix$$object.name$.resize(sequence_size);
+$endif$
+
+    for (auto& item : $preffix$$object.name$)
+    {
+        std::string s;
+        dcdr \>> s;
+        item = s.c_str();
+    }
+}
+
+$else$
+dcdr \>> $preffix$$object.name$;
+$endif$
+$else$
+dcdr \>> $preffix$$object.name$;
+$endif$
+>>
+
+recursive_string_array_deserialization(ctx, name, loopvar, dims, object) ::= <<
+$if(rest(dims))$
+for (uint32_t $loopvar$ = 0; $loopvar$ < $name$.size(); ++$loopvar$)
+{
+    $recursive_string_array_deserialization(ctx=ctx, name=cdrIndexName(name=name,loopvar=loopvar),  loopvar=ctx.nextLoopVarName, dims=rest(dims), object=object)$
+}
+$elseif(ctx.generateTypesC)$
+// Free old memory allocation
+for (char* str : $name$)
+{
+    free(str);
+}
+$name$.fill(nullptr);
+for (uint32_t index = 0; index < $name$.size(); ++index)
+{
+    std::string str;
+    dcdr \>> str;
+    char* aux = new char[str.size() + 1];
+    strncpy(aux, str.c_str(), str.size() + 1);
+    $name$[index] = aux;
+}
+$else$
+for (auto& str : $name$)
+{
+$if(object.typecode.contentTypeCode.isStringType)$
+$if(object.typecode.contentTypeCode.isBounded)$
+    {
+        std::string aux_str;
+        dcdr \>> aux_str;
+        str = aux_str.c_str();
+    }
+
+$else$
+    dcdr \>> str;
+$endif$
+$else$
+    dcdr \>> str;
+$endif$
+}
+
+$endif$
+>>
+
+bitfield_deserialization(ctx, object) ::= <<$if(member.name)$$member.spec.cppTypename$ aux_$member.name$;
+dcdr \>> aux_$member.name$;
+$member.name$(aux_$member.name$);$endif$
+>>
+
+max_serialized_size(ctx, typecode, var) ::= <<
+$if(typecode.isType_13)$
+$var$ += 16$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 8)$endif$; // 128 bits, but aligned as 64
+$elseif(typecode.primitive)$
+$var$ += $typecode.size$$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, $typecode.size$)$endif$;
+
+$elseif(typecode.isWStringType)$
+$var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$ + ($typecode.maxsize$) * 4; // 32 bits
+$elseif(typecode.isType_d)$
+$var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$ + $typecode.maxsize$ + 1;
+$elseif(typecode.isMapType)$
+$var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
+
+$map_max_serialized_size(ctx=ctx, typecodeMap=typecode, var=var, loopvar=ctx.newLoopVarName)$
+$elseif(typecode.isType_e)$
+$var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
+
+$sequence_max_serialized_size(ctx=ctx, typecodeSeq=typecode, var=var, loopvar=ctx.newLoopVarName)$
+$elseif(typecode.isType_f)$
+$array_max_serialized_size(ctx=ctx, typecodeArr=typecode, var=var, loopvar=ctx.newLoopVarName)$
+$else$
+$var$ += $typecode.scopedname$::getMaxCdrSerializedSize($var$);
+$endif$
+
+>>
+
+sequence_max_serialized_size(ctx, typecodeSeq, var, loopvar) ::= <<
+$if(typecodeSeq.contentTypeCode.primitive)$
+$var$ += ($if(typecodeSeq.unbound)$100$else$$typecodeSeq.maxsize$$endif$ * $typecodeSeq.contentTypeCode.size$)$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, $typecodeSeq.contentTypeCode.size$)$endif$;
+
+$elseif(typecodeSeq.contentTypeCode.isType_d)$
+
+for(size_t $loopvar$ = 0; $loopvar$ < $if(typecodeSeq.unbound)$100$else$$typecodeSeq.maxsize$$endif$; ++$loopvar$)
+{
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$ + $typecodeSeq.contentTypeCode.maxsize$ + 1;
+}
+$else$
+
+for(size_t $loopvar$ = 0; $loopvar$ < $if(typecodeSeq.unbound)$100$else$$typecodeSeq.maxsize$$endif$; ++$loopvar$)
+{
+$if(typecodeSeq.contentTypeCode.isMapType)$
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
+
+    $map_max_serialized_size(ctx=ctx, typecodeMap=typecodeSeq.contentTypeCode, var=var, loopvar=ctx.nextLoopVarName)$
+$elseif(typecodeSeq.contentTypeCode.isType_e)$
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
+
+    $sequence_max_serialized_size(ctx=ctx, typecodeSeq=typecodeSeq.contentTypeCode, var=var, loopvar=ctx.nextLoopVarName)$
+$elseif(typecodeSeq.contentTypeCode.isType_f)$
+$array_max_serialized_size(ctx=ctx, typecodeArr=typecodeSeq.contentTypeCode, var=var, loopvar=ctx.nextLoopVarName)$
+$else$
+    $var$ += $typecodeSeq.contentTypeCode.scopedname$::getMaxCdrSerializedSize($var$);
+$endif$
+}
+$endif$
+>>
+
+array_max_serialized_size(ctx, typecodeArr, var, loopvar) ::= <<
+$if(typecodeArr.contentTypeCode.primitive)$
+$var$ += ($typecodeArr.size$ * $typecodeArr.contentTypeCode.size$)$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, $typecodeArr.contentTypeCode.size$)$endif$;
+
+$elseif(typecodeArr.contentTypeCode.isType_d)$
+
+for(size_t $loopvar$ = 0; $loopvar$ < $typecodeArr.size$; ++$loopvar$)
+{
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$ + $typecodeArr.contentTypeCode.maxsize$ + 1;
+}
+$else$
+
+for(size_t $loopvar$ = 0; $loopvar$ < $typecodeArr.size$; ++$loopvar$)
+{
+$if(typecodeArr.contentTypeCode.isMapType)$
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
+    $map_max_serialized_size(ctx=ctx, typecodeMap=typecodeArr.contentTypeCode, var=var, loopvar=ctx.nextLoopVarName)$
+$elseif(typecodeArr.contentTypeCode.isType_e)$
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
+
+    $sequence_max_serialized_size(ctx=ctx, typecodeSeq=typecodeArr.contentTypeCode, var=var, loopvar=ctx.nextLoopVarName)$
+$elseif(typecodeArr.contentTypeCode.isType_f)$
+$array_max_serialized_size(ctx=ctx, typecodeArr=typecodeArr.contentTypeCode, var=var, loopvar=ctx.nextLoopVarName)$
+$else$
+    $var$ += $typecodeArr.contentTypeCode.scopedname$::getMaxCdrSerializedSize($var$);
+$endif$
+}
+$endif$
+>>
+
+map_max_serialized_size(ctx, typecodeMap, var, loopvar) ::= <<
+for(size_t $loopvar$ = 0; $loopvar$ < $typecodeMap.maxsize$; ++$loopvar$)
+{
+    $var$ += $typecodeMap.keyTypeCode.size$$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, $typecodeMap.keyTypeCode.size$)$endif$;
+
+    $if(typecodeMap.valueTypeCode.primitive)$
+    $var$ += $typecodeMap.valueTypeCode.size$$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, $typecodeMap.valueTypeCode.size$)$endif$;
+
+    $elseif(typecodeMap.valueTypeCode.isType_d)$
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$ + $typecodeMap.valueTypeCode.maxsize$ + 1;
+
+    $elseif(typecodeMap.valueTypeCode.isMapType)$
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
+
+    $map_max_serialized_size(ctx=ctx, typecodeMap=typecodeMap.valueTypeCode, var=var, loopvar=ctx.nextLoopVarName)$
+    $elseif(typecodeMap.valueTypeCode.isType_e)$
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
+
+    $sequence_max_serialized_size(ctx=ctx, typecodeSeq=typecodeMap.valueTypeCode, var=var, loopvar=ctx.nextLoopVarName)$
+    $elseif(typecodeMap.valueTypeCode.isType_f)$
+    $array_max_serialized_size(ctx=ctx, typecodeArr=typecodeMap.valueTypeCode, var=var, loopvar=ctx.nextLoopVarName)$
+    $else$
+    $var$ += $typecodeMap.valueTypeCode.scopedname$::getMaxCdrSerializedSize($var$);
+    $endif$
+}
+>>
+
+serialized_size(ctx, object, data, var) ::= <<
+$if(object.typecode.isType_13)$
+$var$ += 16$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 8)$endif$; // 128 bits, but aligned as 64
+$elseif(object.typecode.primitive || object.typecode.isBitmaskType)$
+$var$ += $object.typecode.size$$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, $object.typecode.size$)$endif$;
+$elseif(object.typecode.isWStringType)$
+$var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$ + ($data$.$object.name$().size()) * 4; // 32 bits
+$elseif(object.typecode.isType_d)$
+$var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$ + $if(ctx.generateTypesC)$strlen($data$.$object.name$())$else$$data$.$object.name$().size()$endif$ + 1;
+$elseif(object.typecode.isMapType)$
+$var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
+
+$map_serialized_size(ctx=ctx, typecodeMap=object.typecode, data=[data, ".", object.name, "()"], var=var, loopvar=ctx.newLoopVarName)$
+$elseif(object.typecode.isType_e)$
+$var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
+
+$sequence_serialized_size(ctx=ctx, typecodeSeq=object.typecode, data=[data, ".", object.name, "()"], var=var, loopvar=ctx.newLoopVarName)$
+$elseif(object.typecode.isType_f)$
+$array_serialized_size(ctx=ctx, typecodeArr=object.typecode, data=[data, ".", object.name, "()"], var=var, loopvar=ctx.newLoopVarName, dimensions=object.typecode.dimensions)$
+$elseif(object.typecode.isBitmaskType)$
+$var$ += $object.typecode.size$$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, $object.typecode.size$)$endif$;
+$else$
+$var$ += $object.typecode.scopedname$::getCdrSerializedSize($data$.$object.name$(), $var$);
+$endif$
+
+>>
+
+sequence_serialized_size(ctx, typecodeSeq, data, var, loopvar) ::= <<
+$if(typecodeSeq.contentTypeCode.primitive || typecodeSeq.contentTypeCode.isBitmaskType)$
+if ($data$.size() > 0)
+{
+    $if(typecodeSeq.contentTypeCode.isType_13)$
+    $var$ += ($data$.size() * $typecodeSeq.contentTypeCode.size$)$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 8)$endif$; // 128 bits, but aligned as 64
+    $else$
+    $var$ += ($data$.size() * $typecodeSeq.contentTypeCode.size$)$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, $typecodeSeq.contentTypeCode.size$)$endif$;
+    $endif$
+}
+
+$elseif(typecodeSeq.contentTypeCode.isType_d)$
+
+for(size_t $loopvar$ = 0; $loopvar$ < $data$.size(); ++$loopvar$)
+{
+    $if(typecodeSeq.contentTypeCode.isWStringType)$
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$ + ($data$.at($loopvar$).size() * 4);
+    $else$
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$ +
+        $if(ctx.generateTypesC)$strlen($data$.value()[$loopvar$])$else$$data$.at($loopvar$).size()$endif$ + 1;
+    $endif$
+}
+$else$
+
+for(size_t $loopvar$ = 0; $loopvar$ < $data$.size(); ++$loopvar$)
+{
+$if(typecodeSeq.contentTypeCode.isType_e)$
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
+
+    $if(ctx.generateTypesC)$
+    $sequence_serialized_size(ctx=ctx, typecodeSeq=typecodeSeq.contentTypeCode, data=[data, ".value()[", loopvar, "]"], var=var, loopvar=ctx.nextLoopVarName)$
+    $else$
+    $sequence_serialized_size(ctx=ctx, typecodeSeq=typecodeSeq.contentTypeCode, data=[data, ".at(", loopvar, ")"], var=var, loopvar=ctx.nextLoopVarName)$
+    $endif$
+$elseif(typecodeSeq.contentTypeCode.isMapType)$
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
+
+    $if(ctx.generateTypesC)$
+    $map_serialized_size(ctx=ctx, typecodeMap=typecodeSeq.contentTypeCode, data=[data, ".value()[", loopvar, "]"], var=var, loopvar=ctx.nextLoopVarName)$
+    $else$
+    $map_serialized_size(ctx=ctx, typecodeMap=typecodeSeq.contentTypeCode, data=[data, ".at(", loopvar, ")"], var=var, loopvar=ctx.nextLoopVarName)$
+    $endif$
+$elseif(typecodeSeq.contentTypeCode.isType_f)$
+    $if(ctx.generateTypesC)$
+    $array_serialized_size(ctx=ctx, typecodeArr=typecodeSeq.contentTypeCode, data=[data, ".value()[", loopvar, "]"], var=var, loopvar=ctx.nextLoopVarName, dimensions=typecodeSeq.contentTypeCode.dimensions)$
+    $else$
+    $array_serialized_size(ctx=ctx, typecodeArr=typecodeSeq.contentTypeCode, data=[data, ".at(", loopvar, ")"], var=var, loopvar=ctx.nextLoopVarName, dimensions=typecodeSeq.contentTypeCode.dimensions)$
+    $endif$
+$else$
+    $var$ += $typecodeSeq.contentTypeCode.scopedname$::getCdrSerializedSize($if(ctx.generateTypesC)$$data$.value()[$loopvar$]$else$$data$.at($loopvar$)$endif$, $var$);
+$endif$
+}
+$endif$
+>>
+
+array_serialized_size(ctx, typecodeArr, data, var, loopvar, dimensions) ::= <<
+$if(typecodeArr.contentTypeCode.primitive || typecodeArr.contentTypeCode.isBitmaskType)$
+$if(typecodeArr.notZeroArray)$
+$var$ += ($typecodeArr.size$ * $typecodeArr.contentTypeCode.size$)$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, $typecodeArr.contentTypeCode.size$)$endif$;
+$endif$
+$else$
+$if(first(dimensions))$
+
+for(size_t $loopvar$ = 0; $loopvar$ < $data$.size(); ++$loopvar$)
+{
+    $array_serialized_size(ctx=ctx, typecodeArr=typecodeArr, data=[data, ".at(", loopvar, ")"], var=var, loopvar=ctx.nextLoopVarName, dimensions=rest(dimensions))$
+}
+$else$
+$if(typecodeArr.contentTypeCode.isType_d)$
+    $if(typecodeArr.contentTypeCode.isWStringType)$
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$ + ($data$.size() * 4);
+    $else$
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$ + $if(ctx.generateTypesC)$strlen($data$)$else$$data$.size()$endif$ + 1;
+    $endif$
+$elseif(typecodeArr.contentTypeCode.isMapType)$
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
+
+    $map_serialized_size(ctx=ctx, typecodeMap=typecodeArr.contentTypeCode, data=data, var=var, loopvar=loopvar)$
+$elseif(typecodeArr.contentTypeCode.isType_e)$
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
+
+    $sequence_serialized_size(ctx=ctx, typecodeSeq=typecodeArr.contentTypeCode, data=data, var=var, loopvar=ctx.nextLoopVarName)$
+$elseif(typecodeArr.contentTypeCode.isType_f)$
+    $array_serialized_size(ctx=ctx, typecodeArr=typecodeArr.contentTypeCode, data=data, var=var, loopvar=loopvar, dimensions=typecodeArr.contentTypeCode.dimensions)$
+$else$
+    $var$ += $typecodeArr.contentTypeCode.scopedname$::getCdrSerializedSize($data$, $var$);
+$endif$
+$endif$
+$endif$
+>>
+
+map_serialized_size(ctx, typecodeMap, data, var, loopvar) ::= <<
+for(auto $loopvar$ : $data$)
+{
+    (void)$loopvar$;
+
+    $map_serialized_size_element(ctx=ctx, typecodeMapElement=typecodeMap.keyTypeCode, data=[loopvar, ".first"], var=var, loopvar=loopvar)$
+    $map_serialized_size_element(ctx=ctx, typecodeMapElement=typecodeMap.valueTypeCode, data=[loopvar, ".second"], var=var, loopvar=loopvar)$
+\}
+>>
+
+map_serialized_size_element(ctx, typecodeMapElement, data, var, loopvar) ::= <<
+$if(typecodeMapElement.isType_13)$
+    $var$ += 16$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 8)$endif$; // 128 bits, but aligned as 64
+$elseif(typecodeMapElement.primitive || typecodeMapElement.isBitmaskType)$
+    $var$ += $typecodeMapElement.size$$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, $typecodeMapElement.size$)$endif$;
+$elseif(typecodeMapElement.isWStringType)$
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$ + $data$.size() * 4;
+$elseif(typecodeMapElement.isType_d)$
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$ + $if(ctx.generateTypesC)$strlen($loopvar$)$else$$data$.size()$endif$ + 1;
+$elseif(typecodeMapElement.isMapType)$
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
+
+    $map_serialized_size(ctx=ctx, typecodeMap=typecodeMapElement, data=data, var=var, loopvar=ctx.nextLoopVarName)$
+$elseif(typecodeMapElement.isType_e)$
+    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
+
+    $sequence_serialized_size(ctx=ctx, typecodeSeq=typecodeMapElement, data=data, var=var, loopvar=ctx.nextLoopVarName)$
+$elseif(typecodeMapElement.isType_f)$
+    $array_serialized_size(ctx=ctx, typecodeArr=typecodeMapElement, data=data, var=var, loopvar=ctx.nextLoopVarName, dimensions=typecodeMapElement.dimensions)$
+$else$
+    $var$ += $typecodeMapElement.scopedname$::getCdrSerializedSize($data$, $var$);
+$endif$
+>>

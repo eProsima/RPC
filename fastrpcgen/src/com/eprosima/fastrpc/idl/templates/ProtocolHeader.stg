@@ -1,5 +1,8 @@
 group ProtocolHeader;
 
+import "eprosima.stg"
+import "com/eprosima/fastcdr/idl/templates/FastCdrCommon.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "Protocol.h"], description=["This header file contains the declaration of the interface for all protocols."])$
 
@@ -30,21 +33,21 @@ namespace eprosima
             class RPCUSERDllExport $ctx.filename$Protocol : public Protocol
             {
                 public:
-                
+
                    /*!
                     * @brief This method sets the transport for the communications. It has to be implemented by the children classes.
                     * @param transport Transport to use.
                     * @return True if the assignment is successful, false otherwise
                     */
                     virtual bool setTransport(eprosima::rpc::transport::Transport &transport) = 0;
-                    
+
                         /*!
                          * @brief In some protocols this function activates needed entities to use an interface.
                          * @param interfaceName Interface name.
                          * @return Whether the activation works successfully.
                          */
                     virtual bool activateInterface(const char* interfaceName) = 0;
-                    
+
                     $if(ctx.server)$
                     $ctx.scopedInterfaces : { interface |
                    /*!
@@ -54,45 +57,36 @@ namespace eprosima
                     void link$interface.formatedScopedname$Impl($interface.scopedname$ServerImpl &impl)
                     {
                         _$interface.formatedScopedname$_impl = &impl;
-                    }
+                    \}
                     }; separator="\n"$
                     $endif$
-                             
+
                     $definitions; separator="\n"$
-                    
+
                 protected:
-                
+
                     $ctx.filename$Protocol() : Protocol()
                     $if(ctx.server)$
-                    $ctx.scopedInterfaces : { interface |                      
+                    $ctx.scopedInterfaces : { interface |
                     , _$interface.formatedScopedname$_impl(NULL)
                     }; separator="\n"$
                     $endif$
                     {}
-                    
+
                     virtual ~$ctx.filename$Protocol(){}
-                
+
                     $if(ctx.server)$
-                	$ctx.scopedInterfaces : { interface |                      
+                	$ctx.scopedInterfaces : { interface |
                     $interface.scopedname$ServerImpl *_$interface.formatedScopedname$_impl;
                     }; separator="\n"$
                     $endif$
-                    
+
             };
         } // namespace protocol
     } // namespace rpc
 } // namespace eprosima
 
 #endif // _$ctx.filename;format="toUpper"$_PROTOCOL_H_
->>
-
-module(ctx, parent, module, definition_list) ::= <<
-$definition_list$
->>
-
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
-
 >>
 
 interface(ctx, parent, interface, export_list) ::= <<
@@ -102,7 +96,8 @@ $if(ctx.client)$
  * @brief This method implements the proxy part of the protocol for the operation $operation.name$.
  *        It has to be implemented by the child classes.
  */
-virtual $paramRetType(operation.rettype)$ $interface.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$) = 0;
+virtual $paramRetType(operation.rettype)$ $interface.formatedScopedname$_$operation.name$(
+        $paramDeclarations(params=operation.parameters)$) = 0;
 $endif$
 
 $if(ctx.dds)$
@@ -111,7 +106,8 @@ $if(!operation.oneway)$
  * @brief This asynchronous method implements the proxy part of the protocol for the operation $operation.name$.
  *        It has to be implemented by the child classes.
  */
-virtual void $interface.formatedScopedname$_$operation.name$_async($interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$) = 0;
+virtual void $interface.formatedScopedname$_$operation.name$_async(
+        $interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, initialSeparator=", ")$) = 0;
 
 $endif$
 $endif$
@@ -119,26 +115,3 @@ $endif$
 
 $export_list$
 >>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
-
->>
-
-exception(ctx, parent, exception) ::= <<>>
-
-operation(ctx, parent, operation, param_list) ::= <<>>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<>>
-
-struct_type(ctx, parent, struct) ::= <<>>
-
-union_type(ctx, parent, union) ::= <<>>
-
-enum_type(ctx, parent, enum) ::= <<>>

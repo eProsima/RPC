@@ -1,17 +1,31 @@
-/*************************************************************************
- * Copyright (c) 2012 eProsima. All rights reserved.
- *
- * This copy of FASTRPC is licensed to you under the terms described in the
- * FASTRPC_LICENSE file included in this distribution.
- *
- *************************************************************************/
+// Copyright 2024 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 group TopicsSourceByOperation;
+
+import "eprosima.stg"
+import "com/eprosima/fastcdr/idl/templates/FastCdrCommon.stg"
 
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "Topics.cpp"], description=["This source file contains the implementation of topics generated using operations in the IDL file."])$
 
 #include "$ctx.filename$Topics.h"
+
+
+$if(ctx.cdr_both)$
+#if FASTCDR_VERSION_MAJOR > 1
+$endif$
 
 #include <fastcdr/Cdr.h>
 #include <fastcdr/exceptions/BadParamException.h>
@@ -19,14 +33,9 @@ $fileHeader(ctx=ctx,  file=[ctx.filename, "Topics.cpp"], description=["This sour
 
 $definitions; separator="\n"$
 
->>
-
-module(ctx, parent, module, definition_list) ::= <<
-$definition_list$
->>
-
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
+$if(ctx.cdr_both)$
+#endif // FASTCDR_VERSION_MAJOR > 1
+$endif$
 >>
 
 interface(ctx, parent, interface, export_list) ::= <<
@@ -36,25 +45,25 @@ $if(operation.inputparam)$$parameters_default_init(operation.inputparam)$
 $else$: m_dummy(0)
 $endif$
 {
-}
+\}
 
 $interface.scopedname$_$operation.name$_In::~$interface.name$_$operation.name$_In()
 {
-}
+\}
 
 $interface.scopedname$_$operation.name$_In::$interface.name$_$operation.name$_In(const $interface.name$_$operation.name$_In &x)
 $if(operation.inputparam)$$parameters_copy_init(parameters=operation.inputparam)$
 $else$: m_dummy(x.m_dummy)
 $endif$
 {
-}
+\}
 
 $interface.scopedname$_$operation.name$_In::$interface.name$_$operation.name$_In($interface.name$_$operation.name$_In &&x)
 $if(operation.inputparam)$$parameters_move_init(parameters=operation.inputparam)$
 $else$: m_dummy(x.m_dummy)
 $endif$
 {
-}
+\}
 
 $interface.scopedname$_$operation.name$_In& $interface.scopedname$_$operation.name$_In::operator=(const $interface.scopedname$_$operation.name$_In &x)
 {
@@ -63,9 +72,9 @@ $interface.scopedname$_$operation.name$_In& $interface.scopedname$_$operation.na
     $else$
     m_dummy = x.m_dummy;
     $endif$
-    
+
     return *this;
-}
+\}
 
 $interface.scopedname$_$operation.name$_In& $interface.scopedname$_$operation.name$_In::operator=($interface.scopedname$_$operation.name$_In &&x)
 {
@@ -74,119 +83,43 @@ $interface.scopedname$_$operation.name$_In& $interface.scopedname$_$operation.na
     $else$
     m_dummy = x.m_dummy;
     $endif$
-    
+
     return *this;
-}
-
-size_t $interface.scopedname$_$operation.name$_In::getMaxCdrSerializedSize(size_t current_alignment)
-{
-    size_t initial_alignment = current_alignment;
-            
-    $if(operation.inputparam)$
-    $operation.inputparam : { param |$max_serialized_size(ctx=ctx, typecode=param.typecode, var="current_alignment")$}; separator="\n"$
-    $else$
-    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
-    $endif$
-
-    return current_alignment - initial_alignment;
-}
-
-size_t $interface.scopedname$_$operation.name$_In::getCdrSerializedSize(const $interface.scopedname$_$operation.name$_In& data, size_t current_alignment)
-{
-    size_t initial_alignment = current_alignment;
-
-    $if(operation.inputparam)$
-    $operation.inputparam : { param |$serialized_size(ctx=ctx, object=param, data="data", var="current_alignment")$}; separator="\n"$
-    $else$
-    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
-    $endif$
-
-    return current_alignment - initial_alignment;
-}
-
-void $interface.scopedname$_$operation.name$_In::serialize(eprosima::fastcdr::Cdr &scdr) const
-{
-    $if(operation.inputparam)$
-    $operation.inputparam : { param |$object_serialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
-    $else$
-    scdr << m_dummy;
-    $endif$
-}
-
-void $interface.scopedname$_$operation.name$_In::deserialize(eprosima::fastcdr::Cdr &dcdr)
-{
-    $if(operation.inputparam)$
-    $operation.inputparam : { param |$object_deserialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
-    $else$
-    dcdr \>> m_dummy;
-    $endif$
-}
+\}
 
 $interface.scopedname$_$operation.name$_Request::$interface.name$_$operation.name$_Request()
 {
-}
+\}
 
 $interface.scopedname$_$operation.name$_Request::~$interface.name$_$operation.name$_Request()
 {
-}
+\}
 
 $interface.scopedname$_$operation.name$_Request::$interface.name$_$operation.name$_Request(const $interface.name$_$operation.name$_Request &x)
 : m_header(x.m_header), m_$operation.name$(x.m_$operation.name$)
 {
-}
+\}
 
 $interface.scopedname$_$operation.name$_Request::$interface.name$_$operation.name$_Request($interface.name$_$operation.name$_Request &&x)
 : m_header(std::move(x.m_header)), m_$operation.name$(std::move(x.m_$operation.name$))
 {
-}
+\}
 
 $interface.scopedname$_$operation.name$_Request& $interface.scopedname$_$operation.name$_Request::operator=(const $interface.scopedname$_$operation.name$_Request &x)
 {
     m_header = x.m_header;
     m_$operation.name$ = x.m_$operation.name$;
-    
+
     return *this;
-}
+\}
 
 $interface.scopedname$_$operation.name$_Request& $interface.scopedname$_$operation.name$_Request::operator=($interface.scopedname$_$operation.name$_Request &&x)
 {
     m_header = std::move(x.m_header);
     m_$operation.name$ = std::move(x.m_$operation.name$);
-    
+
     return *this;
-}
-
-size_t $interface.scopedname$_$operation.name$_Request::getMaxCdrSerializedSize(size_t current_alignment)
-{
-    size_t initial_alignment = current_alignment;
-
-    current_alignment += eprosima::rpc::protocol::dds::rpc::RequestHeader::getMaxCdrSerializedSize(current_alignment);
-    current_alignment += $interface.scopedname$_$operation.name$_In::getMaxCdrSerializedSize(current_alignment);
-
-    return current_alignment - initial_alignment;
-}
-
-size_t $interface.scopedname$_$operation.name$_Request::getCdrSerializedSize(const $interface.scopedname$_$operation.name$_Request& data, size_t current_alignment)
-{
-    size_t initial_alignment = current_alignment;
-
-    current_alignment += data.m_header.getCdrSerializedSize(current_alignment);
-    current_alignment += $interface.scopedname$_$operation.name$_In::getCdrSerializedSize(data.m_$operation.name$, current_alignment);
-
-    return current_alignment - initial_alignment;
-}
-
-void $interface.scopedname$_$operation.name$_Request::serialize(eprosima::fastcdr::Cdr &scdr) const
-{
-    scdr << m_header;
-    scdr << m_$operation.name$;
-}
-
-void $interface.scopedname$_$operation.name$_Request::deserialize(eprosima::fastcdr::Cdr &dcdr)
-{
-    dcdr \>> m_header;
-    dcdr \>> m_$operation.name$;
-}
+\}
 
 $if(!operation.oneway)$
 $interface.scopedname$_$operation.name$_Out::$interface.name$_$operation.name$_Out()
@@ -194,25 +127,25 @@ $if([operation.outputparam, operation.rettypeparam])$$parameters_default_init([o
 $else$: m_dummy(0)
 $endif$
 {
-}
+\}
 
 $interface.scopedname$_$operation.name$_Out::~$interface.name$_$operation.name$_Out()
 {
-}
+\}
 
 $interface.scopedname$_$operation.name$_Out::$interface.name$_$operation.name$_Out(const $interface.name$_$operation.name$_Out &x)
 $if([operation.outputparam, operation.rettypeparam])$$parameters_copy_init(parameters=[operation.outputparam, operation.rettypeparam])$
 $else$: m_dummy(x.m_dummy)
 $endif$
 {
-}
+\}
 
 $interface.scopedname$_$operation.name$_Out::$interface.name$_$operation.name$_Out($interface.name$_$operation.name$_Out &&x)
 $if([operation.outputparam, operation.rettypeparam])$$parameters_move_init(parameters=[operation.outputparam, operation.rettypeparam])$
 $else$: m_dummy(x.m_dummy)
 $endif$
 {
-}
+\}
 
 $interface.scopedname$_$operation.name$_Out& $interface.scopedname$_$operation.name$_Out::operator=(const $interface.scopedname$_$operation.name$_Out &x)
 {
@@ -221,9 +154,9 @@ $interface.scopedname$_$operation.name$_Out& $interface.scopedname$_$operation.n
     $else$
     m_dummy = x.m_dummy;
     $endif$
-    
+
     return *this;
-}
+\}
 
 $interface.scopedname$_$operation.name$_Out& $interface.scopedname$_$operation.name$_Out::operator=($interface.scopedname$_$operation.name$_Out &&x)
 {
@@ -232,66 +165,22 @@ $interface.scopedname$_$operation.name$_Out& $interface.scopedname$_$operation.n
     $else$
     m_dummy = x.m_dummy;
     $endif$
-    
+
     return *this;
-}
-
-size_t $interface.scopedname$_$operation.name$_Out::getMaxCdrSerializedSize(size_t current_alignment)
-{
-    size_t initial_alignment = current_alignment;
-            
-    $if([operation.outputparam, operation.rettypeparam])$
-    $[operation.outputparam, operation.rettypeparam] : { param |$max_serialized_size(ctx=ctx, typecode=param.typecode, var="current_alignment")$}; separator="\n"$
-    $else$
-    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
-    $endif$
-
-    return current_alignment - initial_alignment;
-}
-
-size_t $interface.scopedname$_$operation.name$_Out::getCdrSerializedSize(const $interface.scopedname$_$operation.name$_Out& data, size_t current_alignment)
-{
-    size_t initial_alignment = current_alignment;
-            
-    $if([operation.outputparam, operation.rettypeparam])$
-    $[operation.outputparam, operation.rettypeparam] : { param |$serialized_size(ctx=ctx, object=param, data="data", var="current_alignment")$}; separator="\n"$
-    $else$
-    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
-    $endif$
-
-    return current_alignment - initial_alignment;
-}
-
-void $interface.scopedname$_$operation.name$_Out::serialize(eprosima::fastcdr::Cdr &scdr) const
-{
-    $if([operation.outputparam, operation.rettypeparam])$
-    $[operation.outputparam, operation.rettypeparam] : { param |$object_serialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
-    $else$
-    scdr << m_dummy;
-    $endif$
-}
-
-void $interface.scopedname$_$operation.name$_Out::deserialize(eprosima::fastcdr::Cdr &dcdr)
-{
-    $if([operation.outputparam, operation.rettypeparam])$
-    $[operation.outputparam, operation.rettypeparam] : { param |$object_deserialization(ctx=ctx, object=param, preffix="m_")$}; separator="\n"$
-    $else$
-    dcdr \>> m_dummy;
-    $endif$
-}
+\}
 
 $interface.scopedname$_$operation.name$_Result::$interface.name$_$operation.name$_Result() : m__d(2)
 {
-}
+\}
 
 $interface.scopedname$_$operation.name$_Result::~$interface.name$_$operation.name$_Result()
 {
-}
+\}
 
 $interface.scopedname$_$operation.name$_Result::$interface.name$_$operation.name$_Result(const $interface.name$_$operation.name$_Result &x)
 {
     m__d = x.m__d;
-    
+
     switch(m__d)
     {
         case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
@@ -302,13 +191,13 @@ $interface.scopedname$_$operation.name$_Result::$interface.name$_$operation.name
             m_$exception.formatedScopedname$_ex = x.m_$exception.formatedScopedname$_ex;
             break;
         }; separator="\n"$
-    }
-}
+    \}
+\}
 
 $interface.scopedname$_$operation.name$_Result::$interface.name$_$operation.name$_Result($interface.name$_$operation.name$_Result &&x)
 {
     m__d = x.m__d;
-    
+
     switch(m__d)
     {
         case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
@@ -319,13 +208,13 @@ $interface.scopedname$_$operation.name$_Result::$interface.name$_$operation.name
             m_$exception.formatedScopedname$_ex = std::move(x.m_$exception.formatedScopedname$_ex);
             break;
         }; separator="\n"$
-    }
-}
+    \}
+\}
 
 $interface.scopedname$_$operation.name$_Result& $interface.scopedname$_$operation.name$_Result::operator=(const $interface.scopedname$_$operation.name$_Result &x)
 {
     m__d = x.m__d;
-    
+
     switch(m__d)
     {
         case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
@@ -336,15 +225,15 @@ $interface.scopedname$_$operation.name$_Result& $interface.scopedname$_$operatio
             m_$exception.formatedScopedname$_ex = x.m_$exception.formatedScopedname$_ex;
             break;
         }; separator="\n"$
-    }
-    
+    \}
+
     return *this;
-}
+\}
 
 $interface.scopedname$_$operation.name$_Result& $interface.scopedname$_$operation.name$_Result::operator=($interface.scopedname$_$operation.name$_Result &&x)
 {
     m__d = x.m__d;
-    
+
     switch(m__d)
     {
         case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
@@ -355,36 +244,36 @@ $interface.scopedname$_$operation.name$_Result& $interface.scopedname$_$operatio
             m_$exception.formatedScopedname$_ex = std::move(x.m_$exception.formatedScopedname$_ex);
             break;
         }; separator="\n"$
-    }
-    
+    \}
+
     return *this;
-}
+\}
 
 void $interface.scopedname$_$operation.name$_Result::_d(int32_t __d)
 {
     if(m__d != __d)
     {
         throw eprosima::rpc::exception::BadParamException("Discriminator doesn't correspond with the selected union member");
-    }
-    
+    \}
+
     m__d = __d;
-}
+\}
 
 int32_t $interface.scopedname$_$operation.name$_Result::_d() const
 {
     return m__d;
-}
+\}
 
 int32_t& $interface.scopedname$_$operation.name$_Result::_d()
 {
     return m__d;
-}
+\}
 
 void $interface.scopedname$_$operation.name$_Result::unknownEx(eprosima::rpc::protocol::dds::rpc::UnknownException _unknownEx)
 {
     m_unknownEx = _unknownEx;
     m__d = 2;
-}
+\}
 
 eprosima::rpc::protocol::dds::rpc::UnknownException $interface.scopedname$_$operation.name$_Result::unknownEx() const
 {
@@ -392,7 +281,7 @@ eprosima::rpc::protocol::dds::rpc::UnknownException $interface.scopedname$_$oper
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
 
     return m_unknownEx;
-}
+\}
 
 eprosima::rpc::protocol::dds::rpc::UnknownException& $interface.scopedname$_$operation.name$_Result::unknownEx()
 {
@@ -400,225 +289,76 @@ eprosima::rpc::protocol::dds::rpc::UnknownException& $interface.scopedname$_$ope
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
 
     return m_unknownEx;
-}
+\}
 
 void $interface.scopedname$_$operation.name$_Result::result(const $interface.scopedname$_$operation.name$_Out &_result)
 {
     m_result = _result;
     m__d = 0;
-}
+\}
 
 void $interface.scopedname$_$operation.name$_Result::result($interface.scopedname$_$operation.name$_Out &&_result)
 {
     m_result = std::move(_result);
     m__d = 0;
-}
+\}
 
 const $interface.scopedname$_$operation.name$_Out& $interface.scopedname$_$operation.name$_Result::result() const
 {
     if(m__d != 0)
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
-    
+
     return m_result;
-}
+\}
 
 $interface.scopedname$_$operation.name$_Out& $interface.scopedname$_$operation.name$_Result::result()
 {
     if(m__d != 0)
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
-    
+
     return m_result;
-}
+\}
 
 $operation.exceptions:{ exception |$public_exception_union_member_declaration(class=[interface.scopedname, "_", operation.name, "_Result"], exception=exception)$}; separator="\n"$
 
-size_t $interface.scopedname$_$operation.name$_Result::getMaxCdrSerializedSize(size_t current_alignment)
-{
-    size_t initial_alignment = current_alignment;
-    size_t reset_alignment = 0;
-    size_t union_max_size_serialized = 0;
-
-    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
-
-    // UnknownEx
-    union_max_size_serialized = current_alignment;
-    union_max_size_serialized += 1;
-
-    reset_alignment = current_alignment;
-    reset_alignment += $interface.scopedname$_$operation.name$_Out::getMaxCdrSerializedSize(reset_alignment);
-
-    if(union_max_size_serialized < reset_alignment)
-        union_max_size_serialized = reset_alignment;
-
-    $operation.exceptions : { exception |
-    reset_alignment = current_alignment;
-
-    reset_alignment += $exception.scopedname$::getMaxCdrSerializedSize(reset_alignment);
-
-    if(union_max_size_serialized < reset_alignment)
-        union_max_size_serialized = reset_alignment;
-
-    }; separator="\n"$
-
-    return union_max_size_serialized - initial_alignment;
-}
-
-size_t $interface.scopedname$_$operation.name$_Result::getCdrSerializedSize(const $interface.scopedname$_$operation.name$_Result& data, size_t current_alignment)
-{
-    size_t initial_alignment = current_alignment;
-
-    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
-
-    switch(data.m__d)
-    {
-        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
-            current_alignment += $interface.scopedname$_$operation.name$_Out::getCdrSerializedSize(data.m_result, current_alignment);
-            break;
-        $operation.exceptions : { exception |
-        case (int32_t)$exception.md5$:
-            current_alignment += $exception.scopedname$::getCdrSerializedSize(data.m_$exception.formatedScopedname$_ex, current_alignment);
-            break;
-        }; separator="\n"$
-    }
-
-    return current_alignment - initial_alignment;
-}
-
-void $interface.scopedname$_$operation.name$_Result::serialize(eprosima::fastcdr::Cdr &scdr) const
-{
-    scdr << m__d;
-
-    switch(m__d)
-    {
-        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
-            scdr << m_result;
-            break;
-        $operation.exceptions : { exception |
-        case (int32_t)$exception.md5$:
-            scdr << m_$exception.formatedScopedname$_ex;
-            break;
-        }; separator="\n"$
-
-        default:
-            scdr << m_unknownEx;
-            break;
-    }
-}
-
-void $interface.scopedname$_$operation.name$_Result::deserialize(eprosima::fastcdr::Cdr &dcdr)
-{
-    dcdr \>> m__d;
-
-    switch(m__d)
-    {
-        case eprosima::rpc::protocol::dds::rpc::REMOTE_EX_OK:
-            dcdr \>> m_result;
-            break;
-        $operation.exceptions : { exception |
-        case (int32_t)$exception.md5$:
-            dcdr \>> m_$exception.formatedScopedname$_ex;
-            break;
-        }; separator="\n"$
-
-        default:
-            dcdr \>> m_unknownEx;
-            break;
-    }
-}
-
 $interface.scopedname$_$operation.name$_Reply::$interface.name$_$operation.name$_Reply()
 {
-}
+\}
 
 $interface.scopedname$_$operation.name$_Reply::~$interface.name$_$operation.name$_Reply()
 {
-}
+\}
 
 $interface.scopedname$_$operation.name$_Reply::$interface.name$_$operation.name$_Reply(const $interface.name$_$operation.name$_Reply &x)
 : m_header(x.m_header), m_$operation.name$(x.m_$operation.name$)
 {
-}
+\}
 
 $interface.scopedname$_$operation.name$_Reply::$interface.name$_$operation.name$_Reply($interface.name$_$operation.name$_Reply &&x)
 : m_header(std::move(x.m_header)), m_$operation.name$(std::move(x.m_$operation.name$))
 {
-}
+\}
 
 $interface.scopedname$_$operation.name$_Reply& $interface.scopedname$_$operation.name$_Reply::operator=(const $interface.scopedname$_$operation.name$_Reply &x)
 {
     m_header = x.m_header;
     m_$operation.name$ = x.m_$operation.name$;
-    
+
     return *this;
-}
+\}
 
 $interface.scopedname$_$operation.name$_Reply& $interface.scopedname$_$operation.name$_Reply::operator=($interface.scopedname$_$operation.name$_Reply &&x)
 {
     m_header = std::move(x.m_header);
     m_$operation.name$ = std::move(x.m_$operation.name$);
-    
+
     return *this;
-}
-
-size_t $interface.scopedname$_$operation.name$_Reply::getMaxCdrSerializedSize(size_t current_alignment)
-{
-    size_t initial_alignment = current_alignment;
-
-    current_alignment +=  eprosima::rpc::protocol::dds::rpc::ReplyHeader::getMaxCdrSerializedSize(current_alignment);
-    current_alignment += $interface.name$_$operation.name$_Result::getMaxCdrSerializedSize(current_alignment);
-            
-    return current_alignment - initial_alignment;
-}
-
-size_t $interface.scopedname$_$operation.name$_Reply::getCdrSerializedSize(const $interface.scopedname$_$operation.name$_Reply& data, size_t current_alignment)
-{
-    size_t initial_alignment = current_alignment;
-
-    current_alignment +=  data.m_header.getCdrSerializedSize(current_alignment);
-    current_alignment += $interface.name$_$operation.name$_Result::getCdrSerializedSize(data.m_$operation.name$, current_alignment);
-            
-    return current_alignment - initial_alignment;
-}
-
-void $interface.scopedname$_$operation.name$_Reply::serialize(eprosima::fastcdr::Cdr &scdr) const
-{
-    scdr << m_header;
-    scdr << m_$operation.name$;
-}
-
-void $interface.scopedname$_$operation.name$_Reply::deserialize(eprosima::fastcdr::Cdr &dcdr)
-{
-    dcdr \>> m_header;
-    dcdr \>> m_$operation.name$;
-}
-
+\}
 $endif$
 }; separator="\n"$
 
 $export_list$
 >>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
-exception(ctx, parent, exception) ::= <<>>
-
-operation(ctx, parent, operation, param_list) ::= <<>>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<>>
-
-struct_type(ctx, parent, struct) ::= <<>>
-
-union_type(ctx, parent, union) ::= <<>>
-
-enum_type(ctx, parent, enum) ::= <<>>
 
 /***** Utils *****/
 
@@ -668,7 +408,7 @@ const $exception.scopedname$& $class$::$exception.formatedScopedname$_ex() const
 {
     if(m__d != (int32_t)$exception.md5$)
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
-    
+
     return m_$exception.formatedScopedname$_ex;
 }
 
@@ -676,7 +416,7 @@ $exception.scopedname$& $class$::$exception.formatedScopedname$_ex()
 {
     if(m__d != (int32_t)$exception.md5$)
         throw eprosima::rpc::exception::BadParamException("This member is not been selected");
-    
+
     return m_$exception.formatedScopedname$_ex;
 }
 >>

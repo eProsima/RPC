@@ -1,8 +1,4 @@
-cmake_minimum_required(VERSION 2.8.12)
-
-if(NOT CMAKE_VERSION VERSION_LESS 3.0)
-    cmake_policy(SET CMP0048 NEW)
-endif()
+cmake_minimum_required(VERSION 3.20)
 
 project("RTPSCalculator")
 
@@ -31,9 +27,9 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANG OR
     endif()
 endif()
 
-set(RTPSCALCULATOR_COMMON_SOURCES_CXX CalculatorTopicsPlugin.cxx CalculatorTopics.cxx CalculatorDDSProtocol.cxx CalculatorDDSAsyncSupport.cxx)
+set(RTPSCALCULATOR_COMMON_SOURCES_CXX CalculatorTopicsPlugin.cxx CalculatorTopics.cxx CalculatorTopicsv1.cxx CalculatorDDSProtocol.cxx CalculatorDDSAsyncSupport.cxx)
 message(STATUS "Configuring RTPSCalculator libraries...")
-set(RTPSCALCULATOR_SOURCES_CXX Calculator.cxx)
+set(RTPSCALCULATOR_SOURCES_CXX Calculator.cxx Calculatorv1.cxx)
 set(RTPSCALCULATORCLIENT_SOURCES_CXX CalculatorProxy.cxx)
 set(RTPSCALCULATORSERVER_SOURCES_CXX CalculatorServer.cxx)
 
@@ -53,8 +49,8 @@ target_include_directories(CalculatorServer PRIVATE ${rpcdds_INCLUDE_DIR} ${Boos
 target_link_libraries(CalculatorServer fastcdr fastrtps)
 
 message(STATUS "Configuring RTPSCalculator Server and Client examples...")
-set(RTPSCALCULATORSERVEREXAMPLE_SOURCES_CXX CalculatorServerExample.cxx CalculatorServerImplExample.cxx) 
-set(RTPSCALCULATORCLIENTEXAMPLE_SOURCES_CXX CalculatorClientExample.cxx) 
+set(RTPSCALCULATORSERVEREXAMPLE_SOURCES_CXX CalculatorServerExample.cxx CalculatorServerImplExample.cxx)
+set(RTPSCALCULATORCLIENTEXAMPLE_SOURCES_CXX CalculatorClientExample.cxx)
 
 add_executable(CalculatorServerExample ${RTPSCALCULATORSERVEREXAMPLE_SOURCES_CXX})
 target_include_directories(CalculatorServerExample PRIVATE ${Boost_INCLUDE_DIR})

@@ -1,10 +1,10 @@
 /*************************************************************************
- * Copyright (c) 2013 eProsima. All rights reserved.
- *
- * This copy of FASTRPC is licensed to you under the terms described in the
- * FASTRPC_LICENSE file included in this distribution.
- *
- *************************************************************************/
+* Copyright (c) 2013 eProsima. All rights reserved.
+*
+* This copy of FASTRPC is licensed to you under the terms described in the
+* FASTRPC_LICENSE file included in this distribution.
+*
+*************************************************************************/
 #ifndef _TRANSPORTS_DDS_COMPONENTS_RTPSPROXYPROCEDUREENDPOINT_H_
 #define _TRANSPORTS_DDS_COMPONENTS_RTPSPROXYPROCEDUREENDPOINT_H_
 
@@ -25,172 +25,189 @@
 #include <cstdint>
 #include <map>
 
-namespace boost
+namespace boost {
+class mutex;
+class shared_mutex;
+class condition_variable_any;
+} // namespace boost
+
+namespace eprosima {
+namespace fastrtps {
+class Publisher;
+class Subscriber;
+} // namespace fastrtps
+
+namespace rpc {
+namespace transport {
+namespace dds {
+class RTPSAsyncTask;
+class RecvPoint;
+
+/*!
+ * @brief This class represents a remote endpoint used by a proxy.
+ * It also encapsulates the DDS datawriter and the DDS datareader.
+ * @ingroup TRANSPORTMODULE
+ */
+class RTPSProxyProcedureEndpoint : public Endpoint, public eprosima::fastrtps::SubscriberListener,
+    public eprosima::fastrtps::PublisherListener
 {
-    class mutex;
-    class shared_mutex;
-    class condition_variable_any;
-}
+public:
 
-namespace eprosima
-{
-    namespace fastrtps
-    {
-        class Publisher;
-        class Subscriber;
-    }
+    /*!
+     * @brief Default constructor.
+     * @param Transport that is creating the proxy procedure endpoint. It cannot be NULL.
+     */
+    RPC_DllAPI RTPSProxyProcedureEndpoint(
+            RTPSProxyTransport& transport);
 
-    namespace rpc
-    {
-        namespace transport
-        {
-            namespace dds
-            {
-                class RTPSAsyncTask;
-                class RecvPoint;
+    //! @brief Default destructor.
+    virtual RPC_DllAPI ~RTPSProxyProcedureEndpoint();
 
-                /*!
-                 * @brief This class represents a remote endpoint used by a proxy.
-                 * It also encapsulates the DDS datawriter and the DDS datareader.
-                 * @ingroup TRANSPORTMODULE
-                 */
-                class RTPSProxyProcedureEndpoint : public Endpoint, public eprosima::fastrtps::SubscriberListener,
-                public eprosima::fastrtps::PublisherListener
-                {
-                    public:
+    /*!
+     * @brief This function initializes the proxy procedure endpoint.
+     *
+     * @param name The name associated with this proxy procedure endpoint. It cannot be NULL.
+     * @param writertypename The type name of the topic that the proxy procedure endpoint uses in the datawriter. It cannot be NULL.
+     * @param writertopicname The name of the topic that the proxy procedure endpoint uses in the datawriter. It cannot be NULL.
+     * @param readertypename The type name of the topic that the proxy procedure endpoint uses in the datareader. It cannot be NULL.
+     * @param readerttopicname The name of the topic that the proxy procedure endpoint uses in the datareader. It cannot be NULL.
+     * @param copy_data Pointer to the function used to copy the data when it is received.
+     * @return 0 if the initialization works. -1 in other case.
+     * TODO
+     */
+    RPC_DllAPI int initialize(
+            const char* name,
+            const char* writertypename,
+            const char* writertopicname,
+            const char* readertypename,
+            const char* readertopicname,
+            RTPSTransport::Create_data create_data,
+            RTPSTransport::Copy_data copy_data,
+            RTPSTransport::Destroy_data destroy_data,
+            size_t dataSize);
 
-                        /*!
-                         * @brief Default constructor.
-                         * @param Transport that is creating the proxy procedure endpoint. It cannot be NULL.
-                         */
-                        RPC_DllAPI RTPSProxyProcedureEndpoint(RTPSProxyTransport &transport);
+    /*!
+     * @brief This function finalizes the proxy procedure endpoint.
+     * All entities and objects created by this procedure endpoint are deleted.
+     */
+    RPC_DllAPI void finalize();
 
-                        //! @brief Default destructor.
-                        virtual RPC_DllAPI ~RTPSProxyProcedureEndpoint();
+    /*!
+     * @brief This function sends a synchronous RPC call.
+     * It sends the request to the server and waits for the reply.
+     * The wait mechanism is implemented with a DDS WaitSet.
+     *
+     * @param request Pointer to the allocated request. It cannot be NULL.
+     * @param reply Pointer to the allocated reply. This memory will be filled with the incoming data.
+     *        The pointer can be NULL and this means that the RPC call is oneway.
+     * @return Operation status
+     * @throw eprosima::rpc::exception::ServerTimeoutException.
+     */
+    RPC_DllAPI eprosima::rpc::ReturnMessage send(
+            void* request,
+            void* reply);
 
-                        /*!
-                         * @brief This function initializes the proxy procedure endpoint.
-                         *
-                         * @param name The name associated with this proxy procedure endpoint. It cannot be NULL.
-                         * @param writertypename The type name of the topic that the proxy procedure endpoint uses in the datawriter. It cannot be NULL.
-                         * @param writertopicname The name of the topic that the proxy procedure endpoint uses in the datawriter. It cannot be NULL.
-                         * @param readertypename The type name of the topic that the proxy procedure endpoint uses in the datareader. It cannot be NULL.
-                         * @param readerttopicname The name of the topic that the proxy procedure endpoint uses in the datareader. It cannot be NULL.
-                         * @param copy_data Pointer to the function used to copy the data when it is received.
-                         * @return 0 if the initialization works. -1 in other case.
-                         * TODO
-                         */
-                        RPC_DllAPI int initialize(const char *name, const char *writertypename,
-                                const char *writertopicname, const char *readertypename, const char *readertopicname,
-                                RTPSTransport::Create_data create_data, RTPSTransport::Copy_data copy_data,
-                                RTPSTransport::Destroy_data destroy_data, size_t dataSize);
+    /*!
+     * @brief This function sends an asynchronous RPC call.
+     * It sends the request to the server and does not wait for the reply.
+     * Instead, the corresponding callback inside the RTPSAsyncTask object
+     * will be invoked when the response arrives.
+     *
+     * @param request Pointer to the allocated request. It cannot be NULL.
+     * @param task Object containing information of the asynchronous task.
+     * @return Operation status. It can be CLIENT_INTERNAL_ERROR or NO_SERVER
+     */
+    RPC_DllAPI eprosima::rpc::ReturnMessage send_async(
+            void* request,
+            RTPSAsyncTask* task);
 
-                        /*!
-                         * @brief This function finalizes the proxy procedure endpoint.
-                         * All entities and objects created by this procedure endpoint are deleted.
-                         */
-                        RPC_DllAPI void finalize();
+    /// @brief DDS callback.
+    virtual RPC_DllAPI void onNewDataMessage(
+            eprosima::fastrtps::Subscriber* sub);
 
-                        /*!
-                         * @brief This function sends a synchronous RPC call.
-                         * It sends the request to the server and waits for the reply.
-                         * The wait mechanism is implemented with a DDS WaitSet.
-                         *
-                         * @param request Pointer to the allocated request. It cannot be NULL.
-                         * @param reply Pointer to the allocated reply. This memory will be filled with the incoming data.
-                         *        The pointer can be NULL and this means that the RPC call is oneway.
-                         * @return Operation status
-                         * @throw eprosima::rpc::exception::ServerTimeoutException.
-                         */
-                        RPC_DllAPI eprosima::rpc::ReturnMessage send(void *request, void* reply);
+    virtual RPC_DllAPI void onSubscriptionMatched(
+            eprosima::fastrtps::Subscriber* sub,
+            eprosima::fastrtps::rtps::MatchingInfo& info);
 
-                        /*!
-                         * @brief This function sends an asynchronous RPC call.
-                         * It sends the request to the server and does not wait for the reply.
-                         * Instead, the corresponding callback inside the RTPSAsyncTask object
-                         * will be invoked when the response arrives.
-                         *
-                         * @param request Pointer to the allocated request. It cannot be NULL.
-                         * @param task Object containing information of the asynchronous task.
-                         * @return Operation status. It can be CLIENT_INTERNAL_ERROR or NO_SERVER
-                         */
-                        RPC_DllAPI eprosima::rpc::ReturnMessage send_async(void *request, RTPSAsyncTask *task);
+    virtual RPC_DllAPI void onPublicationMatched(
+            eprosima::fastrtps::Publisher* pub,
+            eprosima::fastrtps::rtps::MatchingInfo& info);
 
-                        /// @brief DDS callback.
-                        virtual RPC_DllAPI void onNewDataMessage(eprosima::fastrtps::Subscriber *sub);
+private:
 
-                        virtual RPC_DllAPI void onSubscriptionMatched(eprosima::fastrtps::Subscriber *sub, eprosima::fastrtps::rtps::MatchingInfo& info);
+    /*!
+     * @brief This function creates the DDS entities.
+     * @param name The name associated with this proxy procedure endpoint. It cannot be NULL.
+     * @param writertypename The type name of the topic that the proxy procedure endpoint uses in the datawriter. It cannot be NULL.
+     * @param writertopicname The name of the topic that the proxy procedure endpoint uses in the datawriter. It cannot be NULL.
+     * @param readertypename The type name of the topic that the proxy procedure endpoint uses in the datareader. It cannot be NULL.
+     * @param readertopicname The name of the topic that the proxy procedure endpoint uses in the datareader. It cannot be NULL.
+     * @return 0 value is returned if the initialization works successfully. In other case -1 is returned.
+     */
+    int createEntities(
+            const char* name,
+            const char* writertypename,
+            const char* writertopicname,
+            const char* readertypename,
+            const char* readertopicname);
 
-                        virtual RPC_DllAPI void onPublicationMatched(eprosima::fastrtps::Publisher *pub, eprosima::fastrtps::rtps::MatchingInfo& info);
+    /*!
+     * @brief This function checks if the server was discovered.
+     * @param timeout Timeout used to do the checking. Its value is in milliseconds.
+     * @return FASTRPC return message.
+     */
+    ReturnMessage checkServerConnection(
+            long timeout);
 
-                    private:
+    void addAsyncTask(
+            RTPSAsyncTask* task,
+            int64_t numSec);
 
-                        /*!
-                         * @brief This function creates the DDS entities.
-                         * @param name The name associated with this proxy procedure endpoint. It cannot be NULL.
-                         * @param writertypename The type name of the topic that the proxy procedure endpoint uses in the datawriter. It cannot be NULL.
-                         * @param writertopicname The name of the topic that the proxy procedure endpoint uses in the datawriter. It cannot be NULL.
-                         * @param readertypename The type name of the topic that the proxy procedure endpoint uses in the datareader. It cannot be NULL.
-                         * @param readertopicname The name of the topic that the proxy procedure endpoint uses in the datareader. It cannot be NULL.
-                         * @return 0 value is returned if the initialization works successfully. In other case -1 is returned.
-                         */
-                        int createEntities(const char *name, const char *writertypename, const char *writertopicname,
-                                const char *readertypename, const char *readertopicname);
+    //! @brief Mutex used to ensure that sequence number and query pool is safe-thread.
+    boost::mutex* m_mutex;
 
-                        /*!
-                         * @brief This function checks if the server was discovered.
-                         * @param timeout Timeout used to do the checking. Its value is in milliseconds.
-                         * @return FASTRPC return message.
-                         */
-                        ReturnMessage checkServerConnection(long timeout);
+    boost::mutex* recv_mutex_;
 
-                        void addAsyncTask(RTPSAsyncTask *task, int64_t numSec);
+    std::map<int64_t, RecvPoint&> recv_threads;
 
-                        //! @brief Mutex used to ensure that sequence number and query pool is safe-thread.
-                        boost::mutex *m_mutex;
+    boost::shared_mutex* matched_mutex_;
 
-                        boost::mutex *recv_mutex_;
+    boost::condition_variable_any* matched_sub_cond_;
 
-                        std::map<int64_t, RecvPoint&> recv_threads;
+    boost::condition_variable_any* matched_pub_cond_;
 
-                        boost::shared_mutex *matched_mutex_;
+    unsigned int num_matched_sub_;
 
-                        boost::condition_variable_any *matched_sub_cond_;
+    unsigned int num_matched_pub_;
 
-                        boost::condition_variable_any *matched_pub_cond_;
+    //! @brief Transport that created the proxy procedure endpoint.
+    RTPSProxyTransport& m_transport;
 
-                        unsigned int num_matched_sub_;
+    //! @brief The data writer used to send.
+    eprosima::fastrtps::Publisher* m_writer;
 
-                        unsigned int num_matched_pub_;
+    //! @brief The data reader used to receive.
+    eprosima::fastrtps::Subscriber* m_reader;
 
-                        //! @brief Transport that created the proxy procedure endpoint.
-                        RTPSProxyTransport &m_transport;
+    //! @brief The identifier used as proxy.
+    eprosima::rpc::protocol::dds::GUID_t m_proxyId;
 
-                        //! @brief The data writer used to send.
-                        eprosima::fastrtps::Publisher *m_writer;
+    /// \brief The next sequence number for a request.
+    int64_t m_numSec;
 
-                        //! @brief The data reader used to receive.
-                        eprosima::fastrtps::Subscriber *m_reader;
+    RTPSTransport::Create_data m_create_data;
 
-                        //! @brief The identifier used as proxy.
-                        eprosima::rpc::protocol::dds::GUID_t m_proxyId;
+    RTPSTransport::Copy_data m_copy_data;
 
-                        /// \brief The next sequence number for a request.
-                        int64_t m_numSec;
+    RTPSTransport::Destroy_data m_destroy_data;
 
-                        RTPSTransport::Create_data m_create_data;
+    size_t m_dataSize;
 
-                        RTPSTransport::Copy_data m_copy_data;
-
-                        RTPSTransport::Destroy_data m_destroy_data;
-
-                        size_t m_dataSize;
-
-                        void *data_;
-                };
-            } // namespace dds
-        } // namespace transport
-    } // namespace rpc
+    void* data_;
+};
+}             // namespace dds
+}         // namespace transport
+}     // namespace rpc
 } // namespace eprosima
 
 #endif // RPC_WITH_FASTRTPS

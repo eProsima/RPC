@@ -1,5 +1,7 @@
 group TopicsIDLByOperation;
 
+import "eprosima.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "RequestReply.idl"], description=["This IDL file contains the definition of the DDS messages for all defined interfaces by the user."])$
 
@@ -19,13 +21,9 @@ module $module.name$
 $endif$
 >>
 
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
->>
-
 interface(ctx, parent, interface, export_list) ::= <<
 $export_list$
- 
+
 $interface.all_operations : { operation |
 struct $interface.name$_$operation.name$_In
 {
@@ -89,25 +87,3 @@ struct $interface.name$_$operation.name$_Reply{
 $endif$
 }; separator="\n"$
 >>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
-exception(ctx, parent, exception) ::= <<>>
-
-operation(ctx, parent, operation, param_list) ::= <<>>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<>>
-
-struct_type(ctx, parent, struct) ::= <<>>
-
-union_type(ctx, parent, union) ::= <<>>
-
-enum_type(ctx, parent, enum) ::= <<>>

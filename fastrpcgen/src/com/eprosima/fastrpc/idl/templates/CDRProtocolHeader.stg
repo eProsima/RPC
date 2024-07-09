@@ -1,5 +1,8 @@
 group CDRProtocolHeader;
 
+import "eprosima.stg"
+import "com/eprosima/fastcdr/idl/templates/FastCdrCommon.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "CDRProtocol.h"], description=["This header file contains the declaration of the protocol used to create CDR messages."])$
 
@@ -18,13 +21,13 @@ namespace eprosima
         {
             class ServerTransport;
         }
-        
+
         namespace protocol
         {
             namespace fastcdr
             {
                 $definitions; separator="\n"$
-                
+
                 /*!
                  * @brief
                  * @ingroup $ctx.trimfilename$
@@ -32,28 +35,28 @@ namespace eprosima
                 class RPCUSERDllExport $ctx.filename$Protocol : public eprosima::rpc::protocol::$ctx.filename$Protocol
                 {
                     public:
-                    
+
                         $ctx.filename$Protocol();
-                        
+
                         virtual ~$ctx.filename$Protocol();
-                    
+
                         virtual bool setTransport(eprosima::rpc::transport::Transport &transport);
-                        
+
                         bool activateInterface(const char* interfaceName);
-                        
+
                         static size_t worker(Protocol& protocol, void *&buffer, size_t &bufferLength, size_t &bufferSize, eprosima::rpc::transport::Endpoint *endpoint);
-                        
+
                         $ctx.scopedInterfaces : { interface |
                         $interface.all_operations : { operation |
                         $if(ctx.client)$
                         $paramRetType(operation.rettype)$ $interface.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$);
                         $endif$
-                        
+
                         }; separator="\n"$
                         }; separator="\n"$
-                        
+
                     private:
-                    
+
                         eprosima::fastcdr::FastBuffer serializeBuffer;
                         eprosima::fastcdr::FastCdr scdr;
                 };
@@ -63,25 +66,6 @@ namespace eprosima
 } // namespace eprosima
 
 #endif // _$ctx.filename;format="toUpper"$_CDR_PROTOCOL_H_
->>
-
-module(ctx, parent, module, definition_list) ::= <<
-$definition_list$
-
->>
-
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
-
->>
-
-interface(ctx, parent, interface, export_list) ::= <<
-$export_list$
->>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
-
 >>
 
 exception(ctx, parent, exception) ::= <<
@@ -105,21 +89,11 @@ void deserialize(eprosima::fastcdr::FastCdr &cdr, $exception.scopedname$ &x);
 
 >>
 
-operation(ctx, parent, operation, param_list) ::= <<>>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<>>
-
-struct_type(ctx, parent, struct) ::= <<
+struct_type(ctx, parent, struct, extensions, member_list) ::= <<
 $membered_type(ctx=ctx, mtype=struct)$
 >>
 
-union_type(ctx, parent, union) ::= <<
+union_type(ctx, parent, union, extensions, switch_type) ::= <<
 $membered_type(ctx=ctx, mtype=union)$
 >>
 

@@ -1,11 +1,18 @@
-/*************************************************************************
- * Copyright (c) 2013 eProsima. All rights reserved.
- *
- * This generated file is licensed to you under the terms described in the
- * rpcdds_LICENSE file included in this rpcdds distribution.
- *
- *************************************************************************
- * 
+// Copyright 2016 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+/*!
  * @file CalculatorAsyncSupport.h
  * This header file contains functionality to use asynchronous calls for all interfaces.
  *
@@ -21,7 +28,7 @@
 #include "CalculatorTopics.h"
 /*!
  * @brief This class represents a asynchronous task created to wait the reply of the procedure Calculator::addition from the server in an asynchronous call.
- * @ingroup CALCULATOR
+ * @ingroup Calculator
  */
 class Calculator_additionTask : public eprosima::rpc::transport::dds::RTPSAsyncTask
 {
@@ -38,21 +45,20 @@ class Calculator_additionTask : public eprosima::rpc::transport::dds::RTPSAsyncT
 
         //! @brief Destructor.
         virtual ~Calculator_additionTask();
-        
+
         /*!
          * @brief This funcion is called when the reply sample is received.
          */
         virtual void execute();
-        
+
         /*!
          * @brief This function is called when an exception occurs.
          *        This exception can be launched in the server's side or in the client's side.
          *
          * @param ex The exception that will be launched.
          */
-        virtual void on_exception(const eprosima::rpc::exception::SystemException &ex);        
+        virtual void on_exception(const eprosima::rpc::exception::SystemException &ex);
 
-        
         /*!
          * @brief This function returns the object used by the task.
          *
@@ -65,17 +71,18 @@ class Calculator_additionTask : public eprosima::rpc::transport::dds::RTPSAsyncT
          * @return Pointer to the allocated reply sample.
          */
         virtual void* getReplyInstance();
-        
+
         private:
-        
+
         Calculator_additionCallbackHandler &m_obj;
 
         Calculator_Reply m_reply;
 };
 
+
 /*!
  * @brief This class represents a asynchronous task created to wait the reply of the procedure Calculator::subtraction from the server in an asynchronous call.
- * @ingroup CALCULATOR
+ * @ingroup Calculator
  */
 class Calculator_subtractionTask : public eprosima::rpc::transport::dds::RTPSAsyncTask
 {
@@ -92,21 +99,20 @@ class Calculator_subtractionTask : public eprosima::rpc::transport::dds::RTPSAsy
 
         //! @brief Destructor.
         virtual ~Calculator_subtractionTask();
-        
+
         /*!
          * @brief This funcion is called when the reply sample is received.
          */
         virtual void execute();
-        
+
         /*!
          * @brief This function is called when an exception occurs.
          *        This exception can be launched in the server's side or in the client's side.
          *
          * @param ex The exception that will be launched.
          */
-        virtual void on_exception(const eprosima::rpc::exception::SystemException &ex);        
+        virtual void on_exception(const eprosima::rpc::exception::SystemException &ex);
 
-        
         /*!
          * @brief This function returns the object used by the task.
          *
@@ -119,9 +125,9 @@ class Calculator_subtractionTask : public eprosima::rpc::transport::dds::RTPSAsy
          * @return Pointer to the allocated reply sample.
          */
         virtual void* getReplyInstance();
-        
+
         private:
-        
+
         Calculator_subtractionCallbackHandler &m_obj;
 
         Calculator_Reply m_reply;

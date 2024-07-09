@@ -30,6 +30,7 @@ set(proto_dep_source_files
     utils/dds/Middleware.cpp
     transports/AsyncTask.cpp
     protocols/dds/MessageHeader.cpp
+    protocols/dds/MessageHeaderv1.cpp
     protocols/dds/MessageHeaderPlugin.cpp
     transports/dds/Transport.cpp
     transports/dds/RTPSTransport.cpp
@@ -92,13 +93,14 @@ configure_file(${PROJECT_SOURCE_DIR}/include/config.h.in
 
 #Create library
 add_library(${PROJECT_NAME} ${${PROJECT_NAME}_source_files})
-set_target_properties(${PROJECT_NAME} PROPERTIES 
+set_target_properties(${PROJECT_NAME} PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION_MAJOR}
     )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
     RPC_SOURCE
+    EPROSIMA_USER_DLL_EXPORT
     $<$<AND:$<NOT:$<BOOL:${WIN32}>>,$<STREQUAL:"${CMAKE_BUILD_TYPE}","Debug">>:__DEBUG>
     $<$<AND:$<BOOL:${WIN32}>,$<STREQUAL:"${CMAKE_SYSTEM_NAME}","WindowsStore">>:_WIN32_WINNT=0x0603>
     $<$<AND:$<BOOL:${WIN32}>,$<NOT:$<STREQUAL:"${CMAKE_SYSTEM_NAME}","WindowsStore">>>:_WIN32_WINNT=0x0601>
@@ -110,6 +112,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 # Define public headers
 target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include/protocols/dds>
     $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include> $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}>
     $<INSTALL_INTERFACE:include>
     $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_RTIDDS}>>:${RTIDDS_INCLUDE_DIRS_}>
@@ -186,7 +189,7 @@ install(TARGETS ${PROJECT_NAME}
     COMPONENT libraries
     )
 
-export(TARGETS ${PROJECT_NAME} FILE 
+export(TARGETS ${PROJECT_NAME} FILE
     ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-${RPC_LINKING}-targets.cmake)
 install(EXPORT ${PROJECT_NAME}-${RPC_LINKING}-targets
     DESTINATION ${LIB_INSTALL_DIR}/cmake/${PROJECT_NAME}

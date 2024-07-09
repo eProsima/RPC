@@ -1,5 +1,8 @@
 group RTIExtensionHeader;
 
+import "eprosima.stg"
+import "com/eprosima/fastcdr/idl/templates/FastCdrCommon.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "Extension.h"], description=["This header file contains the declaration of user exceptions in ", ctx.filename, ".idl"])$
 
@@ -34,10 +37,6 @@ namespace $module.name$
 
 >>
 
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
->>
-
 interface(ctx, parent, interface, export_list) ::= <<
 namespace $interface.name$
 {
@@ -47,15 +46,11 @@ namespace $interface.name$
 class RPCUSERDllExport $interface.name$Ext $if(interface.bases)$: $interface.bases : {base |public $base.scopedname$Ext}; separator=", "$$endif$
 {
     public:
-        
+
         $interface.operations : { operation |
             virtual $paramRetType(operation.rettype)$ $operation.name$($paramDeclarations(params=operation.parameters)$) = 0;
         }; separator="\n"$
 };
->>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
 >>
 
 exception(ctx, parent, exception) ::= <<
@@ -66,60 +61,44 @@ exception(ctx, parent, exception) ::= <<
 class RPCUSERDllExport $exception.name$ : public eprosima::rpc::exception::UserException
 {
 public:
-    
+
     //! @brief Default constructor.
-	$exception.name$();
+    $exception.name$();
 
     /*!
      * @brief Copy constructor.
      * @param ex Exception to be copied.
      */
-	$exception.name$(const $exception.name$ &ex);
+    $exception.name$(const $exception.name$ &ex);
 
     /*!
      * @brief Copy constructor.
      * @param ex Exception to be copied.
      */
-	$exception.name$($exception.name$&& ex);
+    $exception.name$($exception.name$&& ex);
 
     /*!
      * @brief Copy assignment.
      * @param ex Exception to be copied.
      */
-	$exception.name$& operator=(const $exception.name$ &ex);
+    $exception.name$& operator=(const $exception.name$ &ex);
 
     /*!
      * @brief Copy assignment.
      * @param ex Exception to be copied.
      */
-	$exception.name$& operator=($exception.name$&& ex);
-	
+    $exception.name$& operator=($exception.name$&& ex);
+
     /*!
      * @brief Destructor.
      */
-	virtual ~$exception.name$() throw();
+    virtual ~$exception.name$() throw();
 
     //! @brief This function throws the object as exception.
-	virtual void raise() const;
-	
-	// Exception members
-	$exception.members : { member | $member.typecode.cppTypename$ $member.name$$if(member.typecode.isType_f)$$member.typecode.arrayExtension$$endif$; }; separator="\n"$
+    virtual void raise() const;
+
+    // Exception members
+    $exception.members : { member | $member.typecode.cppTypename$ $member.name$$if(member.typecode.isType_f)$$member.typecode.arrayExtension$$endif$; }; separator="\n"$
 };
 
 >>
-
-operation(ctx, parent, operation, param_list) ::= <<>>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<>>
-
-struct_type(ctx, parent, struct) ::= <<>>
-
-union_type(ctx, parent, union) ::= <<>>
-
-enum_type(ctx, parent, enum) ::= <<>>

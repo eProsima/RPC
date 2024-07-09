@@ -8,7 +8,7 @@ fileHeader(ctx, file, description) ::= <<
  * $ctx.product;format="upper"$_LICENSE file included in this $ctx.product;format="upperCase"$ distribution.
  *
  *************************************************************************
- * 
+ *
  * @file $file$
  * $description$
  *
@@ -16,15 +16,15 @@ fileHeader(ctx, file, description) ::= <<
  */
 >>
 
-paramDeclsByRef(params, separatorInicial) ::= <<
-$if(params)$$separatorInicial$$endif$$params : {param |/*$param.comment$*/ $paramTypeByRef(typecode=param.typecode)$ $param.name$}; separator=", "$
+paramDeclsByRef(params, initialSeparator) ::= <<
+$if(params)$$initialSeparator$$endif$$params : {param |/*$param.comment$*/ $paramTypeByRef(typecode=param.typecode)$ $param.name$}; separator=", "$
 >>
 
-extractParams(params, separatorInicial) ::= <<
-$if(params)$$separatorInicial$$endif$$params : {param | $param.name$};separator=", "$
+extractParams(params, initialSeparator="") ::= <<
+$if(params)$$initialSeparator$$endif$$params : {param | $param.name$};separator=", "$
 >>
 
-member_destructor(ctx, member) ::= <<$if(member.typecode.forwarded)$delete m_$member.name$;$elseif(ctx.generateTypesC)$$if(member.typecode.isStringType)$free(m_$member.name$);                                                                                               
+member_destructor(ctx, member) ::= <<$if(member.typecode.forwarded)$delete m_$member.name$;$elseif(ctx.generateTypesC)$$if(member.typecode.isStringType)$free(m_$member.name$);
 m_$member.name$ = nullptr;$elseif(member.typecode.isType_f)$$if(member.typecode.contentTypeCode.isStringType)$$member_array_cstring_destructor(ctx=ctx, name=memberName(member.name), loopvar=ctx.newLoopVarName, dims=member.typecode.dimensions)$$endif$$endif$$endif$>>
 
 /**** NEW OUR_TYPES ****/

@@ -1,5 +1,8 @@
 group DDSProtocolHeaderByOperation;
 
+import "eprosima.stg"
+import "com/eprosima/fastcdr/idl/templates/FastCdrCommon.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "DDSProtocol.h"], description=["This header file contains the declaration of the protocol used to create DDS messages."])$
 
@@ -32,7 +35,7 @@ namespace eprosima
                 class Transport;
             }
         }
-        
+
         namespace protocol
         {
             namespace dds
@@ -45,49 +48,49 @@ namespace eprosima
                 class RPCUSERDllExport  $ctx.filename$Protocol : public eprosima::rpc::protocol::$ctx.filename$Protocol
                 {
                     public:
-                    
+
                        /*!
                         * @brief Default constructor
                         */
                         $ctx.filename$Protocol();
-                        
+
                        /*!
                         * @brief Destructor
                         */
                         virtual ~$ctx.filename$Protocol();
-                    
+
                        /*!
                         * @brief This method sets the transport for the communications.
                         * @param transport Transport to use
                         * @return True if the assignment is successful, false otherwise
                         */
                         virtual bool setTransport(eprosima::rpc::transport::Transport &transport);
-                        
+
                         /*!
                          * @brief This function activates needed DDS entities to use an interface.
                          * @param interfaceName Interface name.
                          * @return Whether the activation works successfully.
                          */
                         bool activateInterface(const char* interfaceName);
-                        
+
                         $definitions; separator="\n"$
-                        
+
                     private:
-                    
+
                         eprosima::rpc::transport::dds::Transport *m_ddsTransport;
-                    
+
                         $ctx.scopedInterfaces : { interface |
                         $interface.all_operations : { operation |
                         const char* const $interface.formatedScopedname$_$operation.name$_str;
-                        
+
                         $if(ctx.client)$
                         eprosima::rpc::transport::dds::ProxyProcedureEndpoint *$interface.formatedScopedname$_$operation.name$_pe;
                         $endif$
-                        
+
                         $if(ctx.server)$
                         eprosima::rpc::transport::dds::ServerProcedureEndpoint *$interface.formatedScopedname$_$operation.name$_se;
                         $endif$
-                        
+
                         }; separator="\n"$
                         }; separator="\n"$
                 };
@@ -99,16 +102,6 @@ namespace eprosima
 #endif // _$ctx.filename;format="toUpper"$_DDS_PROTOCOL_H_
 >>
 
-module(ctx, parent, module, definition_list) ::= <<
-$definition_list$
-
->>
-
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
-
->>
-
 interface(ctx, parent, interface, export_list) ::= <<
 $interface.all_operations : {operation|
 $if(ctx.client)$
@@ -116,14 +109,16 @@ $if(ctx.client)$
  * @brief This method implements the proxy part of the protocol for the operation $operation.name$.
  * It is called from the Proxy interface.
  */
-$paramRetType(operation.rettype)$ $interface.formatedScopedname$_$operation.name$($paramDeclarations(params=operation.parameters)$);
+$paramRetType(operation.rettype)$ $interface.formatedScopedname$_$operation.name$(
+        $paramDeclarations(params=operation.parameters)$);
 
 $if(!operation.oneway)$
 /*!
  * @brief This asynchronous method implements the proxy part of the protocol for the operation $operation.name$.
  * It is called from the Proxy interface.
  */
-void $interface.formatedScopedname$_$operation.name$_async($interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, separatorInicial=", ")$);
+void $interface.formatedScopedname$_$operation.name$_async(
+        $interface.scopedname$_$operation.name$CallbackHandler &obj$paramDeclarations(params=operation.inputparam, initialSeparator=", ")$);
 
 $endif$
 $endif$
@@ -143,26 +138,3 @@ $endif$
 
 $export_list$
 >>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
-
->>
-
-exception(ctx, parent, exception) ::= <<>>
-
-operation(ctx, parent, operation, param_list) ::= <<>>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<>>
-
-struct_type(ctx, parent, struct) ::= <<>>
-
-union_type(ctx, parent, union) ::= <<>>
-
-enum_type(ctx, parent, enum) ::= <<>>

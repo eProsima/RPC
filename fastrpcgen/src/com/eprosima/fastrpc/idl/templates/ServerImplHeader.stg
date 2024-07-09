@@ -1,5 +1,7 @@
 group ServerImplHeader;
 
+import "eprosima.stg"
+
 main(ctx, definitions) ::= <<
 $fileHeader(ctx=ctx,  file=[ctx.filename, "ServerImpl.h"], description=["This header file contains the declaration of the skeleton for all interfaces."])$
 
@@ -27,10 +29,6 @@ namespace $module.name$
 
 >>
 
-definition_list(definitions) ::= <<
-$definitions; separator="\n"$
->>
-
 /*!
  * The export_list will be the definition of synchronize functions.
  */
@@ -53,25 +51,3 @@ class $interface.name$ServerImpl : public $interface.name$$if(ctx.rtiTypes)$Ext$
 };
 
 >>
-
-export_list(exports) ::= <<
-$exports; separator="\n"$
->>
-
-exception(ctx, parent, exception) ::= <<>>
-
-operation(ctx, parent, operation, param_list) ::= <<>>
-
-param_list(parameters) ::= <<>>
-
-param(parameter) ::= <<>>
-
-const_decl(ctx, parent, const) ::= <<>>
-
-typedef_decl(ctx, parent, typedefs) ::= <<>>
-
-struct_type(ctx, parent, struct) ::= <<>>
-
-union_type(ctx, parent, union) ::= <<>>
-
-enum_type(ctx, parent, enum) ::= <<>>

@@ -1,11 +1,18 @@
-/*************************************************************************
- * Copyright (c) 2013 eProsima. All rights reserved.
- *
- * This generated file is licensed to you under the terms described in the
- * rpcdds_LICENSE file included in this rpcdds distribution.
- *
- *************************************************************************
- * 
+// Copyright 2016 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+/*!
  * @file CalculatorServer.h
  * This header file contains the declaration of the server for all interfaces.
  *
@@ -31,7 +38,7 @@ namespace eprosima
 
 /*!
  * @brief This class implements a specific server for the defined interface Calculator by user.
- * @ingroup CALCULATOR
+ * @ingroup Calculator
  */
 class RPCUSERDllExport CalculatorServer : public eprosima::rpc::server::Server
 {
@@ -45,7 +52,7 @@ class RPCUSERDllExport CalculatorServer : public eprosima::rpc::server::Server
          * @param transport The network transport that the server has to use.
          *        This transport's object is not deleted by this class in its destructor. Cannot be NULL.
          * @param protocol Generated protocol that the server has to use.
-         *        This class has the information to process requests and build responses for this application environment. 
+         *        This class has the information to process requests and build responses for this application environment.
          * @param servant Servant that the server will use to invoke user's functions.
          * @exception eProsima::RPCDDS::InitializeException This exception is thrown when the initialization was wrong.
          */
@@ -56,10 +63,8 @@ class RPCUSERDllExport CalculatorServer : public eprosima::rpc::server::Server
         virtual ~CalculatorServer();
 
 
-
-        
      private:
-        
+
         //! \brief Pointer to the server's servant implemented by the user.
         CalculatorServerImpl &_impl;
 };
