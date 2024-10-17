@@ -7,6 +7,12 @@ This repository contains a set of C++ libraries that provide different [RPC][rpc
   [**eProsima Fast DDS**][fastdds] and [RTI DDS][rti] implementations.
 * **eProsima RPC over REST** provides an RPC communication over RESTful paradigma.
 
+## Commercial support
+
+Looking for commercial support? Write us to info@eprosima.com
+
+Find more about us at [eProsima’s webpage](https://eprosima.com/).
+
 # Building from sources
 
 This section provides the instructions for installing *eProsima RPC* from sources.
