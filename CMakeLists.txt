@@ -77,7 +77,7 @@ elseif(RPCPROTO STREQUAL "rpcdds")
     string(TOUPPER "${PROJECT_NAME}" PROJECT_NAME_UPPER)
     set(${PROJECT_NAME}_DESCRIPTION_SUMMARY "C++ library implementation remote procedure calls using DDS protocol")
     set(${PROJECT_NAME}_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} library provides RPC communications using DDS protocol.")
-    option(WITH_FASTRTPS "Defined if building agaist eProsima Fast RTPS" ON)
+    option(WITH_FASTDDS "Defined if building agaist eProsima Fast DDS" ON)
     option(WITH_RTIDDS "Defined if building agaist RTI DDS" OFF)
 elseif(RPCPROTO STREQUAL "rpcrest")
     project(rpcrest VERSION "${LIB_VERSION_STR}" LANGUAGES C CXX)
@@ -161,8 +161,8 @@ if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
     find_package(fastcdr)
 endif()
 
-if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
-    find_package(fastrtps)
+if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTDDS)
+    find_package(fastdds)
 endif()
 
 if(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS)
@@ -245,11 +245,11 @@ if(BUILD_DOCUMENTATION)
         COMMENT "Creating documentation directory" VERBATIM)
 
     # User manuals and installation manuals
-    if((NOT RPCPROTO STREQUAL "rpcdds") OR (RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS AND WITH_RTIDDS))
+    if((NOT RPCPROTO STREQUAL "rpcdds") OR (RPCPROTO STREQUAL "rpcdds" AND WITH_FASTDDS AND WITH_RTIDDS))
         set(LIBREOFFICE_CONVERT_INSTALLATION_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual")
         set(LIBREOFFICE_CONVERT_USER_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual")
-    elseif(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
-        set(LIBREOFFICE_CONVERT_INSTALLATION_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual For FastRTPS")
+    elseif(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTDDS)
+        set(LIBREOFFICE_CONVERT_INSTALLATION_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual For FastDDS")
         set(LIBREOFFICE_CONVERT_USER_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - User Manual For FastDDS")
     elseif(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS)
         set(LIBREOFFICE_CONVERT_INSTALLATION_MANUAL_DOC "${PROJECT_SOURCE_DIR}/doc/pdf/${PROJECT_NAME_LARGE} - Installation Manual For RTIDDS")
@@ -284,12 +284,12 @@ install(FILES ${PROJECT_SOURCE_DIR}/${PROJECT_NAME_UPPER}_LICENSE.txt
 set(CPACK_COMPONENT_LICENSES_HIDDEN 1)
 
 # Install examples
-if((NOT RPCPROTO STREQUAL "rpcdds") OR (RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS AND WITH_RTIDDS))
+if((NOT RPCPROTO STREQUAL "rpcdds") OR (RPCPROTO STREQUAL "rpcdds" AND WITH_FASTDDS AND WITH_RTIDDS))
     install(DIRECTORY ${PROJECT_SOURCE_DIR}/examples/C++/${PROJECT_NAME}/
         DESTINATION examples/C++
         COMPONENT examples
         )
-elseif(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
+elseif(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTDDS)
     install(DIRECTORY ${PROJECT_SOURCE_DIR}/examples/C++/${PROJECT_NAME}/c++11Types/RTPSCalculator/
         DESTINATION examples/C++/RTPSCalculator
         COMPONENT examples

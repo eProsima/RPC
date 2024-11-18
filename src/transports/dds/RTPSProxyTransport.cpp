@@ -1,13 +1,13 @@
 /*************************************************************************
- * Copyright (c) 2013 eProsima. All rights reserved.
- *
- * This copy of FASTRPC is licensed to you under the terms described in the
- * FASTRPC_LICENSE file included in this distribution.
- *
- *************************************************************************/
+* Copyright (c) 2013 eProsima. All rights reserved.
+*
+* This copy of FASTRPC is licensed to you under the terms described in the
+* FASTRPC_LICENSE file included in this distribution.
+*
+*************************************************************************/
 #include <config.h>
 
-#if RPC_WITH_FASTRTPS
+#if RPC_WITH_FASTDDS
 
 #include <transports/dds/RTPSProxyTransport.h>
 #include <transports/dds/components/RTPSProxyProcedureEndpoint.h>
@@ -16,50 +16,73 @@
 
 #include <string>
 
-using namespace eprosima::rpc;
-using namespace ::transport::dds;
-using namespace ::exception;
+namespace eprosima {
+namespace rpc {
+
+using namespace transport::dds;
+using namespace exception;
 
 static const char* const CLASS_NAME = "eprosima::rpc::transport::dds::RTPSProxyTransport";
 
 typedef struct encapsulation
 {
-    const char *name;
-    void *data;
+    const char* name;
+    void* data;
 } encapsulation;
 
-RTPSProxyTransport::RTPSProxyTransport(const char* const remoteServiceName, const char* const instanceName, int domainId, long milliseconds) :
-    ::transport::ProxyTransport(), ::transport::dds::RTPSTransport(domainId),
-    m_timeout(milliseconds)
+RTPSProxyTransport::RTPSProxyTransport(
+        const char* const remoteServiceName,
+        const char* const instanceName,
+        int domainId,
+        long milliseconds)
+    : ProxyTransport()
+    , RTPSTransport(domainId)
+    , m_timeout(milliseconds)
 {
-    if(remoteServiceName != NULL)
+    if (remoteServiceName != NULL)
+    {
         m_remoteServiceName = remoteServiceName;
+    }
     else
+    {
         m_remoteServiceName = "Service";
+    }
 
-    if(instanceName != NULL)
+    if (instanceName != NULL)
+    {
         m_instanceName = instanceName;
+    }
 }
 
-RTPSProxyTransport::RTPSProxyTransport(eprosima::fastrtps::Participant *participant, const char* const remoteServiceName,
-        const char* const instanceName, long milliseconds) :
-    ::transport::ProxyTransport(), ::transport::dds::RTPSTransport(participant),
-    m_timeout(milliseconds)
+RTPSProxyTransport::RTPSProxyTransport(
+        fastdds::dds::DomainParticipant* participant,
+        const char* const remoteServiceName,
+        const char* const instanceName,
+        long milliseconds)
+    : ProxyTransport()
+    , RTPSTransport(participant)
+    , m_timeout(milliseconds)
 {
-    if(remoteServiceName != NULL)
+    if (remoteServiceName != NULL)
+    {
         m_remoteServiceName = remoteServiceName;
+    }
     else
+    {
         m_remoteServiceName = "Service";
+    }
 
-    if(instanceName != NULL)
+    if (instanceName != NULL)
+    {
         m_instanceName = instanceName;
+    }
 }
 
 RTPSProxyTransport::~RTPSProxyTransport()
 {
     std::map<const char*, RTPSProxyProcedureEndpoint*>::iterator it = m_procedureEndpoints.begin();
 
-    for(; it != m_procedureEndpoints.end(); ++it)
+    for (; it != m_procedureEndpoints.end(); ++it)
     {
         delete(it->second);
     }
@@ -86,21 +109,31 @@ long RTPSProxyTransport::getTimeout()
     return m_timeout;
 }
 
-::transport::Endpoint* RTPSProxyTransport::createProcedureEndpoint(const char *name, const char *writertypename,
-        const char *writertopicname, const char *readertypename, const char *readertopicname,
-        RTPSTransport::Create_data create_data, RTPSTransport::Copy_data copy_data, RTPSTransport::Destroy_data destroy_data,
-        RTPSTransport::ProcessFunc /*processFunc*/, size_t dataSize)
+transport::Endpoint* RTPSProxyTransport::createProcedureEndpoint(
+        const char* name,
+        const char* writertypename,
+        const char* writertopicname,
+        const char* readertypename,
+        const char* readertopicname,
+        RTPSTransport::Create_data create_data,
+        RTPSTransport::Copy_data copy_data,
+        RTPSTransport::Destroy_data destroy_data,
+        RTPSTransport::ProcessFunc /*processFunc*/,
+        size_t dataSize)
 {
     const char* const METHOD_NAME = "createProcedureEndpoint";
-    RTPSProxyProcedureEndpoint *pe = new RTPSProxyProcedureEndpoint(*this);
+    RTPSProxyProcedureEndpoint* pe = new RTPSProxyProcedureEndpoint(*this);
 
-    if(pe != NULL)
+    if (pe != NULL)
     {
-        if(pe->initialize(name, writertypename, writertopicname, readertypename, readertopicname, create_data, copy_data, destroy_data, dataSize) == 0)
+        if (pe->initialize(name, writertypename, writertopicname, readertypename, readertopicname, create_data,
+                copy_data, destroy_data, dataSize) == 0)
         {
-            std::pair<std::map<const char*, RTPSProxyProcedureEndpoint*>::iterator, bool> retmap = m_procedureEndpoints.insert(std::pair<const char*, RTPSProxyProcedureEndpoint*>(name, pe));
+            std::pair<std::map<const char*, RTPSProxyProcedureEndpoint*>::iterator,
+                    bool> retmap = m_procedureEndpoints.insert(std::pair<const char*,
+                            RTPSProxyProcedureEndpoint*>(name, pe));
 
-            if(retmap.second == true)
+            if (retmap.second == true)
             {
                 return pe;
             }
@@ -116,4 +149,7 @@ long RTPSProxyTransport::getTimeout()
     return NULL;
 }
 
-#endif // RPC_WITH_FASTRTPS
+} // namespace rpc
+} // namespace eprosima
+
+#endif // RPC_WITH_FASTDDS

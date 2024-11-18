@@ -1,5 +1,5 @@
 {
     "name": "rpc",
     "type": "cmake",
-    "dependencies" : ["fastcdr", "fastrtps", "BoostThreadpool"]
+    "dependencies" : ["fastcdr", "fastdds", "BoostThreadpool"]
 }

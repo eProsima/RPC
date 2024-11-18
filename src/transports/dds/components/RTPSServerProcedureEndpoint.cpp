@@ -7,40 +7,34 @@
 *************************************************************************/
 #include <config.h>
 
-#if RPC_WITH_FASTRTPS
+#if RPC_WITH_FASTDDS
 
 #include <transports/dds/components/RTPSServerProcedureEndpoint.h>
 #include <strategies/ServerStrategy.h>
 #include "../../../strategies/ServerStrategyImpl.h"
 #include <utils/macros/snprintf.h>
 
-#include <fastrtps/Domain.h>
-#include <fastrtps/publisher/Publisher.h>
-#include <fastrtps/subscriber/Subscriber.h>
-#include <fastrtps/attributes/SubscriberAttributes.h>
-#include <fastrtps/attributes/PublisherAttributes.h>
-#include <fastrtps/subscriber/SampleInfo.h>
+#include <fastdds/dds/domain/DomainParticipant.hpp>
+#include <fastdds/dds/publisher/DataWriter.hpp>
+#include <fastdds/dds/publisher/Publisher.hpp>
+#include <fastdds/dds/publisher/qos/DataWriterQos.hpp>
+#include <fastdds/dds/subscriber/DataReader.hpp>
+#include <fastdds/dds/subscriber/Subscriber.hpp>
+#include <fastdds/dds/subscriber/qos/DataReaderQos.hpp>
 
 #include <boost/config/user.hpp>
-#include <boost/thread/mutex.hpp>
 #include <boost/bind.hpp>
 
-using namespace eprosima::rpc;
-using namespace ::transport::dds;
+namespace eprosima {
+namespace rpc {
+
+using namespace transport::dds;
 
 const char* const CLASS_NAME = "eprosima::rpc::transport::dds::RTPSServerProcedureEndpoint";
 
 RTPSServerProcedureEndpoint::RTPSServerProcedureEndpoint(
         RTPSServerTransport& transport)
     : m_transport(transport)
-    , m_writer(NULL)
-    , m_reader(NULL)
-    , m_create_data(NULL)
-    , m_destroy_data(NULL)
-    , m_process_func(NULL)
-    , m_dataSize(0)
-    , m_mutex(NULL)
-    , m_started(0)
 {
 }
 
@@ -63,24 +57,19 @@ int RTPSServerProcedureEndpoint::initialize(
     if (name != NULL && readertypename != NULL && create_data != NULL && destroy_data != NULL &&
             processFunc != NULL && dataSize > 0)
     {
-        m_mutex =  new boost::mutex();
-
-        if (m_mutex != NULL)
+        m_name = name;
+        if (writertypename != NULL)
         {
-            m_name = name;
-            if (writertypename != NULL)
-            {
-                m_writerTypeName = writertypename;
-                m_writerTopicName = writertopicname;
-            }
-            m_readerTypeName = readertypename;
-            m_readerTopicName = readertopicname;
-            m_create_data = create_data;
-            m_destroy_data = destroy_data;
-            m_process_func = processFunc;
-            m_dataSize = dataSize;
-            return 0;
+            m_writerTypeName = writertypename;
+            m_writerTopicName = writertopicname;
         }
+        m_readerTypeName = readertypename;
+        m_readerTopicName = readertopicname;
+        m_create_data = create_data;
+        m_destroy_data = destroy_data;
+        m_process_func = processFunc;
+        m_dataSize = dataSize;
+        return 0;
     }
 
     return -1;
@@ -90,18 +79,12 @@ void RTPSServerProcedureEndpoint::finalize()
 {
     if (m_reader != nullptr)
     {
-        eprosima::fastrtps::Domain::removeSubscriber(m_reader);
+        m_transport.get_subscriber()->delete_datareader(m_reader);
     }
 
     if (m_writer != nullptr)
     {
-        eprosima::fastrtps::Domain::removePublisher(m_writer);
-    }
-
-    if (m_mutex != NULL)
-    {
-        delete m_mutex;
-        m_mutex = NULL;
+        m_transport.get_publisher()->delete_datawriter(m_writer);
     }
 }
 
@@ -112,7 +95,7 @@ int RTPSServerProcedureEndpoint::start(
     const char* const METHOD_NAME = "start";
     int returnedValue = -1;
 
-    m_mutex->lock();
+    std::unique_lock<std::mutex> lock(m_mutex);
     if (m_started++ == 0)
     {
         if ((returnedValue = createEntities(std::string(serviceName), std::string(instanceName))) != 0)
@@ -127,29 +110,25 @@ int RTPSServerProcedureEndpoint::start(
         returnedValue = 0;
     }
 
-    m_mutex->unlock();
-
     return returnedValue;
 }
 
 void RTPSServerProcedureEndpoint::stop()
 {
-    m_mutex->lock();
+    std::unique_lock<std::mutex> lock(m_mutex);
     if (--m_started == 0)
     {
         if (m_writer != NULL)
         {
-            eprosima::fastrtps::Domain::removePublisher(m_writer);
+            m_transport.get_publisher()->delete_datawriter(m_writer);
             m_writer = NULL;
         }
         if (m_reader != NULL)
         {
-            eprosima::fastrtps::Domain::removeSubscriber(m_reader);
+            m_transport.get_subscriber()->delete_datareader(m_reader);
             m_reader = NULL;
         }
     }
-
-    m_mutex->unlock();
 }
 
 int RTPSServerProcedureEndpoint::createEntities(
@@ -158,46 +137,54 @@ int RTPSServerProcedureEndpoint::createEntities(
 {
     const char* const METHOD_NAME = "createEntities";
 
-    eprosima::fastrtps::SubscriberAttributes rQos;
+    m_rtopic = m_transport.get_participant()->create_topic(m_readerTopicName, m_readerTypeName,
+                    fastdds::dds::TOPIC_QOS_DEFAULT);
 
-    rQos.topic.topicName = m_readerTopicName;
-    rQos.topic.topicDataType = m_readerTypeName.c_str();
-    rQos.qos.m_reliability.kind = eprosima::fastrtps::RELIABLE_RELIABILITY_QOS;
-
-    m_reader = eprosima::fastrtps::Domain::createSubscriber(m_transport.getParticipant(), rQos, this);
-
-    if (m_reader != nullptr)
+    if (nullptr != m_rtopic)
     {
-        if (!m_writerTypeName.empty())
+        fastdds::dds::DataReaderQos rQos;
+
+        rQos.reliability().kind = fastdds::dds::RELIABLE_RELIABILITY_QOS;
+
+        m_reader = m_transport.get_subscriber()->create_datareader(m_rtopic, rQos, this);
+
+        if (m_reader != nullptr)
         {
-            eprosima::fastrtps::PublisherAttributes wQos;
-
-            wQos.topic.topicName = m_writerTopicName;
-            wQos.topic.topicDataType = m_writerTypeName;
-            wQos.qos.m_reliability.kind = eprosima::fastrtps::RELIABLE_RELIABILITY_QOS;
-            wQos.topic.historyQos.depth = 100;
-
-            m_writer = eprosima::fastrtps::Domain::createPublisher(m_transport.getParticipant(), wQos, nullptr);
-
-            if (m_writer != nullptr)
+            if (!m_writerTypeName.empty())
             {
-                return 0;
+                m_wtopic = m_transport.get_participant()->create_topic(m_writerTopicName, m_writerTypeName,
+                                fastdds::dds::TOPIC_QOS_DEFAULT);
+
+                if (nullptr != m_wtopic)
+                {
+                    fastdds::dds::DataWriterQos wQos;
+
+                    wQos.reliability().kind = fastdds::dds::RELIABLE_RELIABILITY_QOS;
+                    wQos.history().depth = 100;
+
+                    m_writer = m_transport.get_publisher()->create_datawriter(m_wtopic, wQos, nullptr);
+
+                    if (m_writer != nullptr)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        printf("ERROR<%s::%s: Cannot create the reply data writer\n", CLASS_NAME, METHOD_NAME);
+                    }
+                }
             }
             else
             {
-                printf("ERROR<%s::%s: Cannot create the reply data writer\n", CLASS_NAME, METHOD_NAME);
+                return 0;
             }
+
+            m_transport.get_subscriber()->delete_datareader(m_reader);
         }
         else
         {
-            return 0;
+            printf("ERROR<%s::%s: Cannot create the request data reader\n", CLASS_NAME, METHOD_NAME);
         }
-
-        eprosima::fastrtps::Domain::removeSubscriber(m_reader);
-    }
-    else
-    {
-        printf("ERROR<%s::%s: Cannot create the request data reader\n", CLASS_NAME, METHOD_NAME);
     }
 
     return -1;
@@ -213,7 +200,7 @@ int RTPSServerProcedureEndpoint::sendReply(
     {
         if (m_writer != nullptr)
         {
-            if (m_writer->write(data))
+            if (fastdds::dds::RETCODE_OK == m_writer->write(data))
             {
                 returnedValue = 0;
             }
@@ -236,15 +223,15 @@ int RTPSServerProcedureEndpoint::sendReply(
     return returnedValue;
 }
 
-void RTPSServerProcedureEndpoint::onNewDataMessage(
-        eprosima::fastrtps::Subscriber* sub)
+void RTPSServerProcedureEndpoint::on_data_available(
+        fastdds::dds::DataReader* reader)
 {
-    eprosima::fastrtps::SampleInfo_t info;
+    fastdds::dds::SampleInfo info;
     void* data = m_create_data();
 
-    while (data != NULL && sub->takeNextData(data, &info))
+    while (nullptr != data && fastdds::dds::RETCODE_OK == reader->take_next_sample(data, &info))
     {
-        if (info.sampleKind == eprosima::fastrtps::rtps::ALIVE)
+        if (fastdds::dds::ALIVE_INSTANCE_STATE == info.instance_state && info.valid_data)
         {
             m_transport.getStrategy().getImpl()->schedule(boost::bind(&RTPSServerTransport::process, &m_transport, this,
                     data));
@@ -259,4 +246,7 @@ void RTPSServerProcedureEndpoint::onNewDataMessage(
     }
 }
 
-#endif // RPC_WITH_FASTRTPS
+} // namespace rpc
+} // namespace eprosima
+
+#endif // RPC_WITH_FASTDDS

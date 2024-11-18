@@ -43,7 +43,7 @@ AC_C_BIGENDIAN(
 )
 
 AC_DEFINE(EPROSIMA_RPC_LIB_NAME , fastrpc, [Define the name of the library])
-AC_DEFINE(RPC_WITH_FASTRTPS , 0, [Not used in this library])
+AC_DEFINE(RPC_WITH_FASTDDS , 0, [Not used in this library])
 AC_DEFINE(RPC_WITH_RTIDDS , 0, [Not used in this library])
 
 AX_BOOST_BASE([1.53],

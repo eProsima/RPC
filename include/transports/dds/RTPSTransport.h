@@ -11,12 +11,16 @@
 #include "../../rpc_dll.h"
 #include <cstddef>
 
-#if RPC_WITH_FASTRTPS
+#if RPC_WITH_FASTDDS
 
 namespace eprosima {
-namespace fastrtps {
-class Participant;
-} // namespace fastrtps
+namespace fastdds {
+namespace dds {
+class DomainParticipant;
+class Publisher;
+class Subscriber;
+} // namespace dds
+} // namespace fastdds
 
 namespace rpc {
 namespace protocol {
@@ -44,9 +48,9 @@ public:
     typedef void (* Destroy_data)(
             void* data);
     typedef void (* ProcessFunc)(
-            eprosima::rpc::protocol::Protocol&,
+            rpc::protocol::Protocol&,
             void*,
-            eprosima::rpc::transport::Endpoint*);
+            rpc::transport::Endpoint*);
 
     /*!
      * @brief Default destructor.
@@ -62,10 +66,19 @@ public:
      * @brief Gets the domain participant.
      * @return DDS domain participant.
      */
-    inline
-    eprosima::fastrtps::Participant* getParticipant() const
+    fastdds::dds::DomainParticipant* get_participant() const
     {
         return m_participant;
+    }
+
+    fastdds::dds::Publisher* get_publisher() const
+    {
+        return m_publisher;
+    }
+
+    fastdds::dds::Subscriber* get_subscriber() const
+    {
+        return m_subscriber;
     }
 
     virtual const char* getRemoteServiceName() const = 0;
@@ -85,7 +98,7 @@ public:
      * @return 0 if the function ends successfully, -1 otherwise.
      * TODO
      */
-    virtual eprosima::rpc::transport::Endpoint*
+    virtual rpc::transport::Endpoint*
     createProcedureEndpoint(
             const char* name,
             const char* writertypename,
@@ -108,27 +121,31 @@ protected:
             int domainId = 0);
 
     RTPSTransport(
-            eprosima::fastrtps::Participant* participant);
+            fastdds::dds::DomainParticipant* participant);
 
 private:
 
     //! \brief The domain identifier that will be used in DDS.
-    int m_domainId;
+    int m_domainId {0};
 
     /*!
      * @brief A DDS transport that uses a DDS::DomainParticipant entity to create DDS entities.
      * This participant has to be created during the transport creation.
      * This pointer should never be NULL.
      */
-    eprosima::fastrtps::Participant* m_participant;
+    fastdds::dds::DomainParticipant* m_participant {nullptr};
 
-    bool m_ownership;
+    fastdds::dds::Publisher* m_publisher {nullptr};
+
+    fastdds::dds::Subscriber* m_subscriber {nullptr};
+
+    bool m_ownership {false};
 };
 }             // namespace dds
 }         // namespace transport
 }     // namespace rpc
 } // namespace eprosima
 
-#endif // RPC_WITH_FASTRTPS
+#endif // RPC_WITH_FASTDDS
 
 #endif // _TRANSPORTS_DDS_RTPSTRANSPORT_H_

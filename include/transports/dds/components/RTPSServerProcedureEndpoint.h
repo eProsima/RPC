@@ -10,27 +10,27 @@
 
 #include "../../../rpc_dll.h"
 
-#if RPC_WITH_FASTRTPS
+#if RPC_WITH_FASTDDS
+
+#include <mutex>
+#include <string>
 
 #include "../RTPSServerTransport.h"
 #include "../../components/Endpoint.h"
 #include "../../../utils/Messages.h"
 
-#include <fastrtps/fastrtps_dll.h>
-#include <fastrtps/subscriber/SubscriberListener.h>
-#include <fastrtps/rtps/common/MatchingInfo.h>
-
-#include <string>
-
-namespace boost {
-class mutex;
-} // namespace boost
+#include <fastdds/fastdds_dll.hpp>
+#include <fastdds/dds/subscriber/DataReaderListener.hpp>
+#include <fastdds/rtps/common/MatchingInfo.hpp>
 
 namespace eprosima {
-namespace fastrtps {
-class Publisher;
-class Subscriber;
-} // namespace fastrtps
+namespace fastdds {
+namespace dds {
+class DataWriter;
+class DataReader;
+class Topic;
+} // namespace dds
+} // namespace fastdds
 
 namespace rpc {
 namespace transport {
@@ -40,7 +40,7 @@ namespace dds {
  * Also this class encapsulate the DDS datawriter and the DDS datareader.
  * @ingroup TRANSPORTMODULE
  */
-class RTPSServerProcedureEndpoint : public Endpoint, public eprosima::fastrtps::SubscriberListener
+class RTPSServerProcedureEndpoint : public Endpoint, public fastdds::dds::DataReaderListener
 {
 public:
 
@@ -114,13 +114,15 @@ public:
             void* data);
 
     /// @brief DDS callback.
-    virtual RPC_DllAPI void onNewDataMessage(
-            eprosima::fastrtps::Subscriber* sub);
+    RPC_DllAPI void on_data_available(
+            fastdds::dds::DataReader* reader) override;
 
-    virtual void onSubscriptionMatched(
-            eprosima::fastrtps::Subscriber* /*sub*/,
-            eprosima::fastrtps::rtps::MatchingInfo /*info*/)
+    RPC_DllAPI void on_subscription_matched(
+            fastdds::dds::DataReader* reader,
+            const fastdds::dds::SubscriptionMatchedStatus& info) override
     {
+        (void)reader;
+        (void)info;
     }
 
 private:
@@ -146,29 +148,33 @@ private:
 
     std::string m_readerTopicName;
 
+    fastdds::dds::Topic* m_wtopic {nullptr};
+
     //! @brief The data writer used to send.
-    eprosima::fastrtps::Publisher* m_writer;
+    fastdds::dds::DataWriter* m_writer {nullptr};
+
+    fastdds::dds::Topic* m_rtopic {nullptr};
 
     //! @brief The data reader used to receive.
-    eprosima::fastrtps::Subscriber* m_reader;
+    fastdds::dds::DataReader* m_reader {nullptr};
 
-    RTPSTransport::Create_data m_create_data;
+    RTPSTransport::Create_data m_create_data {nullptr};
 
-    RTPSTransport::Destroy_data m_destroy_data;
+    RTPSTransport::Destroy_data m_destroy_data {nullptr};
 
-    RTPSTransport::ProcessFunc m_process_func;
+    RTPSTransport::ProcessFunc m_process_func {nullptr};
 
-    int m_dataSize;
+    int m_dataSize {0};
 
-    boost::mutex* m_mutex;
+    std::mutex m_mutex;
 
-    int m_started;
+    int m_started {0};
 };
 }             // namespace dds
 }         // namespace transport
 }     // namespace rpc
 } // namespace eprosima
 
-#endif // RPC_WITH_FASTRTPS
+#endif // RPC_WITH_FASTDDS
 
 #endif // _TRANSPORTS_DDS_COMPONENTS_RTPSSERVERPROCEDUREENDPOINT_H_

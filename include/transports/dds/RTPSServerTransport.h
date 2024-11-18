@@ -11,13 +11,14 @@
 
 #include "../../rpc_dll.h"
 
-#if RPC_WITH_FASTRTPS
+#if RPC_WITH_FASTDDS
+
+#include <map>
+#include <string>
 
 #include "RTPSTransport.h"
 #include "../ServerTransport.h"
 
-#include <string>
-#include <map>
 
 namespace eprosima {
 namespace rpc {
@@ -56,7 +57,7 @@ public:
      * the default instance's name will be use.
      */
     RPC_DllAPI RTPSServerTransport(
-            eprosima::fastrtps::Participant* participant,
+            fastdds::dds::DomainParticipant* participant,
             const char* const serviceName = NULL,
             const char* const instanceName = NULL);
 
@@ -164,6 +165,6 @@ private:
 }     // namepsace fastrpc
 } // namespace eprosima
 
-#endif // RPC_WITH_FASTRTPS
+#endif // RPC_WITH_FASTDDS
 
 #endif // _TRANSPORTS_DDS_RTPSSERVERTRANSPORT_H_

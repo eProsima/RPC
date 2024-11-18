@@ -232,7 +232,7 @@ This can be done by opening the *Edit system environment variables* control pane
 and *Fast CDR* installation directories:
 
 *   *RPC*: C:\\Program Files\\rpc
-*   *Fast DDS*: C:\\Program Files\\fastrtps
+*   *Fast DDS*: C:\\Program Files\\fastdds
 *   *Fast CDR*: C:\\Program Files\\fastcdr
 
 

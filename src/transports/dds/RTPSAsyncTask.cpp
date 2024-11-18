@@ -7,7 +7,7 @@
  *************************************************************************/
 #include <config.h>
 
-#if RPC_WITH_FASTRTPS
+#if RPC_WITH_FASTDDS
 
 #include <transports/dds/RTPSAsyncTask.h>
 #include <exceptions/ClientInternalException.h>
@@ -23,4 +23,4 @@ RTPSAsyncTask::RTPSAsyncTask() : eprosima::rpc::transport::AsyncTask()
 {
 }
 
-#endif // RPC_WITH_FASTRTPS
+#endif // RPC_WITH_FASTDDS

@@ -74,10 +74,10 @@ set(RPC_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(RPC_VERSION_STR ${PROJECT_VERSION})
 
 set(EPROSIMA_RPC_LIB_NAME ${PROJECT_NAME})
-if(WITH_FASTRTPS)
-    set(RPC_WITH_FASTRTPS 1)
+if(WITH_FASTDDS)
+    set(RPC_WITH_FASTDDS 1)
 else()
-    set(RPC_WITH_FASTRTPS 0)
+    set(RPC_WITH_FASTDDS 0)
 endif()
 if(WITH_RTIDDS)
     string(REPLACE ";" "$<SEMICOLON>" RTIDDS_DEFINITIONS_ "${RTIDDS_DEFINITIONS}")
@@ -122,7 +122,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
     $<$<OR:$<STREQUAL:"${RPCPROTO}","fastrpc">,$<STREQUAL:"${RPCPROTO}","rpcdds">>:fastcdr>
-    $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_FASTRTPS}>>:fastrtps>
+    $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_FASTDDS}>>:fastdds>
     $<$<AND:$<STREQUAL:"${RPCPROTO}","rpcdds">,$<BOOL:${WITH_RTIDDS}>>:${RTIDDS_LIBRARIES_}>
     PRIVATE
     ${Boost_LIBRARIES}
@@ -217,9 +217,9 @@ if(RPCPROTO STREQUAL "fastrpc" OR RPCPROTO STREQUAL "rpcdds")
         "if(NOT fastcdr_FOUND)\n    find_package(fastcdr REQUIRED)\nendif()\n")
 endif()
 
-if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS)
+if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTDDS)
     set(EPROSIMA_FIND_DEPENDENCIES
-        "if(NOT fastrtps_FOUND)\n    find_package(fastcdr REQUIRED)\nendif()\n")
+        "if(NOT fastdds_FOUND)\n    find_package(fastdds REQUIRED)\nendif()\n")
 endif()
 
 configure_package_config_file(${PROJECT_SOURCE_DIR}/cmake/packaging/Config.cmake.in
