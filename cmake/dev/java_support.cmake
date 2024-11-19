@@ -13,9 +13,9 @@ macro(gradle_build directory jar)
     endif()
 
     set(RPCDDS_CUSTOM_VENDOR "")
-    if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTRTPS AND NOT WITH_RTIDDS)
+    if(RPCPROTO STREQUAL "rpcdds" AND WITH_FASTDDS AND NOT WITH_RTIDDS)
         set(RPCDDS_CUSTOM_VENDOR "-Pcustomvendor=eProsima")
-    elseif(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS AND NOT WITH_FASTRTPS)
+    elseif(RPCPROTO STREQUAL "rpcdds" AND WITH_RTIDDS AND NOT WITH_FASTDDS)
         set(RPCDDS_CUSTOM_VENDOR "-Pcustomvendor=RTI")
     endif()
 

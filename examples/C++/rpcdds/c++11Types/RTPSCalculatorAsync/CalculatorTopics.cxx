@@ -21,8 +21,6 @@
 
 #include "CalculatorTopics.h"
 
-#if FASTCDR_VERSION_MAJOR > 1
-
 #include <fastcdr/Cdr.h>
 #include <fastcdr/exceptions/BadParamException.h>
 #include <rpcdds/exceptions/BadParamException.h>
@@ -862,4 +860,3 @@ Calculator_Reply& Calculator_Reply::operator=(Calculator_Reply &&x)
 }
 
 
-#endif // FASTCDR_VERSION_MAJOR > 1

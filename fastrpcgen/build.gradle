@@ -1,6 +1,5 @@
 // internal plugins
 apply plugin: 'java'
-apply plugin: 'eclipse' // Eclipse integration
 
 description = """"""
 
@@ -12,7 +11,7 @@ configurations { antxr }
 
 dependencies {
     antxr 'com.javadude:antxr:0.9.0'
-    implementation files('../thirdparty/idl/build/libs/idlparser-3.0.0.jar')
+    implementation files('../thirdparty/idl/build/libs/idlparser-4.0.2.jar')
     implementation group: 'com.javadude', name: 'antxr', version: '0.9.0'
 }
 
@@ -23,7 +22,6 @@ task buildIDLParser(type: GradleBuild) {
 
 task generateWADLParser(type: JavaExec) {
     File outputDir = file(new File(buildDir, "generated-src/com/eprosima/fastrpc/wadl/grammar"))
-    outputs.dir outputDir
     outputDir.exists() || outputDir.mkdirs()
     classpath configurations.antxr
     mainClass = 'com.javadude.antxr.Tool'
@@ -138,7 +136,7 @@ task rpcrestgenJar(type: Jar) {
     }
 }
 
-compileJava.dependsOn buildIDLParser, generateWADLParser
+compileJava.dependsOn buildIDLParser,generateWADLParser
 compileJava {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8

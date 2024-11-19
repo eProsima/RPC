@@ -15,6 +15,8 @@ $ctx.includeDependencies : { include |#include "$include$.h"}; separator="\n"$
 
 #include "$ctx.filename$TopicsPlugin.h"
 
+#include <fastdds/dds/topic/TypeSupport.hpp>
+
 namespace eprosima
 {
     namespace rpc
@@ -88,9 +90,9 @@ namespace eprosima
                         eprosima::rpc::transport::dds::RTPSServerProcedureEndpoint *$interface.formatedScopedname$_$operation.name$_se;
                         $endif$
 
-                        $interface.scopedname$Plugin::$operation.name$_RequestPlugin $interface.formatedScopedname$_$operation.name$_requestPlugin;
+                        eprosima::fastdds::dds::TypeSupport $interface.formatedScopedname$_$operation.name$_requestPlugin {new $interface.scopedname$Plugin::$operation.name$_RequestPlugin()\};
                         $if(!operation.oneway)$
-                        $interface.scopedname$Plugin::$operation.name$_ReplyPlugin $interface.formatedScopedname$_$operation.name$_replyPlugin;
+                        eprosima::fastdds::dds::TypeSupport $interface.formatedScopedname$_$operation.name$_replyPlugin {new $interface.scopedname$Plugin::$operation.name$_ReplyPlugin()\};
                         $endif$
 
                         }; separator="\n"$

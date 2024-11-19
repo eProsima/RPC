@@ -27,6 +27,8 @@
 
 #include "CalculatorTopicsPlugin.h"
 
+#include <fastdds/dds/topic/TypeSupport.hpp>
+
 namespace eprosima
 {
     namespace rpc
@@ -135,8 +137,8 @@ namespace eprosima
 
                                                 eprosima::rpc::transport::dds::RTPSServerProcedureEndpoint *Calculator_se;
 
-                                                Calculator_RequestPlugin Calculator_requestPlugin;
-                                                Calculator_ReplyPlugin Calculator_replyPlugin;
+                                                eprosima::fastdds::dds::TypeSupport Calculator_requestPlugin {new Calculator_RequestPlugin()};
+                                                eprosima::fastdds::dds::TypeSupport Calculator_replyPlugin {new Calculator_ReplyPlugin()};
 
 
                 };

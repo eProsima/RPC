@@ -22,7 +22,7 @@ $if(ctx.server)$
 $endif$
 #include <$ctx.includePrefix$exceptions/Exceptions.h>
 
-#include <fastrtps/Domain.h>
+#include <fastdds/dds/domain/DomainParticipant.hpp>
 
 using namespace eprosima::rpc;
 using namespace ::protocol::dds;
@@ -81,14 +81,14 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
         if(strcmp(interfaceName, "$first(ctx.scopedInterfaces).scopedname$") == 0)
         {
             $first(ctx.scopedInterfaces).all_operations : { operation |
-            eprosima::fastrtps::Domain::registerType(m_ddsTransport->getParticipant(), &$first(ctx.scopedInterfaces).formatedScopedname$_$operation.name$_requestPlugin);
+            $first(ctx.scopedInterfaces).formatedScopedname$_$operation.name$_requestPlugin.register_type(m_ddsTransport->get_participant());
 
             requesttopicName = "$first(ctx.scopedInterfaces).scopedname$_$operation.name$_";
             requesttopicName += m_ddsTransport->getRemoteServiceName();
             requesttopicName += "_Request";
 
             $if(!operation.oneway)$
-            eprosima::fastrtps::Domain::registerType(m_ddsTransport->getParticipant(), &$first(ctx.scopedInterfaces).formatedScopedname$_$operation.name$_replyPlugin);
+            $first(ctx.scopedInterfaces).formatedScopedname$_$operation.name$_replyPlugin.register_type(m_ddsTransport->get_participant());
 
             replytopicName = "$first(ctx.scopedInterfaces).scopedname$_$operation.name$_";
             replytopicName += m_ddsTransport->getRemoteServiceName();
@@ -99,14 +99,14 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
             if(behaviour == ::transport::PROXY_BEHAVIOUR)
             {
                 $first(ctx.scopedInterfaces).formatedScopedname$_$operation.name$_pe = dynamic_cast<eprosima::rpc::transport::dds::RTPSProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($first(ctx.scopedInterfaces).formatedScopedname$_$operation.name$_str,
-                $first(ctx.scopedInterfaces).formatedScopedname$_$operation.name$_requestPlugin.getName(),
+                $first(ctx.scopedInterfaces).formatedScopedname$_$operation.name$_requestPlugin.get_type_name().c_str(),
                 requesttopicName.c_str(),
                 $if(!operation.oneway)$
-                $first(ctx.scopedInterfaces).formatedScopedname$_$operation.name$_replyPlugin.getName(),
+                $first(ctx.scopedInterfaces).formatedScopedname$_$operation.name$_replyPlugin.get_type_name().c_str(),
                 replytopicName.c_str(),
-                (::transport::dds::RTPSTransport::Create_data)$first(ctx.scopedInterfaces).scopedname$Plugin::$operation.name$_ReplyPlugin::create_data,
-                (::transport::dds::RTPSTransport::Copy_data)$first(ctx.scopedInterfaces).scopedname$Plugin::$operation.name$_ReplyPlugin::copy_data,
-                (::transport::dds::RTPSTransport::Destroy_data)$first(ctx.scopedInterfaces).scopedname$Plugin::$operation.name$_ReplyPlugin::delete_data,
+                (::transport::dds::RTPSTransport::Create_data)$first(ctx.scopedInterfaces).scopedname$Plugin::$operation.name$_ReplyPlugin::_create_data,
+                (::transport::dds::RTPSTransport::Copy_data)$first(ctx.scopedInterfaces).scopedname$Plugin::$operation.name$_ReplyPlugin::_copy_data,
+                (::transport::dds::RTPSTransport::Destroy_data)$first(ctx.scopedInterfaces).scopedname$Plugin::$operation.name$_ReplyPlugin::_delete_data,
                 NULL,
                 sizeof($first(ctx.scopedInterfaces).scopedname$_$operation.name$_Reply)
                 $else$NULL, NULL, NULL, NULL, NULL, NULL, 0$endif$));
@@ -118,14 +118,14 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
                 $first(ctx.scopedInterfaces).formatedScopedname$_$operation.name$_se = dynamic_cast<eprosima::rpc::transport::dds::RTPSServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($first(ctx.scopedInterfaces).formatedScopedname$_$operation.name$_str,
                 $if(operation.oneway)$NULL, NULL
                 $else$
-                $first(ctx.scopedInterfaces).formatedScopedname$_$operation.name$_replyPlugin.getName(),
+                $first(ctx.scopedInterfaces).formatedScopedname$_$operation.name$_replyPlugin.get_type_name().c_str(),
                 replytopicName.c_str()
                 $endif$,
-                $first(ctx.scopedInterfaces).formatedScopedname$_$operation.name$_requestPlugin.getName(),
+                $first(ctx.scopedInterfaces).formatedScopedname$_$operation.name$_requestPlugin.get_type_name().c_str(),
                 requesttopicName.c_str(),
-                (::transport::dds::RTPSTransport::Create_data)$first(ctx.scopedInterfaces).scopedname$Plugin::$operation.name$_RequestPlugin::create_data,
-                (::transport::dds::RTPSTransport::Copy_data)$first(ctx.scopedInterfaces).scopedname$Plugin::$operation.name$_RequestPlugin::copy_data,
-                (::transport::dds::RTPSTransport::Destroy_data)$first(ctx.scopedInterfaces).scopedname$Plugin::$operation.name$_RequestPlugin::delete_data,
+                (::transport::dds::RTPSTransport::Create_data)$first(ctx.scopedInterfaces).scopedname$Plugin::$operation.name$_RequestPlugin::_create_data,
+                (::transport::dds::RTPSTransport::Copy_data)$first(ctx.scopedInterfaces).scopedname$Plugin::$operation.name$_RequestPlugin::_copy_data,
+                (::transport::dds::RTPSTransport::Destroy_data)$first(ctx.scopedInterfaces).scopedname$Plugin::$operation.name$_RequestPlugin::_delete_data,
                 $ctx.filename$Protocol::$first(ctx.scopedInterfaces).formatedScopedname$_$operation.name$_serve,
                 sizeof($first(ctx.scopedInterfaces).scopedname$_$operation.name$_Request)));
             \}
@@ -136,14 +136,14 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
         else if(strcmp(interfaceName, "$interface.scopedname$") == 0)
         {
             $interface.all_operations : { operation |
-            eprosima::fastrtps::Domain::registerType(m_ddsTransport->getParticipant(), &$interface.formatedScopedname$_$operation.name$_requestPlugin);
+            $interface.formatedScopedname$_$operation.name$_requestPlugin.register_type(m_ddsTransport->get_participant());
 
             requesttopicName = "$interface.scopedname$_$operation.name$_";
             requesttopicName += m_ddsTransport->getRemoteServiceName();
             requesttopicName += "_Request";
 
             $if(!operation.oneway)$
-            eprosima::fastrtps::Domain::registerType(m_ddsTransport->getParticipant(), &$interface.formatedScopedname$_$operation.name$_replyPlugin);
+            $interface.formatedScopedname$_$operation.name$_replyPlugin.register_type(m_ddsTransport->get_participant());
 
             replytopicName = "$interface.scopedname$_$operation.name$_";
             replytopicName += m_ddsTransport->getRemoteServiceName();
@@ -154,14 +154,14 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
             if(behaviour == ::transport::PROXY_BEHAVIOUR)
             {
                 $interface.formatedScopedname$_$operation.name$_pe = dynamic_cast<eprosima::rpc::transport::dds::RTPSProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($interface.formatedScopedname$_$operation.name$_str,
-                $interface.formatedScopedname$_$operation.name$_requestPlugin.getName(),
+                $interface.formatedScopedname$_$operation.name$_requestPlugin.get_type_name().c_str(),
                 requesttopicName.c_str(),
                 $if(!operation.oneway)$
-                $interface.formatedScopedname$_$operation.name$_replyPlugin.getName(),
+                $interface.formatedScopedname$_$operation.name$_replyPlugin.get_type_name().c_str(),
                 replytopicName.c_str(),
-                (::transport::dds::RTPSTransport::Create_data)$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::create_data,
-                (::transport::dds::RTPSTransport::Copy_data)$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::copy_data,
-                (::transport::dds::RTPSTransport::Destroy_data)$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::delete_data,
+                (::transport::dds::RTPSTransport::Create_data)$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::_create_data,
+                (::transport::dds::RTPSTransport::Copy_data)$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::_copy_data,
+                (::transport::dds::RTPSTransport::Destroy_data)$interface.scopedname$Plugin::$operation.name$_ReplyPlugin::_delete_data,
                 NULL,
                 sizeof($interface.scopedname$_$operation.name$_Reply)
                 $else$NULL, NULL, NULL, NULL, NULL, NULL, 0$endif$));
@@ -172,14 +172,14 @@ bool $ctx.filename$Protocol::activateInterface(const char* interfaceName)
             {
                 $interface.formatedScopedname$_$operation.name$_se = dynamic_cast<eprosima::rpc::transport::dds::RTPSServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint($interface.formatedScopedname$_$operation.name$_str,
                 $if(operation.oneway)$NULL, NULL$else$
-                $interface.formatedScopedname$_$operation.name$_replyPlugin.getName(),
+                $interface.formatedScopedname$_$operation.name$_replyPlugin.get_type_name().c_str(),
                 replytopicName.c_str()
                 $endif$,
-                $interface.formatedScopedname$_$operation.name$_requestPlugin.getName(),
+                $interface.formatedScopedname$_$operation.name$_requestPlugin.get_type_name().c_str(),
                 requesttopicName.c_str(),
-                (::transport::dds::RTPSTransport::Create_data)$interface.scopedname$Plugin::$operation.name$_RequestPlugin::create_data,
-                (::transport::dds::RTPSTransport::Copy_data)$interface.scopedname$Plugin::$operation.name$_RequestPlugin::copy_data,
-                (::transport::dds::RTPSTransport::Destroy_data)$interface.scopedname$Plugin::$operation.name$_RequestPlugin::delete_data,
+                (::transport::dds::RTPSTransport::Create_data)$interface.scopedname$Plugin::$operation.name$_RequestPlugin::_create_data,
+                (::transport::dds::RTPSTransport::Copy_data)$interface.scopedname$Plugin::$operation.name$_RequestPlugin::_copy_data,
+                (::transport::dds::RTPSTransport::Destroy_data)$interface.scopedname$Plugin::$operation.name$_RequestPlugin::_delete_data,
                 $ctx.filename$Protocol::$interface.formatedScopedname$_$operation.name$_serve,
                 sizeof($interface.scopedname$_$operation.name$_Request)));
             \}

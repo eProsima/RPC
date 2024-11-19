@@ -24,7 +24,7 @@
 
 #include "CalculatorTopics.h"
 
-#include <fastrtps/TopicDataType.h>
+#include <fastdds/dds/topic/TopicDataType.hpp>
 
 
 #if defined(_WIN32)
@@ -40,7 +40,7 @@
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class Calculator_RequestPlugin : public eprosima::fastrtps::TopicDataType
+class Calculator_RequestPlugin : public eprosima::fastdds::dds::TopicDataType
 {
     public:
 
@@ -48,50 +48,46 @@ class Calculator_RequestPlugin : public eprosima::fastrtps::TopicDataType
 
         virtual eProsima_user_DllExport ~Calculator_RequestPlugin();
 
-        eProsima_user_DllExport bool getKey(void *data, eprosima::fastrtps::rtps::InstanceHandle_t* ihandle, bool force_md5);
-
         eProsima_user_DllExport bool serialize(
-                void* data,
-                eprosima::fastrtps::rtps::SerializedPayload_t* payload) override
-        {
-            return serialize(data, payload, eprosima::fastdds::dds::DEFAULT_DATA_REPRESENTATION);
-        }
-
-        eProsima_user_DllExport bool serialize(
-                void* data,
-                eprosima::fastrtps::rtps::SerializedPayload_t* payload,
+                const void* const data,
+                eprosima::fastdds::rtps::SerializedPayload_t& payload,
                 eprosima::fastdds::dds::DataRepresentationId_t data_representation) override;
 
         eProsima_user_DllExport bool deserialize(
-                eprosima::fastrtps::rtps::SerializedPayload_t* payload,
+                eprosima::fastdds::rtps::SerializedPayload_t& payload,
                 void* data) override;
 
-        eProsima_user_DllExport std::function<uint32_t()> getSerializedSizeProvider(
-                void* data) override
-        {
-            return getSerializedSizeProvider(data, eprosima::fastdds::dds::DEFAULT_DATA_REPRESENTATION);
-        }
-
-        eProsima_user_DllExport std::function<uint32_t()> getSerializedSizeProvider(
-                void* data,
+        eProsima_user_DllExport uint32_t calculate_serialized_size(
+                const void* const data,
                 eprosima::fastdds::dds::DataRepresentationId_t data_representation) override;
 
-        eProsima_user_DllExport void* createData();
+        eProsima_user_DllExport bool compute_key(
+                eprosima::fastdds::rtps::SerializedPayload_t& payload,
+                eprosima::fastdds::rtps::InstanceHandle_t& ihandle,
+                bool force_md5 = false) override;
 
-        eProsima_user_DllExport static void* create_data();
+        eProsima_user_DllExport bool compute_key(
+                const void* const data,
+                eprosima::fastdds::rtps::InstanceHandle_t& ihandle,
+                bool force_md5 = false) override;
 
-        eProsima_user_DllExport void deleteData(void *data);
+        eProsima_user_DllExport void* create_data() override;
 
-        eProsima_user_DllExport static void delete_data(void *data);
+        eProsima_user_DllExport void delete_data(
+                void* data) override;
 
-        eProsima_user_DllExport static void copy_data(Calculator_Request *dst,
+        eProsima_user_DllExport static void* _create_data();
+
+        eProsima_user_DllExport static void _delete_data(void *data);
+
+        eProsima_user_DllExport static void _copy_data(Calculator_Request *dst,
                 const Calculator_Request *src);
 };
 
 /*!
  * @brief This class encapsulates the methods used on DDS topics by DDS middleware.
  */
-class Calculator_ReplyPlugin : public eprosima::fastrtps::TopicDataType
+class Calculator_ReplyPlugin : public eprosima::fastdds::dds::TopicDataType
 {
     public:
 
@@ -99,43 +95,39 @@ class Calculator_ReplyPlugin : public eprosima::fastrtps::TopicDataType
 
         virtual eProsima_user_DllExport ~Calculator_ReplyPlugin();
 
-        eProsima_user_DllExport bool getKey(void *data, eprosima::fastrtps::rtps::InstanceHandle_t* ihandle, bool force_md5);
-
         eProsima_user_DllExport bool serialize(
-                void* data,
-                eprosima::fastrtps::rtps::SerializedPayload_t* payload) override
-        {
-            return serialize(data, payload, eprosima::fastdds::dds::DEFAULT_DATA_REPRESENTATION);
-        }
-
-        eProsima_user_DllExport bool serialize(
-                void* data,
-                eprosima::fastrtps::rtps::SerializedPayload_t* payload,
+                const void* const data,
+                eprosima::fastdds::rtps::SerializedPayload_t& payload,
                 eprosima::fastdds::dds::DataRepresentationId_t data_representation) override;
 
         eProsima_user_DllExport bool deserialize(
-                eprosima::fastrtps::rtps::SerializedPayload_t* payload,
+                eprosima::fastdds::rtps::SerializedPayload_t& payload,
                 void* data) override;
 
-        eProsima_user_DllExport std::function<uint32_t()> getSerializedSizeProvider(
-                void* data) override
-        {
-            return getSerializedSizeProvider(data, eprosima::fastdds::dds::DEFAULT_DATA_REPRESENTATION);
-        }
-
-        eProsima_user_DllExport std::function<uint32_t()> getSerializedSizeProvider(
-                void* data,
+        eProsima_user_DllExport uint32_t calculate_serialized_size(
+                const void* const data,
                 eprosima::fastdds::dds::DataRepresentationId_t data_representation) override;
 
-        eProsima_user_DllExport void* createData();
+        eProsima_user_DllExport bool compute_key(
+                eprosima::fastdds::rtps::SerializedPayload_t& payload,
+                eprosima::fastdds::rtps::InstanceHandle_t& ihandle,
+                bool force_md5 = false) override;
 
-        eProsima_user_DllExport static void* create_data();
+        eProsima_user_DllExport bool compute_key(
+                const void* const data,
+                eprosima::fastdds::rtps::InstanceHandle_t& ihandle,
+                bool force_md5 = false) override;
 
-        eProsima_user_DllExport void deleteData(void *data);
+        eProsima_user_DllExport void* create_data() override;
 
-        eProsima_user_DllExport static void delete_data(void *data);
+        eProsima_user_DllExport void delete_data(
+                void* data) override;
 
-        eProsima_user_DllExport static void copy_data(Calculator_Reply *dst,
+        eProsima_user_DllExport static void* _create_data();
+
+        eProsima_user_DllExport static void _delete_data(void *data);
+
+        eProsima_user_DllExport static void _copy_data(Calculator_Reply *dst,
                 const Calculator_Reply *src);
 };
 

@@ -23,7 +23,7 @@
 
 #include <rpcdds/exceptions/Exceptions.h>
 
-#include <fastrtps/Domain.h>
+#include <fastdds/dds/domain/DomainParticipant.hpp>
 
 using namespace eprosima::rpc;
 using namespace ::protocol::dds;
@@ -73,13 +73,13 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
 
         if(strcmp(interfaceName, "Calculator") == 0)
         {
-            eprosima::fastrtps::Domain::registerType(m_ddsTransport->getParticipant(), &Calculator_requestPlugin);
+            Calculator_requestPlugin.register_type(m_ddsTransport->get_participant());
 
             requesttopicName = "Calculator_";
             requesttopicName += m_ddsTransport->getRemoteServiceName();
             requesttopicName += "_Request";
 
-            eprosima::fastrtps::Domain::registerType(m_ddsTransport->getParticipant(), &Calculator_replyPlugin);
+            Calculator_replyPlugin.register_type(m_ddsTransport->get_participant());
 
             replytopicName = "Calculator_";
             replytopicName += m_ddsTransport->getRemoteServiceName();
@@ -88,13 +88,13 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
             if(behaviour == ::transport::PROXY_BEHAVIOUR)
             {
                 Calculator_pe = dynamic_cast<eprosima::rpc::transport::dds::RTPSProxyProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint(Calculator_str,
-                Calculator_requestPlugin.getName(),
+                Calculator_requestPlugin.get_type_name().c_str(),
                 requesttopicName.c_str(),
-                Calculator_replyPlugin.getName(),
+                Calculator_replyPlugin.get_type_name().c_str(),
                 replytopicName.c_str(),
-                (::transport::dds::RTPSTransport::Create_data)Calculator_ReplyPlugin::create_data,
-                (::transport::dds::RTPSTransport::Copy_data)Calculator_ReplyPlugin::copy_data,
-                (::transport::dds::RTPSTransport::Destroy_data)Calculator_ReplyPlugin::delete_data,
+                (::transport::dds::RTPSTransport::Create_data)Calculator_ReplyPlugin::_create_data,
+                (::transport::dds::RTPSTransport::Copy_data)Calculator_ReplyPlugin::_copy_data,
+                (::transport::dds::RTPSTransport::Destroy_data)Calculator_ReplyPlugin::_delete_data,
                 NULL,
                 sizeof(Calculator_Reply)
                 ));
@@ -102,13 +102,13 @@ bool CalculatorProtocol::activateInterface(const char* interfaceName)
             if(behaviour == ::transport::SERVER_BEHAVIOUR)
             {
                 Calculator_se = dynamic_cast<eprosima::rpc::transport::dds::RTPSServerProcedureEndpoint*>(m_ddsTransport->createProcedureEndpoint(Calculator_str,
-                    Calculator_replyPlugin.getName(),
+                    Calculator_replyPlugin.get_type_name().c_str(),
                     replytopicName.c_str(),
-                    Calculator_requestPlugin.getName(),
+                    Calculator_requestPlugin.get_type_name().c_str(),
                     requesttopicName.c_str(),
-                    (::transport::dds::RTPSTransport::Create_data)Calculator_RequestPlugin::create_data,
-                    (::transport::dds::RTPSTransport::Copy_data)Calculator_RequestPlugin::copy_data,
-                    (::transport::dds::RTPSTransport::Destroy_data)Calculator_RequestPlugin::delete_data,
+                    (::transport::dds::RTPSTransport::Create_data)Calculator_RequestPlugin::_create_data,
+                    (::transport::dds::RTPSTransport::Copy_data)Calculator_RequestPlugin::_copy_data,
+                    (::transport::dds::RTPSTransport::Destroy_data)Calculator_RequestPlugin::_delete_data,
                     CalculatorProtocol::Calculator_serve,
                     sizeof(Calculator_Request)));
             }

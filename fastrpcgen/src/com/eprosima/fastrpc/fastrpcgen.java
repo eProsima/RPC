@@ -436,7 +436,7 @@ public class fastrpcgen
 
         // Check prerequisites
         if(m_protocol == PROTOCOL.DDS && m_ddstransport == DDS_TRANSPORT.RTPS && m_types == DDS_TYPES.RTI)
-            throw new BadArgumentException("DDS transport implemented with FastRTPS library (-transport rtps) cannot use RTI DDS types (-types rti).");
+            throw new BadArgumentException("DDS transport implemented with Fast DDS library (-transport rtps) cannot use RTI DDS types (-types rti).");
 
         if(m_idlFiles.isEmpty())
         {
@@ -632,7 +632,7 @@ public class fastrpcgen
                 }
                 else if(m_ddstransport == DDS_TRANSPORT.RTPS && m_exampleOption != null && !m_exampleOption.contains("Win"))
                 {
-                    solution.addLibrary("fastrtps");
+                    solution.addLibrary("fastdds");
                 }
 
                 // Include rpcdds library.
@@ -2224,7 +2224,7 @@ public class fastrpcgen
                 System.out.println("\t\t-transport <transport>: selects the DDS transport to be used by the generated code.");
                 System.out.println("\t\t\tSupported DDS transports:");
                 System.out.println("\t\t\t* rti (Default) - DDS transport implemented using RTI DDS middleware.");
-                System.out.println("\t\t\t* rtps - DDS transport implemented using FastRTPS library.");
+                System.out.println("\t\t\t* rtps - DDS transport implemented using Fast DDS library.");
                 System.out.println("\t\t-types <mapping>: selects the C++ mapping used for user types. Only supported in protocol dds.");
                 System.out.println("\t\t\tSupported C++ mapping:");
                 System.out.println("\t\t\t* c++11 (Default) - C++11 native types.");
