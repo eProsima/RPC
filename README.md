@@ -29,6 +29,36 @@ or the [CMake installation](#cmake-installation) instructions.
 
 ## Requirements
 
+### Linux requirements
+
+The installation of *eProsima RPC* in a Linux environment from sources requires the following tools to be
+installed in the system:
+
+* [SDKman, JDK and gradle](#java-dependencies)
+* [Boost thread, a portable C++ multi-threading library](#libboost-thread)
+* [CMake and other tools](#cmake-and-other-tools)
+
+#### Java dependencies
+
+[SDKman](https://sdkman.io/), [JDK 8](https://www.oracle.com/es/java/technologies/javase/javase8-archive-downloads.html) and [gradle 5.0](https://gradle.org/) are required for the installation:
+
+```cmd
+sudo apt install openjdk-8-jdk
+curl -s "https://get.sdkman.io" | bash
+sdk install gradle 5.0
+```
+
+Once installed, navigate to the RPC `fastrpcgen` directory and build gradle (`gradle assemble`).
+
+#### Libboost-thread
+
+The boost thread library `libboost-thead` is required for this project.
+It can be installed in Linux by running:
+
+```cmd
+sudo apt install libboost-thread1.74-dev
+```
+
 ### Windows requirements
 
 The installation of *eProsima RPC* in a Windows environment from sources requires the following tools to be
@@ -54,7 +84,7 @@ Chocolatey is a Windows package manager.
 It is needed to install some of *eProsima RPC*'s dependencies.
 Download and install it directly from the [website](https://chocolatey.org/).
 
-#### CMake and other tools
+### CMake and other tools
 
 These packages provide the tools required to install *eProsima RPC* and its dependencies from command line.
 Download and install [CMake][cmake], [pip3][pip3], [wget][wget] and [git][git] by following the instructions detailed in the respective
@@ -88,6 +118,14 @@ After downloading these packages, open an administrative shell with *PowerShell*
 
 where `<PATH_TO_DOWNLOADS>` is the folder into which the packages have been downloaded.
 
+**Linux**
+
+On Linux, both dependencies can be easily installed using apt package manager:
+
+```cmd
+    sudo apt install libasio-dev libtinyxml2-dev
+```
+
 ## Colcon installation
 
 [colcon][colcon] is a command line tool based on [CMake][cmake] aimed at building sets of software packages.
@@ -120,6 +158,14 @@ This section explains how to use it to compile *eProsima RPC* and its dependenci
     vcs import src --input rpc.repos
    ```
 
+   Make sure that the [eProsima IDL Parser](https://github.com/eProsima/IDL-Parser/) submodule included in the project has been imported successfully.
+   To do so, initialize the submodule by running:
+
+   ```cmd
+    cd ~\RPC\src\rpc
+    git submodule update --init
+   ```
+
    Finally, use [colcon][colcon] to compile all software:
 
    - Building *eProsima RPC over DDS* use next command:
@@ -127,6 +173,28 @@ This section explains how to use it to compile *eProsima RPC* and its dependenci
      colcon build --cmake-args -DNO_TLS=ON -DRPCPROTO=rpcdds
      ```
 ### Run an application
+
+**Linux**
+
+If the *eProsima RPC over DDS* has been build with colcon, make sure that the `install` folder contains directly all the required dependencies, by adding the flag `--merge-install` in the build process:
+
+```cmd
+colcon build --merge-install --cmake-args -DNO_TLS=ON -DRPCPROTO=rpcdds
+```
+
+The installation directory must be exported to the environment variable `RPCDDSHOME` to be used by the `rpcddsgen` application:
+
+```cmd
+export RPCDDSHOME="~/RPC/install"
+```
+
+Finally, deploy the complete *RPC* framework based on a IDL file by running:
+
+```cmd
+~/RPC/src/rpc/fastrpcgen/scripts/rpcddsgen -example x64Linux2.6gcc4.4.5 -transport rtps my_idl_example.idl
+```
+
+**Windows**
 
 When running an instance of an application using *eProsima RPC*, the colcon overlay built in the
 dedicated `RPC` directory must be sourced.
@@ -163,7 +231,7 @@ This section explains how to compile *eProsima RPC* with [CMake][cmake], either 
 
      ```cmd
      cd ~\RPC
-     git clone https://github.com/eProsima/boost_threadpool.git
+     git clone -b cmake https://github.com/eProsima/boost_threadpool.git
      cd boost_threadpool
      mkdir build && cd build
      cmake -DCMAKE_INSTALL_PREFIX=~/RPC/install ..
