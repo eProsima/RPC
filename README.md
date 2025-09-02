@@ -1,3 +1,9 @@
+> [!NOTE]
+> 🚀 **RPC over DDS** was moved into [Fast DDS](https://github.com/eProsima/Fast-DDS) repository. 🚀
+>
+> You can find more information about this new Fast DDS feature in [RPC over DDS](https://fast-dds.docs.eprosima.com/en/stable/fastdds/rpc_dds/rpc_dds_intro.html) documentation.
+> Also about how Fast DDS-Gen supports [IDL interfaces](https://fast-dds.docs.eprosima.com/en/stable/fastddsgen/interfaces/introduction.html) to work with this great feature.
+
 # Introduction
 
 This repository contains a set of C++ libraries that provide different [RPC][rpc] communications.
