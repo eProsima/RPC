@@ -253,6 +253,24 @@ int RTPSProxyProcedureEndpoint::createEntities(
 
             if (m_writer != nullptr)
             {
+                m_proxyId.guidPrefix()[0] = m_writer->getGuid().guidPrefix.value[0];
+                m_proxyId.guidPrefix()[1] = m_writer->getGuid().guidPrefix.value[1];
+                m_proxyId.guidPrefix()[2] = m_writer->getGuid().guidPrefix.value[2];
+                m_proxyId.guidPrefix()[3] = m_writer->getGuid().guidPrefix.value[3];
+                m_proxyId.guidPrefix()[4] = m_writer->getGuid().guidPrefix.value[4];
+                m_proxyId.guidPrefix()[5] = m_writer->getGuid().guidPrefix.value[5];
+                m_proxyId.guidPrefix()[6] = m_writer->getGuid().guidPrefix.value[6];
+                m_proxyId.guidPrefix()[7] = m_writer->getGuid().guidPrefix.value[7];
+                m_proxyId.guidPrefix()[8] = m_writer->getGuid().guidPrefix.value[8];
+                m_proxyId.guidPrefix()[9] = m_writer->getGuid().guidPrefix.value[9];
+                m_proxyId.guidPrefix()[10] = m_writer->getGuid().guidPrefix.value[10];
+                m_proxyId.guidPrefix()[11] = m_writer->getGuid().guidPrefix.value[11];
+
+                m_proxyId.entityId().entityKey()[0] = m_writer->getGuid().entityId.value[0];
+                m_proxyId.entityId().entityKey()[1] = m_writer->getGuid().entityId.value[1];
+                m_proxyId.entityId().entityKey()[2] = m_writer->getGuid().entityId.value[2];
+                m_proxyId.entityId().entityKind() = m_writer->getGuid().entityId.value[3];
+                
                 // Is not oneway operation
                 if (readertypename != NULL)
                 {
